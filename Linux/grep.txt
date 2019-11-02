@@ -1,0 +1,96 @@
+grep -- 查找匹配航
+
+语法：
+grep [options] pattern [files]
+
+参数释义：
+--help    打印grep的帮助信息
+
+-V,--version    打印grep的版本信息
+
+-E|--extended-regexp    将pattern解释为extended regular expression(ERE)
+
+-F|--fixed-strings    将pattern解释为固定长度字符串
+
+-G|--basic-regexp    将pattern解释为basic regular expression(BRE,默认)
+
+-P|--perl-regexp    将pattern解释为perl兼容模式regular expression
+
+-e PATTERN|--regexp=PATTERN    匹配的pattern，可多个-e连接，每个-e后面接一个pattern，并对其进行or操作
+
+-f FILE|--file=FILE    从文件中读取pattern，每行为一个pattern
+
+-i|--ignore-case    忽略大小写匹配
+
+-v|--invert-match    反向匹配，匹配pattern不包括的行
+
+-w|--word-regexp    完整单词匹配
+
+-x|--line-regexp    完整行匹配
+
+-c|--count    只打印匹配的累计行数，不打印匹配内容
+
+--color="WHEN"    是否突出显示匹配字元，WHEN选项always|auto|never
+
+-L|--files-without-match    只打印未出现pattern内容的文件名(用于多文件)
+
+-l|--files-with-matches    只打印出现pattern内容的文件名(用于多文件)
+
+-m NUM|--max-count=NUM    匹配pattern内容NUM次后，停止查找
+
+-o|--only-matching    只打印行内匹配部分内容
+
+-q|--quiet|--silent    安静模式，不打印任何匹配内容
+
+-s|--no-messages    不输出错误信息
+
+-b|--byte-offset    打印匹配行相对于文件起始的偏移字节数(出现于匹配内容之前)
+
+-H|--with-filename    打印匹配行对应的文件名(用于多文件)
+
+-h|--no-filename    不打印匹配行对应的文件名(默认)
+
+-n|--line-number    输出匹配行在文件中的行号(基于1起始)
+
+-Z|--null    使用NUL替代文件名后的分隔符
+
+-A NUM|--after-context=NUM    在匹配行后显示NUM行非匹配上下文
+
+-B NUM|--before-context=NUM    在匹配行前显示NUM行非匹配上下文
+
+-C NUM|--context=NUM    在匹配行前后显示NUM行非匹配上下文
+
+-a|--text    将匹配的binary文件作为ASCII文件处理
+
+--binary-files=TYPE    将匹配的binary文件作为指定文件类型TYPE处理
+
+-D ACTION|--devices=ACTION    将FIFO或socket文件进行ACTION操作(默认为read操作)
+
+-d ACTION|--directories=ACTION    将目录进行ACTION操作(默认为read操作)
+
+-r|--recursive    将目录递归进行操作
+
+
+正则表达式(BRE和ERE)
+[]    限定的任意字符
+[^]    排除限定字符的任意字符
+  -    范围限定，指定起始至结束之间的字符。如：a-z在C locale中，代表所有小写字母
+^    行起始
+$    行结束
+\<    单词起始位置
+\>    单词结束位置
+\b    单词开始或结束位置
+\B    非单词开始或结束位置(字符)
+\w    单词字符([a-zA-Z0-9_])
+\W    非单词字符
+?    前置字符匹配0或1次(ERE有效)
+*    前置字符匹配0或多次
++    前置字符匹配1次以上(ERE有效)
+{n}    前置字符精确匹配n次(ERE有效)
+{n,}    前置字符至少匹配n次(ERE有效)
+{,m}    前置字符至多匹配m次(ERE有效)
+{n,m}    前置字符匹配n~m次(ERE有效)
+|    备选，可从两个方案中任意匹配一种(ERE有效)
+()    分组(ERE有效)
+\n    分组的引用,n为0~9的数字
+

@@ -1,0 +1,24 @@
+工作管理与bash shell息息相关(shell子进程)
+涉及配置文件：/etc/security/limits.conf
+工作管理状态：
+1.前台
+2.后台：running/stop
+
+将工作放置后台执行：
+<command> &
+
+将工作放置后台暂停：
+ctrl+z
+
+查看后台工作：
+jobs -l
+
+将后台工作放置前台执行：
+fg %<number>
+
+将后台暂停工作在后台运行：
+bg %<number>
+
+关闭工作任务进程：
+kill -9|-15  %<number>
+**-9代表强制关闭，-15代表正常关闭

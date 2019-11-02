@@ -1,0 +1,38 @@
+1.fcitx配置文件：
+/usr/share/fcitx   ##全局设置
+~/.config/fcitx    #特定用户设置
+#pinyin为字库，skin为皮肤
+#~/.profile为用户级登录配置
+2.建议将默认键盘输入法配置为第一个，拼音输入法配置为第二个
+3.配置工具 ：fcitx-config-gtk
+对应指令：fcitx-config-gtk3
+4.问题诊断工具：fcitx-diagnose
+
+安装搜狗输入法
+1.移除ibus
+sudo apt-get purge ibus
+2.安装fcitx
+sudo apt-get install fcitx-pinyin fcitx-config-gtk
+3.切换输入方法：
+老版本：im-switch -s fcitx
+新版本：im-config -n fcitx
+4.安装搜狗拼音(已预先下载deb包)
+sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
+5.解决依赖
+sudo apt-get -f install
+6.注销
+7.打开fcitx配置页面
+fcitx-config-gtk3
+8.输入法皮肤透明问题(X11支持问题)
+fcitx配置 >> 附加组件 >> 勾选高级 >> 勾选"X11支持"
+
+参考链接:
+[1]:https://fcitx-im.org/wiki/Special:MyLanguage/Fcitx
+[2]:https://wiki.archlinux.org/index.php/Fcitx_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29
+[3]:https://code.google.com/archive/p/fcitx/
+
+快捷键：
+u    组合字
+v    罗马字符
+ctrl+shift+f    簡繁切換
+shift+space    半角切換

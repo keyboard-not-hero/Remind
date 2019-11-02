@@ -1,0 +1,173 @@
+sed - stream editor for filtering and transforming text
+语法：
+sed OPTION... [SCRIPT] [INPUTFILE...]
+**多个输入文件组成一个输入流
+OPTION：
+--version    输出sed版本
+--help    打印sed简略帮助文档
+-n
+--quiet
+--silent    阻止pattern空间内容输出到output
+-e    
+--expression    执行SCRIPT内容(默认参数，可反复使用，以组合多个SCRIPT)
+-f    
+--file    从文件读取脚本内容执行
+-i[SUFFIX]    
+--in-place    in-place执行，当提供suffix，生成{filename}suffix备份
+-l N    
+--line-length    指定SCRIPT的l默认长度，初始为70
+--posix    POSIX兼容模式
+--follow-symlinks    联合-i使用，当提供的文件为软链接时，对链接目的文件进行操作。默认斩断符号链接，使文件称为硬链接
+-E    
+-r
+--regexp-extended    使用拓展RE匹配
+-s
+--separate    将多个输入文件分隔为不同的输入流
+--sandbox    在沙盒中运行，禁止e/w/r SCRIPT
+
+SCRIPT格式：
+[effect_line]command [command_desc]
+**SCRIPT操作行规则：
+1.默认作用于所有行
+2.指定行则只作用于该行
+3.使用/RE/前置来匹配行
+4.使用start,end来指定行范围，范围为闭区间，当end<start时，可指定start一行
+5.line!后的!表示取反，作用于非指定/匹配行
+**行符号：
+1.number指定行
+2.$代表文件的最后一行
+3.first~step代表从first起始的每step行
+4./REGEXP/代表使用正则表达式匹配
+5.\%regexp%，方案4的相同方案，并且%可使用其他符号代替
+6./REGEXP/I，方案4的大小写不敏感版本
+7./REGEXP/M，方案4的multi-line版本
+8.0,/REGEXP/中，REGEXP尽量匹配到1，所有只有第一行
+9.addr1,+N代表从addr1行开始，并加上余下的N行
+10.addr1,~N代表从addr1行开始，遇到N的倍数行打印完终止
+
+SCRIPT [command_desc]：
+a TEXT    在下一行添加文本内容(TEXT)
+b label    无条件分支标签，标签行会被组合忽略，不会再被读入pattern空间
+c TEXT    替换指定行为文本内容(TEXT)
+d    删除pattern空间内容，省略后续command，直接进入下一轮cycle
+D    当pattern包含newline，从pattern删除内容，直到遇见newline，并直接以pattern剩余内容进入下一轮cycle，不从输入流读取；如果不包含newline，正常开始下次cycle
+e    根据文件内容执行shell指令
+e command    执行shell下的command指令
+F    在指定行之前打印文件名
+g    将pattern空间内容替换为hold空间内容
+G    
+h    将hold空间内容替换为pattern空间内容
+H    
+i TEXT    在上一行添加文本内容(TEXT)
+l [n]   打印pattern空间内容(以$符号结束)，n为行字符宽度，需要配合-n
+n    pattern空间内容直接跳转到第三步，输出到stdout
+N    在pattern空间添加newline，并将下一行加载进pattern中。如果输入流无内容，则直接打印pattern内容
+p    打印pattern空间内容，需要配合-n。用于打印行
+P    
+q[exit-code]    打印到指定行并以指定返回码(默认为0)退出
+Q[exit-code]    打印到指定行之前并以指定返回码(默认为0)退出
+r filename    读取文件内容到pattern空间之后
+R filename    在多个pattern空间之后打印分别打印一条文件内的记录，取决于文件记录条数
+s/REGEXP/REPLACEMENT/[flags]    将RE匹配到的字符串替换为NEW字符串
+t label    当前一个输入流成功对某行执行s操作时，可对该行打上标签
+T label    当前一个输入流没有对某行执行是操作时，可对该行打上标签
+v [VERSION]    只有GNU版本sed支持v参数；并且当提供的version高于安装版本时，也会出现错误提示
+w filename    将pattern空间内容保存到文件中
+W filename    将pattern空间内容保存到文件中
+x    交换hold空间和pattern空间内容
+y/src/dst/    将src集合中的字符，替换为dst集合对应position的字符;src和dst集合大小需一致
+z    清空pattern空间内容
+#    后续紧跟注释，直到遇到newline
+{cmd;cmd...}    对指定行进行组合操作
+=    在上一行插入行号
+: label    跳转到指定label位置
+**两种buffer：
+1.pattern space：匹配的内容，初始化为空。
+  one：从输入流读取一行，删除尾部newline，将其放入pattern空间；
+  two：pattern空间的内容执行SCRIPT操作；
+  three：如果没有-n参数，spttern空间内容打印到stdout，并添加尾部newline；
+  four：清除当前space内容
+2.hold space：在匹配行之间保留内容，初始化为空
+**SCRIPT可组合，方式如下：
+1.换行
+2.多个-e分开指定
+3.';'符号分隔(a/c/i/#不适用)
+4.集中到文件中，使用-f进行
+5.特殊组合：/./{H;$!d} ; x ; s/REGEXP/REPLACEMENT/。第一部分将输入流的内容以空行为分隔，以块的形式连续导入pattern空间，然后再从pattern空间导入hold空间，重复执行以全部完成块操作；第二部分将hold空间的内容全部导回pattern空间；第三部分将pattern以块执行替换操作，可增加组合或换为其他SCRIPT
+
+s/RE/NEW/[flags]额外标记：
+RE：
+()    标记组
+\1~\9    RE使用()标记的组
+NEW：
+\L    后续字符替换为小写，知道遇到\U或\E
+\l    下一个字符替换为小写
+\U    后续字符替换为大写，直到遇到\L或\E
+\u    下一个字符替换为大写
+\E    大小写转换停止标记
+\1~\9    RE使用()标记的组
+flags：
+g    替换所有匹配对象，而不是第一个
+N    替换第N个匹配对象
+p    打印有替换行为的行
+w filename    将有替换的行内容保存到文件
+e    将结果pattern空间中的内容作为shell命令执行
+i
+I    RE部分忽略大小写
+m
+M    multi line模式    
+
+正则规则：
+BRE
+^    行起始
+$    行结束
+.    所有符号，包含newline
+\?    前置字符出现0或1次
+\+    前置字符出现1或多次
+*    前置字符出现0或1或多次
+\{i\}    前置字符出现i次
+\{i,j\}    前置字符出现i~j次
+\{i,\}    前置字符至少出现i次
+[list]    匹配list中的任一字符
+[^list]    匹配除list中的任一字符
+regexp1\|regexp2    匹配regexp1或regexp2
+\(regexp\)    匹配组，可用于整体用*标记，或反向引用\digit
+\digit    反向引用，引用之前匹配的群组
+\w    代表单词字符,[A-Za-z0-9_]
+\W    代表非单词字符
+\b    单次边界(一边为单词字符，另一边为非单词字符)
+\B    非单词边界(两边都为单词字符或非单词字符)
+\s    空白字符
+\S    非空白字符
+\<    单词起始
+\>    单词结束
+\`    匹配空间的起始处
+\'    匹配空间的结束处
+ERE
+^    行起始
+$    行结束
+.    所有符号，包含newline
+?    前置字符出现0或1次
++    前置字符出现1或多次
+*    前置字符出现0或1或多次
+{i}    前置字符出现i次
+{i,j}    前置字符出现i~j次
+{i,}    前置字符至少出现i次
+[list]    匹配list中的任一字符
+[^list]    匹配除list中的任一字符
+regexp1|regexp2    匹配regexp1或regexp2
+(regexp)    匹配组(subexpression)，可用于整体用*标记，或反向引用\digit
+\digit    反向引用，引用之前匹配的群组
+**BRE与ERE差别：? + {} () |五种符号的差别
+
+名称字符集类：
+[:alpha:]    [A-Za-z]
+[:alnum:]    [0-9A-Za-z]
+[:blank:]    空格和TAB
+[:cntrl:]    ASCII八进制范围：000~037/177
+[:digit:]    [0-9]
+[:xdigit:]    [0-9A-Fa-f]
+[:upper:]    [A-Z]
+[:lower:]    [a-z]
+[:space:]    TAB/空格/newline
+

@@ -1,0 +1,3 @@
+superblock  文件系统汇总信息，inode/block的总量、使用量、剩余量
+inode  档案权限和属性记录，同时记录保存档案内容的block number，一个档案占据一个inode
+block  保存实际档案内容

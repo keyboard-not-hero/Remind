@@ -1,0 +1,12 @@
+dpkg - package manager for Debian
+语法：
+dpkg [option...] action
+参数：
+
+action：
+-i    安装deb包
+-r    卸载软件，但不删除配置文件
+-P    卸载软件，并删除配置文件；如软件已卸载，则直接删除配置文件
+-V    对软件进行md5sum，并和数据库内容进行对比
+
+

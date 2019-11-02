@@ -1,0 +1,81 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{longtable}
+\title{Filesystem Hierarchy Standard}
+\author{Steven Liu}
+\date{Oct 30 2019}
+\begin{document}
+\maketitle
+\vspace{40em}
+\begin{longtable}{l l}
+目录结构：\\
+一级目录 \\
+/&根目录(为了性能和安全性考虑，建议挂载较小的空间分区) \\
+/bin  &  普通用户指令(系统启动相关，无子目录) \\
+/boot  &  系统引导所需文件(系统核心-vmlinuz和引导程序-grub) \\
+/dev   & 设备文件(硬盘等) \\
+/etc   & 程序的全局配置文件(1.限存放ASCII纯文本文件;2.不同程序配置文件存放在不同子目录下) \\
+/home   &  用户家目录，程序的用户级配置文件(1.单个.开头的隐藏配置文件;2.以.开头的隐藏目录，目录包含多个配置文件) \\
+/lib   & 共享库和核心模块(1.以lib*.so格式的C动态链接库;2*.modules目录下的可加载核心模块) \\
+/lib64  &  类似于/lib，和/lib合用，用于同时32bit和64bit二进制格式 \\
+/media   & 可移除媒介挂载点 \\
+/mnt   & 临时挂载点 \\
+/opt  &  拓展包安装目录(程序存放在不同子目录下) \\
+/root  &  root用户家目录，结构类似于/home \\
+/run   & 系统运行相关目录(老版本使用/var/run，为向后兼容，现已链接到/run) \\
+/sbin   & 管理员指令(系统启动相关，无子目录) \\
+/srv   & 开放站点提供的资料目录 \\
+/tmp   & 临时文件目录(系统启动后删除目录内容) \\
+/usr   & 用户软件资源目录(User Software Resource) \\
+/var   & 动态生成数据文档 \vspace{2em} \\
+
+二级目录-/usr \\
+/usr/bin   & 普通用户指令(包管理器安装，无子目录) \\
+/usr/lib   & 共享库(用户安装) \\
+/usr/local  &  local层级目录(源码安装目录) \\
+/usr/sbin   & 管理员指令(包管理器安装，无子目录) \\
+/usr/share   & 非硬件依赖的层级数据 \\
+可选 \\
+/usr/games   & 游戏类和教育类指令 \\
+/usr/include  &  C类头文件 \\
+/usr/libexec   & 被其他指令调用的二进制文件 \\
+/usr/lib64   & 可选共享库 \\
+/usr/src   & 源代码 \vspace{2em} \\
+
+三级目录-/usr/local \\
+/usr/local/bin  &  普通用户指令(本地安装，如源码安装) \\
+/usr/local/etc   & 本地安装的配置文件 \\
+/usr/local/games  &  本地安装的游戏类 \\
+/usr/local/include &   本地安装头文件 \\
+/usr/local/lib    &本地安装库 \\
+/usr/local/man   & 本地在线manual文档 \\
+/usr/local/sbin   & 管理员指令(本地安装) \\
+/usr/local/share   & 本地非硬件依赖的层级数据 \\
+/usr/local/src   & 本地源代码 \vspace{2em} \\
+
+二级目录-/var \\
+/var/cache   & 程序缓存内容 \\
+/var/lib   & 实时状态信息 \\
+/var/local  &  /usr/local相关的动态数据 \\
+/var/lock   & 锁相关文件 \\
+/var/log   & log文件或目录(一般包含dmesg/lastlog/messages/wtmp目录) \\
+/var/opt   & /opt相关动态数据 \\
+/var/run   & 当前进程相关信息 \\
+/var/spool  &  同步队列(执行后自动删除，如mail/cron/at) \\
+/var/tmp   & 重启后依然保留的临时文件 \\
+/var/mail   & 用户邮件 \\
+\end{longtable}
+\begin{flushleft}
+\begin{tabular}{l|l|l}
+\hline
+ & shareable & unshareable \\
+\hline
+static & /usr /opt & /etc /boot \\
+\hline
+variable & /var/mail /var/spool/news & /var/run /var/lock \\
+\hline
+\end{tabular} \\
+\end{flushleft}
+**分区建议：/ /lib /bin /sbin /etc /dev分成一个区 \\
+**在CentOS 7中，已将/lib /bin /sbin合并到/usr，所以在/usr/local进行另外分区 \\
+\end{document}
+

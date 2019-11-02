@@ -1,0 +1,142 @@
+配置变量(变量未被赋值之前为"")
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+查看变量
+echo $PATH
+查看数组变量(索引由0起始)
+echo ${arr[index]}
+定义全局变量
+export VAR
+取消变量
+unset VAR
+查看变量
+env|export
+
+常用内置变量:
+$    当前bash id
+?    上次指令返回status code
+PATH    指令查找路径
+LANG    
+LC_ALL    配置bash所有相关语言(参考local指令)
+
+PATH内容添加
+PATH=$PATH:/usr/local/bin
+PATH变量缓存：hash表
+控制PATH缓存指令：hash
+语法：
+hash [OPTION] [NAME]
+option：
+    显示缓存命中信息
+-d    删除指定指令的缓存
+-l    打印-p配置形式的缓存
+-p pathname    手动配置指令查找位置
+-r    删除所有指令的缓存
+-t    打印对应NAME的查找位置
+name：代表指令名称
+
+PS1:主要指令行提示
+PS2:次要命令行提示
+语法：
+\a    ASCII 007，响铃
+\d    日期，格式"weekday month day"
+\D{format}    日期，将format传给strftime(3)进行转化。当format未指定时，打印'\D'
+    format格式：
+    %a    weekday缩写
+    %A    weekday全称
+    %b    month缩写
+    %B    month全称
+    %c    默认日期和时间格式
+    %C    世纪格式(year/100)
+    %d    day of month
+    %D    日期，%m/%d/%y格式
+    %e    day of month，前置0替换为空格
+    %F    日期，%Y-%m-%d格式
+    %g    年，除去世纪部分(2019的19)
+    %G    年
+    %h    month缩写
+    %H    24小时制的hour
+    %I    12小时制的hour
+    %j    day of year
+    %k    24小时制的hour，单字符前置一个空格
+    %l    12小时制的hour，单字符前置一个空格
+    %m    月份数
+    %M    分钟数
+    %n    换行符
+    %p    AM/PM
+    %P    am/pm
+    %r    12小时制时间，%I:%M:%S %p
+    %R    24小时制时间，%H:%M
+    %s    Unix时间戳秒数
+    %S    秒数
+    %t    制表符
+    %T    24小时制时间，%H:%M:%S
+    %u    day of week，范围1~7，周一为1
+    %U    week of year，以周日为周起始
+    %V    week of year，至少当周有四天的为第一周
+    %w    day of week，范围0~6，周日为0
+    %W    week of year，以周一为周起始
+    %x    日期，格式%m/%d/%Y
+    %X    时间，格式%H:%M:%S %p
+    %y    年，除去世纪部分(2019的19)
+    %Y    年
+    %z    +hhmm或-hhmm时区
+    %Z    时区名称缩写
+    %+    date格式日期和时间(glic2不支持)
+    %%    %字符
+\e    ASCII 033，跳脱字符
+\h    主机名，遇到.截止
+\H    主机名
+\j    当前shell管理的jobs数量
+\l    终端号码(由0起始)
+\n    换行
+\r    回车
+\s    shell名称
+\t    当前时间，24小时时间制，HH:MM:SS格式
+\T    当前时间，12小时时间制，HH:MM:SS格式
+\@    当前时间，12小时时间制，HH:MM am/pm格式
+\A    当前时间，24小时时间制，HH:MM格式
+\u    用户名
+\v    bash版本
+\V    bash详细版本(version+release)
+\w    当前工作目录
+\W    当前工作目录的basename
+\!    历史记录保存数量
+\#    下一条指令为当前终端的第N条指令
+\$    当UID为0时，提示符为"#"；其他UID为"$"
+\nnn    对应的ASCII字符(八进制)
+\\    反斜杠(\)
+\[    开始非打印字符序列
+\]    结束非打印字符序列
+参考:bash(1)手册PROMPTING部分
+
+别名
+配置别名
+alias <ali_name>=<string>
+消除别名
+unalias <ali_name>
+命令行取消别名引用
+\<command>
+
+特殊字符
+* ? > < ; & ! [ ] | \ ' " ` ( ) { }
+
+变量内容删除
+${VAR#WILDCARD}：将变量VAR从起始位置匹配通配符模式WILDCARD，删除符合该匹配的最短部分(懒惰模式)
+例:thompson@www~$ echo $PATH
+   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
+   thompson@www~$ echo ${PATH#/*:}
+   /usr/bin:/sbin:/usr/sbin:/usr/local/bin
+${VAR##WC}：将变量VAR从起始位置匹配通配符模式WILDCARD，删除符合该匹配的最长部分(贪婪模式)
+例:thompson@www~$ echo $PATH
+   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
+   thompson@www~$ echo ${PATH##/*:}
+   /usr/local/bin
+${VAR%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，删除符合该匹配的最短部分(懒惰模式)
+例:thompson@www~$ echo $PATH
+   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
+   thompson@www~$ echo ${PATH%:*bin}
+   /bin:/usr/bin:/sbin:/usr/sbin
+${VAR%%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，删除符合该匹配的最长部分(贪婪模式)
+例:thompson@www~$ echo $PATH
+   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
+   thompson@www~$ echo ${PATH%:*bin}
+   /bin

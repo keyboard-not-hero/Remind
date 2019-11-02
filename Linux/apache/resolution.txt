@@ -1,0 +1,3 @@
+ubuntu:
+1.客户端打开出现乱码
+解决方法：找到文件/etc/apache2/conf-available/charset.conf,取消选项AddDefaultCharset UTF-8的注释

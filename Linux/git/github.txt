@@ -1,0 +1,18 @@
+fork：拷贝一个项目副本，并且拥有更开放的写权限。副本内容新鲜度保留在fork时刻
+
+连接方式：
+http：所有人以只读权限访问。格式：https://github.com/<user>/<project_name>
+ssh：可读写权限，必须上传公钥到后台。格式：git@github.com:<user>/<project_name>
+添加public key步骤：
+1.账号"settings"
+2.选择"SSH and GPG keys"
+3.点击"New SSH key"
+
+github collaborator：仓库级权限，collaborator可web在线编辑你的仓库
+步骤：
+1.仓库的"setting"
+2.点击"collaborator"
+3.输入用户username或email
+4.点击"add collaborator"
+
+github参考：https://help.github.com/en/github

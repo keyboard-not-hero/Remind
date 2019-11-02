@@ -1,0 +1,17 @@
+useradd--创建新用户或者更新用户信息
+语法：
+useradd [options] <user_name>
+参数释义：
+-b|--base-dir    指定用户家目录的父目录
+-d|--home-dir    指定用户家目录
+-e    用户账号过期日期，格式YYYY-MM-DD
+-f    密码过期后，用户账号过期所需经过的天数
+-g|--gid    用户初始所属组别
+-G|--groups    用户所属的其他组
+-m|--create-home    创建用户家目录
+-M|--no-create-home    不创建用户家目录
+-N    不创建与账号同名的组
+-r    创建系统账号
+-s    用户shell
+-u|--uid    指定用户ID，默认使用已使用的ID最大值+1
+-U|--user-group    创建与账号同名的组

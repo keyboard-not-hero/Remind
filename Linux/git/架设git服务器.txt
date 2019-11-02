@@ -1,0 +1,84 @@
+git服务器：只用于保存git项目内容，即只包含工作目录下的.git目录(裸仓库)
+
+服务器协议类型：
+1.本地传输：将同一网络设备的目录作为仓库。URL格式：/<dir>或者file:///<dir>
+2.http协议：分为哑HTTP(v1.6.6之前，只读)和智能HTTP(v1.6.6及之后，可读写)版本。URL格式：https://<server>/<dir>
+3.ssh协议：利用ssh协议搭建，普适性较强，但需要登录系统账户。URL格式：ssh://[user@]<server>/<dir> 或 [user@]<server>:<dir>
+4.git协议：git自带协议，使用端口tcp/9418，所有用户使用统一权限，但是速度最快。URL格式：git://<server>/<dir>
+
+ssh协议服务器架设步骤：
+1.根据已有仓库创建纯仓库(复制仓库目录下的.git目录)
+git clone --bare <storage_name> <storage_name>.git
+
+2.将纯仓库上传到服务器(/opt/git目录已存在)
+scp -r <storage_name>.git <user>@<server>:/opt/git
+**1/2步骤也可换成：git init --bare
+
+3.克隆仓库(服务器需安装git)
+git clone <user>@<server>:/opt/git/<storage_name>.git
+**需用户对/opt/git目录可读
+**并且该项目完整包含工作区和.git目录(即版本库)
+**当用户对/opt/git/<storage_name>.git目录可写，可进行push
+
+4.给仓库目录自动增加群组可写与rwxrwsr-x中的s权限(服务器上操作)
+git init --bare --shared
+
+5.限制git用户，禁止登录服务器(只用于push/pull)
+cat /etc/shells
+which git-shell
+#将git-shell路径加入/etc/shells
+sudo -e /etc/shells
+#修改git用户使用的shell
+chsh git -s $(which git-shell)
+
+
+git协议服务器架设步骤：
+1.根据已有仓库创建纯仓库(复制仓库目录下的.git目录)
+git clone --bare <storage_name> <storage_name>.git
+
+2.将纯仓库上传到服务器(/opt/git目录已存在)
+scp -r <storage_name>.git <user>@<server>:/opt/git
+
+3.将git配置为daemon
+vi /etc/systemd/system/git-daemon.service
+[Unit]
+Description=Start Git Daemon
+
+[Service]
+ExecStart=/usr/bin/git daemon --reuseaddr --base-path=/opt/git/ /opt/git/
+#--base-path指定git root目录
+#<dir>指定开放白名单目录
+
+Restart=always
+RestartSec=500ms
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=git-daemon
+
+User=git
+Group=git
+
+[Install]
+WantedBy=multi-user.target
+
+4.安装并启动git
+yum install git-daemon
+systemctl start git-daemon
+
+5.配置hook
+cd /path/to/<project>.git
+touch git-daemon-export-ok
+
+6.打开防火墙
+firewall-cmd --add-port=9418/tcp
+
+7.增加项目写权限
+git config daemon.receivepack true
+
+
+http协议服务器架设步骤：
+1.
+
+gitweb：web化展示git服务器数据
+gitlab：一体化git服务器假设工具

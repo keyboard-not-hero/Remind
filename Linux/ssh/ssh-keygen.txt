@@ -1,0 +1,8 @@
+ssh-keygen--秘钥生成、管理、转化工具
+语法：
+ssh-keygen [options]
+参数释义：
+-b    指定秘钥生成位数(RSA最小1024bit，默认2048bit；DSA指定1024bit)
+-o    passphrase使用新格式保存，较之老式兼容PEM格式，更难破解
+-t    秘钥加密类型(dsa/rsa/ecdsa)
+

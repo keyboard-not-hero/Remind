@@ -1,0 +1,25 @@
+touch - 修改文件的时间戳
+
+语法：
+touch [option] file
+
+参数释义：
+    创建新文件
+
+-a    修改atime
+
+-c, --no-create    不创建文件
+
+-d, --date=<str>    指定时间戳为<str>转化时间
+
+-h, --no-dereference    修改symbolic link文件，而非被链接的实体文件本身
+
+-m    修改mtime
+
+-r, --reference=<file>    引用指定文件的时间戳。当提供-d时，-d必须为相对时间，-r作为源时间
+
+-t [[CC]YY]MMDDhhmm[.ss]    指定时间戳。当只有YY，0-68对应CC为19，69-99对应CC为20；当没有YY时，默认当前年份
+
+--time=[atime|mtime]    修改access或者mtime
+
+**touch只能修改mtime/atime，不能修改ctime

@@ -1,0 +1,144 @@
+man - 在线参考手册的接口
+
+语法：
+man [option] <command>
+
+参数释义：
+-C <file>, --config-file=<file>    使用指定配置文件替换默认配置文件(默认/etc/.manpath)
+
+-d, --debug    打印debug信息
+
+-D, --default    应用默认选项
+
+--warnings[=warings]    启动来自groff警告，用于检查手册页完整性
+
+-f, --whatis    指定指令手册页的简短说明，等于whatis  
+
+-k, --apropos    NAME字段包含指定关键字匹配，等于apropos
+
+-K, --global-apropos    在所有手册中搜索关键字
+
+-l, --local-file   格式化并显示指定手册文件 
+
+-w, --where, --path, --location    不显示手册页内容，但打印nroff类型手册页文件的位置
+
+-W, --where-cat, --location-cat    不显示手册页内容，但打印cat类型手册页文件的位置
+
+-R <code>, --recode=<code>    将手册页转化为指定编码
+
+-L <zone>, --locale=<zone>    将手册页转化为指定locale配置(man内容页由LC_MESSAGES/LANG控制)
+
+-m <system>, --systems=<system>    使用远程系统手册页时进行系统指定
+
+-M <path>, --manpath=<path>    查找手册的目录(手册目录需要根据章节进行层次区分)
+
+-S, -s, --sections=<list>    指定手册页章节搜索优先级顺序(以':'或','分隔章节)
+
+-e, --extension=<sub-extension>    指定拓展手册页类型(手册页分为主手册页[默认]和tcl手册页)
+
+-i, --ignore-case    搜索手册页忽略大小写(默认配置)
+
+-I, --match-case    搜索手册页精确匹配大小写
+
+--regex    进行正则表达式匹配。隐含-a选项
+
+--wildcard    shell格式通配符匹配，必须匹配整个单词。隐含-a选项
+
+--names-only    --apropos选项只匹配名称而不匹配描述字段
+
+-a, --all    列出所有匹配结果。默认只显示优先级最高的匹配结果
+
+-u, --update    对man数据库与文件系统进行"inode级别"的一致性检查(man程序必须进行setuid配置)
+
+--no-subpages    man默认将选项后的多个单词以下划线(_)或连字符(-)连接，作为单个指令进行手册页搜索(如git diff解释为git-diff)。此选项禁用此功能
+
+-P <pager>, --pager=<pager>    手册页的分页程序，失败则退回到cat(默认为less)
+
+-r <pro>, --prompt=<pro>    当使用less作为分页程序时，配置的提示信息(默认为 manual page <name>(<sec>) line <line>)。参考手册页less(1)
+
+-7, --ascii    让latin1设备以ASCII字符显示字符
+
+-E <encode>, --encoding=<encode>    将手册页以指定编码输出
+
+--no-hyphenation, --nh    取消自动断字。自动断字(单词在行尾未结束时，增加连字符)
+
+--no-justification, --nj    取消文本左右两端对齐，只使用左端对齐
+
+-p <str>, --preprocessor=<str>    指定nroff或troff/groff之前运行的预处理器序列
+
+-t, --troff    使用  %troff  来格式化手册页到 stdout
+
+-T[device], --troff-device[=device]    此选项用于更改 groff (也可能是 troff)  的输出以适合某个非默认设备
+
+-H[browser], --html[=browser]    此选项使 groff 生成 HTML 输出并在浏览器中显示输出结果
+
+-X[dpi], --gxditview[=dpi]    此选项使用  gxditview  程序在一个图形窗口中显示  groff 的输出结果
+
+-Z, --ditroff    groff 会运行troff然后使用合适的后处理器产生适合所选设备的输出
+
+-?, --help    帮助信息
+
+--usage    简洁帮助信息
+
+-V, --version    版本信息
+
+mandb - 创建或更新手册页索引缓存
+
+语法：
+mandb [option] file
+
+参数：
+-d, --debug    debug信息
+
+-q, --quiet    不显示警告
+
+-s, --no-straycats    不向数据库添加cat页面信息
+
+-p, --no-purge    不检查删除的手册页，并从数据库中删除
+
+-c, --create    删除旧数据库，创建新数据库
+
+-u, --user-db    只创建用户数据库，即便拥有系统数据库写权限
+
+-t, --test    对搜索路径的手册页执行正确性检查
+
+-f, --filename    更新指定文件名记录。隐含-p，关闭-c和-s
+
+-C <file>, --config-file=<file>    指定用户配置文件(替换~/.manpath)
+
+-?, --help    帮助信息
+
+--usage    简明帮助信息
+
+-V, --version    显示版本信息
+
+配置信息目录
+/etc/man_db.conf (有的版本為man.conf或manpath.conf或man.config等)
+全局手册页层次结构
+/usr/share/man
+传统的全局索引数据库缓存
+/usr/share/man/index.(bt|db|dir|pag)
+与FHS兼容的全局索引数据库缓存
+/var/cache/man/index.(bt|db|dir|pag)
+mandb支持数据库类型：
+       名称          类型                   异步   文件名
+       ────────────────────────────────────────────────────────────
+       Berkeley db   二叉树                 是     index.bt
+       GNU gdbm      已散列                 是     index.db
+       UNIX ndbm     已散列                 否     index.(dir|pag)
+
+章节
+1   可执行程序或shell指令
+2   系统kernel提供的函数
+3   程序库调用的方法
+4   特殊文件(如/dev)
+5   配置文件
+6   游戏
+7   惯例与协定
+8   系统管理指令
+9   与kernel有关的文件
+章节指定方式：
+man <number> <command>
+或
+man <command>.<number>
+

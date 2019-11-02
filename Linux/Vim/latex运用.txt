@@ -1,0 +1,306 @@
+一、组件及作用：
+1.latexmk:编译latex文本生成目标pdf/dvi/ps(postscript)文件。目标文件可随tex文本同步更新。其中，tex生成pdf依赖pdflatex
+2.vimtex:vim插件，调用latexmk管理latex文件，并且结合pdfviewer进行内容输出
+3.zathura:pdf/dvi/ps格式文件管理器，可用于tex文件前向搜索(tex文件行对应的pdf/dvi/ps文件位置)
+4.ultisnips:
+
+二、组件安装
+1.latexmk
+  安装latexmk：
+  thompson@~$ sudo apt-get install latexmk
+2.vimtex(vim插件)
+  安装vimtex:
+  thompson@~$ vi ~/.vimrc
+  " Keep Plugin commands between vundle#begin() and vundle#end().
+  Plugin "https://github.com/lervag/vimtex.git"
+  " keep let commands after vundle#end().
+  " below command let tex suffix file as latex file
+  let g:tex_flavor = 'latex' 
+  " if vim version less than 7.4.52
+  let g:vimtex_version_check = 0
+  :w
+  :PluginInstall
+  #查看vimtex帮助文档
+  :h vimtex
+3.zathura
+  准备前提库:
+  thompson@~$ sudo apt-get install libsynctex-dev
+  thompson@~$ sudo apt-get install libgtk-3-dev
+  thompson@~$ sudo apt-get install libmagic-dev
+
+  #girara-gtk3:用户接口(libgirara-gtk3-3)
+  #环境需要:meson (>= 0.48)、pango(libpango1.0-dev)、cmake、json-c(libjson-c-dev)、doxygen、check
+  thompson@~$ cd /tmp && git clone https://github.com/pwmt/girara.git && cd girara
+  #当meson未安装，进行如下安装:
+  #thompson@~$ pip3 install meson
+  thompson@~$ meson build
+  thompson@~$ cd build
+  thompson@~$ ninja
+  thompson@~$ ninja install
+
+  安装zathura:
+  #环境需要:synctex(libsynctex-dev >=1.19，下载：https://pkgs.org/或https://packages.ubuntu.com/)
+           libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)
+  thompson@~$ cd /tmp && git clone https://github.com/pwmt/zathura.git && cd zathura
+  thompson@~$ meson build
+  thompson@~$ cd build
+  thompson@~$ ninja
+  thompson@~$ ninja install
+  # zathura的插件：
+  # zathura-pdf-poppler to open PDF files,
+  # zathura-ps to open PostScript files,
+  # zathura-djvu to open DjVu files.
+  
+  #zathura插件--zathura-pdf-poppler:pdf支持
+  #环境需要:zathura/girara-gtk3(libgirara-gtk3-3)/glib-2/poppler-glib(libpoppler-glib-dev)
+  thompson@~$ cd /tmp && git clone https://github.com/pwmt/zathura-pdf-poppler.git
+  thompson@~$ meson build
+  thompson@~$ cd build
+  thompson@~$ ninja
+  thompson@~$ ninja install
+
+  配置预设pdfviewer:
+  thompson@~$ vi ~/.vimrc
+  " Keep let commands after vundle#end().
+  let g:vimtex_view_method = 'zathura'
+
+  #zathura配置文件：$HOME/.config/zathura/zathurarc
+
+4.中文语言支持
+  Texlive安装：
+  下载install-tl
+  下载地址：http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  在线安装
+  steven@~$ cd /your/download/directory
+  steven@~$ ./install-tl
+  配置PATH
+  steven@~$ PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+  测试安装是否成功
+  latex small2es
+
+  #CTex中文包安装(基于Texlive的pdflatex)
+  thompson@~$ tlmgr install ctex
+  #1.CTex的四个文档类ctexart/ctexrep/ctexbook/ctexbeamer对应于latex的四个标准文档类article/report/book/beamer,并且使用时需要使用UTF-8保存
+  #格式：\documentclass[UTF8]{ctexart}
+  #2.使用非文档类时，使用宏包
+  #格式：\usepackage[UTF8]{ctex}
+  #文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
+  #warning:编译需保持源文件编码、编译方式、宏包编码三者一致
+
+  #texlive字体配置
+  #查看ctex自带的字体预设($CTEX_DIR/fontset，格式ctex-fontset-<name>.def)
+  thompson@~$ ls /usr/local/texlive/2019/texmf-dist/tex/latex/ctex/fontset
+  ctex-fontset-ubuntu.def
+  #字体默认查找位置
+  #获取格式文件帮助
+  thompson@~$ kpsewhich -help-formats
+  truetype fonts: .ttf .ttc .TTF .TTC .dfont  [variables: TTFONTS TEXFONTS]
+  [original path (from texmf.cnf) = $TEXMFDOTDIR:$TEXMF/fonts/{truetype,opentype}//:$OSFONTDIR//]
+  #查看单个变量：kpsewhich --var-value=<variable>
+  #查看<sum_name>对应的完整查找路径
+  thompson@~$ kpsewhich --show-path="truetype fonts"
+  .:
+  /home/thompson/.texlive2019/texmf-config/fonts/truetype//:
+  /home/thompson/.texlive2019/texmf-var/fonts/truetype//:
+  /home/thompson/texmf/fonts/truetype//:
+  !!/usr/local/texlive/texmf-local/fonts/truetype//:
+  !!/usr/local/texlive/2019/texmf-config/fonts/truetype//:
+  !!/usr/local/texlive/2019/texmf-var/fonts/truetype//:
+  !!/usr/local/texlive/2019/texmf-dist/fonts/truetype//:
+  /please/set/osfontdir/in/the/environment//
+  #只有前四项目录存放字体时，可以使用
+  #texmf.cnf配置文件：
+  原始配置文件：/usr/local/texlive/2019/texmf.cnf
+  可编辑配置文件：/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+
+  #通过查看$CTEX_DIR/fontset/ctex-fontset-<name>.def文件，得知预设使用字体为uming.ttc
+  thompson@~$ fc-list :lang=zh|grep uming.ttc
+  /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing TW:style=Light
+  /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing CN:style=Light
+  #将ttc文件移动到目录/home/thompson/texmf/fonts/truetype
+  thompson@~$ mkdir -p /home/thompson/texmf/fonts/truetype
+  thompson@~$ cp /usr/share/fonts/truetype/arphic/uming.ttc /home/thompson/texmf/fonts/truetype
+  #tex文档示例
+  \documentclass[UTF8, fontset=ubuntu]{ctexart}
+  \begin{document}
+    你好,\LaTeX{}
+  \end{document}
+
+  或者
+  \documentclass[UTF8, fontset=none]{ctexart}
+  \ctexset{fontset=ubuntu}
+  \begin{document}
+    你好,\LaTeX{}
+  \end{document}  
+
+三、启动vim
+  #--servername参数用于vimtex的前向/后向搜索  
+  thompson@~$ vim --servername vim test.tex
+  Forward search:\lv
+  Backward search:<C-Enter>
+
+------------------------------------------------
+指令相关
+1.latexmk
+latex - 生成LaTeX文档
+
+语法
+latexmk [option] [file1 [file2 [...]]]
+
+参数释义：
+    指定文档生成pdf/ps/dvi目标文件(1.目标类型由配置文件决定；2.不指定文件时，为目录下所有文档；3.原文件名不带后缀，默认为.tex)
+
+-bm <message>    当dvi文件转化为PostScriot文件时，在每一页的对角线上打印banner文字(调用dvips)。隐含-ps参数
+
+-bi <intensity>    banner文字的亮度，0为黑色，1为白色。intensity默认为0.95
+
+-bs <scale>    banner文字大小，单位为1100/scale字符大小。scale默认为220
+
+-commands    latexmk底层调用的其他指令
+
+-c    删除所有中间文件(不包括源tex文件和目标pdf/dvi/ps文件，.aux/.fdb_latexmk/.fls/.log)
+
+-C    删除所有中间文件和目标文件(根据log记录删除，不删除非latex生成的目标文件)
+
+-cd    在latex生成文件之前，切换到tex文件所在目录，使目标文件在tex文件所在目录生成
+
+-cd-    在latex生成文件之前，不切换到tex文件所在目录，使目标文件在当前目录生成(默认)
+
+-CF    执行指令之前，移除文件的database信息。该操作可以重新生成目标文件，否则不更新
+
+-d    类似于-bm DRAFT
+
+-deps, -dependents    执行指令后，打印依赖文件列表
+
+-deps-, -denpendents    执行指令后，不打印依赖文件列表(默认)
+
+-deps-output=<file>    指定打印的依赖文件列表，所保存的文件 
+
+-diagnostics    打印详细诊断信息
+
+-dvi    指定生成dvi目标文件
+
+-e <code>    在执行latexmk之前，执行的perl语法内容初始化
+
+-f    在执行latexmk执行期间，如果检测到错误，继续强制执行
+
+-f-    在执行latexmk执行期间，如果检测到错误，停止执行(默认)
+
+-g    本次与上次执行latexmk期间无内容改变，用于配置改变
+
+-h, -help    帮助文档
+
+-jobname=<str>    指定目标文件的文件名
+
+-M    执行指令后，打印依赖文件列表，类似于-deps
+
+-MF <file>    指定依赖文件列表保存的文档
+
+-new-viewer    即便在目标文件与源文件开启同步情况下，仍开启新查看器来查看当前生成目标文件
+
+-new-viewer-    目标文件与源文件同步情况下，开启旧查看器查看当前生成目标文件(默认)
+
+-norc    执行指令时，不读取配置文件(rc文件)
+
+-outdir=<dir>, -output-directory=<dir>    指定目标文件生成目录
+
+-p    打印目标文件
+
+-pdf    指定生成pdf目标文件(使用pdflatex)
+
+-pdfdvi    利用dvi文件生成pdf文件(使用dvipdf)
+
+-pdfps    利用ps文件生成pdf文件(使用ps2pdf)
+
+-print=pdf|dvi|ps|auto    指定打印目标文件的格式
+
+-ps    生成ps目标文件
+
+-pv    启动同步，下次打开目标文件时，自动检测源tex文件是否内容有变更
+
+-pvc    启动实时同步，不关闭latexmk程序，实时检测tex文件磁盘内容变更
+
+-r <rcfile>    指定配置文件，配置文件规则：1.读取全局配置文件；2.读取用户级配置文件;3.读取当前目录配置文件(latexmkrc或.latexmkrc);4.读取-r参数指定配置文件
+
+-v, -version    指令版本
+
+-view=<default>|<dvi>|<ps>|<pdf>    指定开启同步时，同步的目标文件类型(配合-pv或-pvc使用)
+补充：
+dvips dvi转化为ps
+pdf2ps  pdf转化为ps
+ps2pdf  ps转化为pdf
+dvipdf  dvi转化为pdf
+
+
+全局配置文件："/opt/local/share/latexmk/LatexMk", "/usr/local/share/latexmk/LatexMk", "/usr/local/lib/latexmk/LatexMk"
+用户级配置文件：~/.latexmkrc
+配置文件使用语法：perl语法
+
+------------------------------------------------
+2.vimtex
+功能支撑(vim --version查看)：
++job  提供回馈
++clientserver  提供前向/后向搜索
+
+tex语法检查vim插件：
+ale/neomake/syntastic
+
+snippits/templates插件：
+Ultisnips/neosnippet
+
+快捷键：
+\li    vimtex信息
+\lt    打开toc
+\lT    触发toc   
+\lq    vimtex log(新页面)
+\lv    前向搜索，跳转到当前tex文本cursor对应的pdf文件位置
+\ll    编译tex文本
+\lm    公式字符映射
+<c+enter>    后向搜索
+
+------------------------------------------------
+3.系统字体
+fontconfig软件
+fc-list - 可获取字体列表
+
+语法：
+fc-list [option] [pattern [element]]
+
+参数释义：
+-v    详细输出信息
+
+-f <format>    根据指定格式<format>进行输出
+
+-q    quiet模式，只返回status code    
+
+-V    版本信息
+
+-h    帮助信息
+
+pattern：匹配pattern内容
+
+element：将内容的element元素打印
+
+实例：
+所有字体列表
+fc-list
+指定语言字体
+fc-list :lang=zh
+所有字体指定内容
+fc-list : file family style spacing
+
+全局配置：/etc/fonts/fonts.conf
+用户级配置：~/.fonts.conf
+标签意义(xml格式配置文件)：
+<dir>  搜索的字体目录
+------------------------------------------------
+
+
+引用：
+[1]latexmk read.io:https://mg.readthedocs.io/latexmk.html
+[2]latexmk CTAN(Comprehensive Tex Archive Network):https://ctan.org/pkg/latexmk/
+[3]official website:http://www.personal.psu.edu/jcc8/latexmk/ 
+[4]tex bbs:https://tex.stackexchange.com/
+[5]CTEX CTAN:https://ctan.org/pkg/ctex
+[6]fontconfig:https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
+[7]blog reference:https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/

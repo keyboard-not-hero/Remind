@@ -1,0 +1,6 @@
+tee - read from standard input and write to standard output and files
+语法：
+tee [option]... [file]...
+参数：
+-a    内容添加到file尾部，而非覆盖
+

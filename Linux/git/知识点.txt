@@ -1,0 +1,340 @@
+Linus最初使用的工具：diff/patch
+RCS(Revision Control System)--1982年诞生，保存本地原始备份和补丁集
+CVS(Concurrent Version System)--1985年诞生，使用C/S结构
+SVN(Subversion)--2000年由CollabNet公司资助开发，使用C/S结构
+Git--2005年由Linus开发，使用分布式系统结构。区别是之前RCS和集中版本控制系统的补丁集，Git使用快照进行版本差异化比较
+
+git官网地址：https://git-scm.com
+
+git在差异比较相对于diff/patch的优势：
+1.支持对二进制文件的比较
+2.增加行内逐字比较(git diff --word-diff)
+
+
+一、Git初次使用过程：
+1.安装git：
+包管理器方式：
+Debian系统：
+apt-get install git
+apt-get install git-svn git-email git-gui gitk
+**较老的Debian分支系统(Ubuntu10.04及以下，Debian lenny及以下版本)，名称为git-core
+Redhat系统：
+yum install git
+yum install git-svn git-email git-gui gitk
+
+源代码方式：
+下载地址：https://mirrors.edge.kernel.org/pub/software/scm/git/
+参考INSTALL文件
+
+2.查看版本
+git --version
+
+3.配置/查看/删除变量
+配置用户名和邮件
+git config --global user.name NAME
+git config --global user.email EMAIL
+配置默认调用编辑文本
+git config --global core.editor vim
+查看配置
+git config --global user.name
+罗列配置
+git config --global --list
+删除配置
+git config --unset --global user.name
+**git config中，--system代表适用于所有用户与所有仓库(/etc/gitconfig)
+**--global适用于单一用户与所有仓库(~/.gitconfig 或 ~/.config/git/config)
+**--local适用于当前仓库(OBJECT/.git/config，默认选项)
+
+4.git的帮助文档
+$ git help <verb>
+$ git <verb> --help
+$ man git-<verb>
+
+5.建立git仓库
+①本地初始化
+git init
+②远程克隆
+git clone [-o repo_name] URL [object_name]
+
+6.保存到暂存区
+git add FILE
+将新增、修改、删除文件操作保存到暂存区
+git rm [--cached] FILE
+删除暂存区文件，并将删除文件操作覆盖到工作区
+**--cached只删除暂存区文件，不将其覆盖到工作区
+git add -u
+将所有删除、修改文件操作保存到暂存区(除.gitignore文件包含的文件名)
+git add -A|.
+将所有新增、修改、删除文件操作保存到暂存区(除.gitignore文件包含的文件名)
+git add -f FILE
+将被.gitignore文件包含的文件名，保存到暂存区
+git add -i
+进入交互选择界面
+git mv O_NAME N_NAME
+将暂存区中的O_NAME文件重命名为N_NAME，并应用到工作区
+
+7.提交更改
+git commit -m COMMENT [--amend|--allow-empty|--reset-author|-a]
+参数释义：
+-m  提交的注释
+--amend  覆盖上次提交(通常用于提交信息覆盖)
+--allow-empty  允许空白提交(无内容修改，amend本身也属于空白修改)
+--reset-author  除了commit标签，同时修改author标签
+-a  在提交之前执行add操作(只能add已追踪文件)
+
+8.查看状态
+git status [-s]
+参数释义：
+-s  状态的缩略视图
+  缩略视图解析：
+  -M  工作区文件有改动，未添加到暂存区
+  M-  暂存区文件有改动，未提交到版本库
+  ??  工作区新添加文件，未添加到暂存区
+  A-  暂存区新添加文件，未提交到版本库
+**差异详情(a为靠后区域，b为靠前区域)
+工作区与暂存区(stage)差异
+git diff
+工作区与版本库差异
+git diff HEAD
+暂存区与版本库差异(1.6.1以下版本使用--cached)
+git diff --staged
+工作区空白错误检验(行尾空格、制表符和行首空格后跟制表符，尾行空行)
+git diff --check
+contrib与共同祖先(master/contrib)的差异
+git diff master...contrib
+
+9.提交记录
+git log [--oneline|--graph|-n|-p|--stat|--since|--until|--grep|--all|--pretty=VAR] 
+参数释义：
+-p  显示与上一次提交之后的具体文件内容差异(格式类似于git diff)
+--stat  显示与上一次提交之后的的简略文件内容差异
+--oneline  提交记录的单行缩略格式
+--graph  基于文本的图形化展示(当含有多个子分支时，使用线条表现)
+-n  显示最近的n条记录
+--since  指定时间之后的提交
+--until  指定时间之前的提交
+--grep  含指定注释文字的提交
+--all  显示所有分支内容(默认只显示当前分支)
+--pretty=VAR  定制化内容输出，VAR可选为：format/fuller等
+  format
+**常用分支提交查看：git log --oneline --graph --all
+**子提交与父提交的差异提交：git log <parent_commit>..<son_commit>
+
+10.当前分支提交记录回退(后向)
+git reset {--hard|--soft|--mixed} {ID|HEAD^N|HEAD~N|HEAD@{N}}
+参数释义：
+--hard  修改HEAD引用、暂存区、工作区
+--mixed  修改HEAD引用、暂存区(默认选项)
+--soft  只修改HEAD引用
+ID  从log得到的对应提交ID
+HEAD^N  上一次提交的父提交，N代表第几个父提交(用于三方合并下的多个父提交，默认为1)
+HEAD~N  上一次提交的第几代祖辈提交
+HEAD@{N}  根据操作日志来变更引用(见日志reflog，即下一例)
+
+11.查看日志及恢复(含回退记录，前向和后向)
+git reflog show HEAD
+git reset --hard HEAD@{NUMBER}
+
+12.保存进度、查看进度列表、恢复进度、删除进度、清空进度
+git stash [save STRING]
+git stash list
+git stash pop [stash@{NUMBER}]
+git stash apply [stash@{NUMBER}]
+**pop与apply的区别：apply恢复后不将stash在list
+中删除
+git stash drop [stash@{NUMBER}]
+git stash clear
+**保存进度通常用于工作区/暂存区/版本库不完全一致时
+
+13.分支
+查看分支列表
+git branch [-v]
+  参数释义：
+  -v  显示分支最后一次提交信息与对应的注释
+新建分支(新分支指向当前分支的最新提交对象)
+git branch <new_branch> [base_branch]
+切换分支
+git checkout [-b] <new_branch> [base_branch]
+  参数释义：
+  -b  切换之前先新建分支
+合并分支(将指定分支内容合并进当前分支)：
+git merge <branch_name>
+罗列已/未合并到当前分支的所有分支
+git branch --merged|--no-merged
+删除分支：
+git branch -d <branch_name>
+**HEAD是一个指向当前使用分支的指针，切换分支的本质就是修改HEAD指针的指向
+
+
+二、git特性
+存储空间:
+存储空间类型：
+工作区：位于仓库根目录
+暂存区：位于版本库目录下的index文件(即.git/index)，开启数据跟踪的起点
+版本库：位于根目录下的.git目录
+文件状态：
+未追踪：新增加的文件，未添加到暂存区
+未修改：工作区的内容和版本库同步
+已修改：对工作区文件进行内容修改，暂时没有更新到暂存区
+已暂存：将工作区修改保存到暂存区，下次提交时更新到版本库
+已提交：工作区的修改已同步到版本库
+存储空间数据交换方式：
+工作区-->暂存区：git add <file>
+暂存区-->版本库：git commit -m COMMENT
+暂存区-->工作区：git checkout -- <file>
+版本库-->暂存区：git reset HEAD <file>
+版本库-->暂存区/工作区：git reset --hard HEAD <file>
+存储空间内容查看：
+查看暂存区目录树
+git ls-files [-s]
+查看版本库目录树
+git ls-tree [-l] HEAD|<branch_name>
+
+
+远程仓库管理
+远程仓库内容克隆：
+git clone -o <track_storage> <url>|<path> <pro_name>
+  参数释义：
+  -o    远程追踪仓库名称(本地可见)，默认为origin
+  <pro_name>    本地仓库目录名称
+追踪仓库管理：
+git remote [-v] [show [track_storage]]
+  参数释义：
+  -v    在追踪仓库名称后面列出详细URL
+  show    追踪仓库列表
+新增追踪仓库：
+git remote add <track_storage> <url>|<path>
+追踪仓库重命名：
+git remote rename <old_track_storage> <new_track_storage>
+删除追踪仓库：
+git remote remove <track_storage>
+将远程内容以分支(虚拟指针，不可被HEAD引用)更新到本地(格式<track_storage>/<branch>)：
+git fetch <track_storage>|<url>|--all
+**可新建分支指向虚拟指针，使下载内容可修改：git checkout -b <new_branch> <track_storage>/<remote_branch>
+**clone克隆操作，会默认使用master跟踪远程origin/master分支
+合并分支
+git merge [--allow-unrelated-histories] <branch_name>
+**--allow-unrelated-histories允许合并没有共同祖先的分支
+将远程内容以分支(虚拟指针，不可用)更新到本地(格式<track_storage>/<branch>)，并合并到本地当前分支：
+git pull [--rebase] <track_storage> <remote_branch> 
+**git pull为git fetch和git merge集合体
+**当提供分支跟踪时，可省略远程追踪库和远程分支名称：
+  新建分支：git checkout -b <new_branch> <track_storage>/<remote_branch>
+  已有当前分支(需要有一次fetch)：git branch -u <track_storage>/<remote_branch>
+本地内容更新到远程仓库(推送前，必须拉取服务器最新内容并合并本地最新修改，即服务器内容可由当前本地节点回溯)：
+git push <track_storage> <local_branch>[:remote_branch]
+**当省略remote_branch，服务器分支名与本地分支名相同
+**为防止每次push输入密码，使用以下配置：git config --global credential.helper cache
+删除远程仓库分支：
+git push <track_storage> --delete <remote_branch>
+分支追踪情况(本地分支与远程分支映射)：
+git branch -vv
+
+标签(里程碑)
+查看标签：
+git tag [-l WILDCARD]
+1.打标签(标签类别：annotated)：
+git tag -a <TAG_NAME> -m <STRING> [COMMIT-CHECKSUM]
+  参数释义：
+  -a  指定标签版本号
+  -m  标签文字说明
+  COMMIT-CHECKSUM  为指定提交(40bit校验和)打标签
+2.打标签(标签类别：lightweight)
+git tag <TAG_NAME>
+显示标签详情：
+git show <TAG_NAME>
+删除本地标签：
+git tag -d <TAG_NAME>
+删除远程标签：
+git push <STORAGE> --delete <TAG_NAME>
+同步标签到远程仓库(默认不同步)：
+git push <STORAGE_NAME> [TAG_NAME|--tags]
+  参数释义：
+  STORAGE  远程仓库名称
+  --tag  同步所有标签
+  TAG_NAME  同步指定标签
+**同步标签操作会同时同步两种类型标签(annotated/lightweight)
+
+别名配置：
+git config --global alias.ci commit
+
+快照形式(SHA1格式,160bit)：
+1.blob对象：指向文件快照的指针
+2.tree对象：指向目录快照的指针
+3.commit对象：指向提交快照的指针
+**commit对象会包含父commit对象
+
+
+合并类型：
+1.快进：当前分支为指定分支的祖先
+2.三方合并：当前分支与指定分支含一个共同祖先，以当前分支、指定分支、共同祖先快照为参考，进行合并
+**在三方合并中，在当前分支和指定分支中，都对相同文件做不同内容修改，会产生合并冲突，需要对冲突文件进行手动内容修改，然后再缓存到暂存区(git add)，最后提交(git commit)
+3.变基：实验分支点(B)与主分支点(A)含有共同祖辈主线分支点(C)，先求B相对于C的增量，然后将该增量应用于A
+  git checkout B
+  git rebase A
+  git checkout A
+  git merge B
+**变基合并只适合于本地仓库操作(远程仓库也可，但需要统一合并方式)，因为在分享式远程服务器上，三方合并与变基合并混用可能会导致不同提交含相同的重复提交内容(如：其他人使用三方合并并上传，当事人拉取合并，其他人回滚使用变基合并再上传，我们再拉取时，增量被重复添加)。所以远程服务器统一使用三方合并
+**将C基于B的差异，应用于A
+  git rebase --onto A B C
+  git checkout A
+  git merge C
+4.拣选：选取某个特定提交进行合并
+  git cherry-pick <commit_SHA-1>
+
+
+目录结构：
+版本库(.git)存在于工作区根目录下，当在工作区子目录进行操作时，递归向上级进行版本库追溯，包含版本库的即为工作区根目录
+1.查找版本库目录：
+git rev-parse --git-dir
+2.查找工作区根目录：
+git rev-parse --show-toplevel
+3.当前目录相对于工作区根目录的路径：
+git rev-parse --show-prefix
+4.当前目录到工作区根目录的深度：
+git rev-parse --show-cdup
+5.当前所处分支
+git rev-parse --symbolic --branches
+
+文件名忽略：
+1.普适单一版本库忽略
+在工作区目录下创建.gitignore文件，并上传到版本库
+2.本地全局(所有版本库适用)忽略
+使用core.excludesfile指定本地.gitignore文件
+git config --global core.excludesfile /home/thompson/.gitignore
+3.本地单一版本库忽略
+在版本库子目录.git/info/exclude文件中配合忽略文件名
+
+.gitignore文件规则：
+1.管理当前工作目录和子孙目录下的文件，使之被版本库忽略同步状态
+2.当文件名同步到版本库后，.gitignore对其无效
+3.#开头的行为注释行
+4.可以使用通配符,*代表任意多个字符，?代表任意单个字符，[]代表多选一字符
+5.!开始的名称为不忽略文件
+6./结尾的名称为忽略目录，但不忽略同名文件
+7./开头的名称防止递归
+
+邮件补丁
+1.贡献者sendmail发送
+生成邮件补丁：
+git format-patch -M[n] <track_storage>/<remote_branch>
+**-M代表重命名检测，n通常为百分比(默认50%，为整数时代表小数部分，如05为0.05)，当比较分支之间有n的内容重叠时，则为检测为重命名
+配置邮件工具：
+vi ~/.gitconfig
+[sendemail]
+  smtpencryption = tls
+  smtpserver = smtp.gmail.com
+  smtpuser = user@gmail.com
+  smtpserverport = 587
+发送邮件
+git send-email *.patch
+
+2.管理者
+①git apply工具
+检查补丁是否可用：
+git apply --check <patch_file>
+应用邮件补丁：
+git apply <patch_file>
+②git am工具
+应用邮件补丁：
+git am <patch_file>

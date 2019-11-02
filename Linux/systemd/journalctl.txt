@@ -1,0 +1,126 @@
+journalctl--systemd日志查询
+
+语法：
+journalctl [options]
+
+参数释义：
+--no-full    打印所有日志，屏幕外部分使用...表示(单行)
+
+-a, --all    打印所有日志，屏幕外部分被遮盖(单行，可使用左右键滑动，以下类似)
+
+-f, --follow    只打印最近日志，并且持续打印新增日志，隐式包含-n 10(多行，ctrl+c退出环境)
+
+-e, --pager-end    打印所有日志，并跳转到最新的一页日志，隐式包含-n 1000，仅用于less分页器(单行)
+
+-n, --lines=    打印最后N行内容(单行)
+
+--no-tail    打印所有日志，消除-f作用，但不影响-n(单行)
+
+-r, --reverse    逆序打印日志(最新日志在首行，单行)
+
+-o, --output=<style>    输出格式
+    <style>选项：
+    short    默认打印格式(wallclock)
+    
+    short-full    更完善的时间(weekday/year/timezone)
+
+    short-iso    ISO 8601时间形式
+    
+    short-iso-precise    short-iso微秒级别
+    
+    short-precise    short微秒级别
+
+    short-monotonic    monotonic时钟形式(自reboot开始经历的时间)
+
+    short-unix    Unix时间格式(自1970-01-01经过的微秒数)
+
+    verbose    完整结构信息
+
+    export    序列化输出内容为二进制(大部分为ASCII纯文本，较verbose更易读)，用于备份和保存
+
+    json    格式化输出为JSON结构(单行)
+
+    json-pretty    格式化输出为JSON结构(多行)
+
+    json-sse    格式化输出为JSON结构(单行)，每个item前增加data标签
+
+    cat    非常简洁的输出，没有timestamp和metadata
+
+--utc    以UTC时区格式打印所有日志
+
+--no-hostname    本地生成的日志不打印主机名
+
+-x, --catalog    systemd entry显示额外文本信息
+
+-q, --quiet    不打印所有提示信息(如--reboot--)
+
+-m, --merge    显示entries交错信息(本地与远程混合)
+
+-b [[ID][±offset]|all]|--boot[=[ID][±offset]|all]    显示指定boot_ID的内容。offset为正数时，默认ID从日志第一次boot正向计算；offset小于等于0时，默认
+ID从日志最后一次boot负向计算。offset默认为0
+
+--list-boots    boot号码/boot_ID/时间戳列表
+
+-k, --dmesg    只显示kernel信息，隐式包含-b
+
+-t, --identifier=<syslog_identifier>    显示指定内容。可多次指定
+
+-u, --unit=<unit>|<pattern>    匹配指定systemd unit(如service unit)，systemd unit支持pattern。可多次指定
+
+--user-unit=<unit>    匹配指定systemd unit(当使用systemd --user将systemd运行在用户级模式下)
+
+-p, --priority=<priority>|{<from_pri>..<to_pri>}    通过信息等级过滤输出。可指定单个等级，输出该等级及以下等级(更紧急)内容；或指定范围等级，输出闭区
+间[from,to]等级内容。tips：可通过-o verbose获得
+    信息等级：
+    "emerg" (0), 
+    "alert" (1), 
+    "crit" (2), 
+    "err" (3), 
+    "warning" (4), 
+    "notice" (5), 
+    "info" (6), 
+    "debug" (7)
+
+-g, --grep=<re>    通过perl兼容RE过滤输出内容。当re全部小写时，匹配忽略大小写；否则，不忽略大小写
+
+--case-sensitive[=BOOLEAN]    re是否忽略大小写
+
+-c, --cursor=<cursor>    从指定cursor的entry开始显示。tips：__CURSOR字段由-o verbose获取
+
+--cursor-file=<file>    从文件指定cursor的entry开始显示，如果文件内没有cursor，则根据其他选项来确定cursor。结束后保存最后一个entry的cursor到文件，便于下次使用
+
+--after-cursor=<cursor>    从指定cursor后的entry开始显示
+
+--show-cursor    在最后一条entry后显示最新entry的cursor
+
+-S, --since=<date>    打印自指定日期以后的内容。日期格式：%Y-%m-%d %H:%M:%S，如果时间忽略，则为00:00:00；如果日期忽略，则为当前日期。可使用now/today/yesterday
+
+-U, --until=<date>    打印自指定日期以前的内容
+
+-F, --field=<field>    打印所有entry该field可能包含的值
+
+-N, --fields    打印所有entry使用过的field(并集)
+
+--system    系统和核心服务日志
+
+--user    当前用户日志
+
+-M, --machine=<container>    打印一个本地运行容器发出的信息。tips：可通过-o verbose查看
+
+-D DIR, --directory=<dir>    从指定目录获取system journal，取代默认目录
+
+--root=<root>    使用指定目录作为system journal根目录(向下搜寻journal文件)
+
+--header    打印日志文件头部信息(元数据)，而不打印日志内容
+
+--disk-usage    查看journal文件的磁盘消耗
+--vacuum-size=<size>    清理日志空间，使之所占空间小于指定大小("K""M""G""T")
+--vacuum-time=<time>    清理日志空间，删除指定日期之前的日志
+--vacuum-files=<number>    清理日志空间，使得剩余日志文件数量小于指定数量
+-h|--help    打印简短帮助文档
+
+--version    打印版本信息
+
+--no-pager    不使用分页器，一次性全部打印全部内容
+
+参考链接：https://www.freedesktop.org/software/systemd/man/journalctl.html

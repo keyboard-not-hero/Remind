@@ -1,0 +1,27 @@
+安装：
+rpm -i|--install package
+更新(类似于安装，如有旧包则卸载)：
+rpm -U|--upgrade package
+更新(必须已安装旧版本，安装完成后卸载旧版本)：
+rpm -F|--freshen package
+重新安装当前版本：
+rpm --reinstall package
+卸载：
+rpm -e|--erase package
+查询：
+1.列出所有安装软件：
+rpm -qa 
+2.根据文件查找软件：
+rpm -qf FILE_NAME
+3.根据群组查找软件：
+rpm –qg GROUP
+3.查找软件的配置文件：
+rpm -qc SOFTWARE
+4.查询软件的文档文件：
+rpm -qd SOFTWARE
+5.查询软件的相关文件：
+rpm -ql SOFTWARE
+6.查询软件信息：
+rpm -qi SOFTWARE
+7.软件依赖的其他包：
+rpm -qR SOFTWARE

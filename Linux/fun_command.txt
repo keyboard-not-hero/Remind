@@ -1,0 +1,12 @@
+1.星球大战ASCII演绎版本
+telnet towel.blinkenlights.nl
+2.当地天气ASCII版本
+curl wttr.in
+3.给句子增加外框(epel库)
+boxes
+示例：echo "I'm a dog"|boxes -d dog -a c
+          boxes -l
+4.给句子增加牛形外框
+cowsay
+5.代码矩阵
+cmatrix

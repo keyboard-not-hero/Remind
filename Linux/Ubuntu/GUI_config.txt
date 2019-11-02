@@ -1,0 +1,14 @@
+快捷键配置：
+配置 >> 设备 >> 键盘
+
+文本大小配置：
+配置 >> 通用辅助功能 >> 大号文本-on/off
+
+配置ctrl+alt+backspace快捷键：
+1.修改配置文件
+vi /etc/default/keyboard
+XKBOPTIONS="" 
+-->
+XKBOPTIONS="terminate:ctrl_alt_bksp"
+2.重启
+systemctl poweroff

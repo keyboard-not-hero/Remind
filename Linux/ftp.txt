@@ -1,0 +1,77 @@
+安装vsftpd：
+yum install –y vsftpd
+systemctl start vsftpf
+systemctl enable vsftpd
+firewall-cmd --permanent --add-service=ftp
+firewall-cmd --reload
+
+配置文件：
+vsftpd.conf：主要配置文件
+ftpusers：访问黑名单
+user_list：访问白名单，当userlist_deny=YES时，该名单为黑名单
+
+vsftpd.conf说明：
+1.’#’开头行为注释行
+2.配置行格式为option=value，’option’、’=’、’value’之间不能有空格
+
+vsftpd.conf选项：
+bool选项：
+ssl_enable：使用SSL建立连接(control和data)，默认为NO
+allow_anon_ssl：允许匿名用户通过SSL连接，前提为ssl_enable为YES，默认为NO
+anonymous_enable：允许匿名用户登录(ftp/anonymous)，默认为YES
+write_enable：允许对服务器进行写入，默认为NO
+no_anon_password：使匿名用户不需要密码登录，默认为NO
+anon_mkdir_write_enable：匿名用户可创建目录，前提为write_enable为YES，并且需要对父目录有写入权限，默认为NO
+anon_upload_enable：匿名用户可上传文件，前提为write_enable为YES，并且需要对父目录有写入权限，默认为NO
+anon_other_write_enable：匿名用户可对父目录执行写操作(创建/删除/修改)，不建议使用，默认为NO
+anon_world_readable_only：匿名用户只能下载可读文件，默认为YES
+force_anon_login_ssl：强制anonymous用户使用SSL进行control connection，前提为ssl_enable为YES，默认为NO
+force_anon_data_ssl：强制anonymous用户使用SSL进行data connetion，前提为ssl_enable为YES，默认为NO
+local_enable：允许/etc/passwd中的本地用户登录，默认为NO
+force_local_login_ssl：强制本地用户使用SSL进行control connection，前提为ssl_enable为YES，默认为YES
+force_local_data_ssl：强制本地用户使用SSL进行data connetion，前提为ssl_enable为YES，默认为YES
+guest_enable：所有本地用户映射为指定guest用户，默认为NO
+listen：vsftpd作为standalone运行，而不是由inetd调用，默认为NO
+listen_ipv6：类似于listen，但同时接受ipv4和ipv6请求，默认为NO
+lock_upload_files：锁定上传中文件的写权限和下载中文件的读权限，默认为YES
+log_ftp_protocol：所有请求和响应保存到log文件，默认为NO
+download_enable：允许下载，默认为YES
+chown_upload：修改匿名用户上传文件的所属用户，默认为NO
+chroot_list_enable：使列表(/etc/vsftpd/chroot_list)内的用户活动范围限定在家目录内，如果chroot_local_user为yes，则相反，默认为NO
+chroot_local_user：用户默认全部限定活动范围为家目录，默认为NO
+password_chroot_enable：和chroot_local_user一起使用，将本地登录用户限定活动范围为家目录，默认为NO
+connect_from_port_20：服务器端使用端口20进行data connection，禁止可以使vsftpd获取更小的权限，默认为NO
+debug_ssl：debug信息保存到log文件，默认为NO
+delete_failed_uploads：删除上传失败的文件，默认为NO
+force_dot_file：列出以.开头的隐藏文件，默认为NO
+pasv_enable：使用passive模式进行data connection，默认为YES
+port_enable：服务器使用指定端口20发起data connection，默认为YES
+use_localtime：显示文件列表时，使用本地时间，默认为NO
+userlist_enable：使用userlist文件来允许/拒绝文件内用户登录，配合userlist_file，默认为NO
+userlist_deny：当选项为NO时，userlist_file文件内为允许登录用户；当选项为YES时，反之。前提userlist_enable开启，默认为YES
+userlist_log：在userlist_file的用户被拒绝登录时，记录保存到log，默认为NO
+xferlog_enable：开启log记录，默认为NO
+xferlog_std_format：log记录使用标准xferlog格式，默认为NO
+数字选项：
+accept_timeout：client建立passive模式data connection的超时时间，默认为60s
+connect_timeout：client响应port模式data connection的超时时间，默认为60s
+anon_max_rate：anonymous用户的最大传输速率，默认为0byte/s(无限制)
+local_max_rate：本地登录用户的最大传输速率，默认为0byte/s
+bind_retries：建立passive模式数据连接时，找到释放监听端口的最大尝试次数，默认为9次
+ftp_data_port：port模式数据连接的发起端口，默认为20
+listen_port：当vsftpd为standalone时，control连接的监听端口，默认为21
+max_client：允许连接的最大客户端数量，默认为2000
+max_per_ip：当vsftpd为standalone时，允许单个IP的最大连接数，默认为50
+max_log_fails：允许登录时最大失败次数，默认为3
+pasv_min_port：passive模式数据连接的最小端口，默认为0(无限制)
+pasv_max_port：passive模式数据连接的最大端口，默认为0(无限制)
+文字选项：
+userlist_file：用于配置userlist_enable读取文件，默认目录为/etc/vsftpd/user_list
+chown_username：修改匿名用户上传文件的拥有者，默认为root
+chroot_list_file：将用户限定在家目录内的列表文件位置，需chroot_list_enable开启，当chroot_local_user开启时，文件内用户为不限定活动范围用户，默认为/etc/vsftpd/chroot_list
+ftp_username：anonymous的用户名，该username的家目录为anonymous的根目录，默认为ftp
+guest_username：guest用户名，需guest_enable开启，默认为ftp
+listen_address：使用指定本地IPv4地址代替所有本地监听地址，默认为None
+listen_address6：使用指定本地IPv6地址代替所有本地监听地址，需listen_ipv6开启，默认为None
+vsftpd_log_file：指定log文件，需开启xferlog_enable，默认为/var/log/vsftpd.log
+xferlog_file：xferlog格式log保存文件，需开启xferlog_enable和xferlog_std_format，默认为/var/log/xferlog
