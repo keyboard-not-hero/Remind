@@ -1,0 +1,22 @@
+1.确认内核在4.9.0以上
+uname -r
+1a.更新内核
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum --enablerepo=elrepo-kernel install kernel-ml -y
+rpm -qa | grep kernel
+egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \'
+grub2-set-default 0  //0取决于菜单列表
+shutdown -r now
+uname -r
+2.更新sysctl配置
+echo 'net.core.default_qdisc=fq' >> /etc/sysctl.conf
+echo 'net.ipv4.tcp_congestion_control=bbr' >> /etc/sysctl.conf
+sysctl -p
+3.查看sysctl配置
+sysctl net.ipv4.tcp_available_congestion_control
+sysctl -n net.ipv4.tcp_congestion_control
+4.查看模块是否加载
+lsmod|grep bbr
+5.删除旧模块
+yum remove $(rpm -qa | grep kernel | grep -v $(uname -r))

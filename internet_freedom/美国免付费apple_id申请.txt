@@ -1,0 +1,41 @@
+﻿一、前景   
+    由于国内人口基数问题，导致的从众效应反应巨大，自2017年开始apple store下架了一系列VPN与SS/SSR响应客户端，所以未越狱苹果IOS无法(精确地说是相当困难)从apple store下载科学上网工具。
+
+二、解决方案　　
+    除开以上原因，由于各国的apple store软件不同的上架标准导致的软件列表不同，我们普遍使用美国apple id来进行浏览美国相关app列表并下载。　　
+该方案需攻克难关：apple公司限制中国IP，支付方式必须使用具体支付方案(无"None"选项)，而除中国外的国家支付方式有'None'选项。　　
+本文旨在通过使用代理使用非中国IP进行到apple id验证(话外音：什么，apple store没有代理工具下载，你怎么使用代理，是我看错了，抑或是你晕头了)。咳咳，你没看错，我脑袋也没晕，预知后续如何，请看下面分解
+
+三、具体实行方案需要工具：iphone/ipad，一台Windows电脑
+1.新注册apple id(使用ios设备)
+注册地址：https://appleid.apple.com/account，依次完整填写选项。　　
+其中，COUNTRY/REGION必须选择United States　　
+最后，选择最下端的Continue按钮
+
+2.配置V2Ray代理
+服务器配置(服务器最好为美国机房)
+Windows客户端配置　　
+**注意，服务器可以为其他国家机房，配置完成后apple store会使用该国家的软件列表，但可以手动修改国家为美国，明显标记是支付方式含"None"选项
+
+3.iphone/ipad通过使用电脑作为二层代理　　
+首先，需要让电脑端v2ray开放连接给IOS设备(iphone/ipad)：在windows下的v2ray配置文件config.json中，配置inbound的监听地址为"0.0.0.0"　
+其次，关闭Windows防火墙(重要步骤，否则防火墙会拦截连入)，以Windows 10的防火墙Windows Defender为例：控制面--系统和安全--Windows Defender防火墙--启用或关闭Windows Defender防火墙--勾选进行关闭　　
+然后，查看Windows本地IP地址：ctrl+r打开运行台，输入cmd，在command line中输入ipconfig，获取本地ip地址　　
+**注意，IP可以为无线或者有线网络地址，因为IOS设备并不是通过无线直接与电脑相连的，而是通过路由器中转，所以Windows系统需要与IOS设备在同一个局域网　　
+最后，设置IOS设备：设置--无线局域网--点击wifi名称--点击最下方的HTTP代理--勾选"自动"--PAC地址(如果是文件保存在github，则为文件页面点击"raw"按钮获得的链接，该链接会随着点击"raw"失效，并且有效时长5分钟)
+**由于IOS原生不支持socks5，所以需要使用PAC方式，即创建PAC文件，将之放在一个web服务器上(最方便的是放在github，但限制较多；如果自己有web服务器，建议使用自己的web服务器)
+**PAC文件格式如下：
+**function FindProxyForURL(url, host)
+**{ 
+**     return "SOCKS proxy_host:proxy_port";
+**}
+**将proxy_host替换为代理主机IP，即windows局域IP；proxy_port替换为windows监听端口，一般为1080
+打开浏览器输入google.com进行测试，若正常则进入下一步
+或使用whatismyipaddress.com，确认当前对外IP
+
+4.完善apple id信息　　
+进入apple store，如果当前已登录apple id，则退出账号。　　
+登录新注册的apple id，会提示该id未使用过，需要完善信息，点击确定进入配置完善信息界面　　
+充值方式选择"None"(如果没有使用代理，IOS设备使用中国本地IP是没有该选项的)　　
+填写账号邮寄地址，为了方便，可生成虚拟地址直接拷贝，US虚拟地址生成链接：https://www.fakeaddressgenerator.com/Index/index　　
+填写完整后，选择Done，会发现apple store的界面为全英文，并且上架的软件与国内不尽相同，该apple id即为美国国籍

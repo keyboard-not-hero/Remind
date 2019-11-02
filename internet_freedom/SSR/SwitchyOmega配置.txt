@@ -1,0 +1,7 @@
+SwitchyOmega是一款智能识别内部和外部网络的浏览器代理插件
+以谷歌的chrome浏览器安装为例
+1.下载SwitchyOmega
+https://github.com/FelisCatus/SwitchyOmega/releases
+2.点击chrome右上角选项符号--更多工具--拓展程序--点击右上角开关，启动开发者模式，将下载的SwitchyOmega拖动到chrome浏览器窗口
+3.配置SwitchyOmega
+下载GFWList：https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList.bak，进入SwitchyOmega配置界面，选择导入/导出选项--从备份文件恢复--选择下载的GFWList.bak文件--点击"应用选项"按钮

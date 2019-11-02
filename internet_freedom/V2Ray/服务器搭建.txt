@@ -1,0 +1,54 @@
+1.下载V2Ray：
+wget https://install.direct/go.sh
+2.安装/更新V2Ray(系统需自带systemd)：
+bash go.sh
+**v2ray每周更新。版本号vX.Y.Z，X为大更新版本(一年)，Y为小更新版本(一周)，Z为0则为稳定版本
+3.编辑配置文件：
+vi /etc/v2ray/config.json
+{
+  "inbounds": [
+    {
+      "port": 1910, // 服务器监听端口
+      "protocol": "vmess",    // 主传入协议
+      "settings": {
+        "clients": [
+          {
+            "id": "60394b20-9b45-f2e3-e68c-2454a0bd2008",  // 用户 ID，客户端与服务器必须相同
+            "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
+          }
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",  // 主传出协议
+      "settings": {}
+    }
+  ]
+}
+**uuid可以使用以下指令生成：v2ctl uuid，或者工具网站在线生成：http://www.uuid.online/
+4.配置文件语法检查：
+v2ray -test -config /etc/v2ray/config.json
+5.启动/关闭/重启软件：
+systemctl start v2ray
+6.运行状态查看：
+systemctl status v2ray
+7.防火墙开放/查看：
+firewall-cmd --add-port=8388/tcp
+firewall-cmd --add-port=8388/udp
+firewall-cmd --list-ports
+
+github地址：https://github.com/v2ray/v2ray-core
+官方手册地址：https://www.v2ray.com/
+配置参考地址：https://toutyrater.github.io/
+
+v2ray须知：
+1.协议类型：使用自创VMess加密传输协议
+2.时间限制：客户端和服务器时间差距不能超过90s，时区不做限制
+3.入口流量：在客户端，入口流量一般为1080监听端口；服务器端，为服务器监听客户端流量端口，如8388
+4.出口流量：在客户端，出口流量一般为远程服务器监听端口，如8388；服务器端，为访问的目的网站
+5.C/S端区分：v2ray不进行客户端/服务器端软件区分，只是inbound和outbound配置有差异
+
+原理：
+浏览器<--socks-->客户端<--VMess-->服务器<--freedom-->目标网站

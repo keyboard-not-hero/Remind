@@ -1,0 +1,34 @@
+﻿1.安装依赖
+sudo apt install libcanberra-gtk-module libcanberra-gtk3-module gconf2 gconf-service libappindicator1
+2.下载deb包
+https://github.com/qingshuisiyuan/electron-ssr-backup/releases/download/v0.2.6/electron-ssr-0.2.6.deb
+3.安装软件
+sudo dpkg -i electron-ssr-0.2.6.deb
+4.运行软件
+electron-ssr
+5.参数配置：
+服务器IP：服务器IP
+服务器端口：服务器端口
+密码：服务器配置密码
+加密：aes-256-cfb或其他，参考服务器配置
+协议：origin或其他
+混淆：plain或其他
+**配置文件位置：~/.config/electron-ssr/gui-config.json
+**系统需要安装Python2.7，一般系统自带 
+
+ubuntu无法打开设置：
+apt-get install gnome-control-center
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+1.客户端下载：https://github.com/shadowsocksr-backup/shadowsocksr-android/releases
+**可能需要借助已科学上网工具，直接下载速度较慢
+2.安装并配置，选项如下：
+服务器：服务器IP
+远程端口：服务器端口
+本地端口：本地代理端口
+密码：服务器配置密码
+加密方法：aes-256-cfb或其他，参考服务器配置
+协议：origin或其他
+混淆：plain或其他

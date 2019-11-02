@@ -1,0 +1,11 @@
+1.下载v2rayNG
+google商店下载：v2rayNG
+github下载：https://github.com/2dust/v2rayNG/releases
+2.配置：
+地址：服务器IP
+端口：服务器开放端口
+用户ID：对应uuid
+额外ID：64
+加密方式：默认
+传输协议：默认
+伪装类型：none
