@@ -1,0 +1,12 @@
+故障：出现kernel security check failure提示蓝屏
+解决方案：
+1.查看是否设置错误记录
+控制面板--系统和安全--系统--高级系统设置--高级--启动和故障--系统失败--在下拉选择框选择记录方案，并配置记录文件放置目录
+2.下载WinDbg
+下载地址：https://developer.microsoft.com/windows/downloads/windows-10-sdk
+安装时，选择"适用于 Windows 的调试工具"
+3.配置
+srv*c:\mss*http://msdl.microsoft.com/download/symbols
+
+引用：
+[1]official site:http://www.windbg.org
