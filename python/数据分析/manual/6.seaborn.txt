@@ -1,0 +1,13 @@
+链接：https://seaborn.pydata.org/
+seaborn--基于matplotlib图形和pandas数据结构的统计图绘制库
+
+pip安装：
+pip install seaborn
+
+导入库：
+import seaborn as sns
+
+方法：
+set()：使用seaborn的默认主题搭配
+
+

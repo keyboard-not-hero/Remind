@@ -1,0 +1,56 @@
+requests--python第三方网络请求库
+安装库：
+pip install requests
+模块导入：
+import requests
+模块方法：
+request(method, url, params=None, data=None, headers=None, cookies=None, files=None, auth=None, timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None, json=None)：使用对应方法，返回Response对象。参数列表释义：
+params：URL追加参数，使用dict格式
+data：http请求体内容，使用dict格式
+headers：http请求头内容，使用dict格式
+cookies：cookies集合，使用dict格式或者CookJar对象
+files：文件，使用dict格式，key为文件名，value为类文件对象
+auth：用于账号验证，使用账号密码的tuple格式
+timeout：等待服务器响应时长，使用float格式或(connect,read)元组
+allow_redirects：允许重定向，使用bool格式，默认为True
+proxies：配置代理，使用dict格式，key为协议，value为代理URL。在URL中可使用socks5协议，key不变，并且需要pip安装requests[socks]
+stream：是否直接下载源编码内容(十六进制，而非bytes)，使用bool格式，默认为False。Response的raw方法必须配合该参数使用
+verify：用于控制开启SSL证书校验，使用bool或字符串格式，默认为True，当为字符串格式时，指定cert文件路径
+cert：用于利用本地证书，使用字符串或者字符串元组，字符串为文件路径
+json：http请求体内容，使用json格式
+get(url, **kwargs)：使用get方法，返回Response对象。
+post(url, data=None, json=None, **kwargs)：使用post方法，返回Response对象
+Session()：创建会话句柄，会议使得连接持久化，保存状态。requests的方法也适用于Session类
+
+相关类：
+request.sessions.Session
+对应方法：
+__init__()：创建会话句柄，会议使得连接持久化，保存状态(保存本次获得的cookie，并用于下一次请求)。requests的方法也适用于Session类
+close()：关闭会议
+**Session可使用http方法中的参数作为属性，并且使用属性的update进行参数内容配置
+例：session.headers.update({“user-agent”:”Mozilla firefox 7.0”})
+
+相关类：
+requests.models.Response
+相关方法：
+encoding：配置和获取编码
+url：返回请求URL字符串
+status_code：响应状态码
+reason：返回状态码描述
+headers：返回所有响应头部
+request：返回PreparedRequest对象，显示请求方法
+content：返回编码格式的主体，即bytes格式
+text：返回字符串形式的主体
+raw：获取二进制元数据的主体，返回urllib3.response.HTTPResponse对象。请求方法必须携带stream参数，否则返回’’内容
+cookies：获取requests.cookies.RequestsCookieJar对象
+json()：解码json格式内容
+iter_content(chunk_size)：将Response切割为chunk大小的二进制内容，返回item为bytes的generator
+
+相关类：
+requests.cookies.RequestsCookieJar
+对应方法：
+get_dict()：返回cookie的字典形式
+
+requests链接：
+快速上手：https://2.python-requests.org//zh_CN/latest/user/quickstart.html
+高级用法：https://2.python-requests.org//zh_CN/latest/user/advanced.html

@@ -1,0 +1,188 @@
+链接：https://pandas.pydata.org/
+pandas--用于处理表格型和混杂型数据
+
+import pandas as pd
+方法：
+get_option(option)：获取option
+set_option(option, value)：配置option值
+reset_option(option)：重置option值
+describe_option(option)：option相关信息
+option_context(option)：option上下文信息
+read_csv(file, sep=',', header='infer', names=None, index_col=None, skiprows=None, nrows=None, chunksize=None, na_values=None, engine='c')：读取文件，返回DataFrame对象
+to_csv(file, sep=',', na_rep='', index=True, header=True, columns)：保存Series/DataFrame到文件
+cut(array, bins, right=True, labels=None, retbins=False)：返回Categorical对象。array为一维array-like；bins为分组的分界点数组或按array的最大最小值实行均分的份数(类似于平均数)；right是左开右闭区间还是左闭右开区间；labels代表每个分组的标签；retbins代表是否返回分组区间
+qcut(array, bins, label=None)：array为一维array-like；bins为分组的分界点数组或按份数实行均分的份数(类似于中位数)；label为面元标签，标签数等于面元份数
+get_dummies(data, prefix, prefix_sep='_')：将列的值替换为列名，使用哑变量来标明。仅适用于列值为单一元素
+unique(values)：返回ndarray对象
+merge(left, right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'), copy=True, indicator=False, validate=None)：以数据库join的方式合并DataFrame(笛卡尔积组合)，返回合并后的DataFrame对象。left和right分别为组合前的DataFrame；how有四个值left/right/outer/inner;on为合并时依据的键，默认为两个data相同的所有相同列名组合；left_on和right_on为合并时使用非同名键，所额外指定的键名；left_index和right_index代表是否使用行索引作为合并依据键，并且索引层级需要相同；sort代表是否对结果根据排列键进行排序；suffixes为组合后，非组合键重名的后缀，为tuple格式，默认为('_x','_y');indicator代表插入名为_merge的列，描述行由left或right所衍生；validate验证组合键的值在左边和右边是否唯一或多次出现，可选值由"1:1"/"1:m"/"m:1"/"m:m"构成，不满足则抛出MergeError异常
+concat(objs, axis=0, join='outer', ignore_index=False, keys=None, names=None, sort=None)：将多个DataFrame在某个轴上进行重叠，返回重叠后的对象。objs为DataFrame列表；axis为重叠方向轴；join为在其他方向轴上如何保留键，包含"inner"/"outer"；ignore_index代表是否忽略合并轴上的索引，并且重新建立int索引；与最外层增加索引，ignore_index必须为False；names命名各层级索引的名称
+melt(frame, id_vars=None, value_vars=None, var_name=None, value_name='value', col_level=None)：将宽格式转化为长格式数据。id_vars代表用作标识符变量的列(保留)；value_vars代表转化为值的列，默认将所有未在id_vars中的列转化；var_name代表转化值后列的名称，默认为frame.columns.name或variable；value_name代表原来的值拼凑后的列名称；col_level代表当列为多层索引时，应用于哪一层索引
+crosstab(index, columns, values=None, aggfunc=None, margins=False)：交叉表(特殊透视表)。index代表用于行索引的列；columns代表用于列索引的列；values代表用于值的列
+to_datetime(arg, errors='raise', dayfirst=False, yearfirst=False, utc=None, format=None)：返回DatetimeIndex对象。arg代表时间字符串/datetime/DataFrame等；errors代表无法转化时的策略，参数有raise/ignore/coerce；dayfirst代表优先解释为天；yearfirst代表优先解释为年，优先级高于天；utc代表转化为UTC时区；format代表转化后的格式
+date_range(start=None, end=None, periods=None, freq=None, tz=None, normalize=False, name=None, closed=None)：在日期范围内生成一系列日期，返回DatetimeIndex对象。start代表起始日期；end代表结束日期；periods代表在范围内均分生成几个日期；freq代表范围内日期间隔，默认为'D'，参数缩影A/Y/M/W/D/H/T/S；tz为时区，如'UTC'；normalize代表在生成日期前对start/end进行标准化，即去除时间部分；name代表生成的DatetimeIndex名称；closed代表哪边为闭合，参数有left/right/None，默认为None(两边都闭合)
+**start/end/periods/freq四组参数中，提供任意三个参数的组合即可
+**freq链接：https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases
+period_range(start=None, end=None, periods=None, freq=None, name=None)：在日期范围内生成一系列日期，日期精度由freq控制，返回PeriodIndex对象。start代表起始日期；end代表结束日期；periods代表在范围内均分生成几个日期；freq代表范围内日期间隔，默认为'D'，参数缩影Y/M/W/D/H/T/S；name代表生成的PeriodIndex名称
+**start/end/periods四组参数中，提供任意两个参数的组合即可
+
+DataFrame--由多维数组和索引组成
+from pandas import DataFrame
+属性/方法：
+**DataFrame的数字切片为行索引半开半闭区间，字符串切片为行索引闭区间，索引(含花式索引)为列索引
+COL_NAME：返回对应列的Series，内容为视图
+[COL_NAME]：返回对应列的Series，内容为视图
+loc[ROW_NAME]：返回标签对应行的Series
+iloc[ROW_NUM]：返回位置对应行的Series
+T：行列转置
+values：返回数组值(ndarray)内容
+index：返回索引内容Index对象，index对象是immutable的
+columns：返回column名的Index对象
+__init__(data, columns, index)：将数据以指定列和索引构成DataFrame对象
+reindex(iterable, columns，method)：重排索引，默认为行索引，method代表填充新格方法
+drop(name, axis=0, inplace=False)：删除name名称对应的行或列，返回新DataFrame对象或内部修改
+groupby(by)：根据列进行分组，by可以为列名或列表。返回DataFrameGroupBy对象
+add(frame, fill_value)：对两个DataFrame执行加法运算，并在运算之前对NaN单元进行值填充(两个DataFrame的对应元素都为NaN时，不进行值填充)。返回DataFrame对象
+apply(fun, axis=0)：在轴向进行fun函数的应用
+applymap(fun)：对元素进行fun函数的应用
+sort_index(axis=0, level=None, ascending=True, inplace=False)：根据指定轴进行排序
+sort_values(by, axis=0, ascending=True, inplace=False)：根据值进行排序，NaN将排列于尾部
+rank(axis=0, ascending=True, method="average")：显示对应轴上元素的排名
+sum(axis=0, level=None, skipna=True)：计算对应轴上的和，skipna代表忽略np.NaN
+isin(values)：DataFrame是否在values中，values类型为Series(index)/DataFrame(index,columns)/dict(columns)/list
+dropna(axis=0, how='any', thresh, subset， inplace=False)：how有两种模式，any代表该轴有nan便丢弃，all代表该轴全部为nan才丢弃；thresh代表有n个或以上非nan便保留，优先级高于how；subset代表与axis轴不同的轴，只有subset指定的索引才考虑nan
+fillna(value=None, axis=None, inplace=False, method=None, limit=None)：对Series的nan填充为其他值。method可以为bfill/ffill/None；limit为对method的填充延伸长度限制
+to_numpy(copy=False)：将DataFrame值提取为ndarray，copy为false不一定为视图(可能为复制)，但true一定为复制
+duplicated(subset=None, keep='first')：确定行是否重复，返回Series对象。subset确定由哪些列来组合确定重复；keep确定重复中的哪一个为原始非重复项，first代表第一个出现，last代表最后一个出现，False代表所有都为重复
+drop_duplicates(subset=None, keep='first', inplace=False)：丢弃重复行，返回DataFrame对象
+replace(to_replace=None, value=None, inplace=False, regex=False)：将元素为to_replace的值填为value的值
+rename(mapper=None, index=None, columns=None, axis=None, copy=True, inplace=False, level=None )：修改行和列索引。index为array-like时，进行直接修改，为dict时，进行部分映射修改；inplace优先级高于copy;mapper和axis联合对列和行索引进行修改
+take(array, axis=0, is_copy=True)：对指定方向进行索引
+sample(n=None, frac=None, replace=False, axis=None)：返回行或列上的示例单元。n代表行数或列数；frac代表总行或列的多少倍，n和frac不能同时使用，当frac为None时，n默认为1；replace代表是否可重复轴上的某行或列数据
+swaplevel(i=-2, j=-1, axis=0)：交换层级索引，并返回交换索引后的DataFrame对象。i/j可以为索引层级(int)或索引名称(str)
+set_index(keys, drop=True, append=False, inplace=False)：将列转化为行索引。drop代表是否丢弃转化列；append代表是否将转化列添加在原行索引内层(或者直接覆盖)；inplace代表是否改变DataFrame本身
+reset_index(level=None, drop=False, inplace=False, col_level=0, col_fill='')：将行索引转化为列。level代表将多层级索引的哪一层替换为列，默认为所有层；drop确定是将索引转化为列或者直接丢弃；col_level代表当列索引为多层索引时，行索引将转化为列索引的哪个层级；col_fill表示当列索引为多层级索引时，其他层索引填充的名称
+join(other, on=None, how='left', lsuffix='', rsuffix='', sort=False)：以自身的索引或列键与另一个DataFrame的索引进行数据库的join组合，返回组合后的DataFrame对象
+combine_first(other)：如果当前元素为nan，则使用other对应位置的值填充
+stack(self, level=-1, dropna=True)：将列索引转换为行索引。level代表将多层列索引的哪一层堆砌到行索引，默认为最内层；dropna代表是否丢弃转换后值全为nan的行
+unstack(level=-1, fill_value=None)：将行索引转化为列索引。level代表将多层行索引的哪一层堆砌到列索引，默认为最内层；fill_value代表是否将转化后为nan的值填充为指定值
+pivot(index=None, columns=None, values=None)：将长格式转化为宽格式，即列值转化为列索引。index代表哪些列作为行索引；columns代表哪些列作为列索引；values代表哪些列作为值
+分组运算公式：拆分--应用--合并
+groupby(by=None, axis=0, level=None, as_index=True, sort=True, group_keys=True)：分组。by代表分组依据索引/内容数组/map/函数；axis代表在行上或列上进行分组，默认为行；level代表当分组依据为多层索引内的某层索引时，使用哪一层索引分组；as_index是否使用分组依据作为索引；group_keys代表是否将分组依据作为apply方法的索引(只作用于多层索引)
+pivot_table(values=None, index=None, columns=None, aggfunc='mean', fill_value=None, margins=False, dropna=True)：透视表。values代表作为值的列；index代表作为行索引的列；columns代表作为列索引的列；aggfunc代表对值进行的操作，可以为字符串/列表/map；fill_value代表是否对nan进行值填充；margins代表添加行列小计和总和；dropna代表是否不展示全部为nan的列
+truncate(before=None, after=None, axis=None, copy=True)：截断指定轴上某索引之前或之后的数据。before代表截断之前的数据；after代表截断之后的数据；axis代表操作行或者列，默认为行
+shift(periods=1, freq=None, axis=0, fill_value=None)：对数据进行偏移。periods代表在指定轴上移动的位置，当未提供freq时，只移动数值而不移动索引；freq代表索引移动的依据，参数有Y/M/W/D等；axis代表移动的轴；fill_value代表用于填充nan值的数值
+tz_localize(tz, axis=0, level=None, copy=True)：将时间本地化为某时区。tz为时区名称；axis指代轴；level代表轴上为多层索引时，使用哪一层索引
+tz_convert(tz, axis=0, level=None, copy=True)：将本地化时间转化为某时区时间。tz为时区名称；axis指代轴；level代表轴上为多层索引时，使用哪一层索引
+to_period(freq=None, axis=0, copy=True)：将DatetimeIndex转化为PeriodIndex
+to_timestamp(freq=None, how='start', axis=0, copy=True)：将PeriodIndex转化为DatetimeIndex。how代表转化为时间戳居于period的起始还是结束，参数有start/end
+resample(freq, axis=0, closed=None, label=None, convention='start', kind=None, loffset=None)：重采样，高频到低频为降采样，低频到高频为升采样。freq代表频代表，参数有Y/Q/M/W/D等；axis为操作轴；closed代表降采样时区间左闭合或者右闭合，参数有left/right，默认为left；label代表降采用使用区间的左边或右边来作为索引标记；convertion用于PeriodIndex升采样，表明将原来的值放置在新样本的起始或结束处，参数有start/end；kind代表将结果转化为DatetimeIndex或PeriodIndex，参数有timestamp/period，默认None意味维持源Index；loffset代表微调重采样后的label，格式为timedelta
+rolling(window, min_periods=None)：逐索引平移窗口，窗口大小固定，返回Rolling对象。window代表每个窗口大小，格式为int或者freq，int为连续显示(索引)的非nan值，freq为连续单位(如'D')的非nan值；min_periods代表当数据缺失时，最小可以使用的窗口(中间可包含nan，起始不为nan即可)，当window为int时，默认为window大小，当window为freq时，默认为1
+expanding(min_periods=1, center=False, axis=0)：逐索引拓展窗口，窗口大小逐渐增大，返回Expanding对象。min_periods代表最小需要的包含数(中间可包含nan，起始不能为nan)
+ewm(com=None, span=None)：expanding的加权版本，返回EWM对象。
+astype(dtype, copy=True, errors='raise')：转化元素的类型。dtype为元素类型；copy是否复制生成新值；errors代表错误处理机制，raise/ignore
+pipe(func, *args, **kwargs)：调用func方法，将调用者作用第一个参数，后续可带入顺序参数和关键字参数
+
+Series--由一维数组和索引组成
+from pandas import Series
+属性/方法：
+**Series的数字切片为半开半闭区间，字符串切片为闭合区间
+**当索引为整数，默认使用标签而非位置索引
+values：Series的数组值(ndarray)内容
+index：返回索引内容Index对象，index对象是immutable的
+name：Series的名称
+str：返回StringMethods对象
+__init__(iterable,index)：利用可迭代对象和指定索引值创建Series
+value_counts()：不同值出现的频率，类似于SQL的group by，返回Series
+fillna(str)：使用str替换Serise中的NaN值，返回Series
+reindex(iterable，method)：重排索引，method代表填充新格方法
+plot()：绘制matplotlib图
+dropna(str)：丢弃Series中的NaN值行
+unstack()：根据列内的值转化为列名称
+map(fun)：对元素进行fun函数应用
+sort_index()：根据索引进行排序
+sort_values(ascending=True, inplace=False)：根据值进行排序，NaN将排列于尾部
+rank(ascending=True,method="average")：显示元素的排名
+unique()：返回元素的ndarray对象
+isin(values)：Series的元素是否在values中，values为列表
+isnull()：是否为NaN，返回bool型Series
+notnull()：是否为非NaN，返回bool型值Series
+dropna(inplace=False)：丢弃值为NaN的行
+fillna(value=None, inplace=False, method=None, limit=None)：对Series的nan填充为其他值。method可以为bfill/ffill/None；limit为对method的填充延伸长度限制
+duplicated(keep='first')：确定行是否重复，返回Series对象。keep确定重复中的哪一个为原始非重复项，first代表第一个出现，last代表最后一个出现，False代表所有都为重复
+drop_duplicates(keep='first', inplace=False)：丢弃重复行，返回Series对象
+
+类：
+pandas.core.groupby.DataFrameGroupBy
+方法：
+size()：返回Series对象
+apply(func, *args, **kwargs)：对GroupBy进行分组统计运算，DataFrame作为func函数的第一个参数
+transform(func, *args, **kwargs)：对GroupBy进行分组统计运算，但保留源索引数，DataFrame作为func函数的第一个参数
+
+类：
+pandas.Index
+方法：
+__init__(array-like)：创建索引
+get_Indexer(array)：返回array在Index中所在位置的数组
+
+类：
+pandas.MultiIndex
+方法：
+from_arrays(arrays, names)：创建多层索引，返回MultiIndex对象。arrays为array序列，序列依次为各层级索引内容；names为各层级索引名称
+swaplevel(i=-2, j=-1, axis=0)：交换层级索引
+
+类：
+pandas.PeriodIndex
+方法：
+__init__(year, quarter, month, day, hour, minute, second)：利用年/季度/月来创建PeriodIndex对象
+to_timestamp(freq=None, how='start', axis=0, copy=True)：返回DatetimeIndex对象。freq参数有"B"/"D"/"S"，默认为"D"；how代表季度起始/终止日期(D/S)或一天内的起始/终止时间(B)，参数有"start"/"end"
+
+类：
+pandas.core.strings.StringMethods
+方法：
+contains(pat, case=True, flags=0, na=nan, regex=True):pat为str或者regexp；case为是否在乎大小写；flags为re的flags；na为空值填充；regex是否支持regexp正则
+findall(pat, flags=0)：pat为Pattern或者regexp
+get(i)：从position为i提取内容
+
+类：
+pandas.core.groupby.DataFrameGroupBy
+方法：
+**GroupBy对象可使用for进行循环获取元素，返回name(原元素)和内容
+mean()：对分组求平均值
+size()：求分组内item数量
+agg(func)：将func函数/func函数列表应用于分组。当func为一个字符串和方法组成的tuple时，字符串代表生成列的名称，方法为应用于分组的方法；当func为字典时，key代表要作用的列，value代表作用于列的方法
+apply(func, **func_args)：将func应用于分组，并且可以传入实参到func的关键字形参列表
+
+类：
+pandas.core.resample.PeriodIndexResampler
+方法：
+mean()：求重采样后的平均值
+ohlc()：求open/high/low/close这四个金融领域的盘
+asfreq(fill_value=None)：返回Resampler的DateFrame/Series内容。fill_value代表填充nan单元的值
+ffill(limit=None)：前向填充nan值。limit代表填充长度限制
+bfill(limit=None)：后向填充nan值。limit代表填充长度限制
+
+类：
+pandas.core.window.Rolling
+方法：
+mean()：窗口内数的平均值
+
+option:
+pd.options.display.max_rows
+pd.options.display.max_columns
+
+链接：https://pandas-datareader.readthedocs.io/en/latest/
+pandas-datareader--提取远程站点数据到DataFrame
+依赖环境：
+pandas>=0.19.2
+lxml
+requests>=2.3.0
+requests-file
+requests-ftp
+wrapt
+pip安装：
+pip install pandas-datareader
+
+
+
+
+

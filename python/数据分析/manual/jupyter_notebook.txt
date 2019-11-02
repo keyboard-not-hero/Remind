@@ -1,0 +1,58 @@
+官网地址：http://jupyter.org/
+
+安装：
+pip3 install jupyter
+
+特征：
+1.文件名后缀.ipynb
+2.jupyter notebook的根目录源于终端启动目录
+3.默认使用8888端口
+
+指令选项：
+--port    指定使用端口
+
+启动网页服务器/客户端：
+jupyter notebook
+
+jupyter notebook组件：
+1.web客户端
+  (1)dashboard：管理单元(文件、进程、集群)。文件根目录源自指令行启动目录；启动的进程需要手动shutdown，关闭网页tab仍然运行
+  (2)modal editor：代码管理单元，分为两个模式：
+      编辑模式：enter进入，绿色边框显示，进入代码输入
+      指令模式：esc进入，蓝灰色边框显示，进行cell管理
+          code：代码模式
+          markdown：html和MathJax模式
+2.server端
+
+
+快捷键：
+1.编辑模式：
+shift+enter    执行单元
+%connect_info    连接信息
+%matplotlib notebook    启动matplotlib底层
+ctrl+up    跳转到单元格起始
+ctrl+down    跳转到单元格结束
+2.指令模式：
+Enter  进入编辑模式
+Shift+Enter  执行单元并进入下一行(没有则新建)
+Ctrl+Enter  执行单元
+Alt+Enter  执行单元并新建下一行
+J  下个cell
+K  上个cell
+Ctrl+S  检查并保存
+Y  cell变成代码格式
+M  cell变成markdown格式，使用html/LaTeX
+1~6  cell变成h1~h6标题
+R  清除cell格式
+II  中断服务
+00  重启服务
+A  在上面插入cell
+B  在下面插入cell
+X  剪切cell(独立于system的剪切板)
+C  复制cell
+Shift+V  粘贴到上个cell(新增cell)
+V  粘贴到下个cell(新增cell)
+DD  删除选中cell
+Z  撤销删除
+H  快捷键菜单
+

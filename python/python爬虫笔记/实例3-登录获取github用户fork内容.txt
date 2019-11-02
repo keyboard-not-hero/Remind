@@ -1,0 +1,73 @@
+一、利用POST方法提供内容体
+思路：
+1.登录后，查找POST方法的文件，并找到DATA部分，记录请求地址URL
+2.从login页面获取唯一识别ID(如token)，如DATA无该选项，则省略该步骤
+3.利用session保持cookie
+4.使用POST将所需data(可能包含token)传送到地址URL页面
+示例代码：
+import requests
+from bs4 import BeautifulSoup
+
+session = requests.session()
+def open_session(token):
+    global session
+    headers = {
+        "Referer":"https://github.com",
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+        "Host":"github.com"
+    }
+    data = {
+        "commit":"Sign in",
+        "utf8":"✓",
+        "authenticity_token":token,
+        "login":"account",
+        "password":"password",
+        "webauthn-support":"supported"
+    }  
+    session.post("https://github.com/session",data=data,headers=headers)
+
+def get_token(url):
+    global session
+    login_url = url+"/login"
+    response = session.get(login_url)
+    html = response.text
+    bs = BeautifulSoup(html,'lxml')
+    tag = bs.find('input', type="hidden").next_sibling
+    return tag.get("value")
+
+def get_repository():
+    global session
+    love = session.get("https://github.com")
+    bs = BeautifulSoup(love.text,'lxml')
+    groups = bs.aside.find_all('li',class_="public fork")
+    for group in groups:
+        print(group.find("span",class_="css-truncate css-truncate-target").get("title"))
+
+if __name__ == "__main__":
+    token = get_token("https://github.com")
+    open_session(token)
+    get_repository()
+
+二、利用登录后的cookie进行请求
+思路
+1.登录，找到feed文件(含set-cookie头部的最尾部文件，有例外)，记录set-cookie(因为部分cookie有单次时效性)
+**可利用requests库依次的cookies.get_dict()结果来执行result_dict.update()，注意按顺序，最终字典会更新最新信息
+2.在请求中将cookie加入headers(单一cookie属性，使用';'区分item，key与value使用'='连接，参考浏览器格式，原生库只能使用该方法)参数或cookies参数中
+示例代码：
+import requests
+
+headers={
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+    "Host":"github.com"
+}
+
+cookies={
+    '__Host-user_session_same_site': '_1Px9eAEb0wTXt1l1Z3uEdJYbDngg3DlhNTkkv07KWaJvwhm',
+    '_gh_sess': 'TExja1Z1cU9pbGhSVjY3alBZeFdPV3N1Ly8zbWIrYlBnM3ZrZ0FTTXhtQ2NMR3QzcmpMOFhSazdlZHNyTWRRRjg2T2lleTc5cnN4Mk5pL3RTdE41RFgvczUvdDUxaTBlUnhhR2ppanhmemhGa2hLV0F3R0hYWTVLK1FaVnNUa0svSlJPNEhpN1hmNFBqYzlhZlFXODNXUlVzZGhBekNEeTZlSDY0dVZZb1UwTmZhMTliZzM1c09xSVM4ZGpCcDdJZWJBWGdsSGVjWnZ3c280aHNURWF5VjFCUzZRWEhKN0hFVWcwQzRONWRCZ0NGcUhUOE9URXZVMFJ3ZGNwWXRZRnRDcWI4SUNrckppWjJWb2R2MGhPQUE9PS0tZ0t1ZEtpR3FoTGtVSWlqa3NhcFJGUT09--953474fb8ae6aa4a8b759b4e34205cb458a636f4',
+    'has_recent_activity': '1',
+    'user_session': '_1Px9eAEb0wTXt1l1Z3uEdJYbDngg3DlhNTkkv07KWaJvwhm'
+    }
+response=requests.get("https://github.com",cookies=cookies)
+print(response.text)
+
+三、selenium模拟登录

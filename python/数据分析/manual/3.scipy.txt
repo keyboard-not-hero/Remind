@@ -1,0 +1,2 @@
+官网地址：http://www.scipy.org/
+scipy--作为numpy的科学计算拓展包
