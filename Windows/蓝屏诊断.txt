@@ -1,0 +1,22 @@
+﻿1.查看是否设置错误记录
+
+控制面板--系统和安全--系统--高级系统设置--高级--启动和故障--系统失败--在下拉选择框选择记录方案，并配置记录文件放置目录
+
+2.下载WinDbg
+
+下载地址：https://developer.microsoft.com/windows/downloads/windows-10-sdk。
+安装时，只勾选"Debugging Tools for Windows"
+**查看windows10完整版本，<win>+r -- 输入"winver"
+3.配置windbg
+开始--所有程序--右键单机windbg(x64)--以管理员权限打开
+菜单"File"--Symbol File Path--将下列内容复制进去：
+SRV*C:\Symbols*http://msdl.microsoft.com/download/symbols
+4.打开蓝屏转储文件
+File--Open Crash Dump--进入第1步配置的目录，选择转储文件--获得分析文件内容
+**shift+f5清除上一次查看缓存
+如需获取更详细信息，点击文本内的"!analyze -v"超链接
+引用：
+
+[1]official site:http://www.windbg.org
+
+[2]help document:http://www.dbgtech.net/windbghelp/
