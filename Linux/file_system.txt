@@ -1,3 +1,119 @@
-superblock  文件系统汇总信息，inode/block的总量、使用量、剩余量
-inode  档案权限和属性记录，同时记录保存档案内容的block number，一个档案占据一个inode
-block  保存实际档案内容
+扇区(sector)：硬盘最小存储单位，由ID字段和数据字段组成。常规为512 Byte，其他标准规格4K Byte(Advanced Format)。
+**fdisk -l可查看当前FS sector大小
+**早期，磁盘外围和内围拥有一样的扇区数，因此外围扇区的bit密度更低；当前，磁盘所有区域拥有一样的bit密度，所以外围的扇区多余内部(zone recording)
+
+磁道(cylinder)：早期磁盘圆盘一周(扇区组成)，拥有固定大小，为最小的分割单位。当前，由于bit密度固定，sector成为最小分割单位
+
+主引导记录(Master Boot Record，MBR)：硬盘的第一个扇区，BOIS首先读取内容。其中，446 Byte为部分boot代码，提供active分区选单，加载分区VBR；64 Byte为4个16 byte的分区表组成；2 Byte为结束标记0x55AA(MBR为小端序，低位在前)
+  分区结构信息(16 Byte)：
+  1 Byte - 0x00代表非active分区；0x80代表active分区
+  3 Byte - CHS(Cylinders/Heads/Sectors)地址，标记分区的第一个扇区(已废弃)
+    1 Byte - heads；
+    1 Byte - 0-5bit为secot，6-7bit为cylinder；
+    1 Byte - cylinder
+  1 Byte - 分区类型(如FAT32/NTFS/ext2/xfs)
+  3 Byte - CHS(Cylinders/Heads/Sectors)地址，标记分区的最后一个扇区(已废弃)
+  4 Byte - LBA(Logical Block Addressing)，CHS替代方案，标记分区第一个扇区(当前使用)
+  4 Byte - 分区划分的扇区数量(当前使用，分区大小限制2^32*512Byte=2^41=2TByte，或者2^32*4KByte=2^44=16TByte)
+*fdisk -l可查看硬盘的引导类型
+
+全局唯一标识分区表(GUID Partition Table，GPT)：MBR的替代方案，UEFI首先读取内容。其中，为保持兼容，第1个sector依然为MBR，称之为protective MBR，并且不含bootstrap，分区表只有第一个entry有效，分区类型值为0xEE；第2个sector为GPT头部；不论sector大小，32*512 Byte为GPT分区表，该分区表由2^7个大小为128 Byte的entry组成；为保分区表完整性，硬盘倒数第一个sector为GPT头部备份；倒数32*512 Byte为GPT分区表备份
+  分区结构信息(128 Byte)：
+  16 Byte - 分区类型
+  16 Byte - 全局唯一标识分区号
+  8 Byte - 分区第一个扇区
+  8 Byte - 分区最后一个扇区
+  8 Byte - 分区属性，前6 Byte一致，后2 Byte变化
+  72 Byte - 分区名称，由36个UTF-16LE编码字组成
+**Hybrid MBR：由BIOS与GPT组合中，MBR依然包含bootstrap内容，并用于识别GPT
+**在4k sector中，当硬盘厂商的MBR依然提供512byte物理sector时，会和logical sector产生错位。所以，为了兼容性，建议依然使用512Byte逻辑sector
+**系统支持：Fedora 8+，Ubuntu 8.04+，Windows 8-32bit，Windows Vista-64bit，其中Windows只支持从UEFI引导
+
+superblock：文件系统汇总信息，inode/block的总量、使用量、剩余量
+
+inode：档案权限和属性记录，同时记录保存档案内容的block number，一个档案占据一个inode，大小为128/256 Byte，一个block记录消耗4 Byte。可使用12个直接，1个间接(1层block记录)，1个双间接(2层block记录)，1个三间接(3层block记录)
+*以1k block为例，12个直接12k，1个间接1k/4*1k=256k，一个双间接1k/4*1k/4*1k=64M，一个三间接1k/4*1k/4*1k/4*1k=16G
+
+block：保存实际档案内容，大小可为1/2/4KByte
+
+inode与block联合解析：
+inode：目录与文件的inode相同，用于保存属性/权限等metadate
+block：1.目录的block用于保存目录下的文件/子目录名；2.文件的block用于保存文件内的实质内容
+当创建目录时，在上层目录的block添加文件名称，用于索引新目录的inode；新建inode，用于保存目录权限/属性(该目录inode被引用两次，一次为父目录的名称引用，一次为新目录的'.')；新建block，用于保存目录下的文件/目录名称
+当创建文件时，在所属目录的block添加文件名称，用于索引文件inode；新建inode，用于保存目录权限/属性；新建block，用于保存文件实质内容
+
+hard link与symbolic link差异：
+创建hard link前：
+thompson@dataforthompson:~/demo$ ll
+-rw-r--r--  1 thompson thompson 1086 11月  4 15:46 demo01.txt
+thompson@dataforthompson:~/demo$ df
+文件系统        1K-块     已用      可用        已用%   挂载点
+/dev/sda6       98299524  4010976  89272180    5%      /home
+thompson@dataforthompson:~/demo$ df -i
+文件系统       1K-块      已用      可用        已用%   挂载点
+/dev/sda6      6250496   40189      6210307    1%      /home
+创建hard link：
+thompson@dataforthompson:~/demo$ ln demo01.txt demo02.txt
+创建hard link后：
+thompson@dataforthompson:~/demo$ ll
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo01.txt
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo02.txt
+thompson@dataforthompson:~/demo$ df
+文件系统        1K-块     已用      可用        已用%   挂载点
+/dev/sda6       98299524  4010976  89272180    5%      /home
+thompson@dataforthompson:~/demo$ df -i
+文件系统       1K-块      已用      可用        已用%   挂载点
+/dev/sda6      6250496   40189      6210307    1%      /home
+原理：
+当创建hard link时，在所属目录block中添加文件名称，当增加demo02.txt文件，所属目录总大小并没有超出当前分配的容量时，所属目录不额外分配block；并且demo02.txt文件名直接指向demo01.txt的inode，没有额外分配inode和block
+图解：
+  dir block:demo01.txt----
+                         |
+                         |
+                         ----> file inode:demo01.txt attr---->file block:demo01.txt content
+                         |
+                         |
+  dir block:demo02.txt---- 
+
+创建symbolic link前：
+thompson@dataforthompson:~/demo$ ll
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo01.txt
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo02.txt
+thompson@dataforthompson:~/demo$ ll -d ~/demo
+drwxr-xr-x 2 thompson thompson 4096 11月  4 16:45 /home/thompson/demo/
+thompson@dataforthompson:~/demo$ df
+文件系统        1K-块     已用      可用        已用%   挂载点
+/dev/sda6       98299524  4010952  89272204    5%      /home
+thompson@dataforthompson:~/demo$ df -i
+文件系统       1K-块      已用      可用        已用%   挂载点
+/dev/sda6      6250496   40188 6210308         1%      /home
+创建hard link：
+thompson@dataforthompson:~/demo$ ln -s demo01.txt demo03.txt
+创建hard link后：
+thompson@dataforthompson:~/demo$ ll
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo01.txt
+-rw-r--r--  2 thompson thompson 1086 11月  4 15:46 demo02.txt
+lrwxrwxrwx  1 thompson thompson   10 11月  4 16:15 demo03.txt -> demo01.txt
+thompson@dataforthompson:~/demo$ ll -d ~/demo
+drwxr-xr-x 2 thompson thompson 4096 11月  4 16:45 /home/thompson/demo/
+thompson@dataforthompson:~/demo$ df
+文件系统        1K-块     已用      可用        已用%   挂载点
+/dev/sda6       98299524  4010952  89272204    5%      /home
+thompson@dataforthompson:~/demo$ df -i
+文件系统       1K-块      已用      可用        已用%   挂载点
+/dev/sda6      6250496   40189     6210307     1%      /home
+原理：
+当创建hard link时，在所属目录block中添加文件名称，当增加demo03.txt文件，所属目录总大小并没有超出当前分配的容量时，所属目录不额外分配block；在创建索引后，inode增加1个，block没有增加，代表只创建text03.txt的inode；父目录和demo01.txt的inode被引用次数都没有增加，所以该text03.txt的inode只能指向所属目录的block
+图解：
+                                                      ---->dir block:demo01.txt----> file inode:demo01.txt attr---->file block:demo01.txt
+                                                      | 
+                                                      |
+dir block:demo03.txt---->file inode:demo03.txt attr----
+*warning:该图解与<鸟哥的私房菜>与引用[4]中的结果各有出入，但根据数据的严谨分析，本人认为图解内容更为精确
+
+引用：
+[1]MBR wiki:https://en.wikipedia.org/wiki/Master_boot_record
+[2]GPT wiki:https://en.wikipedia.org/wiki/GUID_Partition_Table
+[3]inode principle:http://www.linfo.org/inode.html
+[4]difference between hard and soft/symbolic link:https://linuxgazette.net/105/pitcher.html
+[5]鸟哥的私房菜:http://linux.vbird.org/linux_basic/0230filesystem.php#harddisk-inode
