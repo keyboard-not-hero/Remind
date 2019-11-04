@@ -69,7 +69,7 @@ ls [options] [file]...
   file-type  --file-type
   classify  -F
 
--i, --inode    显示inode被索引的次数
+-i, --inode    显示inode号码
 
 -I, --ignore=<pattern>    不显示被pattern匹配的项(pattern为shell通配符)
 
