@@ -35,6 +35,7 @@ inode：档案权限和属性记录，同时记录保存档案内容的block num
 *以1k block为例，12个直接12k，1个间接1k/4*1k=256k，一个双间接1k/4*1k/4*1k=64M，一个三间接1k/4*1k/4*1k/4*1k=16G
 
 block：保存实际档案内容，大小可为1/2/4KByte
+**inode和blokc大小在ext家族文件系统下使用dumpe2fs /dev/sd[N]查看
 
 inode与block联合解析：
 inode：目录与文件的inode相同，用于保存属性/权限等metadate
@@ -42,7 +43,12 @@ block：1.目录的block用于保存目录下的文件/子目录名；2.文件�
 当创建目录时，在上层目录的block添加文件名称，用于索引新目录的inode；新建inode，用于保存目录权限/属性(该目录inode被引用两次，一次为父目录的名称引用，一次为新目录的'.')；新建block，用于保存目录下的文件/目录名称
 当创建文件时，在所属目录的block添加文件名称，用于索引文件inode；新建inode，用于保存目录权限/属性；新建block，用于保存文件实质内容
 
-hard link与symbolic link差异：
+hard link：通过新建文件名来连接到目标文件的inode
+缺点：1.不能跨文件系统；2.不能对链接目录
+symbolic link：通过新建inode来连接到目标文件的父目录block，来实现间接访问文件。类似于Windows下的快捷方式
+缺点：删除目标文件的文件名后，symbolic link失效
+
+hard link与symbolic link原理：
 创建hard link前：
 thompson@dataforthompson:~/demo$ ll
 -rw-r--r--  1 thompson thompson 1086 11月  4 15:46 demo01.txt
