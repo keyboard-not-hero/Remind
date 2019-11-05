@@ -28,7 +28,7 @@ x    进入专家菜单(专家级)
 b    从backup GPT header恢复主GPT header
 c    从backup GPT分区表恢复主分区表
 d    从主header恢复备份header
-e    从主分区表恢复备份分区表
+e    从上次保存主分区表加载进内存
 g    将GPT转化为MBR，并进入MBR菜单
 h    制作hybrid MBR
 i    详细分区信息
@@ -37,7 +37,7 @@ m    返回主菜单
 o    打印protective MBR信息
 p    打印分区表
 q    不保存操作退出
-t    
+t    转化BSD分区为GPT分区
 v    磁盘错误检查
 w    保存操作退出
 x    进入专家菜单(专家级)
@@ -47,8 +47,8 @@ x    进入专家菜单(专家级)
 a    设置分区属性
 c    修改分区GUID
 d    显示扇区对齐值
-e    重新分配磁盘尾部的备份数据结构
-f	randomize disk and partition unique GUIDs
+e    将备份GPT移动到磁盘尾部，适用于RAID
+f	   重新分配磁盘和分区GUID
 g    修改磁盘GUID
 h    重新计算protective/hybrid MBR的CHS值
 i    显示分区的详细信息
@@ -61,13 +61,18 @@ p    显示分区表
 q    不保存操作退出
 r    进入恢复和转化菜单
 s    修改分区表大小(entry数量，单个entry 128byte，默认128个)
-t    修改分区号码
+t    交换两个分区号码
 u    复制分区表到新设备
 v    磁盘错误检查
 w    保存操作退出
-z    擦除GPT信息并退出（危险）
+z    擦除GPT数据结构并退出（危险）
 ?    显示帮助信息
 
+GPT保存内容途径：
+1.主GPT_disk：退出保存
+2.主GPT_memory：未保存操作
+3.备份GPT：位于磁盘最后33个扇区，进入gdisk时自动与主GPT_disk同步
+4.备份文件：手动备份
 
 分区建议：
 1.基于EFI的系统，创建EFI System分区，分配550M空间，分区类型0xEF00，格式化为FAT-32
