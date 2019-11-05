@@ -17,7 +17,7 @@ o    初始化分区表
 p    打印分区表
 q    不保存退出
 r    进入恢复和转化菜单(专家级)
-s    排列分区(需要修改/etc/fstab和boot loader配置)
+s    排列分区(分区号码根据分区sector号码进行重新分配，需要修改/etc/fstab)
 t    修改分区类型
 v    磁盘错误检查
 w    保存操作退出
@@ -25,11 +25,11 @@ x    进入专家菜单(专家级)
 ?    显示帮助信息
 
 交互式恢复和转化菜单：
-b    从上一次保存到磁盘的备份内容恢复GPT header
-c    从上一次保存到磁盘的备份内容恢复分区表
-d    从上一次保存到磁盘的主内容恢复GPT header
-e    从上一次保存到磁盘的主内容恢复分区表
-g    将GPT转化为MBR，并进行MBR菜单
+b    从backup GPT header恢复主GPT header
+c    从backup GPT分区表恢复主分区表
+d    从主header恢复备份header
+e    从主分区表恢复备份分区表
+g    将GPT转化为MBR，并进入MBR菜单
 h    制作hybrid MBR
 i    详细分区信息
 l    从备份文件中恢复分区数据
