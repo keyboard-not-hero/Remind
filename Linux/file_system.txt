@@ -25,7 +25,7 @@
   8 Byte - 分区最后一个扇区
   8 Byte - 分区属性，前6 Byte一致，后2 Byte变化
   72 Byte - 分区名称，由36个UTF-16LE编码字组成
-**Hybrid MBR：由BIOS与GPT组合中，MBR依然包含bootstrap内容，并用于识别GPT
+**Hybrid MBR：由BIOS/GPT-unaware OS与GPT组合中，MBR分区表entry指向新建0xEE-EFI类型分区，该分区指向系统区
 **在4k sector中，当硬盘厂商的MBR依然提供512byte物理sector时，会和logical sector产生错位。所以，为了兼容性，建议依然使用512Byte逻辑sector
 **系统支持：Fedora 8+，Ubuntu 8.04+，Windows 8-32bit，Windows Vista-64bit，其中Windows只支持从UEFI引导
 
@@ -123,3 +123,4 @@ dir block:demo03.txt---->file inode:demo03.txt attr----
 [3]inode principle:http://www.linfo.org/inode.html
 [4]difference between hard and soft/symbolic link:https://linuxgazette.net/105/pitcher.html
 [5]鸟哥的私房菜:http://linux.vbird.org/linux_basic/0230filesystem.php#harddisk-inode
+[6]hybrid MBR:https://www.rodsbooks.com/gdisk/hybrid.html
