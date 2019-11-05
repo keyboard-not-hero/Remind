@@ -17,7 +17,7 @@
   4 Byte - 分区划分的扇区数量(当前使用，分区大小限制2^32*512Byte=2^41=2TByte，或者2^32*4KByte=2^44=16TByte)
 *fdisk -l可查看硬盘的引导类型
 
-全局唯一标识分区表(GUID Partition Table，GPT)：MBR的替代方案，UEFI首先读取内容。其中，为保持兼容，第1个sector依然为MBR，称之为protective MBR，并且不含bootstrap，分区表只有第一个entry有效，分区类型值为0xEE；第2个sector为GPT头部；不论sector大小，32*512 Byte为GPT分区表，该分区表由2^7个大小为128 Byte的entry组成；为保分区表完整性，硬盘倒数第一个sector为GPT头部备份；倒数32*512 Byte为GPT分区表备份
+全局唯一标识分区表(GUID Partition Table，GPT)：MBR的替代方案，UEFI首先读取内容。其中，为保持兼容，第1个sector依然为MBR，称之为protective MBR，并且不含bootstrap，分区表一个entry，分区类型值为0xEE；第2个sector为GPT头部；不论sector大小，32*512 Byte为GPT分区表，该分区表由2^7个大小为128 Byte的entry组成；为保分区表完整性，硬盘倒数第一个sector为GPT头部备份；倒数32*512 Byte为GPT分区表备份
   分区结构信息(128 Byte)：
   16 Byte - 分区类型
   16 Byte - 全局唯一标识分区号
@@ -25,7 +25,7 @@
   8 Byte - 分区最后一个扇区
   8 Byte - 分区属性，前6 Byte一致，后2 Byte变化
   72 Byte - 分区名称，由36个UTF-16LE编码字组成
-**Hybrid MBR：由BIOS/GPT-unaware OS与GPT组合中，MBR分区表entry指向新建0xEE-EFI类型分区，该分区指向系统区
+**Hybrid MBR：由BIOS/GPT-unaware OS与GPT组合中，MBR分区表entry指向新建0xEE-EFI类型分区，该分区可包含3个主分区指针，指向系统区
 **在4k sector中，当硬盘厂商的MBR依然提供512byte物理sector时，会和logical sector产生错位。所以，为了兼容性，建议依然使用512Byte逻辑sector
 **系统支持：Fedora 8+，Ubuntu 8.04+，Windows 8-32bit，Windows Vista-64bit，其中Windows只支持从UEFI引导
 
