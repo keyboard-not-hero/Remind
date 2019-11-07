@@ -1,38 +1,33 @@
-1.fcitxÅäÖÃÎÄ¼ş£º
-/usr/share/fcitx   ##È«¾ÖÉèÖÃ
-~/.config/fcitx    #ÌØ¶¨ÓÃ»§ÉèÖÃ
-#pinyinÎª×Ö¿â£¬skinÎªÆ¤·ô
-#~/.profileÎªÓÃ»§¼¶µÇÂ¼ÅäÖÃ
-2.½¨Òé½«Ä¬ÈÏ¼üÅÌÊäÈë·¨ÅäÖÃÎªµÚÒ»¸ö£¬Æ´ÒôÊäÈë·¨ÅäÖÃÎªµÚ¶ş¸ö
-3.ÅäÖÃ¹¤¾ß £ºfcitx-config-gtk
-¶ÔÓ¦Ö¸Áî£ºfcitx-config-gtk3
-4.ÎÊÌâÕï¶Ï¹¤¾ß£ºfcitx-diagnose
+1.fcitxé…ç½®æ–‡ä»¶ï¼š
+/usr/share/fcitx   ##å…¨å±€è®¾ç½®
+~/.config/fcitx    #ç‰¹å®šç”¨æˆ·è®¾ç½®
+#pinyinä¸ºå­—åº“ï¼Œskinä¸ºçš®è‚¤
+2.å°†é»˜è®¤é”®ç›˜å¸ƒå±€é…ç½®ä¸ºç¬¬ä¸€ä¸ªï¼Œæœç‹—è¾“å…¥æ³•é…ç½®ä¸ºç¬¬äºŒä¸ª
+3.é…ç½®å·¥å…· ï¼šfcitx-config-gtk
+å¯¹åº”æŒ‡ä»¤ï¼šfcitx-config-gtk3
+4.é—®é¢˜è¯Šæ–­å·¥å…·ï¼šfcitx-diagnose
 
-°²×°ËÑ¹·ÊäÈë·¨
-1.ÒÆ³ıibus
+å®‰è£…æœç‹—è¾“å…¥æ³•
+1.ç§»é™¤ibus
 sudo apt-get purge ibus
-2.°²×°fcitx
+2.å®‰è£…fcitx
 sudo apt-get install fcitx-pinyin fcitx-config-gtk
-3.ÇĞ»»ÊäÈë·½·¨£º
-ÀÏ°æ±¾£ºim-switch -s fcitx
-ĞÂ°æ±¾£ºim-config -n fcitx
-4.°²×°ËÑ¹·Æ´Òô(ÒÑÔ¤ÏÈÏÂÔØdeb°ü)
-sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
-5.½â¾öÒÀÀµ
+3.åˆ‡æ¢è¾“å…¥æ–¹æ³•ï¼š
+è€ç‰ˆæœ¬ï¼šim-switch -s fcitx
+æ–°ç‰ˆæœ¬ï¼šim-config -n fcitx
+4.å®‰è£…æœç‹—æ‹¼éŸ³(å·²é¢„å…ˆä¸‹è½½debåŒ…)
+sudo dpkg -i sogoupinyin_<version>.deb
+5.è§£å†³ä¾èµ–
 sudo apt-get -f install
-6.×¢Ïú
-7.´ò¿ªfcitxÅäÖÃÒ³Ãæ
+6.ç»§ç»­å®‰è£…
+sudo dpkg -i sogoupinyin_<version>.deb
+7.æ³¨é”€
+8.æ‰“å¼€fcitxé…ç½®é¡µé¢
 fcitx-config-gtk3
-8.ÊäÈë·¨Æ¤·ôÍ¸Ã÷ÎÊÌâ(X11Ö§³ÖÎÊÌâ)
-fcitxÅäÖÃ >> ¸½¼Ó×é¼ş >> ¹´Ñ¡¸ß¼¶ >> ¹´Ñ¡"X11Ö§³Ö"
+9.è¾“å…¥æ³•çš®è‚¤é€æ˜é—®é¢˜(X11æ”¯æŒé—®é¢˜)
+fcitxé…ç½® >> é™„åŠ ç»„ä»¶ >> å‹¾é€‰é«˜çº§ >> å‹¾é€‰"X11æ”¯æŒ"
 
-²Î¿¼Á´½Ó:
+å‚è€ƒé“¾æ¥:
 [1]:https://fcitx-im.org/wiki/Special:MyLanguage/Fcitx
 [2]:https://wiki.archlinux.org/index.php/Fcitx_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29
 [3]:https://code.google.com/archive/p/fcitx/
-
-¿ì½İ¼ü£º
-u    ×éºÏ×Ö
-v    ÂŞÂí×Ö·û
-ctrl+shift+f    º†·±ÇĞ“Q
-shift+space    °ë½ÇÇĞ“Q
