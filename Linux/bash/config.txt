@@ -1,2 +1,2 @@
-全局配置：/etc/profile、/etc/bashrc
-用户级配置：~/.profile、~/.bashrc
+全局配置：/etc/profile(login shell)、/etc/bashrc(nologin shell)
+用户级配置：~/.profile(login shell)、~/.bashrc(nologin shell)

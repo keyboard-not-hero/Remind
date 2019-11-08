@@ -2,7 +2,7 @@ bash设定档：
 全局配置：/etc/bashrc
 用户级配置：$HOME/.bashrc
 
-配置变量(变量未被赋值之前为"")
+配置变量
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 引用变量
 echo $PATH 或 echo ${PATH}
@@ -135,23 +135,57 @@ unalias <ali_name>
 * ? > < ; & ! [ ] | \ ' " ` ( ) { }
 
 变量内容删除
-${VAR#WILDCARD}：将变量VAR从起始位置匹配通配符模式WILDCARD，删除符合该匹配的最短部分(懒惰模式)
+${VAR#WILDCARD}：将变量VAR从起始位置匹配通配符模式WILDCARD，返回删除符合该匹配的最短部分(懒惰模式)
 例:thompson@www~$ echo $PATH
    /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
    thompson@www~$ echo ${PATH#/*:}
    /usr/bin:/sbin:/usr/sbin:/usr/local/bin
-${VAR##WC}：将变量VAR从起始位置匹配通配符模式WILDCARD，删除符合该匹配的最长部分(贪婪模式)
+${VAR##WC}：将变量VAR从起始位置匹配通配符模式WILDCARD，返回删除符合该匹配的最长部分(贪婪模式)
 例:thompson@www~$ echo $PATH
    /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
    thompson@www~$ echo ${PATH##/*:}
    /usr/local/bin
-${VAR%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，删除符合该匹配的最短部分(懒惰模式)
+${VAR%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，返回删除符合该匹配的最短部分(懒惰模式)
 例:thompson@www~$ echo $PATH
    /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
    thompson@www~$ echo ${PATH%:*bin}
    /bin:/usr/bin:/sbin:/usr/sbin
-${VAR%%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，删除符合该匹配的最长部分(贪婪模式)
+${VAR%%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，返回删除符合该匹配的最长部分(贪婪模式)
 例:thompson@www~$ echo $PATH
    /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
    thompson@www~$ echo ${PATH%:*bin}
    /bin
+${VAR/OLD_STR/NEW_STR}:将变量从开始位置匹配到第一个OLD_STR，并返回替换为NEW_STR的结果
+例:thompson@www~$ echo $path
+   /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+   thompson@www~$ echo ${path/bin/show}
+   /show:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+${VAR//OLD_STR/NEW_STR}:将变量从开始位置匹配到所有OLD_STR，并返回替换为NEW_STR的结果
+例:thompson@www~$ echo $path
+   /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+   thompson@www~$ echo ${path/bin/show}
+   /show:/sshow:/usr/show:/usr/sshow:/usr/local/show:/usr/local/sshow
+${OLD_VAR-CONTENT}:当OLD_VAR为已赋值(空字符串或非空字符串)，则返回OLD_VAR的值；当OLD_VAR未赋值，则返回CONTENT的值
+例:thompson@www~$ str="str";null_str=""
+   thompson@www~$ echo $Pstr-new_str};echo ${null_str-new_str};echo ${none_str-new_str}
+   str
+
+   new_str
+${OLD_VAR:-CONTENT}:当OLD_VAR为非空字符串时，则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则返回CONTENT的值
+例:thompson@www~$ str="str";null_str=""
+   thompson@www~$ echo $Pstr:-new_str};echo ${null_str:-new_str};echo ${none_str:-new_str}
+   str
+   new_str
+   new_str
+${OLD_VAR+CONTENT}:当OLD_VAR为已赋值，则返回CONTENT的值；当OLD_VAR未赋值，则返回空字符串
+${OLD_VAR:+CONTENT}:当OLD_VAR为非空字符串，则返回CONTENT的值；当OLD_VAR空字符串或未赋值，则返回空字符串
+${OLD_VAR=CONTENT}:当OLD_VAR为已赋值，则OLD_VAR值不变，并返回OLD_VAR的值；当OLD_VAR未赋值，则OLD_VAR值等于CONTENT，并返回CONTENT的值
+${OLD_VAR:=CONTENT}:当OLD_VAR为非空字符串，则OLD_VAR值不变，并返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则OLD_VAR值等于CONTENT，并返回CONTENT的值
+${OLD_VAR?CONTENT}:当OLD_VAR为已赋值，则返回OLD_VAR的值；当OLD_VAR未赋值，则CONTENT的值输出到stderr
+${OLD_VAR:?CONTENT}:当OLD_VAR为非空字符串，则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则CONTENT的值输出到stderr
+
+其他符号：
+; - 顺序执行指令
+&& - 短路'与'符号，当第一个指令返回status code为0时，才执行第二个指令
+|| - 短路'或'符号，当第一个指令返回status code为非0时，才执行第二个指令
+| - 管道符号，接受第一个指令的stdout，作为第二个指令的stdin。所以，第一个指令的stderr不被管道符号处理(可使用2>&1，将stderr转化为stdout)，第二个指令必须为可接受stdin的指令

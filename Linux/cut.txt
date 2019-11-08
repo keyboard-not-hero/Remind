@@ -1,0 +1,35 @@
+cut - 截取指定字段
+
+语法：
+cut <option> [file]
+
+参数释义：
+-b, --bytes=<list>    获取指定字节
+
+-c, --charactors=<list>    获取指定字符
+
+-d, --delimiter=<delim>    使用指定分隔符，默认为<tab>。只能与-f联合使用
+
+-f, --fields=<list>    获取指定字段
+
+--complement    获取指定字节/字符/字段的补集
+
+-s, --no-delimited    不打印没有包含分隔符的行
+
+--output-delimiter=<str>    使用str作为分隔符，默认使用stdin的分隔符
+
+-z, --zero-terminated    行分隔符为NUL，而不是newline
+
+--help    帮助信息
+
+--version    版本信息
+补充：
+1.-b/-c/-f只能同时使用其中一个
+2.list可以为范围数<number1>-<number2>，也可以为','分隔的多个范围数
+3.cut可接受standard input
+
+范围数格式：
+N    对应的第N个字节/字符/字段，从1起始
+N-    从第N个字节/字符/字段开始，到行尾
+N-M    从第N个到第M个字节/字符/字段
+-M    从第1个到第M个字节/字符/字段
