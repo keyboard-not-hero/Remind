@@ -1,0 +1,30 @@
+uniq - 报告或忽略重复行
+
+语法：
+uniq [option] [input [output]]
+
+参数释义：
+-c, --count    每个重复行出现的次数
+
+-d, --reprated    只筛选重复的行
+
+-D    显示所有重复行
+
+--all-repeated[=method]    类似于-D，但可以使用method进行组分隔显示，meth可选：none/prepend/separate
+
+-f, --skip-fields=<n>    省略前面的n个fields后进行比较
+
+--group[=method]    显示所有行，将组进行分隔显示，method可选：separate,append,prepend,both
+
+-i, --ignore-case    忽略大小写
+
+-s, --skip-chars=<n>    省略前面的n个字符后进行比较
+
+-u, --unique    只显示没有重复的行
+
+-z, --zero-terminated    行分隔符修改为NUL，而非默认的newline
+
+-w, --check-chars=<n>    只比较前面的n个字符
+
+补充：
+uniq支持standard input

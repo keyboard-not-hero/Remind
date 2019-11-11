@@ -1,0 +1,20 @@
+wc - 计算文件行数、单词数和字符数
+
+语法：
+wc [option] <file>|--files0-from
+
+参数释义：
+-c, --bytes    打印字节数
+
+-m, --chars    打印字符数
+
+-w, --words    打印单词数
+
+-l, --lines    打印行数
+
+-L, --max-line-length    打印含最多字节的行宽，<tab>为8个字节，非打印字符0个字节
+
+--files0-from=<file>    从file内读取需要统计的文件名，文件名之间使用NUL(ASCII 0)中断
+
+补充：
+wc支持standard input

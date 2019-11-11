@@ -1,0 +1,46 @@
+sort - 排列文本文件的行
+
+语法：
+sort [option] [file]
+
+参数释义：
+-b, --ignore-leading-blocks    省略首部空格
+
+-d, --dictionary-order    只使用空格和字母/数字作为排序依据
+
+-f, --ignore-case    忽视大小写
+
+-g, --general-numeric-sort    将所有行转化为双精度浮点数进行比较
+  排列顺序：
+  1.以非数字起始的行，结果相等
+  2.NaN(Not a Number)
+  3.负无穷小
+  4.有穷数以升序排列
+  5.正无穷大
+
+-h, --human-numeric-sort    根据单位进行比较，格式[+-]<number>[kmg...KMG...]
+
+-i, --ignorenonprinting    忽略非打印字符
+
+-M, --month-sort    忽略前导空格，根据月份简称排序(忽略大小写)。无效名称先于有效名称
+
+-n, --numeric-sort    十进制数字比较，可以用','作为千位分隔
+
+-r, -reverse    逆序排列
+
+-R, --random-sort    随机排序
+
+--random-source=<file>    随机源
+
+--sort=<word>    排序规则
+  映射关系：
+  general-numeric  -g,  
+  human-numeric  -h,
+  month -M, 
+  numeric -n, 
+  random -R, 
+  version -V
+
+-V, --version-sort    根据版本名称和号码排序([~.0-9A-Za-z]参与比较，优先级：~>.>连续数字>字母)。类似于标准排序，但标准排序将数字逐个排序，-v将数字作为整体排序
+
+

@@ -1,0 +1,82 @@
+test - 检查文件类型和比较值
+
+语法：
+test <expression>
+
+expression语法：
+文件类型
+-b file    文件是否存在并且为块设备
+
+-c file    文件是否存在并且为字符设备
+
+-d file    文件是否存在并且为目录
+
+-f file    文件是否存在并且为标准文件
+
+-h, -L file    文件是否存在并且为符号链接(symbolic link)
+
+-p file    文件是否存在并且为pipe(FIFO)文件
+
+-S file    文件是否存在并且为套接字(socket)
+
+-t FD    FD是否为文件描述符(file descriptor)
+
+文件权限
+-g file    文件是否存在并且为SGID文件
+
+-k file    文件是否存在并且为SBIT文件
+
+-r file    文件是否存在并且为可读
+
+-u file    文件是否存在并且为SUID文件
+
+-w file    文件是否存在并且为可写
+
+-x file    文件是否存在并且为可执行
+
+-O file    文件是否存在并且为当前用户创建
+
+-G file    文件是否存在并且为当前用户有效组
+
+文件特征
+-e file    文件是否存在
+
+-s file    文件是否存在并且大于0 byte
+
+file1 -nt file2    file1新于file2(根据mtime)，或者file1存在而file2不存在
+
+file1 -ot file2    file1旧于file2(根据mtime)，或者file2存在而file1不存在
+
+file1 -ef file2    file1和file2位于相同设备和拥有相同inode number
+
+字符串测试
+-z str    str的长度为0
+
+[-n] str    str的长度为非0
+
+str1 =[=] str2    str1与str2是否相等
+
+str1 != str2    str1与str2是否不相等
+
+数字测试(-l str可获取字符串长度整数)
+arg1 -eq arg2    arg1与arg2相等
+
+arg1 -ne arg2    arg1与arg2不相等
+
+arg1 -lt arg2    arg1小于arg2
+
+arg1 -le arg2    arg1小于等于arg2
+
+arg1 -gt arg2    arg1大于arg2
+
+arg1 -ge arg2    arg1大于等于arg2
+
+连接符
+!expression    expression求反
+
+expr1 -a expr2    expr1与expr2都为真
+
+expr1 -o expr2    expr1或expr2为真
+
+补充：
+可以使用[]代替test关键字

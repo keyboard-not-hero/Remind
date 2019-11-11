@@ -1,0 +1,38 @@
+passwd - 修改用户密码
+
+语法：
+passwd [option] [user]
+
+参数释义：
+-a, --all    与-S参数一起使用，显示所有用户的密码状态
+
+-d, --delete    删除用户密码
+
+-e, --expire    让用户密码立即失效
+
+-h, --help    帮助文档信息
+
+-i, --inactive    密码失效多少天后不允许登录
+
+-k, --keep-tokens    只允许密码失效的用户修改密码
+
+-l, --lock    锁定密码(密码前加'!')，使用户无法登录
+
+-n, --mindays    允许修改密码的最小天数
+
+-q, --quiet    安静模式
+
+-r, --repository    在repository中修改密码
+
+-R, --root    chroot选项
+
+-S, --status    用户密码信息。分别为用户名、密码状态、上次修改密码的日期、密码最小日期、密码最大日期、密码警告期、禁止登录
+
+-u, --unlock    解锁用户密码
+
+-w, --warndays    失效期之前的警告天数
+
+-x, --maxdays    密码的有效期
+
+补充：
+user仅限于root用户修改其他用户的密码

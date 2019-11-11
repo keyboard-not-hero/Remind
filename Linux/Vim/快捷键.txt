@@ -354,5 +354,5 @@ zM    适用所有层折叠(用于多层折叠)
 :tag <func_name>
 --------------------------------------------
 
-
-
+ctrl+s    lock doc
+ctrl+q    unlock doc

@@ -37,7 +37,9 @@ $VIMRUNTIME/vimrc_example.vim
 5.tutor内容
 thompson@dataforthompson:~$ vimtutor
 6.支持剪切板
+查看支持：
 vim --version|grep clipboard
+获取支持：
 apt-get install vim-gnome
 7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80，80代表vim当前安装版本)
 :!echo $VIMRUNTIME

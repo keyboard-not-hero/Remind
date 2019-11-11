@@ -1,18 +1,26 @@
 iconv--convert text from one character encoding to another
+
 参数释义：
 -f    源文件编码
+
 -t    目标文件编码
+
 -o    目标文件名，不指定则为stdout
+
 -l    支持的编码集合
 
 示例：
 iconv -f gb2312 -t utf-8 src.txt -o target.txt
 
 enca--detect and convert encoding of text files
+
 参数释义：
 --list languages    罗列支持的语系及对应编码
+
 -L    标记文本所用语言
+
 -c    自动选择目标编码为当前偏好编码
+
 -x    目标编码
 
 示例：
