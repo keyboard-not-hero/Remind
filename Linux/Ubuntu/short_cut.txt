@@ -1,4 +1,7 @@
-ctrl+alt+t    打开新终端
-ctrl+shift+t    打开新终端(已label形式)
+ctrl+alt+T    打开新终端
+
+ctrl+shift+T    打开新终端(以label形式)
+
 alt+<number>    切换label式终端
+
 ctrl+d    关闭终端

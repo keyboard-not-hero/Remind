@@ -1,20 +1,38 @@
 快捷键：
 <tab><tab>    命令或文档补齐
+
 shift+PgUp    向上翻页
+
 shift+PgDn    向下翻页
+
 ctrl+P    后向查找历史指令
+
 ctrl+N    前向查找历史指令
+
 ctrl+R    按输入字符匹配历史指令
+
 ctrl+C    终止执行
+
 ctrl+A    移动到行首
+
 ctrl+E    移动到行尾
+
 ctrl+K    删除光标到行尾字符
+
 ctrl+U    删除光标到行首字符
+
 ctrl+F    将光标前移一个字符
+
 ctrl+B    将光标后移一个字符
+
 ctrl+L    清屏
+
 ctrl+C    中断指令
+
 ctrl+D    EOF(end of file)
+
 ctrl+Z    当前process丢到background执行    
+
 ctrl+shift+c    复制文本
+
 ctrl+shift+V    粘贴文本

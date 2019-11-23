@@ -1,0 +1,23 @@
+chage - 更改用户密码过期信息
+
+语法：
+chage [option] <user>
+
+参数释义：
+-d, --lastday    上一次修改密码的时间，/etc/passwd第三栏
+
+-E, --expiredate    账号失效时间，/etc/passwd第八栏
+
+-h, --help    帮助信息文档
+
+-I, --inactive    密码失效后还可以登录的时间，/etc/passwd第七栏
+
+-l, --list    显示账号的详细密码参数
+
+-m, --mindays    最小密码可修改间隔时间，/etc/passwd第四栏
+
+-M, --maxdays    密码可使用时间，/etc/passwd第五栏
+
+-R, --root    chroot选项
+
+-W, --warndays    密码失效前的警告日期，/etc/passwd第六栏
