@@ -1,0 +1,15 @@
+userdel - 删除用户和相关文件
+
+语法：
+userdel [option] <user>
+
+参数释义：
+-f, --force    强制删除用户
+
+-h, --help     帮助文档
+
+-r, --remove    删除用户家目录下的文件，其他文件系统的文件需要手动删除
+
+-R, --root    chroot选项
+
+-Z, --selinux-user    移除用户的selinux映射

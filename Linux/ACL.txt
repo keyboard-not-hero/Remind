@@ -1,0 +1,103 @@
+acl - 文件访问控制列表，针对个人或群组进行权限配置
+
+
+名词解释：
+ACL_USER_OBJ - 文件拥有者权限
+ACL_USER - 其他个人权限
+ACL_GROUP_OBJ - 文件所有组权限
+ACL_GROUP - 其他组权限
+mask权限 - 规定ACL_USER/ACL_GROUP_OBJ/ACL_GROUP所能拥有的最大权限，当acl存在时(+)，组权限位置代表的是mask权限
+基本acl - 文件owner、groups、other权限
+默认acl - 针对目录，该目录下的所有文件沿用该acl
+
+
+查看文件系统是否默认支援acl
+dmesg|grep -i acl
+
+使文件系统支持acl
+mount -o remount, acl <mount_point>
+
+
+指令：
+setfacl - 设置文件访问控制列表
+
+语法：
+setfacl [option] [-m|-x spec] [-M|-X spec_file] file
+
+参数释义：
+-b, --remove-all    移除所有拓展acl，基本acl(owner/group/other)保留
+
+-k, --remove-default    移除默认acl
+
+-n, --no-mask    不重新计算mask权限
+
+--mask    重新计算mask权限，即便显式给出mask权限
+
+-d, --default    配置为默认acl
+
+--restore=file    从getfacl -R的结果中恢复
+
+--test    显示acl测试结果，不将其应用于实际文件
+
+-R, --recursive    递归应用于目录下的文件
+
+-L, --logical    应用于symbolic link实际指向的文件
+
+-P, --physical    应用于symbolic link文件
+
+-v, --version    版本信息
+
+-h, --help    帮助信息文档
+
+--    代表option的结束，后续全部解释为文件名，即使以-起始
+
+-    代表从stdin读取文件名
+
+entry格式(空格用于区分字段，实际不存在)：
+个人权限
+[d[efault]:] [u[ser]:][user|uid] [:perms]
+
+群组权限
+[d[efault]:] g[roup]:[group|gid] [:perms]
+
+mask
+[d[efault]:] m[ask][:] [:perms]
+
+others权限
+[d[efault]:] o[ther][:] [:perms]
+
+
+getfacl - 查看文件访问控制列表
+
+语法：
+getfacl [option] file
+
+参数释义：
+-a, --access    显示acl
+
+-d, --default    显示默认acl
+
+-c, --omit-header    忽略acl前三行信息(file_name/owner/group)
+
+-e, --all-effective    打印所有mask权限
+
+-E, --no-effective    不打印mask权限
+
+-s, --skip-base    跳过只含有基本acl的文件
+
+-R, --recursive    递归打印目录下的文件
+
+-L, --logical    打印symbolic link实际指向的文件
+
+-P, --physical    打印symbolic link文件
+
+-t, --tabular    以表格形式打印acl
+
+-p, --absolute-names    不移除起始的/，默认移除起始/
+
+-n, --numeric    列出uid和gid
+
+-v, --version    版本信息
+
+-h, --help    帮助信息文档
+
