@@ -66,7 +66,7 @@ E [file]    强制读取指定文件内容到buff，原buffer内容未保存时�
 
 f [file]    配置默认读取文件，当file未提供，列出默认文件名
 
-g/RE/<command_list>    对匹配RE的行全局执行一系列command操作
+g/RE/<command_list>    对匹配RE的所有行执行一系列command操作
 
 G/RE/    打印匹配RE的行，并提示进行一系列command操作
 
@@ -111,7 +111,7 @@ t<n>    将范围行复制一份到第n行后
 
 u    撤销上一次操作
 
-v /RE/<command_list>    类似于g，但对不匹配RE的行执行command_list操作
+v /RE/<command_list>    类似于g，但对不匹配RE的所有行执行command_list操作
 
 V /RE/    类似于G，但打印不匹配RE的内容，并提示进行command操作
 
