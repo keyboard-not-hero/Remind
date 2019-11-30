@@ -1,0 +1,38 @@
+tr - 转化和删除字符
+
+语法：
+tr [option] SET1 [SET2]
+
+参数释义：
+-c, -C, --complement    将SET1字符取补集
+
+-d, --delete    删除input中的SET1字符
+
+-s, --squeeze-repeats    将input中最后一个SET集合中出现的连续字符压缩成一个对应字符
+
+-t, --truncate-set1    当SET1长度大于SET2长度，将SET1截取成跟SET2一样长度(System V模式，默认为BSD模式)
+
+--help    帮助信息文档
+
+--version    版本信息
+
+SET表示方法：
+CHAR1-CHAR2    CHAR1与CHAR2之间的升序列表
+
+[CHAR*]    用于SET2，复制字符CHAR，直到与SET1等长
+
+[CHAR*REPEAT]    将字符CHAR重复REPEAT次，如果REPEAT为0开头，则为八进制(默认十进制)
+
+[::]    字符集
+
+[==]    等价字符集
+
+tr模式：
+translate - 当没有提供-d选项，并且SET1和SET2都提供，则将input中的SET1字符对应转化为SET2字符。该模式可与squeeze模式同时存在
+  1.当SET1中出现同一个字符多次，只有最后一次出现及对应转化生效
+  2.当SET1长度小于SET2，截取SET2多余字符
+  3.当SET2长度大于SET2。BSD默认重复SET2最后一个字符，直到与SET1长度相同(GNU tr默认)；System V截取SET1多余字符
+
+delete - 提供-d选项，删除input中的SET1提供的字符。该模式可与squeeze模式同时存在
+
+squeeze - 提供-s选项，将input中的最后一个SET出现的连续相同字符压缩成单个对应字符。该模式可与translate或者delete共存
