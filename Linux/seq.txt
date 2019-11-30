@@ -1,0 +1,17 @@
+seq - 打印数字序列
+
+语法：
+seq [option] {[<first> [step]] <last>}
+
+参数释义：
+-f, --format=<format>    打印格式
+
+-s, --separator=<sep>    分隔符号，默认为\n
+
+-w, --equal-width    是否使用前置0，使数字等宽
+
+--help    帮助信息文档
+
+--version    版本信息
+
+**如果first和step省略，则默认为1
