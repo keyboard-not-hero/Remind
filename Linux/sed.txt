@@ -1,180 +1,269 @@
-sed - 过滤和转化文本的流编辑器
+sed - 过滤和转化文本的流编辑器，对文件进行逐行循环操作(模式空间)
 
 语法：
 sed [OPTION] [SCRIPT] [file]
 **多个输入文件组成一个输入流
 
 参数释义：
--n, --quiet, --silent    不打印模式空间的内容
+-n, --quiet, --silent    不打印模式空间的内容(默认打印)
 
--e <script>, --expression=<script>    增加执行的脚本指令
+-e <script>, --expression=<script>    增加执行的脚本指令(一条指令可以多次指定)
 
 -f <script_file>, --file=<script_file>    从文件内读取执行的脚本指令
 
---follow-symlinks    
+--follow-symlinks    配合-i使用，修改symbolic link指向的实际文件
 
--i[suffix], --in-place[=suffix]    修改作用到文件，当suffix提供时，提供suffix后缀备份
+-i[suffix], --in-place[=suffix]    修改作用到文件(默认输出到stdout)，当suffix提供时，提供suffix后缀备份。该选项隐式包含-s选项
 
 -l <n>, --line-length=<n>    单行长度
 
 --posix    关系所有GNU拓展选项
 
--E, -e, --regexp-extended    使用拓展RE
+-b, --binary    以二进制模式打开文件
 
---sandbox    在沙盒模式中操作
+-E, -r, --regexp-extended    使用拓展RE
+
+-s, --separate    默认，sed将所有文件视为一个long stream。该选项将其分为多个stream
+
+--sandbox    在沙盒模式中操作，e/w/r script失效
 
 -u, --unbuffered    从文件加载尽可能少的数据，并更频繁地刷新输出
 
--z, --null-data    以NUL字符分隔行
+-z, --null-data, --zero-terminated    以NUL字符分隔行
 
 --help    打印帮助信息
 
 --version    显示帮助信息
 
+
 SCRIPT格式：
-<effect_line><command>
+<effect_line><command><option>
 
-**SCRIPT操作行规则：
-1.默认作用于所有行
-2.指定行则只作用于该行
-3.使用/RE/前置来匹配行
-4.使用start,end来指定行范围，范围为闭区间，当end<start时，可指定start一行
-5.line!后的!表示取反，作用于非指定/匹配行
-**行符号：
-1.number指定行
-2.$代表文件的最后一行
-3.first~step代表从first起始的每step行
-4./REGEXP/代表使用正则表达式匹配
-5.\%regexp%，方案4的相同方案，并且%可使用其他符号代替
-6./REGEXP/I，方案4的大小写不敏感版本
-7./REGEXP/M，方案4的multi-line版本
-8.0,/REGEXP/中，REGEXP尽量匹配到1，所有只有第一行
-9.addr1,+N代表从addr1行开始，并加上余下的N行
-10.addr1,~N代表从addr1行开始，遇到N的倍数行打印完终止
 
-SCRIPT [command_desc]：
-a TEXT    在下一行添加文本内容(TEXT)
-b label    无条件分支标签，标签行会被组合忽略，不会再被读入pattern空间
-c TEXT    替换指定行为文本内容(TEXT)
-d    删除pattern空间内容，省略后续command，直接进入下一轮cycle
-D    当pattern包含newline，从pattern删除内容，直到遇见newline，并直接以pattern剩余内容进入下一轮cycle，不从输入流读取；如果不包含newline，正常开始下次cycle
-e    根据文件内容执行shell指令
-e command    执行shell下的command指令
-F    在指定行之前打印文件名
-g    将pattern空间内容替换为hold空间内容
-G    
-h    将hold空间内容替换为pattern空间内容
-H    
-i TEXT    在上一行添加文本内容(TEXT)
-l [n]   打印pattern空间内容(以$符号结束)，n为行字符宽度，需要配合-n
-n    pattern空间内容直接跳转到第三步，输出到stdout
-N    在pattern空间添加newline，并将下一行加载进pattern中。如果输入流无内容，则直接打印pattern内容
-p    打印pattern空间内容，需要配合-n。用于打印行
-P    
-q[exit-code]    打印到指定行并以指定返回码(默认为0)退出
-Q[exit-code]    打印到指定行之前并以指定返回码(默认为0)退出
-r filename    读取文件内容到pattern空间之后
-R filename    在多个pattern空间之后打印分别打印一条文件内的记录，取决于文件记录条数
-s/REGEXP/REPLACEMENT/[flags]    将RE匹配到的字符串替换为NEW字符串
-t label    当前一个输入流成功对某行执行s操作时，可对该行打上标签
-T label    当前一个输入流没有对某行执行是操作时，可对该行打上标签
-v [VERSION]    只有GNU版本sed支持v参数；并且当提供的version高于安装版本时，也会出现错误提示
-w filename    将pattern空间内容保存到文件中
-W filename    将pattern空间内容保存到文件中
-x    交换hold空间和pattern空间内容
-y/src/dst/    将src集合中的字符，替换为dst集合对应position的字符;src和dst集合大小需一致
-z    清空pattern空间内容
-#    后续紧跟注释，直到遇到newline
-{cmd;cmd...}    对指定行进行组合操作
-=    在上一行插入行号
-: label    跳转到指定label位置
-**两种buffer：
-1.pattern space：匹配的内容，初始化为空。
-  one：从输入流读取一行，删除尾部newline，将其放入pattern空间；
-  two：pattern空间的内容执行SCRIPT操作；
-  three：如果没有-n参数，spttern空间内容打印到stdout，并添加尾部newline；
-  four：清除当前space内容
-2.hold space：在匹配行之间保留内容，初始化为空
-**SCRIPT可组合，方式如下：
-1.换行
-2.多个-e分开指定
-3.';'符号分隔(a/c/i/#不适用)
-4.集中到文件中，使用-f进行
-5.特殊组合：/./{H;$!d} ; x ; s/REGEXP/REPLACEMENT/。第一部分将输入流的内容以空行为分隔，以块的形式连续导入pattern空间，然后再从pattern空间导入hold空间，重复执行以全部完成块操作；第二部分将hold空间的内容全部导回pattern空间；第三部分将pattern以块执行替换操作，可增加组合或换为其他SCRIPT
+effect_line列表：
+    所有行(默认)
 
-s/RE/NEW/[flags]额外标记：
-RE：
-()    标记组
-\1~\9    RE使用()标记的组
-NEW：
-\L    后续字符替换为小写，知道遇到\U或\E
-\l    下一个字符替换为小写
-\U    后续字符替换为大写，直到遇到\L或\E
-\u    下一个字符替换为大写
-\E    大小写转换停止标记
-\1~\9    RE使用()标记的组
-flags：
-g    替换所有匹配对象，而不是第一个
-N    替换第N个匹配对象
-p    打印有替换行为的行
-w filename    将有替换的行内容保存到文件
-e    将结果pattern空间中的内容作为shell命令执行
-i
-I    RE部分忽略大小写
-m
-M    multi line模式    
+<designate_line>    指定单行
+    1.number - 详细指定行
+    2.$ - 最后一行
+    3.<first>~<step> - <first>代表起始行，<step>代表间隔行
 
-正则规则：
+<start_line>,<end_line>    从第start_line行到第end_line行
+    1.number,/regexp/ - regexp尽量取number+1
+    2.addr1,+N - 匹配addr1行和后续N行
+    3.addr1,~N - 匹配addr1行和后续到达第一个N的整数倍行(包含)
+
+/RE/    匹配RE的行
+    1.当RE为''，则为上一次匹配行
+    2./为分界符，可使用其他符号代替，如:
+      % - \%RE%
+      ; - \;RE;
+    3./RE/I的I代表匹配时忽略大小写
+    4./RE/M的M代表多行模式，即.可匹配<newline>
+
+<address>!    对匹配行取反。如4,7代表取1~3行和8~最后一行
+
+
+command列表：
+a\
+<text>
+a<text>    模式空间的下一行添加文本
+
+b<label>    无条件跳转到打标签处
+
+c\
+<text>
+c<text>    使用text文本替代指定行内容
+
+d    删除模式空间内容，马上开启下一次循环(即不执行后续command)
+
+D    如果模式空间不包含newline，类似于d；如果模式空间包含newline，删除模式空间第一个<newline>(包含)之前文本，并且忽略后续command，在该模式空间结果上重启循环(而非重新读取input开启下一次循环)
+
+e    执行模式空间的shell command，并使用结果替换模式空间内容
+
+e <command>    执行shell command，并将结果输出到stdout
+
+F    打印input file文件名
+
+g    使用hold空间内容替换pattern空间内容
+
+G    从hold空间添加内容到模式空间，添加之前需先注入<newline>
+
+h    使用pattern空间内容替换hold空间内容
+
+H    从模式空间添加内容到hold空间，添加之前需先注入<newline>
+
+i\
+<text>
+i<text>    pattern空间的上一行插入文本
+
+l [line_length]    打印模式空间内容，附带尾部$(与stdout进行格式区分)。line_length代表使用的行长度
+
+n    当auto-print没有关闭，打印pattern空间内容，并马上使用input覆盖pattern空间。当没有input内容读取时，不执行后续command，直接退出
+
+N    添加input file行内容到模式空间，添加之前需先注入<newline>。当没有input内容读取时，不执行后续command，直接退出
+ 
+p    打印pattern空间内容，可配合-n使用
+
+P    打印pattern空间第一个<newline>之前的内容
+
+q[exit_code]    直到指定行(包含)退出，不执行后续command，exit_code为匹配成功后的返回代码
+
+Q[exit_code]    直到指定行(不包含)退出，不执行后续command，exit_code为匹配成功后的返回代码
+
+r <file>    读取file内容。每读取input file一行，即读取file全文一次
+
+R <file>    读取file内容。每读取input file一行，即读取file一行。当input file行数大于file行数，file读取完便不再读取；当input file行数小于file行数，file多余的行也不读取
+
+s/RE/<replace>/[flags]    使用replace字符串替换匹配内容RE    
+    匹配内容:
+    1.replace可使用\n，n为数字1~9，可引用RE中的子分组\( \)
+    2.replace可使用&，为完整RE引用
+    3.replace特殊字符集合
+      \L    后续字符转化为lowercase
+      \l    下一个字符转化为lowercase
+      \U    后续字符转化为uppercase
+      \U    下一个字符转化为uppercase
+      \E    停止case转化
+    4.flags列表
+      g    将替换应用于当前行所有匹配字符串，而非第一个匹配字符串(默认)
+      number    将替换应用于第number个匹配字符串
+      p    当替换发生，打印模式空间内容
+      w <file>    当替换发生，将结果写入到指定文件
+      e    当替换发生，执行模式空间中的shell command，并将结果覆盖到模式空间
+      I
+      i    当匹配RE时，忽略大小写
+      M
+      m    使RE支持multi-line模式，即.可匹配<newline>
+
+t <label>    如当前循环之前已成功执行s///操作，则跳转到标记
+
+T <label>    如当前循环之前没有成功执行s///操作，则跳转到标记
+
+v [version]    当不支持GNU拓展或者无法获得指定版本sed(默认4.0)，指令失败
+
+w <file>    将模式空间内容写入文件
+
+W <file>    将模式空间第一个<newline>之前的内容写入文件
+
+x    交换模式空间和hold空间内容
+
+y/<src>/<dst>/    将src集合中的字符，对应地替换为dst集合中的字符
+
+z    清空模式空间内容
+
+#    注释内容
+
+{<cmd1>;<cmd2>...}    组合多个指令。通常用于含相同addr范围
+
+=    打印行号，行号自带尾部<newline>
+
+:<label>    打标签指令
+
+
+RE列表：
 BRE
-^    行起始
-$    行结束
-.    所有符号，包含newline
-\?    前置字符出现0或1次
-\+    前置字符出现1或多次
-*    前置字符出现0或1或多次
-\{i\}    前置字符出现i次
-\{i,j\}    前置字符出现i~j次
-\{i,\}    前置字符至少出现i次
-[list]    匹配list中的任一字符
-[^list]    匹配除list中的任一字符
-regexp1\|regexp2    匹配regexp1或regexp2
-\(regexp\)    匹配组，可用于整体用*标记，或反向引用\digit
-\digit    反向引用，引用之前匹配的群组
-\w    代表单词字符,[A-Za-z0-9_]
-\W    代表非单词字符
-\b    单次边界(一边为单词字符，另一边为非单词字符)
-\B    非单词边界(两边都为单词字符或非单词字符)
-\s    空白字符
-\S    非空白字符
-\<    单词起始
-\>    单词结束
-\`    匹配空间的起始处
-\'    匹配空间的结束处
+\    escape字符
+
+*    前面的字符重复0或1或多次
+
+.    匹配任一字符，包括<newline>
+
+^    行(当前循环/模式空间)起始位置
+
+$    行(当前循环/模式空间)结束位置
+
+[]    匹配限定的任一字符
+  1.-不在第一或最后位置，代表范围
+  2.meta字符取消特殊含义
+  3.-或]在第一个位置，代表字符
+  4.-和]同时包含，]在第一个位置，-在最后一个位置
+  5.^处于第一个位置，代表取反
+  6.[::]代表字符集
+  7.[..]代表字符集序列
+  8.[==]代表等价字符集
+
+[^]    匹配限定以外的任一字符
+
+\+    前面的字符匹配1或多次
+
+\?    前面的字符匹配0或1次
+
+\{n\}    前面的字符精确匹配n次
+
+\{n,m\}    前面的字符匹配n~m次
+
+\{n,\}    前面的字符匹配n次以上
+
+\( \)    子分组匹配，可同时含9个子分组
+
+\digit    digit代表1~9的数字，代表对\( \)子分组的顺序引用
+
+\|    匹配|符号左边或右边的字符串
+
 ERE
-^    行起始
-$    行结束
-.    所有符号，包含newline
-?    前置字符出现0或1次
-+    前置字符出现1或多次
-*    前置字符出现0或1或多次
-{i}    前置字符出现i次
-{i,j}    前置字符出现i~j次
-{i,}    前置字符至少出现i次
-[list]    匹配list中的任一字符
-[^list]    匹配除list中的任一字符
-regexp1|regexp2    匹配regexp1或regexp2
-(regexp)    匹配组(subexpression)，可用于整体用*标记，或反向引用\digit
-\digit    反向引用，引用之前匹配的群组
-**BRE与ERE差别：? + {} () |五种符号的差别
+\    escape字符
 
-名称字符集类：
-[:alpha:]    [A-Za-z]
-[:alnum:]    [0-9A-Za-z]
-[:blank:]    空格和TAB
-[:cntrl:]    ASCII八进制范围：000~037/177
-[:digit:]    [0-9]
-[:xdigit:]    [0-9A-Fa-f]
-[:upper:]    [A-Z]
-[:lower:]    [a-z]
-[:space:]    TAB/空格/newline
+*    前面的字符重复0或1或多次
 
+.    匹配任一字符，包括<newline>
+
+^    行(当前循环/模式空间)起始位置
+
+$    行(当前循环/模式空间)结束位置
+
+[]    匹配限定的任一字符
+
+[^]    匹配限定以外的任一字符
+
++    前面的字符匹配1或多次
+
+?    前面的字符匹配0或1次
+
+{n}    前面的字符精确匹配n次
+
+{n,m}    前面的字符匹配n~m次
+
+{n,}    前面的字符匹配n次以上
+
+( )    子分组匹配，可同时含9个子分组
+
+\digit    digit代表1~9的数字，代表对\( \)子分组的顺序引用
+
+|    匹配|符号左边或右边的字符串
+
+额外RE：
+\w    单词字符([a-zA-Z0-9])
+
+\W    非单词字符([^a-zA-Z0-9])
+
+\b    单词边界
+
+\B    非单词边界
+
+\s    空白字符(<space>/<tab>/<newline>)
+
+\<    单词起始位置
+
+\>    单词结束位置
+
+\`    模式空间起始位置(行起始)
+
+\'    模式空间结束位置(行结束)
+
+
+组合command方式(不同循环)：
+1.<newline>分割
+2.-e选项进行分割
+3.;分割(a/c/i/r/R/w/W/e不支持，s/RE/<rep>/[we]不支持)
+
+
+原理：
+1.sed从文件读取一行，移除尾部<newline>，将内容放置到模式空间
+2.依次执行command_list - 将command的行与模式空间的行进行比较，匹配则执行
+3.除非使用silent模式(-n参数)，否则将模式空间的结果打印到stdout，移除的<newline>需要添加回去
+4.执行下一次循环1-2-3
+**hold空间：用于保存两次循环之间，上一次循环的模式空间结果数据
+**模式空间和hold空间初始都为空
+
+参考链接：https://www.gnu.org/software/sed/manual/sed.html
