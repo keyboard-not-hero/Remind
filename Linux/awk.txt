@@ -418,7 +418,7 @@ getline <var> - 读取下一行，将下一行内容赋予变量var，作用到�
 
 getline < <file> - 从指定文件读取一行，作用到预定义变量NF/RT/$0
 
-getline <var> < <file> -从指定文件读取一行，并将该行内容赋予变量var，不作用到预定义变量
+getline <var> < <file> -从指定文件读取一行，并将该行内容赋予变量var，作用到预定义变量RT
 
 <command> | getline - 将command的output作为输入读取一行，作用到预定义变量NF/RT/$0
 
