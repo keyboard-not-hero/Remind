@@ -4,15 +4,68 @@ gawk - GNU版本awk，模式扫描和文本处理语言，对文件执行逐行�
 gawk [option] ['program'] [file...]
 
 参数释义：
--F fs, --field-separator fs    field分隔符
+-F <fs>, --field-separator <fs>    field分隔符
 
--f source-filr, --file source-file    从文件内读取program指令
+-f <source-filr>, --file <source-file>    从文件内读取program指令
 
---lint    更严格的错误检查
+-v var=<value>, --assign var=<value>    为program变量var赋值为value
 
--v var=value, --assign var=value    为program变量var赋值为value
+-W <gawk-opt>    使用gawk拓展option
 
 --    代表option部分结束
+
+gawk拓展选项：
+-b, --characters-as-bytes    将所有input和output视为单字节字符
+
+-c, --traditional    gawk兼容模式，只能使用awk基本特性
+
+-C, --copyright    打印GPL简短内容
+
+-d[file], --dump-variables[=file]    打印文件file可使用的全局变量有序列表。当file未提供，默认为awkvars.out
+
+-D[file], --debug[=file]    根据file内的debug交互式指令进行调试
+
+-e <program-text>, --source <program-text>    指定program部分，可多次重复使用该option
+
+-E <file>, --exec <file>    类似于-f，但有两点差异：
+    1.中断其他option，直接将其他option转化为program部分
+    2.-v option被禁止
+
+-g, --gen-pot    分析program内容，并且生成gettext可移植模板文件
+
+-h, --help    帮助信息
+
+-i <source-file>, --include <source-file>    与-f类似，但有两点差异：
+    1.当-i先于program时，不再加载program；但和-f同时使用时，-f指定内容始终读取加载
+    2.由于-i作为code库，所以并不能识别其中program内容，并期望获取-f相关program内容
+
+-l <ext>, --load <ext>   　查找名称为ext的系统共享库。搜索路径参考AWKLIBPATH，extension suffix参考系统默认(不能手动指定)
+
+-L[value], --lint[=value]    更严格的警告模式(类似于开发者模式)，并且对其他版本awk兼容性较低
+
+-M, --bignum    对数字使用任意精度算法，依赖于GNU的MPFR和MP库
+
+-n, --non-decimal-data    允许在input中使用八进制和十六进制
+
+-N, --use-lc-numeric    强制携带十进制的.符号
+
+-o[file], --pretty-print[=file]    将program以pretty方式排列(默认保存文件为awkprof.out)，隐式包含--no-optimize
+
+-O, --optimize    对program部分的优化，默认开启
+
+-p[file], --profile[=file]    指定program的配置文件(默认为awkprof.out)。隐式包含--no-optimize
+
+-P, --posix    严格的posix兼容模式，禁止gawk拓展
+
+-r, --re-interval    允许内部表达式使用regexp，默认开启
+　
+-s, --no-optimize    关闭program部分的优化
+
+-S, --sandbox    沙盒模式，不允许调动system()/input重导向getline/output重导向print与printf，在gawk启动后不可以添加文件名到ARGV
+
+-t, --lint-old    link老版本兼容，awk v7之后不再支持
+
+-V, --version    版本信息
 
 
 program格式:
@@ -26,14 +79,18 @@ program事项：
 3.''保护program内容，不被shell解释
 4.""保护大部分program内容(variable和command除外)。特殊字符列表：$/`/\/"
 5.字符串到数字/数字到字符串的转化都是根据上下文自动进行
+6.'#'后的文字为注释，直到遇到'\n'
 
 program变量汇总(#标记为gawk拓展)：
 ARGC    指令行参数array的元素个数
 ARGIND #    当打开每一个input file时，该值配置为对应文件在ARGV array中的索引
 ARGV    指令行参数array(awk指令/文件名组成，program/option不参与组成)，数组以0为起始
+AWKLIBPATH    
 BINMODE #    以二进制模式代表读写模式。1(r)/2(w)/3(rw),大于3的数字视为3
 CONVFMT    当数字转化为字符串时，作为sprintf函数第一个参数，默认为%.6g(即整数最大位数或浮点数小数位数)
 ENVIRON    数组名称，可通过EVVIRON["NAME"]格式获取系统环境变量的值。如ENVIRON["PATH"]
+    ENVIRON["AWKPATH"]    .awk后缀program文件搜寻路径(-f或-i)，默认为".:/usr/local/share/awk"
+    ENVIRON["AWKLIBPATH"]    .so后缀系统分享库文件搜索路径(-l)，默认为"/usr/local/lib/gawk"
 ERRNO #    
 FIELDWIDTHS #    使用列宽列表来指定field(覆盖FS和FPAT变量)
     1.可在每个元素前指定<number>:来指定field前需跳过的列数
@@ -352,6 +409,20 @@ substr(string, start[, length])：将字符串string从start位置(由1起始)�
 tolower(str)：返回字符串的小写形式
 
 toupper(str)：返回字符串的大写形式
+
+
+getline用法：
+getline - 马上读取下一行，作用到预定义变量NF/NR/FNR/RT/$0。返回1代表读取下一行成功，返回0代表读取到文件末尾，返回-1代表读取错误
+
+getline <var> - 读取下一行，将下一行内容赋予变量var，作用到预定义变量NR/FNR/RT
+
+getline < <file> - 从指定文件读取一行，作用到预定义变量NF/RT/$0
+
+getline <var> < <file> -从指定文件读取一行，并将该行内容赋予变量var，不作用到预定义变量
+
+<command> | getline - 将command的output作为输入读取一行，作用到预定义变量NF/RT/$0
+
+<command> | getline <var> - 将command的output作为输入读取一行，将改行内容赋予变量var，作用到预定义变量RT
 
 
 
