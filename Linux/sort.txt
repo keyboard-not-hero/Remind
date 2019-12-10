@@ -1,46 +1,76 @@
 sort - 排列文本文件的行
 
 语法：
-sort [option] [file]
+sort [option]... [file]...
 
 参数释义：
--b, --ignore-leading-blocks    省略首部空格
+-b, --ignore-leading-blanks    省略行首空白符([ \t])
 
--d, --dictionary-order    只使用空格和字母/数字作为排序依据
+--batch-size=<nmerge>    当进行merge操作时，每一次自排序操作读取的行数。默认为16
+
+-c, --check    检查文件是否已排序，如排序返回status code 0，如未排序，输出第一排未排列行的诊断信息，并返回status code 1
+
+-C, --check=quiet    检查文件是否已排序，类似于-c，但未排序时不输出诊断信息，只返回status code 1
+
+-d, --dictionary-order    排序时，忽略除数字、字母、空白符([[:alpnum:] \t])以外的字符
+
+--debug    对排序field进行高亮显示，并且打印stderr信息
 
 -f, --ignore-case    忽视大小写
 
--g, --general-numeric-sort    将所有行转化为双精度浮点数进行比较
+-g, --general-numeric-sort    以数字形式进行比较，将数字转化为双精度浮点数进行比较。该选项与-n比较，更慢
   排列顺序：
   1.以非数字起始的行，结果相等
   2.NaN(Not a Number)
-  3.负无穷小
-  4.有穷数以升序排列
+  3.负无穷大
+  4.有穷数(以升序排列)
   5.正无穷大
 
 -h, --human-numeric-sort    根据单位进行比较，格式[+-]<number>[kmg...KMG...]
+  排序规则：
+  1.前置代表正负数的符号
+  2.单位(K/M/G)
+  3.数字(<number>)
 
--i, --ignorenonprinting    忽略非打印字符
+-i, --ignore-nonprinting    忽略非打印字符。当-d提供时，本选项失效。由LC_CTYPE决定字符类型
 
--M, --month-sort    忽略前导空格，根据月份简称排序(忽略大小写)。无效名称先于有效名称
+-k POS1[,POS2], --key=POS1[,POS2]    指定比较的field，比较内容为闭区间[POS1,POS2]。当POS2省略时，默认为持续到最后一个field。当选项未提供时，比较整行
+    POS详细格式F[.C][OPTS]
+    F - 代表field
+    C - 代表field中字符位置，从1起始。POS1默认为1，POS2默认为0(0在POS2中代表最后一个字符，且不能用于POS1)
 
--n, --numeric-sort    十进制数字比较，可以用','作为千位分隔
+-m, --merge    使用合并代替默认的排序操作
+    status code:
+    0 - 无错误出现
+    1 - 与'-c'或者'-C'使用时，出现未排序情况
+    2 - 出现错误
+
+-M, --month-sort    根据月份简称排序(由3个连续字符组成，忽略前后空格，忽略大小写)。无效名称低于有效名称。由LC_TIME决定月份拼写格式
+
+-n, --numeric-sort    十进制数字比较(可由前导空白符/'-'组成)，用','作为千位分隔。由LC_NUMERIC决定十进制字符和千分位符
+
+-o <file>, --output=<file>    将结果输出到file文件。默认输出到stdout
+
+--parallel=<n>    使用n个并行sort处理排序，上限为8。默认为处理器个数
 
 -r, -reverse    逆序排列
 
--R, --random-sort    随机排序
+-R, --random-sort    随机排序(每一行生成hash值，根据hash值排序)
 
---random-source=<file>    随机源
+--random-source=<file>    随机排序参考源。如：/dev/urandom
 
---sort=<word>    排序规则
-  映射关系：
-  general-numeric  -g,  
-  human-numeric  -h,
-  month -M, 
-  numeric -n, 
-  random -R, 
-  version -V
+-s, --stable    禁用last-resort比较
 
--V, --version-sort    根据版本名称和号码排序([~.0-9A-Za-z]参与比较，优先级：~>.>连续数字>字母)。类似于标准排序，但标准排序将数字逐个排序，-v将数字作为整体排序
+-S <size>, --buffer-size=<size>    使用指定内存空间作为排序缓存，默认为1024 byte
 
+-t <separator>, --field-separator=<separator>    使用指定字符作为field分隔符。默认为空白符([ \t]，并自动忽略行首空格)
 
+-T <dir>, --temporary-directory=<dir>    用于存放临时文件的目录，用于取代变量'TMPDIR'指定的目录。当多次指定时，每个目录都将存放临时文件
+
+-u, --unique    对行进行去重(根据排序field，不同于unique的整行)
+
+-V, --version-sort    根据版本名称和号码排序([~.[:alpnum:]]参与比较，优先级：~>.>连续数字>字母)。类似于标准排序，但标准排序将数字逐个排序，当前将数字作为整体排序
+
+-z, --zero-terminated    使用NUL代替newline作为行中断
+
+**支持standard input
