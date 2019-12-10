@@ -1,7 +1,0 @@
-lpr--打印文件内容
-语法：
-lpr [options] file
-options释义：
--H server[:port]    连接到文件所在服务器
--P destination    指定打印的机器
--r    打印文件后删除

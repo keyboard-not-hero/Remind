@@ -34,10 +34,11 @@ sort [option]... [file]...
 
 -i, --ignore-nonprinting    忽略非打印字符。当-d提供时，本选项失效。由LC_CTYPE决定字符类型
 
--k POS1[,POS2], --key=POS1[,POS2]    指定比较的field，比较内容为闭区间[POS1,POS2]。当POS2省略时，默认为持续到最后一个field。当选项未提供时，比较整行
+-k POS1[,POS2], --key=POS1[,POS2]    指定比较的field，比较内容为闭区间[POS1,POS2]。当POS2省略时，默认为持续到最后一个field。当参数未提供时，比较整行。可多次使用该选项，依次序进行全文排序
     POS详细格式F[.C][OPTS]
     F - 代表field
     C - 代表field中字符位置，从1起始。POS1默认为1，POS2默认为0(0在POS2中代表最后一个字符，且不能用于POS1)
+    OPTS - 为sort选项，即其他option可跟随在-k完整选项后面
 
 -m, --merge    使用合并代替默认的排序操作
     status code:
@@ -59,7 +60,7 @@ sort [option]... [file]...
 
 --random-source=<file>    随机排序参考源。如：/dev/urandom
 
--s, --stable    禁用last-resort比较
+-s, --stable    在拥有相同排序field的前提下，其他field排序output严格遵守input顺序
 
 -S <size>, --buffer-size=<size>    使用指定内存空间作为排序缓存，默认为1024 byte
 

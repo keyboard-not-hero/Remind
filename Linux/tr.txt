@@ -36,3 +36,5 @@ translate - 当没有提供-d选项，并且SET1和SET2都提供，则将input�
 delete - 提供-d选项，删除input中的SET1提供的字符。该模式可与squeeze模式同时存在
 
 squeeze - 提供-s选项，将input中的最后一个SET出现的连续相同字符压缩成单个对应字符。该模式可与translate或者delete共存
+
+**tr从stdin读取内容

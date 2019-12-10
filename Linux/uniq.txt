@@ -6,7 +6,7 @@ uniq [option] [input [output]]
 参数释义：
 -c, --count    每个重复行出现的次数
 
--d, --reprated    只筛选重复的行
+-d, --reprated    只显示重复的行
 
 -D    显示所有重复行
 
