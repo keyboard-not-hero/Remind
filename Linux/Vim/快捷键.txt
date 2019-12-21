@@ -353,6 +353,3 @@ zM    适用所有层折叠(用于多层折叠)
 **[root@~ ]$ ctags *.py
 :tag <func_name>
 --------------------------------------------
-
-ctrl+s    lock doc
-ctrl+q    unlock doc

@@ -1,4 +1,16 @@
 快捷键：
+ctrl+A    移动到行首
+
+ctrl+E    移动到行尾
+
+ctrl+F    将光标前移一个字符
+
+ctrl+B    将光标后移一个字符
+
+esc+F    移动到下一个单词末尾(单词由字母和数字组成)
+
+esc+B    移动到上一个单词开头(单词由字母和数字组成)
+
 <tab><tab>    命令或文档补齐
 
 shift+PgUp    向上翻页
@@ -13,26 +25,22 @@ ctrl+R    按输入字符匹配历史指令
 
 ctrl+C    终止执行
 
-ctrl+A    移动到行首
-
-ctrl+E    移动到行尾
-
 ctrl+K    删除光标到行尾字符
 
 ctrl+U    删除光标到行首字符
-
-ctrl+F    将光标前移一个字符
-
-ctrl+B    将光标后移一个字符
 
 ctrl+L    清屏
 
 ctrl+C    中断指令
 
-ctrl+D    EOF(end of file)
+ctrl+D    删除当前字符。当cursor位于行首并且该行无字符时，相当于EOF(end of file)
 
 ctrl+Z    当前process丢到background执行    
 
 ctrl+shift+c    复制文本
 
 ctrl+shift+V    粘贴文本
+
+ctrl+s    锁定bash
+
+ctrl+q    解锁bash
