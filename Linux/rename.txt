@@ -1,0 +1,17 @@
+rename - 批量重命名文件
+
+语法
+rename [option] [files]
+
+参数释义
+-v, --verbose    显示所有成功重命名的文件
+
+-n, --nono    显示所有成功匹配的文件，但不重命名
+
+-f, --force    允许名称已存在的文件被覆盖内容
+
+-m, --man    显示相关手册页
+
+-e <perl_pat>    重命名规则，为perl RE格式。默认选项，可重复使用
+
+-E <perl_pat>    类似于-e，但被';'中断
