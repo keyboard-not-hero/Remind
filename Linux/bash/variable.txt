@@ -9,16 +9,16 @@ bash设定档加载规则：
     /etc/profile --> ~/.bash_profile | ~/.bash_login | ~/.profile
     **|代表仅读取按顺序最先出现的文件
 
-    关闭bash
+    关闭bash(发送HUP信号给所有子进程)
     ~/.bash_logout
 
-2.non-login shell - 指通过图形接口(level 5)启动terminal。通过echo $0指令，返回bash内容
+2.non-login shell - 指通过图形接口(level 5)启动terminal，su切换用户，bash开启子进程。通过echo $0指令，返回bash内容
     开启bash
     /etc/bash.bashrc & ~/.bashrc
 
 
 管道：
-<command1> | <command2>    将command1的stdout作为command2的stdin
+<command1> | <command2>    将command1的stdout作为command2的stdin，command1的stderr不改变
 
 <command1> |& <command2>    将command1的stdout/stderr作为command2的stdin。等价于<command1> 2>&1 | <command2>
 
@@ -47,7 +47,9 @@ bash设定档加载规则：
 
 
 配置变量(未配置变量，初始使用默认为"")
-PATH=/bin:/sbin:/usr/bin:/usr/sbin
+VAR=value
+read VAR
+VAR=`command args` | VAR=$(command args)
 
 引用变量
 echo $PATH 或 echo ${PATH}
@@ -66,6 +68,9 @@ env -i <VAR>=<VALUE>... [command]
 
 当前指令从继承变量中移除指定变量
 env -u <VAR>... [command]
+
+只适用于当前指令的变量值
+<VAR>=[VALUE] command
 
 罗列全局变量
 export -p
@@ -97,7 +102,11 @@ $    当前bash PID
 
 BASH    bash二进制程序的路径
 
-LC_ALL    配置bash所有相关语言(参考local指令)
+BASH_COMMAND    当前执行的指令。可用于trap映射
+
+BASH_REMATCH    数组，用于保存test built-in指令的=~匹配结果
+
+GLOBIGNORE    用于bash通配符格式匹配忽略项。自身格式为使用':'分隔的item，item由通配符格式构成
 
 HISTCONTROL    使用':'分割一系列选项，每个选项代表如何将使用过的指令保存到history列表
     选项列表：
@@ -114,7 +123,7 @@ HISTIGNORE    使用':'分割一系列pattern模式，当输入指令时，指�
 
 HISTSIZE    历史指令保存条数。为0时不保存；小于0时保存所有指令。默认为500
 
-HISTTIMEFORMAT    历史命令保存时间戳
+HISTTIMEFORMAT    历史命令保存时间戳。如:"%T %F "；详细格式参考strftime(3)
 
 HOME    用户的家目录，~就是参考该变量
 
@@ -123,6 +132,10 @@ HOSTFILE    类似于/etc/hosts内容格式，读取主机名和IP映射。当HO
 IFS    shell内部字段分割器。如：可用于read参数划分。默认为[ \t\n]
 
 LANG    语言编码
+
+LC_ALL    配置bash所有相关语言(参考local指令)
+
+LINENO    当前行号
 
 MAIL    用户邮件存放位置(/var/spool/mail/<user>)
 
@@ -142,11 +155,15 @@ PS2    指令行次要行提示
 
 PS3    作为select选单提示
 
+PS4    用于set -x的展开调试
+
 PWD    当前工作目录
 
 RANDOM    产生0~32767之间的随机数
 
-SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh)  
+REPLY    当指令read没有指定变量时，默认赋值给该变量
+
+SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh)。赋值为0后，从0开始从新计时
 
 SHELL    用户使用的shell
 
@@ -209,7 +226,13 @@ ${name[index]} - 返回引用元素的值
     3.索引为非负数，从0开始的正向遍历数组；索引为负数：从-1开始的反向遍历数组
     4.当不指定index时，默认index为0
     5.${!name[*]}或${!name[@]}为获取索引列表
-    6.删除数组元素 - unset name[index]；删除整个数组 - unset name/unset name[*]/unset name[@]
+    6.删除数组元素 - unset name[index]；
+    7.删除整个数组 - unset name[*]/unset name[@]
+
+元素切片
+${name[@]:offset[:length]} - 从offset作为起始索引，获取长度为length的子数组
+  1.length可省略，代表持续到原数组末尾
+  2.offset可以为负数，但:与-n要有空格，与${var:-init}做区分，作为反向索引计数
 
 
 重导向符号：
@@ -257,7 +280,6 @@ ${name[index]} - 返回引用元素的值
 
 
 PS1:主要指令行提示
-PS2:次要命令行提示
 语法：
 \a    ASCII 007，响铃
 
@@ -356,6 +378,31 @@ PS2:次要命令行提示
 
 \]    结束非打印字符序列
 
+\033[x;ym    后续字符的外观与颜色，x/y混合使用，一个代表外观(0~9)，另一个代表颜色(30~38)
+  外观可选项
+  00 - 黑暗
+  01 - 明亮
+  02 - 加深字体颜色
+  03 - 斜体
+  04 - 下划线
+  05 - 闪烁
+  07 - 反白
+  08 - 隐藏
+  09 - 删除线
+
+  颜色可选项
+  30 - 黑色
+  31 - 红色
+  32 - 绿色
+  33 - 黄色
+  34 - 蓝色
+  35 - 紫红色
+  36 - 蓝绿色
+  37 - 灰色
+  38 - 默认
+
+例：\[\033[01;34m\]代表后续字符为亮蓝色
+
 参考:bash(1)手册PROMPTING部分
 
 
@@ -389,14 +436,15 @@ wildcard匹配
 **\用于跳脱特殊字符，但是在匹配时忽略\字符
 
 拓展pathname expansion(依赖于shopt的extglob选项)
-?(pattern-list)
-*(pattern-list)
-+(pattern-list)
-@(pattern-list) - 出现pattern-list中的其中一个pattern
+?(pattern-list) - pattern-list出现0次或1次
+*(pattern-list) - pattern-list出现任意次
++(pattern-list) - pattern-list出现1次或多次
+@(pattern-list) - pattern-list出现1次
 
-!(pattern-list) - 出现非后续pattern-list中的patter
+!(pattern-list) - 出现非后续pattern-list
 
 **pattern为使用!分割的一个或多个wildcard格式匹配
+**pattern-list中的不同pattern累计次数
 
 
 
@@ -501,14 +549,17 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${parameter:offset[:length]}:截取子字符串，从offset开始(由0起始)，长度为length
-    1.当length不提供时，子字符串截取到原字符串末尾
-    2.当offset为负数时，为字符串反向计数，并将-与:之间留空格，以与:-区分
-    3.当length为负数时，该参数与offset意义相同，子字符串取原字符串[offset,length]位置字符
+  ${parameter:offset[:length]}:截取子字符串或数组切片(${arr[@]})，从offset开始(由0起始)，长度为length
+    1.当length不提供时，子字符串截取到原字符串末尾；或到数组末尾
+    2.当offset为负数时，为字符串反向计数，并将-与:之间留空格，以与:-区分；或数组索引反向计数
+    3.当length为负数时，该参数与offset意义相同，子字符串取原字符串[offset,length)位置字符；不支持数组
+
+  ${!var}
+  以var变量的值value作为间接变量，得到$value的值
 
   ${!prefix*}
   ${!prefix@}
-  查找以prefix开头的变量，以IFS变量值作为多个变量的分割符
+  查找以prefix开头的变量列表。该列表以IFS变量值作为item分割符
 
   ${!name[*]}
   ${!name[@]}

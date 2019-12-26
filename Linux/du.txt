@@ -4,4 +4,62 @@ du - 估算文件所用空间
 du [option]... [file]...
 
 参数释义：
+    对目录和子目录进行空间使用统计
 
+-0, --null    每个统计项以NUL结尾，取代默认<newline>结尾
+
+-a, --all    统计所有内容，包括文件
+
+--apparent-size    文件和目录实际大小。结果为block大小整数倍
+
+-B, --block-size=<size>    指定统计单位(k,m,g等)
+
+-b, --bytes    等于--apparent-size和--block-size=1，即统计单位为byte的文件实际大小
+
+-c, --totle    综合汇总
+
+-D, --dereference-args    解引用罗列在指令行上的symbolic link文件
+
+-d, --max-depth=<n>    递归统计目录层级
+
+--files0-from=<f>    对文件f中所罗列的文件或目录名称进行使用统计，名称之间使用NUL符号分隔(可使用find * print0 > f辅助，^@为ctrl+v与ctrl+shift+@的组合，但行尾不可避免出现$\n)
+
+-H    同-D
+
+-h    自动切换单位，方便读取
+
+--inodes    统计文件的inode使用情况，而非默认的block统计
+
+-k    类似于--block-size=1k
+
+-L, --dereference    解引用所有symbolic link文件
+
+-l, --count-links    当同一目录的多个文件指向同一inode时(hard link)，进行多次统计。默认为只统计一次
+
+-m    类似于--block-size=1m
+
+-P, --no-dereference    不解引用symbolic link。默认选项
+
+-S, --separate-dirs    目录统计不包含子目录统计
+
+--si    类似于-h，但进制为1000而非1024
+
+-s, --summarize    只对目录进行汇总，类似于--max-depth=0
+
+-t, --threshold=<size>    只显示大于等于指定大小的文件和目录(汇总统计包含全部)
+
+--time    显示统计文件的最后一次modification时间
+
+--time=<word>    显示指定类型的时间，以替换modification时间
+
+--time-style=<style>    时间显示格式。full-iso/long-iso/iso，或date指令的+FORMAT格式
+
+-X, --exclude-from=<file>    不统计文件file中包含的各种匹配pattern的文件和目录
+
+--exclude=<pattern>    不统计符合pattern通配符模式的文件或目录
+
+-x, --one-file-system    跳过属于其他文件系统的文件和目录
+
+--help    帮助文档
+
+--version    du版本信息

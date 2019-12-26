@@ -1,0 +1,3 @@
+第一代框架：Caffe/Torch/Theano
+第二代框架：TensorFlow/CNTK/Caffe 2/Apache MXNet
+第三代框架：PyTorch

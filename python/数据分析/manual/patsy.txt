@@ -1,4 +1,0 @@
-文档：
-https://patsy.readthedocs.io/en/latest/
-pip安装：
-pip install patsy

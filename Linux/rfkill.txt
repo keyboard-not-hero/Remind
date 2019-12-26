@@ -1,0 +1,28 @@
+rfkill - enable/disable无线设备的工具
+
+语法
+rfkill [option] [command]
+
+参数释义
+-J, --json    以json格式显示
+
+-n, --noheadings    不显示头部信息
+
+-o, --output    指定打印列
+
+-r, --raw    以原始格式输出
+
+--help    帮助信息
+
+--version    版本信息
+
+指令相关
+help    显示帮助文本
+
+event    持续监听rfkill时间并打印到stdout
+
+list [id|type...]    显示指定id或type的状态。可使用all进行全部匹配
+
+block id|type...    关闭指定id或type设备
+
+unblock id|type...    开启指定id或type设备

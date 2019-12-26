@@ -1,0 +1,23 @@
+sha256sum - 计算256-bit SHA2格式校验和
+
+语法
+sha256sum [option]... [file]...
+
+参数释义
+-b, --binary    以binary形式解读文件，并生成sha256sum。GNU系统不对二进制和文本作区分，MS-OS以该模式作为默认
+
+-c, --check    从checksum文件读取checksum信息(data文件名和对应sha256sum)，在checksum文件所在目录搜索data文件名，并利用sha256sum求校验和，然后与对应data文件行的sha256sum比对
+
+--ignore-missing    配合-c使用，当sha256sum结果或者无法查找到文件时，忽略该data文件
+
+--quiet    配合-c使用，当成功校验时，忽略成功匹配信息
+
+--status    配合-c使用，当成功校验或校验不匹配时，忽略信息。无法查找到data时，仍然输出信息
+
+--tag    用于生成特殊格式的sha256sum。隐式包含-b
+
+-t, --text    以文本形式解读文件，并生成MD5校验码
+
+-w, --warn    配合-c使用，报告checksum文件内的格式错误
+
+--strict    配合-c使用，当checksum内有一个sha256sum不符时，结果返回status code为非0

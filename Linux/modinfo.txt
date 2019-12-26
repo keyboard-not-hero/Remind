@@ -1,0 +1,25 @@
+modinfo - 显示modules的详细信息
+
+语法
+modinfo [option] [module]
+
+参数释义
+-0, --null    使用NUL作为字段分隔符。默认为<newline>
+
+-a, --author    模块作者信息
+
+-b <basedir>, --basedir <basedir>    指定模块根目录。默认为/
+
+-d, --description    模块描述信息
+
+-F, --field    只显示指定字段
+
+-k <kernel>    指定kernel信息。默认为当前运行kernel
+
+-l, --license    版权信息
+
+-n, --filename    模块完整文件名称
+
+-p, --parameters    参数信息
+
+-V, --version    版本信息

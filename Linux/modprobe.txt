@@ -1,0 +1,45 @@
+modprobe - 向Linux kernel添加或移除模块
+
+语法
+modprobe [option] [module_name]
+
+参数释义
+-a    添加指定模块。默认选项。根据modules.order文件来查找模块安装
+
+-C, --config    指定配置文件。默认为/etc/modprobe.d目录下文件
+
+-c, --showconfig    配置文件目录下的有效配置列表
+
+--dump-modversions    打印模块版本信息
+
+-d, --dirname    modules的根目录，默认为/
+
+--first-time    模块已安装时进行添加，或已卸载时进行移除，都会进行提示。默认不提示
+
+--force-vermagic    无视"version magic"不匹配问题，强制添加模块。配合-a使用
+
+--force--modversion    无视版本不匹配问题，强制添加模块。配合-a使用
+
+-f, --force    类似于--force-vermagic和--force--modversion一起使用
+
+-i, --ignore-install, --ignore-remove    忽视配置文件中的添加和移除模块相关指令
+
+-n, --dry-run, --show    完成任何工作除添加和移除模块，配合-v使用，用于调试
+
+-q, --quiet    quiet模式，当添加/移除无法发现的模块时，不打印错误信息
+
+-R, --resolve-alias    显示所有匹配名称的modules
+
+-r, --remove    移除指定模块。当依赖模块没有被使用时，一起移除
+
+-S, --set-version    手动配置kernel版本，用于模块依赖。该选项取代通过uname获取真实kernel版本
+
+--show-depends    显示模块依赖的模块集，包含自身
+
+-s, --syslog    使用syslog替代输出到stderr
+
+-V, --version    打印modprobe版本
+
+-v    打印详细错误信息
+
+**modile_name中，-与_无差别，-会自动转化为_

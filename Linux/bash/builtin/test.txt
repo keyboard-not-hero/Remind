@@ -67,9 +67,11 @@ str1 =[=] str2    str1与str2是否相等
 
 str1 != str2    str1与str2是否不相等
 
-str1 < str2    str1的字符先于str2出现(注意<被\解除重定向特殊意义)
+[ str =~ RE ]    str是否匹配正则表达式RE。并将匹配完整内容赋值给BASH_REMATCH[0]，子串匹配分别赋值给BASH_REMATCH[1]...
 
-str1 > str2    str1的字符后于str2出现(注意<被\解除重定向特殊意义)
+[ str1 < str2 ]    str1的字符先于str2出现(注意<被\解除重定向特殊意义)
+
+[ str1 > str2 ]    str1的字符后于str2出现(注意<被\解除重定向特殊意义)
 
 int1 -eq int2    int1与int2相等
 
@@ -90,7 +92,7 @@ exp1 -a exp2    exp1和exp2的逻辑与操作
 exp1 -o exp2    exp1和exp2的逻辑或操作
 
 补充：
-1.可以使用[expression]代替test expression，但每个操作符或操作数前后都需要保留空格
+1.可以使用[ expression ]代替test expression，但每个操作符或操作数前后都需要保留空格
 2.字符串参数尽量使用""来限定，如：arg字符串标准写法为"arg"
 3.数字测试仅用于整数，不支持浮点数比较
 4.-a和-o不常用，偏向于在外部使用&&和||

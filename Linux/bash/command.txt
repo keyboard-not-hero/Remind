@@ -1,3 +1,9 @@
+command执行进程
+1.built-in command运行于当前bash进程下
+2.非built-in指令(包括bash script)运行于子进程下
+
+
+
 . filename
 source filename - 在当前bash中读取和执行filename文件中的指令
 注意事项：
@@ -177,7 +183,7 @@ exec [option] [command [argument]]
 
 参数释义
 
-**当command未提供时，exec用于重导向，并且不退出当前新进程，以后该bash所有指令结果皆使用该重导向，所有指令结果视为一个stream(即>file操作不会被当前bash后续指令结果覆盖)
+**当command未提供时，exec用于重导向，并且不创建子进程，以后该bash所有指令结果皆使用该重导向，所有指令结果视为一个stream(即>file操作不会被当前bash后续指令结果覆盖)
 例1：
 steven@www:~/demo$ bash
 steven@www:~/demo$ exec > exec.file
@@ -468,13 +474,13 @@ set [option] [arg...]
 
 -e    当返回status code不为0时，退出当前bash
 
--f    disable路径拓展(文件名无法使用通配符进行匹配)
+-f    关闭pathname expansion(文件名无法使用通配符进行匹配)
 
 -h    使用hash表进行指令路径缓存
 
 -k    所有出现在参数位置的赋值语句都作用于bash环境，而不只是默认的command前赋值语句
 
--m    启动job control，默认启用
+-m    监视模式。当后台running job完成，立即打印该job信息
 
 -n    读取command但不执行。用于script语法检查，在交互式shell中无效
 
@@ -518,7 +524,7 @@ set [option] [arg...]
 
   physical - 同-P
 
-  pipefail - 在所有pipeline指令中，当所有指令返回0时，则返回0；否则返回最后一个指令的非0
+  pipefail - 在所有pipeline指令中，当所有指令成功时，则返回0；否则返回最后一个指令的非0状态码
 
   posix - posix兼容模式
 
@@ -538,7 +544,7 @@ set [option] [arg...]
 
 -v    打印bash读取的内容
 
--x    打印出每一次表达式展开内容，格式为$PS4 <expand_exp>。适用于for/case/$(())等内容展开详情
+-x    打印出每一条指令的完整展开内容，格式为$PS4 <expand_exp>。用于for/case/$(())等内容展开详情；适用于调试脚本
 
 -B    bash执行{}拓展。如:{alice,peter,david}包含三个名称
 
@@ -653,6 +659,8 @@ shift_verbose - 使用shift时，当n>$#，显示警告信息
 
 sourpath - 使用source(.)时，使用PATH变量内容查找文件所在
 
+**glob代表使用通配符进行匹配
+
 
 
 trap - 配置signal及对应指令操作
@@ -761,6 +769,8 @@ unset [option] [name...]
 -n    移除nameref变量，被引用的变量无变化
 
 -v    移除变量。用于nameref时，当前变量和被引用的变量同时被移除
+
+**readonly类型变量无法移除
 
 
 

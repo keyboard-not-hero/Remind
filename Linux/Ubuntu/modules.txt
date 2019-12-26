@@ -1,0 +1,12 @@
+1.联想拯救者y7000无法检测到wifi驱动
+解决：
+$ rfkill list all
+0:ideapad_wlan: Wireless LAN
+1:ideapad_bluetooth: Bluetooth
+2:phy0: Wireless LAN
+3:hci0: Bluetooth
+
+$ sudo modprebe --first-time -r ideapad_laptop
+
+$ rfkill list all
+解析：ideapad_laptop驱动无法通过硬件开关，阻塞自带驱动
