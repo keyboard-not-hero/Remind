@@ -1,0 +1,94 @@
+ubuntu官方packages列表：
+packages.ubuntu.com
+
+
+python3编译：
+1.必要环境安装
+[thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev tcl-dev tk-dev gcc make
+
+
+2.openssl编译(需大于等于1.0.2)
+下载地址：https://www.openssl.org/source
+
+[thompson@~] tar -zxf openssl-1.0.2u.tar.gz -C /usr/src
+
+[thompson@~] make distclean
+
+[thompson@~] ./config --prefix=/usr/local --openssldir=/usr/local/openssl
+
+[thompson@~] make -j4
+
+[thompson@~] sudo make install
+
+
+3.tcl/tk编译
+下载地址：http://www.tcl.tk/software/tcltk/download.html
+
+[thompson@~] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/src
+
+[thompson@~] sudo chown -R steven:steven /usr/src/tcl8.6.10
+
+[thompson@~] cd /usr/src/tcl8.6.10/unix
+
+[thompson@tcl8.6.10] make distclean
+
+[thompson@tcl8.6.10] ./configure
+
+[thompson@tcl8.6.10] make -j4
+
+[thompson@tcl8.6.10] sudo make install
+
+------------------------------------------------------------
+
+[thompson@~] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/src
+
+[thompson@~] sudo chown -R steven:steven /usr/src/tk8.6.10
+
+[thompson@~] cd /usr/src/tk8.6.10/unix
+
+[thompson@tcl8.6.10] sudo apt-get install libx11-dev
+
+[thompson@tcl8.6.10] make distclean
+
+[thompson@tcl8.6.10] ./configure
+
+[thompson@tcl8.6.10] make -j4
+
+[thompson@tcl8.6.10] sudo make install
+
+
+4.编译python
+下载python
+[thompson@~] wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
+
+[thompson@~] tar -Jxf Python-3.8.1.tar.xz -C /usr/src
+
+编辑python配置文件：
+[thompson@~] vi /usr/src/python-3.8.1/Modules/Setup
+#用于配置openssl，注意配置细节
+# Socket module helper for SSL support; you must comment out the other
+# socket line above, and possibly edit the SSL variable:
+SSL=/usr/local/openssl
+_ssl _ssl.c \
+ -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+ -L$(SSL)/lib -lssl -lcrypto
+
+#用于配置tcl/tk
+# *** Always uncomment this (leave the leading underscore in!):
+	_tkinter _tkinter.c tkappinit.c -DWITH_APPINIT \
+# *** Uncomment and edit to reflect where your Tcl/Tk libraries are:
+	-L/usr/local/lib \
+# *** Uncomment and edit to reflect where your Tcl/Tk headers are:
+	-I/usr/local/include \
+# *** Uncomment and edit to reflect your Tcl/Tk versions:
+	-ltk8.6 -ltcl8.6 \
+# *** Always uncomment this; X11 libraries to link with:
+	-lX11
+
+[thompson@~] make distclean
+
+[thompson@~] ./configure
+
+[thompson@~] make
+
+[thompson@~] sudo make install

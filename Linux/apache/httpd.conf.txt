@@ -1,5 +1,6 @@
 CentOS配置文件路径：/etc/httpd/conf/httpd.conf
 Ubuntu配置文件路径：/etc/apache2/apache2.conf
+
 指令作用范围：
 1.全局指令：作用于整个主机的所有站点
 2.IfDefine：用于apache启动时，对标签值进行条件判断，符合条件执行当中语句
