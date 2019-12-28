@@ -4,7 +4,7 @@
 
 磁道(cylinder)：早期磁盘圆盘一周(扇区组成)，拥有固定大小，为最小的分割单位。当前，由于bit密度固定，sector成为最小分割单位
 
-主引导记录(Master Boot Record，MBR)：硬盘的第一个扇区，BOIS首先读取内容。其中，446 Byte为部分boot代码，提供active分区选单，加载分区VBR；64 Byte为4个16 byte的分区表组成；2 Byte为结束标记0x55AA(MBR为小端序，低位在前)
+主引导记录(Master Boot Record，MBR)：硬盘的第一个扇区，BOIS首先读取内容。其中，446 Byte为部分boot代码，提供active分区选单，加载文件系统，切换其它BR；64 Byte为4个16 byte的分区表组成；2 Byte为结束标记0x55AA(MBR为小端序，低位在前)
   分区结构信息(16 Byte)：
   1 Byte - 0x00代表非active分区；0x80代表active分区
   3 Byte - CHS(Cylinders/Heads/Sectors)地址，标记分区的第一个扇区(已废弃)

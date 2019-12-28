@@ -1,132 +1,203 @@
 一、组件及作用：
-1.latexmk:编译latex文本生成目标pdf/dvi/ps(postscript)文件。目标文件可随tex文本同步更新。其中，tex生成pdf依赖pdflatex
-2.vimtex:vim插件，调用latexmk管理latex文件，并且结合pdfviewer进行内容输出
-3.zathura:pdf/dvi/ps格式文件管理器，可用于tex文件前向搜索(tex文件行对应的pdf/dvi/ps文件位置)
+1.latexmk：编译latex文本生成目标pdf/dvi/ps文件。底层依赖pdflatex
+
+2.vimtex：vim插件，在调用latexmk编译tex文件，并且结合zathura进行图形化输出
+
+3.zathura：pdf/dvi/ps(postscript)图形化显示工具。本文主要作为pdfviewer
+
 4.ultisnips:
 
 二、组件安装
-1.latexmk
-  安装latexmk：
-  thompson@~$ sudo apt-get install latexmk
+1.Texlive安装(包含latexmk)：
+  # 下载texlive镜像
+  # 下载地址：https://ctan.org/tex-archive/systems/texlive/Images  
+
+  # 校验完整性
+  steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5
+
+  # 挂载iso文件
+  steven@Downloads$ mount -o loop texlive2019-20190410.iso /mnt 
+
+  # 安装Texlive
+  steven@Downloads$ cd /mnt
+
+  steven@mnt$ ./install-tl
+
+  # 配置PATH
+  steven@~$ vi .bashrc
+  export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+
+  steven@~$ source .bashrc
+
+  # 测试安装是否成功
+  steven@~$ tex --version
+
 2.vimtex(vim插件)
-  安装vimtex:
-  thompson@~$ vi ~/.vimrc
-  " Keep Plugin commands between vundle#begin() and vundle#end().
-  Plugin "https://github.com/lervag/vimtex.git"
-  " keep let commands after vundle#end().
+  # 安装Vundle(vim插件管理套件，如安装或使用其他管理套件，可忽略)：
+  steven@~$ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  
+  # 修改目录所属
+  steven@~$ sudo chown -R steven:steven ~/.vim/bundle
+
+  # 安装vimtex
+  steven@~$ vi ~/.vimrc
+
+  set nocompatible              " be iMproved, required
+  filetype off                  " required
+
+  " set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+  " alternatively, pass a path where Vundle should install plugins
+  "call vundle#begin('~/some/path/here')
+
+  " let Vundle manage Vundle, required
+  Plugin 'VundleVim/Vundle.vim'
+
+  " The following are examples of different formats supported.
+  " Keep Plugin commands between vundle#begin/end.
+
+  Plugin 'https://github.com/lervag/vimtex.git'
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  filetype plugin indent on    " required
   " below command let tex suffix file as latex file
   let g:tex_flavor = 'latex' 
   " if vim version less than 7.4.52
   let g:vimtex_version_check = 0
-  :w
-  :PluginInstall
-  #查看vimtex帮助文档
-  :h vimtex
-3.zathura
-  准备前提库:
-  thompson@~$ sudo apt-get install libsynctex-dev
-  thompson@~$ sudo apt-get install libgtk-3-dev
-  thompson@~$ sudo apt-get install libmagic-dev
 
-  #girara-gtk3:用户接口(libgirara-gtk3-3)
-  #环境需要:meson (>= 0.48)、pango(libpango1.0-dev)、cmake、json-c(libjson-c-dev)、doxygen、check
-  thompson@~$ cd /tmp && git clone https://github.com/pwmt/girara.git && cd girara
-  #当meson未安装，进行如下安装:
-  #thompson@~$ pip3 install meson
-  thompson@~$ meson build
-  thompson@~$ cd build
-  thompson@~$ ninja
-  thompson@~$ ninja install
+  # 保存修改
+  :w
+  
+  # 安装~/.vimrc中注明的插件
+  :PluginInstall
+
+  # 查看vimtex帮助文档
+  :h vimtex
+
+3.zathura
+  # 准备前提库:
+  steven@~$ sudo apt-get install libsynctex-dev libgtk-3-dev libmagic-dev
+
+  # girara-gtk3(libgirara-gtk3-3)：用户接口
+  # 环境需要:meson (>= 0.48)、ninja、pango(libpango1.0-dev)、cmake、json-c(libjson-c-dev)、doxygen、check
+  steven@~$ sudo apt-get install libpango1.0-dev cmake libjson-c-dev doxygen check
+
+  # apt源的meson/ninja版本过低，使用pip3进行安装:
+  steven@~$ pip3 install meson ninja
+
+  steven@~$ cd /tmp && git clone https://github.com/pwmt/girara.git && cd girara
+
+  steven@girara$ meson build
+
+  steven@girara$ cd build
+
+  steven@build$ ninja
+
+  steven@build$ ninja install
 
   安装zathura:
-  #环境需要:synctex(libsynctex-dev >=1.19，下载：https://pkgs.org/或https://packages.ubuntu.com/)
-           libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)
-  thompson@~$ cd /tmp && git clone https://github.com/pwmt/zathura.git && cd zathura
-  thompson@~$ meson build
-  thompson@~$ cd build
-  thompson@~$ ninja
-  thompson@~$ ninja install
+  # 环境需要:synctex(libsynctex-dev >=1.19)/libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)
+  steven@~$ sudo apt-get install libseccomp-dev librsvg2-bin appstream-util sphinx-common 
+  
+  # 当前源的libsynctex-dev版本过低，需要从ubuntu 19.04以上版本源下载，并且依赖于libsynctex2
+  # 下载地址：https://pkgs.org/
+              https://packages.ubuntu.com/
+  steven@~$ sudo dpkg -i libsynctex2-XXX libsynctex-dev-XXX
+
+  steven@~$ cd /tmp && git clone https://github.com/pwmt/zathura.git && cd zathura
+
+  steven@zathura$ meson build
+
+  steven@zathura$ cd build
+
+  steven@build$ ninja
+
+  steven@build$ ninja install
+
   # zathura的插件：
   # zathura-pdf-poppler to open PDF files,
   # zathura-ps to open PostScript files,
-  # zathura-djvu to open DjVu files.
+  # zathura-djvu to open DjVu files.  
+  # 安装zathura-pdf-poppler:pdf支持
+  # 环境需要：glib2(libglib2.0-dev)/poppler-glib(libpoppler-glib-dev)
+  steven@~$ sudo apt-get install libglib2.0-dev libpoppler-glib-dev
+
+  steven@~$ cd /tmp && git clone https://github.com/pwmt/zathura-pdf-poppler.git && cd zathura-pdf-poppler
   
-  #zathura插件--zathura-pdf-poppler:pdf支持
-  #环境需要:zathura/girara-gtk3(libgirara-gtk3-3)/glib-2/poppler-glib(libpoppler-glib-dev)
-  thompson@~$ cd /tmp && git clone https://github.com/pwmt/zathura-pdf-poppler.git
-  thompson@~$ meson build
-  thompson@~$ cd build
-  thompson@~$ ninja
-  thompson@~$ ninja install
+  steven@zathura-pdf-poppler$ meson build
+
+  steven@zathura-pdf-poppler$ cd build
+
+  steven@build$ ninja
+
+  steven@build$ ninja install
 
   配置预设pdfviewer:
-  thompson@~$ vi ~/.vimrc
+  steven@~$ vi ~/.vimrc
   " Keep let commands after vundle#end().
   let g:vimtex_view_method = 'zathura'
 
   #zathura配置文件：$HOME/.config/zathura/zathurarc
 
 4.中文语言支持
-  Texlive安装：
-  下载install-tl
-  下载地址：http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-  在线安装
-  steven@~$ cd /your/download/directory
-  steven@~$ ./install-tl
-  配置PATH
-  steven@~$ PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
-  测试安装是否成功
-  latex small2es
-
   #CTex中文包安装(基于Texlive的pdflatex)
-  thompson@~$ tlmgr install ctex
-  #1.CTex的四个文档类ctexart/ctexrep/ctexbook/ctexbeamer对应于latex的四个标准文档类article/report/book/beamer,并且使用时需要使用UTF-8保存
-  #格式：\documentclass[UTF8]{ctexart}
-  #2.使用非文档类时，使用宏包
-  #格式：\usepackage[UTF8]{ctex}
-  #文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
-  #warning:编译需保持源文件编码、编译方式、宏包编码三者一致
+  steven@~$ tlmgr install ctex
 
-  #texlive字体配置
-  #查看ctex自带的字体预设($CTEX_DIR/fontset，格式ctex-fontset-<name>.def)
-  thompson@~$ ls /usr/local/texlive/2019/texmf-dist/tex/latex/ctex/fontset
+  # 1.CTex的四个文档类ctexart/ctexrep/ctexbook/ctexbeamer对应于latex的四个标准文档类article/report/book/beamer,并且使用时需要使用UTF-8保存
+  # 格式：\documentclass[UTF8]{ctexart}
+  # 2.使用非文档类时，使用宏包
+  # 格式：\usepackage[UTF8]{ctex}
+  # 文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
+  # warning：编译需保持源文件编码、编译方式、宏包编码三者一致
+
+  --------------------------------------------待整理
+  # texlive字体配置
+  # 查看ctex自带的字体预设($CTEX_DIR/fontset，格式ctex-fontset-<name>.def)
+  steven@~$ ls /usr/local/texlive/2019/texmf-dist/tex/latex/ctex/fontset
   ctex-fontset-ubuntu.def
-  #字体默认查找位置
-  #获取格式文件帮助
-  thompson@~$ kpsewhich -help-formats
+
+  # 字体默认查找位置
+  # 获取格式文件帮助
+  steven@~$ kpsewhich -help-formats
   truetype fonts: .ttf .ttc .TTF .TTC .dfont  [variables: TTFONTS TEXFONTS]
   [original path (from texmf.cnf) = $TEXMFDOTDIR:$TEXMF/fonts/{truetype,opentype}//:$OSFONTDIR//]
-  #查看单个变量：kpsewhich --var-value=<variable>
-  #查看<sum_name>对应的完整查找路径
-  thompson@~$ kpsewhich --show-path="truetype fonts"
+
+  # 查看单个变量：kpsewhich --var-value=<variable>
+  # 查看<sum_name>对应的完整查找路径
+  steven@~$ kpsewhich --show-path="truetype fonts"
   .:
-  /home/thompson/.texlive2019/texmf-config/fonts/truetype//:
-  /home/thompson/.texlive2019/texmf-var/fonts/truetype//:
-  /home/thompson/texmf/fonts/truetype//:
+  /home/steven/.texlive2019/texmf-config/fonts/truetype//:
+  /home/steven/.texlive2019/texmf-var/fonts/truetype//:
+  /home/steven/texmf/fonts/truetype//:
   !!/usr/local/texlive/texmf-local/fonts/truetype//:
   !!/usr/local/texlive/2019/texmf-config/fonts/truetype//:
   !!/usr/local/texlive/2019/texmf-var/fonts/truetype//:
   !!/usr/local/texlive/2019/texmf-dist/fonts/truetype//:
   /please/set/osfontdir/in/the/environment//
-  #只有前四项目录存放字体时，可以使用
-  #texmf.cnf配置文件：
-  原始配置文件：/usr/local/texlive/2019/texmf.cnf
-  可编辑配置文件：/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+  # 只有前四项目录存放字体时，可以使用
+  # texmf.cnf配置文件：
+  # 原始配置文件：/usr/local/texlive/2019/texmf.cnf
+  # 可编辑配置文件：/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
 
   #通过查看$CTEX_DIR/fontset/ctex-fontset-<name>.def文件，得知预设使用字体为uming.ttc
-  thompson@~$ fc-list :lang=zh|grep uming.ttc
+  steven@~$ fc-list :lang=zh|grep uming.ttc
   /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing TW:style=Light
   /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing CN:style=Light
-  #将ttc文件移动到目录/home/thompson/texmf/fonts/truetype
-  thompson@~$ mkdir -p /home/thompson/texmf/fonts/truetype
-  thompson@~$ cp /usr/share/fonts/truetype/arphic/uming.ttc /home/thompson/texmf/fonts/truetype
+  
+  #将ttc文件移动到目录/home/steven/texmf/fonts/truetype
+  steven@~$ mkdir -p ~/texmf/fonts/truetype
+  steven@~$ cp /usr/share/fonts/truetype/arphic/uming.ttc ~/texmf/fonts/truetype
+  --------------------------------------------待整理
+
+
   #tex文档示例
+  steven@~$ vi test.tex
   \documentclass[UTF8, fontset=ubuntu]{ctexart}
   \begin{document}
     你好,\LaTeX{}
   \end{document}
-
-  或者
+  --------------------或者---------------------
   \documentclass[UTF8, fontset=none]{ctexart}
   \ctexset{fontset=ubuntu}
   \begin{document}
@@ -134,15 +205,47 @@
   \end{document}  
 
 三、启动vim
-  #--servername参数用于vimtex的前向/后向搜索  
-  thompson@~$ vim --servername vim test.tex
+  # --servername参数用于vimtex的前向/后向搜索  
+  steven@~$ vim --servername vim test.tex
+
   Forward search:\lv
+
   Backward search:<C-Enter>
 
+
+  !!warning!!：~/.vimrc内容汇总
+
+  set nocompatible              " be iMproved, required
+  filetype off                  " required
+
+  " set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+  " alternatively, pass a path where Vundle should install plugins
+  "call vundle#begin('~/some/path/here')
+
+  " let Vundle manage Vundle, required
+  Plugin 'VundleVim/Vundle.vim'
+
+  " The following are examples of different formats supported.
+  " Keep Plugin commands between vundle#begin/end.
+
+  Plugin 'https://github.com/lervag/vimtex.git'
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  filetype plugin indent on    " required
+  " below command let tex suffix file as latex file
+  let g:tex_flavor = 'latex' 
+  " if vim version less than 7.4.52
+  let g:vimtex_version_check = 0
+  " Keep let commands after vundle#end().
+  let g:vimtex_view_method = 'zathura'
+
+
 ------------------------------------------------
-指令相关
+
 1.latexmk
-latex - 生成LaTeX文档
+latexmk - 生成LaTeX文档
 
 语法
 latexmk [option] [file1 [file2 [...]]]
@@ -225,10 +328,14 @@ latexmk [option] [file1 [file2 [...]]]
 -v, -version    指令版本
 
 -view=<default>|<dvi>|<ps>|<pdf>    指定开启同步时，同步的目标文件类型(配合-pv或-pvc使用)
+
 补充：
 dvips dvi转化为ps
+
 pdf2ps  pdf转化为ps
+
 ps2pdf  ps转化为pdf
+
 dvipdf  dvi转化为pdf
 
 
@@ -237,7 +344,22 @@ dvipdf  dvi转化为pdf
 配置文件使用语法：perl语法
 
 ------------------------------------------------
-2.vimtex
+2.vundle
+# 安装~/.vimrc中注明的插件
+:PluginInstall
+
+# 更新~/.vimrc中注明的插件
+:PluginUpdate
+
+#~/.vimrc中的插件列表
+:PluginList
+
+#清除~/.vimrc已删除插件项
+:PluginClean
+
+------------------------------------------------
+
+3.vimtex
 功能支撑(vim --version查看)：
 +job  提供回馈
 +clientserver  提供前向/后向搜索
@@ -249,18 +371,27 @@ snippits/templates插件：
 Ultisnips/neosnippet
 
 快捷键：
-\li    vimtex信息
-\lt    打开toc
-\lT    触发toc   
-\lq    vimtex log(新页面)
-\lv    前向搜索，跳转到当前tex文本cursor对应的pdf文件位置
 \ll    编译tex文本
+
+\lv    前向搜索，跳转到当前tex文本cursor对应的pdf文件位置
+
+\li    vimtex元数据信息
+
+\lt    打开toc
+
+\lT    触发toc   
+
+\lq    vimtex log(新页面)
+
 \lm    公式字符映射
+
 <c+enter>    后向搜索
 
+vimtex指南：https://github.com/lervag/vimtex/blob/master/doc/vimtex.txt
+
 ------------------------------------------------
-3.系统字体
-fontconfig软件
+
+4.系统字体
 fc-list - 可获取字体列表
 
 语法：
@@ -284,8 +415,10 @@ element：将内容的element元素打印
 实例：
 所有字体列表
 fc-list
+
 指定语言字体
 fc-list :lang=zh
+
 所有字体指定内容
 fc-list : file family style spacing
 
@@ -293,14 +426,14 @@ fc-list : file family style spacing
 用户级配置：~/.fonts.conf
 标签意义(xml格式配置文件)：
 <dir>  搜索的字体目录
+
 ------------------------------------------------
 
-
 引用：
-[1]latexmk read.io:https://mg.readthedocs.io/latexmk.html
-[2]latexmk CTAN(Comprehensive Tex Archive Network):https://ctan.org/pkg/latexmk/
-[3]official website:http://www.personal.psu.edu/jcc8/latexmk/ 
-[4]tex bbs:https://tex.stackexchange.com/
-[5]CTEX CTAN:https://ctan.org/pkg/ctex
-[6]fontconfig:https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
-[7]blog reference:https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
+[1]latexmk read.io：https://mg.readthedocs.io/latexmk.html
+[2]latexmk CTAN(Comprehensive Tex Archive Network)：https://ctan.org/pkg/latexmk/
+[3]official website:http：//www.personal.psu.edu/jcc8/latexmk/ 
+[4]tex bbs：https://tex.stackexchange.com/
+[5]CTEX CTAN：https://ctan.org/pkg/ctex
+[6]fontconfig：https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
+[7]blog reference：https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
