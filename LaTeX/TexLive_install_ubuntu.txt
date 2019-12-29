@@ -1,0 +1,44 @@
+1.TexLive安装
+# 下载texlive镜像
+# 下载地址：https://ctan.org/tex-archive/systems/texlive/Images  
+
+# 校验完整性
+steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5
+
+# 挂载iso文件
+steven@Downloads$ mount -o loop texlive2019-20190410.iso /mnt 
+
+# 安装Texlive
+steven@Downloads$ cd /mnt
+
+steven@mnt$ ./install-tl
+
+# 配置PATH
+steven@~$ vi .bashrc
+export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+
+steven@~$ source .bashrc
+
+# 测试安装是否成功
+steven@~$ tex --version
+
+
+2.TexLive附带字体路径配置
+# 让pdflatex找到系统字体
+steven@~$ vi /usr/local/texlive/2019/texmf.cnf
+OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
+
+# 指定texlive附带文字所在路径
+steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
+
+# 刷新fontconfig的字体缓存
+steven@~$ sudo fc-cache -fsv
+
+3.安装TeXworks编辑器
+steven@~$ sudo add-apt-repository ppa:texworks/stable
+
+steven@~$ sudo apt-get update
+
+steven@~$ sudo apt-get install texworks
+
+在launchpad中搜索texworks打开图形编辑界面

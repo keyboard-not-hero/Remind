@@ -97,8 +97,8 @@
   steven@build$ ninja install
 
   安装zathura:
-  # 环境需要:synctex(libsynctex-dev >=1.19)/libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)
-  steven@~$ sudo apt-get install libseccomp-dev librsvg2-bin appstream-util sphinx-common 
+  # 环境需要:synctex(libsynctex-dev >=1.19)/libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)/xdotool
+  steven@~$ sudo apt-get install libseccomp-dev librsvg2-bin appstream-util sphinx-common xdotool
   
   # 当前源的libsynctex-dev版本过低，需要从ubuntu 19.04以上版本源下载，并且依赖于libsynctex2
   # 下载地址：https://pkgs.org/
@@ -151,47 +151,18 @@
   # 文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
   # warning：编译需保持源文件编码、编译方式、宏包编码三者一致
 
-  --------------------------------------------待整理
-  # texlive字体配置
-  # 查看ctex自带的字体预设($CTEX_DIR/fontset，格式ctex-fontset-<name>.def)
-  steven@~$ ls /usr/local/texlive/2019/texmf-dist/tex/latex/ctex/fontset
-  ctex-fontset-ubuntu.def
+  # 字体路径配置
+  # 让pdflatex找到系统字体
+  steven@~$ vi /usr/local/texlive/2019/texmf.cnf
+  OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
 
-  # 字体默认查找位置
-  # 获取格式文件帮助
-  steven@~$ kpsewhich -help-formats
-  truetype fonts: .ttf .ttc .TTF .TTC .dfont  [variables: TTFONTS TEXFONTS]
-  [original path (from texmf.cnf) = $TEXMFDOTDIR:$TEXMF/fonts/{truetype,opentype}//:$OSFONTDIR//]
+  # 指定texlive附带文字所在路径
+  steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
 
-  # 查看单个变量：kpsewhich --var-value=<variable>
-  # 查看<sum_name>对应的完整查找路径
-  steven@~$ kpsewhich --show-path="truetype fonts"
-  .:
-  /home/steven/.texlive2019/texmf-config/fonts/truetype//:
-  /home/steven/.texlive2019/texmf-var/fonts/truetype//:
-  /home/steven/texmf/fonts/truetype//:
-  !!/usr/local/texlive/texmf-local/fonts/truetype//:
-  !!/usr/local/texlive/2019/texmf-config/fonts/truetype//:
-  !!/usr/local/texlive/2019/texmf-var/fonts/truetype//:
-  !!/usr/local/texlive/2019/texmf-dist/fonts/truetype//:
-  /please/set/osfontdir/in/the/environment//
-  # 只有前四项目录存放字体时，可以使用
-  # texmf.cnf配置文件：
-  # 原始配置文件：/usr/local/texlive/2019/texmf.cnf
-  # 可编辑配置文件：/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+  # 刷新fontconfig的字体缓存
+  steven@~$ sudo fc-cache -fsv
 
-  #通过查看$CTEX_DIR/fontset/ctex-fontset-<name>.def文件，得知预设使用字体为uming.ttc
-  steven@~$ fc-list :lang=zh|grep uming.ttc
-  /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing TW:style=Light
-  /usr/share/fonts/truetype/arphic/uming.ttc: AR PL UMing CN:style=Light
-  
-  #将ttc文件移动到目录/home/steven/texmf/fonts/truetype
-  steven@~$ mkdir -p ~/texmf/fonts/truetype
-  steven@~$ cp /usr/share/fonts/truetype/arphic/uming.ttc ~/texmf/fonts/truetype
-  --------------------------------------------待整理
-
-
-  #tex文档示例
+  # tex文档示例
   steven@~$ vi test.tex
   \documentclass[UTF8, fontset=ubuntu]{ctexart}
   \begin{document}
