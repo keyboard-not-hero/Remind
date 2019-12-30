@@ -12,3 +12,68 @@ steven@~$ sudo apt-get install vim
 3.安装搜狗输入法
 参考目录下sogou.txt文本
 
+
+4.开机启动脚本准备
+新版本GNU/Linux中，已使用systemd代替init。systemd会默认开机启动服务/etc/systemd/system/rc-local.service，该服务又会默认调用/etc/rc.local
+# rc-local服务状态查看
+steven@~$ systemctl status rc-local
+● rc-local.service - /etc/rc.local Compatibility
+   Loaded: loaded (/lib/systemd/system/rc-local.service; enabled-runtime; vendor preset: enabled)
+
+# 查看rc-local.service文件内容
+steven@~$ cat /etc/systemd/system/rc-local.service | grep rc.local
+Description=/etc/rc.local Compatibility
+Documentation=man:systemd-rc-local-generator(8)
+ConditionFileIsExecutable=/etc/rc.local
+ExecStart=/etc/rc.local start
+
+steven@~$ vi /etc/rc.local
+#!/bin/bash
+# command execute here
+
+steven@~$ sudo chmod a+x /etc/rc.local
+
+
+5.中文环境下，恢复家目录下子目录的英文显示
+steven@~$ export LANG=en_US.UTF-8
+
+steven@~$ xdg-user-dirs-gtk-update
+
+steven@~$ export LANG=zh_CN.UTF-8
+
+
+6.关闭wifi模块(拯救者Y7000笔记本)
+steven@~$ rfkill list all
+
+steven@~$ lsmod|grep ideapad
+
+steven@~$ modprobe -r ideapad_laptop
+
+
+7.Nvidia显卡驱动安装(拯救者Y7000笔记本，显卡为Geforce GTX 1650)
+# 查看当前驱动和推荐驱动。根据推荐驱动版本去nvidia官网下载
+steven@~$ ubuntu-drivers devices
+
+# 下载完成后，按组合键Ctrl+Alt+F1或F3进入指令行模式
+
+# 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
+steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
+blacklist nouveau
+options nouveau modeset=0
+
+# 重新制作
+steven@~$ sudo update-initramfs -u
+
+# 重启，关闭Secure boot
+
+# 检查nouveau是否加载
+steven@~$ lsmod|grep nouveau
+
+# 安装NIVDIA驱动
+steven@~$ sudo chmod a+x Downloads/NVIDIA-<version>.run
+steven@~$ sudo Downloads/NVIDIA-<version>.run --no-opengl-files
+
+# 重启
+
+# 查看NVIDIA信息
+steven@~$ nvidia-smi
