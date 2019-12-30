@@ -1,0 +1,14 @@
+1.替换阿里云源
+steven@~$ sudo vi /etc/apt/sources.list
+:%s;http://cn.archive.ubuntu.com;https://mirrors.aliyun.com;
+
+steven@~$ sudo apt-get update
+
+
+2.安装vim
+steven@~$ sudo apt-get install vim
+
+
+3.安装搜狗输入法
+参考目录下sogou.txt文本
+
