@@ -16,6 +16,9 @@ python3编译：
 
 [thompson@~] ./config --prefix=/usr/local --openssldir=/usr/local/openssl
 
+[thompson@~] nproc
+4
+
 [thompson@~] make -j4
 
 [thompson@~] sudo make install
@@ -87,8 +90,22 @@ _ssl _ssl.c \
 
 [thompson@~] make distclean
 
-[thompson@~] ./configure
+[thompson@~] ./configure --prefix=/usr/local/python3.8
 
-[thompson@~] make
+[thompson@~] make -j4
 
 [thompson@~] sudo make install
+
+[thompson@~] sudo chown -R thompson:thompson /usr/local/python3.8
+
+[thompson@~] sudo ln -s /usr/local/python3.8/bin/python3 /usr/bin/python3
+
+[thompson@~] sudo ln -s /usr/local/python3.8/bin/pip3 /usr/bin/pip3
+
+
+报错集：
+1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
+解决:
+# lsb_release指定详细python版本
+sudo vi /usr/bin/lsb_release
+#!/usr/bin/python3

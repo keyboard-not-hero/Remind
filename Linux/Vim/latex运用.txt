@@ -32,7 +32,22 @@
   # 测试安装是否成功
   steven@~$ tex --version
 
-2.vimtex(vim插件)
+2.中文语言支持
+  #CTex中文包安装(基于Texlive的pdflatex)
+  steven@~$ tlmgr install ctex
+
+  # 字体路径配置
+  # 让pdflatex找到系统字体
+  steven@~$ vi /usr/local/texlive/2019/texmf.cnf
+  OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
+
+  # 指定texlive附带文字所在路径
+  steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
+
+  # 刷新fontconfig的字体缓存
+  steven@~$ sudo fc-cache -fsv
+
+3.vimtex(vim插件)
   # 安装Vundle(vim插件管理套件，如安装或使用其他管理套件，可忽略)：
   steven@~$ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   
@@ -75,7 +90,7 @@
   # 查看vimtex帮助文档
   :h vimtex
 
-3.zathura
+4.zathura
   # 准备前提库:
   steven@~$ sudo apt-get install libsynctex-dev libgtk-3-dev libmagic-dev
 
@@ -140,28 +155,8 @@
 
   #zathura配置文件：$HOME/.config/zathura/zathurarc
 
-4.中文语言支持
-  #CTex中文包安装(基于Texlive的pdflatex)
-  steven@~$ tlmgr install ctex
 
-  # 1.CTex的四个文档类ctexart/ctexrep/ctexbook/ctexbeamer对应于latex的四个标准文档类article/report/book/beamer,并且使用时需要使用UTF-8保存
-  # 格式：\documentclass[UTF8]{ctexart}
-  # 2.使用非文档类时，使用宏包
-  # 格式：\usepackage[UTF8]{ctex}
-  # 文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
-  # warning：编译需保持源文件编码、编译方式、宏包编码三者一致
-
-  # 字体路径配置
-  # 让pdflatex找到系统字体
-  steven@~$ vi /usr/local/texlive/2019/texmf.cnf
-  OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
-
-  # 指定texlive附带文字所在路径
-  steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
-
-  # 刷新fontconfig的字体缓存
-  steven@~$ sudo fc-cache -fsv
-
+三、启动vim
   # tex文档示例
   steven@~$ vi test.tex
   \documentclass[UTF8, fontset=ubuntu]{ctexart}
@@ -175,7 +170,6 @@
     你好,\LaTeX{}
   \end{document}  
 
-三、启动vim
   # --servername参数用于vimtex的前向/后向搜索  
   steven@~$ vim --servername vim test.tex
 
@@ -184,7 +178,7 @@
   Backward search:<C-Enter>
 
 
-  !!warning!!：~/.vimrc内容汇总
+  # -*- warning -*-：~/.vimrc内容汇总
 
   set nocompatible              " be iMproved, required
   filetype off                  " required

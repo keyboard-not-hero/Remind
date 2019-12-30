@@ -1,0 +1,115 @@
+1.第一个示例
+\documentclass[UTF8]{article}
+\begin{document}
+    This is my first document
+
+    Happy \TeX ing!
+\end{document}
+
+%符号'%'用于注释
+%空白行代表输出的换行
+
+
+2.中文正文示例
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\begin{document}
+    你好，\LaTeX
+\end{document}
+
+% 1.CTex的四个文档类ctexart/ctexrep/ctexbook/ctexbeamer对应于latex的四个标准文档类article/report/book/beamer,并且使用时需要使用UTF-8保存
+% 格式：\documentclass[UTF8, fontset=ubuntu]{ctexart}
+% 2.使用非文档类时，使用宏包
+% 格式：\usepackage[UTF8, fontset=ubuntu]{ctex}
+% 文档类是宏包的超集，所以指定Ctex类文档后无需使用宏
+% warning：编译需保持源文件编码、编译方式、宏包编码三者一致
+
+
+3.标题和目录
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+    \title{论爱情与面包的重要性}
+    \author{steven liu}
+    \date{\today}
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \section{爱情更可贵}
+    精神需求大于物质需求
+    \section{面包更重要}
+    精神需求是基于物质的前提下
+\end{document}
+
+% \begin{document}之前的部分为preamble部分
+% \maketitle使标题等内容显示
+% \tableofcontents和之后的section为目录部分
+
+
+4.文本格式
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\begin{document}
+    勾股定理，参考于欧几里得\footnote{欧几里得，约公元前330--275年}
+
+    其中，3,4,5分别代表\emph{勾股数}
+
+    引用:
+    \begin{quote}
+    勾广三，股修四，径隅五。
+    \end{quote}
+    \end{quote}
+\end{document}
+
+% \footnote代表角标备注
+% \emph代表强调
+% \begin{quote}与\end{quote}之间的内容代表跨段缩进引用
+
+
+5.输入公式
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\begin{document}
+    $E=mc^2$
+    
+    \begin{equation}
+        \angle ABC = \pi / 2 = 90^\circ
+    \end{equation}    
+\end{document}
+
+% $$用于行内公式限定
+% \begin{equation}用于段落公式环境标记
+
+
+6.插入已有图片
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{graphicx}
+\begin{document}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[scale=0.4]{snuggle-4713013_640.jpg}
+        \caption{这是一张图片}
+        \label{fig:snuggle}
+    \end{figure}
+\end{document}
+
+% \usepackage{graphicx}提供插入图片的包
+% \begin{figure}给图片提供浮动空间，ht分别代表位于字体行中间和页顶部
+% \centering代表环境内容居中显示。环境代指最近\begin...\end包围
+% \includegrapgics[scale=0.4]{index}代表插入图片缩放比例和缩放图片名称
+% \caption代表图片注解文字
+% \label代表给图片附带可引用标签。引用格式：\ref{fig:snuggle}
+
+
+7.表格制作
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{graphicx}
+    \begin{tabular}{|rrr|}
+        \hline
+        姓名 & 身高(cm) & 体重(kg)
+        \hline
+        李雷 & 169 & 70
+        张丽 & 163 & 52
+        王飞 & 175 & 72
+        \hline
+    \end{tabular}
+\end{graphicx}
+
+% \begin{tabular}代表表格环境，{|rrr|}代表表格左右两边被竖线包围，内部含3列，每列都右对齐
+% \hline为横线
+% &为列与列之间的分隔

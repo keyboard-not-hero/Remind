@@ -1,0 +1,5 @@
+<tab> - 语法补充
+
+<ctrl>+<tab> - 跳转到语法环境外部
+
+<ctrl>+<mouse_left>    源代码对应的pdf行，或pdf行对应源代码
