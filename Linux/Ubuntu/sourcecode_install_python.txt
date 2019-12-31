@@ -103,5 +103,11 @@ python3编译：
 1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
 解决:
 # lsb_release指定详细python版本
-sudo vi /usr/bin/lsb_release
+[thompson@~] sudo vi /usr/bin/lsb_release
 #!/usr/bin/python3
+
+2.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
+解决：
+# python添加socks支持
+[thompson@~] unset ALL_PROXY
+[thompson@~] sudo pip3 install pysocks
