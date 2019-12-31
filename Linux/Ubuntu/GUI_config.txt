@@ -1,14 +1,23 @@
-快捷键配置：
-配置 >> 设备 >> 键盘
-
-文本大小配置：
-配置 >> 通用辅助功能 >> 大号文本-on/off
-
-配置ctrl+alt+backspace快捷键：
+一、配置ctrl+alt+backspace快捷键：
 1.修改配置文件
 vi /etc/default/keyboard
 XKBOPTIONS="" 
 -->
 XKBOPTIONS="terminate:ctrl_alt_bksp"
+
 2.重启
 systemctl poweroff
+
+
+二、家目录下的子目录显示在桌面(Desktop)下
+vi ~/.config/user-dirs.dirs
+XDG_DESKTOP_DIR="$HOME/Desktop"
+XDG_DOWNLOAD_DIR="$HOME/Downloads"
+XDG_TEMPLATES_DIR="$HOME/Templates"
+XDG_PUBLICSHARE_DIR="$HOME/Public"
+XDG_DOCUMENTS_DIR="$HOME/Documents"
+XDG_MUSIC_DIR="$HOME/Music"
+XDG_PICTURES_DIR="$HOME/Pictures"
+XDG_VIDEOS_DIR="$HOME/Videos"
+
+**按照以上格式对齐，通常该情况下会是$HOME
