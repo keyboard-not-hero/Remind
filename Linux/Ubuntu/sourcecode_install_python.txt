@@ -8,13 +8,12 @@ python3编译：
 
 
 2.openssl编译(需大于等于1.0.2)
-下载地址：https://www.openssl.org/source
-
-[thompson@~] tar -zxf openssl-1.0.2u.tar.gz -C /usr/src
+[thompson@~] cd /tmp && git clone https://github.com/openssl/openssl.git && cd openssl
 
 [thompson@~] make distclean
 
-[thompson@~] ./config --prefix=/usr/local --openssldir=/usr/local/openssl
+# openssl默认安装路径为/usr/local(即--prefix=/usr/local)，对应动态库安装路径为/usr/local/lib
+[thompson@~] ./config
 
 [thompson@~] nproc
 4
@@ -35,7 +34,7 @@ python3编译：
 
 [thompson@tcl8.6.10] make distclean
 
-[thompson@tcl8.6.10] ./configure
+[thompson@tcl8.6.10] ./configure --prefix=/usr/local/tcl
 
 [thompson@tcl8.6.10] make -j4
 
@@ -53,7 +52,7 @@ python3编译：
 
 [thompson@tcl8.6.10] make distclean
 
-[thompson@tcl8.6.10] ./configure
+[thompson@tcl8.6.10] ./configure --prefix=/usr/local/tcl
 
 [thompson@tcl8.6.10] make -j4
 
@@ -64,35 +63,32 @@ python3编译：
 下载python
 [thompson@~] wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
 
-[thompson@~] tar -Jxf Python-3.8.1.tar.xz -C /usr/src
+[thompson@~] sudo tar -Jxf Python-3.8.1.tar.xz -C /usr/src
 
-编辑python配置文件：
-[thompson@~] vi /usr/src/python-3.8.1/Modules/Setup
-#用于配置openssl，注意配置细节
-# Socket module helper for SSL support; you must comment out the other
-# socket line above, and possibly edit the SSL variable:
-SSL=/usr/local/openssl
-_ssl _ssl.c \
- -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
- -L$(SSL)/lib -lssl -lcrypto
-
-#用于配置tcl/tk
-# *** Always uncomment this (leave the leading underscore in!):
-	_tkinter _tkinter.c tkappinit.c -DWITH_APPINIT \
-# *** Uncomment and edit to reflect where your Tcl/Tk libraries are:
-	-L/usr/local/lib \
-# *** Uncomment and edit to reflect where your Tcl/Tk headers are:
-	-I/usr/local/include \
-# *** Uncomment and edit to reflect your Tcl/Tk versions:
-	-ltk8.6 -ltcl8.6 \
-# *** Always uncomment this; X11 libraries to link with:
-	-lX11
-
+# 试编译
 [thompson@~] make distclean
 
 [thompson@~] ./configure --prefix=/usr/local/python3.8
 
 [thompson@~] make -j4
+
+# 出现提示libssl.so.3和libcrypto.so.3 not found，这两个动态库属于程序openssl
+[thompson@~] ldd /usr/local/bin/openssl
+    libssl.so.3 ==> not found
+    libcrypto.so.3 ==> not found
+
+# 解决方法：系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
+[thompson@~] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
+[thompson@~] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
+
+# 重新编译
+[thompson@~] make distclean
+
+[thompson@~] ./configure --prefix=/usr/local/python3.8
+
+[thompson@~] make -j4
+
+[thompson@~] make test
 
 [thompson@~] sudo make install
 

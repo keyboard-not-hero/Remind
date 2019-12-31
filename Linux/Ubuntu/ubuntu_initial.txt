@@ -9,12 +9,29 @@ steven@~$ sudo apt-get update
 steven@~$ sudo apt-get install vim
 
 
-3.安装搜狗输入法
+3.中文环境下，恢复家目录下子目录的英文显示
+steven@~$ export LANG=en_US
+
+# 输入下列指令后弹窗，选择目录语言切换
+steven@~$ xdg-user-dirs-gtk-update
+
+steven@~$ export LANG=zh_CN.UTF-8
+
+
+4.安装搜狗输入法
 参考目录下sogou.txt文本
 
 
-4.开机启动脚本准备
+5.安装谷歌浏览器
+下载地址：https://www.google.cn/chrome/
+
+# 安装
+steven@~$ sudo dpkg -i Downloads/google-xxx.deb
+
+
+6.开机启动脚本准备
 新版本GNU/Linux中，已使用systemd代替init。systemd会默认开机启动服务/etc/systemd/system/rc-local.service，该服务又会默认调用/etc/rc.local
+
 # rc-local服务状态查看
 steven@~$ systemctl status rc-local
 ● rc-local.service - /etc/rc.local Compatibility
@@ -34,15 +51,7 @@ steven@~$ vi /etc/rc.local
 steven@~$ sudo chmod a+x /etc/rc.local
 
 
-5.中文环境下，恢复家目录下子目录的英文显示
-steven@~$ export LANG=en_US.UTF-8
-
-steven@~$ xdg-user-dirs-gtk-update
-
-steven@~$ export LANG=zh_CN.UTF-8
-
-
-6.关闭wifi模块(拯救者Y7000笔记本)
+7.关闭wifi模块(拯救者Y7000笔记本)
 steven@~$ rfkill list all
 
 steven@~$ lsmod|grep ideapad
@@ -50,7 +59,7 @@ steven@~$ lsmod|grep ideapad
 steven@~$ modprobe -r ideapad_laptop
 
 
-7.Nvidia显卡驱动安装(拯救者Y7000笔记本，显卡为Geforce GTX 1650)
+8.Nvidia显卡驱动安装(拯救者Y7000笔记本，显卡为Geforce GTX 1650)
 # 查看当前驱动和推荐驱动。根据推荐驱动版本去nvidia官网下载
 steven@~$ ubuntu-drivers devices
 
