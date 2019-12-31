@@ -1,0 +1,269 @@
+python默认使用tkinter包创建图形
+
+导入：
+import tkinter
+
+主框架：
+tk = tkinter.Tk()
+
+方法：
+title(string)：配置标题
+
+geometry(string)：配置分辨率，格式为widthxheight
+
+
+15种核心插件：
+Button：按钮插件
+
+方法：
+__init__(frame,text,image,compound,fg,bg,command,state…)
+
+config(text,image,compound,fg,bg,command…)：用于配置插件属性
+
+pack(side=tkinter.TOP,fill=None,expand=False,padx,pady)：使插件可见
+
+参数释义：
+frame：容纳插件的框架
+
+text：插件上的文字
+
+image：插件上的图片
+
+compound：如果同时提供image和text，image默认覆盖；提供该参数，则image和text同时存在，该参数代表图片相对于文本的位置
+
+fg：文本颜色
+
+bg：背景色
+
+command：按钮触发的操作，所调用的方法
+
+state：按钮的是否可点击状态，包含ACTIVE/NORMAL/DISABLED
+
+side：插件位于框架的位置，上(默认,值为”top”或者tkinter.TOP)下左右
+
+fill：在X/Y轴上进行背景填充，默认为None，有tkinter.X/tkinter.Y/tkinter.BOTH选项
+
+expand：挤占剩余空间，但背景大小不变，默认为False(0,主要体现为背景下边界被限制在单行边界)
+
+padx/pady：在X/Y上进行padding填充
+
+代码实例：
+import tkinter
+
+
+
+class App:
+
+    def __init__(self, master):
+
+        #创建一个子框架frame
+        frame = tkinter.Frame(master)
+
+        frame.pack()
+
+
+
+        #在frame中创建两个按钮
+        self.quit = tkinter.Button(frame, text="QUIT", fg="red", command=frame.quit)
+
+        self.quit.pack(side="left")
+
+        self.hello = tkinter.Button(frame, text="Hello", fg="green", command=self.hi_body)
+
+        self.hello.pack(side="left")
+
+
+
+    def hi_body(self):
+        print("hello,every everybody")
+
+
+
+if __name__ == "__main__":
+
+#创建主窗口
+
+    tk = tkinter.Tk()
+
+    app = App(tk)
+
+    tk.mainloop()
+
+
+
+Canvas：灵活自由画布
+
+CheckButton：独立勾选按钮组
+
+方法：
+__init__(frame,text,variable,onvalue,offvalue,command…)
+
+pack(side)
+
+参数释义：
+text：按钮代表的含义
+
+variable：按钮代表的值类型
+
+onvalue：按钮选中代表的值
+
+offvalue：按钮未选中代表的值
+
+
+实例代码：
+import tkinter
+
+def cb():
+    print("print the content:%s"%var.get())
+
+tk = tkinter.Tk()
+
+var = tkinter.StringVar()
+
+checkButton = tkinter.Checkbutton(tk,text="sex",variable=var,onvalue="man",offvalue="woman",command=cb)
+
+checkButton.pack()
+
+tk.mainloop()
+
+
+
+Entry：单行文本输入框
+
+方法：
+__init__(frame,textvariable)
+
+pack(side)：使文本框可见
+
+get()：获取Entry内的文本
+
+delete(first,last=None)：删除entry的文本内容
+
+focus_set()：项目启动时，游标即集中于文本框(默认文本框无游标)
+
+参数释义：
+textvariable：entry内文本的类型对象，一般为tkinter.StringVar
+
+first：删除的起始位置
+
+last：删除的最后位置(最后一个位置为tkinter.END)，当未提供时，从first处删除一个字符
+
+import tkinter
+
+#获取文本内容
+def get():
+
+    # print(v.get())
+
+    print(entry.get())
+
+#删除最后一个字符
+def delete():
+
+    cursor = len(entry.get()) - 1
+
+    entry.delete(cursor,tkinter.END)
+
+
+tk = tkinter.Tk()
+
+v = tkinter.StringVar()
+
+entry = tkinter.Entry(tk, textvariable=v)
+
+entry.pack()
+
+get_button = tkinter.Button(tk,text='get',command=get)
+
+get_button.pack()
+
+delete_button = tkinter.Button(tk,text='delete',command=delete)
+
+delete_button.pack()
+
+v.set("this is default value")
+
+tk.mainloop()
+
+Frame：容纳其他插件的子框架
+
+方法：
+__init__(master)
+
+pack(side)
+
+
+实例代码：
+import tkinter
+
+
+tk = tkinter.Tk()
+
+button_1 = tkinter.Button(tk,text="butto_1")
+
+button_1.pack(fill=tkinter.BOTH)
+
+frame = tkinter.Frame(tk)
+
+button_2 = tkinter.Button(frame,text="button_2")
+
+button_2.pack(side="left")
+
+button_3 = tkinter.Button(frame,text="button_3")
+
+button_3.pack(side="left")
+
+tk.mainloop()
+
+
+
+Label：用于展示图片或文本
+
+方法：
+__init__(master,text,image,compound=None,height,width,anchor=tkinter.CENTER)
+
+pack(side)
+
+参数释义：
+compound：默认为None，当此时同时提供image和text，text被忽略；当提供该参数时，为image相对于text的位置，包含CENTER/TOP/BOTTOM/LEFT/RIGHT
+
+height：高度配置，为文本时，为文本行数；为image时，为像素
+
+anchor：内容位于背景的方位，包括中CENTER/南S/北N/西W/东E/西北NW/东北NE/西南SW/东南SE
+
+
+
+Listbox：罗列事项清单
+
+方法：
+__init__(master,selectmode=tkinter.BROWSE,exportselection=1)
+
+pack()
+
+insert(index,item)：从指定索引处添加item
+
+delete(first,last=None)：删除指定范围item
+
+get(first, last=None)：获取指定范围item
+
+curselection()：罗列当前选中item的index元组
+
+参数释义：
+selectmode：listbox的item选择类型，分别为SINGLE(一个选中)、BROWSE(一个选中，但可以使用方向键改选，默认选项)、MULTIPLE(同时多个选中)、EXTENDED(使用shift或ctrl进行多个选中)
+
+exportselection：将当前listbox的选中情况输出给X selection(X selection只能同时容纳一个listbox情况)，默认为True(1)
+
+index：指定项索引位置，起始处为0，末尾为tkinter.END，最后选中条目为tkinter.ACTIVE
+
+item：向Listbox内添加的项
+
+first：删除/获取的起始索引
+
+last：删除/获取的最后一个索引，默认为None，表示只删除从first开始的一个item
+
+插件类型参考：http://effbot.org/tkinterbook/tkinter-classes.htm
+
+
+全文参考：http://effbot.org/tkinterbook/
+
+

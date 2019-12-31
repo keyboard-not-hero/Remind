@@ -1,16 +1,16 @@
 一、配置ctrl+alt+backspace快捷键：
 1.修改配置文件
-vi /etc/default/keyboard
+steven@~$ vi /etc/default/keyboard
 XKBOPTIONS="" 
 -->
 XKBOPTIONS="terminate:ctrl_alt_bksp"
 
 2.重启
-systemctl poweroff
+steven@~$ shutdown -r now
 
 
 二、家目录下的子目录显示在桌面(Desktop)下
-vi ~/.config/user-dirs.dirs
+steven@~$ vi ~/.config/user-dirs.dirs
 XDG_DESKTOP_DIR="$HOME/Desktop"
 XDG_DOWNLOAD_DIR="$HOME/Downloads"
 XDG_TEMPLATES_DIR="$HOME/Templates"
@@ -21,3 +21,10 @@ XDG_PICTURES_DIR="$HOME/Pictures"
 XDG_VIDEOS_DIR="$HOME/Videos"
 
 **按照以上格式对齐，通常该情况下会是$HOME
+
+
+三、ubuntu与windows文明名乱码/问号
+由于ubuntu挂载时ntfs/fat编码不正确造成，如fat解决如下：
+steven@~$ sudo mount -t vfat -o utf8 /dev/sda6 /mnt
+
+参考链接：http://linux-wiki.cn/wiki/zh-hans/%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98

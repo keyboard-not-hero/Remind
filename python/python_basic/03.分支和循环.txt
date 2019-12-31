@@ -1,0 +1,25 @@
+分支
+if语句：
+if CONDITION1:
+STATEMENT1
+elif CONDITION2:
+STATEMENT2
+else:
+STATEMENT3
+
+循环
+for语句：
+for i in array:
+  STATEMENT1
+else:
+STATEMENT2
+当for正常循环完毕或者不成立时，执行else；for由break中断退出或try捕捉到异常，则不执行else
+continue：退出当前层单次迭代，继续后续迭代
+break：直接退出当前层全部迭代
+**注意：for i in array会试图创建一个无穷大的列表，用于insert/append会导致失败，使用copy方式for i in array[:]
+
+while语句：
+while CONDITION：
+    STATEMENT
+
+pass语句：在必须使用语句但不执行任何操作的地方使用

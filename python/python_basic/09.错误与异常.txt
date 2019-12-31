@@ -1,0 +1,19 @@
+错误：指语法输入不正确导致的语法错误
+异常：可通过built-in或自定义异常类捕获(try…except语法)的错误
+
+异常语法：
+try：
+  statement1
+except ErrorClass：
+  statement2
+else：
+  statement3
+finally：
+  statement4
+其中：
+1.else为未捕获到异常时，必须执行的指令
+2.finally不论是否捕获到异常，最终都会执行
+
+
+raise Exception(args)：强制出现指定异常，并附带参数
+raise Exception写法，自动调用Exception的无参构造器

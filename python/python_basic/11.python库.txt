@@ -1,0 +1,468 @@
+builtins -- 内建函数模块
+dir(mod)：罗列模块方法
+
+help(mod/function)：模块/方法的帮助文档(方法介绍、库路径)
+
+isinstance(x,obj)：判断x是否为类obj的实例
+
+open(fn,mode,encoding,newline)：打开一个文件，返回文件句柄fp。
+
+newline默认为None，在输入时，所有系统的换行符(\r、\n、\r\n)都转化为\n
+
+在输出时，所有\n又转化为系统换行符
+
+newline配置为’’，输入时，系统换行符保持不变
+
+输出时，系统换行符照样保持不变
+
+
+os -- 与操作系统交互
+getcwd()：获取当前工作目录
+
+system(cmd)：执行系统级指令
+
+chdir(dir)：跳转到指定目录
+
+getpid()：返回当前进程ID(PID)
+
+getppid()：返回父进程ID
+
+path.splitext(full_fn)：以最后一个.为分隔符，分割文件名和后缀名(.为起始无效)，返回文件名和后缀名的二元tuple
+
+os.path.isfile(file)：判断文件是否存在
+
+os.remove(file)：删除文件
+
+
+hashlib--安全Hash库
+md5(bytes)：获取HASH对象，可从已编码字符串bytes获取对应HASH值
+
+md5().hexdigest：从HASH对象获取16进制数字，128bit
+
+
+shutil -- 高度集中化文件/文件集操作
+copyfile(src,dst)：复制源文件内容到目标文件(不包括metadata - owner/group等)，返回木匾文件名称
+
+
+itertools -- 高效迭代器生成工具
+count(start,step=1)：以start为起始，步长为step(默认为1)的无限长度迭代器
+
+repeat(elem,times=float(“inf”))：对象elem重复times(默认为无穷大)次的迭代器
+
+
+glob -- 文件通配符查找
+glob(wildcard)：使用通配符查找文件
+
+
+time -- 时间模块，基于epoch时间
+sleep(secs)：让程序暂停运行secs秒
+
+time()：返回当前时间，自epoch时间(Unix初始)所经历的秒数，Unix-like系统为1970-1-1 00:00，具体可以通过gmtime(0)查看
+
+asctime([tuple])：返回时间struct_time的字符串形式，未提供tuple则显示当前时间的字符串格式
+
+ctime([secs])：返回自本地epoch时间secs秒后时间的字符串格式，未提供secs则显示当前时间的字符串格式
+
+gmtime([secs])：返回偏移epoch时间secs秒的struct_time结构的gmt(格林威治)时间。当未提供secs，返回当前gmt时间
+
+localtime([secs])：本时区时间，返回相对于epoch时间偏移secs秒的struct_time结构。当未提供secs，返回当前时间内容
+
+
+calendar—日历模块
+**闰年(可以被4整除但同时不能被100整除，或者能被400整除)
+setfirstweekday(weekday)：设置一周的起始日
+
+firstweekday()：获取一周的起始日
+
+isleap(year)：判断year是否为闰年
+
+leapdays(y1,y2)：y1至y2年，闰年的数量
+
+weekday(year, month, day)：给定日期为周几
+
+weekheader(n)：列出周一至周日n位缩写的字符串格式
+
+monthcalendar(year, month)：打印具体年月的日历，格式为二维数组
+
+monthrange(year, month)：具体年月的起始周几与该月天数，格式为tuple
+
+
+datetime—日期时间模块
+Subclass relationships:
+object
+    timedelta
+    tzinfo
+        timezone
+    time
+    date
+        datetime
+
+timedelta类：
+__init__(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)：days/seconds/microseconds作为基本属性保存在内部，其他属性转化为三种基本属性
+
+total_seconds()：将日期转化为秒数
+
+date类：
+__init__(year, month, day)：利用年月日生成日期
+
+-------------------------类方法
+today()：返回本地当前日期，格式为date对象
+
+fromtimestamp(timestamp)：返回epoch时间戳的日期，格式为date
+
+fromordinal(ordinal)：返回格里高日历的日期
+
+-------------------------实例方法
+replace(year=self.year, month=self.month, day=self.day)：使用指定年/月/日替换指定时间
+
+toordinal()：返回date日期对应的天数
+
+isoformat()：返回ISO 8601格式的日期(YYYY-MM-DD)
+
+datetime类：
+__init__(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None, *, fold=0)：使用各种参数构建datetime对象
+
+-------------------------类方法
+today()：返回当前本地日期和时间(不包含timezone信息)，格式为datetime对象
+
+now(tz=None)：返回当前本地日期和时间(可包含timezone信息)，格式为datetime对象
+
+fromtimestamp(timestamp, tz=None)：转化时间戳(如time.time())为datetime格式
+
+fromordinal(ordinal)：转化格里高日历为datetime格式
+
+fromisoformat(date_string)：转化ISO 8601字符串日期格式为datetime格式
+
+strptime(str,time_format)：字符串解析为datetime格式时间，str代表字符串，time_format代表解析的字符串格式
+
+-------------------------实例方法
+tzname()：返回当前使用的时区名称
+
+utcoffset()：偏移utc时区的时间
+
+timestamp()：返回datetime日期的Unix秒数
+
+toordinal()：返回datetime日期的格里高天数
+
+ctime()：返回datetime的字符串格式日期
+
+strftime(time_format)：datetime时间转化为字符串，time_format注明转化后的格式
+日期格式：
+%Y--4位数的年
+%y--2位数的年
+%m--2位数的月
+%d--2位数的日
+%H--2位数的小时
+%M--2位数的分钟
+%S--2位数的秒
+
+
+sys -- 指令行参数
+argv：指令行参数列表。起始argv[0]为脚本名称
+
+getsizeof(obj)：计算给定内容所占的字节
+
+
+json -- json文本模块	
+dump(obj,fp,indent,sort_keys)：将python内容obj编码为json，并保存到file-object类fp下(fp需支持w权限和文本模式)
+
+dumps(obj,indent,sort_keys)：将python内容obj编码为json，并返回编码内容
+
+load(fp)：将file-object类fp内的json内容，解码为python内容，并返回(fp需支持r权限和文本模式)
+
+loads(s)：将s解码为obj，并返回该obj
+
+**python类型编码为json类型，称为序列化
+**json类型解码为python类型，称为反序列化
+**json统一变现为python的str
+**在python的dict编码为json的object时，key统一转化为str
+
+
+csv--csv文本保存模块
+writer(fp,delimiter)：使用fp(file-like)构造一个写入器writer并返回，delimiter代表分隔符。创建fp时的open需携带newline=””参数
+**writer使用writerow(iterable)对行写入多列
+
+reader(fp)：使用fp构造一个读取器reader并返回，创建fp时的open需携带newline=””参数
+**reader为可迭代对象iterable，可使用for提取行数据
+
+
+re -- 正则表达式
+见re文档
+
+
+math -- 数学运算
+ceil(x)：对x进行向上取整
+
+floor(x)：对x进行向下取整
+
+fabs(x)：取x的绝对值
+
+factorial(x)：x的阶乘
+
+gcd(x,y)：x与y的最大公约数
+
+power(x,y)：x的y次方
+
+log(x[,y])：自然对数。当提供y时，以y为底
+
+sin(radian)：三角函数sin
+
+degrees(x)：将x由弧度转化为角度
+
+
+cmath -- 复数的数学运算
+statistics -- 统计相关
+
+mean(sample)：均值
+
+median(sample)：中位数
+
+mode(sample)：众数
+
+stdev(sample)：样本标准差
+
+variance(sample)：样本方差
+
+
+
+random -- 随机数
+seed()：初始化随机数生成器
+
+getstate()：返回生成器状态state，该返回值配合setstate用于恢复生成器
+
+setstate(state)：配置生成器状态
+
+choice(seq)：从seq序列中任意选择一个数
+
+randrange([start,]stop[,step])：从起始和结束范围内[start,stop)，以step为步进，随机生成一个数。类似于choice(range([start,]stop[,step]))
+
+randint(a,b)：从[a,b]区间任意生成一个整数数
+
+random()：返回区间[0，1)之间的随机浮点数
+
+choices(seq,weights=None,*,cum_weights=None,k=1)：从seq中选取随机选取k次值(独立事件),weights为每个item的选取权重，cum_weights为item的累积权重
+
+shuffle(seq,random=None)：在seq内部(in-place)重新洗牌顺序
+
+sample(population,k)：从population中随机抽取k个值，返回该值
+
+uniform(a,b)：返回一个[a,b]或[b,a]闭合区间的浮点数
+
+
+
+turtle -- 图形绘制工具
+forward(distance)：前进距离instance
+
+backward(distance)：后退距离instance
+
+xcor()：返回x坐标
+
+ycor()：返回y坐标
+
+position()：返回坐标定位
+
+setx(x)：x定位
+
+sety(y)：y定位
+
+setposition(x,y)：设置坐标
+
+left(degrees)：左转角度degrees
+
+right(degrees)：右转角度degrees
+
+heading()：返回角度定位
+
+setheading(to_angle)：设置角度
+
+home()：将坐标和角度调整到初始。坐标(0,0)角度(0°)
+
+reset()：初始画布，将坐标和角度调整到初始
+
+clear()：初始画布，不调整坐标和角度
+
+circle(radius,stop_angle=None,step=None)：作圆形图，radius标识半径，stop_angle标识停止位置的圆切角度，step标识由多少边的多边形表示
+
+dot(size=None,*color)：作圆点，size表示直径(默认为pensize+4和pensize*2中的最大值)，color为颜色字符串或者rgb tuple
+
+stamp()：给当前position留下一个戳，并且返回该戳的引用，用于clear
+
+clears(stamp)：使用stamp()返回的引用，删除对应戳
+
+clearstamps(n=None)：默认删除全部戳。当n>0时，删除前n个戳；当n<0时，删除后|n|个戳
+
+undo()：撤销buffer尾部操作
+
+speed(speed=None)：设置绘画速度1~10/0或使用指定字符串，当参数未提供时，返回当前速度。指定字符串{“slowest”,”slow”,”normal”,”fast”,”fastest”}
+
+towards(x,y=None)：返回turtle当前位置到指定位置的角度。x为x坐标时，y为x坐标；x为坐标tuple时，y为None；x为turtle实例时，y为None
+
+distance(x,y=None)：返回turtle当前位置到指定位置的距离。x/y同上
+
+degrees(angle)：将角度转化为整圆为angle度的运算
+
+radians()：将角度转化为弧度，heading()返回弧度
+
+pendown()：显示作画痕迹
+
+penup()：不显示作画痕迹
+
+isdown()：是否有作画痕迹
+
+pensize(width=None)
+
+width(width=None)：配置画笔宽度。未提供参数时，返回当前画笔宽度
+
+colormode(cmode)：配置rgb模式，cmode可以为1.0或255。当未提供参数时，返回当前rgb模式
+
+pencolor(*args)：配置画笔颜色，颜色可以为字符串、rgb元组、rgb(rgb需配合colormode)。当未提供参数时，返回当前画笔颜色
+
+fillcolor(*args)：配置填充颜色(搭配begin_fill和end_fill)，参数规则同上
+
+color(*args)：配置画笔颜色和填充颜色，颜色可以为字符串，rgb元组，rgb，并且可以分别配置pencolor和fillcolor的字符串和rgb元组模式。当未提供参数时，返回当前颜色配置
+
+begin_fill()：图形起始绘画处
+
+end_fill()：图形结束处
+
+filling()：填充状态(在begin_fill和end_fill时为True)
+
+write(arg,move=False,align=”left”,font=(fontname,fontsize,fonttype))：文字描述，arg为描述文字，move为是否将箭头移动到文字右下角，align为文字与图形的垂直对其方式(left/center/right，文字与图形下对齐)，font为字体相关属性
+
+hideturtle()：隐藏箭头
+
+showturtle()：显示箭头
+
+isvisible()：箭头是否可见
+
+getshapes()：返回当前已定义的shape
+
+shape(name=None)：利用已定义的shape作画。如未提供参数，则返回当前shape
+
+done()
+
+register_shape(name,shape=None)：添加已定义shape
+
+mainloop()：开启时间循环，保持窗口不关闭
+
+mode(mode=None)：配置模式，可选参数(standard/logo/world)。如未提供参数，返回当前模式
+
+ 
+
+第三方库安装方式：
+
+1.pip安装：
+pip install pillow
+
+2.pycharm安装：
+file—setting—project:PRO_NAME—project interpreter—“+”
+
+3.wheel文件安装
+pip install wheel
+
+pypi官网下载wheel文件
+
+pip install pillow.whl
+
+4.源码安装
+git clone xxx.git
+
+python setup.py install
+
+
+
+第三方库
+pillow -- 图像编辑模块
+
+**注意：pillow和PIL不同共存，安装之前请先卸载PIL
+
+pip安装：
+pip install pillow
+
+导入模块：
+from PIL import Image
+
+相关模块：
+Image
+
+属性：
+format：从文件读取的图片格式
+
+size：图片的长和宽元组
+
+mode：图片的颜色模式(L/RGB/CMYK)
+
+方法：
+open(filename,mode=’r’)：打开图片文件，打开时立即读取metadata，其他在需要时读取，所以读取文件很快(不依赖于文件格式和大小)，文件无法打开出现IOError异常
+
+save(filename[,format])：保存图片文件，当filename没有指明保存格式时，必须使用format指定格式
+
+thumbnail(tuple)：图片的缩略图(in-place，成比例缩放)，参数为长和宽的元组
+
+resize(tuple)：图片的缩略图(拉伸缩放)，参数为长和宽的元组，返回缩略后的image
+
+crop(tuple)：图片的切图，参数为(left,top,right,bottom)元组，返回切图image
+
+transpose(degree/flip)：图片变形处理，可以进行旋转(ROTATE_90)/翻转(FLIP_LEFT_RIGHT)，返回变形后的image
+
+rotate(degress)：图片旋转degree角度，返回旋转后的image
+
+paste(image[,tuple])：将image置于图片之上，可提供覆盖区域tuple，注意tuple与image大小必须符合
+
+convert(mode)：转换图片颜色模式，mode包含L/RGB等，返回转换后的image
+
+putpixel(coordinate,color)：对coor位置的像素进行设置(in-place)，当image为RGB模式时，color为三元素元组
+
+split()：将多色带图分割成带色带图，返回多个色带图的tuple
+
+point(func,mode=None)：func为对每个像素点进行计算的方法，mode默认跟输入图片一致
+
+merge(mode,bands)：组合单色带图，返回组合image。mode为颜色模式，bands为单色带image列表。该方法为静态方法
+
+filter(imagefilter)：滤镜效果，返回滤镜效果image。参数为ImageFilter类的常量
+
+show()：展示图片文件
+
+
+PyPDF2 -- PDF操作库
+pip安装：
+pip install PyPDF2
+
+pycharm安装：
+file—setting—project:PRO_NAME—project interpreter—“+”
+
+相关模块
+__init__
+
+模块导入：
+from PyPDF2 import PdfFileReader
+
+方法：
+__init__(fp)：利用打开的文件头，进行pdf包装，fp为使用内置open打开的文件头
+
+getNumPages()：返回文档的总页数
+
+
+
+heapq -- 堆
+nlargest(n,iterable,key=None)：从可迭代对象中找出前n个最大的数，可指定比较依据key
+
+nsmallest(n,iterable,key=None)：从可迭代对象中找出前n个最小的数，可指定比较依据key
+
+
+
+dateutil—datetime拓展
+pip安装：
+pip install python-dateutil
+
+文档：
+https://dateutil.readthedocs.io/en/stable/
+
+导入库：
+from dateutil.parser import parse
+
+模块：
+parser
+
+方法：
+parse(timestr, ignoretz=False, tzinfos=None, dayfirst=None, yearfirst=None)：只能识别字符串日期内容，返回datetime对象。ignoretz代表是否忽略字符串中的timezone内容；tzinfos为dict格式，通过使用timestr中的timezone缩写作为键，使用timezone名称或偏移时间作为值，来标记时区信息；dayfirst代表3整数对(如1/5/9)中，第一个解释为day(惯例月/日/年)，但优先级低于yearfirst；yearfirst代表3整数对(如1/5/9)中，第一个解释为year

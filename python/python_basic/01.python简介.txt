@@ -1,0 +1,28 @@
+python是一种高级的解释型语言，可以做到一处编写，处处运行(前提为python解释器无巨大差异)
+python相对于其他语言(如C/C++/Java)的优点：
+1.可以使用一个简单语句执行复杂运算
+2.使用缩进语句组，代替其他语言使用”{}”限定语句范围
+3.变量和参数不需要声明类型
+
+下载python解释器：
+下载地址：https://www.python.org/downloads/
+安装完成后，配置path路径，步骤如下：
+控制面板—系统和安全—系统—高级系统设置—高级—环境变量—在”系统变量”下点击Path，并且选择”编辑”按钮，加入python.exe和pip.exe所在的安装路径(**警告：不要覆盖原来的path内容，尾部额外增加)
+测试安装与配置：
+依次进行如下操作：
+快捷键”Win+R”打开运行窗口—输入cmd进入命令行
+> python –V
+> pip –V
+如分别显示python和pip版本，则安装完成
+
+在命令行输入python，进入python交互界面
+交互界面由首行提示符(>>>)和延续行提示符(…)组成
+
+Mac/Linux下指定源文件为python执行文件：
+#!/usr/bin/env python3
+
+python默认源代码编码格式
+python源文件默认编码格式为UTF-8，也可以在文件首行或次行注明编码格式，格式如下：
+# -*- coding: utf-8 -*-
+
+python官方指南：https://docs.python.org/3/tutorial/index.html

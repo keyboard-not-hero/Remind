@@ -1,0 +1,67 @@
+pip：从PyPI在线下载或更新内容
+
+pip更换源
+
+1.Linux
+[thompson@~] mkdir .pip
+
+[thompson@.pip] vi pip.conf
+
+[global]
+trusted-host=mirrors.aliyun.com
+
+index-url=http://mirrors.aliyun.com/pypi/simple/
+
+
+2.Windows
+C:\Users\LT198> mkdir pip
+
+C:\Users\LT198\pip> vi pip.ini
+
+[global]
+trusted-host=mirrors.aliyun.com
+
+index-url=http://mirrors.aliyun.com/pypi/simple/
+
+
+安装pip：
+python2.7和3.4以后一般都自带pip
+
+
+
+更新pip：
+GNU/Linux:
+pip install --upgrade pip
+
+Windows:
+python -m pip install -U pip
+
+**Windows下，当提示pip module not found，使用python –m ensurepip进行修复
+
+
+从pypi安装包和模块
+
+在线安装：
+pip install PACKAGE_NAME
+**第三方包安装到python_dir/lib/site-packages
+
+本地安装：
+pip install PAC.whl
+
+已安装列表：
+pip list
+
+已安装可更新：
+pip list --outdated
+
+更新：
+pip install --upgrade PACK
+
+包信息：
+pip show PACK
+
+查找可安装包：
+pip search PACK
+
+卸载：
+pip uninstall PACK

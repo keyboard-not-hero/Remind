@@ -1,0 +1,77 @@
+NoSQL-Redis数据库
+
+第三方模块：redis-py
+
+pip安装：
+pip install redis
+
+导入模块：
+import redis
+
+相关类：
+redis.client.Redis
+
+方法列表：
+__init__(host,port)：与服务器进行连接，返回Redis object
+
+set(key,value)：配置string类型key。redis-py使用类似于redis原生API格式
+
+pipeline(transaction)：创建pipeline连接，返回Pipeline object
+
+
+相关类：
+redis.client.Pipeline
+
+方法列表：
+execute()：提交pipleline系列指令
+
+
+
+
+
+SQL-MySQL数据库
+
+第三方模块：PyMySQL
+
+pip安装：
+pip install pymysql
+
+导入模块：
+import pymysql
+
+涉及类：
+pymysql.connections.Connection
+
+相关方法：
+__init__(host=”localhost”,port=3306,user=None,password=None)：创建连接，通常由pymysql.connect()替代初始化连接
+
+begin()：事务起始点
+
+close()：关闭连接套接口
+
+commit()：提交单一操作(无autocommit)，或提交事务
+
+rollback()：回滚到事务起始
+
+select_db(db_name)：选择数据库
+
+cursor()：创建游标，pymysql对数据库操作都需要通过游标执行
+
+
+涉及类：
+pymysql.cursors.Cursor
+
+相关方法：
+execute(query,args=None)：执行操作
+
+executemany(query,args=None)：执行操作，用于多行插入
+
+callproc(pro_name,args=()：调用执行过程
+
+close()：关闭游标
+
+fetchone()：获取一行数据
+
+fetchmany(size=None)：获取多行数据
+
+fetchall()：获取全部行数据
