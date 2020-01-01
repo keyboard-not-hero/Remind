@@ -1,5 +1,6 @@
 1.TexLive安装
 # 下载texlive镜像
+# 点击下载后，会自动切换到国内镜像源下载
 # 下载地址：https://ctan.org/tex-archive/systems/texlive/Images  
 
 # 校验完整性
