@@ -1,0 +1,47 @@
+1.确认内核在4.9.0以上
+uname -r
+
+
+2.更新内核
+内核主线地址 - https://kernel.ubuntu.com/~kernel-ppa/mainline/
+
+# 下载后进行安装
+dpkg -i linux-XXX.deb
+
+# 查看已安装内核列表
+dpkg -l | grep linux-image
+
+# 删除旧内核
+apt-get purge linux-image-XXX
+
+
+3.更新grub
+update-grub
+
+shutdown -r now
+
+
+4.加载模块
+modprobe tcp_bbr
+
+# 设置模块为开机加载
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+
+# 查看模块是否已加载
+lsmod|grep bbr
+tcp_bbr                20480  20 
+
+
+5.更新sysctl配置(/etc/sysctl.conf保存系统变量)
+echo 'net.core.default_qdisc=fq' >> /etc/sysctl.conf
+
+echo 'net.ipv4.tcp_congestion_control=bbr' >> /etc/sysctl.conf
+
+sysctl -p
+
+
+6.查看sysctl配置
+sysctl net.ipv4.tcp_available_congestion_control
+
+sysctl net.ipv4.tcp_congestion_control
+
