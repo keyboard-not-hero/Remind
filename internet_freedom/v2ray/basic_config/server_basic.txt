@@ -1,8 +1,11 @@
+本教程在centos 7和ubuntu 18.04均配置成功
 1.下载V2Ray：
 wget https://install.direct/go.sh
+
 2.安装/更新V2Ray(系统需自带systemd)：
 bash go.sh
 **v2ray每周更新。版本号vX.Y.Z，X为大更新版本(一年)，Y为小更新版本(一周)，Z为0则为稳定版本
+
 3.编辑配置文件：
 vi /etc/v2ray/config.json
 {
@@ -13,7 +16,7 @@ vi /etc/v2ray/config.json
       "settings": {
         "clients": [
           {
-            "id": "60394b20-9b45-f2e3-e68c-2454a0bd2008",  // 用户 ID，客户端与服务器必须相同
+            "id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
             "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
           }
         ]
@@ -27,14 +30,17 @@ vi /etc/v2ray/config.json
     }
   ]
 }
-**uuid可以使用以下指令生成：v2ctl uuid，或者工具网站在线生成：http://www.uuid.online/
-4.配置文件语法检查：
-v2ray -test -config /etc/v2ray/config.json
-5.启动/关闭/重启软件：
+**uuid生成方式：
+I.system进程：cat /proc/sys/kernel/random/uuid
+II.工具网站在线生成：http://www.uuid.online/
+
+4.启动/关闭/重启软件：
 systemctl start v2ray
-6.运行状态查看：
+
+5.运行状态查看：
 systemctl status v2ray
-7.防火墙开放/查看：
+
+6.防火墙开放/查看(ubuntu不需要该步骤)：
 firewall-cmd --add-port=8388/tcp
 firewall-cmd --add-port=8388/udp
 firewall-cmd --list-ports

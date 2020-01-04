@@ -16,24 +16,34 @@
   steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5
 
   # 挂载iso文件
-  steven@Downloads$ mount -o loop texlive2019-20190410.iso /mnt 
+  steven@Downloads$ sudo mount -o loop texlive2019-20190410.iso /mnt 
 
   # 安装Texlive
   steven@Downloads$ cd /mnt
 
-  steven@mnt$ ./install-tl
+  steven@mnt$ sudo ./install-tl
+
+  steven@mnt$ cd && sudo umount /mnt
+
+  # 配置texlive根目录所属
+  steven@~$ sudo chown -R steven:steven /usr/local/texlive
 
   # 配置PATH
-  steven@~$ vi .bashrc
+  steven@~$ vi ~/.bashrc
   export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
 
-  steven@~$ source .bashrc
+  steven@~$ source ~/.bashrc
 
   # 测试安装是否成功
   steven@~$ tex --version
 
 2.中文语言支持
-  #CTex中文包安装(基于Texlive的pdflatex)
+  # 配置CTAN下载源
+  steven@~$ tlmgr option repository https://mirrors.aliyun.com/CTAN/systems/texlive/tlnet
+ 
+  steven@~$ tlmgr update --self
+
+  # CTex中文包安装(基于Texlive的pdflatex)
   steven@~$ tlmgr install ctex
 
   # 字体路径配置
@@ -42,7 +52,7 @@
   OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
 
   # 指定texlive附带文字所在路径
-  steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
+  steven@~$ sudo cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
 
   # 刷新fontconfig的字体缓存
   steven@~$ sudo fc-cache -fsv
@@ -81,9 +91,9 @@
   " if vim version less than 7.4.52
   let g:vimtex_version_check = 0
 
-  # 保存修改
-  :w
-  
+  # 保存退出，重新进入
+  steven@~$ vi ~/.vimrc
+
   # 安装~/.vimrc中注明的插件
   :PluginInstall
 
@@ -91,16 +101,22 @@
   :h vimtex
 
 4.zathura
-  # 准备前提库:
-  steven@~$ sudo apt-get install libsynctex-dev libgtk-3-dev libmagic-dev
+  # zathura依赖库
+  steven@~$ sudo apt-get install libgtk-3-dev libmagic-dev
 
   # girara-gtk3(libgirara-gtk3-3)：用户接口
-  # 环境需要:meson (>= 0.48)、ninja、pango(libpango1.0-dev)、cmake、json-c(libjson-c-dev)、doxygen、check
+  # girara依赖库
   steven@~$ sudo apt-get install libpango1.0-dev cmake libjson-c-dev doxygen check
 
   # apt源的meson/ninja版本过低，使用pip3进行安装:
   steven@~$ pip3 install meson ninja
 
+  # 当python使用源码进行安装时，需配置meson/ninja路径
+  steven@~$ sudo ln -s /usr/local/python3.8/bin/meson /usr/local/bin/meson
+
+  steven@~$ sudo ln -s /usr/local/python3.8/bin/ninja /usr/local/bin/ninja
+
+  # 安装girara
   steven@~$ cd /tmp && git clone https://github.com/pwmt/girara.git && cd girara
 
   steven@girara$ meson build
@@ -112,10 +128,10 @@
   steven@build$ ninja install
 
   安装zathura:
-  # 环境需要:synctex(libsynctex-dev >=1.19)/libseccomp(libseccomp-dev)/rsvg-convert(librsvg2-bin)/appstream-util/sphinx-build(sphinx-common)/xdotool
+  # 依赖库安装
   steven@~$ sudo apt-get install libseccomp-dev librsvg2-bin appstream-util sphinx-common xdotool
   
-  # 当前源的libsynctex-dev版本过低，需要从ubuntu 19.04以上版本源下载，并且依赖于libsynctex2
+  # 当前源的libsynctex-dev版本过低，需要从ubuntu 19.04以上版本源下载，并依赖于libsynctex2
   # 下载地址：https://pkgs.org/
               https://packages.ubuntu.com/
   steven@~$ sudo dpkg -i libsynctex2-XXX libsynctex-dev-XXX
@@ -134,12 +150,13 @@
   # zathura-pdf-poppler to open PDF files,
   # zathura-ps to open PostScript files,
   # zathura-djvu to open DjVu files.  
-  # 安装zathura-pdf-poppler:pdf支持
-  # 环境需要：glib2(libglib2.0-dev)/poppler-glib(libpoppler-glib-dev)
-  steven@~$ sudo apt-get install libglib2.0-dev libpoppler-glib-dev
+
+  # 安装zathura-pdf-poppler
+  # 依赖库安装
+  steven@~$ sudo apt-get install gir1.2-poppler-0.18 libpoppler-dev libglib2.0-dev libpoppler-glib-dev
 
   steven@~$ cd /tmp && git clone https://github.com/pwmt/zathura-pdf-poppler.git && cd zathura-pdf-poppler
-  
+
   steven@zathura-pdf-poppler$ meson build
 
   steven@zathura-pdf-poppler$ cd build
@@ -173,9 +190,12 @@
   # --servername参数用于vimtex的前向/后向搜索  
   steven@~$ vim --servername vim test.tex
 
-  Forward search:\lv
+  # 保存
+  :w
 
-  Backward search:<C-Enter>
+  # 输入快捷键，进行编译
+  \ll
+
 
 
   # -*- warning -*-：~/.vimrc内容汇总
@@ -336,9 +356,11 @@ snippits/templates插件：
 Ultisnips/neosnippet
 
 快捷键：
-\ll    编译tex文本
+\ll    开始/停止编译tex文本(只有第一次生成需要编译，以后对tex文件进行修改，保存后即会自动更新)
 
 \lv    前向搜索，跳转到当前tex文本cursor对应的pdf文件位置
+
+<C-Enter>    后向搜索
 
 \li    vimtex元数据信息
 
@@ -350,7 +372,6 @@ Ultisnips/neosnippet
 
 \lm    公式字符映射
 
-<c+enter>    后向搜索
 
 vimtex指南：https://github.com/lervag/vimtex/blob/master/doc/vimtex.txt
 

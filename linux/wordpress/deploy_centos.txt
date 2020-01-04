@@ -1,0 +1,154 @@
+一、网站搭建
+LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
+
+1.安装Apache:
+
+[root@vultr ~]# yum install nginx
+
+[root@vultr ~]# systemctl start nginx
+
+[root@vultr ~]# systemctl enable nginx
+
+# 防火墙设置
+[root@vultr ~]# firewall-cmd --permanent --zone=public --add-service=http
+
+[root@vultr ~]# firewall-cmd --permanent --zone=public --add-service=https
+
+[root@vultr ~]# firewall-cmd --reload
+
+**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现test123欢迎界面，出现则成功安装
+
+
+2.安装MariaDB:
+
+# 添加新版本源：
+[root@vultr ~]# vi /etc/yum.repos.d/MariaDB.repo
+[mariadb] 
+name = MariaDB 
+baseurl = http://yum.mariadb.org/10.2/centos7-amd64
+enable=1
+gpgcheck=1 
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB 
+
+[root@vultr ~]# yum install MariaDB_server MariaDB_client
+
+[root@vultr ~]# systemctl start mariadb
+
+[root@vultr ~]# systemctl enable mariadb
+
+[root@vultr ~]# mysql_secure_installation
+
+# 防火墙设置
+[root@vultr ~]# firewall-cmd --permanent --add-service=mysql
+
+[root@vultr ~]# firewall-cmd --reload
+
+
+3.安装php:
+
+# 添加ius源
+[root@vultr ~]# yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-<版本号>.ius.centos7.noarch.rpm
+
+# 版本号查找方法，链接：https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/，搜索ius-release
+
+#添加webtatic源
+[root@vultr ~]# rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
+# 安装php
+[root@vultr ~]# yum install php70w php70w-devel php70w-fpm php70w-mysql
+
+# 启动php-fpm
+[root@vultr ~]# systemctl start php70w-fpm
+
+[root@vultr ~]# systemctl enable php70w-fpm
+
+
+4.添加nginx对php支持
+
+[root@vultr ~]# cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+
+[root@vultr nginx]# vi nginx.conf
+# 添加内容到server限定内
+server{
+    location / {
+        index index.php index.html index.htm;
+    }
+    location ~ .php$ {
+        root /usr/share/nginx/html;    #将/usr/share/nginx/html替换为您的网站根目录，本教程使用/usr/share/nginx/html作为网站根目录
+        fastcgi_pass 127.0.0.1:9000;   #Nginx通过本机的9000端口将PHP请求转发给PHP-FPM进行处理
+        fastcgi_index index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include fastcgi_params;   #Nginx调用fastcgi接口处理PHP请求
+    }
+} 
+
+[root@vultr nginx]# systemctl restart nginx
+
+[root@vultr ~]# vi /usr/share/nginx/html/phpinfo.php
+<?php
+   echo phpinfo();
+php>
+**浏览器栏输入<server_ip>/phpinfo.php)测试是否出现php欢迎界面
+
+
+wordpress环境部署：
+
+1.官网下载wordpress，并解压缩:
+[root@vultr ~]# tar -zxvf wordpress-4.9.4-zh_CN.tar.gz -C /usr/share/nginx/html
+
+2.修改/var/www/html目录所属(递归):
+[root@vultr ~]# chown -R nginx:nginx /usr/share/nginx/html
+
+3.创建数据库和账号:
+[root@vultr ~]# mysql -u root -p
+
+# 创建数据库
+>create database wordpress;
+#添加相关帐号并授权(语法：GRANT ALL PRIVILEGES ON database.table TO user@host IDENTIDIED BY passwd)
+
+>GRANT ALL PRIVILEGES ON wordpress.* TO user@localhost IDENTIFIED BY passwd;
+
+4.wordpress站点设置(与数据库连接)：
+浏览器输入ip/wp-admin/install.php，step by step进行设置
+
+
+二、域名解析
+将域名指向IP地址，称为'A'记录
+
+
+三、HTTP加密
+部署HTTPS
+
+1.添加EPEL容器
+[root@vultr ~]# yum install epel-release
+
+2.安装certbot
+[root@vultr ~]# yum install certbot python2-certbot-nginx
+
+3.获取并安装证书
+[root@vultr ~]# certbot --nginx
+交互步骤：
+  输入域名，证书信息写入/etc/nginx/nginx.conf
+  是否将http重导向https
+
+
+4.更新证书所有需要更新的证书(30天之内过期)
+[root@vultr ~]# certbot renew
+
+5.验证证书是否工作
+进入地址：https://www.ssllabs.com/ssltest/，输入域名
+
+6.查看已安装证书
+[root@vultr ~]# certbot certificates
+
+7.更换证书域名
+[root@vultr ~]# certbot certonly --cert-name <cert_name> --domains <new_domain_name>
+
+8.撤销证书
+[root@vultr ~]# certbot revoke --cert-path /etc/letsencrypt/live/<cert_name>/cert.pem
+# 删除已撤销证书相关文件
+[root@vultr ~]# certbot delete --cert-name <cert_name>
+
+引用：
+[1]mariadb源：https://downloads.mariadb.org/mariadb/repositories
+[2]wordpress中文站点：https://cn.wordpress.org/txt-download/

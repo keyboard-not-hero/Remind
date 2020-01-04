@@ -1,0 +1,11 @@
+lsblk - 块设备列表
+
+语法
+lsblk [option] [device...]
+
+参数释义
+-a, --all    显示所有设备和分区，包括空设备。默认选项
+
+-b, --bytes    使用字节显示硬盘和分区空间
+
+-D, --discard    

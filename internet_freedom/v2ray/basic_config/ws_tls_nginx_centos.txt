@@ -1,0 +1,117 @@
+1.搭建https网站，参考Linux/wordpress/deploy_centos.txt
+
+2.配置nginx
+# 更改配置文件
+[root@~ ]$ vi /etc/nginx/nginx.conf
+server {
+    server_name www.dataforthompson.cn; # managed by Certbot
+    root         /usr/share/nginx/html;
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl on;
+    ssl_certificate /etc/letsencrypt/live/www.dataforthompson.cn/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.dataforthompson.cn/privkey.pem; 
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers   HIGH:!aNULL:!MD5;
+    server_name   www.dataforthompson.cn
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+        location /ray/ { # 与 V2Ray 配置中的 path 保持一致
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1080;  #假设WebSocket监听在环回地址
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+}
+
+
+# 重启服务
+[root@~ ]$ systemctl restart nginx
+
+# 测试tls安装
+浏览器输入:https://<domain_name>/ray/
+
+
+3.服务器端配置
+[root@~ ]$ vi /etc/v2ray/config.json
+{
+  "inbounds": [
+    {
+      "port": 1080, // 服务器监听端口
+      "listen": "127.0.0.1" //只监听本地
+      "protocol": "vmess",    // 主传入协议
+      "settings": {
+        "clients": [
+          {
+            "id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
+            "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
+          }
+        ]
+      }
+      
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/ray/"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",  // 主传出协议
+      "settings": {}
+    }
+  ]
+}
+
+4.客户端配置
+[root@~ ]$ vi config.json
+{
+  "inbounds": [
+    {
+      "port": 1080, // 监听端口
+      "listen":"127.0.0.1",
+      "protocol": "socks", // 入口协议为 SOCKS 5
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
+      "settings": {
+        "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess", // 出口协议
+      "settings": {
+        "vnext": [
+          {
+            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
+            "port": 443,  // 服务器端口
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+                "alterId": 64 // 此处的值也应当与服务器相同
+              }
+            ]
+          }
+        ]
+      },
+     
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/ray/"
+        }
+      }
+    }
+  ]
+}

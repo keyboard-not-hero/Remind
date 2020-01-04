@@ -1,0 +1,124 @@
+1.搭建https网站，参考Linux/wordpress/deploy_ubuntu.txt
+
+2.配置tls
+# 开启apache2模块
+[root@~ ]$ a2enmod ssl
+
+[root@~ ]$ a2enmod proxy
+
+[root@~ ]$ a2enmod proxy_wstunnel
+
+[root@~ ]$ a2enmod proxy_http
+
+[root@~ ]$ a2enmod rewrite
+
+[root@~ ]$ a2enmod headers
+
+# 更改配置文件
+[root@~ ]$ cd /etc/apache2/sites-available
+
+[root@~ ]$ vi 000-default-le-ssl.conf
+<VirtualHost *:443>
+  ServerName www.dataforthompson.top
+  SSLEngine On
+  SSLCertificateFile /etc/letsencrypt/live/www.dataforthompson.top/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/www.dataforthompson.top/privkey.pem
+  Include /etc/letsencrypt/options-ssl-apache.conf
+  SSLProtocol -All +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLCipherSuite HIGH:!aNULL
+
+  <Location "/ray/">
+    ProxyPass ws://127.0.0.1:1080/ray/ upgrade=WebSocket
+    ProxyAddHeaders Off
+    ProxyPreserveHost On
+    RequestHeader set Host %{HTTP_HOST}s
+    RequestHeader append X-Forwarded-For %{REMOTE_ADDR}s
+  </Location>
+</VirtualHost>
+
+# 重启apache2服务
+[root@~ ]$ systemctl restart apache2
+
+# 测试tls安装
+浏览器输入:https://<domain_name>/ray/
+
+显示-Internal Server Error，则代表成功
+
+3.服务器端配置
+[root@~ ]$ vi /etc/v2ray/config.json
+{
+  "inbounds": [
+    {
+      "port": 1080, // 服务器监听端口
+      "listen": "127.0.0.1" //只监听本地
+      "protocol": "vmess",    // 主传入协议
+      "settings": {
+        "clients": [
+          {
+            "id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
+            "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
+          }
+        ]
+      }
+      
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/ray/"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",  // 主传出协议
+      "settings": {}
+    }
+  ]
+}
+
+4.客户端配置
+[root@~ ]$ vi config.json
+{
+  "inbounds": [
+    {
+      "port": 1080, // 监听端口
+      "listen":"127.0.0.1",
+      "protocol": "socks", // 入口协议为 SOCKS 5
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
+      "settings": {
+        "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess", // 出口协议
+      "settings": {
+        "vnext": [
+          {
+            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
+            "port": 443,  // 服务器端口
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+                "alterId": 64 // 此处的值也应当与服务器相同
+              }
+            ]
+          }
+        ]
+      }
+     
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/ray/"
+        }
+      }
+    }
+  ]
+}
