@@ -16,7 +16,7 @@ LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本�
 
 [root@vultr ~]# firewall-cmd --reload
 
-**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现test123欢迎界面，出现则成功安装
+**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现欢迎界面，出现则成功安装
 
 
 2.安装MariaDB:

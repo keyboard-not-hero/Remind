@@ -100,7 +100,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
+            "address": "example.com", // 服务器域名
             "port": 443,  // 服务器端口
             "users": [
               {

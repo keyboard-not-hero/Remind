@@ -1,15 +1,15 @@
 一、网站搭建
-LAMP(Linux+Apache+MariaDB+PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
+LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
 
-1.安装Apache:
+1.安装Nginx:
 
-[root@vultr ~]# apt-get install apache2
+[root@vultr ~]# apt-get install nginx
 
-[root@vultr ~]# systemctl start apache2
+[root@vultr ~]# systemctl start nginx
 
-[root@vultr ~]# systemctl enable apache2
+[root@vultr ~]# systemctl enable nginx
 
-**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现test123欢迎界面，出现则成功安装
+**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现welcome to nginx欢迎界面，出现则成功安装
 
 
 2.安装MariaDB:
@@ -25,19 +25,42 @@ LAMP(Linux+Apache+MariaDB+PHP)是基于Linux服务器动态网站的基本套件
 
 3.安装php:
 
-[root@vultr ~]# apt-get install php php-mysql
+# 添加PPA源
+[root@vultr ~]# apt-get install software-properties-common
 
-# 将7.2替换为php版本号
-[root@vultr ~]# vi /etc/php/7.2/apache2/php.ini
-cgi.fix_pathinfo=0
+[root@vultr ~]# add-apt-repository ppa:ondrej/php
 
-[root@vultr ~]# systemctl restart apache2
+[root@vultr ~]# apt-get update
 
-[root@vultr ~]# vi /var/www/html/info.php
+# 安装php7.2
+[root@vultr ~]# apt-get install php7.2 php7.2-dev php7.2-mysql php7.2-fpm
+
+# 启动php7.2-fpm
+[root@vultr ~]# systemctl start php7.2-fpm
+
+[root@vultr ~]# systemctl enable php7.2-fpm
+
+# 修改nginx配置，将.php文件传递给php执行
+[root@vultr ~]# vi /etc/nginx/sites-available/default
+# 将以下内容解除注解
+location ~ .php$ {
+    fastcgi_pass 127.0.0.1:9000;   
+    include snippets/fastcgi-php.conf;   
+} 
+
+[root@vultr ~]# systemctl restart nginx
+
+# 修改php-fpm监听配置，line 36左右
+[root@vultr ~]# vi /etc/php/7.2/fpm/pool.d/www.conf
+listen = 127.0.0.1:9000
+
+[root@vultr ~]# systemctl restart php7.2-fpm
+
+[root@vultr ~]# vi /var/www/html/phpinfo.php
 <?php
-  phpinfo();
+  echo phpinfo();
 ?>
-**浏览器栏输入remote_ip/info.php，测试是否出现php欢迎界面
+**浏览器栏输入remote_ip/phpinfo.php，测试是否出现php欢迎界面
 
 
 wordpress环境部署：
@@ -46,10 +69,10 @@ wordpress环境部署：
 [root@vultr ~]# wget https://wordpress.org/latest.tar.gz
 
 # 解压缩wordpress
-[root@vultr ~]# tar -zxvf latest.tar.gz -C /var/www/html
+[root@vultr ~]# tar -zxvf latest.tar.gz -C /tmp
 
 #将wordpress文件夹内容移动到/var/www/html下
-[root@vultr ~]# cd /var/www/html/wordpress && mv * .. && mv .htaccess ..
+[root@vultr ~]# cd /tmp/wordpress && mv * /var/www/html
 
 2.修改/var/www/html目录所属(递归):
 [root@vultr ~]# chown -R www-data:www-data /var/www/html
@@ -65,7 +88,7 @@ wordpress环境部署：
 >GRANT ALL PRIVILEGES ON wordpress.* TO user@localhost IDENTIFIED BY passwd;
 
 4.wordpress站点设置(与数据库连接)：
-浏览器输入ip/wordpress/wp-admin/install.php，step by step进行设置
+浏览器输入ip/wp-admin/install.php，step by step进行设置
 
 
 二、域名解析
@@ -87,10 +110,10 @@ wordpress环境部署：
 [root@vultr ~]# apt-get update
 
 2.下载certbot
-[root@vultr ~]# apt-get install certbot python-certbot-apache
+[root@vultr ~]# apt-get install certbot python-certbot-nginx
 
 3.安装证书
-[root@vultr ~]# certbot --apache
+[root@vultr ~]# certbot --nginx
 
 4.更新证书
 [root@vultr ~]# certbot renew

@@ -3,6 +3,7 @@ uname -r
 
 
 2.更新内核
+# 下载headers/headers-generic/image-generic/modules-generic
 内核主线地址 - https://kernel.ubuntu.com/~kernel-ppa/mainline/
 
 # 下载后进行安装
