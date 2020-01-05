@@ -1,7 +1,7 @@
 一、网站搭建
 LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
 
-1.安装Apache:
+1.安装Nginx:
 
 [root@vultr ~]# yum install nginx
 

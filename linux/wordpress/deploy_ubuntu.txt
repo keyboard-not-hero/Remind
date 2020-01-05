@@ -42,6 +42,8 @@ LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本�
 
 # 修改nginx配置，将.php文件传递给php执行
 [root@vultr ~]# vi /etc/nginx/sites-available/default
+# 索引文件添加index.php，用于对php支持
+index index.html index.htm index.nginx-debian.html index.php;
 # 将以下内容解除注解
 location ~ .php$ {
     fastcgi_pass 127.0.0.1:9000;   
