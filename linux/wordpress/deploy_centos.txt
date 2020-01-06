@@ -3,6 +3,8 @@ LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本�
 
 1.安装Nginx:
 
+[root@vultr ~]# yum install epel-release
+
 [root@vultr ~]# yum install nginx
 
 [root@vultr ~]# systemctl start nginx
@@ -30,7 +32,7 @@ enable=1
 gpgcheck=1 
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB 
 
-[root@vultr ~]# yum install MariaDB_server MariaDB_client
+[root@vultr ~]# yum install MariaDB-server MariaDB-client
 
 [root@vultr ~]# systemctl start mariadb
 
@@ -58,9 +60,9 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 [root@vultr ~]# yum install php70w php70w-devel php70w-fpm php70w-mysql
 
 # 启动php-fpm
-[root@vultr ~]# systemctl start php70w-fpm
+[root@vultr ~]# systemctl start php-fpm
 
-[root@vultr ~]# systemctl enable php70w-fpm
+[root@vultr ~]# systemctl enable php-fpm
 
 
 4.添加nginx对php支持
@@ -88,13 +90,19 @@ server{
 <?php
    echo phpinfo();
 php>
+
 **浏览器栏输入<server_ip>/phpinfo.php)测试是否出现php欢迎界面
 
 
 wordpress环境部署：
 
-1.官网下载wordpress，并解压缩:
-[root@vultr ~]# tar -zxvf wordpress-4.9.4-zh_CN.tar.gz -C /usr/share/nginx/html
+
+1.下载wordpress:
+[root@vultr ~]# wget https://wordpress.org/latest.tar.gz
+
+[root@vultr ~]# tar -zxvf wordpress-4.9.4-zh_CN.tar.gz -C /tmp
+
+[root@vultr ~]# cd /tmp/wordpress && mv * /usr/share/nginx/html
 
 2.修改/var/www/html目录所属(递归):
 [root@vultr ~]# chown -R nginx:nginx /usr/share/nginx/html

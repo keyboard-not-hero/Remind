@@ -4,17 +4,8 @@
 # 更改配置文件
 [root@~ ]$ vi /etc/nginx/nginx.conf
 server {
-    server_name www.dataforthompson.cn; # managed by Certbot
-    root         /usr/share/nginx/html;
-
-    listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl on;
-    ssl_certificate /etc/letsencrypt/live/www.dataforthompson.cn/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/www.dataforthompson.cn/privkey.pem; 
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers   HIGH:!aNULL:!MD5;
-    server_name   www.dataforthompson.cn
+    # ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #被/etc/letsencrypt/options-ssl-nginx.conf包含
+    # ssl_ciphers   HIGH:!aNULL:!MD5; #被options-ssl-nginx.conf包含
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
         location /ray/ { # 与 V2Ray 配置中的 path 保持一致
@@ -33,9 +24,6 @@ server {
 # 重启服务
 [root@~ ]$ systemctl restart nginx
 
-# 测试tls安装
-浏览器输入:https://<domain_name>/ray/
-
 
 3.服务器端配置
 [root@~ ]$ vi /etc/v2ray/config.json
@@ -52,8 +40,7 @@ server {
             "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
           }
         ]
-      }
-      
+      },
       "streamSettings": {
         "network": "ws",
         "wsSettings": {

@@ -1,0 +1,50 @@
+一、LNMP环境搭建
+
+二、数据库备份
+1.数据库准备(用户信息表：mysql.user)
+创建数据库
+CREATE DATABASE wordpress;
+
+用户授权
+GRANT ALL PRIVILEGES ON wordpress.* TO test123@localhost IDENTIFIED BY "passwd";
+
+应用更改
+FLUSH PRIVILEGES;
+
+显示用户权限
+SHOW GRANTS FOR test123@localhost;
+
+2.备份数据库
+**以下两步需在旧服务器操作
+mysqldump –add-drop-table -u用户名 -p DB_NAME > FILE_NAME
+
+scp FILE_NAME root@NEW_SERVER_IP:/root/
+**以上两个步骤可以整合为一步(需确认mysql.user的host item包含’%’，即任意远程用户登录)，并在新服务器操作
+
+mysqldump –add-drop-table -hOLD_SERVER -uUSER -p DB_NAME > FILE_NAME
+
+3.恢复数据库
+mysql -u用户名 -p DB_NAME < FILE_NAME
+
+三、wordpress备份/恢复
+1.安装wordpress
+**下载wordpress：https://cn.wordpress.org/download/
+tar -zcvf wordpress.tar.gz /var/www/html/*
+
+scp wordrpress.tar.gz root@SERVER_IP:/root
+
+tar -zxvf wordpress.tar.gz -C /var/www/html
+
+2.将http转化为https访问(可选，使用SSL时)
+
+3.修改IP与域名映射(可选，当有新服务器有域名用于访问时)
+
+4.修改后台域名跳转(可选，当域名改变或备份时经历该步骤)
+后台设置：wp_options的option_value值
+UPDATE wp_options SET option_value=’http://SERVER_IP’ where                        option_name=’siteurl’ or option_name=’home’;
+
+文章URL地址：wp_posts的guid值
+UPDATE wp_posts SET guid=replace(guid,’old_str’,’new_str’);
+
+内容超链接：wp_posts的post_content值
+UPDATE wp_posts SET post_content=replace(post_content,’old_str’,’new_str’);

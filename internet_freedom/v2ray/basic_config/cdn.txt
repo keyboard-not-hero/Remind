@@ -1,3 +1,41 @@
+cloudflare是一家国际性cdn技术公司，如果网站或者博客在国外，建议使用cloudflare服务
+
+cloudflare原理：在终端与服务器之间进行中转，可实现内容分布式代理
+
+cloudflare服务类型：
+1.基础版本：完全由cloudflare控制代理节点。需要cloudflare作为DNS解析服务商
+
+2.进阶版本：在cloudflare partner上自主配置中间节点地理区域。DNS服务商不变，将DNS添加CNAME指向parter，随后parter再指向服务器
+
+
+基础版本配置：
 1.进入cloudflare官网
 
 2.将DNS解析服务迁移到cloudflare
+
+3.选择full连接模式
+
+
+进阶版本配置：
+## 使用partern版本，不允许使用cloudflare DNS服务
+1.登录partern网站，使用cloudflare账号登录，新增根域名
+  添加新记录，填写CNAME记录(cf-->2级子域名)指向服务器
+    **二级子域名指定格式，如：cf.www.baidu.com
+  生成对应CNAME值(主机-->cf)
+
+  parter可选列表：
+  https://cdn.moeelf.com/
+
+  https://cdn.kevsrv.com/
+
+  https://cdn.wzfou.com/
+
+2.登录DNS解析服务商后台，进入DNS服务器管理界面，填写对应CNAME记录(主机--cf)，并填写cf到服务器的A记录(2级子域名-->服务器IP)
+
+3.在DNS服务商后台，添加couldflare的官方节点IP为指定入口流量(移动、联通、电信)A记录
+  couldflare官方节点参考：
+  中国联通移动
+  104.23.240.0-104.23.243.254
+
+进阶版原理图：
+主机  ---DNS--->  CF  ---DNS--->  [二级子域名--->]  服务器
