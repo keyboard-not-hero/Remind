@@ -1,0 +1,11 @@
+nice - 指定优先级，以运行程序
+
+语法
+nice [option] [command [arg...]]
+
+参数释义
+-n, --adjustment=<N>    指定优先级，范围-20 ~ 19。默认为10
+
+--help    帮助信息
+
+--version    版本信息

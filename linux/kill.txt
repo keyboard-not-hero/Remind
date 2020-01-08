@@ -17,7 +17,7 @@ kill [option] <pid> [pid...]
 signal列表(参考man 7 signal)
 1.SIGHUP - 重新加载配置文件
 
-2.SIGINT - 从键盘中断
+2.SIGINT - 从键盘中断，类似于ctrl+c
 
 3.SIGQUIT - 从键盘退出
 
@@ -36,3 +36,5 @@ signal列表(参考man 7 signal)
 14.SIGALRM - 从alarm接收计时器信号
 
 15.SIGTERM - 正常终止进程
+ 
+19.SIGSTOP - 暂停进程，类似于ctrl+z

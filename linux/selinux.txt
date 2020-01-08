@@ -1,0 +1,46 @@
+文件存取类型
+DAC(Discretionary Access Control，自主式存取控制) - 根据访问程序的owner对文件的权限进行访问管理
+
+MAC(委任式存取控制) - 根据程序属性和文件属性的匹配进行访问管理
+
+SELinux(NSA Security Enhanced Linux)：一种MAC管理制度，Subject通过两层验证后，对Object开放SELinux层次的访问权限(最终需要对文件有基本的rwx权限)。如图
+
+                      |--------|      |------------------|
+Subject(program) ---> | policy | ---> | security context | ---> Object(file)
+                      |--------|      |------------------|
+
+
+Subject - 访问的对象，通常为程序
+
+Object - 被访问的对象，通常为文件
+
+policy - SELinux层面的访问限制程度，有如下具体类型：
+  targeted：
+  minimum：
+  mls：
+
+**policy切换方法：/etc/selinux/config内修改SELINUXTYPE属性对应的值
+
+security context - Subject与Object的规则匹配，各自规则包含如下字段：
+
+
+SELinux启动模式：
+1.enforcing - 将policy和security context严格执行与访问与被访问对象
+
+2.permissive - 记录访问与被访问对象的匹配情况，但不限制访问
+
+3.disabled - 关闭SELinux
+
+
+模式切换
+setenforce [enforcing|permissive|1|0] - 在enforcing和permissive模式之间切换
+
+**当需要在enable(enforcing/permissive)和disable模式之间切换时，修改/etc/selinux/config文件的SELINUX属性对应的值，并重启系统，从来
+
+
+查看模式
+getenforce
+
+
+查看SELinux详细情况
+sestatus
