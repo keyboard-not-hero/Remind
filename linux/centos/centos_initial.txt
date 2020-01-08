@@ -1,16 +1,13 @@
 1.替换阿里云源
-steven@~$ sudo vi /etc/apt/sources.list
-:%s/cn.archive.ubuntu.com/mirrors.aliyun.com/
-:%s/security.ubuntu.com/mirrors.aliyun.com/
+steven@~$ sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 
-steven@~$ sudo apt-get update
+# centos 7 download
+steven@~$ sudo wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 
-
-2.安装vim
-steven@~$ sudo apt-get install vim
+steven@~$ sudo yum makecache
 
 
-3.中文环境下，恢复家目录下子目录的英文显示
+2.中文环境下，恢复家目录下子目录的英文显示
 steven@~$ export LANG=en_US
 
 # 输入下列指令后弹窗，选择目录语言切换
@@ -19,84 +16,27 @@ steven@~$ xdg-user-dirs-gtk-update
 steven@~$ export LANG=zh_CN.UTF-8
 
 
-4.安装搜狗输入法
-参考目录下sogou.txt文本
+3.切换中文输入法
+设置 -- 区域和语言 -- 点击输入源下方"+" -- 选择汉语(中国) -- 汉语(pinyin) -- 点击添加按钮 -- 点击屏幕右上角输入法图标 -- 选择汉语(pinyin)
 
 
-5.安装谷歌浏览器
+4.安装谷歌浏览器
 下载地址：https://www.google.cn/chrome/
 
 # 安装
-steven@~$ sudo dpkg -i Downloads/google-xxx.deb
+steven@~$ sudo rpm -i Downloads/google-xxx.rpm
 
 
-6.开机启动脚本准备
-新版本GNU/Linux中，已使用systemd代替init。systemd会默认开机启动服务/etc/systemd/system/rc-local.service，该服务又会默认调用/etc/rc.local
+5.开机启动脚本准备
+新版本GNU/Linux中，已使用systemd代替init。systemd会默认开机不启动服务/lib/systemd/system/rc-local.service，该服务会默认调用/etc/rc.d/rc.local
 
 # rc-local服务状态查看
 steven@~$ systemctl status rc-local
-● rc-local.service - /etc/rc.local Compatibility
-   Loaded: loaded (/lib/systemd/system/rc-local.service; enabled-runtime; vendor preset: enabled)
 
 # 查看rc-local.service文件内容
-steven@~$ cat /etc/systemd/system/rc-local.service | grep rc.local
-Description=/etc/rc.local Compatibility
-Documentation=man:systemd-rc-local-generator(8)
-ConditionFileIsExecutable=/etc/rc.local
-ExecStart=/etc/rc.local start
-
-steven@~$ vi /etc/rc.local
-#!/bin/bash
-# command execute here
-
-steven@~$ sudo chmod a+x /etc/rc.local
+steven@~$ chmod a+x /etc/rc.d/rc.local
 
 
-7.关闭wifi模块(拯救者Y7000笔记本)
-steven@~$ rfkill list all
-
-steven@~$ lsmod|grep ideapad
-
-steven@~$ modprobe -r ideapad_laptop
-
-
-8.Nvidia显卡驱动安装(拯救者Y7000笔记本)
-# 更新pci列表
-steven@~$ sudo update-pciids
-
-# 查看显卡驱动(GeForce GTX 1650)
-steven@~$ lshw -numeric -C display
-  *-display                 
-       description: VGA compatible controller
-       product: TU117M [GeForce GTX 1650 Mobile / Max-Q] [10DE:1F91]
-       vendor: NVIDIA Corporation [10DE]
-
-# 查看推荐显卡驱动(如下图显示，默认为nouveau，建议安装nvidia-driver-435)
-steven@~$ ubuntu-drivers devices
-modalias : pci:v000010DEd00001F91sv000017AAsd00003FFBbc03sc00i00
-vendor   : NVIDIA Corporation
-driver   : nvidia-driver-430 - distro non-free
-driver   : nvidia-driver-435 - distro non-free recommended
-driver   : xserver-xorg-video-nouveau - distro free builtin
-
-# 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
-steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
-blacklist nouveau
-options nouveau modeset=0
-
-# 更新内核模块
-steven@~$ sudo update-initramfs -u
-
-# 重启
-# 安装NIVDIA驱动
-steven@~$ sudo apt-get install nvidia-driver-435
-
-# 查看NVIDIA信息
-steven@~$ nvidia-smi
-
-#可以在ubuntu activity查找到NVIDIA X Server Settings，点击PRIME Profiles进行独显和集显切换，切换后注销重新进入桌面生效
-
-
-9.DNS配置
+6.DNS配置
 vi /etc/sysconfig/network-scripts/ifcfg-<interface>
 DNS=223.5.5.5

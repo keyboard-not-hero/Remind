@@ -1,0 +1,5 @@
+libXss.so.1 - libXScrnSaver
+
+libappindicator3.so.1 - libappindicator-get3
+
+

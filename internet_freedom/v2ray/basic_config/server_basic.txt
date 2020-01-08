@@ -34,6 +34,9 @@ vi /etc/v2ray/config.json
 I.system进程：cat /proc/sys/kernel/random/uuid
 II.工具网站在线生成：http://www.uuid.online/
 
+3.语法检查
+/usr/bin/v2ray/v2ray -test
+
 4.启动/关闭/重启软件：
 systemctl start v2ray
 
