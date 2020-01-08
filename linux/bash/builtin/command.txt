@@ -344,28 +344,6 @@ jobs [option] [jobspec]
 
 
 
-kill - 给进程发送信号
-
-语法
-kill [option] [pid|jobspec]
-
-参数释义
--l [signum|sigspec]    可选的signal号与对应signal名称列表
-
--L [signum|sigspec]    同-l
-
--n signum    通过signal号给进程发送信号
-
--signum    同-n
-
--s sigspec    通过signal名称给进程发送信号
-
--sigspec    同-s
-
-**sigspec不在乎大小写
-
-
-
 let - 数学运算指令
 
 语法

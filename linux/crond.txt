@@ -106,3 +106,4 @@ anacron原理：
 1.在/etc/cron.hourly下，0anacron被周期调用，当/etc/cron.daily的时间戳为当天之前，则执行anacron
 2.anacron根据/etc/anacrontab配置，将/var/spool/anacron/cron.<period>文件内的时间戳与当前时间作比对
 3.当对应文件的时间差对于/etc/anacrontab的允许时间差时，执行配置文件内的对应指令
+，并更新/var/spool/anacron下对应文件的时间戳
