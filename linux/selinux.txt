@@ -1,7 +1,7 @@
 文件存取类型
-DAC(Discretionary Access Control，自主式存取控制) - 根据访问程序的owner对文件的权限进行访问管理
+DAC(Discretionary Access Control，自主式存取控制) - 根据访问程序的owner对文件的权限进行访问管理。如rwx权限
 
-MAC(委任式存取控制) - 根据程序属性和文件属性的匹配进行访问管理
+MAC(Mandatory Access Control，委任式存取控制) - 根据程序属性和文件属性的匹配进行访问管理。如SELinux
 
 SELinux(NSA Security Enhanced Linux)：一种MAC管理制度，Subject通过两层验证后，对Object开放SELinux层次的访问权限(最终需要对文件有基本的rwx权限)。如图
 
@@ -9,19 +9,41 @@ SELinux(NSA Security Enhanced Linux)：一种MAC管理制度，Subject通过两�
 Subject(program) ---> | policy | ---> | security context | ---> Object(file)
                       |--------|      |------------------|
 
+Subject - 访问的程序
 
-Subject - 访问的对象，通常为程序
-
-Object - 被访问的对象，通常为文件
+Object - 被访问的文件
 
 policy - SELinux层面的访问限制程度，有如下具体类型：
-  targeted：
+  
+targeted：
   minimum：
-  mls：
+  mls：额外支持MLS和MCS
 
 **policy切换方法：/etc/selinux/config内修改SELINUXTYPE属性对应的值
 
-security context - Subject与Object的规则匹配，各自规则包含如下字段：
+context(label) - 文件(包括program和doc)的额外标签，用于Subject与Object访问权限匹配。主要包含:
+  user - 用户等级
+  role - RBAC(Role-Base Access Control)安全模型
+  type - 以_t结尾的字段，context匹配的最重要子段
+    domain：当执行binary file为process时，由type转化而成，该步骤称为domain transition，字段改变内容。domain通常为<daemon_name>_t，其中，unconfined_service_t domain可以访问任何type文件，将binary type修改为bin_t即可
+    示例：
+    [steven@localhost ~]$ ll -Z /usr/bin/passwd
+    -rwsr-xr-x. root root system_u:object_r:passwd_exec_t:s0 /usr/bin/passwd
+
+    [steven@localhost ~]$ passwd
+    更改用户 steven 的密码 。
+    为 steven 更改 STRESS 密码。
+    （当前）UNIX 密码：
+
+    # 不输入密码，新开终端
+    [steven@localhost v2ray]$ ps -eZ|grep passwd
+    unconfined_u:unconfined_r:passwd_t:s0-s0:c0.c1023 17316 pts/2 00:00:00 passwd
+
+  [security level] - MLS(Multi-Level Security)和MCS(Multi-Category Security)的属性。需要额外安装selinux-policy-mls包，并且配置MLS policy
+    MLS：格式为<low_level>-<high_level>
+    MCS：格式为<low_category>.<high_category>，支持范围为0~023
+
+**context匹配问题可以查看/var/log/audit/audit.log。指令：cat /var/log/audit/audit.log | grep AVC
 
 
 SELinux启动模式：
@@ -44,3 +66,56 @@ getenforce
 
 查看SELinux详细情况
 sestatus
+
+
+补充
+1.Subject首先经过DAC通过，再验证MAC
+
+
+相关指令
+chcon - 修改文件的context(label)
+
+语法
+chcon
+
+参数释义
+--dereference    解引用，应用于symbolic link实际指向的文件
+
+-h, --no-dereference    不解引用，修改symbolic link文件本身
+
+-r, --role=<role>    配置context的role字段
+
+-R, --recursive    递归修改目录及目录下的context内容
+
+-t, --type=<type>    配置context的type字段
+
+-u, --user=<user>    配置context的user字段
+
+
+restorecon - 恢复文件默认context
+
+语法
+restorecon [option] file
+
+参数释义
+
+
+seinfo - SELinux policy查询工具，包含在setools-console package中
+
+语法
+
+参数释义
+
+
+
+semanage - SELinux policy 管理工具 
+
+语法
+
+参数释义
+
+
+引用
+[1] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/chap-security-enhanced_linux-introduction
+[2] https://people.redhat.com/duffy/selinux/selinux-coloring-book_A4-Stapled.pdf
+[3] http://freecomputerbooks.com/books/The_SELinux_Notebook-4th_Edition.pdf
