@@ -52,13 +52,17 @@ steven@~$ vi /etc/rc.local
 steven@~$ sudo chmod a+x /etc/rc.local
 
 
-7.关闭wifi模块(拯救者Y7000笔记本)
+7.关闭ideapad wifi模块(拯救者Y7000笔记本)
+临时关闭
 steven@~$ rfkill list all
 
 steven@~$ lsmod|grep ideapad
 
 steven@~$ modprobe -r ideapad_laptop
 
+永久关闭
+steven@~$ vi /etc/modprobe.d/blacklist.conf
+blacklist ideapad_laptop
 
 8.Nvidia显卡驱动安装(拯救者Y7000笔记本)
 # 更新pci列表
@@ -79,19 +83,39 @@ driver   : nvidia-driver-430 - distro non-free
 driver   : nvidia-driver-435 - distro non-free recommended
 driver   : xserver-xorg-video-nouveau - distro free builtin
 
-# 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
-steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
-blacklist nouveau
-options nouveau modeset=0
 
-# 更新内核模块
-steven@~$ sudo update-initramfs -u
-
-# 重启
+以下介绍两种安装方法：
+I.使用apt源
 # 安装NIVDIA驱动
 steven@~$ sudo apt-get install nvidia-driver-435
 
 # 查看NVIDIA信息
 steven@~$ nvidia-smi
 
-#可以在ubuntu activity查找到NVIDIA X Server Settings，点击PRIME Profiles进行独显和集显切换，切换后注销重新进入桌面生效
+但是，该方法重启系统后，会造成登陆界面的循环，直接显示结果就是无法进入GNOME桌面。所以，该方法无效
+
+II.手动下载官网驱动安装
+下载驱动：https://www.geforce.cn/drivers
+
+删除原有nvidia驱动残留
+sudo apt purge nvidia*
+
+# 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
+steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
+blacklist nouveau
+options nouveau moeset=0
+
+# 更新内核模块
+steven@~$ sudo update-initramfs -u
+
+# 重启,关闭secure boot
+
+sudo telinit 3
+
+sudo chmod a+x NVIDIA-XXX.run
+sudo ./NVIDIA-XXX.run --no-opengl-files
+选择Continue installation
+是否安装386兼容库? 否
+是否使用xconfig自动更新? 否
+
+# 重启
