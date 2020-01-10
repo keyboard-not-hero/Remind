@@ -27,7 +27,7 @@ steven@~$ sudo apt-get install vim
 3.中文环境下，恢复家目录下子目录的英文显示
 steven@~$ export LANG=en_US
 
-# 输入下列指令后弹窗，选择目录语言切换
+## 输入下列指令后弹窗，选择目录语言切换
 steven@~$ xdg-user-dirs-gtk-update
 
 steven@~$ export LANG=zh_CN.UTF-8
@@ -40,19 +40,19 @@ steven@~$ export LANG=zh_CN.UTF-8
 5.安装谷歌浏览器
 下载地址：https://www.google.cn/chrome/
 
-# 安装
+## 安装
 steven@~$ sudo dpkg -i Downloads/google-xxx.deb
 
 
 6.开机启动脚本准备
 新版本GNU/Linux中，已使用systemd代替init。systemd会默认开机启动服务/etc/systemd/system/rc-local.service，该服务又会默认调用/etc/rc.local
 
-# rc-local服务状态查看
+## rc-local服务状态查看
 steven@~$ systemctl status rc-local
 ● rc-local.service - /etc/rc.local Compatibility
    Loaded: loaded (/lib/systemd/system/rc-local.service; enabled-runtime; vendor preset: enabled)
 
-# 查看rc-local.service文件内容
+## 查看rc-local.service文件内容
 steven@~$ cat /etc/systemd/system/rc-local.service | grep rc.local
 Description=/etc/rc.local Compatibility
 Documentation=man:systemd-rc-local-generator(8)
@@ -60,8 +60,8 @@ ConditionFileIsExecutable=/etc/rc.local
 ExecStart=/etc/rc.local start
 
 steven@~$ vi /etc/rc.local
-#!/bin/bash
-# command execute here
+##!/bin/bash
+## command execute here
 
 steven@~$ sudo chmod a+x /etc/rc.local
 
@@ -79,17 +79,17 @@ steven@~$ vi /etc/modprobe.d/blacklist.conf
 blacklist ideapad_laptop
 
 8.Nvidia显卡驱动安装(拯救者Y7000笔记本)
-# 更新pci列表
+## 更新pci列表
 steven@~$ sudo update-pciids
 
-# 查看显卡驱动(GeForce GTX 1650)
+## 查看显卡驱动(GeForce GTX 1650)
 steven@~$ lshw -numeric -C display
   *-display                 
        description: VGA compatible controller
        product: TU117M [GeForce GTX 1650 Mobile / Max-Q] [10DE:1F91]
        vendor: NVIDIA Corporation [10DE]
 
-# 查看推荐显卡驱动(如下图显示，默认为nouveau，建议安装nvidia-driver-435)
+## 查看推荐显卡驱动(如下图显示，默认为nouveau，建议安装nvidia-driver-435)
 steven@~$ ubuntu-drivers devices
 modalias : pci:v000010DEd00001F91sv000017AAsd00003FFBbc03sc00i00
 vendor   : NVIDIA Corporation
@@ -97,39 +97,30 @@ driver   : nvidia-driver-430 - distro non-free
 driver   : nvidia-driver-435 - distro non-free recommended
 driver   : xserver-xorg-video-nouveau - distro free builtin
 
-
-以下介绍两种安装方法：
-I.使用apt源
-# 安装NIVDIA驱动
-steven@~$ sudo apt-get install nvidia-driver-435
-
-# 查看NVIDIA信息
-steven@~$ nvidia-smi
-
-但是，该方法重启系统后，会造成登陆界面的循环，直接显示结果就是无法进入GNOME桌面。所以，该方法无效
-
-II.手动下载官网驱动安装
+## 手动下载官网驱动安装
 下载驱动：https://www.geforce.cn/drivers
 
 删除原有nvidia驱动残留
 sudo apt purge nvidia*
 
-# 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
+## 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
 steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
 blacklist nouveau
 options nouveau moeset=0
 
-# 更新内核模块
+## 更新内核模块
 steven@~$ sudo update-initramfs -u
 
-# 重启,关闭secure boot
+## 重启,关闭secure boot
 
-sudo telinit 3
+## 进入CLI模式
+steven@~$ sudo telinit 3
 
-sudo chmod a+x NVIDIA-XXX.run
-sudo ./NVIDIA-XXX.run --no-opengl-files
+## 安装NVIDIA驱动
+steven@~$ sudo chmod a+x NVIDIA-XXX.run
+steven@~$ sudo ./NVIDIA-XXX.run --no-opengl-files
 选择Continue installation
 是否安装386兼容库? 否
 是否使用xconfig自动更新? 否
 
-# 重启
+## 重启
