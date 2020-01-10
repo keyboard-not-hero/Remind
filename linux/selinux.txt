@@ -15,11 +15,16 @@ Object - 被访问的文件
 
 policy - SELinux层面的访问限制程度，有如下具体类型：
   
-targeted：
+  targeted：
   minimum：
   mls：额外支持MLS和MCS
 
 **policy切换方法：/etc/selinux/config内修改SELINUXTYPE属性对应的值
+
+**policy细则：boolean，可使用semanage boolean -l查看当前policy下的boolean
+
+**修改policy后，将模式修改为permissive，重启后观察是否有SELinux，确认没有后再开启enforcing模式。观察错误提示: grep "SELinux is preventing" /var/log/messages
+
 
 context(label) - 文件(包括program和doc)的额外标签，用于Subject与Object访问权限匹配。主要包含:
   user - 系统用户在SELinux下的映射
@@ -39,11 +44,12 @@ context(label) - 文件(包括program和doc)的额外标签，用于Subject与Ob
     [steven@localhost v2ray]$ ps -eZ|grep passwd
     unconfined_u:unconfined_r:passwd_t:s0-s0:c0.c1023 17316 pts/2 00:00:00 passwd
 
-  [security level] - MLS(Multi-Level Security)和MCS(Multi-Category Security)的属性。需要额外安装selinux-policy-mls包，并且配置MLS policy
+  [level] - MLS(Multi-Level Security)和MCS(Multi-Category Security)的属性。需要额外安装selinux-policy-mls包，并且配置MLS policy。不建议X window system使用
     MLS：格式为<low_level>-<high_level>
     MCS：格式为<low_category>.<high_category>，支持范围为0~023
 
 **context匹配问题可以查看/var/log/audit/audit.log。指令：cat /var/log/audit/audit.log | grep AVC
+
 
 
 SELinux启动模式：
@@ -68,6 +74,10 @@ setenforce [enforcing|permissive|1|0] - 在enforcing和permissive模式之间切
 **当需要在enable(enforcing/permissive)和disable模式之间切换时，修改/etc/selinux/config文件的SELINUX属性对应的值，并重启系统，从来
 
 
+boot切换：
+在grub菜单选项中，使用'e'进入内核参数编辑界面，在linux内核行尾输入selinux=0
+
+
 查看模式
 getenforce
 
@@ -81,23 +91,48 @@ sestatus
 
 
 相关指令
-chcon - 修改文件的context(label)
+chcon - 修改文件的context(label)，当前启动有效
 
 语法
-chcon
+chcon [option] file
 
 参数释义
 --dereference    解引用，应用于symbolic link实际指向的文件
 
 -h, --no-dereference    不解引用，修改symbolic link文件本身
 
+--help    帮助文档
+
+-H    针对指令给出的目录进行解引用，配合-R使用
+
+-l, --range=<range>    配置context的level字段
+
+-L    对所有目录进行解引用，配合-R使用
+
+--no-preserve-root    可以从'/'进行递归操作。默认
+
+--preserve-root    不能从'/'进行递归操作
+
+-P    不解引用目录。默认选项，配合-R使用
+
 -r, --role=<role>    配置context的role字段
+
+--reference=<file>    使用指定文件file的context来修改目标文件
 
 -R, --recursive    递归修改目录及目录下的context内容
 
 -t, --type=<type>    配置context的type字段
 
 -u, --user=<user>    配置context的user字段
+
+-v, --verbose    verbose模式
+
+--version    版本信息
+
+**chcon的永久修改版本semanage fcontext -a，该操作对/etc/selinux/targeted/contexts/files/file_contexts.local文件做修改，需要restorecon进行实际应用
+
+**wraning：不支持对带有-o context的挂载进行该操作
+
 
 
 restorecon - 恢复文件默认context
@@ -106,13 +141,51 @@ restorecon - 恢复文件默认context
 restorecon [option] file
 
 参数释义
+-e <full_path>    排除全路径文件或目录，配合-R使用
+
+-f <file>    从文件file中读取需要恢复context的文件列表
+
+-F    强制修改文件的context
+
+-h, -?    帮助文档信息
+
+-i    直接忽略不存在的文件
+
+-n    不修改context，只显示可能会出现的结果，配合-v使用
+
+-p    显示修改进度，以1024个文件为一个单位
+
+-r, -R    递归子目录context修改
+
+-v    verbose模式
+
+-0    将null字符(ASCII first)作为分隔符，并且引号和'\'作为一般字符。默认为空格，适用于内容包含空格/引号/\的情况
+
+**restorecon参考/etc/selinux/targeted/contexts/files目录下的文件
 
 
-seinfo - SELinux policy查询工具，包含在setools-console package中
+
+getsebool - 获取SELinux的boolean开启状态
 
 语法
+getsebool [-a] [boolean_name]
 
 参数释义
+-a    获取所有boolean名称
+
+
+
+setsebool - 配置SELinux的boolean开启状态
+
+语法
+setsebool [option] boolean status
+
+参数释义
+-N    对persistent修改，不进行配置重载
+
+-P    修改保存到配置。默认只当前生效
+
+-V    显示详细错误信息
 
 
 

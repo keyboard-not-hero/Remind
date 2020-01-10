@@ -33,14 +33,14 @@ mount [option] [device] [dir]
     mount -a -O no_netdev    挂载/etc/fstab内option列不包含_netdev的项目
 
 -o, --options <opts>    指定挂载选项
-    选项列表
+    fs通用选项列表
     sync    文件系统保存机制为syna。即内存内容实时保存到硬盘
     async    文件系统保存机制为async
     atime    访问时间保持更新
     noatime    访问时间不保持更新
     auto    使用-a时，挂载该项目。通常用于/etc/fstab
     noauto    使用-a时，不挂载该项目。通常用于/etc/fstab
-    context=<context>    配置SELinux context
+    context=<context>    临时配置SELinux context，不覆盖原有context。用于临时挂载
     defaults    使用默认配置。包含：rw,suid,dev,exec,auto,nouser,async
     dev    允许使用字符或块设备
     nodev    不允许使用字符或块设备
@@ -68,6 +68,9 @@ mount [option] [device] [dir]
     nouser    不允许普通用户挂载该文件系统
     users    允许普通用户挂载该文件系统，并且任何用户可卸载。饮食包含noexec/nosuid/nodev
     loop[=/dev/loop<N>]    将镜像文件映射到/dev/loop<N>设备，并挂载到目录。当未指定设备时，自动实现映射    
+    vfat选项
+    uni_xlate    不能解码的unicode字符作为特殊字符显示。默认选项
+    utf8    使用utf8解码fs。uni_xlate指定时不可用
 
 -R, --rbind    将文件系统的根目录再次挂载到其他目录，并且当子目录为其他挂载点时，递归覆盖
 
