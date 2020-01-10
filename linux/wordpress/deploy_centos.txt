@@ -74,11 +74,11 @@ server{
         index index.php index.html index.htm;
     }
     location ~ .php$ {
-        root /usr/share/nginx/html;    #将/usr/share/nginx/html替换为您的网站根目录，本教程使用/usr/share/nginx/html作为网站根目录
-        fastcgi_pass 127.0.0.1:9000;   #Nginx通过本机的9000端口将PHP请求转发给PHP-FPM进行处理
+        root /usr/share/nginx/html;   
+        fastcgi_pass 127.0.0.1:9000; 
         fastcgi_index index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        include fastcgi_params;   #Nginx调用fastcgi接口处理PHP请求
+        include fastcgi_params;  
     }
 } 
 
@@ -87,7 +87,7 @@ server{
 [root@vultr ~]# vi /usr/share/nginx/html/phpinfo.php
 <?php
    echo phpinfo();
-php>
+?>
 
 **浏览器栏输入<server_ip>/phpinfo.php)测试是否出现php欢迎界面
 
@@ -98,7 +98,7 @@ wordpress环境部署：
 1.下载wordpress:
 [root@vultr ~]# wget https://wordpress.org/latest.tar.gz
 
-[root@vultr ~]# tar -zxvf wordpress-4.9.4-zh_CN.tar.gz -C /tmp
+[root@vultr ~]# tar -zxvf latest.tar.gz -C /tmp
 
 [root@vultr ~]# cd /tmp/wordpress && mv * /usr/share/nginx/html
 
@@ -136,6 +136,8 @@ wordpress环境部署：
 交互步骤：
   输入域名，证书信息写入/etc/nginx/nginx.conf
   是否将http重导向https
+
+**如果提示：UnicodeDecodeError: 'ascii' codec can't decode byte 0xe5 in position 1: ordinal not in range(128)。说明nginx配置文件中含中文(非ascii)字符
 
 
 4.更新证书所有需要更新的证书(30天之内过期)
