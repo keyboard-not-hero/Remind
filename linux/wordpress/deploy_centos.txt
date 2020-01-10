@@ -48,16 +48,14 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 
 3.安装php:
 
-# 添加ius源
-[root@vultr ~]# yum install -y http://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/ius-release-<版本号>.ius.centos7.noarch.rpm
+# 添加remi源
+[root@vultr ~]# rpm -ivh https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
 
-# 版本号查找方法，链接：https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/x86_64/，搜索ius-release
+# 查看容器列表
+ll /etc/yum.repos.d
 
-#添加webtatic源
-[root@vultr ~]# rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-
-# 安装php
-[root@vultr ~]# yum install php70w php70w-devel php70w-fpm php70w-mysql
+# 安装php7.4
+[root@vultr ~]# yum --enablerepo=remi-php74 install php php-devel php-fpm php-mysql
 
 # 启动php-fpm
 [root@vultr ~]# systemctl start php-fpm
