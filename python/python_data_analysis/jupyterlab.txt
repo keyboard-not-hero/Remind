@@ -1,0 +1,14 @@
+安装jupyterlab：
+pip3 install jupyterlab
+
+依赖：jupyter notebook 4.3以上
+安装jupyter notebook：
+pip3 install jupyter notebook
+
+支持浏览器：
+Firefox/Chrome/Safari
+
+启动：
+jupyter lab
+
+

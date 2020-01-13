@@ -31,7 +31,7 @@
 插件汇总
 一、插件管理器--vundle(其他管理器：vim-plug/pathogen/neobundle)
 原理：vundle追踪配置文件~/.vimrc的Plugin值对插件进行集中激活管理，安装位置~/.vim/bundle
-1.前提条件：
+1.依赖工具：
   git
   curl(用于搜索)
 2.下载

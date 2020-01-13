@@ -1,0 +1,33 @@
+1.nerd commenter - 块注释插件
+github地址：https://github.com/preservim/nerdcommenter
+
+配置：
+"注释符号后添加空格(默认)
+let g:NERDSpaceDelims=1
+
+"使用紧凑语法进行多行注释
+let g:NERDCompactSexyComs=1
+
+"注释符左对齐，而不是根据语法缩进
+let g:NERDDefaultAlign='left'
+
+"设置语言使用alternate分隔符(默认)
+let g:NERDAltDelims_java=1
+
+
+快捷键：
+\cc - 注释当前行或visual模式已选中内容
+
+\cn - 类似于\cc，但是强制嵌套
+
+\c<space> - 当选中行的第一行为注释状态，则选中行取消注释；如第一行为非注释状态，选中行进行注释
+
+\ci - 所有选中行切换注释状态
+
+\cs - 以块注释对选中行进行优雅注释
+
+\cy - 类似于\cc，但注释之前对内容进行复制
+
+\c$ - 删除当前行的cursor到行尾
+
+\cu - 取消注释选中行

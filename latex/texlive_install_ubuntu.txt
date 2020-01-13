@@ -7,16 +7,17 @@
 steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5
 
 # 挂载iso文件
-steven@Downloads$ mount -o loop texlive2019-20190410.iso /mnt 
+steven@Downloads$ sudo mount -o loop texlive2019-20190410.iso /mnt 
 
 # 安装Texlive
 steven@Downloads$ cd /mnt
 
-steven@mnt$ ./install-tl
+steven@mnt$ sudo ./install-tl
+安装选项列表，选择'i'或'I'进行安装
 
 # 配置PATH
 steven@~$ vi .bashrc
-export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+export PATH=${PATH}:/usr/local/texlive/2019/bin/x86_64-linux
 
 steven@~$ source .bashrc
 

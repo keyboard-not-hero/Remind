@@ -1,0 +1,65 @@
+一、下载必要库
+1.安装BLAS库(CPU进行张量运算)
+sudo apt-get install python3-pip pkg-config libopenblas-dev liblapack-dev
+
+2.安装科学库(numpy/scipy/matplotlib)
+pip3 install numpy scipy matplotlib pyyaml
+
+3.安装HDF5(二进制文件高效存储，h5py为中间接口库)
+sudo apt-get install libhdf5-serial-dev
+pip3 install h5py
+
+4.安装Graphviz(神经网络可视化，为中间接口库)
+sudo apt-get install graphviz
+pip3 install pydot-ng
+
+5.opencv包
+sudo apt-get install python-opencv
+
+
+二、CUDA和cuNND
+CUDA与cuNND下载版本根据TensorFlow最新版本的推荐，当前TensorFlow 2.1.0 - CUDA 10.1; CUnnd>=7.6
+CUDA - GPU编程接口
+下载地址：https://developer.nvidia.com/cuda-10.1-download-archive-base
+
+## 安装
+sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
+sudo apt-key add /var/cuda-repo-10-1-local-10.1.105-418.39/7fa2af80.pub
+sudo apt-get update
+sudo apt-get install cuda
+
+cuNND - GPU运算加速库
+下载地址：https://developer.nvidia.com/cudnn，需要注册成为开发者
+
+## 安装
+sudo dpkg -i libcudnn7_7.6.5.32-1+cuda10.1_amd64.deb
+sudo dpkg -i libcudnn7-dev_7.6.5.32-1+cuda10.1_amd64.deb
+## 重启
+
+三、安装后端引擎
+1.TensorFlow
+由于需要使用NVIDIA的GPU，使用安装GPU版本
+pip3 install tensorflow-gpu
+
+2.Theano
+pip3 install theano
+
+配置theano使用GPU
+vi ~/.theanorc
+[global]
+floatX = float32
+device = gpu0
+[nvcc]
+fastmath = True
+
+3.CNTK
+依赖库安装(OpenMPI):
+sudo apt-get install openmpi-bin
+
+安装GPU版本CNTK
+pip3 install cntk-gpu
+
+
+四、安装Keras
+pip3 install keras
+keras运行一次后，自动生成配置文件~/.keras/keras.json

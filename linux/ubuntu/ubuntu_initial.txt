@@ -106,7 +106,7 @@ sudo apt purge nvidia*
 ## 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
 steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
 blacklist nouveau
-options nouveau moeset=0
+options nouveau modeset=0
 
 ## 更新内核模块
 steven@~$ sudo update-initramfs -u

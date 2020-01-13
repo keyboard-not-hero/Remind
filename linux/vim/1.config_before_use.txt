@@ -2,6 +2,7 @@
 全局配置文件：/etc/vimrc
 用户级配置文件：~/.vimrc
 **在配置文件中，"之后的内容为注释
+
 2.常规设置
 :set compatible/nocompatible    是否与vi兼容
 :set ignorecase/noignorecase    是否忽略大小写进行查找
@@ -30,17 +31,22 @@
 :set linebreak    将行尾的部分单词截断到下一行
 :set virtualedit=all    表格化编辑(j/k直接移动到光标下/上方，为空字符串''则关闭)
 :set arabic    配置arabic模式(文字从右向左)
+
 3.查看配置格式(backup为例)
 :set backup?
+
 4.示例文件地址：
 $VIMRUNTIME/vimrc_example.vim
+
 5.tutor内容
 thompson@dataforthompson:~$ vimtutor
+
 6.支持剪切板
 查看支持：
 vim --version|grep clipboard
 获取支持：
 apt-get install vim-gnome
+
 7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80，80代表vim当前安装版本)
 :!echo $VIMRUNTIME
 
