@@ -1,6 +1,9 @@
-﻿apt--command-line interface
+﻿apt - 包管理器的指令行接口
 
-参数释义：
+语法
+apt [option] [package]
+
+参数释义
 update    更新容器的可安装包信息(从/etc/apt/sources.list)
 
 upgrade    更新已安装软件，不会卸载软件，当需要卸载其他以更新时，不会执行该软件更新
@@ -22,7 +25,10 @@ search    查找匹配关键字的容器内软件，并附带间接
 source    下载源码(需配置原配置文件的deb-src使用)
 
 
-apt-get--APT package handling utility
+apt-get - apt包工具
+
+语法
+apt-get [option] [package]
 
 参数释义：
 update    更新容器的可安装包信息(从/etc/apt/sources.list)
@@ -30,6 +36,14 @@ update    更新容器的可安装包信息(从/etc/apt/sources.list)
 upgrade    更新已安装软件，不会卸载软件，当需要卸载其他以更新时，不会执行该软件更新
 
 dist-upgrade    更新可更新软件，当需要卸载其他以更新时，进行卸载后更新
+
+install    安装可获得最新软件或指定版本软件
+
+remove    卸载软件但保存配置文件
+
+purge    卸载软件并移除配置文件
+
+source    下载可获取软件的源代码。容器库中需配置deb-src
 
 check    探测依赖是否完整
 
@@ -39,27 +53,25 @@ clean    删除容器的缓存安装包信息
 
 autoclean    清除无效的缓存安装包信息(保留有效信息)
 
+autoremove    自动移除依赖软件(当前不被依赖)
+
 -f install   修复问题
 
 软件包：software-properties-common
-add-apt-repository--Adds a repository into the /etc/apt/sources.list or /etc/apt/sources.list.d or removes an existing one
-参数：
+指令
+add-apt-repository - 从/etc/apt/sources.list文件或/etc/apt/sources.list.d目录添加/移除软件源
+
+语法
+add-apt-repository [option] ppa:<user>/<ppa-name>
+
+参数释义：
     添加指定源到/etc/apt/sources.list(优先)或/etc/apt/sources.list.d(ppa:<user>/<ppa-name>)目录下
+
 -r    从/etc/apt/sources.list.d目录下删除指定源
+
 -y    确认所有选项
+
 -u    添加源后，更新源的可用软件信息(cache)，避免全局apt-get update
 
 
-
-配置路径：/etc/apt/sources.list或/etc/apt/sources.list.d/
-163源：
-deb http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+源配置路径：/etc/apt/sources.list或/etc/apt/sources.list.d/

@@ -127,3 +127,6 @@ python3编译：
 
 ## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3.8时，对应与/usr/local/pytnon3.8/lib/python3.8/site-packages)
 [thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3.8/lib/python3.8/site-packages
+
+**警告：由于ubuntu已将许多依赖库由python实现，所以自带的python3.6默认带有许多非python官方库，建议将该类库直接复制到自行安装python库目录下，语法如下：
+[thompson@gi] sudo cp -fr /usr/lib/python3/dist-packages/ /usr/local/python3.6/lib/python3.6/site-packages

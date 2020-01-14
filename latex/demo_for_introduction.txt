@@ -54,7 +54,6 @@
     \begin{quote}
     勾广三，股修四，径隅五。
     \end{quote}
-    \end{quote}
 \end{document}
 
 % \footnote代表角标备注
@@ -99,16 +98,17 @@
 7.表格制作
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \usepackage{graphicx}
-    \begin{tabular}{|rrr|}
+\begin{document}
+    \begin{tabular}{|r r r|}
         \hline
-        姓名 & 身高(cm) & 体重(kg)
+        姓名 & 身高(cm) & 体重(kg)\\
         \hline
-        李雷 & 169 & 70
-        张丽 & 163 & 52
-        王飞 & 175 & 72
+        李雷 & 169 & 70\\
+        张丽 & 163 & 52\\
+        王飞 & 175 & 72\\
         \hline
     \end{tabular}
-\end{graphicx}
+\end{document}
 
 % \begin{tabular}代表表格环境，{|rrr|}代表表格左右两边被竖线包围，内部含3列，每列都右对齐
 % \hline为横线
