@@ -82,7 +82,7 @@
   " The following are examples of different formats supported.
   " Keep Plugin commands between vundle#begin/end.
 
-  Plugin 'https://github.com/lervag/vimtex.git'
+  Plugin 'lervag/vimtex.git'
   " All of your Plugins must be added before the following line
   call vundle#end()            " required
   filetype plugin indent on    " required
@@ -95,6 +95,7 @@
   steven@~$ vi ~/.vimrc
 
   # 安装~/.vimrc中注明的插件
+  # lervag/vimtex.git已被阻断，请使用proxy安装
   :PluginInstall
 
   # 查看vimtex帮助文档
@@ -188,6 +189,9 @@
   \end{document}  
 
   # --servername参数用于vimtex的前向/后向搜索  
+  # 当提示不支持--servername参数时，安装支持
+  steven@~$ sudo apt-get install vim-gnome
+
   steven@~$ vim --servername vim test.tex
 
   # 保存
@@ -198,7 +202,11 @@
 
 
 
-  # -*- warning -*-：~/.vimrc内容汇总
+----------------------***------------------------
+## 至此已安装完成，下列为补充内容
+----------------------***------------------------
+
+# -*- warning -*-：~/.vimrc内容汇总
 
   set nocompatible              " be iMproved, required
   filetype off                  " required
