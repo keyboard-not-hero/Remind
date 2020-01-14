@@ -104,10 +104,26 @@ python3编译：
 解决:
 # lsb_release指定详细python版本
 [thompson@~] sudo vi /usr/bin/lsb_release
-#!/usr/bin/python3
+#!/usr/bin/python3.8
 
 2.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
 解决：
 # python添加socks支持
 [thompson@~] unset ALL_PROXY
+
 [thompson@~] sudo pip3 install pysocks
+
+3.安装完成后无法打开terminal，在ctrl+alt+F1输入gnome-terminal显示无'gi'模块
+解决：
+## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
+## 如不在该目录，使用find / -name gi查找
+
+## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.8为例)
+[thompson@~] cd /usr/lib/python3/dist-packages/gi
+
+[thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-38m-x86_64-linux-gnu.so
+
+[thompson@gi] mv _gi.cpython-36m-x86_64-linux-gnu.so _gi.cpython-38m-x86_64-linux-gnu.so
+
+## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3.8时，对应与/usr/local/pytnon3.8/lib/python3.8/site-packages)
+[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3.8/lib/python3.8/site-packages
