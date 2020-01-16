@@ -1,31 +1,67 @@
 官网地址：http://matplotlib.org/
 
-matplotlib的TkAgg后端依赖于tkinter库，tkinter底层软件是tk/tcl
+matplotlib的后端有MacOSX/qt5/qt4/gtk3/tkinter/wxpython等。其中，tkinter的软件是tk/tcl。具体backend查找matplotlibrc文件
 
 pip安装：
 pip install -U pip
 pip install matplotlib
 
+升级
+pip install -U matplotlib
+
 导入库
 import matplotlib.pyplot as plt
 
 结构：
-plot--Figure--Axes,Axes为主要构图坐标轴
+pyplot--Figure--Axes，Axes为主要构图区域
 matplotlib通常使用np.array格式数据集作图，pandas格式和np.matrix格式数据尽量转化为np.array数据
 
-模块：
+
+matplotlibrc文件定位顺序(查找到第一个结束查找)：
+1.当前工作目录，只用于当前工作项目
+
+2.当环境变量$MATPLOTLIBRC存在时，为该变量指定文件；或该变量为目录时，为$MATPLOTLIBRC/matplotlibrc
+
+3.根据系统差异有两种：
+  Linux/FreeBSD - 路径~/.config/matplotlib/matplotlibrc，或$XDG_CONFIG_HOME/matplotlib/matplotlibrc
+  others - .matplotlib/matplotlibrc
+
+4.假设INSTALL为matplotlib库安装路径，则为INSTALL/matplotlib/mpl-data/matplotlibrc。假设python安装路径为/usr/local/python3.8，则INSTALL路径为/usr/local/python3.8/lib/python3.8/site-packages
+
+
+打印matplotlibrc查找位置：
+>>import matplotlib
+>>matplotlib.matplotlib_fname()
+/usr/local/python3.8/lib/python3.8/site-packages/matplotlib/mpl-data/matplotlibrc
+
+
+主要模块：
 matplotlib.pyplot
+
 方法：
 figure()：在plot上生成一个Figure对象
-subplot(x,y)：返回Figure对象和数组形式的Axes对象。x代表在Figure上创建的行数；y代表在Figure上创建的列数
+
+subplot(*args, **kwargs)：返回AxesSubplot对象。args可以为(rows,cols,index)或3-digit数字，两种方式效果一致
+
+subplots(nrows=1, ncols=1)：返回Figure和Axes数组的元组
+
+plot([x], y, [fmt], scalex=True, scaley=True, data=None, **kwargs)：在x轴和y轴上作图。([x], y, [fmt])序列可重复多次出现。隐式创建subplot(111)。
+kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
+
 subplots_adjust(wspace=None, hspace=None)：调整Axes之间的距离
+
 gca()：获取当前Axes
+
 gcf()：获取当前Figure
+
 show()：展示图形
+
 savefig(fname, dpi, bbox_inches)：保存Figure到文件。fname代表文件名，通常为svg后缀；dpi(dots per inch)代表单位像素；bbox_inches代表要保存的部分，'tight'为剪切掉边缘空白部分
+
 
 类：
 matplotlib.figure.Figure
+
 方法：
 add_subplot(nrows, ncols, index)：创建Axes对象。nrows代表Figure行内容纳多少Axes；ncols代表Figure列内容纳多少Axes；index代表当前创建Axes的索引(起始为1)
 
@@ -34,19 +70,72 @@ matplotlib.axes.Axes
 方法：
 plot(x, y, format, drawstyle， label)：折线图或step图。x代表横坐标集合；y代表纵坐标集合；format代表marker、颜色和线条style拼接字符串，默认为'b-'；drawstyle为step图或折线图，参数为{'default', 'steps', 'steps-pre', 'steps-mid', 'steps-post'}，默认为'default'；label为线条标签，搭配legend方法使用
 **format参考链接：https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot
+
 pie(sizes, explode=None, labels=None, autopct=None, shadow=False, startangle=None, radius=None)：饼图。sizes代表份额列表；explode代表各部分切割列表，格式为float；labels代表标签列表；autopct代表是否显示分布百分比，可以为字符串格式或方法调用，字符串格式为fmt%pct(如'%1.1f%%')；shadow代表是否有图像阴影；startangle代表起始角度，默认为0；radius为饼图圆半径，默认为1
+
 bar(x, height, width=0.8, bottom=None, *, align='center, label=None)：条形图。x代表在X轴的坐标列表；height对应X轴的高度列表；width代表占刻度宽度的百分比；bottom代表在Y轴的底部起始坐标，需重新计算height；align代表条形图的哪个部分与X坐标对齐，参数有'center'/'edge'；label配合axes.legend为注解
+
 barh(y, width, height=0.8, left=None, *, align='center')：水平条形图。其他选项参考bar
+
 hist(x, bins=None, range=None, density=None, cumulative=False)：直方图。x代表数据集；bins代表均分份数(int)或各边界值(array);range代表x内的取值上下限，只有bins为int类型时生效，类型为tuple；当density为True时，直方图高度为所占百分比；cumulative代表是否为累积值
+
 scatter(x, y, s=None, c=None, alpha=None, marker=None)：散点图。x/y分别代表点在X、Y轴上的列表；s代表不同点大小的列表；c代表不同点颜色列表；alpha代表点的透明度；marker代表点的展现形式
+
 **marker参考：https://matplotlib.org/api/markers_api.html#module-matplotlib.markers
+
 boxplot(x, notch=None, sym=None, vert=None, whis=None)：箱线图。x代表数据集列表；notch为True时，在箱线图的中位数位置展示凹痕；sym代表是否显示异常值，默认值None代表'b+'，使用''可不显示；vert代表是否为垂直箱线图，默认None代表True；whis代表温和异常值起始系数，默认为1.5(即Q1-1.5IQR)
 **箱线图概念：Q1-3IQR、Q1-1.5IQR、Q1、Q3、Q3+1.5IQR、Q3+3IQR。其中，IQR=Q3-Q1
+
 set_title(str, loc)：配置图表标题。str代表标题；loc代表定位，参数有{'center', 'left', 'right'}，默认为'center'
+
 legend(loc)：线条注解。loc代表注解放置在图表的位置，{‘best', 'upper left', 'upper right', 'lower left', 'lower right', 'upper center', 'lower center', 'center left', 'center right', 'center', 'right'}，一般使用'best'
+
 set_xticks(ticks, minor=False)：设置X轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度，为True时设置minor刻度
+
 set_yticks(ticks, minor=False)：设置Y轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度，为True时设置minor刻度
+
 set_xlabel(xlabel)：设置X轴标签
+
 set_ylabel(xlabel)：设置Y轴标签
+
 set_xlim(xmin=None, xmax=None)：设置x轴限制
+
 text(x, y, str)：配置线条某点的说明文本。x,y为文本坐标；str为说明文本
+
+
+额外工具
+axisartist
+
+导入库
+import mpl_toolkits.axisartist as AA
+
+原理：matplotlib的两个axis不可用，AA使用ax.axis['left']格式来使用指定坐标轴，坐标轴格式有left/right/top/bottom
+
+示例
+import mpl_toolkits.axisartist as AA
+# 创建axes
+fig=plt.figure()
+ax=AA.Subplot(fig,111)
+fig.add_subplot(ax)
+
+# 使轴边界不可见
+ax.axis[:].set_visible(False)
+
+# 添加x轴，第一个0代表水平直线，第二个0代表y=0
+ax.axis["x"]=ax.new_floating_axis(0,0)
+# 配置x轴箭头
+ax.axis["x"].set_axisline_style("->", size=1.5)
+# 添加y轴，第一个1代表垂直直线，第二个0代表x=0
+ax.axis["y"]=ax.new_floating_axis(1,0)
+ax.axis["y"].set_axisline_style("->", size=1.5)
+# 显示刻度位置
+ax.axis["x"].set_axis_direction("bottom")
+ax.axis["y"].set_axis_direction("left")
+
+# 作立方图
+x=np.linspace(-5,5,1000)
+plt.plot(x,x**3)
+plt.xlim(-10,10)
+plt.ylim(-130,130)
+plt.show()
+

@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1579015843 "symbol_summry.tex" "symbol_summry.pdf" "symbol_summry" 1579015855
+["pdflatex"] 1579019064 "symbol_summry.tex" "symbol_summry.pdf" "symbol_summry" 1579019075
   "/dev/null" 1579005566 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/sfd/ttf2pk/UGBK.sfd" 1230831514 182544 bcd31d5d273400b38612a969fcab55f9 ""
@@ -14,6 +14,8 @@
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/zhmetrics/unisong/unisong53.tfm" 1248648499 1172 e2a03d4bc65395303b42aaff9aacd7be ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/zhmetrics/unisong/unisong78.tfm" 1248648499 1172 7693562f5e83d5e3f5e32b3aa27065f6 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/zhmetrics/unisong/unisong7b.tfm" 1248648499 1172 11ddb11e6fbba10bd31629a75b0d10c6 ""
+  "/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -82,9 +84,9 @@
   "/usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1578927686 4258184 2d5be7e66c23799edeb3d0e0db184862 ""
   "/usr/local/texlive/2019/texmf.cnf" 1578928682 520 5341c4ae47aeaa830a7392b56296a3a5 ""
   "/usr/share/fonts/truetype/arphic/uming.ttc" 1323544169 21053592 75533bdcc9c99c9e17b1b190562b6128 ""
-  "symbol_summry.aux" 1579015844 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
-  "symbol_summry.tex" 1579015842 244 86ebe1aaca88cfe47aae074429f08dc9 ""
+  "symbol_summry.aux" 1579019064 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "symbol_summry.tex" 1579019061 415 7dca72af7c313df580bd562b7f85ae02 ""
   (generated)
+  "symbol_summry.aux"
   "symbol_summry.log"
   "symbol_summry.pdf"
-  "symbol_summry.aux"

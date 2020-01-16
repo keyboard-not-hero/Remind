@@ -94,8 +94,24 @@
 % \caption代表图片注解文字
 % \label代表给图片附带可引用标签。引用格式：\ref{fig:snuggle}
 
+7.单行多列图片
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{float}
+\begin{figure}[H]
+    \subfigure[奇函数]{
+        \includegraphics[scale=0.4]{odd_func.png}
+    }   
+    \subfigure[偶函数]{
+        \includegraphics[scale=0.4]{even_func.png}
+    }   
+\end{figure}
 
-7.表格制作
+% usepackage{subfigure}代表行列式排列
+% usepackage{float}与\begin{figure}[H]中的H结合，使图片紧贴文字排列，避免图片紧贴一起
+
+
+8.表格制作
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \usepackage{graphicx}
 \begin{document}
