@@ -1,5 +1,9 @@
+texwork - 为TUG(TeX User Group)发布并推荐的Tex入门编辑器。Windows下的texlive默认已安装，GNU/Linux需要自行另外安装
+
 <tab> - 语法补充
 
 <ctrl>+<tab> - 跳转到语法环境外部
 
-<ctrl>+<mouse_left>    源代码对应的pdf行，或pdf行对应源代码
+<ctrl>+鼠标左键 - 源代码对应的pdf行，或pdf行对应源代码
+
+

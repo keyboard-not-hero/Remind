@@ -1,15 +1,3 @@
-1.第一个示例
-\documentclass[UTF8]{article}
-\begin{document}
-    This is my first document
-
-    Happy \TeX ing!
-\end{document}
-
-%符号'%'用于注释
-%空白行代表输出的换行
-
-
 2.中文正文示例
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \begin{document}
@@ -24,58 +12,8 @@
 % warning：编译需保持源文件编码、编译方式、宏包编码三者一致
 
 
-3.标题和目录
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
-    \title{论爱情与面包的重要性}
-    \author{steven liu}
-    \date{\today}
-\begin{document}
-    \maketitle
-    \tableofcontents
-    \section{爱情更可贵}
-    精神需求大于物质需求
-    \section{面包更重要}
-    精神需求是基于物质的前提下
-\end{document}
 
-% \begin{document}之前的部分为preamble部分
-% \maketitle使标题等内容显示
-% \tableofcontents和之后的section为目录部分
-
-
-4.文本格式
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
-\begin{document}
-    勾股定理，参考于欧几里得\footnote{欧几里得，约公元前330--275年}
-
-    其中，3,4,5分别代表\emph{勾股数}
-
-    引用:
-    \begin{quote}
-    勾广三，股修四，径隅五。
-    \end{quote}
-\end{document}
-
-% \footnote代表角标备注
-% \emph代表强调
-% \begin{quote}与\end{quote}之间的内容代表跨段缩进引用
-
-
-5.输入公式
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
-\begin{document}
-    $E=mc^2$
-    
-    \begin{equation}
-        \angle ABC = \pi / 2 = 90^\circ
-    \end{equation}    
-\end{document}
-
-% $$用于行内公式限定
-% \begin{equation}用于段落公式环境标记
-
-
-6.插入已有图片
+7.插入已有图片
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \usepackage{graphicx}
 \begin{document}
@@ -94,7 +32,7 @@
 % \caption代表图片注解文字
 % \label代表给图片附带可引用标签。引用格式：\ref{fig:snuggle}
 
-7.单行多列图片
+8.单行多列图片
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{float}
@@ -111,9 +49,8 @@
 % usepackage{float}与\begin{figure}[H]中的H结合，使图片紧贴文字排列，避免图片紧贴一起
 
 
-8.表格制作
+9.基础表格
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
-\usepackage{graphicx}
 \begin{document}
     \begin{tabular}{|r r r|}
         \hline
@@ -126,6 +63,44 @@
     \end{tabular}
 \end{document}
 
-% \begin{tabular}代表表格环境，{|rrr|}代表表格左右两边被竖线包围，内部含3列，每列都右对齐
+% \begin{tabular}代表表格环境，{|rrr|}代表表格左右两边被竖线包围，内部含3列，每列都右对齐(r，其余还有l/c分别对应左对齐，居中)
 % \hline为横线
 % &为列与列之间的分隔
+
+10.自适应宽度表格
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{array}
+\begin{document}
+    \begin{tabular}{|m{2em}|m{2cm}|m{2cm}|}
+        \hline
+        姓名 & 身高(cm) & 体重(kg)\\
+        \hline
+        李雷 露西 李莉 & 169 & 70\\
+        张丽 & 163 & 52\\
+        王飞 & 175 & 72\\
+        \hline
+    \end{tabular}
+\end{document}
+
+% m{2em}限制第一列只占用2列字符宽度，超过该长度拓展到下一行，使之实现自适应。需配合\usepackage{array}使用
+
+11.带标签和标题的表格
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\begin{document}
+\begin{table}
+    \begin{tabular}{|r r r|}
+        \hline
+        姓名 & 身高(cm) & 体重(kg)\\
+        \hline
+        李雷 & 169 & 70\\
+        张丽 & 163 & 52\\
+        王飞 & 175 & 72\\
+        \hline
+    \end{tabular}
+    \caption{学生信息}
+    \label{table:1}
+\end{table}
+\end{document}
+
+% \begin{table}...\end{table}用于给表格tabular添加额外信息，如caption/label等
+% \label{table:1}创建的标签，可以在其他地方使用\ref{table:1}引用

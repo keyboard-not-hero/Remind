@@ -112,6 +112,8 @@ import mpl_toolkits.axisartist as AA
 原理：matplotlib的两个axis不可用，AA使用ax.axis['left']格式来使用指定坐标轴，坐标轴格式有left/right/top/bottom
 
 示例
+import matplotlib.pyplot as plt
+import numpy as np
 import mpl_toolkits.axisartist as AA
 # 创建axes
 fig=plt.figure()

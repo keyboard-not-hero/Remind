@@ -1,0 +1,27 @@
+\documentclass{article}
+\begin{document}
+  \begin{enumerate}
+    \item 编号列表1
+    \item 编号列表2
+    \item 编号列表3
+  \end{enumerate}
+  \begin{itemize}
+    \item 不编号列表1
+    \item 不编号列表2
+    \item 不编号列表3
+  \end{itemize}
+  \begin{description}
+    \item[high] 心情亢奋
+    \item[low] 心情低落
+  \end{description}
+\end{document}
+
+% \begin{enumerate}...\end{enumerate}用于指定编号列表环境，列表entry使用\item[arg]指定，不带可选参数时，使用默认计时器
+
+% \begin{itemize}...\end{itemize}用于指定不编号列表，其他特性与编号列表类似
+
+% \begin{description}...\end{description}用于指定自定义编号，列表entry格式\item[]中的可选参数一般都会使用
+
+% 所有列表皆可进行嵌套(最多四层)
+
+%编号列表嵌套计数器为enumi/enumii/enumiii/enumiv，可通过\the<counter_name>进行引用(如1)，通过\label<counter_name>进行标签引用(如1.)。编号列表嵌套格式：默认第一层为数字，第二层为小写字母，第三层为罗马数字，第四层为大写字母

@@ -1,0 +1,32 @@
+\documentclass[a4paper, titlepage]{article}
+%\usepackage{syntonly}
+%\syntaxonly
+\title{Demo}
+\author{steven}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{section}
+this is section content
+\subsection{subsection}
+this is subsection content
+%\include{chapter_02}
+%\input{chapter_03}
+\end{document}
+
+% \documentclass[a4paper, titlepage]{article}的a4paper代表页为A4纸大小，titlepage代表标题独立占一页
+
+% \begin{document}之前的内容为引言
+
+% \title表示标题，\author表示作者，\date表示日期
+
+% \maketitle使引言的标题部分显示生效
+
+% \tableofcontents用于配置目录索引。其中，常用结构层级：chapter/section/subsection/subsubsection。report/book文档层级chapter/section/subsection，article文档层级section/subsection/subsubsection。目录需要经过两次编译，第一次编译将目录结构输出到.toc文件，第二次编译将.toc文件目录结构输出到目标文档
+
+% \include{file_name}用于将指定文件内的内容复制过来，导入后会在新页开始。通常用于整个章节导入
+
+% \input{file_name}用于将指定文件内的内容复制过来，在导入的地方开始，通常用于小文件导入
+
+% \syntaxonly用于注明 - 文档只进行文档检查，不输出dvi/pdf文档，可加快编译速度。该指令包含在syntonly宏包中

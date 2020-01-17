@@ -1,11 +1,29 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{graphicx}
 \begin{document}
-\begin{tabular}{c|c|c|c|c|c}
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	$\circ$ & $\backslash$circ & $\backslash$ & $\backslash$backslash & $\frac{a}{b}$ & $\backslash frac\{a\}\{b\}$\\
-        $\geq$ & $\backslash$geq & $\leq$ & $\backslash$leq & $\neq$ & $\backslash$neq
+	$\backslash$ & $\backslash$backslash & $\{$ & $\backslash\{$ & $\}$ & $\backslash\}$ & $\sim$ & $\backslash$sim\\
+	\hline
+	\$ & $\backslash$\$ & \% & $\backslash$\% & \^{} & $\backslash$\^{}$\{\}$ & \# & $\backslash$\#\\
+	\hline
+	\& & $\backslash$\& & \_ & $\backslash$\_\\
+	\hline
+\end{tabular}\par
+**$\backslash \sim \{ \}$是数学公式类符号\\
+**也可使用$\backslash$verb$<$sep$><$content$><$sep$>$来抄录特殊字符，$\backslash$begin\{verbatim\}...$\backslash$end\{verbatim\}用于环境抄录\\
+\caption{特殊符号}
+\end{table}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\circ$ & $\backslash$circ & $\frac{a}{b}$ & $\backslash frac\{a\}\{b\}$ & $\geq$ & $\backslash$geq & $\leq$ & $\backslash$leq\\
+	\hline
+	$\neq$ & $\backslash$neq & \copyright & $\backslash$copyright & \textregistered & $\backslash$textregistered & \texttrademark & $\backslash$texttrademark\\
+	\hline
 \end{tabular}
 \end{document}
