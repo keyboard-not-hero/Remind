@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{bm}
+\begin{document}
+	\noindent $\frac{1}{2}$\\
+	$\sfrac{1}{2}$\\
+	$\binom{4}{3}$\\
+	$\sqrt[3]{8}$\\
+\[
+\begin{vmatrix}
+ 	a_11 & a_12 & a_13\\
+ 	a_21 & a_22 & a_23\\
+ 	\vdots & \ddots & a_33\\
+ 	a_n1 & \dots & a_n3\\
+\end{vmatrix}
+\]
+\[
+\begin{vmatrix*}[r]
+	9 & 100 & 2\\
+	-1001 & 3 & 90\\
+	100 & 29 & 11\\
+\end{vmatrix*}
+\]
+$\hm\int > \bm\int = \pmb\int > \int$
+\begin{equation}
+	e^{\pi i}+1=0
+\end{equation}
+\end{document}
+
+% \frac{}{}用于分数形式
+
+% \sfrac{}{}用于斜杠分数形式。包含在xfrac宏包中
+
+% \binom{}{}用于二项式形式。包含在amsmath宏包中
+
+% \sqrt[]{}用于开方，可选参数代表开方的次数，必选参数代表被开方的数字。可使用\mathstrut表示较统一的开方框架大小，放置于被开方数字之前
+
+% \begin{vmatrix}...\end{vmatrix}用于配置矩阵环境。行元素之间使用&分隔，行之间使用\\分隔
+
+% \dots为横向省略号，\vdots为纵向省略号，\ddots为斜向省略号
+
+% \begin{vmatrix*}[<align>]...\end{vmatrix*}为可指定对齐方式的矩阵。由mathtools宏包提供
+
+% 矩阵环境默认最多只有10列，可使用\setcounter{MaxMatrixCols}{<number>}来配置
+
+% \hm用于公式字符使用加重粗体，\bm用于公式字符使用粗体。由bm宏包提供
+
+% \pmb用于公式字符使用伪粗体(由字体稍稍错位连续输出得到，当无法使用粗体时，可使用该方法)。由amsmath宏包提供
+

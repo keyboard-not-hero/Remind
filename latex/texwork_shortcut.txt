@@ -6,4 +6,6 @@ texwork - 为TUG(TeX User Group)发布并推荐的Tex入门编辑器。Windows�
 
 <ctrl>+鼠标左键 - 源代码对应的pdf行，或pdf行对应源代码
 
+<ctrl>+<shift>+] - 一键注释选中行
 
+<ctrl>+<shift>+[ - 一键取消注释选中行

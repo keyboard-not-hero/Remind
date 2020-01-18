@@ -1,15 +1,15 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \begin{document}
 \begin{table}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\begin{tabular}{c c c c c c c c}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
 	$\backslash$ & $\backslash$backslash & $\{$ & $\backslash\{$ & $\}$ & $\backslash\}$ & $\sim$ & $\backslash$sim\\
-	\hline
 	\$ & $\backslash$\$ & \% & $\backslash$\% & \^{} & $\backslash$\^{}$\{\}$ & \# & $\backslash$\#\\
-	\hline
 	\& & $\backslash$\& & \_ & $\backslash$\_\\
 	\hline
 \end{tabular}\par
@@ -17,13 +17,37 @@
 **也可使用$\backslash$verb$<$sep$><$content$><$sep$>$来抄录特殊字符，$\backslash$begin\{verbatim\}...$\backslash$end\{verbatim\}用于环境抄录\\
 \caption{特殊符号}
 \end{table}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\begin{table}
+\begin{tabular}{c c c c c c c c}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	$\circ$ & $\backslash$circ & $\frac{a}{b}$ & $\backslash frac\{a\}\{b\}$ & $\geq$ & $\backslash$geq & $\leq$ & $\backslash$leq\\
-	\hline
-	$\neq$ & $\backslash$neq & \copyright & $\backslash$copyright & \textregistered & $\backslash$textregistered & \texttrademark & $\backslash$texttrademark\\
+	$\alpha$ & $\backslash$alpha & $\beta$ & $\backslash$beta & $\gamma$ & $\backslash$gamma & $\delta$ & $\backslash$delta\\
+	$\epsilon$ & $\backslash$epsilon & $\zeta$ & $\backslash$zeta & $\eta$ & $\backslash$eta & $\theta$ & $\backslash$theta\\
+	$\iota$ & $\backslash$iota & $\kappa$ & $\backslash$kappa & $\lambda$ & $\backslash$lambda & $\mu$ & $\backslash$mu\\
+	$\nu$ & $\backslash$nu & $\xi$ & $\backslash$xi & $\pi$ & $\backslash$pi & $rho$ & $\backslash$rho\\
+	$\sigma$ & $\backslash$sigma & $\tau$ & $backslash$tau & $\upsilon$ & $\backslash$upsilon & $\phi$ & $\backslash$phi\\
+	$\chi$ & $\backslash$chi & $\psi$ & $\backslash$psi & $\omega$ & $\backslash$omega & $\varepsilon$ & $\backslash$varepsilon\\
+	$\vartheta$ & $\backslash$vartheta & $\varkappa$ & $\backslash$varkappa\footnotemark[1] & $\varpi$ & $\backslash$varpi & $\varrho$ & $\backslash$varrho\footnotemark[1]\\
+	$\varsigma$ & $\backslash$varsigma & $\varphi$ & $\backslash$varphi & $\digamma$ & $\backslash$digamma\footnotemark[1]\\
 	\hline
 \end{tabular}
+\footnotetext[1]{ams符号，包含在amssymb宏包中}
+\caption{公式-小写希腊字母}
+\end{table}
+\begin{table}
+\begin{tabular}{c c c c c c c c}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\Gamma$ & $\backslash$Gamma & $\Delta$ & $\backslash$Delta & $\Theta$ & $\backslash$Theta & $\Lambda$ & $\backslash$Lambda\\
+	$\Xi$ & $\backslash$Xi & $\Pi$ & $\backslash$Pi & $\Sigma$ & $\backslash$Sigma & $\Upsilon$ & $\backslash$Upsilon\\
+	$\Phi$ & $\backslash$Phi & $\Psi$ & $\backslash$Psi & $\Omega$ & $\backslash$Omega & $\varGamma$ & $\backslash$varGamma\\
+	$\varDelta$ & $\backslash$varDelta & $\varTheta$ & $\backslash$varTheta & $\varLambda$ & $\backslash$varLambda & $\varXi$ & $\backslash$varXi\\
+	$\varPi$ & $\backslash$varPi & $\varSigma$ & $\backslash$varSigma & $\varUpsilon$ & $\backslash$varUpsilon & $\varPhi$ & $\backslash$varPhi\\
+	$\varPsi$ & $\backslash$varPsi & $\varOmega$ & $\backslash$varOmega\\
+\end{tabular}
+**$\backslash$var格式的代码由amsmath宏包提供
+\caption{公式-大写希腊字母}
+\end{table}
 \end{document}
