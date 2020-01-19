@@ -18,7 +18,7 @@
 \caption{特殊符号}
 \end{table}
 \begin{table}
-\begin{tabular}{c c c c c c c c}
+\begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
@@ -36,7 +36,7 @@
 \caption{公式-小写希腊字母}
 \end{table}
 \begin{table}
-\begin{tabular}{c c c c c c c c}
+\begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
@@ -49,5 +49,42 @@
 \end{tabular}
 **$\backslash$var格式的代码由amsmath宏包提供
 \caption{公式-大写希腊字母}
+\end{table}
+\begin{table}
+\begin{tabular}{l l l l l l l l}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\sum$ & $\backslash$sum & $\prod$ & $\backslash$prod & $\coprod$ & $\backslash$coprod & $\int$ & $\backslash$int\\
+	$\oint$ & $\backslash$oint & $\bigcup$ & $\backslash$bigcup & $\biguplus$ & $\backslash$biguplus & $\bigsqcup$ & $\backslash$bigsqcup\\
+	$\bigvee$ & $\backslash$bigvee & $\bigwedge$ & $\backslash$bigwedge & $\bigcap$ & $\backslash$bigcap & $\bigodot$ & $\backslash$bigodot\\
+	$\bigoplus$ & $\backslash$bigoplus & $\bigotimes$ & $\backslash$bigotimes & $\iint$ & $\backslash$iint & $\iiint$ & $\backslash$iiint\\
+	$\iiiint$ & $\backslash$iiiint & $\idotsint$ & $\backslash$idotsint\\
+\end{tabular}
+**最后四个积分符号需要amsmath宏包
+\caption{公式-大小可变的运算符}
+\end{table}
+\begin{table}
+\begin{tabular}{l l l l l l l l}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$($ & $($ & $[$ & $[$ & $\{$ & $\backslash\{$ & $\langle$ & $\backslash$langle\\
+	$)$ & $)$ & $]$ & $]$ & $\}$ & $\backslash\}$ & $\rangle$ & $\backslash$rangle\\
+	$\lfloor$ & $\backslash$lfloor & $\lceil$ & $\backslash$lceil\\
+	$\rfloor$ & $\backslash$rfloor & $\rceil$ & $\backslash$rceil\\
+\end{tabular}\par
+**在左/右括号前使用$\backslash$left/right可使定界符随视情况改变大小，left/right必须在同一行配对，但不需要匹配对应括号，可使用$\backslash<direction>$.来匹配，无可视单元。还有$\backslash$middle调节中间的定界符
+**也可手动调节大小，位置：$\backslash$big $\backslash$bigl $\backslash$bigm $\backslash$bigr，规格：$\backslash$big $\backslash$Big $\backslash$bigg $\backslash$Bigg
+\caption{公式-括号定界符}
+\end{table}
+\begin{table}
+\begin{tabular}{l l l l l l l l}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\ldots$ & $\backslash$ldots & $\cdots$ & $\backslash$cdots & $\vdots$ & $\backslash$vdots & $\iddots$ & $\backslash$iddots\\
+\end{tabular}
+\caption{公式-省略号}
 \end{table}
 \end{document}

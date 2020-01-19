@@ -1,0 +1,69 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\usepackage{diagbox}
+\usepackage{array}
+\begin{document}
+%\begin{tabular}[t]{l|c|r}
+%	1 & 2 & 3\\
+%	\hline
+%	4 & 50 & 6\\
+%	\hline
+%	7 & 10000 & 9\\
+%\end{tabular}\par
+%\begin{tabular}{|c|r|r|}
+%	\hline
+%	\multirow{2}*{姓名} & \multicolumn{2}{c|}{成绩}\\
+%	\cline{2-3}
+%	& 语文 & 数学\\
+%	\hline
+%	张三 & 87 & 100 \\
+%	\hline
+%\end{tabular}\par
+%\begin{tabular}{|c|c|c|}
+%	\hline
+%	\diagbox{姓名}{成绩}{性别} & 男 & 女\\
+%	\hline
+%	琳达 & & 100\\
+%	\hline
+%	李磊 & 94 &\\
+%	\hline
+%	露西 & & 79\\
+%	\hline
+%\end{tabular}\par
+\begin{tabular}{|l>{\$}l|r|}
+	\hline
+	姓名 & 年龄 & 成绩\\
+	\hline
+	汤普森 & 45 & 100\\
+	\hline
+	约翰布兰妮 & 31 &97\\
+	\hline
+	威尔 & 12 & 67\\
+	\hline
+\end{tabular}
+\end{document}
+
+% \begin{tabular}[t]{<align><align>...}...\end{tabular}代表表格环境，可选参数[]为当前表格的顶部/中部/底部与当前行文字对齐，使用t/c/b表示，默认为c；必选参数{}代表列数与分隔方式
+
+% 必选参数详解 - <align>为列格式，详细格式参数如下：
+% l - 左对齐
+% c - 中央对齐
+% r - 右对齐
+% p{<width>} - 指定列的宽度，行内垂直方向上对齐
+% | - 以竖线作为列分隔符，不占用列
+% @{<content>} - 以指定内容为列分隔符，不占用列
+% *{<counter>}{<col_des>} - col_des代表以上各种模式，并重复指定counter次
+% **-** 使用array宏包后
+% m{<width>} - 类似于p{}，但行内垂直方向中对齐
+% b{<width>} - 类似于p{}，但行内垂直方向下对齐
+% >{<content>} - 将content添加到后续列的开头，不占用列
+% <{<content>} - 将content添加到前方列的末尾，不占用列
+% !{<content>} - 类似于@{}，但左右会有额外距离
+
+% \multicolumn{<col_num>}{<align>}{<content>}用于表明合并多列。col_num合并列数；align代表列格式，不能使用*{<conter>}{<col_des>}格式；content代表列内容
+
+% \multirow{<row_num>}{<width>}{<content>}用于合并多行。row_num合并行数；width为单元宽度，超过自动换行，也可以将{<width>}换为*，取最长那一行的宽度；content为单元的内容。包含在multirow宏包中
+
+% \cline{<col_range>}为占据指定列范围的横线
+
+% \diagbox{<left>}{<center>}{<right>}用于创建斜线分割，其中{<center>}可以省略。包含在diagbox宏包中
