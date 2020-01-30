@@ -1,0 +1,222 @@
+iptables为Linux kernel 2.6以后内核集成模块，作用于Netfilter内核框架(kernel 3.13之后由firewalld替代).
+
+iptables中，多条rule组成chain，多条chain组成table.
+
+流程：
+
+
+1.当一个请求进入netfilter进行对应链规则匹配时，从上之下匹配rule，如果完全匹配，则跳出；
+2.如果遇到return target，则进入子链，匹配原地退出，否则遍历完返回父链当前规则的下一条规则(相当于中断)；
+
+3.匹配到最后一条规则都无法匹配，则执行默认政策
+
+iptables表格/链列表
+filter--处理传送包的默认表格
+    INPUT:包目的地为本地主机
+    OUTPUT：包生成地为本地主机
+    FORWARD：路由转换链-->nat
+nat--用于网络地址转换的表格
+    PREROUTING：目标转换(主机/端口)
+    POSTROUTING：来源转换(主机/端口)
+    OUTPUT：路由转换后的输出
+mangle--特定类型数据包转换
+    INPUT：
+    OUTPUT：         
+    FORWARD：
+    PREROUTING：   
+    POSTROUTING：
+raw
+security
+
+常用参数列表
+-t  table      
+    指定table,默认为filter
+-L|--list  [chain]      
+    罗列链内规则(rule)；常常搭配-n使用，直接显示ip；搭配-v，显示包流量
+-F|--flush  [chain]
+    删除链内所有rule
+-X|--delete-chain  [chain]
+    删除额外链(除官方table自带chain，并且链内无rule)
+-Z|--zero  [chain[rule_num]]
+    将指定table(或者链)的包传输重置为0
+-N|--new-chain  chain
+    新建一条链
+-P|--policy  chain  target
+    设置chain默认政策(不符合链内所有rule，则执行该政策)
+-A|--append  chain  rule_detail
+    新增一条rule至最后
+-I|--insert  chain  [rule_num]  rule_detail
+    新增一条rule至rule_num之前(rule_num默认为1)
+-D|--delete  chain  [rule_num|rule_detail]
+    删除一条rule(根据行数或者rule_detail,行数起始为1)
+-R|--replace  chain rule_num  rule_detail
+    替换第rule_num条rule为rule_detail
+-C|--check  chain rule_detail
+    查询是否chain内是否含rule_detail
+[!]-i|--in-interface  iface
+    数据包传入接口
+[!]-o|--out-interface  iface
+    数据包传出接口
+[!]-p|--protocol protocol
+    具体协议(TCP/UDP/ICMP等,!代表取反)
+[!]-s|--source address
+来源ip(可以为域名和network,并且network支持net_bit数)
+[!]-d|--destination address
+    目标ip(同-s)
+--sport  port
+    来源端口(搭配-p tcp/udp)
+--dport  port
+    目标端口(同上)
+--icmp-type  type
+    icmp协议相关(搭配-p icmp)
+*****************分割线内为显示匹配相关
+-m|--match  match
+    额外模块(如mac/state/limit/comment)
+--mac-source mac_addr
+--state  [NEW|RELATED|ESTABLISHED|INVALID]
+    related：与established有关的连接，如ftp-command/ftp-data,当com为established时，data为related
+--limit  num/(second|minute|hour|day)   
+    单位时间派发的限额数量(整数)
+--limit-burst
+    初始派发数量
+--comment  comment_text
+*****************分割线内为显示匹配相关
+-j|--jump target|chain
+    对rule采取的措施|跳转到链(相当于插入指定链)
+target
+    ACCEPT/DROP/REJEST/RETURN/REDERICT/MASQUERADE/LOG/SNAT/DNAT)
+--to-port  port
+    端口重定向(配合-j REDERECT)
+--to-destination  ip[:port]
+    主机映射，适用于DNAT
+--to-source  ip[:port]
+    主机映射，适用于SNAT
+
+target列表及意义
+ACCEPT
+  接受
+DROP
+  阻塞丢弃，不返回信息给请求方，等待超时
+REJEST
+  拒绝，返回信息给请求方
+RETURN
+  与目前规则匹配时，停止遍历规则项，执行默认政策
+LOG
+  记录包的相关信息，用于除错
+REDERICT
+  重导向，适用于端口DNAT
+MASQUERADE
+  伪装，适用于动态IP的SNAT
+SNAT
+  source nat,适用于nat的POSTROUTING chain
+DNAT
+  destination nat,适用于nat的PREROUTING chain
+
+iptables配置(服务器192.168.1.250,测试客户端192.168.1.3/192.168.1.4)
+1.查看是否安装iptable模块：
+#较新内核版本并没有集成iptable模块(kernel 4.15无集成，3.10集成)
+[root@192.168.1.250 ~]# yum install -y iptables-services 
+[root@192.168.1.250 ~]# systemctl status iptables
+[root@192.168.1.250 ~]# systemctl mask firewalld
+#上述显示说明已集成，否则，继续步骤1
+[root@192.168.1.250 ~]# yum install -y iptable
+
+2.查询当前防火墙规则：
+[root@192.168.1.250 ~]# iptables -L -n -v
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target prot opt in out source destination 
+ 0 0 ACCEPT udp -- virbr0 * 0.0.0.0/0 0.0.0.0/0 udp dpt:53
+ 0 0 ACCEPT tcp -- virbr0 * 0.0.0.0/0 0.0.0.0/0 tcp dpt:53
+ 0 0 ACCEPT udp -- virbr0 * 0.0.0.0/0 0.0.0.0/0 udp dpt:67
+ 0 0 ACCEPT tcp -- virbr0 * 0.0.0.0/0 0.0.0.0/0 tcp dpt:67
+
+...
+#后续一堆chain和rule
+
+3.备份当前规则，清除chain与rule：
+[root@192.168.1.250 ~]# iptables-save>/etc/iptables.rule
+[root@192.168.1.250 ~]# iptables -F    #清除所有rule
+[root@192.168.1.250 ~]# iptables -Z    #重置流量
+[root@192.168.1.250 ~]# iptables -X    #删除除基本链之外的空链
+
+4.配置INPUT chain默认政策并测试：
+[root@192.168.1.250 ~]# iptables  -P INPUT DROP
+#使用其他主机测试连接
+[root@dataforthompson ~]# telnet 192.168.1.250 22
+Trying 192.168.1.250...
+telnet: connect to address 192.168.1.250: Connection timed out 
+
+5.更换INPUT chain默认政策，使默认通过，阻挡ssh连接：
+[root@192.168.1.250 ~]# iptables -P INPUT ACCEPT
+[root@192.168.1.250 ~]# iptables -A INPUT -s 192.168.1.4 -p tcp --dport 22 -j REJECT
+#客户端连接测试
+[root@192.168.1.4 ~]# ssh 192.168.1.250
+ssh: connect to host 192.168.1.250 port 22: Connection refused
+[root@192.168.1.3 ~]# ssh 192.168.1.250
+root@192.168.1.250's password: 
+Last login: Wed May 2 11:43:45 2018
+
+6.使用mac地址阻挡连接：
+[root@192.168.1.3 ~]# telnet 192.168.1.250 22|80
+[root@192.168.1.3 ~]# ifconfig|grep ether|awk '{print $2}'
+52:54:00:be:f3:0e
+[root@192.168.1.250 ~]# iptables -A INPUT -m mac --mac-source52:54:00:be:f3:0e -j REJECT
+#重新测试连接
+[root@192.168.1.3 ~]# telnet 192.168.1.250 80
+Trying 192.168.1.250...
+telnet: connect to address 192.168.1.250: Connection refused
+
+7.一个针对ddos攻击的方案：
+#ddos攻击：利用大量主机进行无效syn连接，占用带宽，使访客无法访问服务器资源
+[root@192.168.1.250 ~]# iptables -A INPUT -m limit --limit 5/minute --limit-burst 10
+
+8.iptables log：
+[root@192.168.1.250 ~]# iptables -A INPUT -p icmp -j LOG --log-prefix='[ICMP LOG]'
+[root@192.168.1.4 ~]# ping -c 2 192.168.1.250
+PING 192.168.1.250 (192.168.1.250) 56(84) bytes of data.
+From 192.168.1.250 icmp_seq=1 Destination Port Unreachable
+#centos/rhel系列log文件/var/log/messages，ubuntu/debian系列log文件/var/log/syslog
+[root@192.168.1.250 ~]# cat /var/log/messages|grep "ICMP LOG"
+May 4 14:40:35 guest-co kernel: [ICMP LOG]IN=eth0 OUT= MAC=52:54:00:9e:35:0b:34:17:eb:7e:8a:fd:08:00 SRC=192.168.1.4 DST=192.168.1.250 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=26738 DF PROTO=ICMP TYPE=8 CODE=0 ID=5411 SEQ=1 
+May 4 14:40:36 guest-co kernel: [ICMP LOG]IN=eth0 OUT= MAC=52:54:00:9e:35:0b:34:17:eb:7e:8a:fd:08:00 SRC=192.168.1.4 DST=192.168.1.250 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=26744 DF PROTO=ICMP TYPE=8 CODE=0 ID=5411 SEQ=2 
+#icmp type8 code0代表一个echo request(ping请求)
+9.目的端口映射(REDIRECT)：
+[root@192.168.1.250 ~]# iptables -F     #清除filter所有rule，方便访问
+[root@192.168.1.250 ~]# iptables -t nat -F    #清除nat所有rule，方便测试
+[root@192.168.1.250 ~]# iptables -t nat -A PREROUTING -p tcp --dport 1000 -j REDIRECT --to-port 80
+[root@192.168.1.250 ~]# systemctl status httpd  #确保httpd开启
+[root@192.168.1.250 ~]# netstat -tuln|grep :80   #确保httpd开放端口80
+浏览器测试，出现test123默认界面，success！！
+
+10.网关来源伪装(MASQUERADE)：
+#操作nat表之前确认允许转发 
+[root@192.168.1.250 ~]# cat >> /etc/sysctl.conf<<EOF 
+net.ipv4.ip_forward=1 
+EOF 
+[root@192.168.1.250 ~]# sysctl -p
+#当局域网内容经过网关，通向public ip主机时，需要将来源主机转化为网关public ip(接口eth1，可以是动态ip，如果是静态ip，也可以使用SNAT)，使得通讯目标能返回消息(否则对方无法直接访问内网主机)
+[root@192.168.1.250 ~]# iptables -t nat -A POSTROUTING -o eth1 -s 192.168.1.9/24 -j MASQUERADE
+
+11.DNAT(destination network address translate)：
+#包到达目标后,经过filter的forward chain,再经nat的PREROUTING charin将目标转化为其他主机,达到最终访问目的(如：外网主机访问内网服务时,经过网关跳转)
+[root@192.168.1.250 ~]# iptable -t nat -A PREROUTING -d 192.168.1.250 -p tcp --dport 80 -j DNAT --to-destination 192.168.1.4
+
+12.SNAT(source network address translate)：
+#nat转化来源ip为自己ip，通常用于内网主机主动访问时，网关采取的措施，使得外网主机可通过网关进行回应，并通过DNAT将消息返回给内网主机
+[root@192.168.1.250 ~]# iptable -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth1 -j SNAT --to-source public_ip
+
+13.iptables规则持久化：
+#iptables设置的规则会在下次重启时载入/etc/sysconfig/iptables规则(iptables-services已安装)，所以我们需要为更改做配置保存
+[root@192.168.1.250 ~]# service iptables save
+
+14.还原iptables：
+[root@192.168.1.250 ~]# iptables-restore</etc/iptables.rule
+
+
+[1]iptables manual：http://ipset.netfilter.org/iptables.man.html
+[2]iptables extensions：http://ipset.netfilter.org/iptables-extensions.man.html
+[3]nat rfc：https://tools.ietf.org/html/rfc3022
+[4]tcp rfc：https://www.rfc-editor.org/rfc/rfc793.txt
+[5]udp rfc：https://www.rfc-editor.org/rfc/rfc768.txt
+[6]iptables tutorial：https://www.frozentux.net/iptables-tutorial
+[7]icmp type：http://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/icmp-code.html

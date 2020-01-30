@@ -41,10 +41,10 @@ tar -zxvf wordpress.tar.gz -C /var/www/html
 
 4.修改后台域名跳转(可选，当域名改变或备份时经历该步骤)
 后台设置：wp_options的option_value值
-UPDATE wp_options SET option_value=’http://SERVER_IP’ where                        option_name=’siteurl’ or option_name=’home’;
+UPDATE wp_options SET option_value="http://SERVER_IP" where option_name="siteurl" or option_name="home";
 
 文章URL地址：wp_posts的guid值
-UPDATE wp_posts SET guid=replace(guid,’old_str’,’new_str’);
+UPDATE wp_posts SET guid=replace(guid,"old_str","new_str");
 
 内容超链接：wp_posts的post_content值
-UPDATE wp_posts SET post_content=replace(post_content,’old_str’,’new_str’);
+UPDATE wp_posts SET post_content=replace(post_content,"old_str","new_str");

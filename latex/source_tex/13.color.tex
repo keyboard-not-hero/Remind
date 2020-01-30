@@ -1,0 +1,24 @@
+\documentclass{article}
+%\usepackage{color}
+\usepackage{colortbl}
+\begin{document}
+%	\fcolorbox{green}{yellow}{this is box}
+%	\color[cmyk]{0,0.5,1.0,0}i love you
+%	\textcolor{blue}{this is comment }do you love me
+
+\begin{tabular}{>{\columncolor{red}}c c c}
+	\arrayrulecolor{black}
+	\hline
+	\rowcolor{green} name & sex & score \\
+	lucy & female & 89 \\
+	lily & \cellcolor{blue}female & 90 \\
+	leijun & \textcolor{green}{male} & 98 \\
+	\hline
+\end{tabular}
+\end{document}
+
+ % \color{color}用于指定环境字体颜色，\textcolor{color}{text}用于指定局部字体颜色，\pagecolor{color}用于指定背景颜色，\colorbox{box_color}{text}，\fcolorbox{rim_color}{box_color}{text}。包含在color宏包中。颜色列表：
+ % black/white/red/green/blue，以及印刷三原色cyan/magenta/yellow
+ % 也可使用以下模式指定颜色：color[gray]{0.5}或color[rgb]{0.6,0.6,0}或color[cmyk]{0,0.5,1,0}
+ 
+ % >{colomncolor{color}}用于配置表格列的背景色，\rowcolor{color}用于配置表格行的背景色，\cellcolor{color}用于配置表格单元的背景色，\arrayrulecolor{color}用于配置表格框颜色，包含在colortbl宏包中

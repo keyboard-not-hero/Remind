@@ -1,0 +1,181 @@
+firewalld是动态防火墙管理器(设置后即采纳，不需要重启)，使用双层架构防火墙设计：core层和D-Bus层。
+
+core层：iptables, ip6tables, ebtables, ipset等工具的上层控制工具
+
+D-Bus层：操作firewalld的主要层。firewall-cmd, firewallctl, firewall-config and firewall-applet等工具直接控制层(firewall-offline-cmd控制与core层交互)
+
+firewalld引入了区域(zone)的概念，即防火墙的策略集和，使得防火墙更易于综合管理。如：home为家庭策略，可以设置为可信任，可增加网内可访问服务种类；public为公共场合策略，除必要服务，其他服务设为禁止。
+
+firewall含两种时态：runtime(一次性，重启失效)和permanent(永久性，重启生效，使用–reload可即时生效)，runtime和permanent是分离的两个配置。
+
+firewall-cmd是firewalld的主要CLI控制工具。本文主要介绍firewall-cmd的用法，CLI是Linux最有效的方式，并且只要理解CLI，图形配置自然理解
+
+重要参数：
+Generic use:
+--state
+    firewall-cmd是否可使用("running" or "not  running",取决于firewalld)
+--reload
+    重新加载配置，使永久化配置立即生效(使用permanent创建新runtime，保留已连接状态服务)
+--complete-reload
+    重新加载配置，使永久化配置立即生效(所有连接马上断开)
+--runtime-to-permanent
+    使用runtime的规则覆盖permanent的规则
+--permanent
+    持久化，不添加默认为runtime(下列选项外可选，除panic)
+--zone=zone_name 
+    指定zone操作(下列选项外可选，除panic)
+--get-zones
+    可用zone列表
+--list-all-zones
+    可用zone列表及属性
+--list-all
+    当前zone属性
+--get-default-zone
+    当前使用zone
+--get-active-zone
+    当前使用zone和相关接口
+--set-default-zone=zone_name
+    设置zone
+--get-services
+    支持的service列表
+
+--add/remove/query-service=ser_name [--timeout=N]
+    开启/关闭/查询服务[N秒]
+--list-services
+    开启服务列表
+--add/remove/query-port=port[-port]/proto [--timeout=sec]
+    开启/关闭/查询端口[序列]/协议对
+--list-ports
+    开启端口列表
+--get-icmptypes
+    支持icmp类型列表
+--add/remove/query-icmp-block=icmp_type
+    添加/移除/查询icmp指定type阻塞
+--add/remove/query-masquerade
+    添加/移除/查询ip伪装(仅限ipv4)
+--add/remove/query-forward-port=(port=s_port[-port]):(proto=pro_type){:(toport=t_port[-port])|:(toaddr=tar_addr)|:(toport=t_port[-port]:toaddr=tar_addr)}
+    "增加/移除/查询"端口/主机重定向     *"()"用于增加阅读性，实际应用请clear
+--panic-on/off
+    开启/关闭紧急模式，关闭所有网络连接
+--query-panic
+    查询紧急模式是否开启
+Direct options:
+syntax：firewall-cmd --direct --passthrough { ipv4 | ipv6 | eb } <args>
+
+Rich Language:
+匹配顺序：<zone>_log   <zone>_deny   <zone>_allow
+    --add/remove/query-rich-rule='rule_detail' [--timeout=sec]
+    设置/取消/查询rich rule
+    rule_detail详解：
+    rule 
+    [family="<rule family>"]
+        ip协议版本(ipv4/ipv6，默认皆可) 
+    [ source address="<address>" [invert="True"] ]
+        来源地址(ip或者network/mask，不支持域名) 
+    [ destination address="<address>" [invert="True"] ] 
+        目标地址(ip或者network/mask，不支持域名) 
+    [ <element> ] 
+        service name="ser_name"
+        port port="port_name" protocol="tcp|udp"
+        protocol value="pro_name"    #参考/etc/protocols
+        icmp-block name="icmp_name"   #参考firewall-cmd --get-icmptypes
+        masquerade
+        forward-port port="s_port" protocol="tcp|udp" to-port="d_port" to-addr="addr"
+    [ log [prefix="<prefix text>"] [level="<log level>"] [limit value="<rate/duration>"] ]   
+    [ audit [limit value="<rate/duration>"] ] 
+    <action>
+        accept|reject [reject_type]|drop   #reject_type参考iptables-extensions之--reject-with type
+
+实战演练：
+
+主机环境(部署server：192.168.1.250;测试client：192.168.1.4)
+1.准备环境：
+#由于firewalld会读取iptable规则(即便关闭也没用)，所以需要清除iptables规则
+[root@192.168.1.250 ~]# iptables -F
+[root@192.168.1.250 ~]# iptables -X
+[root@192.168.1.250 ~]# systemctl status firewalld
+#如果没有开启，则继续执行，否则跳转到步骤2
+[root@192.168.1.250 ~]# systemctl start firewalld
+
+2.当前firewalld环境：
+#当前zone
+[root@192.168.1.250 ~]# firewall-cmd --get-default-zone
+home
+#可使用zone
+[root@192.168.1.250 ~]# firewall-cmd --get-zones
+block dmz drop external home internal public trusted work
+#当前启动services
+[root@192.168.1.250 ~]# firewall-cmd --list-services
+ssh mdns samba-client dhcpv6-client
+#当前启动端口/[tcp|udp]对
+[root@192.168.1.250 ~]# firewall-cmd --list-ports
+#可操作服务
+[root@192.168.1.250 ~]# firewall-cmd --get-services
+
+3.阻止指定服务的连接
+#测试是否可以正常连接(预设22和80开放连接)
+[root@192.168.1.250 ~]# netstat -tuln|egrep '22|80'
+[root@192.168.1.250 ~]# firewall-cmd --list-services
+ssh dhcpv6 http
+#client测试
+[root@192.168.1.4 ~]# telnet 192.168.1.250 22
+[root@192.168.1.4 ~]# telnet 192.168.1.250 80
+#server操作
+[root@192.168.1.250 ~]# firewall-cmd --remove-service=ssh
+Connected to 192.168.1.250.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_7.4
+[root@192.168.1.250 ~]# firewall-cmd --remove-service=http
+#client再次测试
+[root@192.168.1.4 ~]# telnet 192.168.1.250 22
+Trying 192.168.1.250...
+telnet: connect to address 192.168.1.250: No route to host
+[root@192.168.1.4 ~]# telnet 192.168.1.250 80
+
+4.增加指定端口的连接：
+#步骤3测试遗留，http已经关闭
+[root@192.168.1.250 ~]# firewall-cmd --list-services
+dhcpv6
+[root@192.168.1.250 ~]# firewall-cmd --list-ports
+#增加80/tcp
+[root@192.168.1.250 ~]# firewall-cmd --add-port=80/tcp
+#client测试
+[root@192.168.1.4 ~]# telnet 192.168.1.250 80
+Trying 192.168.1.250...
+Connected to 192.168.1.250.
+Escape character is '^]'.
+
+5.阻止icmp查询(echo-request,即ping)
+[root@192.168.1.4 ~]# ping -c 2 192.168.1.250
+PING 192.168.1.250 (192.168.1.250) 56(84) bytes of data.
+64 bytes from 192.168.1.250: icmp_seq=1 ttl=64 time=0.143 ms
+64 bytes from 192.168.1.250: icmp_seq=2 ttl=64 time=0.240 ms
+[root@192.168.1.250 ~]# firewall-cmd --add-icmp-block=echo-request
+[root@192.168.1.4 ~]# ping -c 2 192.168.1.250
+PING 192.168.1.250 (192.168.1.250) 56(84) bytes of data.
+From 192.168.1.250 icmp_seq=1 Destination Host Prohibited
+From 192.168.1.250 icmp_seq=2 Destination Host Prohibited
+
+6.将端口1000重定向到80，访问主机www服务
+#确认80端口开启，防火墙未阻拦；由iptables的PREROUTING可知，PREROUTING在进入主机之前便进行端口转换，所以端口1000并不需要开启，防火墙方面也无需考虑。
+[root@192.168.1.250 ~]# netstat -tuln|grep 80;firewall-cmd --query-port=80/tcp
+[root@192.168.1.250 ~]# firewall-cmd --add-forward-port=port=1000:proto=tcp:toport=80
+#注意结果后面的200 OK，代表服务器http成功
+[root@192.168.1.4 ~]# wget http://192.168.1.250:1000
+Connecting to 192.168.1.250:1000... connected.
+HTTP request sent, awaiting response... 200 OK
+
+7.添加rich rule(更为完善的细则)
+#将来自ipv6为1:2:3:4:6::的主机，对tcp4011端口的访问，重定向到对主机1::2:3:4:7的4012端口访问
+[root@192.168.1.250 ~]# firewall-cmd -add-rich-rule='rule family="ipv6" source address="1:2:3:4:6::" forward-port port="4011" protocol="tcp" to-port="4012" to-addr="1::2:3:4:7"'
+
+8.恢复规则
+[root@192.168.1.250 ~]# firewall-cmd --reload
+
+*以上所有内容均为对当前zone操作，并且为了都为runtime设置，--zone与--permanent参数请适当添加
+
+[1]firewalld generic use：https://fedoraproject.org/wiki/Firewalld?rd=FirewallD
+
+[2]firewalld Rich Language：https://fedoraproject.org/wiki/Features/FirewalldRichLanguage
+
+[3]man manual：https://www.firewalld.org/documentation/man-pages/firewall-cmd
