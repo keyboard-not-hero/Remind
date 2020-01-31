@@ -1,8 +1,34 @@
 \documentclass{article}
-\usepackage[all,pdf]{xy}
+\usepackage[all]{xy}
 \begin{document}
+%	\xymatrix{
+%		a\ar"1,2" & b\ar@<1ex>[l] & a+b\ar@/_3pc/[l]^{on}_{under} \\
+%		1 & 2 & 3
+%	}
 	\xymatrix{
-		a\ar[r] & b & a+b \\
-		1 & 2 & 3
+			A'\ar[rr]\ar[dr] & & B'\ar[dd]|\hole\ar[dr]\\
+		   & A\ar[rr] & & B\ar[dd]\\
+			C'\ar[dr] \ar[uu]& & D'\ar[dr]\ar[ll]|\hole\\
+					  & C\ar[uu] & & D\ar[ll]\\
 	}
 \end{document}
+
+% \ar@<distance>@/^/@{arr_style}[direction]^{super_script}使用[direction]从当前单元配置指定相对位置的箭头，并使用@{arr_style}指定箭头样式，使用^/_/|在箭头上/下方或内部配置注解，使用@/^/或@/_/使用箭头上/下弧度，@<distance>用于指定偏移竖直方向中心的距离。
+% 1.[direction]相对位置参数如下：
+% l - 左边
+% r - 右边 
+% t - 上边
+% b - 下边
+% 也可以使用[r, c]的相对位置，当前位置为[0,0]，向下为r增加方向，向右为c增加方向
+% 可以使用"r,c"的绝对位置，左上角为"1,1"
+% 可使用f;t指定箭头起始和结束位置
+% 2.箭头样式参数如下：
+% ->/-->/=>/.>/:>/~>/-/<space>
+% 3.箭头注解 - 在箭头方向为右的基础上，^为箭头上方，_为箭头下方，|为箭头内部镶嵌(镶嵌空内容使用|\hole)。在^/_/|与实际注解内容之间，<代表箭头尾部，>代表箭头首部(箭头端)；<<代表箭头尾部范围内，>>代表箭头首部范围内；()内可指定0~1的分数，指定从尾端到头部的位置。根据箭头方向进行旋转
+% 4.箭头弧度 - 在箭头方向为右的基础上，@/^/为上弧度，@/_/为下弧度，还可以使用@/^<n>pc/或@/_<n>pc/指定高弧曲线
+% 5.偏离位置 - 在箭头方向为右的基础上，使用@<distance>向上偏离竖直方向中心位置
+% 以上所有功能包含在xy-pic宏包中，使用usepackage[all]{xy}导入包
+
+
+
+
