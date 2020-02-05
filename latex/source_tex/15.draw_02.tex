@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+	\begin{tikzpicture}
+		% 作直线
+		\draw[->] (-1.4,0) -- (1.4,0);
+		\draw[->] (0,-1.4) -- (0,1.4);
+		% 作虚线
+		\draw[dashed](0,3) -- (2,3);
+		% 作点状线
+		\draw[dotted](0,4) -- (2,4);
+		% 作圆
+		\draw (0,0) circle (1);
+		% 栅栏
+		\draw (-1,-1) grid (1,1);
+	\end{tikzpicture}
+\end{document}
+
+% \begin{tikzpicture}...\end{tikzpicture}用于限定作图环境；\draw[color, style, bold]用于画图，color用于指定颜色，style用于指定形状，bold用于指定粗细。
+% 粗细列表：
+% ultra thin  --  very thin  --  thin  --  semithick  --  thick  --  very thick  --  ultra thick
+% 形状列表：
+% dotted - 点状
+% dashed - 虚线
+% 以上所有功能包含在tikz宏包中，后端引擎为pgf

@@ -1,17 +1,19 @@
 \documentclass{article}
 \usepackage[all]{xy}
 \begin{document}
-%	\xymatrix{
-%		a\ar"1,2" & b\ar@<1ex>[l] & a+b\ar@/_3pc/[l]^{on}_{under} \\
-%		1 & 2 & 3
-%	}
+	\xymatrix{
+		a\ar"1,2" & b\ar@<1ex>[l] & a+b\ar@/_3pc/[l]^{on}_{under} \\
+		1 & 2 & 3
+	}
 	\xymatrix{
 			A'\ar[rr]\ar[dr] & & B'\ar[dd]|\hole\ar[dr]\\
 		   & A\ar[rr] & & B\ar[dd]\\
 			C'\ar[dr] \ar[uu]& & D'\ar[dr]\ar[ll]|\hole\\
 					  & C\ar[uu] & & D\ar[ll]\\
 	}
+
 \end{document}
+
 
 % \ar@<distance>@/^/@{arr_style}[direction]^{super_script}使用[direction]从当前单元配置指定相对位置的箭头，并使用@{arr_style}指定箭头样式，使用^/_/|在箭头上/下方或内部配置注解，使用@/^/或@/_/使用箭头上/下弧度，@<distance>用于指定偏移竖直方向中心的距离。
 % 1.[direction]相对位置参数如下：
@@ -28,7 +30,3 @@
 % 4.箭头弧度 - 在箭头方向为右的基础上，@/^/为上弧度，@/_/为下弧度，还可以使用@/^<n>pc/或@/_<n>pc/指定高弧曲线
 % 5.偏离位置 - 在箭头方向为右的基础上，使用@<distance>向上偏离竖直方向中心位置
 % 以上所有功能包含在xy-pic宏包中，使用usepackage[all]{xy}导入包
-
-
-
-

@@ -1,4 +1,8 @@
-tlmgr - 
+tlmgr - package管理器
 
 语法
 tlmgr 
+
+实例
+查看package是否已安装
+tlmgr info --list <package>
