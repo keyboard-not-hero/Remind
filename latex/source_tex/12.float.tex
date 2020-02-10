@@ -5,13 +5,12 @@
 %\usepackage{float}
 \usepackage{picinpar}
 \begin{document}
-%	this is dog picture
-%	\begin{figure}
+%	\begin{figure}[ht]
 %		\includegraphics[scale=0.4]{snuggle.jpg}
 %		\caption{in plain format, if title too long, like normal paragraphics for display. 
 %		if you set the formal small title,you can cut for paragraphics}
 %	\end{figure}\par
-%	this is cat type table
+
 %	\begin{table}
 %		\begin{tabular}{c|c|c}
 %			name & sex & grade\\
@@ -22,6 +21,21 @@
 %		\end{tabular}
 %		\caption{student information}
 %	\end{table}\par
+
+%\begin{figure}
+%	\includegraphics{snuggle}
+%	\includegraphics{number}
+%	\caption{this is picture}
+%\end{figure}
+
+%\begin{figure}
+%	\subfigure[caption_01]{
+%		\includegraphics[scale=0.4]{snuggle}
+%	}
+%	\subfigure[caption_02]{
+%		\includegraphics[scale=0.4]{nuber}
+%	}
+
 %	\begin{figure}
 %		\centering
 %		\begin{varwidth}[t]{\textwidth}
@@ -40,8 +54,6 @@
 
 So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.
 
-There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, ‘Oh dear! Oh dear! I shall be late!’ (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.
-
 In another moment down went Alice after it, never once considering how in the world she was to get out again.
 
 The rabbit-hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.
@@ -50,11 +62,11 @@ The rabbit-hole went straight on like a tunnel for some way, and then dipped sud
 \end{document}
 
 
-% begin{figure}...\end{figure}用于图片浮动体
+% begin{figure}[]...\end{figure}用于图片浮动体
 
-% begin{table}...\end{table}用于表格浮动体
+% begin{table}[]...\end{table}用于表格浮动体
 
-% 共同可选参数列表：
+% table和figure环境共同可选参数列表：
 % h - 浮动体根据上下文顺序排列
 % t - 浮动体排在当前页或下一页页首
 % b - 浮动体排在当前页页尾
@@ -64,11 +76,15 @@ The rabbit-hole went straight on like a tunnel for some way, and then dipped sud
 
 % LaTeX最多同时保存18个未处理的浮动体
 
-% \caption{string}为浮动体中的标题
+% \caption{string}为浮动体中的标题。并且有两种类型：
+% 1.\caption{<title>}
+% 2.\caption{<short_title>}{<long_title>}，long_title可进行分段
 
-% 在同一个浮动体中，表格和图标盒子可以并列排放。其中，表格按垂直方向居中对其，图片按垂直方向的基准线对齐
+% 将多个表格/图标盒子在同一个浮动体中，可以并列排放。其中，表格按垂直方向居中对其，图片按垂直方向的基准线对齐
 
-% \begin{varwidth}[t]{\textwidth}...\end{varwidth}用于确定宽度，\vspace{0pt}用于配置一个0pt空行，并按空行进行对齐
+% \subfigure用于单个浮动体内的多个图像，分别标注标题。包含在subfigure宏包中
+
+% \begin{varwidth}[t]{\textwidth}...\end{varwidth}用于确定宽度；\vspace{0pt}用于配置一个0pt空行，并按空行进行对齐，即top对齐。该功能包含在varwidth宏包中
  
  % \begin{figwindow}[下降行数, 水平位置, 图内容, 图表题]...\end{figwindow}用于指定图片四周的文字绕排。包含在picinpar宏包中
  
