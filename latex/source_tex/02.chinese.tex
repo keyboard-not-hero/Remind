@@ -1,0 +1,38 @@
+%\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\documentclass{article}
+\usepackage[UTF8,fontset=ubuntu,space]{ctex}
+\usepackage{graphicx}
+\linespread{2}
+\begin{document}
+\parindent=0pt
+这是一个中文文~档!!\\
+\songti 我是宋体\par
+%\heiti 我是黑体\par
+\kaishu 我是楷书\par
+\zihao{0}我是初号\par
+\zihao{-0}我是小初号\par
+\zihao{1}我是一号\par
+\zihao{-1}我是小一号\par
+\resizebox{!}{20mm}{China  中国}\par
+  有时候我觉得自己像一只小小鸟，想要飞却怎么样也飞不高，也许有一天我栖上了枝头，却成为猎人的目标，我飞上了青天才发现自己从此无依无靠，每次到了夜深人静的时候，我总是睡不着，我怀疑是不是只有我的明天没有变得更好\par
+  \renewcommand{\CJKglue}{\hskip 1pt}
+  有时候我觉得自己像一只小小鸟，想要飞却怎么样也飞不高，也许有一天我栖上了枝头，却成为猎人的目标，我飞上了青天才发现自己从此无依无靠，每次到了夜深人静的时候，我总是睡不着，我怀疑是不是只有我的明天没有变得更好
+\end{document}
+
+% \documentclass[UTF8,fontset=ubuntu]{ctexart}中，ctexart代表中文文档类型；UTF8代表中文编码方式；fontset=ubuntu代表字体定义文件，Linux系统必须额外该选项，Windows/MacOS系统没有必要
+
+% \usepackage[UTF8,fontset=ubuntu]{ctex}为另一种使用ctex包的方式
+
+% 在CJK中文宏包中，字与字之间空格被省略，可使用~符号生成空格。或者使用usepackage的space可选参数，来保留字与字之间的空格
+
+% 中文字体默认使用宋体，ubuntu提供字体宋体/黑体/楷书，windows提供字体宋体/黑体/仿宋/楷书/隶书/幼圆
+
+% \zihao{number}提供字号，字号列表 - 初号/小初号/一号/小一号/二号/小二号/三号/小三号/四号/小四号/五号/小五号/六号/小六号/七号/八号。小开头对应-符号，如小初号-0
+
+% \resizebox{width}{height}{text}用于指定文字盒子的宽度和高度，width和height为!时，可使该参数指定为根据原高宽比来缩放或扩展
+
+% 查看当前中文字体:fc-list :lang=zh-cn
+
+% \renewcommand{\CJKglue}{\hskip 1pt}用于配置汉字之间的间距
+
+% \linespread{factor}用于在导言中修改全文中文行距，该指令需要在ctex导入之后使用

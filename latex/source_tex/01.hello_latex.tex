@@ -1,0 +1,38 @@
+\documentclass{article}
+\begin{document} 
+	This is my first document.
+	Welcome to \LaTeX!!
+	\newcommand{\myname}{Steven Liu}
+	\myname
+\end{document}
+
+% 符号'%'用于注释。可使用\begin{comment}...\end{comment}进行块注释，该功能包含在comment宏包中
+
+% \usepackage{comment}为使用宏包comment
+
+% 命令格式如下：
+% \command - 无参
+% \command{args} - {}内为多字符必选参数
+% \command[args] - []内为可选参数
+
+% \documentclass{article}代表文档类型，文档类型列表：article/report/book/beamer
+% article - 10页以内，不设置目录
+% report/book - 10页~几百页，设置目录
+
+% \documentclass到\begin{document}之间的为导言，导言指令对全文产生影响
+
+% \begin{document} ... \end{document}标识文档正文范围
+
+% 命令的形式：
+% 1.声明 - 作用于指令后所有的内容。如粗体命令\bfseries 
+% 2.参数 - 只作用于指令所带的参数。如倾斜体命令\textsl{Asia}
+% 3.组合 - 把声明形式和需作用的内容至于花括号中，从而将作用范围限定在花括号内。如粗体命令{\bfseries this is bracket}
+% 4.环境 - 由环境限定的作用范围。如公式限定\begin{equation}...\end{equation}
+
+% \newcommand{<new_command>}[arg_number][first_arg_default]{<command_content>}为新建指令，解释如下：
+% <new_command> - 新指令名称
+% arg_number - 新指令可包含参数个数，默认为0
+% first_arg_defualt - 当arg_number不为0时，该参数指定第一个可选参数的默认值，其他剩余参数必须为必选参数
+% <command_content> - 新指令指代内容
+
+% \renewcommand{<new_command>}[arg_number][first_arg_default]{<command_content>}为修改已有指令，解释见\newcommand

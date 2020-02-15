@@ -44,3 +44,6 @@ steven@~$ sudo apt-get update
 steven@~$ sudo apt-get install texworks
 
 在launchpad中搜索texworks打开图形编辑界面
+
+1.TUG：https://tug.org
+2.LaTeX：https://www.latex-project.org

@@ -3,59 +3,81 @@
 \usepackage{tensor}
 \usepackage{amsmath}
 \begin{document}
-	这是一个行内公式：$a+b=b+a$\par
-	这也是一个行内公式：\( a=b+1\)\par
-	这又是一个行内公式：\begin{math}y=x^2\end{math}\par
-	这是一个行间公式：$$f(x)=mx+b$$
-	\indent 这还是一个行间公式：\[E=mc^2\]
-	\indent 这仍旧是一个行间公式：\begin{displaymath}Ft=mv_1-mv_2\end{displaymath}
-	\indent 最后一个行间公式：\begin{equation}a+b=b+a\\b+c=c+b\end{equation}
-	$\int\limits_0^n x$\\
-	$\int\nolimits_0^n y$\\
-	$\prescript{n}{m}{H}^i_j$\\
-	$\tensor[_a^b_c^d]{M}{^a_b^c_d}$\\
-	$\overline{a+b}$\\
-	$\underline{a+b}$\\
-	$\overleftarrow{a+b}$\\
-	$\overrightarrow{a+b}$\\
-	$\overleftrightarrow{a+b}$\\
-	$\underleftarrow{a+b}$\\
-	$\underrightarrow{a+b}$\\
-	$\underleftrightarrow{a+b}$\\
-	$\overbrace{a+b+c}$\\
-	$\underbrace{a+b+c}$\\
-	$a+\rlap{$\overbrace{\phantom{b+c+d}}^{m}$}b+\underbrace{c+d+e}_{n}+f$\\
-\begin{gather}
-	a+b=b+a\notag \\
-	b+c=c+a
-\end{gather}
+%	这是一个行内公式：$a+b=b+a$\par
+%	这也是一个行内公式：\( a=b+1\)\par
+%	这又是一个行内公式：
+%	\begin{math}
+%	y=x^2
+%	\end{math}\par
+	
+%	这是一个行间公式：$$f(x)=mx+b$$
+%	这还是一个行间公式：\[E=mc^2\]
+%	这仍旧是一个行间公式：
+%	\begin{displaymath}
+%	Ft=mv_1-mv_2
+%	\end{displaymath}
+%	\indent 最后一个行间公式：
+%	\begin{equation}
+%	a+b=b+a
+%	\end{equation}
+
+%	\begin{equation*}
+% 	y=sin(x)
+%	\end{equation*}	
+	
+%	$\int\limits_0^n x$\\
+%	$\int\nolimits_0^n y$\\
+%	$\prescript{n}{m}{H}^i_j$\\
+%	$\tensor[_a^b_c^d]{M}{^a_b^c_d}$\\
+%	$\overline{a+b}$\\
+%	$\underline{a+b}$\\
+%	$\overleftarrow{a+b}$\\
+%	$\overrightarrow{a+b}$\\
+%	$\overleftrightarrow{a+b}$\\
+%	$\underleftarrow{a+b}$\\
+%	$\underrightarrow{a+b}$\\
+%	$\underleftrightarrow{a+b}$\\
+%	$\overbrace{a+b+c}$\\
+%	$\underbrace{a+b+c}$\\
+%	$a+\rlap{$\overbrace{\phantom{b+c+d}}^{m}$}b+\underbrace{c+d+e}_{n}+f$\\
+	
+%\begin{gather}
+%	a+b=b+a\notag \\
+%	b+c=c+a
+%\end{gather}
+
 \begin{align}
-	f(x)&=1*2+100/2 \notag \\
-	       &=2+50\notag \\
-	       &=52
+&\mathrel{\phantom{=}}(a+b)(a^2-ab+b^2) \notag\\
+&=a^3-a^2b+ab^2+a^2b-ab^2+b^3\notag\\
+&=a^3+b^3
 \end{align}
-\begin{equation}
-f(x) = \begin{cases}
-1, & \text{if } x > 1;\\
-0, & \text{if } x < 1.
-\end{cases}
-\end{equation}
-\begin{equation}
-\left.\begin{gathered}
-	S \subseteq T\\
-	S \subseteq T
-	\end{gathered} \right\}
-	\implies S = T
-\end{equation}
+
+%\begin{equation}
+%f(x) = \begin{cases}
+%1, & \text{if } x > 1;\\
+%0, & \text{if } x < 1.
+%\end{cases}
+%\end{equation}
+
+%\begin{equation}
+%\left.\begin{gathered}
+%	S \subseteq T\\
+%	S \subseteq T
+%	\end{gathered} \right\}
+%	\implies S = T
+%\end{equation}
+
 \end{document}
 
 % $...$用于限定行内公式区域。其余还有\(...\)与\begin{math}...\end{math}。行内公式的上下角标普遍位于右上下角
 
-% $$...$$用于限定行间公式区域。其余还有\[...\]与\begin{displaymath}...\end{displaymath}。此外还有\begin{equation}...\end{equation}，该环境自动配置一个公式号码，并且\\无效。行间公式的上下角标普标位于正向下方
+% $$...$$用于限定行间公式区域。其余还有\[...\]与\begin{displaymath}...\end{displaymath}。此外还有\begin{equation}...\end{equation}，该环境自动配置一个公式号码，并且换行\\无效。行间公式的上下角标普标位于正向下方
 
-% \limits用于限定后续上下角标位于正上下方。该指令包含在amsmath宏包中
- 
-% \nolimits类似于\limits，不过是限制上下角标位于右上下角
+% \begin{equation*}...\end{equation*}与\[...\]为相同环境，与equation不同，它不配置公式号码
+
+% \indent用于行首缩进，\noindent用于不缩进
+
+% \limits用于限定后续上下角标位于正上下方，\nolimits限制上下角标位于右方上下角。该指令包含在amsmath宏包中
 
 % \prescript{super_script}{sub_script}{variable}用于显示左上下角标。该指令包含在mathtools宏包中
 
@@ -75,7 +97,9 @@ f(x) = \begin{cases}
 
 % \begin{gather}...\end{gather}用于多行行间公式，可以使用\\来分行，并且使用\notag来使当前行不使用公式序号。包含在amsmath宏包中
 
-% \begin{align}...\end{align}用于多行行间公式，可以使用\\分行，使用\notag不编号，并且在关系运算符之前使用&来表明对齐位置。包含在amsmath宏中
+% \begin{align}...\end{align}用于多行行间公式，可以使用\\分行，每行分别参与编号，并且在关系运算符之前使用&来表明对齐位置。包含在amsmath宏中
+% \phantom{}参与占位，但不显示内容；\mathrel可保证占位空间
+% \notag取消行参与编号
 
 % \begin{cases}...\end{cases}用于在数学公式环境中配置条件公式，可使用&来区分公式内容和条件。包含在amsmath宏包中。另外，mathtools宏包的dcases环境可以保证公式为行间公式大小
 

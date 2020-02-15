@@ -1,0 +1,137 @@
+\documentclass[10pt]{article}
+\begin{document}
+%    \tiny this is first para\par
+%    this is normalsize text\par
+%    \small this is second para\par
+%    \normalsize this is third para\par
+%    \large this is fourth para\par
+%    \huge  this is fifth para\par
+%    \linespread{2}\selectfont
+%    this is leading test\par
+%    what this deep\par
+%    this is 1\,cm\par
+%    here is a\hspace{1cm}big space\\
+%    \mbox{it is a no broken line.if you don't stop,it will continue all the time.you are my friend,i am your gay friend,i want to see what is you}
+%    \setlength{\fboxrule}{3pt}
+%    \setlength{\fboxsep}{10pt}
+%    \fbox{it's is a line,if you want to know what,please see this.continue...}
+%    \makebox[20em][s]{it is }\par
+%    \framebox[10em][s]{this is me}\par
+%    \setlength{\parskip}{10pt}
+%    \raggedright
+%    this is first paragraphics for test\raisebox{2mm}{this is raisebox }parskip\\
+%    this is second paragraphics for test parskip\par
+%    this is third paragraphics for test parskip
+%    \begin{flushright}
+%	    this is para for envir align
+%
+%	    this is second para for align
+%    \end{flushright}
+
+%	字体簇
+%	\textrm{This is Roman Family}\par
+%	\textsf{This is San Serif Family}\par
+%	\texttt{This is TypeWrite Family}\par
+
+%	\rmfamily This is Roman Family\par
+%	\sffamily This is San Serif Family\par
+%	\ttfamily This is TypeWrite Family\par
+
+%	\rm This is Roman Family\par
+%	\sf This is San Serif Family\par
+%	\tt This is TypeWrite Family\par
+
+%	粗细序列
+%	\textbf{This is bold series}\par
+%	\textmd{This is medium series}\par
+
+%	\bfseries This is bold series\par
+%	\mdseries This is medium series\par
+
+%	\bf This is bold series\par
+
+%	形状
+%	\textit{This is Italic Shape}\par
+%	\textsc{This is Small Caps Shape}\par
+%	\textsl{This is Slanted Shape}\par
+%	\textup{This is Upright Shape}\par
+%
+%	\itshape This is Italic Shape\par
+%	\scshape This is Small Caps Shape\par
+%	\slshape This is Slanted Shape\par
+%	\upshape This is Upright Shape\par
+%
+%	\it This is Italic Shape\par
+%	\sc This is Smalll Caps Shape\par
+%	\sl This is Slannted Shape\par
+
+%	文本
+%	\textnormal{This is Normal style}\par
+%	\emph{This is emphasized text}\par
+%
+%	\normalfont This is Normal style\par
+%	\em This is emphasized text\par
+
+%	LaTeX默认使用罗马字体/常规序列/直立形状
+%	This is Roman Family\par
+%	\textrm{\textmd{\textup{This is Roman Family}}}\par
+\end{document}
+
+
+% 文字大小单位:
+%mm - 1 mm=2.845 pt
+%pt - 1 pt=0.351 mm
+%bp - 1 bp=0.353 mm≈ 1 pt
+%dd - 1 dd=0.376 mm=1.07 pt
+%pc - 1 pc=4.218 mm=12 pt
+%sp - 65536 sp=1 pt
+%cm - 1 cm=10 mm=28.453 pt
+%cc - 1 cc =4.513 mm=12 dd=12.84 pt
+%in - 1 in=25.4 mm=72.27 pt
+%ex - 1 ex=当前字体中x的高度
+%em - 1 em=当前字体尺寸≈ M的宽度
+
+% \documentclass[12pt]中的12pt代表全局所有文字基准(normalsize)大小。默认为10pt，限10~12pt
+
+% \tiny用于限制局部文字大小，基于全局磅数。可选列表：tiny/scriptsize/footnotesize/small/normalsize/large/Large/LARGE/huge/Huge
+
+% 盒子模式：基准线将总高度分为高度(基准线之上)和深度(基准线之下)
+
+% 每个文字都是一个小盒子，每一行文字为小盒子组成的中盒子，每一页文字为中盒子组合成的大盒子
+
+% \linespread{2}用于指定行间距，行间距 - 两排文字基准线的距离。公式：行间距=系数x基本行距(默认字体高度*1.2)，西文默认系数为1(1.2)，汉字系数默认为1.3(1.3x1.2)，\selectfont用于作用生效。也可使用\setstretch{系数}，并默认生效，该指令属于setspace宏包。
+
+% \,用于小间距(0.1667em)。\hspacei{}用于指定水平间距，距离为负数时，相当于backspace，可使用\hspace*{}在行首或行尾强制留空白
+
+% \mbox{text}用于不断行内容。所有文字属于一个行盒子。用于保证不被断词，或者将普通文本插入数学公式中
+
+% \fbox{text}类似于mbox，但行盒子带边框。边框与文本距离为3pt，边框线的宽度为0.4pt。\setlength{\fboxrule}{3pt}用于配置边框线宽度；\setlength{\fboxsep}{10pt}用于配置边框线与文本的距离
+
+% \makebox[width][align]{text}也用于不断行内容，width指定盒子宽度，align用于限定文本text与盒子的对其方式。对齐参数如下：
+% l - 盒子与文本左对齐
+% c - 盒子与文本中间对齐
+% r - 盒子与文本右对齐
+% s - 类似于l，但间隔均匀
+
+% \framebox类似于\makebox，但带有边框。边框与文本距离为3pt，边框线的宽度为0.4pt。
+
+% \raisebox{offset}[height][deepth]{text}用于配置盒子与当前文本行的垂直位移，offset代表垂直位移量，正数为向上移动；height为高度；deepth为深度
+
+% \setlength{\parskip}{}用于配置段落与段落之间的距离。属于环境指令
+
+% \raggedright为左对齐，后续缩进失效，即便使用\indent。对齐方式列表：raggedright/centering/raggedleft
+
+% \RaggedRight为左对齐，与\raggedright不同，它包含断词功能。包含在ragged2e宏包中
+
+% \begin{flushright}...\end{flushright}用于对指定环境使用右对齐方式，不同于\raggedright，它含有段首尾额外间隔。对齐方式列表：flushleft/center/flushright
+
+% 字体类型列表：
+% 1.位图字体 - 由像素栅栏组成，放大或缩小会失真
+% 2.向量字体 - 在字形上分割出若干个关键点，相邻关键点之间由一条光滑曲线连接。向量字体可以进行无级缩放而不会产生失真
+
+% 向量字体类型：
+% 1.TrueType - 使用二次贝塞尔曲线来描述字形，扩展名为.ttf
+% 2.Typel - 使用三次贝塞尔曲线来描述字形，比TrueType更精美，扩展名为.pfb
+% 3.OpenType - 集合前两种优点并兼容于前两者，拓展名为.otf
+
+% 手写体宏包：pbsi/calligra/aurical/chancery/emerald/oesch/suetterl/tgchorus
