@@ -13,7 +13,7 @@ yum --enablerepo=elrepo-kernel install kernel-ml -y
 rpm -qa | grep kernel
 
 # 删除旧内核
-yum remove $(rpm -qa | grep kernel | grep -v $(uname -r))
+yum remove $(rpm -qa | grep kernel | grep $(uname -r))
 
 
 3.配置系统引导文件

@@ -1,23 +1,47 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart} 
 \usepackage[marginal]{footmisc}
+\usepackage{threeparttable}
+\usepackage{endnotes}
 \begin{document}
-	勾股定理，参考于欧几里得\footnote{前325年-前265年}\\
-	
-	\renewcommand\thefootnote{}	
-	
-	脚注带斜杠字符串应用\footnote{\texttt{\string\verb}}\\
-	
-	\renewcommand{\thefootnote}{\Alph{footnote}}
-	
-	鸭子一只\footnote{量词}，小鸡一只\footnotemark[\value{footnote}]，燕子一只\footnotemark[\value{footnote}]
-	
-	\begin{tabular}{c c c}
-		姓名 & 身高 & 体重\\
-		李磊 & 169 & 62\\
-		张三 & 175 & 89\footnotemark[2]\\
-		王麻子 & 162 & 70\footnotemark[2]\\
-	\end{tabular}
-	\footnotetext[2]{严重偏胖}
+%	\renewcommand{\footnoterule}{\vspace*{-3pt} \hrule width \columnwidth height 3pt \vspace*{10pt}}
+%	勾股定理，参考于欧几里得\footnote{前325年-前265年}\\
+%	
+%	\renewcommand{\thefootnote}{}	
+%	
+%	脚注带斜杠字符串应用\footnote{\texttt{\string\verb}}\\
+%	
+%	\renewcommand{\thefootnote}{\Alph{footnote}}
+%	
+%	鸭子一只\footnote{量词}，小鸡一只\footnotemark[\value{footnote}]，燕子一只\footnotemark[\value{footnote}]
+%	
+%	\begin{tabular}{c c c}
+%		姓名 & 身高 & 体重\\
+%		李磊 & 169 & 62\\
+%		张三 & 175 & 89\footnotemark[2]\\
+%		王麻子 & 162 & 70\footnotemark[2]\\
+%	\end{tabular}
+%	\footnotetext[2]{严重偏胖}
+
+%\begin{threeparttable}
+%\caption{table label}
+%\begin{tabular}{ll}
+%\hline
+%AMPS\tnote{1} & 移动电话服务系统\\
+%GSM\tnote{2} & 全球移动通讯系统\\
+%CDMA\tnote{2} & 码分多址通信系统\\
+%NMT\tnote{1} & 北欧移动电话系统\\
+%\hline
+%\end{tabular}
+%\begin{tablenotes}
+%\item[1] 贝尔实验室于1969年开始研究，1983年投入使用。
+%\item[2] 数字技术。
+%\end{tablenotes}
+%\end{threeparttable}
+
+南北朝时著名数学家祖冲之\endnote{公元429-500}发明了一种计算方法，从而得到了更为准确的圆周率\endnote{圆周长与直径之比}值。
+\renewcommand{\notesname}{本章注释}
+\theendnotes
+\setcounter{endnote}{0}
 
 \end{document}
 
@@ -25,7 +49,16 @@
 
 % latex在注解处生成一个上角标序号，并且在版心底部生成对应序号和对应注解内容。第一个注解之前会生成0.4*/columnwidth宽度和0.4pt高度的水平脚注线。不可嵌套
 
-% \footnote[number]{comment}用于脚注，number为脚注编号，未提供时，使用系统自带脚注计数器；comment为对应脚注内容。
+% 脚注在article中以全文为排序单位，report/book中以章为排序单位
+
+% 脚注与脚注之间的距离为\footnotesep，当\footnotesep小于默认值时，距离为\baselineskip；脚注与正文之间的距离由\skip\footins控制，默认为10pt plus 4pt minus 2pt；脚注线由\footnoterule定义。
+% book文类的\footnoterule默认定义如下：
+% \renewcommand{\footnoterule}{\vspace*{-3pt} \hrule width 0.4\columnwidth height 0.4pt \vspace*{2.6pt}}
+% \vspace*{-3pt} - 脚注线与脚注的距离
+% \vspace*{2.6} - 脚注线与正文的距离
+% \hrule为TeX水平画线命令。width为画线宽度，height为画线高度
+
+% \footnote[number]{comment}用于脚注，number为脚注编号，未提供时，使用系统自带脚注计数器，提供number时，不会引起脚注计数器增长；comment为对应脚注内容。
 % 注意事项：
 % 1.不能用于浮动环境、左右盒子
 % 2.可使用数学式、表格和插图
@@ -53,4 +86,11 @@
 % perpage - 将脚注以页为排序单位，需经过两次编译
 % ragged - 脚注文本左对齐
 % side - 将脚注修改为边注
-% symbol - 将默认的阿拉伯脚注序号，修改为各种符号，符号共九种，超过提示出错
+% symbol - 将默认的阿拉伯脚注序号，修改为各种符号，符号共9种，超过提示出错
+% symbol* - 类似于symbol，但有16种符号及组合，超过16使用阿拉伯数字
+
+% \begin{threeparttable}...\end{threeparttable}用于指定表格标注环境，可看作不可浮动table环境；\begin{tablenotes}...\end{tablenotes}用于脚注环境；\tnote{}用于脚注位置和编号标注，其脚注文字格式可使用\TPTtagStyle修改；\item[]用于对应编号的脚注详细内容。包含在threeparttable宏包中
+
+% \endnote用于标注尾注位置，\notesname用于配置修改尾注标题名，\theendnotes用于生成尾注，\setcounter{endnote}{0}用于重置尾注计数器，以便下一章尾注计数从新开始。包含在宏包endnotes中
+
+% \marginpar[left_marnote]{right_marnote}用于配置边注，left_marnote用于双页或双栏的左侧边注；right_marnote用于双页或双栏的右侧边注，或单页的标注

@@ -1,38 +1,77 @@
-\documentclass{article}
-\begin{document} 
-	This is my first document.
-	Welcome to \LaTeX!!
-	\newcommand{\myname}{Steven Liu}
-	\myname
+\documentclass[titlepage]{report}
+\usepackage[toc]{multitoc}
+\title{first paper}
+\author{steven liu\thanks{compter/article}\\
+electroc\\
+lt19891121@live.cn \and
+lucy\\
+MBA\\
+85xxxxx@qq.com
+}
+\date{\today}
+\begin{document}
+\maketitle
+\renewcommand{\abstractname}{summary}
+\begin{abstract}
+this is abstract
+\end{abstract}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\pagenumbering{Roman}
+\part{part}
+\pagenumbering{arabic}
+\section{section}
+\subsection{subsection}
+\subsubsection{subsubsection}
+\paragraph{paragraph}
+\subparagraph{subparagraph}
+This is my first document.
+Welcome to \LaTeX !!
+Steven Liu
 \end{document}
 
-% 符号'%'用于注释。可使用\begin{comment}...\end{comment}进行块注释，该功能包含在comment宏包中
+% \documentclass[arg1,arg2,...]{doc_type}用于标示文档类型。
+% 可选参数列表：
+% twocolumn - 文档为双栏
+% titlepage - 配置标题自成一页，摘要自成一页。默认article标题/摘要/正文融合为一页；report标题/摘要各自一页；book标题自成一页，无摘要环境
+% notitlepage - 配置标题/摘要/正文融合为一页
+% doc_type代表文档类型，类型列表：article/report/book/beamer
 
-% \usepackage{comment}为使用宏包comment
+% 在双栏文档中，有公式：\columnwidth=(\textwidth-\columnsep)/2。其中，\columnwidth为单栏宽度；\textwidth为版心宽度；\columnsep为栏距；\columnseprule为双栏之间的垂直分割线，默认为0pt
 
-% 命令格式如下：
-% \command - 无参
-% \command{args} - {}内为多字符必选参数
-% \command[args] - []内为可选参数
+% \begin{document}...\end{document}用于指定文档正文环境
 
-% \documentclass{article}代表文档类型，文档类型列表：article/report/book/beamer
-% article - 10页以内，不设置目录
-% report/book - 10页~几百页，设置目录
+% \title{}配置标题；\author{}配置作者；\and用于配置多个作者；\thanks{}用于配置标题或作者的脚注；\date{}用于配置论文生成日期；\today用于日期中，生成当前日期；\maketitle用于显示以上配置信息
 
-% \documentclass到\begin{document}之间的为导言，导言指令对全文产生影响
+% \renewcommand{\abstractname}{Summary}为修改摘要名称
 
-% \begin{document} ... \end{document}标识文档正文范围
+% \begin{abstract}...\end{abstract}为摘要环境
 
-% 命令的形式：
-% 1.声明 - 作用于指令后所有的内容。如粗体命令\bfseries 
-% 2.参数 - 只作用于指令所带的参数。如倾斜体命令\textsl{Asia}
-% 3.组合 - 把声明形式和需作用的内容至于花括号中，从而将作用范围限定在花括号内。如粗体命令{\bfseries this is bracket}
-% 4.环境 - 由环境限定的作用范围。如公式限定\begin{equation}...\end{equation}
+% report/book标题层次：part/chapter/section/subsection/subsubsection/paragraph/subparagraph
 
-% \newcommand{<new_command>}[arg_number][first_arg_default]{<command_content>}为新建指令，解释如下：
-% <new_command> - 新指令名称
-% arg_number - 新指令可包含参数个数，默认为0
-% first_arg_defualt - 当arg_number不为0时，该参数指定第一个可选参数的默认值，其他剩余参数必须为必选参数
-% <command_content> - 新指令指代内容
+% article标题层次：part/section/subsection/subsubsection/paragraph/subparagraph
 
-% \renewcommand{<new_command>}[arg_number][first_arg_default]{<command_content>}为修改已有指令，解释见\newcommand
+% \setcounter用于配置计数器，\setlength用于配置长度
+% \setcounter{tocdepth}{3}为配置目录深度，article默认为3，report默认为2，book默认为2
+
+% \tableofcontents用于生成目录
+
+% \listoffigures用于生成图片目录
+
+% \listoftables用于生成表格目录
+
+% \usepackage[toc]{multitoc}用于为双栏目录宏包。可选参数列表：
+% 1.toc - 双栏目录
+% 2.lof - 双栏图像目录
+% 3.lot - 双栏表格目录
+% 栏间距离为\columnsep，默认为10pt
+
+% \pagenumbering{number_style}为配置页码计数方式，可为目录和正文分别配置一次，以区分页码。计数方式列表：
+% 1.alph - 小写字母
+% 2.Alph - 大写字母
+% 3.arabic - 阿拉伯数字
+% 4.roman - 小写罗马数字
+% 5.Roman - 大写罗马数字
+
+
+

@@ -1,7 +1,15 @@
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
-\usepackage{mathtools}
-\usepackage{tensor}
+%\usepackage{mathtools}
+%\usepackage{tensor}
 \usepackage{amsmath}
+%\usepackage{amsmath}
+%\usepackage{framed}
+%\usepackage{color}
+%\usepackage{pstricks}
+%\usepackage[framed]{ntheorem}
+%\usepackage{fancybox}
+%\usepackage{xcolor}
+%\usepackage{amscd}
 \begin{document}
 %	这是一个行内公式：$a+b=b+a$\par
 %	这也是一个行内公式：\( a=b+1\)\par
@@ -11,18 +19,20 @@
 %	\end{math}\par
 	
 %	这是一个行间公式：$$f(x)=mx+b$$
-%	这还是一个行间公式：\[E=mc^2\]
+%	这还是一个行间公式：
+%	\[a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s+t=t+s+r+q+p+o+n+m+l+k+j+i+h+g+f+e+d+c+b+a\]
 %	这仍旧是一个行间公式：
 %	\begin{displaymath}
-%	Ft=mv_1-mv_2
+%	a+b+c=c+b+a
 %	\end{displaymath}
-%	\indent 最后一个行间公式：
+
+%	equation环境
 %	\begin{equation}
-%	a+b=b+a
+%	a+b+c+d=d+c+b+a\tag*{2}
 %	\end{equation}
 
 %	\begin{equation*}
-% 	y=sin(x)
+% 	y=\sin(x)
 %	\end{equation*}	
 	
 %	$\int\limits_0^n x$\\
@@ -40,23 +50,41 @@
 %	$\overbrace{a+b+c}$\\
 %	$\underbrace{a+b+c}$\\
 %	$a+\rlap{$\overbrace{\phantom{b+c+d}}^{m}$}b+\underbrace{c+d+e}_{n}+f$\\
-	
-%\begin{gather}
-%	a+b=b+a\notag \\
-%	b+c=c+a
-%\end{gather}
+    \begin{flalign*}
+        &\lim_{x\to0}\frac{\sin(x)}{x}=1&\\
+        &\lim_{x\to0}\frac{\tan(x)}{x}=1&\\
+        &\lim_{x\to0}\frac{1-\cos^2(x)}{x^2}=1&\\
+        &\lim_{x\to0}\frac{1-\cos(x)}{x}=0&
+    \end{flalign*}
 
-\begin{align}
-&\mathrel{\phantom{=}}(a+b)(a^2-ab+b^2) \notag\\
-&=a^3-a^2b+ab^2+a^2b-ab^2+b^3\notag\\
-&=a^3+b^3
-\end{align}
+%\begin{align}
+%&\mathrel{\phantom{=}}(a+b)(a^2-ab+b^2) \notag\\
+%&=a^3-a^2b+ab^2+a^2b-ab^2+b^3\notag\\
+%&=a^3+b^3
+%\end{align}
+
+%\begin{align}
+%	a_{11} &=b_{11} & a_{12} &=b_{12}\notag\\
+%	a_{21} &=b_{21} & a_{22} &=b_{22}
+%\end{align}
+
+%\begin{align*}
+% \lim_{x\to 5}\frac{\sqrt{x^2-9}-4}{x-5}&=\lim_{x\to 5}\frac{\sqrt{x^2-9}-4}{x-5}\times\frac{\sqrt{x^2-9}+4}{\sqrt{x^2-9}+4} \\
+% & =\lim_{x\to 5}\frac{x^2-25}{(x-5)(\sqrt(x^2-9)+4)}\\
+% & =\lim_{x\to 5}\frac{(x+5)(x-5)}{(x-5)(\sqrt{x^2-9}+4)}\\
+% & =\lim_{x\to 5}\frac{x+5}{\sqrt{x^2-9}+4}\\
+% & =\frac{5}{4}
+%\end{align*}
 
 %\begin{equation}
 %f(x) = \begin{cases}
 %1, & \text{if } x > 1;\\
 %0, & \text{if } x < 1.
 %\end{cases}
+%\end{equation}
+
+%\begin{equation}
+%	a+b+c+d=d+c+b+a
 %\end{equation}
 
 %\begin{equation}
@@ -67,17 +95,104 @@
 %	\implies S = T
 %\end{equation}
 
+% 边框环境
+%\begin{equation}
+%\mathsurround=10pt
+%\fbox{$\int_a^bf(x)\,dx=-\int_b^af(x)\,dx$}
+%\end{equation}
+%
+%\begin{equation}
+%\boxed{\int_a^bf(x)\,dx=-\int_b^af(x)\,dx}
+%\end{equation}
+%
+%\begin{equation}
+%\mathsurround=10pt
+%\shadowbox{$\int_a^bf(x)\,dx=-\int_b^af(x)\,dx$}
+%\end{equation}
+%
+%\begin{equation}
+%\mathsurround=10pt
+%\doublebox{$\int_a^bf(x)\,dx=-\int_b^af(x)\,dx$}
+%\end{equation}
+%
+%\begin{equation}
+%\mathsurround=10pt
+%\colorbox{blue}{$\int_a^bf(x)\,dx=-\int_b^af(x)\,dx$}
+%\end{equation}
+%
+%\begin{equation}
+%\mathsurround=10pt
+%\fcolorbox{blue}{pink}{$\int_a^bf(x)\,dx=-\int_b^af(x)\,dx$}
+%\end{equation}
+
+%\begin{equation*}
+%\left.
+%\begin{array}[c]{l r@{}l@{}l}
+%\text{常数} & y & = & c\\
+%\text{直线} & y & = & ax+b\\
+%\text{抛物线} & y & = & ax^2+bx+c\\
+%\end{array}
+%\right\} \text{多项式}
+%\end{equation*}
+
+%\begin{equation}
+%	\lim_{\substack{x\to\infty\\y\to\infty}}f(x)=8
+%\end{equation}
+
+%\theoremseparator{.}
+%\theoremindent40pt
+%\theoremsymbol{证毕}
+%\theoremstyle{nonumberplain}
+%\newframedtheorem{theorem1}{theorem}
+%\begin{theorem1}
+%if three line satisfy $3^2+4^2=5^2$，mean the Pythagorean theorem
+%\end{theorem1}
+
+%\begin{equation}
+%\begin{CD}
+%	A @>>> B\\
+%	@| @VjVkV\\
+%	D @<j<k< C\\
+%\end{CD}
+%\end{equation}
+
+%\setlength{\multlinegap}{0pt}
+%\begin{multline}
+%	a^2+b^2=c^2\\
+%	\shoveleft{y=f(x)}\\
+%	g=2x^2+9
+%\end{multline}
+
 \end{document}
 
-% $...$用于限定行内公式区域。其余还有\(...\)与\begin{math}...\end{math}。行内公式的上下角标普遍位于右上下角
+% $...$用于行内公式环境。其余还有\(...\)与\begin{math}...\end{math}。行内公式的上下角标普遍位于右上下角
 
-% $$...$$用于限定行间公式区域。其余还有\[...\]与\begin{displaymath}...\end{displaymath}。此外还有\begin{equation}...\end{equation}，该环境自动配置一个公式号码，并且换行\\无效。行间公式的上下角标普标位于正向下方
+% $$...$$用于行间公式环境。其余还有\[...\]与\begin{displaymath}...\end{displaymath}。以上都是单行行间公式
 
-% \begin{equation*}...\end{equation*}与\[...\]为相同环境，与equation不同，它不配置公式号码
+% amsmath宏包可选参数列表：
+% centertags - 用于equation中包含split环境，此时编号垂直居中。默认选项
+% tbtags - 用于equation中包含split环境，当编号位于右边时，编号位于底部；当编号位于左边时，编号位于顶部
+% sumlimits - 在多行公式模式中，汇总符号的上下角标位于头部和顶部。如\sum、\prod。默认选项
+% nosumlimits - 在多行公式模式中，汇总符号的上下角标位于右上下角
+% intlimits - 类似于sumlimits，但作用于积分符号。如\int。
+% nointlimits - 与intlimites相反。默认选项
+% namelimits - 类似于sumlimits，但作用于det、inf、lim、max、min符号。默认选项
+% nonamelimits - 与namelimits相反
+% leqno - 编号位于公式左边
+% reqno - 编号位于公式右边
+% fleqn - 编号位于公式右边，但公式缩进
 
-% \indent用于行首缩进，\noindent用于不缩进
+% \begin{equation}...\end{equation}为单行行间公式环境，该环境自动配置一个公式号码，并且换行\\无效。行间公式的上下角标普遍位于正上下方。包含在amsmath宏包中
+
+% \left<>和\right<>用于公式起始和结束时自动调整定界符大小，如：\left.为起始限定符为空，\left\{为起始限定符为{
+
+% \begin{equation*}...\end{equation*}与equation环境类似，但与equation不同，它不配置公式号码。包含在amsmath宏包中
+
+% \indent用于当前行行首缩进，\noindent用于当前行行首不缩进
 
 % \limits用于限定后续上下角标位于正上下方，\nolimits限制上下角标位于右方上下角。该指令包含在amsmath宏包中
+
+% \notag取消行参与编号，在\\之前插入；\tag{label}使用指定公式编号，格式为(number)，在\\之前插入；\tag*{label}使用指定公式编号，与\tag不同，格式不包含()，在\\之前插入。包含在amsmath宏包中
 
 % \prescript{super_script}{sub_script}{variable}用于显示左上下角标。该指令包含在mathtools宏包中
 
@@ -95,12 +210,101 @@
 
 % \phantom{}将环境内的内容进行占位，但不显示
 
-% \begin{gather}...\end{gather}用于多行行间公式，可以使用\\来分行，并且使用\notag来使当前行不使用公式序号。包含在amsmath宏包中
+% \begin{multline}...\end{multline}用于多行行间公式，可使用\\分行，只有末行参数编号，默认第一行左对齐，中间行居中对齐，最后一行右对齐。\shoveleft{}强制某一中间行左对齐，\shoveright{}强制某一中间行右对齐。\setlength{\multlinegap}{0pt}用于配置首行与左边界的距离，默认为10pt。包含在amsmath宏包
 
-% \begin{align}...\end{align}用于多行行间公式，可以使用\\分行，每行分别参与编号，并且在关系运算符之前使用&来表明对齐位置。包含在amsmath宏中
+% \begin{split}...\end{split}用于多行行间公式，可使用\\分行。与multline区别：
+% 1.可使用&分列，但最多只能分为两列，第一列右对齐，第二列左对齐
+% 2.必须置于除multline的其他数学环境中
+% 3.不生成公式编号，由外部数学环境生成，并垂直居中
+
+% \begin{gather}...\end{gather}用于多行行间公式，可以使用\\来分行(最后一行不能使用\\)，每行都参与公式编号，每行在垂直方向上居中对齐，并且使用\notag来使当前行不使用公式序号。该环境内的公式应该使用split环境限定。\begin{gather*}...\end{gather*}是无编号版本。包含在amsmath宏包中
+
+% \begin{align}...\end{align}用于多行行间公式，可以使用\\分行，每行分别参与编号，并且在关系运算符之前使用&来表明对齐位置，并且以&分列，奇数列右对齐，偶数列左对齐。\begin{align*}..,\end{align*}是无编号版本。包含在amsmath宏中
+
+% \begin{alignat}{equa_col}...\end{alignat}类似于align，但同一行的公式之间无空格，需显式指定，equa_col指定一行的公式数量，该数字等于(&数量+1)/2。\begin{alignat*}为无编号版本。包含在amsmath中
+
+% \begin{flalign}...\end{flalign}类似于align，但同一行的公式之间空格尽量大。\begin{flalign*}为无编号版本。包含在amsmath中
+% 可使用flalign来创造公式在文档中靠近左边缘，公式之间的空格尽量大...
+
+% \begin{gathered}...\end{gathered}类似于gather，但与gather不同，它可以使用行的剩余空间，需放置于数学环境内。包含在amsmath宏包中
+
 % \phantom{}参与占位，但不显示内容；\mathrel可保证占位空间
-% \notag取消行参与编号
 
-% \begin{cases}...\end{cases}用于在数学公式环境中配置条件公式，可使用&来区分公式内容和条件。包含在amsmath宏包中。另外，mathtools宏包的dcases环境可以保证公式为行间公式大小
+% \begin{cases}...\end{cases}用于在数学公式环境中构造条件公式，可使用&来区分公式内容和条件。包含在amsmath宏包中。另外，mathtools宏包的dcases环境可以保证公式为行间公式大小
 
-% \begin{gathered}...\end{gathered}可以用于将环境内的多行公式组合成一个整体。包含在amsmath宏包中
+% \text{}用于在公式中插入文本
+
+% \overbracket[line_width][bracket_height]{math_formula}用于上方括号。包含在mathtools
+
+% \boldmath可将希腊字母更改为粗体模式，该指令用在数学公式范围之外
+
+% \fbox{inline_formula}用于给行内公式增加边框，\mathsurround用于增加公式与边框左右位置的间距，\,用于增加公式内的间隔空间
+
+% \boxed{text}用于给行内公式增加边框。包含在amsmath中
+
+% \shadowbox{inline_formula}和\doublebox{inline_formula}分别用于阴影边框和双层边框，类似于\fbox使用方法。包含在fancybox宏包中
+
+% \colorbox{bg_color}{inline_formula}和\fcolorbox{box_color}{bg_color}{inline_formula}用于配置背景色边框，类似于\fbox。包含在xcolor宏包中
+
+% \begin{array}[position]{col_format1 col_format2 ...}...\end{array}用于数学环境的表格，参数形式与tabular完全相同
+
+% 在文类book和report中，行间公式是以章为排序单位的，跨越章节时计数器重置；在文类article中，行间公式以全文为排序单位。可使用\numberwithin{equation}{section}将节作为排序单位
+
+% \substack可在上下角标内换行，包含在amsmath宏包中
+
+% \newtheorem{env_name}[reuse_counter]{title}[sort_base]用于定义定理等环境，env_name为定理计数器名称；reuse_counter为当前定时器与之共用的已定义计数器；title为定理名称，全称为定理名称+计数器；sort_base为排序单位，默认为全文，可指定chapter或section等指定以章或者节为排序单位
+
+% \begin{env_name}[sub_title]...\end{env_name}可指定特定计数器定理环境，sub_title用于副标题
+
+
+% 更深入的定理环境参考宏包ntheorem，宏包可选参数列表：
+% framed - 配合framed宏包使用
+
+%该宏包指令集合：
+% \newtheorem{env_name}[reuse_counter]{title}[sort_base]，类似于系统提供的newtheorem环境
+
+% \renewtheorem{env_name}[reuse_counter]{title}[sort_base]，重定义定理环境，但计数器不重新初始化
+
+% \theoremstyle{style}表明定理风格，可用列表如下：
+% plain - 原始LaTeX风格。默认选项
+% break - 定理头部与定理正文分别占一行
+% change - 定理号码在定理头部起始部位
+% changebreak - 类似于change，并且定理头部后跟line break
+% margin - 定理号码在定理起始部位，并且位于左边缘
+% marginbreak - 类似于margin，定理头部后跟line break
+% nonumberplain - 类似于plain，但没有号码。类似于使用\newtheorem*{env_name}{theorem_head}
+% nonumberbreak - 类似于break，但没有号码
+% empty - 没有定理头部
+
+% \theoremheaderfont{font}为定理头部字体
+
+% \theorembodyfont{font}为定理内容字体
+
+% \theoremnumbering{style}为设置定理数字格式，可选列表如下：
+% arabic - 阿拉伯数字
+% alph - 小写字母
+% Alph - 大写字母
+% roman - 小写罗马数字
+% Roman - 大写罗马数字
+% greek - 小写希腊字母
+% Greek - 大写希腊字母
+
+% \theoremseparator{separator}定理头部与定理正文的分隔符
+
+% \theorempreskip{skip}定理之前的垂直距离
+
+% \theorempostskip{skip}定理之后的垂直距离
+
+% \theoremindent<dimen>定理缩进距离
+
+% \theoremsymbol{str}定理结尾语，配合\usepackage[thmmarks]{ntheorem}使用
+
+% \newframedtheorem{env_name}[reuse_counter]{title}[sort_base]，提供带边框的定理环境，需要framed宏包和ntheorem宏包的framed可选参数
+
+% \begin{CD}...\end{CD}为交换图环境，包含在amscd宏包。图标列表：
+% @>>> - 右箭头，@>j>>代表注解放在箭头上方，@>>j>代表注解放在箭头下方
+% @<<< - 左箭头，注解方向同右箭头
+% @AAA - 上箭头，@AjAA代表注解放在箭头左边，@AAjA代表注解放在箭头右边
+% @VVV - 下箭头，注解方向同上箭头
+% @= - 水平双实线
+% @| - 垂直双实线

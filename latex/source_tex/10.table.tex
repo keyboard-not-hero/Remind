@@ -1,7 +1,9 @@
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\documentclass{article}
 \usepackage{multirow}
 \usepackage{diagbox}
 \usepackage{array}
+\usepackage{rotating}
+\usepackage{longtable}
 \begin{document}
 %\begin{tabular}[t]{l|c|r}
 %	1 & 2 & 3\\
@@ -30,40 +32,208 @@
 %	露西 & & 79\\
 %	\hline
 %\end{tabular}\par
-\begin{tabular}{|l>{\$}l|r|}
-	\hline
-	姓名 & 年龄 & 成绩\\
-	\hline
-	汤普森 & 45 & 100\\
-	\hline
-	约翰布兰妮 & 31 &97\\
-	\hline
-	威尔 & 12 & 67\\
-	\hline
-\end{tabular}
+
+%\arrayrulewidth=2pt
+%\tabcolsep=10pt
+%\begin{sidewaystable}
+%\begin{tabular}[b]{|l>{\$}l|r|}
+%	\firsthline
+%	姓名 & 年龄 & 成绩\\
+%	\hline
+%	汤普森 & 45\vline23 & 100\\
+%	\hline
+%	约翰布兰妮 & 31 &97\\
+%	\hline
+%	威尔 & 12 & 67\\
+%	\lasthline
+%\end{tabular}
+%\end{sidewaystable}
+%this is document
+
+\begin{longtable}{l r r}
+\endfirsthead
+\multicolumn{2}{l}{continue...}\\
+\hline
+\endhead
+\hline
+\multicolumn{2}{l}{next tabular...}\\
+\endfoot
+\endlastfoot
+name & age & score\\\hline
+thompson & male & 89 \\
+peter & male & 97\\
+lucy & female & 78\\
+lily & female & 87\\
+david & male & 69\\
+steven & male & 100\\
+lilei & male & 74\\
+hanmei & female & 72\\
+Barry & male & 92\\
+Arien & male & 83\\
+Andrew &male & 39\\
+Allen & male & 69\\
+Alger & male & 82\\
+Albert & female & 65\\
+Abel & male & 29\\
+John & male & 85\\
+Aaron & male & 79\\
+Alan & male & 82\\
+Baron & male & 84\\
+Barton & male & 79\\
+Ben & male & 73\\
+Berton & male & 71\\
+Bob & male & 91\\
+Brian & male & 58\\
+Carl & male & 99\\
+Colin & male & 78\\
+Daniel & male & 87\\
+Dean & male & 90\\
+Dennis & male & 80\\
+Devin & male & 79\\
+peter & male & 97\\
+lucy & female & 78\\
+lily & female & 87\\
+david & male & 69\\
+steven & male & 100\\
+lilei & male & 74\\
+hanmei & female & 72\\
+Barry & male & 92\\
+Arien & male & 83\\
+Andrew &male & 39\\
+Allen & male & 69\\
+Alger & male & 82\\
+Albert & female & 65\\
+Abel & male & 29\\
+John & male & 85\\
+Aaron & male & 79\\
+Alan & male & 82\\
+Baron & male & 84\\
+Barton & male & 79\\
+Ben & male & 73\\
+Berton & male & 71\\
+Bob & male & 91\\
+Brian & male & 58\\
+Carl & male & 99\\
+Colin & male & 78\\
+Daniel & male & 87\\
+Dean & male & 90\\
+Dennis & male & 80\\
+Devin & male & 79\\
+thompson & male & 89 \\
+peter & male & 97\\
+lucy & female & 78\\
+lily & female & 87\\
+david & male & 69\\
+steven & male & 100\\
+lilei & male & 74\\
+hanmei & female & 72\\
+Barry & male & 92\\
+Arien & male & 83\\
+Andrew &male & 39\\
+Allen & male & 69\\
+Alger & male & 82\\
+Albert & female & 65\\
+Abel & male & 29\\
+John & male & 85\\
+Aaron & male & 79\\
+Alan & male & 82\\
+Baron & male & 84\\
+Barton & male & 79\\
+Ben & male & 73\\
+Berton & male & 71\\
+Bob & male & 91\\
+Brian & male & 58\\
+Carl & male & 99\\
+Colin & male & 78\\
+Daniel & male & 87\\
+Dean & male & 90\\
+Dennis & male & 80\\
+Devin & male & 79\\
+peter & male & 97\\
+lucy & female & 78\\
+lily & female & 87\\
+david & male & 69\\
+steven & male & 100\\
+lilei & male & 74\\
+hanmei & female & 72\\
+Barry & male & 92\\
+Arien & male & 83\\
+Andrew &male & 39\\
+Allen & male & 69\\
+Alger & male & 82\\
+Albert & female & 65\\
+Abel & male & 29\\
+John & male & 85\\
+Aaron & male & 79\\
+Alan & male & 82\\
+Baron & male & 84\\
+Barton & male & 79\\
+Ben & male & 73\\
+Berton & male & 71\\
+Bob & male & 91\\
+Brian & male & 58\\
+Carl & male & 99\\
+Colin & male & 78\\
+Daniel & male & 87\\
+Dean & male & 90\\
+Dennis & male & 80\\
+Devin & male & 79\\
+\hline
+\caption{score table}
+\end{longtable}
 \end{document}
 
-% \begin{tabular}[t]{<align><align>...}...\end{tabular}代表表格环境，可选参数[]为当前表格的顶部/中部/底部与当前行文字对齐，使用t/c/b表示，默认为c；必选参数{}代表列数与分隔方式
+% \begin{tabular}[position]{col_format1 col_format2 ...}...\end{tabular}代表表格环境，可选参数为表格内内容与外部内容的对齐方式；必选参数{}代表列数与分隔方式
 
-% 必选参数详解 - <align>为列格式，详细格式参数如下：
+% 对齐方式列表：
+% t - 表格顶线与外部文本对齐。可使用array宏包的\firsthline和\lasthline改善，分别替换第一个和最后一个\hline
+% c - 表格中部与外部文本对齐
+% b - 表格底线与外部文本对齐。可使用array宏包的\firsthline和\lasthline改善，分别替换第一个和最后一个\hline
+
+% 必选参数详解，col_format为列格式，详细格式参数如下：
 % l - 左对齐
 % c - 中央对齐
 % r - 右对齐
 % p{<width>} - 指定列的宽度，行内垂直方向上对齐
 % | - 以竖线作为列分隔符，不占用列
+% || - 以双竖线作为列分隔符，使用\doublerulesep作为双线距离，默认为2pt
 % @{<content>} - 以指定内容为列分隔符，不占用列
 % *{<counter>}{<col_des>} - col_des代表以上各种模式，并重复指定counter次
-% **-** 使用array宏包后
-% m{<width>} - 类似于p{}，但行内垂直方向中对齐
+% **-** 使用array宏包后的额外选项：
+% m{<width>} - 类似于p{}，但行内垂直方向居中对齐
 % b{<width>} - 类似于p{}，但行内垂直方向下对齐
-% >{<content>} - 将content添加到后续列的开头，不占用列
-% <{<content>} - 将content添加到前方列的末尾，不占用列
+% >{<content>} - 将content声明到后续列所有数据之前，不占用列
+% <{<content>} - 将content声明到前方列所有数据之后，不占用列
 % !{<content>} - 类似于@{}，但左右会有额外距离
 
-% \multicolumn{<col_num>}{<align>}{<content>}用于表明合并多列。col_num合并列数；align代表列格式，不能使用*{<conter>}{<col_des>}格式；content代表列内容
+% \multicolumn{<col_num>}{<align>}{<content>}用于表明合并多列。col_num合并列数；align代表合并列的对齐方式，不能使用*{<conter>}{<col_des>}格式；content代表列内容
 
-% \multirow{<row_num>}{<width>}{<content>}用于合并多行。row_num合并行数；width为单元宽度，超过自动换行，也可以将{<width>}换为*，取最长那一行的宽度；content为单元的内容。包含在multirow宏包中
+% \multirow{<row_num>}{<col_width>}[<vertical_offset>]{<content>}用于合并多行。row_num合并行数；col_width为列宽度，超过自动换行，也可以将{<width>}换为*，取最长那一行的宽度为自然宽度；vertical_offset为数据的垂直位位移量，正值为向上移动；content为单元的内容。包含在multirow宏包中
 
-% \cline{<col_range>}为占据指定列范围的横线
+% \hline为占据所有列的横线，紧跟在\\换行之后
+
+% \cline{<col_range>}为占据指定列范围的横线，紧跟在\\换行之后
+
+% \vline用于在所在列侧边画一条垂直线
 
 % \diagbox{<left>}{<center>}{<right>}用于创建斜线分割，其中{<center>}可以省略。包含在diagbox宏包中
+
+% 表格额外参数列表：
+% \arrayrulewidth - 表格线粗细，默认为0.4pt
+% \arraystretch - 行与行之间的距离系数，默认是1
+% \extrarowheight - 每行的附加额外高度
+% \tabcolsep - 列与列之间空白的一半，默认为6pt
+
+% \begin{sidewaystable}...\end{sidewaystable}用于将表格逆时针旋转90度，该指令开启新的一页，并且可在其中放置\caption指令
+
+% \begin{longtable}[position]{col_format1 col_format2 ...}...\end{longtable}用于可跨页的长表格，可在其中包含\caption指令。包含在longtable宏包中
+% position可选列表：
+% 1.c - 表格垂直方向居中。默认选项
+% 2.l -  表格垂直方向向左
+% 3.r - 表格垂直方向向右
+
+% longtable环境内的指令列表：
+% 1.endfirsthead - 第一页的表格头部，指定该指令之前的部分。如果没有指定，默认被endhead覆盖
+% 2.endhead - 每一页的表格头部，指定该指令之前的部分
+% 3.endfoot - 每一页的表格尾部，指定该指令之前的部分
+% 4.endlastfoot - 最后一页的表格尾部，指定该指令之前的部分。如果没有指定，默认被endfoot覆盖

@@ -44,8 +44,8 @@ systemctl start v2ray
 systemctl status v2ray
 
 6.防火墙开放/查看(ubuntu不需要该步骤)：
-firewall-cmd --add-port=8388/tcp
-firewall-cmd --add-port=8388/udp
+firewall-cmd --add-port=1910/tcp
+firewall-cmd --add-port=1910/udp
 firewall-cmd --list-ports
 
 github地址：https://github.com/v2ray/v2ray-core

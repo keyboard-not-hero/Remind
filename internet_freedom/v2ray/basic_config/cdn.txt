@@ -11,9 +11,11 @@ cloudflare服务类型：
 基础版本配置：
 1.进入cloudflare官网
 
-2.将DNS解析服务迁移到cloudflare
+2.配置顶级域名
 
-3.选择full连接模式
+3.将DNS解析服务从域名服务商迁移到cloudflare，并配置www DNS记录，并且配置为DNS only
+
+4.在SSL/TLS中选择full连接模式
 
 
 进阶版本配置：

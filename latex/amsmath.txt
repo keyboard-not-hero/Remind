@@ -1,0 +1,8 @@
+amsmath的辅助包
+1.amsmath - 主要包,提供多种用于显示公式和其他数学结构的特征
+2.amstext - 提供\text指令，用于在公式环境内显示文字
+3.amsopn - 提供\DeclareMathOperator，用于定义类似于\sin和\lim的新指令
+4.amsbsy - 用于后向兼容，目前建议使用bm包替代
+5.amscd - 提供\begin{CD}...\end{CD}环境，用于交换图
+6.amsxtra - 
+1/2/3/4被包含在amsmath包体中，5/6需额外调用

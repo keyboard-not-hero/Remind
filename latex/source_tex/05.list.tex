@@ -1,22 +1,26 @@
 \documentclass{article}
 \begin{document}
   \begin{enumerate}
-    \item 编号列表1
-    \item 编号列表2
-    \item 编号列表3
+	\itemsep=0pt
+	\parskip=0pt
+    \item number one
+    \item number two
+    \item number three
   \end{enumerate}
   \begin{itemize}
-    \item 不编号列表1
-    \item 不编号列表2
-    \item 不编号列表3
+	\itemsep=0pt
+	\parskip=0pt
+	\item item one
+	\item item two
+	\item item three
   \end{itemize}
   \begin{description}
-    \item[high] 心情亢奋
-    \item[low] 心情低落
+    \item[high] high light
+    \item[low] low light
   \end{description}
 \end{document}
 
-% \begin{enumerate}...\end{enumerate}用于指定编号列表环境，列表entry使用\item[arg]指定，不带可选参数时，使用默认计时器
+% \begin{enumerate}...\end{enumerate}用于指定编号列表环境，列表entry使用\item[arg]指定，可选参数可用于修改默认item标识符
 
 % \begin{itemize}...\end{itemize}用于指定不编号列表，其他特性与编号列表类似
 
@@ -25,3 +29,5 @@
 % 所有列表皆可进行嵌套(最多四层)
 
 %编号列表嵌套计数器为enumi/enumii/enumiii/enumiv，可通过\the<counter_name>进行引用(如1)，通过\label<counter_name>进行标签引用(如1.)。编号列表嵌套格式：默认第一层为数字，第二层为小写字母，第三层为罗马数字，第四层为大写字母
+
+% 所有列表的item与item之间有两个叠加额外空白，分别使用\itemsep和\parskip指定

@@ -67,16 +67,16 @@ The rabbit-hole went straight on like a tunnel for some way, and then dipped sud
 % begin{table}[]...\end{table}用于表格浮动体
 
 % table和figure环境共同可选参数列表：
-% h - 浮动体根据上下文顺序排列
-% t - 浮动体排在当前页或下一页页首
-% b - 浮动体排在当前页页尾
-% p - 浮动体另外一页进行排列
-% H - 不适用浮动体，不能与其他选项合用。包含在float宏包中
+% h - here,浮动体根据上下文顺序排列
+% t - top,浮动体排在当前页或下一页页首
+% b - bottom,浮动体排在当前页页尾
+% p - page,浮动体另外一页进行排列
+% H - 强制使用here，不能与其他选项合用。包含在float宏包中
 % 参数的优先级与顺序无关，通常按htbp顺序排列；当只有h参数时，拓展为ht参数集合；默认参数集合为tbp
 
 % LaTeX最多同时保存18个未处理的浮动体
 
-% \caption{string}为浮动体中的标题。并且有两种类型：
+% \caption[cata_title]{title}为浮动体中的标题，cata_title为目录中显示的标题；title为实际标题内容。并且有两种类型：
 % 1.\caption{<title>}
 % 2.\caption{<short_title>}{<long_title>}，long_title可进行分段
 

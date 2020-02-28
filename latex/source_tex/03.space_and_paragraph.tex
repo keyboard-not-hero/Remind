@@ -1,6 +1,10 @@
 \documentclass{article}
 \usepackage{xspace}
 \usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{lettrine}
+\usepackage{contour}
+\usepackage{parallel}
 %\linespread{2}
 \begin{document}
   \parindent=2em
@@ -24,6 +28,26 @@
   i believe i can f{\it l}y. i believe i can in the sky. look in my eyes. you will honorificabilitudinitatibus\par
   \xspaceskip=10mm
   i believe i can f{\it l}\/y. i believe  \vadjust{\vspace{10pt}} i can in the sky. look in my eyes. you will honorificabilit\-udinitatibus\par
+  \leftskip=2em
+  \rightskip=2em  
+  If we can only encounter each other rather than stay with each other,then I wish we had never encountered.\par
+  In the end, it’s not the years in your life that count. It’s the life in your years.\par
+  No one indebted for others,while many people don't know how to cherish others.\par
+  \parindent=0pt
+  \includegraphics[scale=0.1]{snuggle.jpg}\par
+  \vspace{-6em}
+  \hangafter=-4 \hangindent=7em
+  Life is full of confusing and disordering Particular time,a particular location,Do the arranged thing of ten million time in the brain,Step by step ,the life is hard to avoid delicacy and stiffness No enthusiasm forever,No unexpected happening of surprising and pleasing So,only silently ask myself in mind Next happiness,when will come?\par
+  \parshape=3 8mm 92mm 5mm 95mm 0mm 100mm hen the wandering soul wild crane stands still the memory river Listen to whistle play tightly ring slowly,Water rises a ship to go medium long things of the past.Wait for a ship’s person Wait for one and other,But hesitate always should ascend which ship Missed Had to consign the hope to next time,Finally what to wait for until has no boats and ships to come and go,Sunset west.\par
+  \vspace{-10.2em}
+  \mbox{\fontsize{160pt}{180pt}\selectfont\bf V}\par
+  \newpage
+  \lettrine[lines=2,lhang=0,lraise=0.2]{S}{}wim, let nature cleanse your heart; read, let the words warmyour stillness; keep a raise, let free conditioning your exhaustion; put out of your mind, let things. Fun, let laughteraround your heart; sing, let the song express your memories; let a let, let pass to retain your tolerance; say, let you unlock your doubts; look, let the distance from your hope.\par
+  \contour{black}{\color{red}LaTeX source file}
+  \begin{Parallel}[p]{50mm}{50mm}
+  \ParallelLText{Childhood is a cup of coffee, drink a people lead a person to endless aftertastes; childhood is a book, each page is a record of our hours of the passions; childhood is a cup of tea, after drinking, the mouth is also revealing the sweet taste; childhood is a painting, we have a colorful life picture. An insect, a toy, a discovery, a quarrel. Not worth mentioning are full ofhappiness, the pursuit of dreams and. Childhood innocence,unforgettable years.}
+  \ParallelRText{Sometimes you dream to be a kind of happiness, sometimes the dream is also a kind of happiness; sometimes is a kind of happiness, sometimes the loss is also a kind of happiness;sometimes success is a kind of happiness, sometimes failure is also a kind of happiness. Sometimes the rich is a kind of happiness, sometimes poverty is also a kind of happiness. "Not happy" today, now can not be "happy", while it may be tomorrow or later become "happiness"!}
+  \end{Parallel}
 \end{document}
 
 % 多个<space>与<enter>/<tab>都被视为单个空格
@@ -84,4 +108,35 @@
 % \hangafter段落悬挂缩进的段落，正值代表前n行不缩进，之后全部缩进；负值代表前n行缩进，之后全部不缩进。默认为1
 % \hangindent代表下一段落缩进策略，正值代表左侧向右移动，负值代表右侧向左移动。默认为0pt
 
-% \parshape n i_1 l_1 i_2 l_2 ... i_n l_n text用于指定段落特定形状，n指定段落行数，i用于指定行的缩进宽度，l用于指定该行长度
+% \parshape=n i_1 l_1 i_2 l_2 ... i_n l_n text用于指定段落特定形状，n指定段落行数，i用于指定行的缩进宽度，l用于指定该行长度。当段落行数小于n时，多余行参数被忽略；当段落行数大于n时，n行的应用于段落n行之后的剩余行
+
+% \lettrine[ary1=val1,arg2=val2,...]{first_alpha}{text}用于首字母下沉或上浮，first_alpha为首字母；text为单行大写字符串；通常字符串在限定范围之后。可选参数列表如下：
+% lines - 下沉占据行数，默认为2；当值为1时，代表上浮一行，总计占据两行
+% lhang - 首字母向左侧凸进的宽度与首字母宽度的比值，取值范围为[-1,1]。默认为0
+% loversize - 当取值[-1,0]时，代表缩放尺寸占行字体大小的百分比，取值范围为(-1,1]。默认为0
+% lraise - 首字母上移距离，为正时向上移，为负时向下移。默认为0
+% 功能包含在lettrine宏包中
+
+% \contour{color}{text}为文本配置边缘轮廓颜色，color为配色；text为配置颜色的字符串。包含在contour宏包中
+
+% \begin{Parallel}[format]{left_width}{right_width}
+% \ParallelLText{l_text}
+% \ParallelRText{r_text}
+% \end{Parallel}
+% 用于文本并列显示，format为显示格式，格式列表：
+% c - 使用空格分隔
+% v - 使用竖线分隔
+% p - 使用分页分隔
+% 功能包含在parallel宏包中
+
+% badness为排版劣质参数，取值范围为[0,10000]，0代表单词间距完全符合自然宽度，10000代表单词间距偏离其自然宽度
+
+% \tolerance为容许度，即容许单词间距可达到的最大值，取值范围为[0,10000]，默认为200
+
+% \hfuzz为溢出警告值，当溢出宽度超过该值时，产生overfull warning信息，默认为0.1pt
+
+% \hbadness为单词间距警告阀值，当单词间距过大，超过该阀值时，产生underfull warning信息。阀值默认为1000
+
+% 孤行：在某一页中只有段落的其中一行。种类区分：
+% 1.将第一行遗弃在上一页，称为孤儿。使用\clubpenalty指定大数值来抑制该孤行，默认为150。取值范围为[0,10000]
+% 2.将最后一行流落到下一页，称为寡妇。使用\widowpenalty指定大数值来抑制该孤行，默认为150。取值范围为[0,10000]
