@@ -2,7 +2,6 @@
 %\usepackage{mathtools}
 %\usepackage{tensor}
 \usepackage{amsmath}
-%\usepackage{amsmath}
 %\usepackage{framed}
 %\usepackage{color}
 %\usepackage{pstricks}
@@ -10,6 +9,8 @@
 %\usepackage{fancybox}
 %\usepackage{xcolor}
 %\usepackage{amscd}
+%\usepackage{mhchem}
+%\usepackage{xfrac}
 \begin{document}
 %	这是一个行内公式：$a+b=b+a$\par
 %	这也是一个行内公式：\( a=b+1\)\par
@@ -39,23 +40,31 @@
 %	$\int\nolimits_0^n y$\\
 %	$\prescript{n}{m}{H}^i_j$\\
 %	$\tensor[_a^b_c^d]{M}{^a_b^c_d}$\\
+
+%	化学式
+%	$\ce{Na(NH4)HPO4 ->[\Delta] (NaPO3)_x + x NH3 ^ + x H2O}$
+
 %	$\overline{a+b}$\\
-%	$\underline{a+b}$\\
 %	$\overleftarrow{a+b}$\\
-%	$\overrightarrow{a+b}$\\
-%	$\overleftrightarrow{a+b}$\\
-%	$\underleftarrow{a+b}$\\
-%	$\underrightarrow{a+b}$\\
-%	$\underleftrightarrow{a+b}$\\
+
 %	$\overbrace{a+b+c}$\\
 %	$\underbrace{a+b+c}$\\
 %	$a+\rlap{$\overbrace{\phantom{b+c+d}}^{m}$}b+\underbrace{c+d+e}_{n}+f$\\
-    \begin{flalign*}
-        &\lim_{x\to0}\frac{\sin(x)}{x}=1&\\
-        &\lim_{x\to0}\frac{\tan(x)}{x}=1&\\
-        &\lim_{x\to0}\frac{1-\cos^2(x)}{x^2}=1&\\
-        &\lim_{x\to0}\frac{1-\cos(x)}{x}=0&
-    \end{flalign*}
+
+%	$\dfrac{1}{2}$
+%	$\tfrac{1}{2}$
+%	$\sfrac{1}{a+b}$
+
+%	$\binom{n}{k}$
+%	$\tbinom{n}{k}$
+%	$\dbinom{n}{k}$
+
+%    \begin{flalign*}
+%        &\lim_{x\to0}\frac{\sin(x)}{x}=1&\\
+%        &\lim_{x\to0}\frac{\tan(x)}{x}=1&\\
+%        &\lim_{x\to0}\frac{1-\cos^2(x)}{x^2}=1&\\
+%        &\lim_{x\to0}\frac{1-\cos(x)}{x}=0&
+%    \end{flalign*}
 
 %\begin{align}
 %&\mathrel{\phantom{=}}(a+b)(a^2-ab+b^2) \notag\\
@@ -165,6 +174,8 @@
 
 \end{document}
 
+% _后跟角标内容，^后跟头标内容
+
 % $...$用于行内公式环境。其余还有\(...\)与\begin{math}...\end{math}。行内公式的上下角标普遍位于右上下角
 
 % $$...$$用于行间公式环境。其余还有\[...\]与\begin{displaymath}...\end{displaymath}。以上都是单行行间公式
@@ -180,7 +191,7 @@
 % nonamelimits - 与namelimits相反
 % leqno - 编号位于公式左边
 % reqno - 编号位于公式右边
-% fleqn - 编号位于公式右边，但公式缩进
+% fleqn - 编号位于公式右边，公式固定缩进不居中
 
 % \begin{equation}...\end{equation}为单行行间公式环境，该环境自动配置一个公式号码，并且换行\\无效。行间公式的上下角标普遍位于正上下方。包含在amsmath宏包中
 
@@ -196,19 +207,32 @@
 
 % \prescript{super_script}{sub_script}{variable}用于显示左上下角标。该指令包含在mathtools宏包中
 
+% \indices{right_script}用于显示右方错位角标。包含在tensor宏包中
+
 % \tensor[left_script]{variable}{right_script}用于显示左右方的上下角标，并且上下角标错次排列。该指令包含在tensor宏包中
 
-% 关于化学式的上下角标，参考mhchem宏包
+% \ce{}用于化学式环境，必须包含在公式环境中。包含在mhchem宏包中
 
 % \overline用于上横线，\underline用于下横线
 
-% \overleftarrow用于上方向左箭头，类似列表：overleftarrow/overrightarrow/overleftrightarrow/underleftarrow/underrightarrow/underleftrightarrow。该指令集合包含在amsmath宏包中
+% \overleftarrow用于上方向左箭头，箭头列表：
+% overleftarrow/overrightarrow/overleftrightarrow/underleftarrow/underrightarrow/underleftrightarrow。该指令集合包含在amsmath宏包中
 
 % \overbrace{}和\underbrace{}用于上下大括号
+
+% \overbracket[line_width][bracket_height]{math_formula}用于上方中括号。此外\underbracket为下方中括号。包含在mathtools
 
 % \rlap{}将环境内的内容与环境右边的内容进行左对齐重叠
 
 % \phantom{}将环境内的内容进行占位，但不显示
+
+% \frac{molecule}{denominator}用于表示分式
+
+% \tfrac{}{}用于行内公式大小分式，\dfrac{}{}用于行间公式大小分式。包含在amsmath宏包中
+
+% \sfrac为斜式分式。包含在xfrac宏包中
+
+% \binom{}{}用于二项式系数，\tbinom{}{}为行内公式大小二项式系数，\dbinom{}{}为行间公式大小二项式分布。包含在amsmath宏包中
 
 % \begin{multline}...\end{multline}用于多行行间公式，可使用\\分行，只有末行参数编号，默认第一行左对齐，中间行居中对齐，最后一行右对齐。\shoveleft{}强制某一中间行左对齐，\shoveright{}强制某一中间行右对齐。\setlength{\multlinegap}{0pt}用于配置首行与左边界的距离，默认为10pt。包含在amsmath宏包
 
@@ -234,9 +258,7 @@
 
 % \text{}用于在公式中插入文本
 
-% \overbracket[line_width][bracket_height]{math_formula}用于上方括号。包含在mathtools
-
-% \boldmath可将希腊字母更改为粗体模式，该指令用在数学公式范围之外
+% \boldmath可将希腊字母更改为粗体模式，该指令在数学公式范围之外进行指定
 
 % \fbox{inline_formula}用于给行内公式增加边框，\mathsurround用于增加公式与边框左右位置的间距，\,用于增加公式内的间隔空间
 
@@ -250,15 +272,13 @@
 
 % 在文类book和report中，行间公式是以章为排序单位的，跨越章节时计数器重置；在文类article中，行间公式以全文为排序单位。可使用\numberwithin{equation}{section}将节作为排序单位
 
-% \substack可在上下角标内换行，包含在amsmath宏包中
-
 % \newtheorem{env_name}[reuse_counter]{title}[sort_base]用于定义定理等环境，env_name为定理计数器名称；reuse_counter为当前定时器与之共用的已定义计数器；title为定理名称，全称为定理名称+计数器；sort_base为排序单位，默认为全文，可指定chapter或section等指定以章或者节为排序单位
 
 % \begin{env_name}[sub_title]...\end{env_name}可指定特定计数器定理环境，sub_title用于副标题
 
 
 % 更深入的定理环境参考宏包ntheorem，宏包可选参数列表：
-% framed - 配合framed宏包使用
+% framed - 带边框的定理环境。需配合framed宏包使用
 
 %该宏包指令集合：
 % \newtheorem{env_name}[reuse_counter]{title}[sort_base]，类似于系统提供的newtheorem环境

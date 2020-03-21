@@ -124,3 +124,15 @@ steven@~$ sudo ./NVIDIA-XXX.run --no-opengl-files
 是否使用xconfig自动更新? 否
 
 ## 重启
+
+9.使ubuntu 18.04下的nvidia独显可调整屏幕亮度
+cd /usr/share/X11/xorg.conf.d
+vi 10-nvidia.conf
+#添加如下内容到文件末尾
+Section "Device"
+    Identifier "Device0"
+    Driver "nvidia"
+    VendorName "NVIDIA Corporation"
+    BoardName "GeForce GTX 1650"
+    Option "RegistryDwords" "EnableBrightnessControl=1"
+EndSection

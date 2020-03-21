@@ -1,25 +1,27 @@
 \documentclass{article}
 %\documentclass[fleqn]{article}
-\usepackage{xfrac}
-\usepackage{mathtools}
+%\usepackage{mathtools}
 \usepackage{amsmath}
-\usepackage{bm}
+%\usepackage{bbm}
+%\usepackage{amssymb}
+%\usepackage{texnames}
+%\usepackage{mathrsfs}
+%\usepackage{eucal}
+%\usepackage{eufrak}
 \begin{document}
-%	\noindent $\frac{1}{2}$\\
-%	$\sfrac{1}{2}$\\
-%	$\binom{4}{3}$\\
 %	$\sqrt[3]{8}$\\
-	
+
 % 矩阵
+%\setcounter{MaxMatrixCols}{12}
 %\begin{gather*}
 %\begin{matrix}
-%1 & 2\\
-%3 & 4\\
-%\end{matrix}
+%1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\
+%1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\
+%\end{matrix}\\
 %\begin{pmatrix}
 %5 & 6\\
 %7 & 8\\
-%\end{pmatrix}
+%\end{pmatrix}\\
 %\begin{bmatrix}
 %9 & 10\\
 %11 & 12\\
@@ -27,27 +29,21 @@
 %\begin{Bmatrix}
 %13 & 14\\
 %15 & 16\\
-%\end{Bmatrix}
+%\end{Bmatrix}\\
 %\begin{vmatrix}
 %17 & 18\\
 %19 & 20\\
-%\end{vmatrix}
+%\end{vmatrix}\\
 %\begin{Vmatrix}
 %21 & 22\\
 %23 & 24\\
 %\end{Vmatrix}
 %\end{gather*}
 
+%$\sum\limits_{\substack{i=1\\j=1}}(i+j)$
+
 %$F=\big(\begin{smallmatrix}A & B\\C & D\end{smallmatrix}\big)$
-	
-%\[
-%\begin{vmatrix}
-% 	a_11 & a_12 & a_13\\
-% 	a_21 & a_22 & a_23\\
-% 	\vdots & \ddots & a_33\\
-% 	a_n1 & \dots & a_n3\\
-%\end{vmatrix}
-%\]
+
 %\[
 %\begin{vmatrix*}[r]
 %	9 & 100 & 2\\
@@ -55,6 +51,20 @@
 %	100 & 29 & 11\\
 %\end{vmatrix*}
 %\]
+
+%\[
+%\bordermatrix{
+%    & 1 & 2 & 3 \cr
+%1 & A & B & C \cr
+%2 & D & E & F \cr
+%}
+%\]
+
+%\parindent=0pt
+%$\mathfrak{A+B=B+A}$\\
+%$\mathfrak{a+b=c+d}$\\
+%$\mathfrak{1+3=2+1}$
+
 %$\hm\int > \bm\int = \pmb\int > \int$
 
 %\thinmuskip=0mu
@@ -133,27 +143,38 @@
 %\sqrt[k]{b} \qquad \sqrt[\leftroot{-2}\uproot{2}k]{b}
 %\end{gather}
 
+$f(x)\stackrel{\text{d}}{=}ax^2+bx+c$
+
 \end{document}
 
-% \frac{}{}用于分数形式
+% \sqrt[]{}用于开方，可选参数代表开方的次数，必选参数代表被开方的数字
 
-% \sfrac{}{}用于斜杠分数形式。包含在xfrac宏包中
+% 可使用\uproot和\leftroot来修改开方次数的位置。包含在amsmath宏包中
 
-% \binom{}{}用于二项式形式。包含在amsmath宏包中
+% 也可使用\mathstrut表示圆括号高度和深度的支架
 
-% \sqrt[]{}用于开方，可选参数代表开方的次数，必选参数代表被开方的数字。可使用\mathstrut表示较统一的开方框架大小，放置于被开方数字之前
+% \vphantom可用于调整垂直方向占位，并因此调整根号高度
 
-% \begin{matrix}、\begin{pmatrix}、\begin{bmatrix}、\begin{Bmatrix}、\begin{vmatrix}、\begin{Vmatrix}为矩阵环境，需包含在公式环境中
+% \begin{matrix}...\end{matrix}为原始矩阵环境，无限定框。行元素之间使用&分隔，行之间使用\\分隔。矩阵列表：
+% pmatrix - 小括号限定矩阵环境
+% bmatrix - 中括号限定矩阵环境
+% Bmatrix - 大括号限定矩阵环境
+% vmatrix - 单垂直线限定矩阵环境
+% Vmatrix - 双垂直线限定矩阵环境
 
-% \begin{smallmatrix}...\end{smallmatrix}用于限定行内矩阵环境，\big<>用于限定起始或结束符号
+% \begin{smallmatrix}...\end{smallmatrix}用于限定行内矩阵环境
 
-% \begin{vmatrix}...\end{vmatrix}用于配置矩阵环境。行元素之间使用&分隔，行之间使用\\分隔
+% \dots为横向省略号，\vdots为纵向省略号，\ddots为斜向省略号。具体参考symbol_summary文档－表12
 
-% \dots为横向省略号，\vdots为纵向省略号，\ddots为斜向省略号
+% \hdotsfor{cols}用于指定占据指定列数的横向省略号。包含在amsmath宏包
 
-% \begin{vmatrix*}[<align>]...\end{vmatrix*}为可指定对齐方式的矩阵。由mathtools宏包提供
+% \begin{vmatrix*}[<align>]...\end{vmatrix*}为可指定对齐方式的矩阵，其他矩阵也有对应的可对齐方式环境。由mathtools宏包提供
 
 % 矩阵环境默认最多只有10列，可使用\setcounter{MaxMatrixCols}{<number>}来配置
+
+% \substack{}可在用于限定上下角标，该上下角标内可换行。包含在amsmath宏包中
+
+% \bordermatrix{}用于限定带矩阵行列注释的矩阵，\cr为特有换行标志
 
 % \hm用于公式字符使用加重粗体，\bm用于公式字符使用粗体。由bm宏包提供
 
@@ -178,16 +199,8 @@
 
 % \documentclass[fleqn]{article}中的fleqn可选参数，可使所有行间公式左对齐，缩进宽度为\mathindent=2.5em。行间公式默认为居中对齐
 
-% \dfrac类似于\displaystyle\frac，\tfrac类似于\textstyle\frac
-
 % \choose用于二项式系数
 
-% \binom{}{}、\tbinom{}{}、\dbinom{}{}为二项式系数公式指令，\binom为系统默认格式，\tbinom为\textstyle，\dbinom为\displaystyle为\displaystyle。由amsmath提供
-
-% \sfrac为斜分数式，由xfrac宏包提供
-
-% \vphantom可用于调整垂直方向占位，并因此调整根号高度
-
-% \leftroot{}和\uproot{}用于调整根指数位置。由amsmath提供
-
 % \raisetag{height}用于调整公式序号垂直位置
+
+% \stackrel{comment}{symbol}用于在符号上添加注释，comment为注释内容，symbol为符号

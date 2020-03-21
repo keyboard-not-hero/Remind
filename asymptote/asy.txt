@@ -1,0 +1,13 @@
+asy - 基于脚本的矢量图形语言
+
+语法
+asy [option] file
+
+参数释义
+-outformat, -f <format>    编译后生成文件的格式
+
+-outname, -o <name>    指定编译结果全称，必须包括文件类型后缀
+
+-version    Asymptote版本信息
+
+-View, -V    编译后显示结果

@@ -4,8 +4,16 @@
 \usepackage{graphicx}
 \usepackage{mathdots}
 \usepackage{ragged2e}
+\usepackage{float}
+\usepackage{threeparttable}
+\usepackage{bbm}
+\usepackage{mathrsfs}
+\usepackage{eucal}
+\usepackage{metalogo}
+\usepackage{mflogo}
+\usepackage{texnames}
 \begin{document}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{c c c c c c c c}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -14,24 +22,24 @@
 	\$ & \textbackslash\$ & \% & \textbackslash\% & \^{} & \verb|\^{}| & \# & \textbackslash\#\\
 	\& & \textbackslash\& & \_ & \textbackslash\_\\
 	\hline
-\end{tabular}\par
+\end{tabular}\\[2mm]
 \RaggedRight
-**也可使用\textbackslash verb\verb'<'sep\verb'>'\verb'<'content\verb'>'\verb'<'sep\verb'>'来抄录单行特殊字符，$\backslash$begin\{verbatim\}...$\backslash$end\{verbatim\}用于环境式多行抄录\\
+**也可使用\textbackslash verb\textless sep\textgreater\textless content\textgreater\textless sep\textgreater来抄录单行特殊字符，\textbackslash begin\{verbatim\}...\textbackslash end\{verbatim\}用于环境式多行抄录\\
 \caption{专用符号}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
 	\textbar & \textbackslash textbar & \textless & \textbackslash textless & \textgreater & \textbackslash textgreater\\
 	\hline
-\end{tabular}\par
+\end{tabular}\\[2mm]
 \RaggedRight
-**也可使用\textbackslash verb\verb'<'sep\verb'>'\verb'<'content\verb'>'\verb'<'sep\verb'>'来抄录单行特殊字符，$\backslash$begin\{verbatim\}...$\backslash$end\{verbatim\}用于环境式多行抄录\\
+**也可使用\textbackslash verb\textless sep\textgreater\textless content\textgreater\textless sep\textgreater来抄录单行特殊字符，\textbackslash begin\{verbatim\}...\textbackslash end\{verbatim\}用于环境式多行抄录\\
 \caption{键盘符号}
 \end{table}
-\begin{table}
+\begin{threeparttable}
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -42,15 +50,17 @@
 	$\nu$ & $\backslash$nu & $\xi$ & $\backslash$xi & $\pi$ & $\backslash$pi & $\rho$ & $\backslash$rho\\
 	$\sigma$ & $\backslash$sigma & $\tau$ & $\backslash$tau & $\upsilon$ & $\backslash$upsilon & $\phi$ & $\backslash$phi\\
 	$\chi$ & $\backslash$chi & $\psi$ & $\backslash$psi & $\omega$ & $\backslash$omega & $\varepsilon$ & $\backslash$varepsilon\\
-	$\vartheta$ & $\backslash$vartheta & $\varkappa$ & $\backslash$varkappa${}^1$ & $\varpi$ & $\backslash$varpi & $\varrho$ & $\backslash$varrho${}^1$\\
-	$\varsigma$ & $\backslash$varsigma & $\varphi$ & $\backslash$varphi & $\digamma$ & $\backslash$digamma${}^1$\\
+	$\vartheta$ & $\backslash$vartheta & $\varkappa$ & $\backslash$varkappa\tnote{1} & $\varpi$ & $\backslash$varpi & $\varrho$ & $\backslash$varrho\tnote{1}\\
+	$\varsigma$ & $\backslash$varsigma & $\varphi$ & $\backslash$varphi & $\digamma$ & $\backslash$digamma\tnote{1}\\
 	\hline
 \end{tabular}
-**$\backslash$var格式的代码由amsmath宏包提供\par
-${}^1$\hspace{1mm}ams符号，包含在amssymb宏包中
+**$\backslash$var格式的代码由amsmath宏包提供
+\begin{tablenotes}
+	\item[1] \AMS符号，包含在amssymb宏包中
+\end{tablenotes}
 \caption{公式-小写希腊字母}
-\end{table}
-\begin{table}
+\end{threeparttable}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -62,11 +72,11 @@ ${}^1$\hspace{1mm}ams符号，包含在amssymb宏包中
 	$\varPi$ & $\backslash$varPi & $\varSigma$ & $\backslash$varSigma & $\varUpsilon$ & $\backslash$varUpsilon & $\varPhi$ & $\backslash$varPhi\\
 	$\varPsi$ & $\backslash$varPsi & $\varOmega$ & $\backslash$varOmega\\
 	\hline
-\end{tabular}
+\end{tabular}\\[2mm]
 **$\backslash$var格式的代码由amsmath宏包提供
 \caption{公式-大写希腊字母}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -77,25 +87,26 @@ ${}^1$\hspace{1mm}ams符号，包含在amssymb宏包中
 	$\bigoplus$ & $\backslash$bigoplus & $\bigotimes$ & $\backslash$bigotimes & $\iint$ & $\backslash$iint & $\iiint$ & $\backslash$iiint\\
 	$\iiiint$ & $\backslash$iiiint & $\idotsint$ & $\backslash$idotsint\\
 	\hline
-\end{tabular}
+\end{tabular}\\[2mm]
 **最后四个积分符号需要amsmath宏包
 \caption{公式-大小可变的运算符}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	$\log$ & $\backslash$log & $\lg$ & $\backslash$lg & $\ln$ & $\backslash$ln & $\sin$ & $\backslash$sin & $\arcsin$ & $\backslash$arcsin\\
+	$\log$ & \textbackslash log & $\lg$ & \textbackslash lg & $\ln$ & \textbackslash ln & $\sin$ & \textbackslash sin & $\arcsin$ & \textbackslash arcsin\\
 	$\cos$ & $\backslash$cos & $\arccos$ & $\backslash$arccos & $\tan$ & $\backslash$tan & $\arctan$ & $\backslash$arctan & $\cot$ & $\backslash$cot\\
-	$\sinh$ & $\backslash$sinh & $\cosh$ & $\backslash$cosh & $\tanh$ & $\backslash$tanh & $\coth$ & $\backslash$coth & $\sec$ & $\backslash$sec\\
-	$\csc$ & $\backslash$csc & $\arg$ & $\backslash$arg & $\ker$ & $\backslash$ker & $\dim$ & $\backslash$dim & $\hom$ & $\backslash$hom\\
-	$\exp$ & $\backslash$exp & $\deg$ & $\backslash$deg\\
+	$\sec$ & \textbackslash sec & $\csc$ & \textbackslash csc & $\sinh$ & \textbackslash sinh & $\cosh$ & \textbackslash cosh & $\tanh$ & \textbackslash tanh\\
+	$\coth$ & \textbackslash coth & $\arg$ & \textbackslash arg & $\ker$ & \textbackslash ker & $\dim$ & \textbackslash dim & $\hom$ & \textbackslash hom\\
+	$\exp$ & \textbackslash exp & $\deg$ & \textbackslash deg\\
 	\hline
-\end{tabular}
+\end{tabular}\\[2mm]
+**可在导言区使用\textbackslash DeclareMathOperator\{\textbackslash \textless command\textgreater\}\{\textless str\textgreater\}来定义新数学符号.如\textbackslash DeclareMathOperator\{\textbackslash sech\}\{sech\}
 \caption{不带上下限的数学运算符}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -105,22 +116,22 @@ ${}^1$\hspace{1mm}ams符号，包含在amssymb宏包中
 	$\Pr$ & $\backslash$Pr & $\gcd$ & $\backslash$gcd & $\varliminf$ & $\backslash$varliminf & $\varlimsup$ & $\backslash$varlimsup\\
 	$\injlim$ & $\backslash$injlim & $\projlim$ & $\backslash$projlim & $\varinjlim$ & $\backslash$varinjlim & $\varprojlim$ & $\backslash$varprojlim\\
 	\hline
-\end{tabular}
+\end{tabular}\\[2mm]
 **$\backslash$var类型需要amsmath宏包
 \caption{带上下限的数学运算符}
 \end{table}
-\begin{table}
+\begin{threeparttable}
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	$hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath & $\ell$ & \textbackslash ell\\
+	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath & $\ell$ & \textbackslash ell\\
 	$\wp$ & \textbackslash wp & $\Re$ & \textbackslash Re & $\Im$ & \textbackslash Im & $\partial$ & \textbackslash partial\\
 	$\infty$ & \textbackslash infty & $\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash nabla\\
 	$\surd$ & \textbackslash surd & $\top$ & \textbackslash top & $\bot$ & \textbackslash bot & $\angle$ & \textbackslash angle\\
 	$\triangle$ & \textbackslash triangle & $\forall$ & \textbackslash forall & $\exists$ & \textbackslash exists & $\neg$ & \textbackslash neg\\
 	$\flat$ & \textbackslash flat & $\natural$ & \textbackslash natural & $\sharp$ & \textbackslash sharp & $\clubsuit$ & \textbackslash clubsuit\\
-	$\diamondsuit$ & \textbackslash diamondsuit & $\heartsuit$ & \textbackslash heartsuit & $\spadesuit$ & \textbackslash spadesuit & $\backslash$ & \textbackslash $backslash^1$\\
+	$\diamondsuit$ & \textbackslash diamondsuit & $\heartsuit$ & \textbackslash heartsuit & $\spadesuit$ & \textbackslash spadesuit & $\backslash$ & \textbackslash backslash\tnote{1}\\
 	$\backprime$ & \textbackslash backprime & $\hslash$ & \textbackslash hslash & $\varnothing$ & \textbackslash varnothing & $\vartriangle$ & \textbackslash vartriangle\\
 	$\blacktriangle$ & \textbackslash blacktriangel & $\triangledown$ & \textbackslash triangledown & $\blacktriangledown$ & \textbackslash blacktriangledown & $\square$ & \textbackslash square\\
 	$\blacksquare$ & \textbackslash blacksquare & $\lozenge$ & \textbackslash lozenge & $\blacklozenge$ & \textbackslash blacklozenge & $\circledS$ & \textbackslash circledS\\
@@ -129,11 +140,13 @@ ${}^1$\hspace{1mm}ams符号，包含在amssymb宏包中
 	$\diagup$ & \textbackslash diagup & $\Game$ & \textbackslash Game & $\diagdown$ & \textbackslash diagdown & $\Bbbk$ & \textbackslash Bbbk\\
 	\hline
 \end{tabular}
-**从\textbackslash backprime开始是ams符号\par
-${}^1$ \hspace{1pt}\textbackslash backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash setminus
+**从\textbackslash backprime开始是\AMS符号
+\begin{tablenotes}
+	\item[1] \textbackslash backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash setminus
+\end{tablenotes}
 \caption{数学普通符号}
-\end{table}
-\begin{table}
+\end{threeparttable}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -144,23 +157,23 @@ ${}^1$ \hspace{1pt}\textbackslash backslash同时也是长度可变的定界符�
 	$\triangleleft$ & \textbackslash triangleleft & $\triangleright$ & \textbackslash triangleright & $\bigtriangleup$ & \textbackslash bigtriangleup & $\bigtriangledown$ & \textbackslash bigtriangledown\\
 	$\wedge$ & \textbackslash wedge & $\vee$ & \textbackslash vee & $\ddagger$ & \textbackslash ddagger & $\dagger$ & \textbackslash dagger\\
 	$\sqcap$ & \textbackslash sqcap & $\sqcup$ & \textbackslash sqcup & $\uplus$ & \textbackslash uplus & $\amalg$ & \textbackslash amalg\\
-	$\diamond$ & \textbackslash diamond & $\bullet$ & \textbackslash & $\wr$ & \textbackslash wr & $\odot$ & \textbackslash odot\\
-	$\oslash$ & \textbackslash & $\otimes$ & \textbackslash otimes & $\oplus$ & \textbackslash oplus\\
+	$\diamond$ & \textbackslash diamond & $\bullet$ & \textbackslash bullet & $\wr$ & \textbackslash wr & $\odot$ & \textbackslash odot\\
+	$\oslash$ & \textbackslash oslash & $\otimes$ & \textbackslash otimes & $\oplus$ & \textbackslash oplus\\
 	\hline
 \end{tabular}
 \caption{二元运算符}
 \end{table}
-\begin{table}
+\begin{threeparttable}
 \begin{tabular}{l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码\\
 	\hline
-	$\gets$ & $\backslash$leftarrow或$\backslash$gets & $\nleftarrow$ & $\backslash nleftarrow^2$\\
-	$\to$ & $\backslash$rightarrow或$\backslash$to & $\nrightarrow$ & $\backslash nrightarrow^2$\\
-	$\Leftarrow$ & $\backslash$Leftarrow & $\nLeftarrow$ & $\backslash nLeftarrow^2$\\
+	$\gets$ & $\backslash$leftarrow或$\backslash$gets & $\nleftarrow$ & \textbackslash nleftarrow\tnote{1}\\
+	$\to$ & $\backslash$rightarrow或$\backslash$to & $\nrightarrow$ & \textbackslash nrightarrow\tnote{1}\\
+	$\Leftarrow$ & $\backslash$Leftarrow & $\nLeftarrow$ & $\backslash$ nLeftarrow\tnote{1}\\
 	$\Rightarrow$ & $\backslash$Rightarrow & $\nRightarrow$ & $\backslash$nRightarrow\\
-	$\leftrightarrow$ & $\backslash$leftrightarrow & $\nleftrightarrow$ & $\backslash nleftrightarrow^2$\\
-	$\Leftrightarrow$ & $\backslash$Leftrightarrow & $\nLeftrightarrow$ & $\backslash nLeftrightarrow^2$\\
+	$\leftrightarrow$ & $\backslash$leftrightarrow & $\nleftrightarrow$ & $\backslash$ nleftrightarrow\tnote{1}\\
+	$\Leftrightarrow$ & $\backslash$Leftrightarrow & $\nLeftrightarrow$ & $\backslash$ nLeftrightarrow\tnote{1}\\
 	$\longleftarrow$ & $\backslash$longleftarrow & $\longrightarrow$ & $\backslash$longrightarrow\\
 	$\Longleftarrow$ & $\backslash$Longleftarrow & $\Longrightarrow$ & $\backslash$Longrightarrow\\
 	$\longleftrightarrow$ & $\backslash$longleftrightarrow & $\Longleftrightarrow$ & $\backslash$Longleftrightarrow\\
@@ -175,27 +188,28 @@ ${}^1$ \hspace{1pt}\textbackslash backslash同时也是长度可变的定界符�
 	$\downarrow$ & $\backslash$downarrow & $\Downarrow$ & $\backslash$Downarrow\\
 	$\updownarrow$ & $\backslash$updownarrow & $\Updownarrow$ & $\backslash$Updownarrow\\
 	\hline
-\end{tabular}\par
-**最后三行的垂直箭头同时也是可延长的定界符\par
-${}^2$\hspace{2pt}ams否定箭头
+\end{tabular}
+**最后三行的垂直箭头同时也是可延长的定界符
+\begin{tablenotes}
+	\item[1] \AMS否定箭头
+\end{tablenotes}
 \caption{\LaTeX 箭头符号}
-\end{table}
-\begin{table}
+\end{threeparttable}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
-	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\\hline
 	$($ & $($ & $[$ & $[$ & $\{$ & $\backslash\{$ & $\langle$ & $\backslash$langle\\
 	$)$ & $)$ & $]$ & $]$ & $\}$ & $\backslash\}$ & $\rangle$ & $\backslash$rangle\\
 	$\lfloor$ & $\backslash$lfloor & $\lceil$ & $\backslash$lceil\\
 	$\rfloor$ & $\backslash$rfloor & $\rceil$ & $\backslash$rceil\\
 	\hline
-\end{tabular}\par
-**在左/右括号前使用$\backslash$left/right可使定界符随视情况改变大小，left/right必须在同一行配对，但不需要匹配对应括号，可使用$\backslash<direction>$.来匹配，无可视单元。还有$\backslash$middle调节中间的定界符\par
-**也可手动调节大小，位置：$\backslash$big $\backslash$bigl $\backslash$bigm $\backslash$bigr，规格：$\backslash$big $\backslash$Big $\backslash$bigg $\backslash$Bigg
+\end{tabular}\\[2mm]
+**在左/右括号前使用\textbackslash left或\textbackslash right可使定界符视情况改变大小,left/right必须在同一行配对,但不需要匹配对应括号,可使用\textbackslash\textless direction\textgreater.来匹配,无可视单元.还有\textbackslash middle调节中间的定界符\par
+**也可手动调节大小,位置:\textbackslash big \textbackslash bigl \textbackslash bigm \textbackslash bigr,规格:\textbackslash big \textbackslash Big \textbackslash bigg \textbackslash Bigg
 \caption{公式-括号定界符}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l l l l l l l}
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
@@ -204,11 +218,11 @@ ${}^2$\hspace{2pt}ams否定箭头
 	$\iddots$ & $\backslash$iddots & $\dotsc$ & $\backslash$dotsc & $\dotsb$ & $\backslash$dotsb & $\dotsm$ & $\backslash$dotsm\\
 	$\dotsi$ & $\backslash$dotsi & $\dotso$ & $\backslash$dotso\\
 	\hline
-\end{tabular}
-**$\backslash$iddots需要mathdots宏包
+\end{tabular}\\[2mm]
+**\textbackslash iddots需要mathdots宏包
 \caption{公式-省略号}
 \end{table}
-\begin{table}
+\begin{table}[H]
 \begin{tabular}{l l}
 	\hline
 	单位 & 说明\\
@@ -227,5 +241,119 @@ ${}^2$\hspace{2pt}ams否定箭头
 	\hline
 \end{tabular}
 \caption{通用长度单位}
+\end{table}
+\begin{threeparttable}
+\begin{tabular}{l l l}
+	\hline
+	类别 & 字体命令 & 输出效果\\\hline
+	数学环境的默认字体 & \textbackslash mathnormal & $\mathnormal{ABCHIJXYZabchijxyz12345}$\\
+	意大利体 & \textbackslash mathit & $\mathit{ABCHIJXYZabchijxyz12345}$\\
+	罗马体 & \textbackslash mathrm & $\mathrm{ABCHIJXYZabchijxyz12345}$\\
+	粗体 & \textbackslash mathbf & $\mathbf{ABCHIJXYZabchijxyz12345}$\\
+	无衬线体 & \textbackslash mathsf & $\mathsf{ABCHIJXYZabchijxyz12345}$\\
+	打字机体 & \textbackslash mathtt & $\mathtt{ABCHIJXYZabchijxyz12345}$\\
+	手写体(花体)\tnote{1} & \textbackslash mathcal & $\mathcal{ABCHIJXYZ}$\\\hline
+\end{tabular}
+\begin{tablenotes}
+	\item[1] LaTeX默认只支持大写字母，使用专业字体包可支持小写字母
+\end{tablenotes}
+\caption{LaTeX默认提供的数学字体}
+\end{threeparttable}
+\begin{table}[H]
+	\begin{tabular}{l l l l}
+		\hline
+		类别 & 字体命令 & 输出效果 & 宏包及说明\\\hline
+		黑板粗体 & \textbackslash mathbb & $\mathbb{ABCXYZ}$ & amssymb,仅大写字母\\
+				 & \textbackslash mathbbm & $\mathbbm{ABCXYZabcxyz12}$ & bbm,数字仅有1和2\\
+		花体 & \textbackslash mathscr & $\mathscr{ABCXYZ}$ & mathrsfs,仅大写字母\\
+			 & \textbackslash mathcal & $\mathcal{ABCXYZ}$ & eucal,仅大写字母\\
+		哥特体 & \textbackslash mathfrak & $\mathfrak{ABCXYZabcxyz123890}$ & amssymb或eufrak\\\hline
+	\end{tabular}
+	\caption{其他宏包字体}
+\end{table}
+\begin{threeparttable}
+\begin{tabular}{l l l l l l l l}
+		\hline
+		符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\\hline
+		$=$ & = & $\ne$ & \textbackslash ne & $:$ & : & $<$ & $<$\\
+		$\nless$ & \textbackslash nless\tnote{1} & $>$ & $>$ & $\ngtr$ & \textbackslash ngtr\tnote{1} & $\le$ & \textbackslash le\\
+		$\nleq$ & \textbackslash nleq\tnote{1} & $\ge$ & \textbackslash ge & $\ngeq$ & \textbackslash ngeq\tnote{1} & $\in$ & \textbackslash in\\
+		$\notin$ & \textbackslash notin & $\ni$ & \textbackslash ni & $\ll$ & \textbackslash ll & $\gg$ & \textbackslash gg\\
+		$\prec$ & \textbackslash prec & $\nprec$ & \textbackslash nprec\tnote{1} & $\succ$ & \textbackslash succ & $\nsucc$ & \textbackslash nsucc\tnote{1}\\
+		$\preceq$ & \textbackslash preceq & $\npreceq$ & \textbackslash npreceq\tnote{1} & $\succeq$ & \textbackslash succeq & $\nsucceq$ & \textbackslash nsucceq\tnote{1}\\
+		$\precneqq$ & \textbackslash precneqq\tnote{1} & $\succneqq$ & \textbackslash succneqq & $\sim$ & \textbackslash sim & $\nsim$ & \textbackslash nsim\tnote{1}\\
+		$\approx$ & \textbackslash approx & $\simeq$ & \textbackslash simeq & $\cong$ & \textbackslash cong & $\ncong$ & \textbackslash ncong\tnote{1}\\
+		$\equiv$ & \textbackslash equiv & $\doteq$ & \textbackslash doteq & $\subset$ & \textbackslash subset & $\supset$ & \textbackslash supset\\
+		$\subseteq$ & \textbackslash subseteq & $\nsubseteq$ & \textbackslash nsubseteq\tnote{1} & $\supseteq$ & \textbackslash supseteq & $\nsupseteq$ & \textbackslash nsupseteq\tnote{1}\\
+		$\subsetneq$ & \textbackslash subsetneq\tnote{1} & $\varsubsetneq$ & \textbackslash varsubsetneq\tnote{1} & $\supsetneq$ & \textbackslash supsetneq\tnote{1} & $\varsupsetneq$ & \textbackslash varsupsetneq\tnote{1}\\
+		$\smile$ & \textbackslash smile& $\frown$ & \textbackslash frown & $\perp$ & \textbackslash perp & $\models$ & \textbackslash models\\
+		$\mid$ & \textbackslash mid & $\nmid$ & \textbackslash nmid\tnote{1} & $\parallel$ & \textbackslash parallel & $\nparallel$ & \textbackslash nparallel\tnote{1}\\
+		$\vdash$ & \textbackslash vdash & $\nvdash$ & \textbackslash nvdash\tnote{1} & $\dashv$ & \textbackslash dashv & $\propto$ & \textbackslash propto\\
+		$\asymp$ & \textbackslash asymp & $\bowtie$ & \textbackslash bowtie & $\Join$ & \textbackslash Join\tnote{1}\\\hline
+\end{tabular}
+\begin{tablenotes}
+	\item[1] \AMS符号,包含在amssymb宏包中
+\end{tablenotes}
+\caption{二元关系符}
+\end{threeparttable}
+\begin{table}[H]
+	\begin{tabular}{l l l l l l}
+		\hline
+		符号 & 代码 & 符号 & 代码 & 符号 & 代码\\\hline
+		$\leqq$ & \textbackslash leqq & $\nleqq$ & \textbackslash nleqq & $\geqq$ & \textbackslash geqq\\
+		$\ngeqq$ & \textbackslash ngeqq & $\lneqq$ & \textbackslash lneqq & $\lvertneqq$ & \textbackslash lvertneqq\\
+		$\gneqq$ & \textbackslash gneqq & $\gvertneqq$ & \textbackslash gvertneqq &	$\leqslant$ & \textbackslash leqslant\\
+		$\nleqslant$ & \textbackslash nleqslant & $\geqslant$ & \textbackslash geqslant & $\ngeqslant$ & \textbackslash ngeqslant\\
+		$\lneq$ & \textbackslash lneq & $\gneq$ & \textbackslash gneq & $\lesssim$ & \textbackslash lesssim\\
+		$\lnsim$ & \textbackslash lnsim & $\gtrsim$ & \textbackslash gtrsim & $\gnsim$ & \textbackslash gnsim\\
+		$\lessapprox$ & \textbackslash lessapprox& $\lnapprox$ & \textbackslash lnapprox & $\gtrapprox$ & \textbackslash gtrapprox\\
+		$\gnapprox$ & \textbackslash gnapprox & $\precsim$ & \textbackslash precsim & $\precnsim$ & \textbackslash precnsim\\
+		$\succsim$ & \textbackslash succsim & $\succnsim$ & \textbackslash succnsim & $\precapprox$ & \textbackslash precapprox\\
+		$\precnapprox$ & \textbackslash precnapprox & $\succapprox$ & \textbackslash succapprox & $\succnapprox$ & \textbackslash succnapprox\\
+		$\subseteqq$ & \textbackslash subseteqq & $\nsubseteqq$ & \textbackslash nsubseteqq & $\supseteqq$ & \textbackslash supseteqq\\
+		$\nsupseteqq$ & \textbackslash nsupseteqq & $\subsetneqq$ & \textbackslash subsetneqq & $\varsubsetneqq$ & \textbackslash varsubsetneqq\\
+		$\supsetneqq$ & \textbackslash supsetneqq & $\varsupsetneqq$ & \textbackslash varsupsetneqq & $\vartriangleleft$ & \textbackslash vartriangleleft\\
+		$\ntriangleleft$ & \textbackslash ntriangleleft & $\vartriangleright$ & \textbackslash vartriangleright & $\ntriangleright$ & \textbackslash ntriangleright\\
+		$\trianglelefteq$ & \textbackslash trianglelefteq & $\ntrianglelefteq$ & \textbackslash ntrianglelefteq & $\trianglerighteq$ & \textbackslash trianglerighteq\\
+		$\ntrianglerighteq$ & \textbackslash ntrianglerighteq & $\shortmid$ & \textbackslash shortmid & $\nshortmid$ & \textbackslash nshortmid\\
+		$\shortparallel$ & \textbackslash shortparallel & $\nshortparallel$ & \textbackslash nshortparallel & $\vDash$ & \textbackslash vDash \\
+		$\nvDash$ & \textbackslash nvDash & $\Vdash$ & \textbackslash Vdash & $\nVdash$ & \textbackslash nVdash\\
+		$\Vvdash$ & \textbackslash Vvdash & $\nVDash$ & \textbackslash nVDash &	$\eqslantless$ & \textbackslash eqslantless\\
+		$\eqslantgtr$ & \textbackslash eqslantgtr & $\approxeq$ & \textbackslash approxeq & $\lessdot$ & \textbackslash lessdot\\
+		$\gtrdot$ & \textbackslash gtrdot & $\lll$ & \textbackslash lll & $\ggg$ & \textbackslash ggg \\
+		$\lessgtr$ & \textbackslash lessgtr & $\gtrless$ & \textbackslash gtrless & $\lesseqgtr$ & \textbackslash lesseqgtr \\
+		$\gtreqless$ & \textbackslash gtreqless & $\lesseqqgtr$ & \textbackslash lesseqqgtr & $\gtreqqless$ & \textbackslash gtreqqless \\
+		$\doteqdot$ & \textbackslash doteqdot & $\triangleq$ & \textbackslash triangleq & $\eqcirc$ & \textbackslash eqcirc\\
+		$\circeq$ & \textbackslash circeq & $\risingdotseq$ & \textbackslash risingdotseq & $\fallingdotseq$ & \textbackslash fallingdotseq\\
+		$\backsim$ & \textbackslash backsim & $\thicksim$ & \textbackslash thicksim & $\backsimeq$ & \textbackslash backsimeq\\
+		$\thickapprox$ & \textbackslash thickapprox & $\preccurlyeq$ & \textbackslash preccurlyeq & $\succcurlyeq$ & \textbackslash succcurlyeq\\
+		$\sqsubseteq$ & \textbackslash sqsubseteq & $\sqsupseteq$ & \textbackslash sqsupseteq & $\sqsubset$ & \textbackslash sqsubset\\
+		$\sqsupset$ & \textbackslash sqsupset & $\Subset$ & \textbackslash Subset & $\Supset$ & \textbackslash Supset\\
+		$\smallsmile$ & \textbackslash smallsmile &	$\smallfrown$ & \textbackslash smallfrown & $\bumpeq$ & \textbackslash bumpeq\\
+		$\Bumpeq$ & \textbackslash Bumpeq & $\between$ & \textbackslash between & $\pitchfork$ & \textbackslash pitchfork\\
+		$\varpropto$ & \textbackslash varpropto & $\backepsilon$ & \textbackslash backepsilon & $\blacktriangleleft$ & \textbackslash blacktriangleleft\\
+		$\blacktriangleright$ & \textbackslash blacktriangleright & $\therefore$ & \textbackslash therefore & $\because$ & \textbackslash because\\\hline
+	\end{tabular}
+	\caption{\AMS关系运算符}
+\end{table}
+\begin{table}[H]
+	\begin{tabular}{l l l}
+		\hline
+		标识符 & 符号指令 & 所需宏包\\\hline
+		\TeX & \textbackslash TeX &\\
+		\LaTeX & \textbackslash LaTeX &\\
+		\LaTeXe & \textbackslash LaTeXe &\\
+		\AMS & \textbackslash AMS & texnames\\
+		\AMSTeX & \textbackslash AMSTeX & texnames\\
+		\BibTeX & \textbackslash BibTeX & texnames\\
+		\MF & \textbackslash MF & mflogo、texnames\\
+		\MP & \textbackslash MP & mflogo\\
+		\XeTeX & \textbackslash XeTeX & metalogo\\
+		\XeLaTeX & \textbackslash XeLaTeX & metalogo\\
+		\LuaTeX & \textbackslash LuaTeX & metalogo\\
+		\LuaLaTeX & \textbackslash LuaLaTeX & metalogo\\
+		\hline
+	\end{tabular}
+	\caption{TeX家族标识符}
 \end{table}
 \end{document}

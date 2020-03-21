@@ -1,0 +1,123 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{ntheorem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\begin{document}
+\parindent=0pt
+	1.指数公式
+	\begin{align}
+		b^0&=1\\
+		b^1&=b\\
+		b^xb^y&=b^{x+y}\\
+		\frac{b^x}{b^y}&=b^{x-y}\\
+		(b^x)^y&=b^{xy}
+	\end{align}
+	2.对数公式
+	\begin{align}
+		\log_b(1)&=0\\
+		\log_b(b)&=1\\
+		\log_b(xy)&=\log_b(x)+\log_b(y)\\
+		\log_b(\frac{x}{y})&=\log_b(x)-\log_b(y)\\
+		\log_b(x^y)&=y\log_b(x)
+	\end{align}
+	\newtheorem*{theorem1}{换底法则}
+	\begin{theorem1}
+		对于任意的底数$b>1$和$c>1$及任意的数$x>0$,
+		\begin{equation}
+			\boxed{\log_b(x)=\frac{\log_c(x)}{\log_c(b)}}
+		\end{equation}
+	\end{theorem1}
+	3.自然对数\\
+	$e=2.718 281 828 459 045 23\ldots$
+	\begin{align}
+		e^{\ln(x)}&=x\\
+		\ln(e^x)&=x\\
+		\ln(1)&=0\\
+		\ln(e)&=1\\
+		\ln(xy)&=ln(x)+ln(y)\\
+		\ln(\frac{x}{y})&=\ln(x)-\ln(y)\\
+		\ln(x^y)&=y\ln(x)
+	\end{align}
+	4.常用对数求导\par
+	\begin{align}
+		\lim_{n\to\infty}(1+\frac{x}{n})^n&=e^x\\
+		\lim_{n\to\infty}(1+\frac{1}{n})^n&=e\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\log_b(x)&=\frac{1}{x\ln(b)}
+	\end{align}
+	\begin{flalign*}
+		&\text{证明过程:}&&&&\\
+		&\text{假设}g(x)=\log_bx\text{,则:}&&&&\\
+		&&g'(x)&=\lim_{\Delta x\to0}\frac{\log_b(x+\Delta x)-\log_b x}{\Delta x}&&\\
+			 &&&=\lim_{\Delta x\to0}\frac{1}{\Delta x}\log_b{x+\Delta x}{x}&&\\
+			 &&&=\lim_{\Delta x\to0}\log_b(1+\frac{\Delta x}{x})^{\frac{1}{\Delta x}}&&\\
+			 &&&=\log_be^{\frac{1}{x}}&&\\
+			 &&&=\frac{1}{x}\log_be&&\\
+			 &\text{由换底法则,得:}&&&&\\
+		&&\log_be&=\frac{\ln e}{\ln b}&&\\
+			   &&&=\frac{1}{\ln b}&&\\
+			   &\text{所以,得出结论:}&&&&\\
+		&&g'(x)&=\frac{1}{x}\log_be&&\\
+		&&&=\frac{1}{x\ln b}&&
+	\end{flalign*}
+	\begin{align}
+			\frac{\mathrm{d}}{\mathrm{d}x}\ln(x)&=\frac{1}{x}\\
+			\frac{\mathrm{d}}{\mathrm{d}x}b^x&=b^x\ln(b)\\
+			\frac{\mathrm{d}}{\mathrm{d}x}e^x&=e^x\\
+			\lim_{h\to0}\frac{e^h-1}{h}&=1
+	\end{align}
+	\begin{flalign*}
+		&\text{证明过程:}&&&&\\
+		&\text{当}f(x)=e^x\text{,得:}&&&&\\
+		&&f'(x)&=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}&&\\
+		&&e^x&=\lim_{h\to0}\frac{e^{x+h}-e^x}{h}&&\\
+		&\text{当}x\text{取}0\text{时,得到:}&&&&\\
+		&&\lim_{h\to0}\frac{e^h-1}{h}&=1\text{.}&&
+	\end{flalign*}
+	\begin{align}
+		\lim_{h\to0}\frac{\ln(1+h)}{h}&=1
+	\end{align}
+	\begin{flalign*}
+		&\text{证明过程}&&&&\\
+		&\text{当}f(x)=\ln(x)\text{,得:}&&&&\\
+		&&f'(x)&=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}&&\\
+		&&\frac{1}{x}&=\lim_{h\to0}\frac{\ln(x+h)-\ln(x)}{h}&&\\
+		&\text{当}x\text{取}1\text{时,得到:}&&&&\\
+		&&\lim_{h\to0}\frac{\ln(1+h)-\ln(1)}{h}&=1&&
+	\end{flalign*}
+	\begin{align}
+		\lim_{x\to\infty}\frac{x^n}{e^x}=0\\
+		\lim_{x\to\infty}\frac{\ln(x)}{x^a}=0\text{;其中,}a>0
+	\end{align}
+	\begin{flalign*}
+		& \text{当}y=x^{\sin (x)}\text{,求该函数的导数:}&&&&\\
+		& \because & y & =x^{\sin (x)}\\
+		& \therefore & \ln (y) & =\ln (x^{\sin (x)})\\
+		&& \ln (y) & =\sin (x)\ln (x)\\
+		&& \frac{\mathrm{d}}{\mathrm{d}x}\ln (y) & =\frac{\mathrm{d}}{\mathrm{d}x}\sin (x)\ln (x)\\
+		&& \frac{1}{y}\frac{\mathrm{d}y}{\mathrm{d}x} & =\frac{\mathrm{d}(\sin (x))}{\mathrm{d}x}\ln (x)+\sin (x)\frac{\mathrm{d}(\ln (x))}{\mathrm{d}x}\\
+		&& \frac{1}{y}\frac{\mathrm{d}y}{\mathrm{d}x} & =\cos (x)\ln (x)+\frac{\sin (x)}{x}\\
+		&& \frac{\mathrm{d}y}{\mathrm{d}x} & =(\cos (x)\ln (x)+\frac{\sin (x)}{x})y\\
+		&\text{由于}y=x^{\sin (x)}\text{,使用}x^{\sin (x)}\text{替换}y\text{,得:}\\
+		&& \frac{\mathrm{d}y}{\mathrm{d}x} & =(\cos (x)\ln (x)+\frac{\sin (x)}{x})x^{\sin (x)}\\
+	\end{flalign*}
+	5.指数增长与指数衰减
+	\begin{align}
+			P(t)=P_0e^{kt}\\
+			P(t)=P_0e^{-kt}
+	\end{align}
+	6.双曲函数
+	\begin{align}
+			\cosh (x)&=\frac{e^x+e^{-x}}{2}\\
+			\sinh (x)&=\frac{e^x-e^{-x}}{2}\\
+			\tanh (x)&=\frac{\sinh (x)}{\cosh (x)}=\frac{e^x-e^{-x}}{e^x+e^{-x}}\\
+			\coth (x)&=\frac{1}{\tanh (x)}=\frac{e^x+e^{-x}}{e^x-e^{-x}}\\
+			\sech (x)&=\frac{1}{\cosh (x)}=\frac{2}{e^x+e^{-x}}\\
+			\csch (x)&=\frac{1}{\sinh (x)}=\frac{2}{e^x-e^{-x}}\\
+			\cosh^2(x)-\sinh^2(x)&=1\\
+			1-\tanh^2(x)=\sech^2(x)\\
+			\frac{\mathrm{d}}{\mathrm{d}x}\sinh (x)&=\cosh (x)\\
+			\frac{\mathrm{d}}{\mathrm{d}x}\cosh (x)&=\sinh (x)
+	\end{align}
+\end{document}

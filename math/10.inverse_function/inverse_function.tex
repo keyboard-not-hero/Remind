@@ -1,0 +1,52 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\arccoth}{arccoth}
+\DeclareMathOperator{\arcsech}{arcsech}
+\DeclareMathOperator{\arccsch}{arccsch}
+\begin{document}
+	1.导数与反函数\par
+	\newtheorem{definition}{导数和反函数}
+	\begin{definition}
+		如果$f$在其定义域$(a,b)$上可导且满足以下条件中的任意一条:\\
+		(1)对于所有的在$(a,b)$中的$x$,$f'(x)>0$;\\
+		(2)对于所有的在$(a,b)$中的$x$,$f'(x)<0$;\\
+		(3)对于所有的在$(a,b)$中的$x$,$f'(x)\geqslant 0$且对于有限个数的$x$,$f'(x)=0$;\\
+		(4)对于所有的在$(a,b)$中的$x$,$f'(x)\leqslant 0$且对于有限个数的$x$,$f'(x)=0$.\\
+		则$f$有反函数
+	\end{definition}
+	\begin{flalign*}
+		& \text{当}y=f^{-1}(x)\text{,得:}&&&&\\
+		&& x & =f(y)\\
+		& \text{对方程两边关于x作隐函数求导,得:}\\
+		&& \frac{\mathrm{d}}{\mathrm{d}x}(x) & =\frac{\mathrm{d}}{\mathrm{d}x}(f(y))\\
+		& \text{等号左右置换位置,得:}\\
+		&& f'(y)\frac{\mathrm{d}y}{\mathrm{d}x} & =1\\
+		&& \frac{\mathrm{d}y}{\mathrm{d}x} & =\frac{1}{f'(y)}\\
+		&& \frac{\mathrm{d}}{\mathrm{d}x}(f^{-1}(x)) & =\frac{1}{f'(f^{-1}(x))}
+	\end{flalign*}
+	2.反三角函数\par
+	\begin{align}
+		\frac{\mathrm{d}}{\mathrm{d}x}\arcsin x & =\frac{1}{\sqrt{1-x^2}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccos x & =-\frac{1}{\sqrt{1-x^2}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arctan x & =\frac{1}{1+x^2}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccot x & =-\frac{1}{1+x^2}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arcsec x & =\frac{1}{|x|\sqrt{x^2-1}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccsc x & =-\frac{1}{|x|\sqrt{x^2-1}}
+	\end{align}
+	3.反双曲函数\par
+	\begin{align}
+		\frac{\mathrm{d}}{\mathrm{d}x}\arcsinh (x)=\frac{1}{\sqrt{x^2+1}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccosh (x)=\frac{1}{\sqrt{x^2-1}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arctanh (x)=\frac{1}{1-x^2}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccoth (x)=\frac{1}{1-x^2}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arcsech (x)=-\frac{1}{x\sqrt{1-x^2}}\\
+		\frac{\mathrm{d}}{\mathrm{d}x}\arccsch (x)=-\frac{1}{|x|\sqrt{1+x^2}}
+	\end{align}
+\end{document}

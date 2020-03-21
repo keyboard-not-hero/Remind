@@ -1,7 +1,8 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart} 
-\usepackage[marginal]{footmisc}
-\usepackage{threeparttable}
-\usepackage{endnotes}
+%\usepackage[marginal]{footmisc}
+%\usepackage{threeparttable}
+%\usepackage{endnotes}
+\usepackage{tablefootnote}
 \begin{document}
 %	\renewcommand{\footnoterule}{\vspace*{-3pt} \hrule width \columnwidth height 3pt \vspace*{10pt}}
 %	勾股定理，参考于欧几里得\footnote{前325年-前265年}\\
@@ -15,12 +16,26 @@
 %	鸭子一只\footnote{量词}，小鸡一只\footnotemark[\value{footnote}]，燕子一只\footnotemark[\value{footnote}]
 %	
 %	\begin{tabular}{c c c}
-%		姓名 & 身高 & 体重\\
+%		\hline
+%		姓名 & 身高 & 体重\\\hline
 %		李磊 & 169 & 62\\
 %		张三 & 175 & 89\footnotemark[2]\\
-%		王麻子 & 162 & 70\footnotemark[2]\\
+%		王麻子 & 162 & 70\footnotemark[2]\\\hline
 %	\end{tabular}
+%	\caption{people info}
 %	\footnotetext[2]{严重偏胖}
+
+	\begin{table}
+	\centering
+	\begin{tabular}{c c c}
+		\hline
+		姓名 & 身高 & 体重\\\hline
+		李磊 & 169 & 62\\
+		张三 & 175 & 89\tablefootnote{非常肥胖}\\
+		王麻子 & 162 & 70\\\hline
+	\end{tabular}
+	\caption{people info}
+	\end{table}
 
 %\begin{threeparttable}
 %\caption{table label}
@@ -38,10 +53,10 @@
 %\end{tablenotes}
 %\end{threeparttable}
 
-南北朝时著名数学家祖冲之\endnote{公元429-500}发明了一种计算方法，从而得到了更为准确的圆周率\endnote{圆周长与直径之比}值。
-\renewcommand{\notesname}{本章注释}
-\theendnotes
-\setcounter{endnote}{0}
+%南北朝时著名数学家祖冲之\endnote{公元429-500}发明了一种计算方法，从而得到了更为准确的圆周率\endnote{圆周长与直径之比}值。
+%\renewcommand{\notesname}{本章注释}
+%\theendnotes
+%\setcounter{endnote}{0}
 
 \end{document}
 
@@ -60,21 +75,25 @@
 
 % \footnote[number]{comment}用于脚注，number为脚注编号，未提供时，使用系统自带脚注计数器，提供number时，不会引起脚注计数器增长；comment为对应脚注内容。
 % 注意事项：
-% 1.不能用于浮动环境、左右盒子
-% 2.可使用数学式、表格和插图
-% 3.不可包含抄录指令
-% 4.可使用等宽字体指令+字符串指令的方式处理带反斜杠的字符串\texttt{\string<content>}
-% 5.可使用书签指令/label
-% 6.可使用\interfootnotelinepenalty=<number>指定当前页可显示的书签数量
-% 7.多个注释对象使用同一个脚注 - 第一个注释对象使用\footnote{comment}，第二个以及之后对象使用\footnotemark[\value{footnote}]
-% 8.可使用\renewcommand{\thefootnote}{\alpha{footnote}}修改脚注计数器的计数形式。默认为阿拉伯数字，\alph为小写字母，\Alph为大写字母
-% 9.可使用\renewcommand\thefootnote{}删除脚注排序
+% 1.脚注标注不能用于浮动环境、左右盒子
+% 2.脚注标注不可用于表格
+% 3.脚注内容可使用数学式、表格和插图
+% 4.不可包含抄录指令
+% 5.可使用等宽字体指令+字符串指令的方式处理带反斜杠的字符串\texttt{\string<content>}
+% 6.可使用书签指令/label
+% 7.可使用\interfootnotelinepenalty=<number>指定当前页可显示的书签数量
+% 8.多个注释对象使用同一个脚注 - 第一个注释对象使用\footnote{comment}，第二个以及之后对象使用\footnotemark[\value{footnote}]
+% 9.可使用\renewcommand{\thefootnote}{\alpha{footnote}}修改脚注计数器的计数形式。默认为阿拉伯数字，\alph为小写字母，\Alph为大写字母
+% 10.可使用\renewcommand\thefootnote{}删除脚注排序
 
-% \footnotemark[number]用于脚注位置标记，可选参数指定脚注编号；footnotetext[number]{comment}用于给指定编号脚注配置注解内容
+% \footnotemark[number]用于脚注位置标记，可选参数指定脚注编号；footnotetext[number]{comment}用于给指定编号脚注配置注解内容。
 % 注意事项：
-% 1.可用于浮动环境、左右盒子
-% 2.可使用\renewcommand{\thefootnote}{\alpha{footnote}}修改脚注计数器的计数形式。默认为阿拉伯数字
-% 3.可使用\renewcommand\thefootnote{}删除脚注排序
+% 1.脚注标注不可用于浮动环境(如\begin{table}...\end{table}中)
+% 2.脚注标注可用于表格环境(如tabular)
+% 3.可使用\renewcommand{\thefootnote}{\alpha{footnote}}修改脚注计数器的计数形式。默认为阿拉伯数字
+% 4.可使用\renewcommand\thefootnote{}删除脚注排序
+
+% \tablefootnote[number]{comment}用于在表格环境内指定脚注，并且内嵌到\begin{table}...\end{table}环境。包含在tablefootnote宏包
 
 % 以下内容包含在footmisc宏包中。footmisc - 用于脚注格式
 % usepackage[args]{footmisc}，args可选参数列表：
