@@ -1,4 +1,5 @@
 settings.outformat="pdf";
+settings.tex="pdflatex";
 defaultpen(fontsize(10pt));
 label("Hello World");
 
@@ -8,6 +9,8 @@ label("Hello World");
 // "//"，为Asymptote的注释符号
 
 // settings.outformat="pdf";，生成pdf格式结果。默认为eps格式结果
+
+// settings.tex="pdflatex";，使用pdflatex作为latex引擎
 
 // defaultpen(fontsize(10pt));，配置字体大小。fontsize(10pt)返回对象pen
 

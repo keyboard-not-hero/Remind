@@ -1,31 +1,3 @@
-// 13.定义路径变量，变量类型：
-// path - 路径
-// pair - 坐标，格式为(x,y)
-// arrowbar - 箭头实例
-// int - 整数
-// real - 实数
-// draw((-0.1,0) -- (2,0),arrow=Arrow(TeXHead));
-// draw((0,-0.1) -- (0,2),arrow=Arrow(TeXHead));
-// path s = (0,0) .. (1,1) .. (2,sqrt(2));
-// draw(s);
-// fill(s -- (2,0) -- cycle);
-
-// 14.剪切，剪切后只剩余指定区域
-// path thebox = box((0,0),(1cm,1cm));
-// draw(thebox, blue);
-// draw(shift(.5cm,.5cm)*thebox,green);
-// clip(thebox);
-
-// 15.曲线的指定区域，subpath(p,x,x+dx)
-// path p = (0,0) .. (1,1) .. (2, sqrt(2));
-// draw(p,blue);
-// real x = 1.4;
-// real dx = .05;
-// draw(subpath(p,x,x+dx),red);
-// draw((x,0) -- (x,2),green);
-// draw((x+dx,0) -- (x+dx,2),green);
-
-
 // 16.获取线条相交点数组。方法：times(p,x) - 代表路径p与经过(x,0)的垂直线的相交点
 // path p = (-2,0) .. (0,7/4) .. (6/4,0) .. (0,-5/4) .. (-4/4,0) .. (0,3/4) .. (2/4,0) .. (0,-1/4) .. (0,0);
 // draw(p);

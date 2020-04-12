@@ -87,7 +87,7 @@ location /ray/ { # 与 V2Ray 配置中的 path 保持一致
             ]
           }
         ]
-      }
+      },
      
       "streamSettings": {
         "network": "ws",

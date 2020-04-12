@@ -13,3 +13,4 @@ draw(s,arr);
 // arrowbar - 箭头
 // real - 实数
 // pair - 坐标点 
+// int - 整数
