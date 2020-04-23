@@ -1,4 +1,0 @@
-1965年，由MIT(麻省理工)、美国通用电气、贝尔实验室联合发起Multics(Multiplexed Information and Computing System)系统项目，贝尔实验室于1969年退出该项目，后续由通用电气和MIT继续开发并成功销售，最后一台运行该系统的计算机于2000年停机。参考：https://www.multicians.org/
-1970年，由贝尔实验室的Ken Thompson和Dennis Ritchie开发处Unix系统。参考：http://www.unix.org
-1983年，Richard Stallman发起GNU开源运动，并于1985年10月成立FSF(Free Software Foundation)，Brian Fox成为第一位FSF员工，并开发出Bash(Bourne Again Shell)。参考：https://www.gnu.org/，https://www.fsf.org/
-1991年10月，Linus Torvalds在新闻组发布Linux内核。参考：https://www.linux.org

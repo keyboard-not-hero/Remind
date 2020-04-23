@@ -1,0 +1,16 @@
+软件包：software-properties-common
+
+指令：
+add-apt-repository - 从/etc/apt/sources.list文件或/etc/apt/sources.list.d目录添加/移除软件源
+
+语法
+add-apt-repository [option] ppa:<user>/<ppa-name>
+
+参数释义：
+    添加指定源到/etc/apt/sources.list(优先)或/etc/apt/sources.list.d(ppa:<user>/<ppa-name>)目录下
+
+-r    从/etc/apt/sources.list.d目录下删除指定源
+
+-y    确认所有选项
+
+-u    添加源后，更新源的可用软件信息(cache)，避免全局apt-get update

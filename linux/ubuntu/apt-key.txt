@@ -1,0 +1,39 @@
+包：gnupg2
+
+指令：
+apt-key - apt秘钥管理工具
+
+语法
+apt-key 
+
+参数释义
+add <filename>|-
+    从filename文件读取内容(支持标准输入-)，添加到信任秘钥列表
+
+del <key_id>
+    从信任秘钥列表删除
+
+export <key_id>
+    显示对应秘钥内容
+
+exportall
+    显示所有秘钥内容
+
+list, finger, fingerprint
+    显示信任秘钥的指纹
+
+adv
+    传递更高级选项给pgp
+
+net-update
+    更新gpg内容。
+    需要安装wget
+    只能在Ubuntu下工作
+
+
+保存位置
+/etc/apt/trusted.pgp
+/etc/apt/trusted.pgp.d/
+
+注意
+使用前提：apt>=1,4

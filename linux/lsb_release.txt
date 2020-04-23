@@ -1,0 +1,38 @@
+lsb_release - 显示发行Linux版本信息
+
+语法
+lsb_release [option]
+
+参数释义
+-a, --all
+    显示所有相关信息
+
+-c, --codename
+    显示codename栏
+
+-d, --description
+    显示description栏
+
+-h, --help
+    帮助信息
+
+-i, --id
+    显示发行版名称
+
+-r, --release
+    显示发行版本号
+
+-s, --short
+    只显示对应栏的值(不显示key)
+
+-v, --version
+    版本信息(默认参数)
+
+
+
+
+CentOS下安装
+yum install redhat-lsb-core
+
+Ubuntu下安装
+apt-get install lsb-core

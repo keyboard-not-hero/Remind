@@ -8,6 +8,6 @@ cmd关闭socks5代理
 unset ALL_PROXY
 
 测试代理：
-curl https://ip.cn
+curl www.google.com
 
 **无法使用ping进行测试，因为代理作用于TCP/UDP；而ping为ICMP，与IP位于同一ISO架构层级

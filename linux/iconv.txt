@@ -1,33 +1,23 @@
-iconv--convert text from one character encoding to another
+iconv - 将文本从一个编码转化为另一个编码
 
-参数释义：
--f    源文件编码
+语法
+iconv [option ...] [file ...]
 
--t    目标文件编码
+参数释义
+-f, --from-code=<encode>    源文件编码
 
--o    目标文件名，不指定则为stdout
+-t, --to-code=<encode>    目标文件编码
 
--l    支持的编码集合
+-o, --output=<file>     目标文件名，默认为stdout
 
-示例：
-iconv -f gb2312 -t utf-8 src.txt -o target.txt
+-c    忽略无效字符
 
-enca--detect and convert encoding of text files
+-l, --list    罗列支持的编码集合
 
-参数释义：
---list languages    罗列支持的语系及对应编码
+-?, --help    帮助信息
 
--L    标记文本所用语言
-
--c    自动选择目标编码为当前偏好编码
-
--x    目标编码
+-V, --version    版本信息
 
 示例：
-1.检测文本编码
-enca -L language file_name
-2.转化文本编码(in-place)
-enca -L language -x tar_encode file_name
-3.转化文本编码
-enca -L language -x tar_encode <in_file >out_file
+iconv -f gbk -t utf-8 src.txt -o target.txt
 

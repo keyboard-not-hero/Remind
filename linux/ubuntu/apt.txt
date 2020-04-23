@@ -6,7 +6,9 @@ apt [option] [package]
 参数释义
 update    更新容器的可安装包信息(从/etc/apt/sources.list)
 
-upgrade    更新已安装软件，不会卸载软件，当需要卸载其他以更新时，不会执行该软件更新
+upgrade    更新已安装软件，当需要卸载其他软件进行更新时，不会执行该软件更新
+
+full-upgrade    类似于upgrade，但需要卸载其他软件进行更新时，执行该操作
 
 install    安装软件
 
@@ -56,22 +58,5 @@ autoclean    清除无效的缓存安装包信息(保留有效信息)
 autoremove    自动移除依赖软件(当前不被依赖)
 
 -f install   修复问题
-
-软件包：software-properties-common
-指令
-add-apt-repository - 从/etc/apt/sources.list文件或/etc/apt/sources.list.d目录添加/移除软件源
-
-语法
-add-apt-repository [option] ppa:<user>/<ppa-name>
-
-参数释义：
-    添加指定源到/etc/apt/sources.list(优先)或/etc/apt/sources.list.d(ppa:<user>/<ppa-name>)目录下
-
--r    从/etc/apt/sources.list.d目录下删除指定源
-
--y    确认所有选项
-
--u    添加源后，更新源的可用软件信息(cache)，避免全局apt-get update
-
 
 源配置路径：/etc/apt/sources.list或/etc/apt/sources.list.d/

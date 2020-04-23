@@ -39,4 +39,4 @@ vi config.json
   ]
 }
 4.启动软件：
-./v2ray --config=config.json
+nohup ./v2ray --config=config.json &>/dev/null &

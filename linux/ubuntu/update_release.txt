@@ -1,0 +1,32 @@
+cmd更新
+1.更新容器
+sudo apt update
+
+2.更新软件
+sudo apt upgrade
+
+3.完整更新
+sudo apt full-upgrade
+
+4.移除不需要软件
+sudo apt autoremove
+
+5.重启
+sudo shutdown -r now
+
+6.选择是否支持非LTS版本
+vi /etc/update-manager/release-upgrades
+
+7.ubuntu release升级(软件:update-manager-core，发布一段时间后才能进行更新)
+do-release-upgrade -m desktop
+
+当出现以下提示：Failed to connect to https://changelogs.ubuntu.com/meta-release
+解决方案：sudo rm /var/lib/ubuntu-release-upgrader/release-upgrade-available
+
+18.04-->20.04
+GUI更新
+1.桌面左下角打开application列表，搜索update manager，进行软件更新
+
+2.点击界面的settings & livepath按钮，选择更新栏，在"有新版本时通知我"选择对应更新通知
+
+3.再次打开update manager(该选择需要在distribution发布一段时间后提示更新)

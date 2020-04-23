@@ -1,0 +1,62 @@
+swapon, swapoff - 启动/关闭swap
+
+语法
+swapon [option] [file|label|uuid]
+
+参数释义
+-a, --all
+    所有在/etc/fstab内的swap配置都生效
+
+-d, --discard[=once|=pages]
+    once代表整个swap空间进行更新
+    pages代表不可重用的swap页
+
+-e, --ifexists
+    忽略不存在的文件或设备
+
+-f, --fixpgsz
+    当swap页大小不匹配内核时，重新初始化swap空间
+
+-h, --help
+    帮助信息
+
+-L <label>
+    使用指定label的分区(借助/proc/partitions内容)
+
+-o, --options <opts>
+    fstab兼容的选项格式，以逗号分隔。如:
+    swapon -o pri=1,discard=pages,nofail /dev/sda2
+
+-p, --priority <pri>
+    swap空间的优先级，范围为-1~32767，值越高优先级越高，默认为-1
+
+-s, --summary
+    显示swap用例汇总
+
+--show[=column...]
+    显示可指定显示列的swap用例。可选列:
+    NAME - 设备文件或分区路径
+    TYPE - 设备类型
+    SIZE - swap大小
+    USED - 已使用字节数
+    PRIO - swap优先级
+    UUID - swap uuid
+    LABEL - swap label
+
+--noheadings
+    当使用--show选项时，不显示首行列名
+
+--raw
+    当使用--show选项时，不将列进行格式对齐
+
+--bytes
+    当使用--show选项时，以字节单位显示
+
+-U <uuid>
+    使用指定uuid的分区
+
+-v, --verbose
+    输出详细信息
+
+-V, --version
+    版本信息

@@ -68,7 +68,6 @@ ll /etc/yum.repos.d
 [root@vultr ~]# cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 
 [root@vultr nginx]# vi nginx.conf
-# 添加内容到server限定内
 server{
     location / {
         index index.php index.html index.htm;
@@ -137,7 +136,8 @@ wordpress环境部署：
   输入域名，证书信息写入/etc/nginx/nginx.conf
   是否将http重导向https
 
-**如果提示：UnicodeDecodeError: 'ascii' codec can't decode byte 0xe5 in position 1: ordinal not in range(128)。说明nginx配置文件中含中文(非ascii)字符
+** 如果提示：UnicodeDecodeError: 'ascii' codec can't decode byte 0xe5 in position 1: ordinal not in range(128)。
+** 说明nginx配置文件中含中文(非ascii)字符
 
 
 4.更新证书所有需要更新的证书(30天之内过期)

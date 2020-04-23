@@ -39,6 +39,7 @@ certbot revoke -cert-name <cert_name>
 
 删除与证书有关的内容
 certbot delete
+** 切记需删除nginx配置文件中与certbot有关的内容("#manage by certbot"后缀内容)
 
 静默安装(常用语cron排程)
 certbot --quiet renew
