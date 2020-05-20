@@ -1,0 +1,15 @@
+1.安装fcitx
+sudo apt install fcitx fcitx-config-gtk
+
+2.配置fcitx为默认框架
+im-config -n fcitx
+
+3.安装google拼音
+sudo apt install fcitx-googlepinyin
+
+4.重启
+
+5.配置输入法
+fcitx-config-gtk3
+反勾选"仅显示当前语言"
+选取Google拼音

@@ -4,11 +4,12 @@ switchyomega为浏览器拓展工具，用于代理导向，实现科学上网
 1.开启v2ray
 
 2.进入chrome设置 -- 高级 -- 系统代理 -- 手动配置 
-socks 127.0.0.1   1080
+linux - socks 127.0.0.1   1080
+Windows - 选择"代理"，127.0.0.1 1080。注意，Windows只支持http
 
 3.目前可以全局代理，如须PAC，继续如下步骤
 
-4.进入chrome拓展商店，搜索switchtyomega，添加拓展
+4.进入chrome拓展商店，搜索switchyomega，添加拓展
 
 5.下载配置文件，下载地址：https://raw.githubusercontent.com/wiki/FelisCatus/SwitchyOmega/GFWList.bak
 
@@ -18,4 +19,6 @@ socks 127.0.0.1   1080
 
 8.点击应用选项
 
-9.最后，点击浏览器的switchyomega拓展图标，选择自动切换
+9.点击浏览器的switchyomega拓展图标，选择自动切换
+
+10.最后，可关闭全局proxy配置，只是用浏览器switchyomega插件的PAC
