@@ -1,13 +1,22 @@
 函数：用于步骤封装(黑盒)或对重复代码提取(整洁)
 
+函数步骤
+1.定义函数
+def fun_name(formal_args):
+    statement
+    return None
+**定义函数时可指定返回值，默认为return None
+2.调用函数
+fun_name(actual_args)
+
 函数
 位置参数：
 def NAME(key1):
-STATEMENT
+    STATEMENT
 
 默认参数：
 def NAME(key1=value):
-STATEMENT
+    STATEMENT
 
 可变参数：
 def NAME(*args):
@@ -16,21 +25,21 @@ def NAME(*args):
 
 关键字参数：
 def NAME(**keywords):
-STATEMENT
+    STATEMENT
 **keywords代表将参数作为dictionary传递给函数
 
 命名关键字参数：
 def NAME(key1,*,key2)
-STATEMENT
+    STATEMENT
 key2为命名关键字参数，与位置参数需要*分隔(或者之间有可变参数分隔)
 
 嵌套函数：
 def outer_func():
-print(“this is out func”)
-def inner_func():
-print(“this is inner func”)
-print(“we are back to out func”)
-return inner_func
+    print(“this is out func”)
+    def inner_func():
+        print(“this is inner func”)
+    print(“we are back to out func”)
+    return inner_func
 
 装饰器(decolator)：
 from functools import wraps
@@ -98,3 +107,85 @@ pass
 >>> def f(ham: str, eggs: str = 'eggs') -> str:
 ...     print("Annotations:", f.__annotations__)
 
+
+built-in函数
+abs(x)
+    返回一个整数或小数的绝对值，或者复数的模
+    复数的模：实数与虚数系数的平方和，再开平方
+
+class float([x])
+    接受一个数字或字符串参数x，返回浮点数。当参数未提供时，返回浮点数0.0
+
+input([prompt])
+    接受一个可选的提示参数prompt，读取标准输入，返回一个该输入的字符串
+
+class int([x])
+class int(x, base=10)
+    接受一个数字或字符串参数x，返回指定进制整数。当参数未提供时，返回整数0
+
+len(s)
+    接受一个sequence或collection，返回其长度
+
+class list([iterable])
+    根据可迭代对象iterable生成一个list对象。当未提供参数时，生成空list
+
+open(file, mode='r', buffering=-1,encoding=None, errors=None, newline=None, closefd=True, opener=None)
+
+    file - 打开一个path字符串或file description格式指定的文件;
+
+    mode - 代表打开文件的方式。列表如下:
+        'r' - 以只读方式打开文件(默认方式)。当文件不存在时，抛出FileNotFoundError异常
+        'w' - 以只写方式打开文件(重新写入)。当文件不存在时，创建文件
+        'a' - 以只写方式打开文件(尾部添加)。当文件不存在时，创建文件
+        'x' - 用于创建文件，并可写入。当文件存在时，抛出FileExistsError异常
+        'b' - 以二进制模式打开文件
+        't' - 以文本模式打开文件(默认方式)
+        '+' - 添加在r/w/a/x之后，以读写模式打开文件
+
+    buffering - 可选buffer大小。列表如下:
+        0 - 关闭buffer，只能用于binary模式
+        1 - 选择行buffer，只作用于文本模式
+        [2,999999) - 指定buffer大小
+        binary和文本模式默认buffer:
+            binary - 使用固定buffer，可通过io.DEFAULT_BUFFER_SIZE查看
+            text - 为interactive文本文件时，即file object的isatty()返回True时，使用行buffer；其他的文本文件，同binary默认buffer一致
+
+    encoding - 当mode为文本模式时，将存储/读取文本操作使用指定编码方式进行编码/解码。默认使用locale.getpreferredencoding()返回的系统默认编码
+
+    errors - 当encode或decode出现错误时，反馈的方式。只能用于文本模式。列表如下:
+        'strict' - 抛出ValueError(子类)异常。默认的None与此项效果一致
+        'ignore' - 忽略无法编码/解码的字符
+        'replace' - 使用?替换无法编码/解码的字符
+        'surrogateescape' - 将任何编码异常的字符，使用Unicode编码范围为DC80~DCFF区间的字符代替
+        'xmlcharrefreplace' - 当编码不支持指定字符时，使用xml格式&#nnn代替。只能用于写入文件，即编码
+        'backslashreplace' - 使用\xnn替换编码异常的字符
+        'namereplace' - 使用\N{...}替换编码不支持的字符。只能用于写入文件。version 3.5加入
+    
+    newline - 换行符转化方式。只用于文本模式。列表如下:
+        当从文本中读取内容时:
+            None - 以'\n','\r','\r\n'结尾的换行符，都转化为'\n'
+            '' - '\n','\r','\r\n'都识别为换行符，但是不进行转化
+            other - 只有指定格式是被为换行符，并且不进行转化
+        当写入内容到文本时:
+            None - 将'\n'转化为系统默认的行分隔符，可通过os.linesep查看
+            '', '\n' - 没有转化过程
+            other - '\n'都转化为指定的换行符('\r', '\r\n') 
+
+    closefd - 当file为file description格式时，如果closefd为False，则file object使用close()时，不关闭file description；如果file为path字符串，closefd必须为True，否则抛出异常
+
+print(*object, sep=' ', end='\n', file=sys.stdout, flush=False)
+    打印object对象到指定流文件file(write(str)方法返回的类型)，使用sep分隔参数对象，并以end符号结束
+
+round(number[, ndigits])
+    返回number最接近精度为10^(-ndigits)的数。ndigits默认为0
+    当舍去位为5时，取最后一个精度位为偶数的数
+
+class str(object='')
+class str(object=b'', encoding='utf-8', errors='strict')
+    接受一个任意类型对象，并返回一个对应字符串。当提供encoding或errors参数时，对象类型必须为bytes
+    小数无法精确取值，会有细微差异
+
+class tuple([iterable])
+    根据可迭代对象iterable生成一个tuple对象。当未提供参数时，生成空tuple
+
+参考链接：https://docs.python.org/3/library/functions.html

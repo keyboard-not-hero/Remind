@@ -17,3 +17,8 @@ finally：
 
 raise Exception(args)：强制出现指定异常，并附带参数
 raise Exception写法，自动调用Exception的无参构造器
+
+常见异常
+ZeroDivisionError - 除数为0
+ValueError - 方法接收的参数为正确的类型，但是为错误的值
+IndexError - sequence(列表/元组)的索引超出范围

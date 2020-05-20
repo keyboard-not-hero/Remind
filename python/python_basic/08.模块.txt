@@ -1,0 +1,191 @@
+module
+模块即python程序文件(<module_name>.py)
+
+导入模块 - 使用<mod_name>.<func_name>方式调用函数
+import <module_name>
+
+从模块中导入方法 - 使用<func_name>方式调用函数
+form <module_name> import <func_name>/*
+**warning：*引进所有函数，但是以_开头的除外
+
+从包中导入模块
+from package import module/*
+**warning：*导入package下__init__.py文件内，包含在__all__列表下的module
+；如__all__未定义，则不导入模块。直接使用module不需要包含在__all__内
+**可使用相对路径导入
+导入模块建立别称
+import module as alias
+
+全局symbol表：当前使用模块的方法和变量
+局部symbol表：直接导入模块的方法和变量，但导入模块位于全局symbol表
+
+当module为使用import导入时，__name__为module名称；当module作为script运行时，__name__为”__main__”
+
+模块查找路径
+1.built-in module
+2.执行script所在路径(交互命令时，该字符串为空)
+3.PYTHONPATH路径
+4.安装路径(默认为prefix/python_version/Lib)
+**2/3/4为sys.path搜寻路径
+
+编译文件
+python为提高import速度，保存编译文件(.pyc)在模块父目录的__pycache__子目录下。编译文件包含32bit的big-endian数字，分别为magic number，用于代表VM编译版本；时间戳，用于与源文件进行编译时间比较
+相关优化参数：
+-O 减少编译文件大小
+-OO 减少编译文件大小，并省略doc string注释
+
+dir(module)：罗列出模块内定义的变量和方法。当没有参数时，罗列全局symbol表
+结合builtins模块，可罗列所有built-in内容
+
+package
+包用于规避新建模块与已有模块重名问题，每个包或子包下都有__init__.py文件
+
+
+
+常用模块
+random - 伪随机数字生成器
+
+function:
+random()
+    返回一个在区间[0.0,0.1)内的浮点数。其他函数的核心
+
+randrange(stop)
+randrange(start, stop[, step])
+    返回一个在区间[start,stop)内的整数，步长为1(整数默认为1)。当未提供start时，默认为0
+
+randint(a,b)
+    返回一个在闭区间[a,b]内的整数
+
+choice(seq)
+    从sequence类型seq中，返回一个随机元素
+
+
+sys - 访问编译器层级的变量
+
+variable:
+argv
+    指令行参数列表，argv[0]代表脚本名称，argv[1]代表第一个额外读取参数，以此类推
+
+function:
+exit([code])
+    以可选的退出码code退出python程序。code默认为0
+
+
+os - 具有可移植性的依赖于操作系统的方法
+
+variable:
+linesep
+    行分隔符
+
+name
+    操作系统名称，列表：posix/nt/java
+
+sep
+    目录层级分隔符
+
+supports_dir_fd
+    支持使用fd作为dir_fd参数的方法set
+
+supports_fd
+    支持使用fd作为path参数的方法set
+
+
+function:
+chdir(path)
+    切换到指定路径path下，path为字符串格式的路径
+
+exists(path)
+    指定文件/目录是否存在。当目标为sysbolic link，并且所指向的文件不存在时，返回False
+
+fchchir(fd)
+    类似于chdir，路径使用file description代替。需要使用os.supprots_fd查看是否支持
+
+getcwd()
+    返回当前工作目录的字符串形式
+
+getsize()
+    返回文件/目录的大小，单位为byte
+
+listdir(path='.')
+    列出指定路径path下的文件/目录名称，path默认为当前目录.
+
+makedirs(path, mode=0o777, exist_ok=False)
+    创建目标目录，并创建所需的父目录，新创建的目录使用mode-umask。当exist_ok为False时，如目标目录存在，抛出FileExistsError异常
+
+remove(path, *, dir_fd=None)
+    删除指定文件，当path为目录时，抛出IsADirectoryError异常。在Windows中，文件在使用中，进行删除会抛出异常。当dir_fd不为None时，指定fd目录，并且path为相对于fd目录的相对路径
+
+rmdir(path, *, dir_fd=None)
+    删除指定目录，当目录不存在或不为空时，抛出FileNotFoundError或OSError异常
+
+removedirs(name)
+    删除目录，并将空的父目录一并删除
+
+rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
+    将文件/目录src重命名为dst。Windows中，dst存在便抛出FileExistsError异常。Unix规则如下:
+        1.当src为文件，dst为已存在文件时，新内容覆盖原内容；
+        2.当src为文件，dst为已存在目录时，抛出IsAdirectoryError异常；
+        3.当src为文件，dst不存在时，直接进行重命名；
+        4.当src为目录，dst为已存在empty目录时，直接覆盖；
+        5.当src为目录，dst为已存在非empty目录时，抛出OSError异常；
+        6.当src为目录，dst为已存在文件时，抛出NotADirectoryError异常
+        7.当src为目录，dst不存在时，直接进行重命名
+    src_dir_fd为源文件的file description，此时src为相对于该fd的路径
+    dst_dir_fd为源文件的file description，此时dst为相对于该fd的路径
+
+walk(top, topdown=True, onerror=None, followlinks=False)
+    遍历目录树，树根为top，返回generator，其item为(dir, subdir_list, subfile_list)。topdown为True时，从根部向枝部遍历；False则为枝部向根部聚拢。onerror为方法，并携带一个OSError参数。followlinks为True时，支持继续遍历symbolic link指向的目录
+
+
+os.path - 路径操作方法
+abspath(path)
+    指定绝对/相对路径的绝对路径表示方法
+
+basename(path)
+    指定路径的最后一个'\'之后的字符串
+
+dirname(path)
+    指定路径的最后一个'\'之前的全部字符串
+
+join(path, *paths)
+    使用目录分隔符os.sep连接path和*paths，除了最后一个参数和''参数不带目录分隔符
+
+split(path)
+    将路径拆分为最后一个'\'之前和之后的字符串，并返回该两个字符串的元组
+
+
+codecs - 编码/解码定义和基础类
+
+
+shutil - 对文件和文件集进行的高级操作
+copy(src, dst, *, follow_symlinks=True)
+    将源文件src复制为目标文件dst，当dst为不存在或为已存在文件时，复制为文件(覆盖)；当dst为已存在目录时，复制到目标目录dst下。当follow_symlinks为True，如果src为symbolic link，则dst为硬链接；当follow_symlinks为False，如果src为symbolic link，则dst也为symbolic link
+
+copy2(src, dst, *, follow_symlinks=True)
+    类似于copy，但复制时保留文件metadata
+
+copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)
+    将根目录为src下的所有子目录和文件递归复制到目录dst下，如果目录dst不存在，则递归创建该目录及其父目录。返回目标目录
+    当symlinks为True，symbolic文件复制为symbolic文件；当symlinks为False，symbolic文件复制实际指向的文件，当实际指向的文件不存在时，抛出Error异常
+    ignore代表复制时忽略的文件function，shutil已通过shutil.ignore_patterns(*patterns)实现，传递所有忽略文件的通配符格式
+    copy_function代表使用的复制单个文件的function
+    ignore_dangling_synlinks用于指定当源文件为symbolic link文件，并且实际指向的文件不存在时，True代表不抛出异常
+    dirs_exist_ok代表当目标目录存在时，是否抛出异常。version 3.8新增
+
+move(src, dst, copy_function=copy2)
+    
+
+rmtree(
+
+
+需额外安装模块
+pyperclip - 在剪切板上进行复制或粘贴
+安装方法 - pip3 install pyperclip
+**Linux需额外安装xsel或xclip工具，并且可能需要gtk或PyQt4库
+
+function:
+copy(str)
+    复制字符串内容str到剪切板
+
+paste()
+    从剪切板读取内容

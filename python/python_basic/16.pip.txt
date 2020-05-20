@@ -1,7 +1,7 @@
 pip：从PyPI在线下载或更新内容
 
-pip更换源
-
+一、pip更换源
+永久更换
 1.Linux
 [thompson@~] mkdir .pip
 
@@ -23,13 +23,12 @@ trusted-host=mirrors.aliyun.com
 
 index-url=http://mirrors.aliyun.com/pypi/simple/
 
-
-安装pip：
-python2.7和3.4以后一般都自带pip
-
+临时更换
+pip3 install <package> -i http://mirrors.aliyun.com/pypi/simple/
 
 
-更新pip：
+
+二、更新pip：
 GNU/Linux:
 pip install --upgrade pip
 
@@ -39,8 +38,8 @@ python -m pip install -U pip
 **Windows下，当提示pip module not found，使用python –m ensurepip进行修复
 
 
-从pypi安装包和模块
 
+三、利用pip从pypi安装包和模块
 在线安装：
 pip install PACKAGE_NAME
 **第三方包安装到python_dir/lib/site-packages

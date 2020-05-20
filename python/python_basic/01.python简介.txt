@@ -18,11 +18,17 @@ python相对于其他语言(如C/C++/Java)的优点：
 在命令行输入python，进入python交互界面
 交互界面由首行提示符(>>>)和延续行提示符(…)组成
 
-Mac/Linux下指定源文件为python执行文件：
+Linux下指定源文件为python可执行文件
+#!/usr/bin/python3
+Mac下指定源文件为python可执行文件
 #!/usr/bin/env python3
+Windows下指定源文件为python可执行文件
+#!python3
 
 python默认源代码编码格式
-python源文件默认编码格式为UTF-8，也可以在文件首行或次行注明编码格式，格式如下：
+python源文件默认编码格式为UTF-8，在文件首行注明编码格式(当包含#!/usr/bin/env语句时，放置到第二行)，格式如下：
 # -*- coding: utf-8 -*-
+
+#之后的内容为注释
 
 python官方指南：https://docs.python.org/3/tutorial/index.html

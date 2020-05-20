@@ -90,7 +90,7 @@ I/IGNORECASE：不关心大小写的匹配
 
 L/Locale：适用于bytes模式，修改\b\w和IGNORECASE特征
 
-M/MULTILINE：如未提供该flag，则全体字符串视为一行
+M/MULTILINE：^和$作为每一行的开头和结尾。默认^和$视为所有字符串的开头和结尾；
 
 S/DOTALL：使.匹配所有字符，包括newline
 
@@ -98,7 +98,7 @@ X/VERBOSE：使pattern以更为易读方式书写(忽略空白符和#后的字�
 
 
 re模块方法：
-compile(pattern,flags=0)：编译一个正则匹配模式，返回Pattern对象
+compile(pattern,flags=0)：编译一个正则匹配模式，返回Pattern对象。flags可以使用'|'分隔多个常量
 
 search(pattern,string,flags=0)：从源字符串中匹配第一个符合正则pattern格式的字符串，返回Match对象
 
@@ -108,7 +108,7 @@ fullmatch(pattern,string,flags=0)：整个源字符串完整匹配正则pattern
 
 split(pattern, string, maxsplit=0, flags=0)：以正则pattern来分割源字符串，最大分割maxsplit次，其余以最后一个元素列出，返回的是list(若pattern为群组，则包含分割符部分)
 
-findall(pattern,string,flags=0)：从源字符串中匹配所有符合正则pattern格式的字符串，返回匹配内容的list。其中，item为group(1,2…)的元组，当不含group时，item为group 0
+findall(pattern,string,flags=0)：从源字符串中匹配所有符合正则pattern格式的字符串，返回匹配内容的list。当pattern含分组时，item为str的元组；当pattern不含分组时，item为str
 
 finditer(pattern,string,flags=0)：从源字符串中匹配所有符合正则pattern格式的字符串，以iterator(惰性列表)形式返回
 
@@ -125,18 +125,17 @@ groups：pattern中的组个数
 pattern：pattern的匹配源内容
 
 Pattern类方法：
+search(string[, pos[, end_pos]])：使用正则从字符串任意处匹配，可指定字符串参与匹配的起始点和终点[pos,end_pos)。返回Match对象
 
-search(string[,pos[,end-pos]])：使用正则从字符串任意处匹配，可指定字符串参与匹配的起始点和终点[pos,end-pos)
+match(string[, pos[, end_pos]])：使用正则从字符串起始处开始匹配，可指定字符串参与匹配的起始点和终点[pos,end_pos)
 
-match(string[,pos[,end-pos]])：使用正则从字符串起始处开始匹配，可指定字符串参与匹配的起始点和终点[pos,end-pos)
+fullmatch(string[, pos[, end_pos]])：使用正则匹配整个字符串，可指定字符串参与匹配的起始点和终点[pos,end_pos)
 
-fullmatch(string[,pos[,end-pos]])：使用正则匹配整个字符串，可指定字符串参与匹配的起始点和终点[pos,end-pos)
+split(string[, pos[, end_pos]])：使用正则分割字符串，可指定字符串参与分割的起始点和终点[pos,end_pos)
 
-split(string[,pos[,end-pos]])：使用正则分割字符串，可指定字符串参与分割的起始点和终点[pos,end-pos)
+findall(string[, pos[, end_pos]])：从字符串中匹配所有符合正则的内容，可指定字符串参与匹配的起始点和终点[pos,end_pos)。返回结果的list
 
-findall(string[, pos[, endpos]])：从字符串中匹配所有符合正则的内容，可指定字符串参与匹配的起始点和终点[pos,end-pos)
-
-finditer(string[, pos[, endpos]])：从字符串中匹配所有符合正则的内容，返回iterator，可指定字符串参与匹配的起始点和终点[pos,end-pos)
+finditer(string[, pos[, endpos]])：从字符串中匹配所有符合正则的内容，返回iterator，可指定字符串参与匹配的起始点和终点[pos,end_pos)
 
 sub(repl,string,count=0)：使用repl替换字符串中的正则匹配部分，替换count次
 
@@ -157,9 +156,9 @@ re：匹配pattern的原文
 string：用于匹配的原始字符串
 
 Match类方法： 
-group([group1,group2,…])：返回对应组内容(0为完整pattern匹配内容)，当参数有多个时，返回包含多个组的元组
+group([group1,group2,…])：返回对应组内容(0为完整pattern匹配内容)，当参数有多个时，返回包含多个分组的元组
 
-groups(default=None)：返回包含所有组的元组(1,2…)
+groups(default=None)：返回包含所有分组的元组(1,2…)
 
 groupdict(default=None)：返回key=组命名(?P<NAME>)，value=组的dictionary
 
