@@ -157,15 +157,21 @@ split(path)
 codecs - 编码/解码定义和基础类
 
 
-shutil - 对文件和文件集进行的高级操作
+shutil - 对文件和目录进行的高级操作
 copy(src, dst, *, follow_symlinks=True)
-    将源文件src复制为目标文件dst，当dst为不存在或为已存在文件时，复制为文件(覆盖)；当dst为已存在目录时，复制到目标目录dst下。当follow_symlinks为True，如果src为symbolic link，则dst为硬链接；当follow_symlinks为False，如果src为symbolic link，则dst也为symbolic link
+    将源文件(不能是目录)src进行复制
+        1.当dst为不存在或为已存在文件时，复制为文件(覆盖)；
+        2.当dst为已存在目录时，复制到目标目录dst下
+    当follow_symlinks为True，如果src为symbolic link，则dst为硬链接；当follow_symlinks为False，如果src为symbolic link，则dst也为symbolic link
 
 copy2(src, dst, *, follow_symlinks=True)
     类似于copy，但复制时保留文件metadata
 
 copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)
-    将根目录为src下的所有子目录和文件递归复制到目录dst下，如果目录dst不存在，则递归创建该目录及其父目录。返回目标目录
+    将根目录为src下的所有子目录和文件递归复制到目录dst下。返回目标目录。详细如下：
+        1.当src为文件，抛出NotADirectoryError
+        2.当src为目录，dst为已存在文件/目录时，抛出FileExistsError异常
+        3.当src为目录，dst不存在时，将src目录及子目录下的文件递归复制到目录dst
     当symlinks为True，symbolic文件复制为symbolic文件；当symlinks为False，symbolic文件复制实际指向的文件，当实际指向的文件不存在时，抛出Error异常
     ignore代表复制时忽略的文件function，shutil已通过shutil.ignore_patterns(*patterns)实现，传递所有忽略文件的通配符格式
     copy_function代表使用的复制单个文件的function
@@ -173,9 +179,18 @@ copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2, ignore_dang
     dirs_exist_ok代表当目标目录存在时，是否抛出异常。version 3.8新增
 
 move(src, dst, copy_function=copy2)
-    
+    将文件/目录递归移动到目标dst，返回目标路径
+    1.当src为文件，dst为已存在的目录，将文件src移动到目录dst下
+    2.当src为文件，dst为已存在的文件，将src重命名，并覆盖dst原内容
+    3.当src为文件，dst为不存在的文件，将src重命名为dst
+    4.当src为目录，dst为已存在的目录，将目录src的内容递归移动到目录dst下
+    5.当src为目录，dst为已存在的文件，抛出FileExistsError异常
+    6.当src为目录，dst为不存在的文件，重命名src目录
 
-rmtree(
+rmtree(path, ignore_errors=False, onerror=None)
+    向下递归删除目录，即使该目录不为空
+    当ignore_errors为False时，当由于权限等原因无法删除目录时，抛出异常，该异常可由onerror指定；当ignore_errors为True时，不抛出异常
+    
 
 
 需额外安装模块

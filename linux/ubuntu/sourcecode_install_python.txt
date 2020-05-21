@@ -63,14 +63,16 @@ python3编译：
 下载python
 [thompson@~] wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
 
-[thompson@~] sudo tar -Jxf Python-3.8.1.tar.xz -C /usr/src
+[thompson@~] sudo tar -Jxf Python-3.8.1.tar.xz -C /usr/local/src
 
 # 试编译
-[thompson@~] make distclean
+[thompson@~] cd /usr/local/src/Python3.8.1
 
-[thompson@~] ./configure --prefix=/usr/local/python3.8
+[thompson@3.8.1] sudo make distclean
 
-[thompson@~] make -j4
+[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3.8
+
+[thompson@3.8.1] sudo make -j4
 
 # 出现提示libssl.so.3和libcrypto.so.3 not found，这两个动态库属于程序openssl
 [thompson@~] ldd /usr/local/bin/openssl
@@ -78,25 +80,27 @@ python3编译：
     libcrypto.so.3 ==> not found
 
 # 解决方法：系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
-[thompson@~] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
-[thompson@~] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
+[thompson@3.8.1] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
+[thompson@3.8.1] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
 
 # 重新编译
-[thompson@~] make distclean
+[thompson@3.8.1] sudo make distclean
 
-[thompson@~] ./configure --prefix=/usr/local/python3.8
+[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3.8
 
-[thompson@~] make -j4
+[thompson@3.8.1] sudo make -j4
 
-[thompson@~] make test
+[thompson@3.8.1] sudo make test
 
-[thompson@~] sudo make install
+[thompson@3.8.1] sudo make install
 
-[thompson@~] sudo chown -R thompson:thompson /usr/local/python3.8
+[thompson@3.8.1] sudo chown -R thompson:thompson /usr/local/python3.8
 
-[thompson@~] sudo ln -s /usr/local/python3.8/bin/python3 /usr/bin/python3
+[thompson@3.8.1] sudo ln -s /usr/local/python3.8/bin/python3 /usr/bin/python3
 
-[thompson@~] sudo ln -s /usr/local/python3.8/bin/pip3 /usr/bin/pip3
+[thompson@3.8.1] sudo ln -s /usr/local/python3.8/bin/pip3 /usr/bin/pip3
+
+[thompson@3.8.1] sudo rm -rf /usr/local/src/Python3.8.1
 
 
 报错集：
@@ -114,19 +118,24 @@ python3编译：
 [thompson@~] sudo pip3 install pysocks
 
 3.安装完成后无法打开terminal，在ctrl+alt+F1输入gnome-terminal显示无'gi'模块
-解决：
+解决方法1：
 ## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
 ## 如不在该目录，使用find / -name gi查找
+## 只适用于3.7及以下python版本
 
-## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.8为例)
-[thompson@~] cd /usr/lib/python3/dist-packages/gi
+## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3.7时，对应与/usr/local/pytnon3.7/lib/python3.7/site-packages)
+[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3.7/lib/python3.7/site-packages
 
-[thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-38m-x86_64-linux-gnu.so
+## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例)
+[thompson@~] cd /usr/local/python3.7/lib/python3.7/site-packages/gi
 
-[thompson@gi] mv _gi.cpython-36m-x86_64-linux-gnu.so _gi.cpython-38m-x86_64-linux-gnu.so
+[thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-37m-x86_64-linux-gnu.so
 
-## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3.8时，对应与/usr/local/pytnon3.8/lib/python3.8/site-packages)
-[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3.8/lib/python3.8/site-packages
+[thompson@gi] mv _gi.cpython-36m-x86_64-linux-gnu.so _gi.cpython-37m-x86_64-linux-gnu.so
 
-**警告：由于ubuntu已将许多依赖库由python实现，所以自带的python3.6默认带有许多非python官方库，建议将该类库直接复制到自行安装python库目录下，语法如下：
-[thompson@gi] sudo cp -fr /usr/lib/python3/dist-packages/ /usr/local/python3.6/lib/python3.6/site-packages
+解决方法2：
+如果系统自带老旧版本python遗留，修改/usr/bin/gnome-terminal使用的python版本(python3.8只能使用该方案，方案一有许多库不完整)
+sudo vi /usr/bin/gnome-terminal
+#!/usr/bin/python3
+修改为
+#!/usr/bin/python3.6
