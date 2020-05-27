@@ -1,0 +1,5 @@
+HTTP本身是无状态协议，Cookie使得状态得以保存。
+
+原理：服务器保存一份cookie值，并且通过响应报文的header的Set-Cookie发送给客户端，客户端在下次报文的header中发送Cookie，即可向服务器证明自己的身份
+
+

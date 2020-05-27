@@ -1,0 +1,19 @@
+HTTP通过范围下载，实现断点续传的功能，避免重复下载字节
+
+原理：
+client - 通过在请求中添加Range首部，指定请求的字节范围。格式：Range: bytes=<start>-<end>
+
+server - 通过在响应中添加Content-Range首部，指定发送的字节范围，并表明文件的原始大小，响应状态为206 Partial Content。格式：Content-Range: bytes <start>-<end>/<res_totle_size>
+**范围下载中，字节从0开始，并且范围为闭区间[start,end]
+
+例：
+client
+GET /cat.jpg HTTP/1.1
+Host: www.humanesociety.org
+Range: bytes=100-200
+
+server
+HTTP/1.1 206 Partial Content
+Content-Type: image/jpeg
+Content-Range: bytes 100-200/141635
+Content-Length: 101

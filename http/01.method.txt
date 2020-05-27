@@ -1,0 +1,20 @@
+GET
+    从服务器获取资源
+
+POST
+    向服务器传送主体内容
+
+PUT
+    向服务器传输文件
+
+HEAD
+    类似于GET，但服务器只返回header
+
+DELETE
+    请求删除服务器的文件
+
+OPTIONS
+    询问服务器支持的方法
+
+TRACE
+    追踪路径

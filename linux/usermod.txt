@@ -4,44 +4,65 @@ usermod - 修改用户账号信息
 usermod [option] <user>
 
 参数释义：
--a, --append    将用户添加到附加群组，必须和-G一起使用
+-a, --append    
+    将用户添加到附加群组，必须和-G一起使用
 
--c, --comment    修改注释字段，/etc/passwd第五栏
+-c, --comment <comment>   
+    修改注释字段，/etc/passwd第五栏
 
--d, --home    用户家目录路径，配合-m一起使用
+-d, --home <dir>
+    用户家目录路径，配合-m一起使用
 
--e, --expiredate    账号失效日期，/etc/passwd第八栏
+-e, --expiredate <date>   
+    账号失效日期，/etc/passwd第八栏
 
--f, --inactive    密码失效一定天数后，无法登录所需天数，/etc/passwd第七栏
+-f, --inactive <days>   
+    密码失效一定天数后，无法登录所需天数，/etc/passwd第七栏
 
--g, --gid    用户初始群组
+-g, --gid <group>   
+    用户初始群组
 
--G, --groups    用户附属群组
+-G, --groups <group1>[, group2...]   
+    用户附属群组
 
--l, --login    更改用户登录名，家目录和邮件目录需要额外手动修改
+-l, --login <name>
+    更改用户登录名，家目录和邮件目录需要额外手动修改
 
--L, --lock    锁定用户密码
+-L, --lock 
+    锁定用户密码
 
--m, --move-home    修改用户的家目录，配合-d一起使用
+-m, --move-home    
+    修改用户的家目录，配合-d一起使用
 
--o, --non-unique    将用户ID修改为非唯一
+-o, --non-unique    
+    将用户ID修改为非唯一
 
--p, --password    配置用户密码，该密码为已加密密码格式，加密方式参考crypt(3)
+-p, --password <passwd>   
+    配置用户密码，该密码为已加密密码格式，加密方式参考crypt(3)
 
--R, --root    chroot应用
+-R, --root <chroot_dir>   
+    使用指定目录作为用户根目录
 
--s, --shell    重新指定shell
+-s, --shell <shell>   
+    重新指定shell
 
--u, --uid    修改用户的id
+-u, --uid <uid>
+    修改用户的id
 
--U, --unlock    解锁用户的密码
+-U, --unlock    
+    解锁用户的密码
 
--v, --add-subuids    给用户添加附属uid范围
+-v, --add-subuids <first>-<last>   
+    给用户添加附属uid范围
 
--V, -del-subuids    移除用户附属uid范围
+-V, -del-subuids <first>-<last>
+    移除用户附属uid范围
 
--w, --add-subgids    给用户添加附属gid范围
+-w, --add-subgids <first>-<last>
+    给用户添加附属gid范围
 
--W, --del-subgids    移除用户附属gid范围
+-W, --del-subgids <first>-<last>
+    移除用户附属gid范围
 
--Z, --selinux-user    用户默认的selinux规则
+-Z, --selinux-user <selinux_user>
+    用户默认的selinux规则

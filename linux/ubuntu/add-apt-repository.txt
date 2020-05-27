@@ -7,10 +7,28 @@ add-apt-repository - 从/etc/apt/sources.list文件或/etc/apt/sources.list.d目
 add-apt-repository [option] ppa:<user>/<ppa-name>
 
 参数释义：
+<null>    
     添加指定源到/etc/apt/sources.list(优先)或/etc/apt/sources.list.d(ppa:<user>/<ppa-name>)目录下
 
--r    从/etc/apt/sources.list.d目录下删除指定源
+-h, --help
+    帮助信息
 
--y    确认所有选项
+-k, --keyserver
+    使用自定义keyserver，用以代替默认
 
--u    添加源后，更新源的可用软件信息(cache)，避免全局apt-get update
+-m, --massive-debug
+    打印debug信息
+
+-r, --remove
+    从/etc/apt/sources.list.d目录下删除指定源。建议手动到该目录下删除文件
+
+-s, --enable-source
+    允许下载源代码包
+
+-u, --update
+    添加源后，更新源的可用软件信息(cache)，避免全局apt-get update
+
+-y, --yes
+    确认所有询问
+
+

@@ -22,3 +22,11 @@ raise Exception写法，自动调用Exception的无参构造器
 ZeroDivisionError - 除数为0
 ValueError - 方法接收的参数为正确的类型，但是为错误的值
 IndexError - sequence(列表/元组)的索引超出范围
+
+Python的错误称为反向追踪器，最先显示外部调用错误，末尾一般为内部调用错误(一开始出错的地方)
+
+
+断言
+语法：
+assert condition,
+statement

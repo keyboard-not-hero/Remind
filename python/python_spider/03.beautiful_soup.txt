@@ -1,0 +1,37 @@
+Beautiful Soup - 从HTML和XML文本中拉取数据
+安装 - pip3 install beautifulsoup4
+模块导入 - import bs4
+
+function:
+
+
+class
+bs4.BeautifulSoup
+variable:
+
+method:
+__init__()
+
+find_all(tag)
+
+get_text()
+
+prettify()
+    整齐排版的HTML/XML格式数据
+
+解析器优缺点
+解析器           使用方法               优点                  缺点
+Python标准库     BeautifulSoup(markup,  1.Python内置标准库    Python 2.7.3或3.2.
+                 "html.parser")         2.执行速度适中        2之前的版本容错能
+                                        3.容错能力强          力差
+lxml HTML解析器  BeautifulSoup(markup,  1.执行速度快          需要安装C语言库
+                 "lxml")                2.容错能力强
+lxml XML解析器   BeautifulSoup(markup,  1.执行速度快          需要安装C语言库
+                 "xml")                 2.唯一支持xml的解析器
+html5lib         BeautifulSoup(markup,  1.容错能力最强        1.执行速度慢
+                 "html5lib")            2.以浏览器的方式解析
+                                        3.生成HTML5格式的文档
+                                        4.不依赖外部拓展
+
+引用
+Beautiful Soup Official：https://www.crummy.com/software/BeautifulSoup/bs4/doc/

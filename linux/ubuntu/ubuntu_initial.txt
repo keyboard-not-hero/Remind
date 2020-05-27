@@ -33,8 +33,8 @@ steven@~$ xdg-user-dirs-gtk-update
 steven@~$ export LANG=zh_CN.UTF-8
 
 
-4.安装搜狗/google输入法
-参考目录下sogou_pinyin.txt或google_pinyin.txt文本
+4.安装搜狗/google/百度输入法
+参考目录下sogou_pinyin.txt/google_pinyin.txt/baidu_pinyin.txt文本
 
 
 5.安装谷歌浏览器
@@ -77,6 +77,7 @@ steven@~$ modprobe -r ideapad_laptop
 永久关闭
 steven@~$ vi /etc/modprobe.d/blacklist.conf
 blacklist ideapad_laptop
+
 
 8.Nvidia显卡驱动安装(拯救者Y7000笔记本)
 ## 更新pci列表
@@ -124,6 +125,7 @@ steven@~$ sudo ./NVIDIA-XXX.run --no-opengl-files
 是否使用xconfig自动更新? 否
 
 ## 重启
+
 
 9.使ubuntu 18.04下的nvidia独显可调整屏幕亮度
 cd /usr/share/X11/xorg.conf.d

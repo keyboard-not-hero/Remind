@@ -157,6 +157,12 @@ wordpress环境部署：
 # 删除已撤销证书相关文件
 [root@vultr ~]# certbot delete --cert-name <cert_name>
 
+certificates type:
+privkey.pem - private key
+cert.pem - public key
+chain.pem - chain key
+fullchain.pem - public key+chain key
+
 引用：
 [1]mariadb源：https://downloads.mariadb.org/mariadb/repositories
 [2]wordpress中文站点：https://cn.wordpress.org/txt-download/

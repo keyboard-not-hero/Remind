@@ -1,0 +1,134 @@
+HTTP报文种类分为请求报文和响应报文
+
+请求/响应报文通常由packet header(首部)和packet body(主体)组成。报文使用CR+LF作为换行符
+
+
+请求报文格式
+一、packet header:
+1.请求行，格式：GET /index.html HTTP/1.1
+2.请求首部字段
+3.通用首部字段
+4.实体首部字段
+二、packet body
+
+
+响应报文格式
+一、packet header:
+1.状态行，格式：HTTP/1.1 200 OK
+2.响应首部字段
+3.通用首部字段
+4.实体首部字段
+二、packet body
+**首部字段格式 - key:value1[, value2...]
+
+
+首部字段汇总
+1.通用首部字段(请求和响应报文都可以使用的首部)
+Cache-Control - 控制缓存的行为
+
+Connection - 管理客户端与源服务器的连接
+
+Date - 创建报文的时间
+
+MIME-Version - 发送端的MIME版本
+
+Trailer - 在使用分块传输的情况下，在最后一个数据包之后指定的校验和格式首部
+
+Transfer-Encoding - 指定报文主体的传输编码方式
+
+Update - 发送端想要使用的新版本协议
+
+Via - 报文经过的中间节点(代理、网关)
+
+2.请求首部字段
+Accept - 可接受的媒体类型
+
+Accept-Charset - 可接受的字符集
+
+Accept-Encoding - 可接受的压缩编码
+
+Accept-Language - 可接受的语言
+
+Authorization - 客户端发送给源服务器的认证信息
+
+Cookie - 客户端发送的cookie内容
+
+Cookie2 - 客户端支持的cookie版本
+
+Expect - 期待服务器的特定行为
+
+From - 客户端用户的电子邮箱
+
+Host - 接收请求的服务器的主机名和端口
+
+If-Match - 比较实体标记(ETag)
+
+If-Modified-Since - 比较资源的更新时间
+
+If-None-Match - 比较实体标记(与If-Match相反)
+
+If-Range - 服务器接受范围请求
+
+If-Unmodified-Since - 比较资源的更新时间(与If-Modified-Since相反)
+
+Max-Forwards - 在通往源服务器路径，允许通过代理或网关的最大次数。与TRACE请求一同使用
+
+Proxy-Authorization - 发送给代理服务器的认证信息
+
+Proxy-Connection - 管理客户端与代理服务器的连接
+
+Range - 字节范围请求
+
+Referer - 包含当前请求URI的文档的URI
+
+TE - 可使用的拓展传输编码
+
+User-Agent - 客户端程序相关信息
+
+3.响应首部字段
+Accept-Range - 针对当前资源，服务器接受的范围类型
+
+Age - 资源存在于代理服务器上的时间(单位秒)，代理服务器当前时间-响应中的Data header时间
+
+Proxy-Authenticate - 代理服务器返回的待认证列表
+
+Retry-After - 再次发起请求的间隔时间
+
+Server - 服务器的程序
+
+Set-Cookie - 服务器发送给客户端的cookie
+
+Title - HTML文档的标题
+
+Vary - 包含客户端请求包含的协商首部。如：Accept-Encoding
+
+Warning - 比原因短语更详细的警告文本
+
+WWW-Authenticate - 源服务器返回的待认证列表
+
+4.实体首部字段(请求和响应报文中都可以使用的首部)
+Allow - 针对该资源可以进行的请求方法
+
+Location - 重定向URI
+
+Content-Base - 解析主体中的相对URL时，使用的基础URL
+
+Content-Encoding - 主体的压缩编码格式
+
+Content-Language - 主体的语言
+
+Content-Length - 主体的长度
+
+Content-MD5 - 主体的校验和
+
+Content-Range - 主体内容在完整资源中的字节范围
+
+Content-Type - 主体的对象类型
+
+ETag - 用于与请求进行匹配，缓存资源版本的ID
+
+Expires - 缓存资源需重新从源服务器获取的时间
+
+Last-Modified - 缓存资源上次被修改的时间
+
+

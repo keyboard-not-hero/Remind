@@ -1,0 +1,23 @@
+1.下载百度输入法Linux版
+下载地址：https://srf.baidu.com/site/guanwang_linux/index.html
+
+2.解压缩
+unzip Ubuntu_Deepin-fcitx-baidupinyin-64.zip -d baidupinyin
+
+3.安装fcitx和依赖
+sudo apt install fcitx fcitx-bin fcitx-config-gtk qtcreator
+
+4.配置fcitx为默认框架
+im-config -n fcitx
+
+5.安装百度拼音
+sudo dpkg -i fcitx-baidupinyin.deb
+
+6.解决依赖
+sudo apt -f install
+sudo dpkg -i fcitx-baidupinyin.deb
+
+7.reboot
+
+8.卸载百度拼音
+sudo dpkg --purge remove fcitx-baidupinyin:amd64

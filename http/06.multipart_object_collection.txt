@@ -1,0 +1,23 @@
+邮件系统的MIME由于使用了Multipart object collection的方法，实现多种不同类型数据的同时发送/接收，HTTP也实现了该方法
+
+HTTP的响应在Content-Type header中，指定下列两种值来指定：
+1.multipart/form-data
+在Web表单文件发送时使用
+
+2.multipart/byteranges
+返回的状态码为206 Partial Content，用于包含多个范围内容
+
+并且，在Content-Type键的值中，使用boundary来指定多个数据的分界
+'--<boundary_str>'放置于数据之前，代表数据起始
+'--<boundary_str>--'放置于最后一个数据之后，代表所有数据的结束
+例：
+<header>
+HTTP/1.1 206 Partial Content
+Content-Type:multipart/byteranges;boundary=THIS_IS_BOUNDARY
+
+<body>
+--THIS_IS_BOUNDARY
+<pic_body>
+--THIS_IS_BOUNDARY
+<moive_body>
+--THIS_IS_BOUNDARY--

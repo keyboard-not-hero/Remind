@@ -61,7 +61,6 @@ choice(seq)
 
 
 sys - 访问编译器层级的变量
-
 variable:
 argv
     指令行参数列表，argv[0]代表脚本名称，argv[1]代表第一个额外读取参数，以此类推
@@ -72,7 +71,6 @@ exit([code])
 
 
 os - 具有可移植性的依赖于操作系统的方法
-
 variable:
 linesep
     行分隔符
@@ -88,7 +86,6 @@ supports_dir_fd
 
 supports_fd
     支持使用fd作为path参数的方法set
-
 
 function:
 chdir(path)
@@ -110,10 +107,13 @@ listdir(path='.')
     列出指定路径path下的文件/目录名称，path默认为当前目录.
 
 makedirs(path, mode=0o777, exist_ok=False)
-    创建目标目录，并创建所需的父目录，新创建的目录使用mode-umask。当exist_ok为False时，如目标目录存在，抛出FileExistsError异常
+    创建目标目录，并创建所需的父目录，新创建的目录使用mode-umask
+    当exist_ok为False时，如目标目录存在，抛出FileExistsError异常
 
 remove(path, *, dir_fd=None)
-    删除指定文件，当path为目录时，抛出IsADirectoryError异常。在Windows中，文件在使用中，进行删除会抛出异常。当dir_fd不为None时，指定fd目录，并且path为相对于fd目录的相对路径
+    删除指定文件，当path为目录时，抛出IsADirectoryError异常
+    在Windows中，文件在使用中，进行删除会抛出异常
+    当dir_fd不为None时，指定fd目录，并且此时path为相对于fd目录的相对路径
 
 rmdir(path, *, dir_fd=None)
     删除指定目录，当目录不存在或不为空时，抛出FileNotFoundError或OSError异常
@@ -134,10 +134,14 @@ rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
     dst_dir_fd为源文件的file description，此时dst为相对于该fd的路径
 
 walk(top, topdown=True, onerror=None, followlinks=False)
-    遍历目录树，树根为top，返回generator，其item为(dir, subdir_list, subfile_list)。topdown为True时，从根部向枝部遍历；False则为枝部向根部聚拢。onerror为方法，并携带一个OSError参数。followlinks为True时，支持继续遍历symbolic link指向的目录
+    遍历目录树，树根为top，返回generator，其item为(dir, subdir_list, subfile_list)，dir为以top为根目录的当前file所在的目录
+    topdown为True时，从根部向枝部遍历；False则为枝部向根部聚拢
+    onerror为方法，并携带一个OSError参数
+    followlinks为True时，支持继续遍历symbolic link指向的目录
 
 
 os.path - 路径操作方法
+function:
 abspath(path)
     指定绝对/相对路径的绝对路径表示方法
 
@@ -146,6 +150,9 @@ basename(path)
 
 dirname(path)
     指定路径的最后一个'\'之前的全部字符串
+
+getsize(path)
+    返回指定文件的大小，单位为bytes。当文件不存在不可访问时，抛出OSError异常
 
 join(path, *paths)
     使用目录分隔符os.sep连接path和*paths，除了最后一个参数和''参数不带目录分隔符
@@ -190,6 +197,32 @@ move(src, dst, copy_function=copy2)
 rmtree(path, ignore_errors=False, onerror=None)
     向下递归删除目录，即使该目录不为空
     当ignore_errors为False时，当由于权限等原因无法删除目录时，抛出异常，该异常可由onerror指定；当ignore_errors为True时，不抛出异常
+
+
+zipfile - 创建/读取/写入/添加/罗列一个ZIP文件
+function:
+ZipFile(file, mode='r', compression=ZIP_STORED, allowZip64=True, compresslevel=None, *, strict_timestamps=True)
+    打开一个ZIP文件
+    mode为打开方式，列表：
+        'r' - 以只读方式
+        'w' - 以覆盖的写入方式
+        'a' - 以添加的写入方式
+        'x' - 以创建并写入的方式。文件存在抛出FileExistsError异常
+
+traceback - 提取、格式化和打印追踪栈信息
+function:
+format_exc()
+    获取追踪栈信息
+
+print_exc()
+    打印追踪栈信息
+
+
+webbrowser - 显示基于web的文档
+function:
+open(url, new=0, autoraise=True)
+    使用浏览器打开url地址
+    当new=0，浏览器使用当前窗口打开页面；当new=1，浏览器使用新窗口打开页面；当new=2，浏览器在当前窗口打开新tab
     
 
 
@@ -197,10 +230,16 @@ rmtree(path, ignore_errors=False, onerror=None)
 pyperclip - 在剪切板上进行复制或粘贴
 安装方法 - pip3 install pyperclip
 **Linux需额外安装xsel或xclip工具，并且可能需要gtk或PyQt4库
-
 function:
 copy(str)
     复制字符串内容str到剪切板
 
 paste()
     从剪切板读取内容
+
+
+send2trash - 将文件发送到trash
+安装方法 - pip3 install send2trash
+function:
+send2trash(path)
+    将指定文件/目录递归发送到trash

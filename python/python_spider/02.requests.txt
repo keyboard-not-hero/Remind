@@ -1,0 +1,205 @@
+requests - python第三方网络请求库，用于下载网页源代码
+安装库 - pip3 install requests
+模块导入 - import requests
+
+method:
+request(method, url, **kwargs)
+    使用指定HTTP的method请求方法。返回Response对象
+    method - 字符串格式，发起请求的类型，如：GET/POST/PUT/HEAD/DELETE/PATH/OPTIONS
+    url - 访问地址url
+    kwargs列表：
+        params - 字典格式，以'?key1=val1&key2val2'格式append到url请求中
+        data - 字典格式，post请求的http正文内容
+        json - json格式，post请求的http正文内容
+        headers - 字典格式，请求的http header内容
+        cookies - 字典格式或CookieJar对象
+        files - 用于multipart object，格式为{name: file_object}字典形式，其他形式：{name: (filename, file_object)}/{name: (filename, file_object, content_type)}
+        auth - tuple格式的认证信息，认证类型为Basic/Digest/Custim
+	timeout - 字符串格式，接收资源等待超时；tuple模式，(connect_timeout,read timeout)
+        allow_redirects - 是否允许重定向
+        proxies - 代理，格式为{protocol: URL} 
+        verify - 验证SSL服务器证书。可以为boolean或str格式。当为boolean，是否验证服务器的TLS证书；当为str，为指定CA Bundle文件或可信任CA证书在服务器上的路径。默认为True
+        stream - 是否为流下载。为True时，只下载header并保持连接，使用Response.content再下载主体
+	cert - SSL客户端证书。可以为str或tuple。当为str，为证书在本地的路径；当为tuple时，格式为(cert_file_path, key_file_path)
+
+head(url, **kwargs)
+    使用HTTP的HEAD请求方法。返回Response对象
+
+get(url, params=None, **kwargs)
+    使用HTTP的GET请求方法。返回Response对象
+    params - 字典格式，以'?key1=val1&key2val2'格式append到url请求中
+
+post(url, data=None, json=None, **kwargs)
+    使用HTTP的POST请求方法。返回Response对象
+    data - 字典格式，post请求的http正文内容
+    json - json格式，post请求的http正文内容
+
+put(url, data=None, **kwargs)
+    使用HTTP的PUT请求方法。返回Response对象
+    data - 字典格式，put请求的http正文内容
+    
+patch(url, data=None, **kwargs)
+    使用HTTP的PATCH请求方法。返回Response对象
+    data - 字典格式，patch请求的http正文内容
+
+delete(url, **kwargs)
+    使用HTTP的DELETE请求。返回Response对象
+
+
+class:
+requests.models.Response
+variable:
+apparent_encoding
+    当响应首部不包含编码，根据网页返回的内容，推测出的编码格式，由charade/chardet库提供
+
+content
+    服务器返回的网页内容，bytes格式
+
+cookies
+    服务器返回的RequestsCookieJar对象
+
+elapsed
+    发出请求和响应到达的时间差
+
+encoding=None
+    指定用于解码服务器返回内容的编码格式，或返回当前编码格式
+
+headers
+    返回CaseInsensitiveDict对象，Dict的item为服务器返回的header键值对
+
+is_permanent_redirect
+    是否为永久重定向
+
+is_redirect
+    是否为重定向
+
+ok
+    当服务器返回状态码小于400为True，否则为False
+
+raw
+    返回urllib3.response.HTTPResponse
+    需要在请求方法中使stram=True
+
+reason
+    服务器返回的文本状态信息
+
+request
+    返回PreparedRequest对象，该对象为请求报文内容
+
+status_code
+    服务器返回的数字状态码
+
+text
+    服务器返回的网页信息，str格式
+
+url
+    服务器最终定位的访问页面
+
+method:
+close()
+    将连接释放会连接池
+
+iter_content(chunk_size=1, decode_unicode=False)
+    返回generator，每个item的内容大小为chunk_size
+    当decode_unicode为True时，将内容解码为str
+    **HTTP请求方法的stream必须为True
+
+json(**kwargs)
+    返回解码为json格式的内容
+    kwargs列表，参考json.loads()
+    当Response不包含可转化为json的内容时，抛出ValueError异常
+    **       encode        encode
+    ** json --------> str --------> bytes
+
+raise_for_status()
+    当服务器返回正常状态码时，无异常发生；当服务器返回错误状态码时，抛出HTTPError异常
+
+
+requests.PreparedRequest
+variable:
+body
+    请求报文主体
+
+headers
+    请求报文首部字典
+
+method
+    请求方法类型
+
+url
+    请求的完整URL
+
+
+requests.Session
+variable:
+auth
+    tuple格式验证信息
+
+cert
+    客户端证书信息，可以为str或tuple格式，详细见requests.request参数
+
+cookies
+    请求中的cookies信息
+
+headers
+    不在乎大小写的请求首部字典
+
+params
+    URL携带的额外参数内容，以字典形式表示 
+
+proxies=None
+    设置代理信息，或获取代理信息，以{"protocol","host:port"}字典格式表示
+
+stream=None
+    设置请求是否为stream格式，或获取stream信息
+
+verify
+    验证服务器的SSL证书，参考requests.request对应参数
+
+method:
+Session()
+    构造Session对象
+
+close()
+    关闭session
+    
+delete(url, **kwargs)
+    发送DELETE方法的请求，返回Response对象
+
+get(url, **kwargs)
+    发送GET方法的请求，返回Response对象
+
+head(url, **kwargs)
+    发送HEAD方法的请求，返回Response对象
+
+options(url, **kwargs)
+    发送OPTIONS方法的请求，返回Response对象
+
+patch(url, data=None, **kwargs)
+    发送PATCH方法的请求，返回Response对象
+
+post(url, data=None, json=None, **kwargs)
+    发送POST方法的请求，返回Response对象
+
+put(url, data=None, **kwargs)
+    发送PUT方法的请求，返回Response对象
+
+request(method, url, params=None, data=None, headers=None, cookies=None, files=None, auth=None, timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None, json=None)
+    发送指定方法的请求，返回Response对象
+    参数列表，参考requests.request参数
+
+
+注意事项：
+**网页内容保存为二进制文件，即open(path, 'wb')
+**requests的根证书需要随着requests的更新而更新，所以建议使用certifi包，并经常更新，可从PyPI获取
+**requests 2.10.0之后新增对socks的支持：
+**    安装方法：pip3 install requests[socks]    
+**    配置方法：proxies = {'https': 'socks5://user:passwd@host:port'}
+**当响应首部不包含编码方式时，使用charade/chardet猜测编码。不进行猜测情况汇总：
+**    1.包含Content-Encoding首部，此时编码为Content-Type首部charset值。默认为utf-8
+**    2.Content-Type首部不包含charset值，并且包含text值。此时默认为utf-8
+
+
+引用：
+requests readthedocs：https://requests.readthedocs.io/en/master/
+certifi.io：https://certifi.io/en/latest/

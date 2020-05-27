@@ -116,6 +116,14 @@ abs(x)
 class float([x])
     接受一个数字或字符串参数x，返回浮点数。当参数未提供时，返回浮点数0.0
 
+dir([object])
+    当不包含参数时，返回当前namespace的变量/方法名称列表；当object为模块名称时，返回指定模块的变量/方法名称列表；当oeject为对象时，返回对象的变量/方法名称列表
+    调用模块的__dir__()方法。没有则调用__dict__变量
+
+help([object])
+    当不提供object时，进入交互式帮助模式
+    当提供object时，object可以为module/function/class/method/keyword/object，打印相关帮助信息
+
 input([prompt])
     接受一个可选的提示参数prompt，读取标准输入，返回一个该输入的字符串
 
@@ -188,4 +196,6 @@ class str(object=b'', encoding='utf-8', errors='strict')
 class tuple([iterable])
     根据可迭代对象iterable生成一个tuple对象。当未提供参数时，生成空tuple
 
-参考链接：https://docs.python.org/3/library/functions.html
+引用：
+official function tutorial：https://docs.python.org/3/library/functions.html
+the difference between function and method：https://stackoverflow.com/questions/155609/whats-the-difference-between-a-method-and-a-function

@@ -1,5 +1,5 @@
 urllib--python原生库
-1.request模块(该模块使用HTTP/1.1并携带connection:close头部)
+1.request模块(该模块使用HTTP/1.1)
 导入方法：
 import urllib.request
 方法：

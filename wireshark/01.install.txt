@@ -1,0 +1,15 @@
+Ubuntu
+1.安装
+sudo apt install wireshark
+
+弹窗提示时，选择'yes'允许普通用户检测接口，选择'no'只允许root用户检测接口
+
+2.将用户添加进群组
+sudo usermod -a -G wireshark $USER
+
+3.确认用户已在群组
+groups
+
+引用：
+docs：/usr/share/doc/wireshark-common/README.Debian
+User's Guide：https://www.wireshark.org/docs/wsug_html_chunked/index.html

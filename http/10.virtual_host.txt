@@ -1,0 +1,16 @@
+虚拟主机 - 可以使用不同域名(或同域名不同路径)将一台主机作为多个web站点
+
+虚拟主机类型
+1.IP address-based virtual host - 针对每个站点，都有一个专门的IP，主机需要多个网卡接口
+缺点
+    需要多个网卡接口，并且站点数量受网卡接口数量限制
+
+2.Name-based virtual host - 可以使用一个IP访问多个站点，但client必须支持HTTP/1.1(或实现HTTP/1.1拓展的HTTP/1.0版本)，使得请求包含Host header
+优点
+    不需要过多的网卡接口
+
+3.Dynamic virtual host - 使用一个域名来访问多个站点，client必须支持HTTP/1.1(或实现HTTP/1.1拓展的HTTP/1.0)，使得请求包含Host header
+优点
+    添加站点不需要修改配置文件
+缺点
+    所有站点使用相同log文件
