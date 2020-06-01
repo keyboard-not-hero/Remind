@@ -49,6 +49,8 @@
 
 :set autoindent    自动对齐(<enter>后根据上一行对齐)
 
+:set shiftwidth    使用autoindent时，下一行相对于上一行的内层缩进
+
 :set tabstop=NUM    配置tab所占的空格数(修改已存在的tab，每次打开文件都需要设置)
 
 :set softtabstop=NUM    配置tab所占的空格数(只适用于配置后的tab)

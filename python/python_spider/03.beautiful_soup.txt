@@ -2,22 +2,326 @@ Beautiful Soup - 从HTML和XML文本中拉取数据
 安装 - pip3 install beautifulsoup4
 模块导入 - import bs4
 
-function:
-
-
 class
 bs4.BeautifulSoup
 variable:
+<Tag_name>
+    下一级的第一个目标Tag
+
+contents
+    子节点列表
+
+children
+    子节点list_iterator
+
+descendants
+    所有节点，格式为generator
+
+original_encoding
+    猜测得出的内容编码
+
+stripped_strings
+    所有提出前后空格的字符串，格式为generator
 
 method:
-__init__()
+__init__(markup='', features=None, builder=None, parse_only=None, from_encoding=None, exclude_encodings=None, element_classes=None, **kwargs)
+    构造BeautifulSoup对象
+    markup = 要解析的str/bytes文本或者file-object
+    features - 解析器类型(lxml/html5lib/html.parser/lxml-xml)
+    parse_only - 只转化指定tag，不直接转化所有内容。传入实参为SoupStrainer对象
+    from_encoding - 指定doc的编码字符串，用于解码
+    exclude_encodings - 排除的doc编码，格式为列表。BeautifuSoup 4.4.0引入
+    kwargs列表：
+        store_line_numbers - 保存标签起始行数和字符偏移。只有html5lib和bulti-in支持。BeautifulSoup 4.8.1引入
 
-find_all(tag)
+find_all(Tag)
+    获取所有符合该名称的Tag，以列表形式返回
 
 get_text()
+    获取所有子孙节点Tag所包含的字符串内容，返回组合的字符串
+
+new_Tag(name, namespace=None, nsprefix=None, attrs={}, sourceline=None, sourcepos=None, **kwattrs)
+    创建一个新Tag，该Tag与BeautifulSoup对象连接，只能在其内使用
+    name - Tag的名称，字符串格式
+    attrs - 字典形式的Tag属性键值对
+    kwattrs - 关键字参数形式的Tag属性键值对
+
+prettify(encoding=None, formatter='minimal')
+    整齐排版的BeautifulSoup
+    encoding - 返回内容的编码格式，默认为Unicode string
+
+
+bs4.SoupStrainer
+method:
+__init__(name, attrs, string, **kwargs)
+    构造指定SoupStrainer对象
+    参数参考bs4.element.Tag.find_all()
+
+
+bs4.element.Tag
+variable:
+<Tag_name>
+    获取下一级的第一个目标Tag
+
+attrs
+    获取标签属性的键值对
+
+contents
+    当前Tag下的NavigableString字符串列表
+
+decomposed
+    Tag是否被移除
+    Beautiful Soup 4.9.0引入
+
+name
+    设置标签名称，或获取标签名称
+
+next_element
+    获取下一个元素节点，查找规则：先从子节点深入，最深处再跳转到最内层兄弟节点。可以持续跳转到最外层
+    **当跳转到兄弟节点时，通常需要多(n)个</Tag>后的'\n'，需调用n+1次
+
+next_elements
+    获取后续所有节点，格式为generator
+
+next_sibling
+    获取下一个兄弟节点
+    **通常一个节点为分隔兄弟节点的</Tag>后的'\n'符，需连续调用两次
+
+next_siblings
+    获取后续所有兄弟节点，格式为generator
+    **含多余'\n'符项
+
+parent
+    获取父节点Tag
+
+parents
+    获取所有的直系祖宗节点，格式为generator
+
+previous_element
+    获取上一个元素。与next_element正相反，先跳转到兄弟节点的最内层节点，然后再往外层节点。可以持续跳转到最外层
+    **跳转到兄弟节点最内层时，需要多个(n)</Tag>后的'\n'，即调用n+1次
+
+previous_elements
+    获取之前所有节点，格式为generator
+
+previous_sibling
+    获取上一个兄弟节点
+    **通常一个节点为分隔兄弟节点的</Tag>后的'\n'符，需连续调用两次
+
+previous_siblings
+    获取之前所有兄弟节点
+    **含多余'\n'符项
+
+sourceline
+    tag起始的行数
+    解析器支持：
+        1.lxml不支持
+        2.html5lib以tag起始中的>为准
+        3.html.parser以tag起始中的<为准
+    需要BeautifulSoup构造器的store_line_numbers参数为True
+
+sourcepos
+    tag起始行的字符偏移
+    解析器支持：
+        1.lxml不支持
+        2.html5lib以tag起始中的>为准
+        3.html.parser以tag起始中的<为准
+    需要BeautifulSoup构造器的store_line_numbers参数为True
+
+sourcepos
+    tag起始行的字符偏移，xml不支持，html5lib
+
+string
+    获取或配置标签的正文字符串，字符串格式为NavigableString
+    当该标签下包含多级NavigableString时，返回None
+
+strings
+    获取子孙节点下的所有NavigableString，格式为generator
+
+stripped_strings
+    类似于strings，但删除多余的空格(推荐)
+
+method:
+append(str)
+    为当前Tag的NavigableString数组尾部添加字符串
+
+clear()
+    移除当前Tag的NavigableString对象
+
+decompose()
+    移除当前Tag
+
+extend(list)
+    为当前Tag的NavigableString数组尾部添加字符串数组
+
+extract()
+    移除当前Tag，并返回移除的Tag对象
+
+find(name, attrs, recursive, string, **kwargs)
+    获取后续第一个符合name(string)的Tag或符合string的NavigableString子孙节点内容
+    参数参考find_all()
+
+find_all(name, attrs, recursive, string, limit, **kwargs)
+    获取后续所有符合name的Tag(string)或符合string的NavigableString子孙节点内容，返回ResultSet对象
+    name - 符合条件的查找条件，可选列表：
+        str - 符合条件的Tag
+        re - 使用正则表达式匹配Tag
+        list - 符合条件的Tag的列表，也可以为tuple或set
+        True - 所有Tag都匹配
+        function - 函数只能有一个参数Tag，返回boolean
+    attrs - dict格式的属性键值对
+    recursive - 是否递归查找子孙节点，False代表只查找子节点，默认为True
+    string - 搜索Tag中的NavigableString。bs 4.4.0中引进，之前版本为text
+    limit - 限制搜索并返回的结果数量
+    kwargs - 所有不包含在必选参数中的参数名称，皆识别为Tag的属性，attr的值匹配方式与name参数相同
+
+find_next_sibling(name, attrs, string, **kwargs)
+    查找下一个符合指定的兄弟节点Tag
+
+string
+    获取或配置标签的正文字符串，字符串格式为NavigableString
+    当该标签下包含多级NavigableString时，返回None
+
+strings
+    获取子孙节点下的所有NavigableString，格式为generator
+
+stripped_strings
+    类似于strings，但删除多余的空格(推荐)
+
+method:
+append(str)
+    为当前Tag的NavigableString数组尾部添加字符串
+
+clear()
+    移除当前Tag的NavigableString对象
+
+decompose()
+    移除当前Tag
+
+extend(list)
+    为当前Tag的NavigableString数组尾部添加字符串数组
+
+extract()
+    移除当前Tag，并返回移除的Tag对象
+
+find(name, attrs, recursive, string, **kwargs)
+    获取后续第一个符合name(string)的Tag或符合string的NavigableString子孙节点内容
+    参数参考find_all
+
+find_all(name, attrs, recursive, string, limit, **kwargs)
+    获取后续所有符合name的Tag(string)或符合string的NavigableString子孙节点内容，返回ResultSet对象
+    name - 符合条件的查找条件，可选列表：
+        str - 符合条件的Tag
+        re - 使用正则表达式匹配Tag
+        list - 符合条件的Tag的列表，也可以为tuple或set
+        True - 所有Tag都匹配
+        function - 函数只能有一个参数Tag，返回boolean
+    attrs - dict格式的属性键值对
+    recursive - 是否递归查找子孙节点，False代表只查找子节点，默认为True
+    string - 搜索Tag中的NavigableString。bs 4.4.0中引进，之前版本为text
+    limit - 限制搜索并返回的结果数量
+    kwargs - 所有不包含在必选参数中的参数名称，皆识别为Tag的属性，attr的值匹配方式与name参数相同
+
+find_next_sibling(name, attrs, string, **kwargs)
+    查找下一个符合指定的兄弟节点Tag
+
+find_next_siblings(name, attrs, string, limit, **kwargs)
+    查找后续所有符合指定的兄弟节点
+
+find_next(name, attrs, string, **kwargs)
+    查找下一个符合指定的节点，与next_element变量规则类似
+
+find_all_next(name, attrs, string, limit, **kwargs)
+    查找所有符合指定的节点，返回ResultSet
+
+find_parent(name, attrs, string, **kwargs)
+    获取第一个符合name的Tag或符合string的NavigableString祖宗节点
+    参数参考find_all
+
+find_parents(name, attrs, string, limit, **kwargs)
+    获取所有符合name的Tag或符合string的Navigablestring祖宗节点，返回ResultSet对象
+
+find_previous(name, attrs, string, **kwargs)
+    查找上一个符合指定的节点，规则类似于previous_element变量
+
+find_all_previous(name, attrs, string, limit, **kwargs)
+    查找所有符合指定的节点，返回ResultSet对象 
+
+find_previous_sibling(name, attrs, string, **kwargs)
+    查找之前的一个符合指定的兄弟节点
+
+find_previous_siblings(name, attrs, string, limit, **kwargs)    
+    查找之前所有符合指定的兄弟节点，格式为ResultSet
+
+get_text(sep, strip=False)
+    获取所有子孙节点Tag所包含的字符串内容，返回组合的字符串
+    sep - 字符串内，不同tag字符串的隔离
+    strip - 是否删除原始tag字符串前后空格后，再进行拼接
+    **可以将Tag看作包含标签属性的字典
+
+insert(index, str)
+    为当前Tag的NavigableString数组指定索引处添加字符串
+
+insert_before(*args)
+    在指定Tag之前，并且当前Tag之内，添加NavigableString(Tag)
+
+insert_after(*args)
+    在指定Tag之前，并且当前Tag之内，添加NavigableString(Tag)
 
 prettify()
-    整齐排版的HTML/XML格式数据
+    Tag整体的优雅格式。不同Tag进行换行，不同层级包含不同缩进
+
+replace_with(tag)
+    使用指定Tag替换当前Tag，并且返回被替换的Tag对象
+
+select(selector, namespaces=None, limit=None, **kwargs)
+    在当前元素上执行CSS选择操作，返回ResultSet对象
+    借助Soup Sieve来辅助，BeautifulSoup 4.7.0以上版本已自动安装Soup Sieve
+    selector - CSS选择器，参数格式列表：
+        .class - class属性
+        #id - id属性
+        [attr=val] - attr的键值对。val可选
+        forefather child - 层级查找Tag，forefather为child一或多层上级
+        parent > child - 层级查找Tag，parent必须为child上一层
+        sibling ~ sibling - 所有兄弟Tag
+        sibling + sibling - 所有兄弟Tag
+        Tag:not([Tag].class, *args) - 不包含指定class(id)属性值的tag
+        Tag:is([Tag].class, *args) - 包含指定class(id)属性值的tag
+        parent:has(> child) - 拥有指定子(非子孙)Tag的Tag
+    limit - 限制查找结果数量
+
+smooth()
+    将Tag及子孙Tag下的Tag内字符串合并，即contents list内容合并为一项
+    Beautifulsoup 4.8.0引入
+
+unwrap()
+    移除指定Tag的包围，但其内的内容不删除。返回移除包围的Tag
+
+wrap(tag)
+    当前Tag被新Tag包围，返回新Tag对象
+
+
+bs4.element.NavigableString
+variable:
+
+method:
+extract()
+    移除当前Navigablestring，并返回该Navigablestring对象
+
+insert_before(*args)
+    在指定NavigableString之前，并且当前Tag之内，添加NavigableString(Tag)
+
+insert_after(*args)
+    在指定NavigableString之前，并且当前Tag之内，添加NavigableString(Tag)
+
+replace_with(str)
+    使用字符串str替换Navigablestring内容，并返回被替换的NavigableString
+
+wrap(tag)
+    当前字符串对象被新Tag包围，返回新Tag内容
+
+
+
 
 解析器优缺点
 解析器           使用方法               优点                  缺点
@@ -28,10 +332,15 @@ lxml HTML解析器  BeautifulSoup(markup,  1.执行速度快          需要安�
                  "lxml")                2.容错能力强
 lxml XML解析器   BeautifulSoup(markup,  1.执行速度快          需要安装C语言库
                  "xml")                 2.唯一支持xml的解析器
-html5lib         BeautifulSoup(markup,  1.容错能力最强        1.执行速度慢
+html5lib         BeautifulSoup(markup,  1.容错能力最强        执行速度慢
                  "html5lib")            2.以浏览器的方式解析
                                         3.生成HTML5格式的文档
                                         4.不依赖外部拓展
 
+注意事项：
+1.Tag查找规则 - 从当前往下查找，第一个遇到的匹配Tag(与深度无关)
+2.在所有解析器都已安装的前提，默认解析器顺序：xml > html5lib > built-in
+
 引用
 Beautiful Soup Official：https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+Soup Sieve Official：https://facelessuser.github.io/soupsieve/

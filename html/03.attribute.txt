@@ -1,0 +1,69 @@
+HTML attribute - 为element提供额外信息，格式为key=value，包含在起始tag中
+
+HTML attribute包含通用和专用。通用代表可以用于所有tag，专用代表只能用于某一个或几个tag
+
+attribute功能和列表：
+通用
+style - 用于指定元素的颜色(color)、字体(font-family)、大小(font-size)等。格式：style="<property>:<value>;"，格式具体解析如下：
+    property - 代表CSS属性
+    value - 代表CSS值
+
+dir - 定义文字框架的排列方向
+
+title - 当鼠标停留在元素上，显示的提示文字
+
+id - 标识某个tag，在整个html中具有唯一性，并且可以作为书签
+
+class - 标识某个类别的tag
+
+专用
+<html>
+    lang - 代表html页面使用的语言种类。如："en-US"
+
+<p>
+
+<a>
+    href - 代表链接地址
+           可使用绝对路径或相对路径
+		   可以作为书签引用，格式：href="[page_addr]#<id_name>"
+           当最后一个目录不带'/'时，会发出两个请求，建议自行添加
+
+    target - 代表打开超链接的方式。列表如下：
+        _blank - 在新的tab中打开
+        _self - 在当前tab中打开。默认选项
+        _parent - 在父frame中打开
+        _top - 在当前window的完整body下打开
+        <frame_name> - 在指定frame下打开
+
+<img>
+    src - 图片的路径和文件名
+
+    width - 图片嵌入页面的宽度，单位为像素。推荐使用style代替
+
+    height - 图片嵌入页面的高度，单位为像素。推荐使用style代替
+
+    alt - 当图片无法正确显示时，备用显示的文字
+
+    usemap - 引用map tag定义的可点击区域映射，格式usemap="#<map_name>"
+
+<map>
+    name - map tag的名称，用于img的引用
+
+<area>
+    shape - 区域的形状，可选列表：rect/circle/poly/default。default为整张图
+
+    coords - 区域坐标，rect为left_top,right_bottom，circle为center,radius
+
+    alt - 悬浮标记
+
+    href - 引用的图片
+
+<source>
+    media - 指定设备要求。如：media="(min-width: 650px)"
+  
+    srcset - 图片引用位置
+
+<th>/<td>
+    colspan - 合并的单元列
+
+    rowspan - 合并的单元行

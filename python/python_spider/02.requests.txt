@@ -62,10 +62,10 @@ elapsed
     发出请求和响应到达的时间差
 
 encoding=None
-    指定用于解码服务器返回内容的编码格式，或返回当前编码格式
+    指定用于解码服务器返回内容的编码格式，或获取当前编码格式
 
 headers
-    返回CaseInsensitiveDict对象，Dict的item为服务器返回的header键值对
+    获取CaseInsensitiveDict对象，Dict的item为服务器返回的header键值对
 
 is_permanent_redirect
     是否为永久重定向
@@ -77,14 +77,14 @@ ok
     当服务器返回状态码小于400为True，否则为False
 
 raw
-    返回urllib3.response.HTTPResponse
+    获取urllib3.response.HTTPResponse原始内容
     需要在请求方法中使stram=True
 
 reason
     服务器返回的文本状态信息
 
 request
-    返回PreparedRequest对象，该对象为请求报文内容
+    获取PreparedRequest对象，该对象为请求报文内容
 
 status_code
     服务器返回的数字状态码
@@ -157,7 +157,7 @@ verify
     验证服务器的SSL证书，参考requests.request对应参数
 
 method:
-Session()
+__init__()
     构造Session对象
 
 close()

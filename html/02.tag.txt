@@ -1,0 +1,120 @@
+tag种类与功能：
+
+一般元素：
+<html> - HTML文档的根
+
+<head> - metadata容器。metadata列表：
+    1.文档标题
+	2.字符集
+	3.styles
+	4.scripts
+	...
+
+<body> - HTML文档的主体
+
+<h1> ~ <h6> - 可视Web页面内的标题和子标题。包含6个标题种类h1~h6，重要性依次降低
+
+<a> - 超链接
+    超链接包含四种状态：普通/已访问/鼠标悬挂/点击中。使用CSS定义示例：
+		-----------------------分隔符
+		a:link {
+			color: green;
+			background-color: transparent;
+			text-decoration: none;
+		}	
+		
+		a:visited {
+			color: gray;
+			background-color: transparent;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: red;
+			background-color: transparent;
+			text-decoration: underline;
+		}
+
+		a:active {
+			color: yellow;
+			background-color: transparent;
+			text-decoration: underline;
+		}
+		-----------------------分隔符
+
+<pre> - 预格式化文本，保留内容内的所有space和line break。html其他格式默认删除多余空格
+
+<b> - 加粗体
+
+<strong> - 加粗体，并且强调为重要文本
+
+<i> - 斜体
+
+<em> - 斜体，并且强调为重要文本
+
+<small> - 小号字体
+
+<mark> - 字体增加背景色
+
+<del> - 含删除线的文本
+
+<ins> - 含下划线的文本
+
+<sub> - 下标文本
+
+<sup> - 上标文本
+
+<q> - 简短引用
+
+<blockquote> - 段落引用
+
+<abbr> - 缩写
+
+<address> - author联系信息
+
+<cite> - 用于图片或表格标题，表现为斜体
+
+<bdo> - 指定文字排列方向，需配合dir属性
+
+<style> - 用于在内部指定CSS style
+
+<map> - 图片区域映射，通常被img tag引用
+
+<picture> - 用于针对不同设备显示不同的图片
+
+<table> - 表格
+
+<tr> - 表格的行
+
+<th> - 表格头部单元
+
+<td> - 表格一般单元。可包含text/image/list/other_table内容
+
+<caption> - 表格的名称，为table的子tag
+
+<ul> - 无序列表
+
+<ol> - 有序列表
+
+<li> - 列表item，为ul或ol的子tag
+
+<dl> - description列表
+
+<dt> - 
+
+<dd> - 
+
+空元素：
+<br> - 换行符
+
+<hr> - 水平分割线
+
+<!-- --> - 注释
+
+<link> - 用于导入外部CSS style
+
+<img> - 图片插入
+
+<area> - 区域划分，通常为map子tag
+
+<source> - picture子tag，用于指定设备指标和对应的图片item。规则：第一个source符合要求后，忽略剩下的item
