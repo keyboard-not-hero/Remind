@@ -1,5 +1,8 @@
-tag种类与功能：
+tag空间分类：
+1.块元素 - 内容从新行起始，并且占据内容行的所有空间
+2.行内元素 - 内容紧随其它内容之后，只占据内容所占宽度
 
+tag种类与功能：
 一般元素：
 <html> - HTML文档的根
 
@@ -92,17 +95,30 @@ tag种类与功能：
 
 <caption> - 表格的名称，为table的子tag
 
-<ul> - 无序列表
+<ul> - 无序列表。item默认使用实心圆点标记，可使用style的list-style-type指定其他类型。列表如下：
+    disc - 实心圆点，默认选项
+    circle - 空心圆点
+    square - 实心正方形
+    none - 无标记
 
-<ol> - 有序列表
+<ol> - 有序列表。item默认使用数字标记，可使用type属性。start属性指定起始数字。type列表如下：
+    1 - 数字，默认选项
+    a - 小写字母
+    A - 大写字母
+    i - 小写罗马字母
+    I - 大写罗马字母
 
 <li> - 列表item，为ul或ol的子tag
 
 <dl> - description列表
 
-<dt> - 
+<dt> - description term
 
-<dd> - 
+<dd> - description describe
+
+<div> - 作为其他元素的块容器
+
+<span> - 作为文本容器
 
 空元素：
 <br> - 换行符
@@ -118,3 +134,7 @@ tag种类与功能：
 <area> - 区域划分，通常为map子tag
 
 <source> - picture子tag，用于指定设备指标和对应的图片item。规则：第一个source符合要求后，忽略剩下的item
+
+<iframe> - 在子框架内显示web内容。使用src指定web页面
+
+<meta> - 可使用charset属性指定编码(html5默认为utf-8)，meta为head的子tag

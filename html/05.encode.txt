@@ -1,0 +1,10 @@
+编码格式：
+十进制 - &#<utf-8_code>;
+十六进制 - &#x<utf-8_code>;
+
+emoji - utf-8编码，而不是图片
+
+
+引用
+字符集：https://www.w3schools.com/tags/ref_charactersets.asp
+emoji编码表：https://www.w3schools.com/charsets/ref_emoji.asp

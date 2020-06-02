@@ -12,15 +12,13 @@ dir - 定义文字框架的排列方向
 
 title - 当鼠标停留在元素上，显示的提示文字
 
-id - 标识某个tag，在整个html中具有唯一性，并且可以作为书签
+id - 标识某个tag，在整个html中具有唯一性，并且可以作为书签，使用指定style，大小写敏感
 
-class - 标识某个类别的tag
+class - 标识某个类别的tag，该类别使用相同style，并且大小写敏感
 
 专用
 <html>
     lang - 代表html页面使用的语言种类。如："en-US"
-
-<p>
 
 <a>
     href - 代表链接地址
@@ -67,3 +65,12 @@ class - 标识某个类别的tag
     colspan - 合并的单元列
 
     rowspan - 合并的单元行
+
+<iframe>
+    src - 需要在iframe内显示的Web页面
+
+    width - iframe的宽度
+
+    height - iframe的高度
+
+    name - iframe名称

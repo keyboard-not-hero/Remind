@@ -1,12 +1,14 @@
-selenium--动态js解析第三方库，目前支持2.7和3.5以上版本
-pip安装：
-pip install selenium
+selenium - 动态js解析第三方库，目前支持2.7和3.5以上版本
+pip安装 - pip3 install selenium
+导入库 - from selenium import webdriver
 
 浏览器驱动：
 google浏览器--chromedriver
 下载地址：http://chromedriver.chromium.org/downloads
+
 firefox浏览器--geckodriver
 下载地址：https://github.com/mozilla/geckodriver/releases
+
 1.Windows下载后将可执行文件拖动到/PYTHON/PATH/scripts目录下
 GNU/Linux和Mac直接将可执行文件加入PATH路径
 2.在command下执行驱动文件
@@ -15,8 +17,6 @@ GNU/Linux和Mac直接将可执行文件加入PATH路径
 1.下载后将bin目录配置到环境变量
 2.在command下执行phantomjs
 
-导入库：
-from selenium import webdriver
 
 获取WebDriver：
 webdriver.Chrome()：返回selenium.webdriver.chrome.webdriver.WebDriver对象

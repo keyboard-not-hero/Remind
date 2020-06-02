@@ -1,4 +1,92 @@
-virtualenv：隔离的运行环境
+virtualenv - 隔离的Python运行环境
+
+语法
+virtualenv [options] destination
+
+参数释义
+--seeder {app-data|pip}
+	是否创建cache目录，复制pip/setuptools/wheel到该cache。默认为app-data
+	app-date即为创建cache目录
+
+--app-data
+    cache目录。默认为$HOME/.local/share/virtualenv
+
+--reset-app-data
+    激活virtualenv时，清空cache。默认False
+
+verbosity=<level>
+    设定消息警告等级，默认为3。映射如下：
+        0 - CRITICAL
+		1 - ERROR
+		2 - WARNING
+		3 - INFO
+		4 - DEBUG
+		5 - NOTSET
+
+-v, --verbose
+    消息警告等级设置为2
+
+-q, --quiet
+    消息警告等级设置为0
+
+-p <path>, --python <path>
+    创建的virtualenv使用的python解释器路径。默认为/usr/bin/python3
+
+--clear
+    当目标目录存在时，移除该目录。默认为False
+
+--system-site-packages
+    允许virtualenv访问系统的site-package目录。默认为False
+
+--symlinks
+	使用链接库文件，代替复制。默认为True
+
+--copies, --always-copy
+    使用复制库文件，代替链接。默认为False
+
+--without-pip, --no-seed
+	不安装pip。默认为False
+
+--no-download, --never-download
+	不从PyPI下载最新版本pip/wheel/setuptools。默认为True
+
+--download
+	从PyPI下载最新版本pip/wheel/setuptools。默认为False
+
+--extra-search-dir <dir>...
+    额外查找wheel包的目录。默认为[]
+
+--pip <version>
+    由extra-search-dir确定。默认为已安装最新版本
+
+--wheel <version>
+    由extra-search-dir确定。默认为已安装最新版本
+
+--setuptools <version>
+    由extra-search-dir确定。默认为已安装最新版本
+
+--no-pip
+    virtualenv中不安装pip。默认为False
+
+--no-setuptools
+    virtualenv中不安装setuptools。默认为False
+    
+--no-wheel
+    virtualenv中不安装wheel。默认为False
+
+--prompt <prompt>
+    virtualenv的提示符。默认为(<env_name>)
+
+--version
+    版本信息
+
+-h, --help
+    帮助信息
+
+目标位置
+destination
+    创建环境的目录
+
 
 安装virtualenv：
 pip install virtualenv
@@ -8,12 +96,12 @@ pip install virtualenv
 > virtualenv ENV_NAME
 
 
-进入虚拟环境：
+激活虚拟环境：
 GNU/Linux
-> source /PATH/BIN/activate
+> source /PATH/bin/activate
 
 Windows
-> /PATH/SCRIPTS/activate
+> /PATH/Scripts/activate
 
 
 退出虚拟环境：
@@ -26,9 +114,3 @@ GNU/Linux
 
 Windows
 > rmdir /S ENV_NAME
-
-
-virtualenv参数释义：
--p    使用系统的指定python版本(与PATH有关)
---no-site-packages：新环境不可以使用site-packages中的第三方包，已弃用，默认选项
---system-site-packages：新环境可以使用site-packages中的第三方包

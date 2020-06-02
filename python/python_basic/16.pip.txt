@@ -1,66 +1,204 @@
-pip：从PyPI在线下载或更新内容
+pip - 从PyPI在线下载或更新内容，python3使用pip3指令
 
-一、pip更换源
+语法：
+pip <command> [options] [packages]
+
+command选项：
+help
+	帮助信息
+
+install
+	安装package
+
+download
+    下载package
+
+uninstall
+    卸载package
+
+freeze
+    打印已安装package列表，requirement格式
+
+list
+    打印已安装package列表，易读格式
+
+show
+    打印已安装某package详细信息
+
+search
+    从PyPi查找package
+
+check
+    检查是否有包体依赖性问题
+
+config
+    pip的本地或全局配置
+
+wheel
+    根据包体依赖性，编译所需包体的wheel包
+
+
+general option选项：
+** 以下options通用于所有<command>，具体<command>的专用option，使用pip3 <command> --help查看
+-h, --help
+    帮助文档
+
+-v, --verbose
+    输出详细信息
+
+-V, --version
+    版本信息
+
+-q, --quiet
+    尽量少的输出信息
+
+--log-file <path>
+    记录失败的log文件路径，每次记录覆盖上次记录，默认路径为~/.pip/pip.log。默认模式
+
+--log <path>
+    每次进行append尾部添加的log文件路径，默认改模式不启动
+
+--proxy <proxy>
+    指定代理，格式为[<protocol>://][user:passwd@]proxy.server:port
+
+--timeout <sec>
+    设定超时时长
+
+--cert <path>
+    服务器上的CA路径
+
+
+install option：
+-r, --requirement <file>
+    从file内获取安装包体名称
+
+-b, --build <dir>
+    解包和编译目录，即安装的备份
+
+-t, --target <dir>
+    安装目录
+
+-d, --download <dir>
+    下载包体到指定目录，不进行安装，并不在乎是否已安装该包体
+
+-U, --upgrade
+    更新包体
+
+--force-reinstall
+    与-U一起使用，无论是否已更新到最新版本，都直接进行更新
+
+-I, --ignore-installed
+    无论包体是否安装，都进行安装
+
+--no-deps
+    不安装当前包体依赖
+
+--user
+    安装到用户级库目录
+    GNU/Linux为~/.local/，Windows为%AppData%/Python/
+    Debian在非virtualenv环境和非root用户默认使用该选项
+
+--system
+    安装到site-wide级库目录
+
+--root <dir>
+    chroot应用，安装到以该目录为根目录的相对路径
+
+--pre
+    如果有pre-release和development版本，也可以进行安装。默认只安装stable版本
+
+--no-clean
+    不清除build目录内容
+
+--no-cache-dir
+    不使用cache目录的软体，重新下载
+
+
+uninstall option：
+-r, --requirement <file>
+    从指定文件中读取卸载软体列表
+
+-y, --yes
+    直接进行卸载，不进行询问
+
+
+package index option：
+-i, --index-url <url>
+    临时参考的基础url。默认为https://pypi.org/simple/，config file的配置也可覆盖
+
+--extra-index-url <url>
+    append到--index-url内容之后，作为基础url
+
+
+补充
+一、pip配置文件完整路径
+1.用户级
+GNU/Linux - $HOME/.config/pip/pip.conf
+Windows - %AppData%\pip\pip.ini，即c:\user\<user_name>\AppData\pip\pip.ini
+
+旧版本
+GNU/Linux - $HOME/.pip/pip.conf
+Windows - %HOME%\pip\pip.ini，即c:\user\<user_name>\pip\pip.ini
+
+2.virtualenv
+GNU/Linux - $VIRTUAL_ENV/pip.conf
+Windows - %VIRTUAL_ENV%/pip.ini
+
+3.system级 
+GNU/Linux - /etc/pip.conf
+Windows - C:\ProgramData\pip\pip.ini，支持Windows 7与之后的版本，Vista不支持
+
+优先级：virtualenv > per-user > site-wide
+
+
+二、pip更换源
 永久更换
 1.Linux
-[thompson@~] mkdir .pip
-
 [thompson@.pip] vi pip.conf
-
 [global]
 trusted-host=mirrors.aliyun.com
-
 index-url=http://mirrors.aliyun.com/pypi/simple/
 
-
 2.Windows
-C:\Users\LT198> mkdir pip
-
 C:\Users\LT198\pip> vi pip.ini
-
 [global]
 trusted-host=mirrors.aliyun.com
-
 index-url=http://mirrors.aliyun.com/pypi/simple/
 
 临时更换
 pip3 install <package> -i http://mirrors.aliyun.com/pypi/simple/
 
 
+三、手动安装pip3
+1.下载
+下载地址：https://bootstrap.pypa.io/get-pip.py
 
-二、更新pip：
-GNU/Linux:
-pip install --upgrade pip
-
-Windows:
-python -m pip install -U pip
-
-**Windows下，当提示pip module not found，使用python –m ensurepip进行修复
+2.安装
+GNU/Linux - python3 get-pip.py
+Windows - python get-pip.py
 
 
+四、升级pip3
+GNU/Linux - pip3 install -U pip
+Windows - python -m pip -U pip
+** warning：Windows不能使用pip3 install -U pip升级pip，Windows会先卸载pip3,导致后续无法进行
 
-三、利用pip从pypi安装包和模块
-在线安装：
-pip install PACKAGE_NAME
-**第三方包安装到python_dir/lib/site-packages
 
-本地安装：
-pip install PAC.whl
+五、socks5 proxy配置
+永久配置
+1.GNU/Linux
+vi pip.conf
+[global]
+proxy=socks5://<IP_ADDR>:<PORT>
 
-已安装列表：
-pip list
+2.Windows
+[global]
+proxy=socks5://<IP_ADDR>:<PORT>
 
-已安装可更新：
-pip list --outdated
+临时配置
+pip3 install --proxy socks5://<IP_ADDR>:<PORT> <package>
 
-更新：
-pip install --upgrade PACK
 
-包信息：
-pip show PACK
-
-查找可安装包：
-pip search PACK
-
-卸载：
-pip uninstall PACK
+引用
+1.Stack Overflow：https://stackoverflow.com/questions/9510474/removing-pips-cache#:~:text=0%2C%20pip%20provides%20an%20on,no%2Dcache%2Ddir%20option.
+2.pip manual
