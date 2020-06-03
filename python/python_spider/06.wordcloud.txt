@@ -1,0 +1,10 @@
+wordcloud - 词云生成器的python库
+安装 - pip3 install wordcloud
+导入 - from wordcloud import WordCloud
+依赖 - numpy/pillow
+
+
+
+引用
+1.github Project: https://github.com/amueller/word_cloud
+2.document: http://amueller.github.io/word_cloud/index.html

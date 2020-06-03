@@ -4,7 +4,7 @@ packages.ubuntu.com
 
 python3编译：
 1.必要环境安装
-[thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev tcl-dev tk-dev gcc make
+[thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
 
 
 2.openssl编译(需大于等于1.0.2)
@@ -26,38 +26,37 @@ python3编译：
 3.tcl/tk编译
 下载地址：http://www.tcl.tk/software/tcltk/download.html
 
-[thompson@~] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/src
+[thompson@~] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/local/src
 
-[thompson@~] sudo chown -R steven:steven /usr/src/tcl8.6.10
-
-[thompson@~] cd /usr/src/tcl8.6.10/unix
+[thompson@~] cd /usr/local/src/tcl8.6.10/unix
 
 [thompson@tcl8.6.10] make distclean
 
-[thompson@tcl8.6.10] ./configure --prefix=/usr/local/tcl
+[thompson@tcl8.6.10] sudo ./configure --prefix=/usr/local/tcl
 
-[thompson@tcl8.6.10] make -j4
+[thompson@tcl8.6.10] sudo make -j4
 
 [thompson@tcl8.6.10] sudo make install
 
 ------------------------------------------------------------
 
-[thompson@~] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/src
+[thompson@~] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/local/src
 
-[thompson@~] sudo chown -R steven:steven /usr/src/tk8.6.10
-
-[thompson@~] cd /usr/src/tk8.6.10/unix
+[thompson@~] cd /usr/local/src/tk8.6.10/unix
 
 [thompson@tcl8.6.10] sudo apt-get install libx11-dev
 
 [thompson@tcl8.6.10] make distclean
 
-[thompson@tcl8.6.10] ./configure --prefix=/usr/local/tcl
+[thompson@tcl8.6.10] sudo ./configure --prefix=/usr/local/tcl
 
-[thompson@tcl8.6.10] make -j4
+[thompson@tcl8.6.10] sudo make -j4
 
 [thompson@tcl8.6.10] sudo make install
 
+[thompson@tcl8.6.10] sudo rm -rf /usr/local/src/tcl8.6.10
+
+[thompson@tcl8.6.10] sudo rm -rf /usr/local/src/tk8.6.10
 
 4.编译python
 下载python
@@ -70,7 +69,7 @@ python3编译：
 
 [thompson@3.8.1] sudo make distclean
 
-[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3.8
+[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3
 
 [thompson@3.8.1] sudo make -j4
 
@@ -86,7 +85,7 @@ python3编译：
 # 重新编译
 [thompson@3.8.1] sudo make distclean
 
-[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3.8
+[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3
 
 [thompson@3.8.1] sudo make -j4
 
@@ -94,13 +93,12 @@ python3编译：
 
 [thompson@3.8.1] sudo make install
 
-[thompson@3.8.1] sudo chown -R thompson:thompson /usr/local/python3.8
+[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/python3 /usr/bin/python3
 
-[thompson@3.8.1] sudo ln -s /usr/local/python3.8/bin/python3 /usr/bin/python3
-
-[thompson@3.8.1] sudo ln -s /usr/local/python3.8/bin/pip3 /usr/bin/pip3
+[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
 
 [thompson@3.8.1] sudo rm -rf /usr/local/src/Python3.8.1
+
 
 
 报错集：
@@ -110,6 +108,7 @@ python3编译：
 [thompson@~] sudo vi /usr/bin/lsb_release
 #!/usr/bin/python3.8
 
+
 2.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
 解决：
 # python添加socks支持
@@ -117,17 +116,18 @@ python3编译：
 
 [thompson@~] sudo pip3 install pysocks
 
+
 3.安装完成后无法打开terminal，在ctrl+alt+F1输入gnome-terminal显示无'gi'模块
 解决方法1：
 ## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
 ## 如不在该目录，使用find / -name gi查找
 ## 只适用于3.7及以下python版本
 
-## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3.7时，对应与/usr/local/pytnon3.7/lib/python3.7/site-packages)
-[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3.7/lib/python3.7/site-packages
+## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3时，对应与/usr/local/pytnon3/lib/python3.7/site-packages)
+[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3/lib/python3.7/site-packages
 
 ## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例)
-[thompson@~] cd /usr/local/python3.7/lib/python3.7/site-packages/gi
+[thompson@~] cd /usr/local/python3/lib/python3.7/site-packages/gi
 
 [thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-37m-x86_64-linux-gnu.so
 

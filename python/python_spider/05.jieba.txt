@@ -1,0 +1,50 @@
+jieba - 中文分词Python库
+安装 - pip3 install jieba
+导入 - import jieba
+
+额外库paddle
+前提：jieba 0.40.0及以上、python_x64 3.5.1+/3.6/3.7(3.8.3测试安装不成功)、pip_x64 9.0.1+。并且系统架构必须为64bit。
+安装 - pip3 install paddlepaddle-tiny==1.6.1
+
+function:
+add_word(word, freq=None, tag=None)
+	在程序中动态添加新词
+
+cut(sentence, cut_all=False, HMM=True, use_paddle=False)
+	对句子进行分词，并返回词组的generator
+	sentence - 被分解的中文字符串
+	cut_all - 分词模式。True代表完整模式，False代表精确模式
+	HMM - 是否使用HMM模型
+	use_paddle - 
+
+cut_for_search(sentence, HMM=True)
+	搜索引擎模式进行分词，并返回词组的generator
+	sentence - 被分解的中文字符串
+	HMM - 是否使用HMM模型
+
+del_word(word)
+	在程序中动态删除词组
+
+disable_parallel()
+	关闭多进程分词模式
+
+enable_parallel(num)
+	开启多进程分词模式
+	num - 进程数量
+	
+lcut(sentence, cut_all=False, HMM=True, use_paddle=False)
+	list(cut(*args, **kwargs))，即cut的返回列表形式
+
+lcut_for_search(sentence, HMM=True)
+	list(cut_for_search(*args, **kwargs))，即cut_for_search的返回列表形式
+
+load_userdict(file)
+	向词库添加新词。默认已有词库为dict.txt
+	新增词库中，一个词占据一行，词库文本格式：
+		词语 词频(optional) 词性(optional)
+	file - file-object或者文件路径字符串
+	
+
+引用
+1.github地址：https://github.com/fxsjy/jieba
+2.paddlepaddle官网：https://www.paddlepaddle.org.cn/install/quick
