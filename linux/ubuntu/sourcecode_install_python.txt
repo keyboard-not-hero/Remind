@@ -121,12 +121,12 @@ python3编译：
 解决方法1：
 ## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
 ## 如不在该目录，使用find / -name gi查找
-## 只适用于3.7及以下python版本
+## 使用情况：系统自带3.8及以上版本(ubuntu 20.04)，并且手动安装也是3.8及以上版本；或者系统自带3.7及以下版本(ubuntu 18.04及以下系统版本)，并且手动安装也是3.7及以下版本。原因是ubuntu自带的python库在ubuntu 20.04做了很大变动
 
 ## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3时，对应与/usr/local/pytnon3/lib/python3.7/site-packages)
 [thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3/lib/python3.7/site-packages
 
-## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例)
+## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例，主.次版本相同则不用修改)
 [thompson@~] cd /usr/local/python3/lib/python3.7/site-packages/gi
 
 [thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-37m-x86_64-linux-gnu.so
@@ -134,7 +134,8 @@ python3编译：
 [thompson@gi] mv _gi.cpython-36m-x86_64-linux-gnu.so _gi.cpython-37m-x86_64-linux-gnu.so
 
 解决方法2：
-如果系统自带老旧版本python遗留，修改/usr/bin/gnome-terminal使用的python版本(python3.8只能使用该方案，方案一有许多库不完整)
+## 将gnome-terminal使用的python版本指向系统自带版本
+## 使用情况，系统自带Python3.7及以下版本，手动安装3.8版本；或者系统自带Python3.8版本，手动安装3.7及以下版本
 sudo vi /usr/bin/gnome-terminal
 #!/usr/bin/python3
 修改为

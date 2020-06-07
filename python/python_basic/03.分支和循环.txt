@@ -20,6 +20,7 @@ else:
     class range(start, stop[, step])
         构造一个range对象，起始元素为start(包含，整数类型)，终止元素为stop(不包含，整数)，步长为step(整数，默认为1)。当未提供start时，默认为0
     **注意：for i in array会试图创建一个无穷大的列表，用于insert/append会导致失败，使用copy方式for i in array[:]
+	**for语句的实质: 使用iter()built-in方法，返回对象的iterator
 
 while语句：
 while CONDITION:

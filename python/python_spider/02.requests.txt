@@ -105,11 +105,9 @@ iter_content(chunk_size=1, decode_unicode=False)
     **HTTP请求方法的stream必须为True
 
 json(**kwargs)
-    返回解码为json格式的内容
+    返回编码为json格式(统一表现为str)的内容
     kwargs列表，参考json.loads()
     当Response不包含可转化为json的内容时，抛出ValueError异常
-    **       encode        encode
-    ** json --------> str --------> bytes
 
 raise_for_status()
     当服务器返回正常状态码时，无异常发生；当服务器返回错误状态码时，抛出HTTPError异常

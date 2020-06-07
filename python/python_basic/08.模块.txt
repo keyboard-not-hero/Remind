@@ -10,9 +10,9 @@ form <module_name> import <func_name>/*
 
 从包中导入模块
 from package import module/*
-**warning：*导入package下__init__.py文件内，包含在__all__列表下的module
-；如__all__未定义，则不导入模块。直接使用module不需要包含在__all__内
+**warning：from package import *代表导入package下__init__.py文件内，包含在__all__列表下的module；如__all__未定义，则不导入模块。直接使用module不需要包含在__all__内
 **可使用相对路径导入
+
 导入模块建立别称
 import module as alias
 
@@ -43,32 +43,120 @@ package
 
 
 常用模块
-random - 伪随机数字生成器
-
+codecs - 编码/解码定义和基础类
 function:
-random()
-    返回一个在区间[0.0,0.1)内的浮点数。其他函数的核心
+encode(obj, encoding='utf-8', errors='strict')
+	对obj进行编码格式为encoding的编码
+	errors - 字符串格式，表示对错误的处理方式，列表如下：
+		strict - 当出现异常字符时，抛出ValueError异常(或子类)
+		ignore - 当出现异常字符时，忽略该字符
 
-randrange(stop)
-randrange(start, stop[, step])
-    返回一个在区间[start,stop)内的整数，步长为1(整数默认为1)。当未提供start时，默认为0
-
-randint(a,b)
-    返回一个在闭区间[a,b]内的整数
-
-choice(seq)
-    从sequence类型seq中，返回一个随机元素
+decode(obj, encoding='utf-8', errors='strict')
+	对obj进行编码格式为encoding的解码
+	errors - 字符串格式，表示对错误的处理方式，列表如下：
+		strict - 当出现异常字符时，抛出ValueError异常(或子类)
+		ignore - 当出现异常字符时，忽略该字符
 
 
-sys - 访问编译器层级的变量
-variable:
-argv
-    指令行参数列表，argv[0]代表脚本名称，argv[1]代表第一个额外读取参数，以此类推
+datetime - 日期和时间模块
+class timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+	构造一个timedelta对象，保存在内部的只有day/seconds和microseconds，其他参数全部转化为该三个单位
 
+totle_seconds()
+	返回总共秒数
+
+class
+date
+
+classmethod:
+today()
+	返回当前时间的date对象格式
+
+method:
+__init__(year, month, day)
+	使用年/月/日构造date对象
+
+replace(year=self.year, month=self.month, day=self.day)
+	修改data对象的年/月/日
+
+timetuple()
+	返回date对象的time.struct_time对象格式
+
+class
+datetime
+
+classmethod:
+fromtimestamp(timestamp, tz=None)
+	返回自epoch时间累计的秒数，转化的datetime对象
+
+today()
+	返回本地当前时间的datetime格式对象，无时区信息
+
+now(tz=None)
+	返回指定时区的datetime格式对象
+	tz - tzinfo的子类，默认为本地时区
+
+utcnow()
+	返回UTC当前时间的datetime格式对象，无时区信息
+	
+method:
+__init__(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None, *, fold=0)
+	构造datetime对象
+	tzinfo - tzinfo抽象类的子类
+
+date()
+	提取datetime对象的年/月/日信息，返回date对象
+
+支持的操作
+datetime2 = datetime1 + timedelta
+datetime2 = datetime1 - timedelta
+timedelta = datetime2 - datetime1
+datetime1 > datetime2
+
+
+
+
+json - 将内容在python格式和json之间进行转化
 function:
-exit([code])
-    以可选的退出码code退出python程序。code默认为0
+dumps(obj, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
+	将python格式编码为json格式(统一表现为字符串格式)
+	参数见dump(*args, **kwargs)
 
+dump(obj, fp, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
+	将python格式内容obj编码为json格式，并且将结果写入fp文件
+	fp - file-object格式，结果保存文件
+	skipkeys - bool格式，当skipkeys为True时，如果obj为字典，且包含key为非基础类型(str, int, float, bool, None)时，忽略该键值对，而不是抛出TypeError
+	ensure_ascii - bool格式，为True时，非ASCII字符进行跳脱；为False时，非ASCII直接进行显示
+	allow_nan - bool格式，当为True时，允许使用nan/inf/-inf，并转化为NaN/Infinity/-Infinity；为False时，使用nan/inf/-inf，则抛出ValueError异常
+	cls - JSONEncoder子类，重写default()方法
+	indent - int格式或字符串格式，按层级使用指定缩进空格，或指定字符串(如'\t')
+	separator - tuple格式，代表(item_sep, key_sep)。默认为(',', ':')
+	default - function，当obj无法转化为json序列时，使用该函数指定的方式返回内容
+	sort_keys - bool格式，结果是否根据key排序
+
+loads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
+	将s(str/bytes/bytearray)表现的json内容，解码为python类型
+	参数见load(*args, **kwargs)
+
+load(fp, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
+	将file-object fp的json内容，解码为python类型
+	cls - JSONDecoder子类
+	object_hook - function，使用自定义的方法获得解码内容
+	parse_float - function，使用自定义的针对float的解码方法。默认为float(num_str)
+	parse_int - function，使用自定义的针对int的解码方法。默认为int(num_str)
+	parse_constant - 字符串，可选内容Infinity/-Infinity/NaN。为None时，遇见类似字符串则抛出异常
+
+JSON与Python参照
+JSON			Python
+object			dict
+array			list/tuple
+string			str
+number(int)		int
+number(real)	float
+true			True
+false			False
+null			None 
+	
 
 os - 具有可移植性的依赖于操作系统的方法
 variable:
@@ -161,8 +249,75 @@ split(path)
     将路径拆分为最后一个'\'之前和之后的字符串，并返回该两个字符串的元组
 
 
-codecs - 编码/解码定义和基础类
+queue - 生产者/消费者队列，其中，Queue类完整实现锁机制
+class
+Queue 
+method:
+__init__(maxsize=0)
+	FIFO队列
+	maxsize - 队列的容量，当其<=0时，容量为infinite
 
+empty()
+	队列是否为空
+
+full()
+	队列是否已满
+
+get(block=True, timeout=None)
+	从队列中移除并返回item
+	block - 当为True，如果队列为空，则等待队列有数据时返回; 当为False，队列为空时，抛出queue.Empty Exception
+	timeout - 当block为True时，最多等待返回数据时间，超时则抛出queue.empty Exception。为None时，不限制时间进行等待
+
+put(item, block=True, timeout=None)
+	放置item进入队列
+	block - 当为True时，如果队列已满，等待队列有位置时放入；当为False时，抛出queue.full Exception
+	timeout - 当block为True时，最多等待放入时间，超时则抛出queue.full Exception。为None时，不限制等待时间
+
+qsize()
+	队列当前item数量
+	
+
+class
+LifoQueue
+method:
+__init__(maxsize=0）
+	LIFO队列
+	maxsize - 队列的容量，当其<=0时，容量为infinite
+
+class
+PriorityQueue
+method:
+__init__(maxsize=0)
+	优先级队列，item为(priority_number, data)，priority_number最小的优先查找
+	maxsize - 队列的容量，当其<=0时，容量为infinite
+
+
+random - 伪随机数字生成器
+function:
+choice(seq)
+    从sequence类型seq中，返回一个随机元素
+	当seq为空，抛出IndexError异常
+
+randint(a, b)
+    返回一个在闭区间[a, b]内的整数
+
+random()
+    返回一个在区间[0.0, 1.0)内的浮点数。其他函数的核心
+
+randrange(stop)
+randrange(start, stop[, step])
+    返回一个在区间[start,stop)内的整数，步长为1(整数默认为1)。当未提供start时，默认为0
+
+sample(populatin, k)
+	从sequence population中抽出index不重复的k个元素，组成列表，返回该列表
+
+shuffle(x, random=random)
+	将sequence x进行in-place排序
+	random - function，排序的核心方法。默认为random()
+
+uniform(a, b)
+	返回闭区间[a, b]或[b, a]范围的浮点数
+	
 
 shutil - 对文件和目录进行的高级操作
 copy(src, dst, *, follow_symlinks=True)
@@ -199,15 +354,102 @@ rmtree(path, ignore_errors=False, onerror=None)
     当ignore_errors为False时，当由于权限等原因无法删除目录时，抛出异常，该异常可由onerror指定；当ignore_errors为True时，不抛出异常
 
 
-zipfile - 创建/读取/写入/添加/罗列一个ZIP文件
+sys - 访问编译器层级的变量
+variable:
+argv
+    指令行参数列表，argv[0]代表脚本名称，argv[1]代表第一个额外读取参数，以此类推
+
 function:
-ZipFile(file, mode='r', compression=ZIP_STORED, allowZip64=True, compresslevel=None, *, strict_timestamps=True)
-    打开一个ZIP文件
-    mode为打开方式，列表：
-        'r' - 以只读方式
-        'w' - 以覆盖的写入方式
-        'a' - 以添加的写入方式
-        'x' - 以创建并写入的方式。文件存在抛出FileExistsError异常
+exit([code])
+    以可选的退出码code退出python程序。code默认为0
+
+
+time - 相对epoch时间模块
+function:
+asctime(t=localtime)
+	返回struct_time结构时间t的字符串格式，t默认为localtime返回的当前时间
+	字符串格式参考：'Sun Jun  5 20:31:07 1980'
+
+ctime(secs=time)
+	将自epoch时间累计的秒数，转化为字符串格式
+	secs默认为time返回的当前时间秒数
+
+gmtime(secs=None)
+	将自epoch累计时间秒数，转化为UTC的struct_time结构时间，并返回struct_time
+	secs默认为time返回的时间
+
+localtime(secs=None)
+	将自epoch累计时间秒数，转化为本地的struct_time结构时间，并返回struct_time
+	secs默认为time返回的时间
+
+mktime(t)
+	将本地的struct_time结构时间，转化为自epoch累计时间秒数，并返回该秒数
+
+sleep(secs)
+	将当前线程暂停secs秒
+	secs - int或float格式
+
+strftime(format, t=localtime)
+	将struct_time结构的时间t，转化为指定格式format的字符串
+	format - 指定时间的字符串格式，格式列表如下：
+		%a - locale缩写weekday
+		%A - locale完整weekday
+		%b - locale缩写月份
+		%B - locale完整月份
+		%c - locale缩写日期和时间
+		%d - 当前月份所在天数，范围[01, 31]
+		%H - 24小时时间制，范围[00, 23]
+		%I - 12小时时间制，范围[01, 12]
+		%j - 当前年份所在天数，范围[01, 366]
+		%m - 月份的数字格式，范围[01, 12]
+		%M - 分钟数，范围[00, 59]
+		%p - locale AM或PM
+		%S - 秒数，范围[00, 61]
+		%U - 当前年份所在周数，范围[00, 53]. 星期天为起始，并且每年的第一个星期天所在的周为第一周(00)
+		%w - 数字形式的weekday，起始为星期天，范围[0, 6]
+		%W - 当前年份所在周数，范围[00, 53]. 星期一为起始，并且每年的第一个星期一所在的周为第一周(00)
+		%x - locale缩写日期
+		%X - locale缩写时间
+		%y - 无世纪部分的年，范围[00, 99]. 两位year转化规则, 69~99为1969~1999, 0~68为2000~2068
+		%Y - 年份
+		%z - 跟UTC/GMT时区作比较的时区偏移量，格式为+HHMM或-HHMM，HH代表小时，MM代表分钟
+		%Z - 时区名称
+		%% - '%'字符
+	t - struct_time结构的时间，默认为localtime返回的时间
+
+strptime(string, format='%a %b %d %H:%M:%S %Y')
+	将字符串格式时间string根据format规则转化为struct_time格式的时间，并返回struct_time格式时间
+	format - 参考strftime
+
+time()
+	返回当前自epoch时间累计的秒数，格式为float
+
+class:
+struct_time
+Index	Attribute	Values
+0		tm_year		(for example, 1993)
+
+1		tm_mon		range [1, 12]
+
+2		tm_mday		range [1, 31]
+
+3		tm_hour		range [0, 23]
+
+4		tm_min		range [0, 59]
+
+5		tm_sec		range [0, 61]
+
+6		tm_wday		range [0, 6], Monday is 0
+
+7		tm_yday		range [1, 366]
+
+8		tm_isdst	0, 1 or -1; see below
+
+N/A		tm_zone		abbreviation of timezone name
+
+N/A		tm_gmtoff	offset east of UTC in seconds
+
+
 
 traceback - 提取、格式化和打印追踪栈信息
 function:
@@ -223,7 +465,18 @@ function:
 open(url, new=0, autoraise=True)
     使用浏览器打开url地址
     当new=0，浏览器使用当前窗口打开页面；当new=1，浏览器使用新窗口打开页面；当new=2，浏览器在当前窗口打开新tab
-    
+
+
+zipfile - 创建/读取/写入/添加/罗列一个ZIP文件
+function:
+ZipFile(file, mode='r', compression=ZIP_STORED, allowZip64=True, compresslevel=None, *, strict_timestamps=True)
+    打开一个ZIP文件
+    mode为打开方式，列表：
+        'r' - 以只读方式
+        'w' - 以覆盖的写入方式
+        'a' - 以添加的写入方式
+        'x' - 以创建并写入的方式。文件存在抛出FileExistsError异常
+
 
 
 需额外安装模块

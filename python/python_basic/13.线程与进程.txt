@@ -1,255 +1,410 @@
-进程：单个用户启动后的单个程序，每个进程使用单独的内存空间
+进程：cpu最小分配单元，每个运行中的程序至少包含一个进程，不同进程使用不同内存空间
 
-涉及模块：
-multiprocessing包的__init__模块(实际为context模块)，适用于Unix和Windows系统
+multiprocessing模块
+function:
+cpu_count()
+	当前当前cpu数量
 
-方法：
-__init__(target=None,args=(),kwargs={})：target为函数名称，args为函数参数的tuple，kwargs为函数参数的dict
+current_process()
+	返回当前进程对象
 
-start()：启动子进程
+parent_process()
+	返回当前进程的父进程对象
 
-join(timeout=None)：未提供参数时，等待子进程结束；当提供参数时，至少阻塞timeout时间
+Pipe(duplex=True)
+	创建一个管道，返回(conn1, conn2)， 即一对Connection对象
+	duplex - 当为True，管道为双工管道；当为False时，单工管道，conn1只能接收信息，conn2只能发送信息
 
-代码实例：
-from multiprocessing import Process
-import os
-def f(process_name):
-    print("%s的进程ID ：%s"%(process_name,os.getpid()))
-    print("%s的父进程ID ：%s"%(process_name,os.getppid()))
+class - Process
+variabl:
+daemon
+	设置或获取进程是否为daemon进程
+	进程的初始daemon继承于父进程
+	进程结束时，试图中断所有daemonic子进程
+	daemonic进程不允许创建子进程，当其daemonic的父进程结束时，它跟着结束，并将其子进程遗留为孤儿进程
+	daemonic进程不同于Unix daemon程序概念
 
-def main():
-    process1 = Process(target=f,args=("branch1 line",))
-    process1.start()
-    process2 = Process(target=f,args=("branch2 line",))
-    process2.start()
-    process1.join()
-    process2.join()
+exitcode
+	子进程的exit code
+
+name
+	赋值或获取进程名
+
+pid
+	进程id
+
+method:
+__init__(self, group=None, target=None, name=None, args=(),kwargs={}, *, daemon=None)
+	创建一个新进城
+	group - 保留
+	target - function，进程中执行的方法. 实际被run()调用
+	name - str类型，进程的名称，默认为'ForkPoolWorker-<N>'
+	args - tuple类型，传入target方法的位置参数
+	kwargs - dict类型，传入target方法的关键字参数
+	daemon - bool类型，设置进程是否为守护线程。默认继承自主进程，主进程非守护进程
+
+close()
+	关闭进程
+
+is_alive()
+	进程是否正在运行，返回bool对象
+
+join(timeout=None)
+	子进程阻塞父进程，直到子进程结束
+	timeout - 子进程阻塞指定时间，后续分离执行
+
+kill()
+	SIGKILL signal中断
+
+start()
+	启动子进程，实质上调用run()
+
+terminate()
+	SIGTERM signal中断
+
+multiprocessing.pool模块
+class - Pool
+
+method:
+__init__(self, processes=None, initializer=None, initargs=(), maxtasksperchild=None, context=None)
+	创建进程池
+	processes - 进程数量，默认为os.cpu_count()返回的值
+
+apply(self, func, args=(), kwds={})
+	启动sync进程
+	func - 调用的函数
+	args - tuple格式，传递给调用函数的位置参数
+	kwds - dict格式，传递给调用函数的关键字参数
+
+apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None)
+	启动async进程
+	func - 调用的函数
+	args - tuple格式，传递给调用函数的位置参数
+	kwds - dict格式，传递给调用函数的关键字参数
+
+close()
+	阻止新进程加入进程池
+
+join()
+	进程池进程阻塞主进程
+
+terminate()
+	马上中断进程池中所有进程
+
+multiprocessing.connection模块
+class - Connection
+
+method:
+close()
+	关闭连接
+
+recv()
+	接收另一端发送的信息，阻塞直到另一端发送信息
+	当阻塞阶段，另一端主动关闭，抛出EOFError异常
+
+send(obj)
+	向另一端发送信息
+
+示例1 - 子进程与父进程分离
+import multiprocessing, time, os
+
+def f(proc_name):
+	print("%s的进程ID: %s." % (proc_name, os.getpid()))
+	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
+	time.sleep(20)
+	print("进程%s is done." % os.getpid())
 
 if __name__ == "__main__":
-    main()
+	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
+	process = multiprocessing.Process(target=f, args=("sub_proc"))
+	process.start()
+	print("进程%s is done." % os.getpid())
+	
 
+示例2 - 父进程等待子进程完结
+import multiprocessing, time, os
 
-进程池：进程池内进程依然独享内存空间，当进程执行完当前任务空闲时，立即分配下一个任务
-涉及模块：
-multiprocessing包的__init__模块(实际为context模块)
+def f(proc_name):
+	print("%s的进程ID: %s." % (proc_name, os.getpid()))
+	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
+	time.sleep(20)
+	print("进程%s is done." % os.getpid())
 
-方法：
-__init__(process=core_number)：创建进程池实例
+if __name__ == "__main__":
+	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
+	process = multiprocessing.Process(target=f, args=("sub_proc"))
+	process.start()
+	process.join()
+	print("进程%s is done." % os.getpid())
+	
+3.子进程跟随父进程结束(子进程为daemonic进程)
+import multiprocessing, time, os
 
-apply(func,args,kwargs)：进程池内进程同步进行(即完成当前进程再进行下一个)
+def f(proc_name):
+	print("%s的进程ID: %s." % (proc_name, os.getpid()))
+	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
+	time.sleep(20)
+	print("进程%s is done." % os.getpid())
 
-apply_async(func,args,kwargs)：进程池内进程异步进行
+if __name__ == "__main__":
+	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
+	process = multiprocessing.Process(target=f, args=("sub_proc",), daemon=True)
+	process.start()
+	time.sleep(5)
+	print("进程%s is done." % os.getpid())
 
-close()：保证最后没有新任务进入到进程池
+4.进程池
+import multiprocessing, time, os
 
-join()：等待所有任务完成
-
-代码实例：
-import os,random
-from time import sleep
-from multiprocessing import Pool
 def f(i):
-    print("第%d个进程开始执行，PID：%s"%(i,os.getpid()))
-    sleep(random.random()*3)
-    print("第%d个进程执行完毕，PID：%s" %(i, os.getpid()))
-
-def main():
-    p = Pool(processes=4)
-    for i in range(6):
-        p.apply_async(func=f,args=(i,))
-    p.close()
-    p.join()
+    start = time.time()
+    print("Process %s is running." % multiprocessing.current_process().name)
+    result = 100**10000000
+    end = time.time()
+    print("Process %s done, cost time %d." % (multiprocessing.current_process().name, end-start))
 
 if __name__ == "__main__":
-    main()
+    print("Process %s is running." % multiprocessing.current_process().name)
+    start_totle = time.time()
+    pool = multiprocessing.Pool(4)
+    for i in range(10):
+        pool.apply_async(f, args=(i,))
+    pool.close()
+    pool.join()
+    end_totle = time.time()
+    print("总共用时%d s." % (end_totle-start_totle))
 
 
-进程间通信
-涉及模块：
-multiprocessing包的__init__模块(实际为context模块)
-
-方法：
-put(item[,block=True[,timeout=0]])：向队列中放入内容，当block为True
-
-get([block=True[,timeout=0]])：从队列中取出，当block为True，则queue无数据时，会进行阻塞等待，并且等待时间为timeout(默认为0，无限等待)
-
-empty()：队列是否为空
-
-实例代码：
-from multiprocessing import Process,Queue
-def square(numbers,queue):
-    for i in range(numbers):
-        queue.put(i*i)
-
-def cube(numbers,queue):
-    for i in range(numbers):
-        queue.put(i*i*i)
-
-def get(queue):
-    while not queue.empty():
-        print(queue.get())
-
-def main():
-    numbers = 5
-    queue = Queue()
-    process1 = Process(target=square,args=(numbers,queue))
-    process2 = Process(target=cube,args=(numbers,queue))
-    process3 = Process(target=get,args=(queue,))
-    process1.start()
-    process2.start()
-    process3.start()
-    process1.join()
-    process2.join()
-    process3.join()
-
-if __name__ == "__main__":
-    main()
 
 
 线程：CPU中的最小调度单元，同一进程的不同线程，共享同一内存空间
 
-锁：由于同一进程下的线程共享同一内存空间，所以会造成同时读取内容，所以需要使用互斥锁防止同时读取
+锁：由于同一进程下的线程共享同一内存空间，同时读取内容会造成混乱，所以需要使用互斥锁防止同时读取
 
-涉及模块：
-threading模块的Thread、Lock
+threading模块
+function:
+active_count()
+	当前alive线程数量
 
-Thread方法：
-__init__(target=None,args=None,kwargs=None)
+current_thread()
+	返回当前运行的线程Thread对象
 
-参数释义：
-target：run方法调用的函数名称
+enumerate()
+	当前alive线程Thread对象列表
 
-args：函数的参数值元组
+class 
+Thread
 
-kwargs：函数的关键字参数值
+variable:
+name
+	获取或配置线程名称
 
-Lock方法：
-__init__(blocking=True, timeout=-1)
+daemon
+	判断或设置守护线程
 
-acquire()：请求锁，将锁置于lock状态
+method：
+__init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)
+	创建一个线程实例
+	group - 保留，用于将来ThreadGroup类的实现
+	target - function，线程中执行的方法. 实际被run()调用
+	name - str类型，线程的名称，默认为'Thread-<N>'
+	args - tuple类型，传入target方法的位置参数
+	kwargs - dict类型，传入target方法的关键字参数
+	daemon - bool类型，设置线程是否为守护线程。默认继承自主线程，主线程非守护线程
 
-release()：释放锁，将锁置于unlock状态。如果试图释放unlock锁，将会引发RuntimeError异常
+is_alive()
+	线程是否存活
 
-参数释义：
-blocking：是否阻塞(block直到unlock)，默认为True
+join(timeout=None)
+	将创建的线程阻塞主线程，阻塞指定时间或阻塞直到线程terminate
+	timeout - float格式，阻塞指定时间
 
-timeout：当block为True时，阻塞直到unlock和timeout中的最大值。默认-1不指定超时时间
+run()
+	线程实际执行的方法
+	在子类实现中必须被重写
 
-实例代码：
-from threading import Thread,Lock
-import time
-class Account:
-    def __init__(self):
-        self._balance = 0
-        self._lock = Lock()
+start()
+	启动线程，使run()被调用
+	当多次调用同一个线程的该方法时，抛出Runtimeerror异常
 
-    def desipot(self,money):
-        self._lock.acquire()
-        new_balance = self._balance + money
-        time.sleep(0.01)
-        self._balance = new_balance
-        self._lock.release()
+class
+Lock
 
-    @property
-    def balance(self):
-        return self._balance
+method:
+__init__()
+	初始化锁
 
-class Add_money_thread(Thread):
-    def __init__(self,account,money):
-        super().__init__()
-        self._account = account
-        self._money = money
+acquire(blocking=True, timeout=-1)
+	请求锁，获取后置于locked状态
+	blocking - 当为True时，如果请求的锁状态为locked，进行排队等候释放锁；当为False，如果请求的锁状态为locked，直接放弃请求
+	timeout - 排队等候时间，超过该时间放弃。默认为-1，代表不限制等候时间
 
-    def run(self):
-        self._account.desipot(self._money)
+release()
+	释放锁，释放后置于unlock状态
+	如果试图释放locked状态的锁，将会引发RuntimeError异常
 
-def main():
-    account = Account()
-    thread_pool = []
-    for _ in range(100):
-        add_money_thread = Add_money_thread(account, 1)
-        thread_pool.append(add_money_thread)
-        add_money_thread.start()
-    for i in thread_pool:
-        i.join()
-    print("账户内余额为：%s"%account.balance)
+locked()
+	查看锁的状态
 
-if __name__ == "__main__":
-    main()
+**并发问题：当多个线程同时读取相同变量时，会导入互相干扰，得出错误结果。
+**问题解决1：确保函数使用局部变量可避免该问题
+**问题解决2：使用锁，使同一时间变量只能被一个线程访问
 
 采用多进程(多线程)的条件：计算密集型任务 or I/O密集型任务
-多进程：因为线程切换需要消耗CPU计算能力，并且由于GIL特性无法使用多核特性，而计算任务是不会减少的，所以多线程只会减少计算机性能，使用多进程可以在多核间灵活切换，所以计算密集型任务使用多进程
+多进程：线程切换需要消耗CPU，并且由于GIL特性无法并行执行多个线程，所以计算密集型任务适合多进程
 
-多线程：但是I/O密集型任务由于大部分时间处于等待I/O传输(由于CPU运算速度远高于I/O速度)，所以此时切换线程会大幅增加计算机性能，所以I/O密集型任务使用多线程
+多线程：I/O密集型任务由于大部分时间处于等待I/O传输(由于CPU运算速度远高于I/O速度)，所以此时切换线程会大幅增加计算机性能，且由于线程的共享空间特性，所以I/O密集型任务使用多线程
 
 并发和并行的差异：
-并发(concurrency)：在单CPU上，将时间段切分为更小的时间片，不同任务在不同的时间片切换进行执行，但是并不是同一个时间点同时执行。多线程和多进程都属于并发
+并发(concurrency)：将时间段切分为多个时间片，在时间片执行不同内容，但同一时间片只执行一个呢绒。多线程和多进程都属于并发
 
-并行(parallel)：在多CPU计算机上，不同任务在不同CPU上同一时间点同时执行。只有多进程属于并行
+并行(parallel)：不同任务在不同CPU上同一时间点同时执行。python只有多进程属于并行
 
-协程(coroutine)：单线程+异步I/O的编程模型，基于事件驱动
-涉及模块：
-asyncio
 
-相关第三方模块
-aiohttp：提供异步的HTTP客户端和服务器
-aiofiles
+示例1 - 主线程与子线程分开
+from threading import Thread
+import time, os
 
-相关关键字：
-async：用来定义支持coroutine的方法
+def sub_thread():
+	print("sub-thread begin")
+	print("sub-thread pid: %s" % os.getpid())
+	time.sleep(10)
+	print("sub-thread end")
 
-await：用于调用asyncio中的大部分方法。await必须在async方法中调用，并且调用的方法必须为async方法
+print("main-thread begin")
+print("main-thread pid: %s" % os.getpid())
+thread = Thread(target=sub_thread)
+thread.start()
+print("main-thread end")
 
-函数：
-run(coro, *, debug=False)：创建事件循环，运行协成，关闭循环。通常coro为顶部函数调用main()
 
-await sleep(delay)：暂停当前任务，允许其他任务运行
+示例2 - 主线程等待子线程中断
+from threading import Thread
+import time, os
 
-create_task(func)：创建协程任务(func含参数)，返回Task对象task。后续搭配await task调用
+def sub_thread():
+    print("sub-thread begin")
+    print("sub-thread pid: %s" % os.getpid())
+    time.sleep(10)
+    print("sub-thread end")
 
-await gather(*aws,loop=None)：同时调用的不同async方法(带参数调用)，可以在其中间进行切换
+print("main-thread begin")
+print("main-thread pid: %s" % os.getpid())
+thread = Thread(target=sub_thread)
+thread.start()
+thread.join()
+print("main-thread end")
 
-Queue属性/方法：
-maxsize：队列的容量
-__init__(maxsize=0,*,loop=None)：maxsize为队列最大容量(<=0时，容量无限大)，返回队列对象
 
-empty()：队列是否为空
+示例3 - 子线程随着主线程终结
+from threading import Thread
+import time, os
 
-qsize()：返回队伍内的item数
+def sub_thread():
+    print("sub-thread begin")
+    print("sub-thread pid: %s" % os.getpid())
+    time.sleep(10)
+    print("sub-thread end")
 
-full()：队列是否已满，maxsize需大于0才会返回True
+print("main-thread begin")
+print("main-thread pid: %s" % os.getpid())
+thread = Thread(target=sub_thread, daemon=True)
+thread.start()
+print("main-thread end")
 
-await get()：从队列移除并返回item，当队列为空时，等待队列填入新值
 
-get_nowait()：立刻从队列返回item，如果队列为空，则引发QueueEmpty异常
+示例4 - Thread子类实现线程功能
+import threading
 
-await put(item)：item填入队列，当队列full，等待留出空间
+class SubThread(threading.Thread):
+    def __init__(self, args=0):
+        super().__init__()
+        self._args = args
 
-put_nowait(item)：item立刻填入队列，当队伍full，引发QueueFull异常
+    def run(self):
+        print("current thread name: %s." % threading.current_thread().name)
+        result = self._args**100
+        print("%d^100结果: %d." % (self._args, result))
 
-await join()：当item填入队列时，count增加；当执行task_done后，count较少。最终当count为0，取消阻塞
+thread = SubThread(args=2)
+thread.start()
+thread.join()
+print("thread over")
 
-task_done()：意味一次排队任务完成，通常由消费者调用
 
-Task方法：
-cancel()：退出task的协程执行(含await关键字部分无法执行)
+示例5 - 线程锁
+from threading import Thread
+import threading
+import time, os
 
-协程链(coroutine chain)：当gather中调用的某个async方法包含多个 async方法(链)调用时，该链为sync，后续方法需要前面的方法完成，然后再执行
-生产者(producer)/消费者(consumer)模型：
+class Account:
+	def __init__(self):
+		self.balance = 0
 
-代码实例：
-import time
-import asyncio
-async def counter():
-    print("one")
-    await asyncio.sleep(1)
-    print("two")
+	def add(self, lock):
+		lock.acquire()
+		for i in range(1000):
+			self.balance += 1
+			print("the %d th add, result is: %d" % (i, self.balance))
+		lock.release()
 
-async def main():
-    start = time.perf_counter()
-    await asyncio.gather(counter(), counter(), counter())
-    end = time.perf_counter()
-    print("sum cost time：%.2f"%(end-start))
+	def delete(self, lock):
+		lock.acquire()
+		for i in range(1000):
+			self.balance -= 1
+			print("the %d th delete,result is: %d" % (i, self.balance))
+		lock.release()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+	account = Account()
+	lock = threading.Lock()
+	thread1 = Thread(target=account.add, args=(lock,))
+	thread2 = Thread(target=account.delete, args=(lock,))
+	
+	# 启动线程
+	thread1.start()
+	thread2.start()
+
+	# 阻塞主线程
+	thread1.join()
+	thread2.join()
+
+	print("The final balance is: %d" % account.balance)
+
+
+6.Queue队列(Queue为线程安全, 内部实现锁机制)
+import threading, queue, time, random
+
+class Producer(threading.Thread):
+	def __init__(self, name=None, queue=None):
+		super().__init__(name=name)
+		self._queue = queue
+
+	def run(self):
+		for i in range(5):
+			self._queue.put(i)
+			print("%s is producing %d to queue." % (self.name, i))
+			time.sleep(random.randrange(2))
+		print("producer done")
+
+class Consumer(threading.Thread):
+	def __init__(self, name=None, queue=None):
+		super().__init__(name=name)
+		self._queue = queue
+
+	def run(self):
+		for i in range(5):
+			n = self._queue.get()
+			print("%s is producing %d to queue." % (self.name, n))
+			time.sleep(random.randrange(2))
+		print("consumer done")
+		
+queue = queue.Queue()
+producer = Producer("producer", queue)
+consumer = Consumer("consumer", queue)
+producer.start()
+consumer.start()
+producer.join()
+consumer.join()
+print("everything is done")
+		

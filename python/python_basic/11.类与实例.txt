@@ -1,0 +1,202 @@
+面向对象：利用封装、继承和多态特性，对物件进行描述和对象间的相互关联，对象为基本单位。
+
+类：定义了数据的形式和对数据的操作，是对事物的抽象描述
+
+对象：类的实例
+
+
+面向对象的特性：
+封装：使用者只需要知道实现了哪些功能，而不需要知道实现的细节
+
+继承：子类通过对父类的继承，只需要实现子类区别于父类的功能
+
+多态：同一个类的不同子类，具有不同的实现功能
+
+类成员
+1.data attributes
+	权限 - public或private，描述如下: 
+		public - VarName的格式。可通过类实例访问
+		private - _VarName的格式，含'_'前缀。建议限类内部访问
+
+	共享范围 - 类变量被所有类实例对象共享；对象变量只被当前对象共享
+	示例：
+	class Dog:
+        kind = 'canine'         # class variable shared by all instances
+        def __init__(self, name):
+            self.name = name    # instance variable unique to each instance
+
+2.methods
+	共享范围 - method被所有类实例对象共享
+
+	同名方法 - 只保留参数最多的同名方法
+	
+	
+
+常规内部属性/方法：
+__class__: <namespace>.ClassName名称
+
+__doc__: 返回类的docstring(类起始的几行字符串描述)
+
+__init__(): 创建对象时，进行的初始化构造对象操作
+
+__iter__(): 返回对象的iterator
+
+__next__(): 返回下一个元素。实现该方法的类，其实例即为iterator
+
+__slots__: 属性的字符串列表，限定类可使用的属性
+
+**self关键字: 在类中，通过self调用类对象的属性和方法。类方法的第一个参数携带该关键字，调用关系object.method()等于ClassName.method(object)
+
+
+类与类的三种关系: 
+1.is-a：继承关系，一个类继承自另一个类
+
+2.has-a：关联关系，一个类的属性为另一个类
+
+3.use-a：依赖关系，一个类的方法使用另一个类作为参数
+
+
+命名空间(namespace)创建顺序:
+1.built-in名称 -- 解释器启动
+
+2.全局变量 -- 模块导入
+
+3.类变量 -- 实例化类
+
+4.局部变量 -- 方法调用
+
+** built-in名称变量实质是在builtins模块中
+
+** 变量引用顺序为创建顺序的逆序
+
+** 最顶层调用模块或交互模式的__name__为'__main__'
+
+
+属性scope:
+1.全局 - 位于module内
+
+2.非local - 位于嵌套函数的非最内层
+
+3.local - 位于最内部函数
+
+**当local范围内，需要对全局属性操作时，使用global关键字
+**当local范围内，需要对非local属性操作时，使用nonlocal关键字
+示例：
+def scope_test():
+    def do_local():
+        spam = "local spam"
+
+    def do_nonlocal():
+        nonlocal spam
+        spam = "nonlocal spam"
+
+    def do_global():
+        global spam
+        spam = "global spam"
+
+    spam = "test spam"
+    do_local()
+    print("After local assignment:", spam)
+    do_nonlocal()
+    print("After nonlocal assignment:", spam)
+    do_global()
+    print("After global assignment:", spam)
+
+scope_test()
+print("In global scope:", spam)
+
+
+
+原始类语法(默认继承自object)：
+class ClassName:
+	<statement-1>
+	.
+	.
+	.
+	<statement-2>
+
+继承类：
+class DerivedClassName(BaseClasssName):
+	<statement-1>
+	.
+	.
+	.
+	<statement-2>
+
+** attribute引用查找：derivedclass - baseclass - ...
+** 子类继承规则: 
+**     1.类变量直接继承
+**     2.方法直接继承，__init__与普通方法继承规则一致，无隐式调用
+示例:
+class Beth:
+    sex = "female"
+    def __init__(self, age):
+        self.age = age
+
+class Summer(Beth):
+    def display(self):
+        print("Summer's age: %d." % self.age)
+        print("Summer's sex: %s." % self.sex)
+
+summer = Summer(20)
+summer.display()
+               
+** 子类method extend规则: 
+**     1a.使用BaseClassName.method_name(self, *args)
+**     1b.使用super().method_name(*args)
+**     2.extend code
+示例:
+class Beth:
+    def __init__(self):
+        self.beth_age = 30
+
+    def display(self):
+        print("Beth's age: %d." % self.beth_age)
+
+class Morty(Beth):
+    def __init__(self):
+        Beth.__init__(self)
+        self.morty_age = 10
+
+    def display(self):
+        Beth.display(self)
+        print("Morty's age: %d." % self.morty_age)
+
+morty = Morty()
+morty.display()
+
+
+多点继承：
+class DerivedClassName(Base1,Base2,Base3):
+    statement1
+	statement2
+
+** 继承规则: depth-first, left-to-right。先从Base1继承，再递归深入到Base1父类，然后再Base2，如此循环
+
+抽象类定义：
+from abc import ABCMeta,abstractmethod
+class Abstract_class(metaclass=ABCMeta):
+def __init__(self,name):
+    self._name = name
+#抽象方法，月薪
+@abstractmethod
+def get_salary(self):
+    pass
+
+
+继承类属性查找规则：
+1.从子类查找
+
+2.从父类查找
+
+3.向更上层父类递归查找
+
+
+python中没有private属性概念，通常使用下划线(__)做前缀的属性为类内部使用属性。
+内部方法使用规则：__spam在python语言中，被包装为_classname__spam，并且使用该包装才能引用该属性
+内部属性使用规则：如果使用__开头，子类将不可用该属性，所以以_为开头表明应注意为内部使用属性，但可正常使用
+
+
+built-in方法：
+isinstance(obj,type)：判断实例obj是否为type类或其子类
+issubclass(type1,type2)：判断type1类是否为type2的子类
