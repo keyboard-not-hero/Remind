@@ -1,0 +1,23 @@
+pysocks - 配置socks和http代理模块
+安装 - pip3 install PySocks
+导入 - import socks
+
+function:
+set_default_proxy(proxy_type=None, addr=None, port=None, rdns=True, username=None, password=None)
+	配置代理
+	proxy_type - socks模块常量，代理类型。可选列表: SOCKS4/SOCKS5/HTTP
+	addr - str类型，代理服务器地址
+	port - int类型，代理服务器端口
+	rdns - bool类型，是否在远端执行DNS查询，替换在本端执行
+	username - str类型，认证用户名
+	password - str类型，认证用户密码
+
+
+示例:
+import socket, socks
+import requests
+
+socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 1080)
+socket.socket = socks.socksocket
+html = requests.get("https://www.google.com")
+print(html.text)

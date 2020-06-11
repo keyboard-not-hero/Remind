@@ -11,13 +11,13 @@ input(prompt)：读取输入字符串，并去掉末尾的newline标记
 
 二、字符串格式化：
 1.formatted string literals
-  f”I love {变量名}”
+  f"I love {<var_name>}"
 
 2.str的format()函数
-  “I love {参数定位:格式} ”.format(变量名)
+  "I love {参数定位:格式}".format(<var_name>)
 
 3.%表示法
-  “I love %格式”%变量名
+  "I love %<format>" % <var_name>
 
 
 保存到文本
@@ -39,7 +39,7 @@ mode：文本操作模式。
 使用with语句结合open()，可以使文件在使用完成后自动close
 例：
 with open(“vi.txt”) as f：
-read_data = f.read()
+	read_data = f.read()
 
 
 file object方法：

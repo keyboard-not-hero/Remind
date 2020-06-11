@@ -21,3 +21,5 @@ iconv [option ...] [file ...]
 示例：
 iconv -f gbk -t utf-8 src.txt -o target.txt
 
+** Windows的ISO-8859等于gbk
+

@@ -1,0 +1,152 @@
+smtplib - 可发送邮件的客户端会话
+
+class 
+SMTP
+
+method:
+__init__(self, host='', port=0, local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, source_address=None)
+	封装的STMP连接
+	host - str格式，STMP服务器地址
+	port - int格式，STMP服务器开放的端口。TLS常规端口587
+	local_hostname - str格式，本地主机的FQDN(Fully Qualified Domain Name)
+	timeout - tuple格式，本地主机的(host, port)内容
+
+ehlo(name='')
+	发送给ESMTP服务器的自身标识，返回250表示成功，TLS选择该选项
+	name - 本地主机的FQDN
+
+helo(name='')
+	发送给SMTP服务器的自身标识，返回250表示成功
+	name - 本地主机的FQDN
+
+login(user, password, *, initial_response_ok=True)
+	登录到SMTP服务器，如果本地没有发送helo/ehlo，默认发送ehlo。返回235表示成功
+	登录失败则抛出异常，列表如下：
+		SMTPHeloError - 无法回复ehlo信息
+		SMTPAuthenticationError - user/password信息不正确
+		SMTPNotSupportedError - 服务器不支持认证指令
+		SMTPException - 没有发现适当的认证方法
+
+quit()
+	中断SMTP会话和关闭连接，返回221表示成功关闭
+
+sendmail(from_addr, to_addrs, msg, mail_options=(), rcpt_options=())
+	发送邮件。返回dict，其内包含报送失败收件人信息
+	from_addr - str格式，发送邮件的地址。规范查看RFC 822
+	to_addrs - str或list格式，接收邮件的str地址或多个地址列表
+	msg - ASCII str或bytes，str中单独的\r或\n转化为\r\n，bytes则不改变
+	
+send_message(msg, from_addr=None, to_addrs=None, mail_options=(), rcpt_options=())
+    发送邮件。返回dict，其内包含报送失败收件人信息
+	msg - email.message.Message对象
+    from_addr - str格式，发送邮件的地址。规范查看RFC 822
+    to_addrs - str或list格式，接收邮件的str地址或多个地址列表
+
+starttls(keyfile=None, certfile=None, context=None)
+	将SMTP连接放入TLS，并且应该再次发送helo/ehlo。返回220表示成功
+	keyfile - Deprecated since v3.6
+	certfile - Deprecated since v3.6
+	context - ssl.SSLContext对象，可使用ssl.SSLContext()
+
+示例
+import smtplib, ssl
+
+smtp_obj = smtplib.SMTP("smtp.office365.com", 587)
+smtp_obj.ehlo()
+context = ssl.create_default_context()
+smtp_obj.starttls(context=context)
+passwd = input("Enter your passwd: ")
+smtp_obj.login("shuffle_liu@163.com", passwd)
+sender = "From:" + "shuffle_liu@163.com\r\n"
+receiver = "To:" + "lt19891121@live.cn\r\n"
+subject = "Subject:"+"testmail\r\n\r\n"
+text = "Hello World"
+content = sender + receiver + subject + text
+smtp_obj.sendmail(<from_addr>, <to_addr>, content)
+
+
+
+imapclient - 从服务器拉取邮件的第三方库
+安装 - pip3 install imapclient
+导入 - import imapclient
+
+class
+IMAPClient
+
+method:
+__init__(host, port=None, use_uid=True, ssl=True, stream=False, ssl_context=None, timeout=None)
+	初始化与IMAP服务器的连接
+	host - str类型，服务器地址
+	port - int类型，服务器开放端口，默认ssl为993，非ssl为143
+	use_uid - bool类型，为True时，所有消息使用uid进行标识；为False时，使用message sequence number表示(连续编号)
+	ssl - bool类型，是否使用ssl加密
+	ssl_context - ssl.SSLContext实例，适用于ssl为True时
+	timeout - float类型或imapclient.SocketTimeout对象，连接服务器的超时时长
+
+list_folders(directory=u'', pattern=u'*')
+	获取目录列表，item格式为(flags, delimiter, name)的tuple
+	directory - 限制返回的基目录，返回该基目录和其子目录
+	pattern - 只返回匹配通配符pattern的目录，*代表0或多个任意字符，%代表0或多个除目录分隔符的任意字符
+
+fetch(messages, data, modifiers=None)
+	获取指定uid或sequence number对应的内容
+	messages - int类型，指定ids或sequence number
+	data - str类型，邮件的部分相关，列表如下:
+	macro
+		ALL - header的metadata
+		FAST - FLAGS/INTERNALDATE/RFC822.SIZE简略消息
+		FULL - header和body的metadata
+	item
+		BODY - body的metadata
+		BODY[<section>] - BODY指定部分，section列表如下:
+			<n> - 邮件正文部分内容
+			TEXT - 邮件正文全文，默认
+
+login(username, password)
+	使用账号进行登录
+
+search(criteria=u'ALL', charset=None)
+	返回符合criteria的邮件id列表
+	criteria - str格式，邮件筛选标准，参考格式如下:
+		<sequence number> - sequence number指定邮件
+		ALL - folder下所有邮件
+		ANSWERED - 包含\Answered flag的集合
+		BCC <str> - BBC(暗抄送)内容包含指定字符串
+		BEFORE <date> - 指定日期之前收到的邮件。日期格式：8-Jun-2020
+		BODY <string> - 邮件内容包含指定字符串
+		CC <string> - CC(抄送)字段包含指定字符串
+		FROM <string> - 指定发送人
+		LARGER <n> - 大于指定bytes的内容
+		NOT <search-key> - 指定匹配求非
+		OR <search-key1> <search-key2> - 或操作
+		SMALLER <n> - 邮件小于指定bytes
+		SINCE <date> - 指定日期当日及之后收到的邮件
+		SUBJECT <string> - 指定主题邮件
+		TO <string> - 指定收件人
+		UID <number> - uid指定邮件
+		匹配不在乎大小写
+		其他具体参考: https://tools.ietf.org/html/rfc3501.html#section-6.4.4
+	charset - 支持的字符集。默认为US-ASCII，支持UTF-8
+
+select_folder(folder, readonly=False)
+	设置当前文件夹
+	folder - str格式
+
+starttls(ssl_context=None)
+	使用SSL加密连接
+	ssl_context - ssl.SSLContext对象
+
+
+示例
+import imapclient, ssl
+client = imapclient.IMAPClient(host="outlook.office365.com", port=993, ssl_context=ssl.SSLContext())
+passwd = input("Enter your passwd: ")
+client.login("shuffle_liu@hotmail.com", passwd)
+client.list_folders()
+client.select_folder("Inbox")
+ids = client.search("SINCE 8-Jun-2020")
+client.fetch(ids, data="BODY[]")
+
+
+引用
+1.imapclient tutorial: https://imapclient.readthedocs.io/en/2.1.0/ 

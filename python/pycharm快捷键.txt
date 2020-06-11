@@ -1,25 +1,26 @@
-ctrl+/    ע�ͱ���У�Ĭ�ϱ�ǵ�ǰ��
-ctrl+B    �ƶ�����ǰ�����Ķ���λ��
-ctrl+D    ����ѡ�����ݣ�û��ѡ�����Ƶ�ǰ��
-ctrl+N    ���ٲ�����(��Դ�����п�)
-ctrl+Q    ���ٲ鿴�α괦�����ĵ�
-ctrl+P    �����Ĳ����б���ʾ
-ctrl+X    ɾ����ǰ��
-ctrl+W    ���������չѡ��
-ctrl+F12    �оٷ�������������
-ctrl+Space    ������������ʾ
-ctrl+Enter    ���뵽��һ��
-shift+F6    ����������(����������ʹ�øñ����ĵط�)
-shift+Esc    �༭�������
-ctrl+shift+V    ��ճ������ѡ������ճ��(������ʷ��������)
-ctrl+shift+J    �����кϲ�Ϊһ�У���ɾ������Ҫ�Ŀո�
-ctrl+shift+��/��    ����ǰ����/����һ��
-ctrl+shift+Enter    ���뵽��һ��
-alt+Enter    ���ٴ�������/�࣬���ٵ��뷽��/��
-alt+��/��    �ڷ���/����������ƶ�
-F12    ��ʾ��Ŀ����
+ctrl+/    		注释标记行，默认标记当前行
+ctrl+B    		移动到当前变量的定义位置
+ctrl+D    		复制选中内容，没有选中则复制当前行
+ctrl+N    		快速查找类(来源于所有库)
+ctrl+Q    		快速查看游标处内容文档
+ctrl+P    		函数的参数列表提示
+ctrl+X    		删除当前行
+ctrl+W    		逐渐向外层拓展选中
+ctrl+F12    	列举方法、变量和类
+ctrl+Space    	方法或属性提示
+ctrl+Enter    	插入到下一行
+shift+F6    	重命名变量(适用于所有使用该变量的地方)
+shift+Esc    	编辑窗口最大化
+shift+alt+Left/Right	代码跳转后退/前进
+ctrl+shift+V    从粘贴板中选择内容粘贴(多条历史复制内容)
+ctrl+shift+J    将两行合并为一行，并删除不必要的空格
+ctrl+shift+Up/Down    	将当前行上/下移一行
+ctrl+shift+Enter    	插入到上一行
+alt+Enter    	快速创建方法/类，快速导入方法/类
+alt+Up/Down   	在方法/函数间快速移动
+F12    			显示项目窗口
 
-1.�ļ����ع�
-���޸��ļ��������д������Ʋ���ı䣬��Ҫ����������Ͻ������Եı༭�����ļ���Ȼ������Ӧ�ļ������޸����ƺ�script path
-2.pycharm��ubuntu���޷�ʹ���ѹ�
-X11�����뷨��֧�����⣬��fcitx������湴ѡ"X11֧��"
+1.文件名重构
+当修改文件名后，运行窗口名称不会改变，需要点击窗口右上角运行旁的编辑配置文件，然后点击对应文件名，修改名称和script path
+2.pycharm在ubuntu下无法使用搜狗
+X11对输入法的支持问题，在fcitx插件界面勾选"X11支持"

@@ -1,0 +1,91 @@
+pyautogui - 控制鼠标/键盘与其他应用进行交互
+安装 - pip3 install pyautogui
+导入 - import pyautogui
+
+Linux下依赖环境安装:
+sudo apt-get install scrot
+sudo apt-get install python3-tk
+sudo apt-get install python3-dev
+
+术语:
+坐标 - 屏幕坐标原点为左上角，向右延伸为x轴，向下延伸为y轴。单位为像素
+
+variable:
+PAUSE
+	float类型，执行每个方法后暂停时间，可用于紧急恢复
+
+FAILSAFE
+	bool类型，是否允许鼠标指向指定位置时，抛出Failsafeexception异常。该位置由FAILSAFE_POINTS指定
+
+FAILSAFE_POINTS
+	list类型，item为屏幕坐标tuple，表示指向特定坐标触发的事件。配合FAILSAFE一起使用
+
+General function:
+position()
+	返回当前鼠标所在坐标
+
+size()
+	返回屏幕(width,height)像素值
+
+
+Mouse function:
+click(x=None, y=None, clicks=1, interval=0.0, button=PRIMARY, duration=0.0, tween=linear)
+	点击鼠标
+	x - int/float类型，x轴坐标
+	y - int/float类型，y轴坐标
+	clicks - int类型，点击次数
+	interval - int/float类型，多次点击时的点击间隔时间
+	button - str类型，拖动时鼠标点击的按键。可选: "left"/"midlle"/"right"。默认PRIMARY代表"left"
+	duration - int/float类型，鼠标从当前位置移动到(x, y)的时间
+	tween - function，鼠标在duration时间内移动的速度与时间相关性。方法包含在pytweening库内，可选: linear/easeInQuad/easeInOutSince等，具体参考pytweening库
+	
+dragRel(xOffset=None, yOffset=None, duration=0.0, tween=linear, button=PRIMARY)
+	在指定时间后点击拖动鼠标到相对于当前位置(xOffset, yOffset)的位置
+	xOffset - int/float类型，相对于当前x轴位置的偏移
+	yOffset - int/float类型，相对于当前y轴位置的偏移
+	duration - float类型，鼠标移动时间
+	tween - function，鼠标在duration时间内移动的速度与时间相关性。方法包含在pytweening库内，可选: linear/easeInQuad/easeInOutSince等，具体参考pytweening库
+	button - str类型，拖动时鼠标点击的按键。可选: "left"/"midlle"/"right"。默认PRIMARY代表"left"
+	mouseDownUp - bool类型，鼠标拖动的时候是否按下指定键
+
+dragTo(x=None, y=None, duration=0.0, tween=linear, button=PRIMARY, logScreenshot=None, _pause=True, mouseDownUp=True)
+	在指定时间后点击拖动鼠标到坐标(x, y)
+	x - int/float类型，x轴坐标
+	y - int/float类型，y轴坐标
+	duration - float类型，鼠标移动时间
+	tween - function，鼠标在duration时间内移动的速度与时间相关性。方法包含在pytweening库内，可选: linear/easeInQuad/easeInOutSince等，具体参考pytweening库
+	button - str类型，拖动时鼠标点击的按键。可选: "left"/"midlle"/"right"。默认PRIMARY代表"left"
+	mouseDownUp - bool类型，鼠标拖动的时候是否按下指定键
+
+moveRel(xOffset=None, yOffset=None, duration=0.0, tween=linear)
+	在指定时间后移动鼠标到相对于当前位置(xOffset, yOffset)的位置
+	xOffset - int/float类型，相对于当前x轴位置的偏移
+	yOffset - int/float类型，相对于当前y轴位置的偏移
+	duration - float类型，鼠标移动时间
+	tween - function，鼠标在duration时间内移动的速度与时间相关性。方法包含在pytweening库内，可选: linear/easeInQuad/easeInOutSince等，具体参考pytweening库
+
+moveTo(x=None, y=None, duration=0.0, tween=linear)
+	在指定时间后移动鼠标到坐标(x, y)
+	x - int/float类型，x轴坐标。float截断小数点
+	y - int/float类型，y轴坐标
+	duration - float类型，鼠标移动时间
+	tween - function，鼠标在duration时间内移动的速度与时间相关性。方法包含在pytweening库内，可选: linear/easeInQuad/easeInOutSince等，具体参考pytweening库
+
+
+Keyboard function:
+hotkey(*args, **kwargs)
+	组合键
+	args列表:
+		key - str/list类型，按键名称
+		interval - float类型，按键之间的间隔时间
+
+typewrite(message, interval=0.0)
+	点击键盘按键
+	message - str或list类型，str代表按键组成的字符串，list代表item为按键名称。按键名称参考KEYBOARD_KEYS
+	interval - float类型，代表每次按键的时间间隔
+
+
+
+
+引用
+1.pyautogui tutorial: https://pyautogui.readthedocs.io/en/latest/
