@@ -1,0 +1,20 @@
+keras.datasets.mnist
+
+keras.datasets.imdb
+
+function:
+load_data(path="imdb.npz", num_words=None, skip_top=0, maxlen=None, seed=113, start_char=1, ovv_char=2, index_from=3, **kwargs)
+	加载数据集, 返回((train_data, train_labels), (test_data, test_labels))格式的数据
+	train_data/train_labels/test_data/test_labels为ndarray数据
+	path - str类型, 数据集读取位置, 默认路径为~/.keras/datasets
+	num_words - int类型, 单词出现频率排名前num_words名, 超过按ovv_char替代. 默认所有排名
+	skip_top - int类型, 单词出现频率排名前skip_top进行跳过, 使用ovv_char替代
+	maxlen - int类型, 评论单词数量限制，只取低于该长度的评论. 默认无限制
+	seed - int类型, 数据集排列的seed
+	start_char - int类型, 将评论的起始单词rank增加为该字符. 该评论增加一个字符
+	ovv_char - int类型, 用于替换num_words和skip_top参数内容的字符
+	index_from - int类型, 在评论所有rank排名基础上, 增加该数字
+
+get_word_index(path="imdb_word_index.json")
+	返回单词dict, item为word:rank pair
+	path - str类型, 数据集读取, 默认路径为~/.keras/datasets

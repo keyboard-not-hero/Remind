@@ -1,0 +1,232 @@
+官网地址：http://www.numpy.org/
+numpy--同构多维数组，即ndarray
+特性:
+1.广播：不同大小的数组进行运算，会扩散到元素级
+2.原子级：相同大小的数组进行运算，不同数组的相同位置进行运算
+3.视图：切片为原数组的视图，而不是冗余复制，对视图的元素修改直接映射到原数组元素
+4.二维数组中(单次嵌套数组)，轴0为Y轴负向(行)，轴1为X轴正向(列)
+
+import numpy as np
+
+function:
+array(iterable，dtype)
+	iterable可嵌套，用于创建多维数组；dtype为元素类型。返回一个ndarray对象
+
+arange([start,]stop[,step])
+	返回一个ndarray对象
+
+asarray(a, dtype=None, order=None)
+	将输入转化为array
+	a - iterable对象, 如: list/tuple
+	dtype - 基础字符类型(指向numpy定义的数据类型变量), 默认继承自iterable的类型
+	order - str类型, 矩阵数组的排列为行优先(C-style)或列优先(Fortran-style)，默认为'C'. 可选列表: 'C'/'F'
+
+linspace(start,stop,num,endpoint=True)
+	在start和stop平均分成num个数，endpoint决定stop是否闭合。返回一个ndarray对象
+
+ones(shape)
+	创建全1数组。返回一个ndarray对象
+
+zeros(shape, dtype=float, order='C')
+	创建全0数组。返回一个ndarray对象
+	shape - int/tuple类型, 数组的形状
+	dtype - numpy变量类型, 代表数组元素类型. 如: numpy.int8
+	order - str类型, 多维数组存储方式以行优先(C-style)或列优先方式(Fortran-style). 可选列表: 'C'/'F'
+
+full(shape, fill_value)
+	使用fill_value作为填充值创建矩阵。返回一个ndarray对象
+
+empty(shape)
+	创建非初始化数组。返回一个ndarray对象
+
+eye(number)
+	创建单位矩阵。返回一个ndarray对象
+
+unique(arr)
+	对数组进行去重。返回一维格式ndarray对象
+
+diag(arr,k=0)
+	从对角线矩阵提取一维数组或从一维数组构造对角线矩阵，arr为N*N矩阵或一维数据；k为偏移主对角线的位置。返回一个ndarray对象
+
+exp(ndarray)
+	求元素的exp**n。返回ndarray对象
+
+sin(ndarray)
+	求元素的sin(n)。返回ndarray对象
+
+sign()
+	返回元素的符号，>0为1，==0为0，<0为-1
+
+sum(array-like, axis=None)
+	求所有元素的和，可指定轴
+
+average(array, axis=None, weights=None)
+	求所有元素的平均值，可指定轴和权重
+
+in1d(arr1,arr2)
+	arr1中的元素是否在arr2中出现。返回ndarray对象
+
+where(cond,yes,no)
+	将符合条件的值设为yes，不符合的设为no，类似于?:三目运算符。返回一个ndarray
+
+vstack(tuple)
+	将多个ndarray进行垂直方向重叠。返回ndarray
+
+hstack(tuple)
+	将多个ndarray进行水平方向重叠。返回ndarray
+
+concatenate(tuple,axis=0)
+	将多个ndarray进行指定方向重叠。返回ndarray
+
+hsplit(ndarray,piece_or_tuple)
+	将数组按水平方向等分或者指定区块，当piece_or_tuple为int时，均分成n份；当为tuple时，每个数字为下一个切分ndarray起点在源ndarray中的索引(由0起始)
+
+vsplit(ndarray,piece_or_tuple)
+	将数组按垂直方向等分或者指定区块，当piece_or_tuple为int时，均分成n分；当为tuple时，每个数字为下一个切分ndarray起点在源ndarray中的索引(由0起始)
+
+split(ndarray,piece_or_tuple，axis=0)
+	将数组按指定方向等分或者指定区块，当piece_or_tuple为int时，均分成n分；当为tuple时，每个数字为下一个切分ndarray起点在源ndarray中的索引(由0起始)
+
+ix_(iterables)
+	利用可迭代对象创建对应个多维数组，如:len(a)=3,len(b)=2，则返回ax.shape=(3,1),bx.shape=(1,2)两个tuple
+
+trace(a, offset=0, axis1=0, axis2=1)
+	求矩阵在offset上的对角线和，axis1和axis2用于2维以上数组的矩阵轴确认
+
+mgrid[start:stop[:step][,start:stop[:step]]]
+	返回n个矩阵，第n个矩阵沿第n轴递增。当step为实数，代表步进，不包含stop数；当step为虚数，代表等分份数，并且包含stop数
+
+poly1d(c_or_r, r=False)
+	返回poly1d对象。当r为False，c_or_r为以iterable为系数的降次多项式；当r为True时，c_or_r为多项式的根
+
+save(file, arr, allow_pickle=True, fix_imports=True)
+	将arr保存到.npy格式的文件中
+	file - str或file-object格式
+	arr - numpy array
+	allow_pickle - bool类型，是否允许使用使用pickle来保存数据. pickle包含下列问题: 
+		1.security问题 -pickle本身存在安全性问题
+		2.compatible问题 - 不可以使用不同版本python分别进行内容的存和取
+	fix_imports - bool类型, 在python2使用Python3的pickle文件时使用
+
+savez(file, *args, **kwds)
+	保存多个array到.npz格式的文件中
+	file - str或file-object, 保存的文件
+	args - arr variable, 保存到文件的array. 在file中以arr_<N>保存
+	kwds - arr_key=arr_variable, 保存到文件的array名称. 在file中以arr_key保存
+	
+load(file, mmap_mode=None, allow_pickle=False, fix_imports=True, encoding='ASCII')
+	从.npy或.npz格式文件中加载数组。返回ndarray对象或NpzFile对象
+	NpzFile对象类似于dict，使用files获取keys值
+	file - str或file-object, 加载的文件
+	mmap_mode - str类型, 使用是否memory-map模式，该模式适合big-file内容，其将内容缓存到硬盘上，不一次性读取到内容中. 列表如下: 
+		1.'r+' - 打开已存在文件进行读写
+		2.'r' - 打开已存在文件进行只读
+		3.'w+' - 创建文件或覆盖已存在文件进行读写
+		4.'c' - 文件为只读模式，内容改动只发生在memory中，不写回文件
+	allow_pickle - bool类型, 当为True时，可读取保存内容. 参考引用[1]
+	fix_imports - bool类型, 在python3读取Python2生成的pickle文件时使用
+	encoding - str类型, 在python3读取python2生成的pickle文件时使用. 可选列表: 'ASCII'/'latin1'/'bytes'
+
+
+class
+numpy.ndarray
+
+variable:
+T
+	行列置换
+
+ndim
+	数组维度
+
+shape
+	返回tuple，里面包含各维度大小
+
+size
+	数组的元素总个数
+
+dtype
+	元素类型
+
+itemsize
+	元素所占字节大小
+
+reshape(tuple)
+	重置ndarray的shape，通常为一维变为多维。返回ndarray对象
+
+resize(tuple)
+	重置ndarray的shape，并且是in-place
+
+copy()
+	返回复制的ndarray
+
+dot(ndarray)
+	矩阵运算，返回ndarray对象
+
+运算符
+	ndarray执行元素级运算，矩阵运算使用@符号或者dot函数
+
+sum(axis)
+	对元素求和，当axis为0时，对列求和；为1时，对行求和；默认时，所有元素求和
+
+min(axis)
+	求元素的最小值
+
+max(axis)
+	求元素的最大值
+
+cumsum(axis)
+	对元素求累计和
+
+cumprod(axis)
+	对元素求累计积
+
+view()
+	创建一个视图
+
+transpose([iterable])
+	维度置换，当用于二维以上时，需要指定维度顺序列表
+
+argmax(axis=0)
+	行或列上最大数的索引
+
+any()
+	测试数组中是否包含True
+
+all()
+	测试数组是否全为True
+
+sort(axis)
+	内部排序
+
+
+
+numpy.linalg module
+function:
+inv(a)
+	返回a的逆矩阵，a必须为方阵。公式：ab=ba=np.eye(a.shape[0])
+
+solve(a, b)
+	求解线性方程组. 公式ax=b
+	a - array或sequence类型, 系数矩阵
+	b - array或sequence类型, 因变量
+
+eig(a)
+	返回矩阵a的特征值w和特征向量v的tuple。公式：AV=WV
+
+类：
+numpy.poly1d
+方法：
+detiv(m=1)：返回导数多项式poly1d对象。m代表求导次数
+integ(m=1)：返回反导多项式poly1d对象。m代表反导次数
+
+包：
+numpy.random
+方法：
+seed(int)：配置伪随机数种子
+normal()：生成标准正态分布
+randint(low,high=None,size=None)：在[low,high)区间上创建shape为size的随机整数，high未提供则为[0,low)区间。返回ndarray对象
+
+
+
+引用
+1.stackoverflow: https://stackoverflow.com/questions/55890813/how-to-fix-object-arrays-cannot-be-loaded-when-allow-pickle-false-for-imdb-loa

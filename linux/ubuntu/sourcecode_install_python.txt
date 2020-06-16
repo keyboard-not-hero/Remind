@@ -93,12 +93,13 @@ python3编译：
 
 [thompson@3.8.1] sudo make install
 
-[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/python3.8 /usr/bin/python3.8
 
-[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/pip3.8 /usr/bin/pip3.8
 
 [thompson@3.8.1] sudo rm -rf /usr/local/src/Python3.8.1
 
+**warning: 最好不要修改默认python3，保持其指向系统默认安装版本
 
 
 报错集：
@@ -121,7 +122,10 @@ python3编译：
 解决方法1：
 ## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
 ## 如不在该目录，使用find / -name gi查找
-## 使用情况：系统自带3.8及以上版本(ubuntu 20.04)，并且手动安装也是3.8及以上版本；或者系统自带3.7及以下版本(ubuntu 18.04及以下系统版本)，并且手动安装也是3.7及以下版本。原因是ubuntu自带的python库在ubuntu 20.04做了很大变动
+## 使用情况: 
+	系统自带3.8及以上版本(ubuntu 20.04)，并且手动安装也是3.8及以上版本；
+	系统自带3.7及以下版本(ubuntu 18.04及以下系统版本)，并且手动安装也是3.7及以下版本
+	原因是ubuntu自带的python库在ubuntu 20.04做了很大变动，造成python库不兼容
 
 ## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3时，对应与/usr/local/pytnon3/lib/python3.7/site-packages)
 [thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3/lib/python3.7/site-packages

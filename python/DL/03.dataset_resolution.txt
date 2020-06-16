@@ -1,0 +1,10 @@
+数据集默认缓存目录: ~/.keras/datasets
+
+由于服务器不可用，所以目前无法直接下载数据集，需手动下载
+下载源: https://storage.googleapis.com/tensorflow/tf-keras-datasets/<file_name>
+备用下载源: https://www.kaggle.com/datasets
+
+数据集汇总:
+1.mnist.npz
+2.imdb.npz - 25000条影评，并且对半分为正负极评论，每条评论划分为单词列表，数据内容为该对应单词出现频次排名
+3.

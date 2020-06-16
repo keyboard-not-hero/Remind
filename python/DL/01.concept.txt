@@ -55,7 +55,7 @@
 
 术语: 
 CUDA: GPU编程接口，将代码交由GPU进行运算
-cuNDD: 
+cuDNN(CUDA Deep Neural Network library): GPU深度卷积网络库
 TPU(Tensor Processing Unit，张量处理器): 谷歌专门为机器学习定制的专用集成电路
 过拟合: 模型在新数据上的性能比在训练数据上要差
 tersor(张量): 即轴的数量，也可视为数组维度。0阶张量为标量，1阶为向量，2阶为矩阵

@@ -178,21 +178,31 @@ dict为mutable，是key/value对的无序组合，并且key值在dict中具有�
 4.删除item：del dict[key]
 
 方法：
-keys()：返回dict_keys，里面的元素为key
+keys()
+	返回dict_keys，里面的元素为key
 
-values()：返回dict_values，里面的元素为value
+values()
+	返回dict_values，里面的元素为value
 
-items()：返回dict_items，item为key/value组成的tuple
+items()
+返回dict_items，item为key/value组成的tuple
 
-get(key[,default])：当key在dict中，返回value；当key不在dict中，返回default，若default未提供，则为None
+** keys/values/items返回dict的view, 内容会根据dict内容改变而改变
 
-pop(key[, default])：当key在dict中，删除对应item并返回value；当key不在dict中，返回default，若default未提供，抛出KeyError异常
+get(key[,default])
+	当key在dict中，返回value；当key不在dict中，返回default，若default未提供，则为None
 
-popitem()：删除一个item并返回，自version 3.7删除顺序遵循FILO。当使用该方法时dict为空，则抛出KeyError异常
+pop(key[, default])
+	当key在dict中，删除对应item并返回value；当key不在dict中，返回default，若default未提供，抛出KeyError异常
 
-setdefault(key[, default])：当key在dict中，返回对应value；当key不在dict中，添加value值为default并返回，若default未提供，默认为None
+popitem()
+	删除一个item并返回，自version 3.7删除顺序遵循FILO。当使用该方法时dict为空，则抛出KeyError异常
 
-clear()：删除dict所有项
+setdefault(key[, default])
+	当key在dict中，返回对应value；当key不在dict中，添加value值为default并返回，若default未提供，默认为None
+
+clear()
+	删除dict所有项
 
 
 dict推导式：{x:x**2 for x in range(4)}

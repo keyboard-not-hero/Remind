@@ -1,29 +1,71 @@
-官网地址：http://jupyter.org/
-
-安装：
-pip3 install jupyter
+官网地址 - http://jupyter.org/
+安装 - pip3 install jupyter
+启动 - jupyter notebook
 
 特征：
 1.文件名后缀.ipynb
-2.jupyter notebook的根目录源于终端启动目录
+2.jupyter notebook的根目录源于终端当前目录
 3.默认使用8888端口
 
-指令选项：
---port    指定使用端口
+配置文件默认路径: ~/.jupyter
 
-启动网页服务器/客户端：
-jupyter notebook
+jupyter notebook - 从默认浏览器启动jupyter
 
-jupyter notebook组件：
-1.web客户端
-  (1)dashboard：管理单元(文件、进程、集群)。文件根目录源自指令行启动目录；启动的进程需要手动shutdown，关闭网页tab仍然运行
-  (2)modal editor：代码管理单元，分为两个模式：
-      编辑模式：enter进入，绿色边框显示，进入代码输入
-      指令模式：esc进入，蓝灰色边框显示，进行cell管理
-          code：代码模式
-          markdown：html和MathJax模式
+语法
+jupyter notebook <command> [args]
 
-2.server端
+command:
+list
+	列出当前运行的notebook服务
+
+password
+	为notebook设置密码
+
+stop <port_number>
+	关闭指定端口notebook，端口号默认为8888
+
+args:
+--allow-root
+	允许notebook在root权限下允许
+
+--debug
+	调整log level为logging.DEBUG
+
+--generate-config
+	生成配置文件jupyter_notebook_config.py
+
+--ip=<listen_ip>
+	服务监听的IP
+
+--no-mathjax
+	关闭mathjax，mathjax为解释LaTeX的javascript库，占用带宽比较高
+
+--no-browser
+	启动服务后，不在浏览器中打开窗口
+
+--port=<listen_port>
+	服务监听的端口
+
+-y
+	默认yes
+
+--pylab
+	启用matplotlib，已弃用，替代方案为notebook环境中使用%pylab或%matplotlib
+
+
+jupyter -
+
+语法
+jupyter [option]
+
+参数释义
+--config-dir
+	当前配置文件路径
+
+--paths
+	可用配置文件搜寻路径
+
+
 
 
 快捷键：

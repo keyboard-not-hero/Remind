@@ -1,0 +1,74 @@
+一、下载前提工具
+1.科学套件
+Numpy/Scipy/matplotlib
+BLAS - cpu张量运算库，Numpy库底层高性能基础
+
+sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
+pip3 install numpy scipy pyyaml
+
+2.其他工具
+HDF5 - 二进制文件高效存储，h5py为中间接口库
+Graphviz - 神经网络可视化，为中间接口库
+
+sudo apt-get install libhdf5-serial-dev python-h5py graphviz
+pip3 install pydot-ng
+
+3.opencv包
+sudo apt-get install python-opencv
+
+
+二、CUDA和cuDNN(参考TensorFlow官方文档，以Ubuntu 18.04为例)
+1.TensorFlow
+pip3 install tensorflow
+
+2.安装CUDA和cuDNN
+CUDA - GPU编程接口
+cuDNN - GPU深度卷积网络库
+
+TensorFlow与CUDA版本对照: 
+https://www.tensorflow.org/install/source#gpu
+
+# CUDA版本与Nvidia驱动版本对照地址: 
+https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+本文版本如下: tensorflow-2.2.0/CUDA-10.1/cuDNN-7.6
+
+# Add NVIDIA package repositories
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+sudo dpkg -i cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+sudo apt-get update
+wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+sudo apt-get update
+
+# Install development and runtime libraries (~4GB)
+# cuDNN版本参考地址: http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/
+sudo apt-get install --no-install-recommends cuda-10-1 libcudnn7=7.6.4.38-1+cuda10.1 libcudnn7-dev=7.6.4.38-1+cuda10.1
+## 重启
+# Check that GPUs are visible using the command: nvidia-smi
+
+三、安装其他后端引擎
+1.Theano
+pip3 install theano
+
+配置theano使用GPU
+vi ~/.theanorc
+[global]
+floatX = float32
+device = gpu0
+
+[nvcc]
+fastmath = True
+
+2.CNTK
+依赖库安装(OpenMPI):
+sudo apt-get install openmpi-bin
+
+安装GPU版本CNTK
+pip3 install cntk-gpu
+
+
+四、安装Keras
+pip3 install keras
+keras运行一次后，自动生成配置文件~/.keras/keras.json
