@@ -1,0 +1,5 @@
+latex源文件: 后缀为.tex的文件
+
+latex目标文件: 后缀为.dvi/.pdf等的文件
+
+编译工具: latexmk

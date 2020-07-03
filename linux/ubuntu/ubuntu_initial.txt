@@ -138,3 +138,23 @@ Section "Device"
     BoardName "GeForce GTX 1650"
     Option "RegistryDwords" "EnableBrightnessControl=1"
 EndSection
+
+
+10.安装翻译字典
+安装goldendict
+sudo apt-get install goldendict
+
+添加在线词典支持
+编辑 - 词典 - 词典来源 - 网站, 点击右侧'添加'按钮, 输入以下内容:
+名称: youdao
+地址: http://dict.youdao.com/search?q=%GDWORD%&ue=utf8
+勾选'已启用', 点击'apply'按钮, 并点击'OK'按钮
+
+将词典添加进指定群组
+编辑 - 字典 - 群组, 点击'添加群组'按钮, 输入群组名称, 并点击'OK'按钮, 将词典添加进群组
+点击'apply'按钮, 并点击'OK'按钮
+
+调用词典
+选中单词 - ctrl+c+c组合键
+
+参考引用: https://www.pdawiki.com/forum/thread-14077-1-1.html

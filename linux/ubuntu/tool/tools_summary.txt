@@ -1,0 +1,12 @@
+video play
+1.VLC
+	sudo apt-get install vlc
+	offical url: https://www.videolan.org/
+
+bt tool
+1.qbittorrent
+    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
+    sudo apt-get update && sudo apt-get install qbittorrent
+	添加tracker:
+	工具 -- 首选项 -- BitTorrent
+    tracker url: https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt

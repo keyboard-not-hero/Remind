@@ -1,0 +1,8 @@
+一、Demo(示例)01 -- basic footnote
+\documentclass{article}
+\begin{document}
+	Gnus\footnote{A gnu is a big animal} can be quite a gnusance
+\end{document}
+
+内容讲解
+\footnote{fn_detail}用于给内容添加脚注

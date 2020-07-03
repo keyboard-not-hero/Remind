@@ -144,3 +144,9 @@ sudo vi /usr/bin/gnome-terminal
 #!/usr/bin/python3
 修改为
 #!/usr/bin/python3.6
+
+4.ModuleNotFoundError: No module named 'CommandNotFound'
+解决:
+sudo apt purge python3-apt
+sudo apt autoremove
+sudo apt install python3-apt

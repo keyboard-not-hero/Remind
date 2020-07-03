@@ -1,0 +1,20 @@
+一、Demo(示例)01 -- inline formula
+\documentclass{article}
+\usepackage{amssymb}
+\begin{document}
+	The formula \( x-3y = 7 \) is easy to type.\\
+	$E = mc^2$\\
+	\begin{math}
+		x^2 = y^2 + z^2
+	\end{math}\\
+	\( a_1 > x^{2n}/y^{2n} \)\\
+	$\because y = x$, $\therefore y' = 1$
+\end{document}
+
+内容讲解
+1.\( ... \)用于限定行内公式内容
+2.$ ... $用于限定行内公式内容
+3.\begin{math} ... \end{math}用于限定行内公式内容
+4._用于指定公式的subscript, ^用于指定公式的supscript
+5.'在公式中为求导符号
+6.数学公式中, \because和\therefore为几何的因为/所以符号, 在amssymb宏包中定义

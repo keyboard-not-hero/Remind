@@ -1,5 +1,6 @@
-texwork - 为TUG(TeX User Group)发布并推荐的Tex入门编辑器。Windows下的texlive默认已安装，GNU/Linux需要自行另外安装
+texwork - 为TUG(TeX User Group)发布并推荐的Tex入门编辑器。Windows下的texlive默认编辑器，GNU/Linux需要自行另外安装
 
+快捷键: 
 <tab> - 语法补充
 
 ctrl+' - 预览结果
@@ -10,9 +11,9 @@ ctrl+o - 打开文件
 
 ctrl+tab - 跳转到语法环境外部
 
-Ctrl+← - 向左一个单词
+Ctrl+←  - 向左一个单词
 
-ctrl+→ - 向右一个单词
+ctrl+→  - 向右一个单词
 
 ctrl+鼠标左键 - 源代码对应的pdf行，或pdf行对应源代码。即正反向查找
 

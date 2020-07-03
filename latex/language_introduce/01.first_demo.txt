@@ -1,0 +1,38 @@
+一、Demo(示例)01 -- 第一个示例
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\begin{document}
+	This is first demo!!
+\end{document}
+
+指令讲解
+1.\documentclass[arg1, arg2, ...]{doc_class}指定文档类型, []为可选参数限定, {}为必选参数限定, 指定文档类型
+arg<N> - 对应文档类型的额外参数
+doc_class - 类型列表: article/report/book/slides
+
+2.\documentclass与\begin{document}之间的部分为document preamble
+
+3.\usepackage[arg1, arg2, ...]{pac_name1, pac_name2, ...}指定包含额外指令的包, 属于document preamble内容
+pac_name<N> - 导入的包名
+
+4.begin{document} ... \end{document}指定正文内容部分
+
+
+二、Demo(示例)02 -- 基础结构
+\documentclass{article}
+\
+
+结构讲解
+标题 - \maketitle
+内容结构
+	\part(in report/book)         level-1
+	\part(in article)             level0
+	\chapter(only report/book)    level0
+    \section                      level1
+	\subsection                   level2
+	\subsubsection                level3
+	\paragraph                    level4
+	\subparagraph                 level5	
+引用 - thebibliography environment
+
+指令讲解

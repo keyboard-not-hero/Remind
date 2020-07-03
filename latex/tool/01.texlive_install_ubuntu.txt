@@ -13,7 +13,7 @@ steven@Downloads$ sudo mount -o loop texlive2019-20190410.iso /mnt
 steven@Downloads$ cd /mnt
 
 steven@mnt$ sudo ./install-tl
-安装选项列表，选择'i'或'I'进行安装
+安装选项列表，输入'i'/'I'进行安装
 
 # 配置PATH
 steven@~$ vi .bashrc
@@ -45,5 +45,8 @@ steven@~$ sudo apt-get install texworks
 
 在launchpad中搜索texworks打开图形编辑界面
 
-1.TUG：https://tug.org
-2.LaTeX：https://www.latex-project.org
+
+引用: 
+1.TeX User Group: https://tug.org
+2.LaTeX: https://www.latex-project.org
+3.CTAN: https://www.ctan.org

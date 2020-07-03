@@ -1,0 +1,7 @@
+\documentclass{article}
+\begin{document}
+	this is first line %comment begin with here
+\end{document}
+
+内容讲解
+%用于标注注释部分

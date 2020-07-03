@@ -159,12 +159,13 @@ resize(tuple)
 copy()
 	返回复制的ndarray
 
-dot(ndarray)
-	矩阵运算，返回ndarray对象
+dot(a, b[, out])
+	矩阵a与b的点乘运算结果，返回ndarray对象
 
 运算符
 	ndarray执行元素级运算，矩阵运算使用@符号或者dot函数
 
+method:
 sum(axis)
 	对元素求和，当axis为0时，对列求和；为1时，对行求和；默认时，所有元素求和
 
@@ -202,16 +203,19 @@ sort(axis)
 
 numpy.linalg module
 function:
+det(a)
+	返回a的行列式结果
+
+eig(a)
+	返回矩阵a的特征值w和特征向量v的tuple。公式：AV=WV
+
 inv(a)
 	返回a的逆矩阵，a必须为方阵。公式：ab=ba=np.eye(a.shape[0])
 
 solve(a, b)
 	求解线性方程组. 公式ax=b
 	a - array或sequence类型, 系数矩阵
-	b - array或sequence类型, 因变量
-
-eig(a)
-	返回矩阵a的特征值w和特征向量v的tuple。公式：AV=WV
+	b - array或sequence类型, 结果向量
 
 类：
 numpy.poly1d
@@ -219,14 +223,25 @@ numpy.poly1d
 detiv(m=1)：返回导数多项式poly1d对象。m代表求导次数
 integ(m=1)：返回反导多项式poly1d对象。m代表反导次数
 
-包：
+module
 numpy.random
-方法：
-seed(int)：配置伪随机数种子
-normal()：生成标准正态分布
-randint(low,high=None,size=None)：在[low,high)区间上创建shape为size的随机整数，high未提供则为[0,low)区间。返回ndarray对象
 
+function
+seed(int)
+	配置伪随机数种子
 
+normal()
+	生成标准正态分布
+
+randint(low, high=None, size=None, dtype=int)
+	在[low,high)区间上创建shape为size的随机整数。返回ndarray对象
+	low - int类型, 随机数的起始数. 当high未提供时, [0,low)模式的结束值
+	high - int类型, 随机数的尾数
+	size - int或tuple类型, 代表生成array的shape
+	dtype - 结果元素的类型, 可选: int/float等
+
+random(size=None)
+	在[0.0,1.0)的取件上创建shape为size的随机浮点数。返回ndarray对象
 
 引用
 1.stackoverflow: https://stackoverflow.com/questions/55890813/how-to-fix-object-arrays-cannot-be-loaded-when-allow-pickle-false-for-imdb-loa

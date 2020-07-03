@@ -1,0 +1,14 @@
+latexmk - 操作latex相关文件
+
+语法
+latexmk [options] [files]
+
+参数释义
+-c
+	删除中间文件
+
+-C
+	删除中间文件和目标文件
+
+-pdf
+	指定目标文件为pdf格式
