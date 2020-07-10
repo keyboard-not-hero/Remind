@@ -4,11 +4,72 @@ latexmk - 操作latex相关文件
 latexmk [options] [files]
 
 参数释义
+-auxdir=<dir>, -aux-directory=<dir>
+	额外指定存放中间文件的目录, 只适用于MikTeX
+
+-bibtex
+	当需要重新生成bbl文件时, 调用BibTex
+
+-bibtex-
+	不重新生成bbl文件
+
+-bibtex-cond
+	当需要重新生成bbl文件时, 并且bib文件存在时, 调用BibTex. 默认选项
+
+-commands
+	latexmk调用的命令列表
+
 -c
 	删除中间文件
 
 -C
 	删除中间文件和目标文件
 
+-d
+	DRAFT模式, 与-bm DRAFT一致. 隐式包含-ps选项
+
+-diagnostics
+	输出详细的编译信息
+
+-dvi
+	生成目标文件为dvi格式. 默认模式. 步骤: .tex -> .dvi
+
+-dvi-
+	不生成dvi格式文件, 选项可被覆盖
+
 -pdf
-	指定目标文件为pdf格式
+	指定目标文件为pdf格式. 步骤: .tex -> .pdf
+
+-ps
+	指定目标文件为ps格式. 步骤: .tex -> .dvi -> .ps
+
+-ps-
+	不生成ps格式文件
+
+-pv
+	生成目标文件后, 使用默认的viewer进行结果预览. 不同格式模式使用的viewer:
+		dvi - xdvi
+		ps - gv
+		pdf - acroread(adobe acrobat reader), adobe 2013年停止对Linux版本的支持
+	viewer修改方式 - 目标文件~/.latexmkrc或./.latexmkrc, 变量列表:
+		$dvi_previewer = 'start xdvi %O %S'
+		$ps_previewer = 'start gv %O %S'
+		$pdf_previewer = 'start evince %O %S'	
+
+-pvc
+	类似于-pv, 但修改源文件并保存到disk时, 预览效果实时更新
+
+-recorder
+	利用latex/pdflatex生成.fls文件, 方便下次编译时进行校对. 
+	fls文件包含输入输出文件列表. 
+	默认选项
+
+-recorder-
+	不生成.fls文件
+
+-xelatex
+	使用xelatex编译, 生成pdf文件
+
+
+**files - 指定.tex文件, 后缀可省略; 当未指定该参数时，默认为当前工作目录的所有.tex文件
+

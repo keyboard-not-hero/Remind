@@ -1,0 +1,21 @@
+一、Demo(示例)01 - figure
+\documentclass{article}
+\begin{document}
+    This is the place in the running text that mentions Figure-7 for the first time.
+    \begin{figure}
+        The body of the figure goes here. This figure happened to float to the top of the current page.
+        \caption{The caption goes here.}
+    \end{figure}
+    The figure will not be put on an earlier page than the text preceding the figure environment.
+\end{document}
+
+内容讲解
+1.float原理: 
+前景 - 当图片/表格按顺序排列在页面底部时，由于其不可切割性质，图片/表格会平移到下一个页面，因此在当前页面底部留下很大空白部分
+解决 - 利用float, 使图片/表格优先浮动排列到当前页面最上方，而可切割的文字在页面底部，可解决页面的空白空间问题
+
+2.\begin{figure} ... \end{figure}用于设置浮动内容环境. figure常用语图片
+
+3.\begin{table} ... \end{table}用于设置浮动内容环境. table常用于表格
+
+4.\caption{}用于设置浮动内容的标题, 内嵌于figure/table环境

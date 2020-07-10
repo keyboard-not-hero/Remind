@@ -27,4 +27,9 @@ XDG_VIDEOS_DIR="$HOME/Videos"
 由于ubuntu挂载时ntfs/fat编码不正确造成，如fat解决如下：
 steven@~$ sudo mount -t vfat -o utf8 /dev/sda6 /mnt
 
+
+四、卡在登录界面，无法成功登录
+1.检查~/.Xauthority是否存在, xinit会读取该文件
+2.出现/usr/bin/X not found, 重新安装xorg - sudo apt-get install --reinstall xorg
+
 参考链接：http://linux-wiki.cn/wiki/zh-hans/%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98

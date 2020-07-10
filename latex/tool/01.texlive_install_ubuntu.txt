@@ -1,4 +1,5 @@
-1.TexLive安装
+更新时间: 2020-07-10
+1a.离线安装Texlive
 # 下载texlive镜像
 # 点击下载后，会自动切换到国内镜像源下载
 # 下载地址：https://ctan.org/tex-archive/systems/texlive/Images  
@@ -15,9 +16,22 @@ steven@Downloads$ cd /mnt
 steven@mnt$ sudo ./install-tl
 安装选项列表，输入'i'/'I'进行安装
 
-# 配置PATH
+
+1b.在线安装Texlive
+官网地址: http://tug.org/texlive/
+选择'download' -- 点击'install-tl-unx.tar.gz'
+
+解压install-tl-unx.tar.gz
+tar -zxf install-tl-unx.tar.gz
+
+安装
+cd install-tl-*
+./install-tl
+
+
+2.配置PATH
 steven@~$ vi .bashrc
-export PATH=${PATH}:/usr/local/texlive/2019/bin/x86_64-linux
+export PATH=${PATH}:/usr/local/texlive/2020/bin/x86_64-linux
 
 steven@~$ source .bashrc
 
@@ -25,18 +39,19 @@ steven@~$ source .bashrc
 steven@~$ tex --version
 
 
-2.TexLive附带字体路径配置
-# 让pdflatex找到系统字体
-steven@~$ vi /usr/local/texlive/2019/texmf.cnf
+3.TexLive字体查找配置
+# 系统字体
+steven@~$ sudo vi /usr/local/texlive/2020/texmf.cnf
 OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
 
-# 指定texlive附带文字所在路径
-steven@~$ cp /usr/local/texlive/2019/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
+# texlive附带字体
+steven@~$ sudo cp /usr/local/texlive/2020/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
 
 # 刷新fontconfig的字体缓存
 steven@~$ sudo fc-cache -fsv
 
-3.安装TeXworks编辑器
+
+4.安装TeXworks编辑器
 steven@~$ sudo add-apt-repository ppa:texworks/stable
 
 steven@~$ sudo apt-get update

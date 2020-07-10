@@ -1,0 +1,236 @@
+一、Demo(示例)01 -- inline formula
+\documentclass{article}
+\usepackage{amssymb}
+\begin{document}
+	The formula \( x-3y = 7 \) is easy to type.\\
+	$E = mc^2$\\
+	\begin{math}
+		x^2 = y^2 + z^2
+	\end{math}\\
+	\( a_1 > x^{2n}/y^{2n} \)\\
+	$\because y =\frac{x}{1}$, $\therefore y' = 1$
+\end{document}
+
+内容讲解
+1.\( ... \)用于限定行内公式内容
+
+2.$ ... $用于限定行内公式内容
+
+3.\begin{math} ... \end{math}用于限定行内公式内容
+
+4._用于指定公式的subscript, ^用于指定公式的supscript
+
+5.'在公式中为求导符号
+
+6.数学公式中, \because和\therefore为几何的因为/所以符号, 在amssymb宏包中定义
+
+7.\frac为分数的分子分母分割线
+
+
+
+二、Demo(示例)02 - display formula
+\documentclass{article}
+\begin{document}
+	\begin{displaymath}
+		x'+y^2=z_i^2
+	\end{displaymath}
+	\begin{equation}
+		x'+y^2=z_i^2
+	\end{equation}
+	\[x'+y^2=z_i^2\]
+\end{document}
+
+内容讲解
+1.\begin{displaymath} ... \end{displaymath}用于行间公式环境
+
+2.\begin{equation} ... \end{equation}用于标号的行间公式环境
+
+3.\[ ... \]用于行间公式环境
+
+4.本示例所有环境为单行行间公式环境
+
+
+
+三、Demo(示例)03 - math font style
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+    \mathit{ABCDabcd1234}\\
+    \mathbf{ABCDabcd1234}\\
+    \mathrm{ABCDabcd1234}\\
+    \mathsf{ABCDabcd1234}\\
+    \mathtt{ABCDabcd1234}
+\end{gather}
+\end{document}
+
+内容讲解
+1.\begin{gather} ... \end{gather}用于含多行公式的行间公式环境, 包含在amsmath宏包中
+
+2.\mathit为斜体公式, \mathbf为粗体公式, \mathrm为roman体, \mathsf为无衬线体, \mathtt为打印机字体. 详情参考symbol_summary
+
+
+
+四、Demo(示例)04 - binary operator
+\documentclass{article}
+\begin{document}
+	\mp\\
+	\ominus\\
+	\lhd
+\end{document}
+
+内容讲解
+1.\mp为二进制运算符. 详情参考symbol_summary
+
+2.\lhd包含在latexsym宏包中
+
+
+
+五、Demo(示例)05 - array
+\documentclass{article}
+\begin{document}
+\begin{displaymath}
+\begin{array}{l l l l}
+    a+b & c\\
+    c+d & e
+\end{array}
+\end{displaymath}
+\end{document}
+
+内容讲解
+1.\begin{array}{horiz_aligns...} ... \end{array}用于指定数学公式表格环境, aligns用于指定列数和每列的水平对齐方式. 对齐方式列表: l/c/r
+
+2.\begin{array}[vert_align]{horiz_aligns...} ... \end{array}, 如代码所示, 可使用可选参数vert_align指定垂直对齐方式, 对齐方式列表: t/b
+
+3.数组的列之间使用'&'分隔, 行之间使用'\\'分隔
+
+4.最后一行末尾不能使用'\\'
+
+5.数组需要置于数学公式环境中
+
+
+
+六、Demo(示例)06 - Overlining and Underlining
+\documentclass{article}
+\begin{document}
+	$\overline{x+y}$\\
+	\underline{x+y}\\
+	$\overbrace{x+y}$\\
+	$\underbrace{x+y}$
+\end{document}
+
+内容讲解
+1.\overline{}用于上划线
+
+2.\underline{}用于下划线, 并且可用于paragraph mode和LR mode
+
+3.\overbrace{}用于水平上括号, 并可对指令使用^{}添加备注
+
+4.\underbrace{}用于水平下括号, 并可对指令使用_{}添加备注
+
+
+
+七、Demo(示例)07 - math accent
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+	\begin{gather}
+		\hat{a}\\
+		\widehat{aa}\\
+		\breve{\imath}
+	\end{gather}
+\end{document}
+
+内容讲解
+1.\hat用于对公式单字符内容进行重音配置
+
+2.\widehat用于对长公式内容进行重音配置
+
+3.\breve{\imath}用于对字符进行重音配置, i或j进行重音时, 需要先消除头部'.', 使用指令\imath或\jmath
+
+4.详情参考symbol_summary
+
+
+
+八、Demo(示例)08 - stacking symbols
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+	A \stackrel{a'}{\rightarrow} B \stackrel{b'}{\rightarrow} C
+\end{gather}
+\end{document}
+
+内容讲解
+\stackrel{up}{down}表示进行内容堆叠, down是下方的内容, up是上方的内容
+
+
+
+九、Demo(示例)09 - space
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+    x\!+\!y\!=\!z\\
+    x+y=z\\
+    x\,+\,y\,=\,z\\
+    x\:+\:y\:=\:z\\
+    x\;+\;y\;=\;z\\
+    x\ +\ y\ =\ z
+\end{gather}
+\end{document}
+
+内容讲解
+1.\!代表缩小与\,相同的间隔距离
+
+2.间隔距离汇总: \! < <space> < \, < \: < \; < \<space>
+
+3.所有空格适用于paragraph mode和LR mode
+
+
+
+十、Demo(示例)10 - font type style
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+    different\\
+    \mathit{different}
+\end{gather}
+\end{document}
+
+内容讲解
+1.\mathit指定italic字体, 详情参考symbol_summary
+
+
+
+十一、Demo(示例)11 - newcommand
+\documentclass{article}
+\newcommand{\gn}{$\Gamma_{i}$}
+\newcommand{\cn}{\ensuremath{\Delta_{j}}}
+\begin{document}
+    Let \gn\ in the first line\\
+    Let \cn\ in the second line\\
+    Let $\cn$ in the third line
+\end{document}
+
+内容讲解
+1.\newcommand{\cmd}[num]{content}用于新建指令, cmd为指令名称; num代表新建指令的参数个数; content为指令代表的内容, 可使用#1,#2...引用指令传递的参数. 该指令位于preable区
+
+2.\ensuremath{}用于确保内容位于math mode. 而原生math mode偶数层嵌套会取消math环境
+
+
+
+十二、Demo(示例)12 - theorem
+\documentclass{article}
+\newtheorem{guess}{pythagorean theorem}
+\begin{document}
+\begin{guess}
+    $3^2+4^2=5^2$
+\end{guess}
+\end{document}
+
+内容讲解
+1.\newtheorem{env_name}{theorem_label}用于新建定理环境, env_name为定理环境名称, theorem_label为定理显示的标签名称. 通常放置于preamble区
+
+2.\begin{env_name} ... \end{env_name}用于定理内容环境, 代表定理的内容描述

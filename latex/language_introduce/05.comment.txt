@@ -1,3 +1,4 @@
+一、Demo(示例)01 - %
 \documentclass{article}
 \begin{document}
 	this is first line %comment begin with here
@@ -5,3 +6,15 @@
 
 内容讲解
 %用于标注注释部分
+
+
+
+二、Demo(示例)02 - \typeout
+\documentclass{article}
+\begin{document}
+    Hello World!!
+    \typeout{Don't forget to revise this!}
+\end{document}
+
+内容讲解
+\typeout{}用于内容注释, 但该注释内容会出现在terminal和log文件中

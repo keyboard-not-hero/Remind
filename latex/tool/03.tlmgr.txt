@@ -1,0 +1,161 @@
+tlmgr - Texlive package管理器
+
+
+
+语法
+tlmgr [option...] action [option...] [operand...]
+
+
+
+option列表
+--repository <url>
+	配置当前intstall/update操作临时使用的容器url
+
+--gui
+	GUI模式, 依赖于Perl/Tk
+
+--machine-readable
+	以容易转化的格式输出结果
+
+--package-logfile <log_path>
+	指定log文件路径, 默认为/usr/local/texlive/2020/texmf-var/web2c/tlmgr.log
+
+--pause
+	在执行结束退出前，等待用户输入
+
+
+
+action列表
+help
+	帮助文档信息
+
+
+version
+	版本信息
+
+
+candidates <pkg>
+	下载指定package的容器类型
+
+
+info [option...] <pkg>
+info [option...] collections
+info [option...] schemes
+	不包含后续参数时(tlmgr info), 代表容器中可获取的package列表, 已安装的package含i前缀. 类别如下:
+		<pkg> - 指定package的详细信息
+		collections - collection package列表
+		schemes - scheme package列表
+	option列表如下:
+	--list
+		当用于package时, 包含相关文件列表
+	--only-installed
+		只列出已安装的package列表
+	--only-remote
+		可从remote容器获取的package
+	--data <field1>,<field2>,...
+		配合package, 获取指定字段 
+	--json
+		输出内容为json编码格式
+
+	
+install [option] <pkg>
+	安装指定package, option列表如下:
+	--dry-run
+		不进行实际安装, 测试安装结果
+	--file
+		不从容器中获取package, 而是根据完整路径获取package
+	--force
+		忽略需要升级tlmgr self的要求，强行安装package. 不建议使用
+	--no-depends
+		不安装package依赖的包. 默认安装
+	--reinstall
+		重新安装package和依赖包
+	--with-doc
+		附带下载documentation
+	--with-src
+		附带下载source file
+
+	
+option [--json] show
+option [--json] showall|help
+option <key> [value]
+	选项配置, 列表如下:
+		show - 显示全局已配置内容
+		showall|help - 显示全局可配置内容
+		key - 获取key值或者配置key值, key列表参考如后续
+	option选项:
+	--json
+		以json编码格式输出
+	key列表:
+		repository - 容器url地址, velue格式: http://<domain_name>/CTAN/systems/texlive/tlnet
+		docfiles - 安装doc文件
+		srcfiles - 安装src文件
+		backupdir - 默认备份文件夹
+		autobackup - 备份数量
+
+
+remove [option...] <pkg>
+	移除指定package, option列表如下:
+	--all
+		移除所有package, 会弹出confirm提示
+	--no-depends
+		不移除依赖package
+	--dry-run
+		不进行实际移除操作, 测试移除结果
+	--force
+		当package被其他package依赖时, 强制移除
+
+
+search [option...] <what>
+	以what的perl RE模式匹配内容, option列表如下:
+	--file
+		相关文件名包含what, 本地已安装
+	--all
+		package/descriptions/相关文件名称包含what, 本地已安装
+	--global
+		使用容器搜索代替本地安装
+	--word
+		package/description名称与what完整匹配, 而非RE匹配模式
+
+
+update [option...] [pkg...]
+	升级package, option列表如下:
+	--all
+		升级所有已安装的package, 除了tlmgr自身
+	--dry-run
+		不进行实际升级, 显示升级结果
+	--list
+		显示可升级的package, 或指定package是否可升级
+	--exclude <pkg>
+		升级package中不包含指定pkg
+	--force
+		当提示需要升级tlmgr时, 忽略提示并强制升级packages
+	--no-depends
+		不升级依赖package
+	--self
+		升级tlmgr
+	
+
+
+实例
+修改镜像url
+tlmgr option repository ctan|<url>
+**镜像site参考列表: https://ctan.org/mirrors/mirmon
+**url格式参考: https://mirrors.aliyun.com/CTAN/systems/texlive/tlnet
+**ctan代表距离最近镜像, 等于: http://mirror.ctan.org/systems/texlive/tlnet
+
+查看package是否已安装
+tlmgr info <package>
+
+更新tlmgr版本
+tlmgr update --self
+
+可更新包列表
+tlmgr update --list
+
+更新所有包
+tlmgr update --all
+
+
+参考
+[1]tug.org tlmgr: https://www.tug.org/texlive/doc/tlmgr.html

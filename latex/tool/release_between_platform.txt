@@ -1,8 +1,0 @@
-LaTeX在不同系统有不同的安装选择
-1.Windows
-  MiKTex - 包含一系列宏包，编辑器：TeXworks。官网：https://miktex.org/
-  
-  CTeX - 对MiKTeX的再包装，提供对中文的支持。增加特性：WinEdt编辑器，PDF阅览器SumatraPDF，PostScript阅览器GSview/GhostScript
-
-2.Linux
-  TexLive - TUG(TeX User Group)发布的版本，编辑器：无(推荐TeXworks)，管理工具：tlmgr(texlive manager)。官网：https://www.tug.org/texlive/

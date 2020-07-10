@@ -1,0 +1,47 @@
+一、Demo(示例)01 - itemize list
+\documentclass{article}
+\begin{document}
+	\begin{itemize}
+		\item Each list item is marked with a label. The labels in this itemized list are bullets.
+		\item \LaTeX\ permits at least four levels of nested lists, which is more than enough.
+		\item Blank lines before an item have no effect.
+	\end{itemize}
+\end{document}
+
+内容讲解
+1.\begin{itemize} ... \end{itemize}用于非序号列表
+
+2.\item为列表项内容
+
+
+
+二、Demo(示例)02 - enumerate list
+\documentclass{article}
+\begin{document}
+	\begin{enumerate}
+		\item The item labels in an enumerated list are numerals or letters.
+		\item A list should have at least two items.
+	\end{enumerate}
+\end{document}
+
+内容讲解
+1.\begin{enumerate} ... \end{enumerate}用于序号列表
+
+2.\item为列表项内容
+
+
+
+三、Demo(示例)03 - description list
+\documentclass{article}
+\begin{document}
+	\begin{description}
+		\item[gnat] A small animal, found in the North Woods, that causes no end of trouble.
+		\item[gnu] A large animal, found in crossword puzzles, that causes no end of trouble.
+		\item[armadillo] A medium-sized animal, named after a medium-sized Texas city.
+	\end{description}
+\end{document}
+
+内容讲解
+1.\begin{description} ... \end{description}用于描述性列表
+
+2.\item为描述性列表项内容, []为列表项名称

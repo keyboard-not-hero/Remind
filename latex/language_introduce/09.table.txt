@@ -1,0 +1,89 @@
+一、Demo(示例)01 - tabbing
+\documentclass{article}
+\begin{document}
+\begin{tabbing}
+    this is \= column one\\
+    this \> is column two\\
+    this is column three \kill
+\end{tabbing}
+\end{document}
+
+内容讲解
+1.\begin{tabbing} ... \end{tabbing}用于指定表格环境
+
+2.\=设定下一列的起始位置, \>跳转到下一列, \\换行符, \kill不显示当前行
+
+
+
+二、Demo(示例)02 - basic tabular
+\documentclass{article}
+\begin{document}
+\begin{tabular}{l|l|l l}
+    \hline
+    name & sex & item & score\\
+    \cline{1-2}
+    peter & male & math & 99\\
+    david & male & english & 76\\
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\begin{tabular}{aligns...} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). aligns指定列数、对应列的对齐方式和列与列之间的分隔符
+
+2.\hline用于作水平宽度为所有列宽度之和的水平线
+
+3.&代表列与列之间的正文分隔
+
+4.\\代表换行
+
+5.\cline{i-j}用于作水平铺满指定列的水平线
+
+
+
+三、Demo(示例)03 - span column of tabular
+\documentclass{article}
+\begin{document}
+\begin{tabular}{l|l|l|l}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & \multicolumn{2}{r|}{null} & 99\\
+    david & male & english & 76\\
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\multicolumn{n}{align}{content}用于合并多列, n为合并的列数; align为合并后内容的对齐方式, |为添加到其后的列分隔符; content为合并单元格的内容
+
+
+
+四、Demo(示例)04 - cross-reference
+\documentclass{article}
+\begin{document}
+\begin{table}
+\begin{tabular}{l l l l}
+    \hline
+    name & sex & age & symptom\\
+    \hline
+    david & male & 21 & positive\\
+    peter & male & 25 & negative\\
+    steven & male & 30 & negative\\
+    lucy & female & 27 & negative\\
+    \hline
+\end{tabular}
+\caption{detect result}
+\label{tab:detect}
+\end{table}
+we get a detect result, please reference table \ref{tab:detect} in page \pageref{tab:detect}
+\end{document}
+
+内容讲解
+1.\label{}用于对表格编号做名称标记. 在figure/table中, \label需要放置在\caption后
+
+2.\ref{}用于引用指定名称的标记的编号
+
+3.\pageref{}用于引用指定名称标记的页码

@@ -8,7 +8,9 @@
 \end{document}
 
 内容讲解
-任意单个或多个组合(只能为单个<enter>/<return>), 都作为一个<space>进行对待
+1.任意单个或多个组合(只能含单个<enter>/<return>), 都作为一个<space>进行对待
+
+2.\\用于段落内换行
 
 
 二、Demo(示例)02 -- blank line
@@ -73,3 +75,26 @@ this is paragraph two
 4.当.之前为大写字母时, 默认不是句子结束. 但可在.之前使用\@来指定.为句子结束标志
 5.当.之后有)/'/"时，规则同.结尾
 6.?/!/:效果同.效果一致
+
+六、Demo(示例)06 -- quotation
+\documentclass{article}
+\begin{document}
+	\noindent The following is an example of a short displayed quotation.
+	\begin{quote}
+		it's a good idea to make your input file\\
+		as easy to read as possible.
+	\end{quote}
+	It is indented at both margins.
+
+	\noindent Here is some advice to remember when you are using \LaTeX:
+	\begin{quotation}
+		Environments for making quotations can be used for other things as well.
+
+		Many problem can be solved by novel applications of  existing environments.
+	\end{quotation}
+\end{document}
+
+内容讲解
+1.\begin{quote} ... \end{quote}用于段首不缩进的引用, 引用本身全体也缩进
+
+2.\begin{quotation} ... \end{quotation}用于段首缩进的引用, 引用本身全体也缩进

@@ -1,0 +1,111 @@
+一、Demo(示例)01 - basic poetry
+\documentclass{article}
+\begin{document}
+	\begin{verse}
+		There is an environment for verse\\
+		Whose features some poets will curse.
+
+		For instead of making\\
+		Them do all line breaking,\\
+		It allbws them to put too many words on a line when they'd rather be forced to be terse.
+	\end{verse}
+\end{document}
+
+内容讲解
+\begin{verse} ... \end{verse}用于指定诗歌环境
+
+
+
+二、Demo(示例)02 - emphasize
+\documentclass{article}
+\begin{document}
+	it is a normal text\\
+	\emph{i'm italic} text\\
+	it is normal text too\\
+	\em it's italic text\\
+	and continued to here\\
+	it is normal text\\
+	\begin{em}
+		it is italic text
+	\end{em}
+\end{document}
+
+内容讲解
+1.\emph{}用于将指定文本配置为斜体
+
+2.\em用于将当前环境(指令所处\end或}之前的环境)剩余文本配置为斜体
+
+3.\begin{em} ... \end{em}为\em的环境版本模式
+
+
+
+三、Demo(示例)03 - font type style
+\documentclass{article}
+\begin{document}
+	\textup{Upright shape. Usually the default.}\\
+	\textit{Italic shape. Often used for emphasized text.}\\
+	\textsl{Slanted shape. A bit different from italic.}\\
+	\textsc{Small caps shape. Use Sparingly.}
+
+	\textmd{Medium series. Usually the default.}\\
+	\textbf{Boldface series. Often used for headings.}
+
+	\textrm{Roman family. Usually the default.}\\
+	\textsf{Sans serif family. Often used in ads.}\\
+	\texttt{Typewriter family. Popular with hackers.}
+\end{document}
+
+内容讲解
+1.\textup为upright(直立, 默认)字体, \textit为italic(倾斜)字体, \textsl为slanted(倾斜)字体, \textsc问哦small caps(小号大写)字体
+
+2.\textmd为medium(中号, 默认)字体, \textbf为boldface(粗体)字体
+
+3.\textrm为roman(罗马, 默认)字体, \textsf为sans serif(无衬线)字体, \texttt为typewriter(打字机)字体
+
+4.style cmd对应的declaration版本, 列表如下:
+	\textup - \upshape
+	\textit - \itshape
+	\textsl - \slshape
+	\textsc - \scshape
+	\textmd - \mdseries
+	\textbf - \bfseries
+	\textrm - \rmfamily
+	\textsf - \sffamily
+	\texttt - \ttfamily
+
+5.字体默认仅适用于paragraph mode和left-to-right mode
+
+
+
+四、Demo(示例)04 - accents
+\documentclass{article}
+\begin{document}
+    \={a} \'{a} \v{a} \`{a}\\
+    \={\i} \'{\i} \v{\i} \`{\i}
+\end{document}
+
+内容讲解
+1.\=为拼音一声, \'为拼音二声, \v为拼音三声, \`为拼音四声. 详情参考symbol_summary
+
+2.i和j的重音需要先取出头上的'.', 即\i或\j
+
+3.重音符默认仅适用于paragraph mode和left-to-right mode
+
+
+
+五、Demo(示例)05 - symbol
+\documentclass{article}
+\begin{document}
+	\oe\\
+	\OE\\
+	?`\\
+	$x+y=\mbox{\oe}$
+\end{document}
+
+内容讲解
+1.\oe为非英文语言符号. 详情参考symbol_summary
+
+2.该类符号默认仅适用于paragraph mode和LF mode
+
+3.处于\mbox中的符号，可适用于math mode
+
