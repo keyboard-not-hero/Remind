@@ -12,7 +12,7 @@
 \end{document}
 
 内容讲解
-\begin{verse} ... \end{verse}用于指定诗歌环境
+1.\begin{verse} ... \end{verse}用于指定诗歌环境
 
 
 
@@ -31,38 +31,43 @@
 \end{document}
 
 内容讲解
-1.\emph{}用于将指定文本配置为斜体
+1.\emph{}用于将指定文本配置为斜体. 嵌套使用两次时, 还原为直立体
 
-2.\em用于将当前环境(指令所处\end或}之前的环境)剩余文本配置为斜体
+2.\em用于将当前环境(指令之后第一个\end或}之前的环境)剩余文本配置为斜体, 为\emph的declaration版本
 
-3.\begin{em} ... \end{em}为\em的环境版本模式
+3.\begin{em} ... \end{em}为\emph{}的环境版本模式
 
 
 
 三、Demo(示例)03 - font type style
 \documentclass{article}
 \begin{document}
+	%shape
 	\textup{Upright shape. Usually the default.}\\
 	\textit{Italic shape. Often used for emphasized text.}\\
 	\textsl{Slanted shape. A bit different from italic.}\\
 	\textsc{Small caps shape. Use Sparingly.}
 
+	%bold
 	\textmd{Medium series. Usually the default.}\\
 	\textbf{Boldface series. Often used for headings.}
 
+	%family
 	\textrm{Roman family. Usually the default.}\\
 	\textsf{Sans serif family. Often used in ads.}\\
 	\texttt{Typewriter family. Popular with hackers.}
 \end{document}
 
 内容讲解
-1.\textup为upright(直立, 默认)字体, \textit为italic(倾斜)字体, \textsl为slanted(倾斜)字体, \textsc问哦small caps(小号大写)字体
+1.\textup为upright(直立, 默认)字体, \textit为italic(倾斜)字体, \textsl为slanted(倾斜)字体, \textsc为small caps(小号大写)字体
 
-2.\textmd为medium(中号, 默认)字体, \textbf为boldface(粗体)字体
+2.shape字体可嵌套使用, 综合功能. 当嵌套同一个指令偶数次时, 还原字体为默认字体(upright)
 
-3.\textrm为roman(罗马, 默认)字体, \textsf为sans serif(无衬线)字体, \texttt为typewriter(打字机)字体
+3.\textmd为medium(中号, 默认)字体, \textbf为boldface(粗体)字体
 
-4.style cmd对应的declaration版本, 列表如下:
+4.\textrm为roman(罗马, 也称serif, 默认)字体, 适用于正文; \textsf为sans serif(无衬线)字体, 适用于标题; \texttt为typewriter(打字机, 也称monospaced)字体
+
+5.style cmd对应的declaration版本, 列表如下:
 	\textup - \upshape
 	\textit - \itshape
 	\textsl - \slshape
@@ -77,7 +82,7 @@
 
 
 
-四、Demo(示例)04 - accents
+四、Demo(示例)04 - input accents
 \documentclass{article}
 \begin{document}
     \={a} \'{a} \v{a} \`{a}\\
@@ -91,9 +96,24 @@
 
 3.重音符默认仅适用于paragraph mode和left-to-right mode
 
+4.重音符不适用于typewriter family字体
 
 
-五、Demo(示例)05 - symbol
+
+五、Demo(示例)05 - direct copy/paste accents
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\begin{document}
+	Não compreendo. Há aqui alguém que fale inglês?
+Comment çava? Où se trouve l'aéroport?
+\end{document}
+
+内容讲解
+1.inputenc宏包可以解释原样重音符内容, 因此可直接原文粘贴内容到源代码
+
+
+
+六、Demo(示例)06 - symbol
 \documentclass{article}
 \begin{document}
 	\oe\\
@@ -109,3 +129,102 @@
 
 3.处于\mbox中的符号，可适用于math mode
 
+
+
+七、Demo(示例)07 - font size
+\documentclass{article}
+\begin{document}
+	\noindent\tiny m\scriptsize m\footnotesize m\small m\normalsize m\large m\Large m\LARGE m\huge m\Huge m
+    \begin{tiny}
+        tiny
+    \end{tiny}
+
+    \begin{scriptsize}
+        scriptsize
+    \end{scriptsize}
+
+    \begin{footnotesize}
+        footnotesize
+    \end{footnotesize}
+
+    \begin{small}
+        small
+    \end{small}
+
+    \begin{normalsize}
+        normalsize
+    \end{normalsize}
+
+    \begin{large}
+        large
+    \end{large}
+
+    \begin{Large}
+        Large
+    \end{Large}
+
+    \begin{LARGE}
+        LARGE
+    \end{LARGE}
+
+    \begin{huge}
+        huge
+    \end{huge}
+
+    \begin{Huge}
+        Huge
+    \end{Huge}
+\end{document}
+
+内容讲解
+1.以上指令, 除了\noindent, 其他都是字体大小指令, 并且字体依次增大
+
+2.\begin{huge}...\end{huge}为\huge的environment版本, 其他环境指令对应其declaration指令
+
+
+
+八、Demo(示例)08 - hyphenate
+\documentclass{article}
+\hyphenation{acr-onym}
+\begin{document}
+	    \begin{minipage}{3cm}
+        TUG is an acronym.It means \TeX\ User Group.
+    \end{minipage}
+\end{document}
+
+内容讲解
+1.\hyphenation用于指定可能的连字符位置
+
+
+
+九、Demo(示例)09 - align
+\documentclass{article}
+\begin{document}
+    \noindent TUG is an acronym. It means \TeX\ User Group.\\
+    \raggedright
+    TUG is an acronym. It means \TeX\ User Group.\\
+    \raggedleft
+    TUG is an acronym. It means \TeX\ User Group.\\
+    \centering
+    TUG is an acronym. It means \TeX\ User Group.
+\end{document}
+
+内容讲解
+1.\raggedright为左对齐declaration指令, 对应environment指令为\begin{flushleft} ... \end{flushleft}
+
+2.\raggedleft为右对齐declaration指令, 对应environment指令为\begin{flushright} ... \end{flushright}
+
+3.\centering为中间对齐declaration指令, 对应environment指令为\begin{center} ... \end{center}
+
+
+
+十、Demo(示例)10 - 引号
+\documentclass{article}
+\begin{document}
+    peter said:``you should run''.
+\end{document}
+
+内容讲解
+1.`代表‘
+
+2.'代表’

@@ -1,0 +1,170 @@
+一、Demo(示例)01 -- <space>/<tab>/<enter>/<return>组合
+\documentclass{article}
+\begin{document}
+	i love this    country\\
+	but you don't like		this\newline
+	he maybe like\linebreak
+	this is line one
+	this is line two
+\end{document}
+
+内容讲解
+1.任意单个或多个组合(只能含单个<enter>/<return>), 都作为一个<space>进行对待
+
+2.\\用于段落内换行, \\[value]用于指定与下一行的行间距, \\*[value]指定与下一行的行间距, 并且不允许在当前行之后换页(可将当前行移动到下一页)
+
+3.\newline用于段落内换行, 类似于\\
+
+4.\linebreak[number]也用于段落内换行, 但当前行内容填充满当前行, number代表换行的意愿, 范围为[0,4]依次增强. 例: 0代表允许, 4代表强制, 默认为4
+
+5.\nolinebreak[number]阻止在当前位置换行, number代表意愿, 范围为[0,4]依次增强
+
+6.~用于阻止在当前空白位置换行
+
+
+二、Demo(示例)02 -- paragraphy break
+\documentclass{article}
+\begin{document}
+this is paragraph one
+
+this is paragraph two
+\end{document}
+
+内容讲解
+1.空白行用于段落的结束
+
+
+三、Demo(示例)03 -- short space
+\documentclass{article}
+\begin{document}
+    "'Fi' or 'fum'" he said
+
+    "\,'Fi' or 'fum'\," he said
+
+    " 'f\/i' or 'fum' " he said
+
+    " 'f{}i' or 'fum' " he said
+\end{document}
+
+内容讲解
+1.\,用于比<space>更短的空格, 用于分隔'与"
+
+2.\/用于解决字母之间的连接过于紧密问题, 空间小于\,. 如: f与i, --分离
+
+3.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳
+
+
+四、Demo(示例)04 -- 破折号
+\documentclass{article}
+\begin{document}
+    An intra-word dash or hyphen, as in X-ray.
+
+    A medium dash for number ranges, like 1--2.
+
+    A punctuation dash---like this.
+\end{document}
+
+内容讲解
+1.-用于表示连字符
+
+2.--用于表示数字范围
+
+3.---用于主句与从句
+
+
+五、Demo{示例}05 -- 句子结束相关的空格
+\documentclass{article}
+\begin{document}
+    this is the line onE. but nothing more\\
+    this is the line onE.\ but nothing more\\
+    this is the line onE\@. but nothing more\\
+    this is the line one. but nothing more\\
+    this is the line one.\ but nothing more\\
+	this is the line (one.) but nothing more\\
+	this is the line (one.)\ but nothing more
+\end{document}
+
+内容讲解
+1.word之间的的空格为\<space>, 句子结束时的空格为<space>, \<space>的空间小于<space>
+	空格空间大小: {} < \/ < \,  <  \<space>  <  <space>
+
+2.在.之前为大写字母时, 默认不是句子结束, 后续<space>默认为\<space>, 即单词之间的空格
+
+3.当.之前为非大写字母时, 后续代表句子结束, 后续<space>默认为<space>. 可强制使用\<space>定义单词之间的空格
+
+4.当.之前为大写字母时, 默认不是句子结束. 但可在.之前使用\@来指定.为句子结束标志
+
+5.当.之后有)/'/"时，规则同.结尾
+
+6.?/!/:效果同.效果一致
+
+7.\frenchspacing可用于将正文中的句子结束的水平间距调整为与word之间的水平间距一致. 在preamble区域使用
+
+
+
+六、Demo(示例)06 -- quotation
+\documentclass{article}
+\begin{document}
+	\noindent The following is an example of a short displayed quotation.
+	\begin{quote}
+		it's a good idea to make your input file\\
+		as easy to read as possible.
+	\end{quote}
+	It is indented at both margins.
+
+	\noindent Here is some advice to remember when you are using \LaTeX:
+	\begin{quotation}
+		Environments for making quotations can be used for other things as well.
+
+		Many problem can be solved by novel applications of  existing environments.
+	\end{quotation}
+\end{document}
+
+内容讲解
+1.\begin{quote} ... \end{quote}用于段首不缩进的短引用, 引用本身全体也缩进
+
+2.\begin{quotation} ... \end{quotation}用于段首缩进的多段落引用, 引用本身全体也缩进
+
+
+七、Demo(示例)07 - indent
+\documentclass{article}
+\begin{document}
+	\noindent this is disable paragraphy indent\\
+	\indent this is enable paragraphy
+\end{document}
+
+内容讲解
+1.\noindent取消段落内的当前行缩进
+
+2.\indent开启段落内的当前缩进
+
+
+八、Demo(示例)08 - vertical space
+\documentclass{article}
+\begin{document}
+    this is first line\\
+    this is second line
+
+    \bigskip
+    this is third line
+\end{document}
+
+内容讲解
+1.\bigskip用于增加段落与段落之间的行距离
+
+
+
+九、Demo(示例)09 - paragraphy style
+\documentclass{article}
+\usepackage{parskip}
+\begin{document}
+    this is first paragraphy.
+
+    this is second paragraphy.
+
+    this is third paragraphy.\\
+just newline
+\end{document}
+
+内容讲解
+1.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异

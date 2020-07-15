@@ -1,0 +1,19 @@
+一、Demo(示例)01 - basic appendix
+\documentclass{article}
+\title{simple demo}
+\begin{document}
+\section{Hello}
+Hello World!!
+\section{Done}
+this is done.
+\appendix
+\section{how}
+how are you
+\section{like}
+i like you
+\end{document}
+
+内容解答
+1.\appendix用于分隔正文与appendix部分, 之后的\chapter或\section等为appendix编号(A/B/C...)
+
+2.article的appendix的格式为A/B/C <title>, report和book的appendix的格式为Appendix A/B/C <return> <title>

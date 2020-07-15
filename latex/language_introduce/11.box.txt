@@ -1,0 +1,41 @@
+一、Demo(示例)01 - specify width
+\documentclass{article}
+\begin{document}
+    \parbox[c]{2cm}{TUG is an acronym.It means \TeX\ User Group.}
+    \parbox[t]{1.8cm}{this is top text}
+    \parbox[b]{2cm}{that is bottom text}
+\end{document}
+
+内容讲解
+1.\parbox[align]{width}{content}用于限定一个指定垂直对齐方式和宽度的盒子, align为文本的t/c/b对齐盒子垂直中线; width为盒子宽度; content为内容
+
+
+
+二、Demo(示例)02 - page in page
+\documentclass{article}
+\begin{document}
+    \begin{minipage}[c]{2cm}
+        TUG is an acronym.It means \TeX\ User Group.
+    \end{minipage}
+    \begin{minipage}[t]{1.8cm}
+        this is top text
+    \end{minipage}
+    \begin{minipage}[b]{2cm}
+        that is bottom text
+    \end{minipage}
+\end{document}
+
+内容讲解
+1.\begin{minipage}[align]{width} ... \end{minipage}页面中的页面, 参数类似于\parbox, 并且可内嵌\footnote
+
+
+
+三、Demo(示例)03 - reject break line
+\documentclass{article}
+\begin{document}
+    the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored\\
+    \mbox{the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored. this is append text, you can ignore}
+\end{document}
+
+内容讲解
+1.\mbox{content}用于限定内容为LR mode, 不能在内容中进行换行

@@ -16,6 +16,6 @@
 \end{document}
 
 内容讲解
-1.\marginpar{}用于配置边缘注解. 在单页模式中, 注解在右侧; 在双页模式中(文档可选参数为twoside), 注解在外侧; 在双列模式中(文档可选参数为towcolumn), 注解在内侧
+1.\marginpar{note_content}用于配置边缘注解. 在单页模式中, 注解在右侧; 在双页模式中(文档可选参数为twoside), 注解在外侧; 在双列模式中(文档可选参数为towcolumn), 注解在内侧
 
 2.\marginpar[left_note]{right_note}中, 可选参数代表注解位于左侧时的内容, 必选参数代表注解位于右侧时的内容

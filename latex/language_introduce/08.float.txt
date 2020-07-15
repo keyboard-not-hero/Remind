@@ -11,11 +11,17 @@
 
 内容讲解
 1.float原理: 
-前景 - 当图片/表格按顺序排列在页面底部时，由于其不可切割性质，图片/表格会平移到下一个页面，因此在当前页面底部留下很大空白部分
-解决 - 利用float, 使图片/表格优先浮动排列到当前页面最上方，而可切割的文字在页面底部，可解决页面的空白空间问题
+背景 - 当图片/表格按顺序排列在页面底部时，由于其不可切割性质，图片/表格会平移到下一个页面，因此在当前页面底部留下很大空白部分
+解决 - 利用float, 使图片/表格优先浮动排列到当前页面最上方，而可切割的文字在页面底部，可解决页面的多余空白问题
 
-2.\begin{figure} ... \end{figure}用于设置浮动内容环境. figure常用语图片
+2.\begin{figure}[loc] ... \end{figure}用于设置单列浮动内容环境. figure常用于图片, loc表示figure的位置定位, 默认为tbp, 列表如下:
+	H - here, 强制性根据上下文的位置, 按序排列, 等于h!. 包含在float宏包中
+	h - here, 根据所在上下文的位置, 按序确定figure的位置
+	t - top, 在页面最上方
+	b - bottom, 在页面最下方
+	p - page of float, 使用float页面, 该页面只包含float内容, 不包含text文本
+	! - 强制使用指定位置参数, 格式为<position>!
 
-3.\begin{table} ... \end{table}用于设置浮动内容环境. table常用于表格
+3.\begin{table}[loc] ... \end{table}用于设置单列浮动内容环境. table常用于表格
 
-4.\caption{}用于设置浮动内容的标题, 内嵌于figure/table环境
+4.\caption[toc_content]{content}用于设置浮动内容的标题, 内嵌于figure/table环境, toc_content为目录标题, content为浮动内容标题. 单个figure/table可同时容纳多个\caption. \label必须位于\caption之后

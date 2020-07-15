@@ -13,6 +13,8 @@
 
 2.\=设定下一列的起始位置, \>跳转到下一列, \\换行符, \kill不显示当前行
 
+3.tabbing可跨页
+
 
 
 二、Demo(示例)02 - basic tabular
@@ -30,15 +32,37 @@
 \end{document}
 
 内容讲解
-1.\begin{tabular}{aligns...} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). aligns指定列数、对应列的对齐方式和列与列之间的分隔符
+1.\begin{tabular}{aligns...} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). aligns可使用如下内容:
+	l - 当前列的每一行左对齐
+	c - 当前列的每一行中间对齐
+	r - 当前列的每一行右对齐
+	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
+	@{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
+			  text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
+			  text为<null>时, 列之间无分隔符
+			  text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐
+	*{num}{cols} - 指定num个连续列都采用cols指定格式
 
-2.\hline用于作水平宽度为所有列宽度之和的水平线
+2.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
 
 3.&代表列与列之间的正文分隔
 
 4.\\代表换行
 
-5.\cline{i-j}用于作水平铺满指定列的水平线
+5.\cline{i-j}用于作水平铺满指定列的水平线, 必须位于表格第一行或紧跟在\\后
+
+6.\vline可以在单独一行内作垂直线
+
+7.\tabcolsep配置列之间的间隔. 配置示例: \setlength{\tabcolsep}{1cm}
+
+8.\arrayrulewidth配置线条宽度. 配置示例: \setlength{\arrayrulewidth}{2pt}. 线条列表: | \vline \hline \cline
+
+9.\doublerulesep配置两个紧邻线条的距离. 配置示例: \setlength{\doublerulesep}{3pt}
+
+10.\arraystretch配置行之间距离的系数. 配置示例: \renewcommand{\arraystretch}{2}
+
+11.tabular不可跨页
 
 
 
@@ -57,7 +81,7 @@
 \end{document}
 
 内容讲解
-1.\multicolumn{n}{align}{content}用于合并多列, n为合并的列数; align为合并后内容的对齐方式, |为添加到其后的列分隔符; content为合并单元格的内容
+1.\multicolumn{num}{align}{content}用于合并多列, num为合并的列数; align为合并后内容的水平对齐方式, 可选为l/c/r, 合并列右侧不使用表格的列分隔符, |为手动添加到其后的列分隔符; content为合并单元格的内容
 
 
 

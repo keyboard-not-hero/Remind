@@ -8,15 +8,46 @@
 内容讲解
 1.\documentclass[arg1,arg2,...]{doc_class}指定文档类型, []为可选参数限定, {}为必选参数限定, 指定文档类型
 arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不能包含任何空格, 列表:
-	11pt - 指定内容文字大小为11pt. 默认为10pt
-	twoside - 奇数页内容偏左, 偶数页内容偏右, book文档的默认选项
-	twocolumn - 单页内容显示为两列
-doc_class - 类型列表: article/report/book/slides, 路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls
+	10pt|11pt|12pt - 指定内容文字大小. 默认为10pt
+	
+	letterpaper|legalpaper|executivepaper|a4paper|a5paper|b5paper - 指定输出的页面大小, 默认为letterpaper. 参数列表如下:
+		letter		8.5in x 11in
+		legal		8.5in x 14in
+		executive	7.25in x 10.5in
+		a4			210mm x 297mm
+		a5			148mm x 210mm
+		b5			176mm x 250mm
+
+	landscape - 将页面宽和高交换, 即倒置放置
+
+	final|draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记
+
+	oneside|twoside - oneside代表所有页面统计对齐显示, article/report文档类型默认选项; twoside代表左右页面对称显示, 偶数页为左侧, 奇数页为右侧, book文档类型默认选项
+
+	openright|openany - openright代表新chapter只从right-hand开启, book文档类的默认选项; openany代表新chapter可从两侧开启, report文档类默认选项
+
+	onecolumn|twocolumn - 指定一页分为单列或双列显示, 默认选项为onecolumn. 
+		可在preamble区域使用\columnsep调整twocolumn的间隔宽度, 如: \setlength{\columnsep}{2pt}. 
+		可在preamble区域使用\columnseprule调整twocolumn的分割线宽度, 如: \setlength{\columnseprule}{2pt}. 默认为0pt
+
+	notitlepage|titlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表\maketitle生成单独标题页, \begin{abstract} ... \end{abstract}生成单独摘要页, report/book文档类默认选项
+
+	openbib - bibliography为open style
+
+	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
+
+	fleqn - 公式左对齐, 包含统一缩进. 默认为居中对齐
+		可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
+
+doc_class - 类型列表: article/report/book/slides/letter, 路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls
+
 
 2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
 pac_name<N> - 导入的包名
 
+
 3.\begin{document}之前的部分为document preamble
+
 
 4.begin{document} ... \end{document}指定正文内容部分. \end{document}后的所有内容被忽略
 
@@ -40,7 +71,7 @@ pac_name<N> - 导入的包名
 结构讲解
 标题 - \maketitle
 
-目录 - \tableofcontents
+目录 - \tableofcontents \listoffigures \listoftables
 
 内容结构
 	\part(in report/book)         level-1
@@ -91,3 +122,36 @@ this is auxiliary file content
 	开启新page - 在新的一页中, 进行内容导入
 	不可在辅助文件中再使用\include导入其他文件, 但可以使用\input
 	联合includeonly - 联合preamble区域的\includeonly, 只有包含在\includeonly内的文件名, 能被导入
+
+
+
+四、Demo(示例)04 - page style
+\documentclass{article}
+\begin{document}
+	\pagestyle{plain}
+	\pagenumbering{arabic}
+    Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do: once or twice she had peeped into
+the book her sister was reading, but it had no pictures or
+conversations in it, “and what is the use of a book,” thought Alice
+“without pictures or conversations?”
+
+So she was considering in her own mind (as well as she could, for the
+hot day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{document}
+
+内容讲解
+1.\pagestyle{type}用于指定页面类型, 页面包含head/body/foot属性, type可选列表:
+	plain - head为空, foot属性包含页码
+	empty - head和foot都为空
+	headings - head包含章/节信息和页码, foot为空
+	
+2.\pagenumbering{num_style}用于指定页码格式, num_style指定格式, 列表如下:
+	arabic - 阿拉伯数字
+	roman - 小写罗马数字
+	Roman - 大写罗马数字
+	alph - 小写字母
+	Alph - 大写字母

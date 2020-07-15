@@ -50,8 +50,8 @@
 	\hline
 	\'{o} & \textbackslash'\{o\} & \`{o} & \textbackslash`\{o\} & \^{o} & \textbackslash\^{}\{o\} & \"{o} & \textbackslash"\{o\}\\
 	\~{o} & \textbackslash\~{}\{o\} & \={o} & \textbackslash=\{o\} & \.{o} & \textbackslash.\{o\} & \u{o} & \textbackslash u\{o\}\\
-	\v{o} & \textbackslash v\{o\} & \H{o} & \textbackslash H\{o\} & \t{o} & \textbackslash t\{o\} & \c{o} & \textbackslash c\{o\}\\
-	\d{o} & \textbackslash d\{o\} & \b{o} & \textbackslash d\{o\}\\
+	\v{o} & \textbackslash v\{o\} & \H{o} & \textbackslash H\{o\} & \t{oo} & \textbackslash t\{oo\} & \c{o} & \textbackslash c\{o\}\\
+	\d{o} & \textbackslash d\{o\} & \b{o} & \textbackslash b\{o\}\\
 	\hline
 \end{tabular}
 \caption{重音符}
@@ -125,15 +125,16 @@
 \end{table}
 
 \begin{table}[H]
-\begin{tabular}{l l l l l l l l}
-	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
-	\hline
-	$\sum$ & $\backslash$sum & $\prod$ & $\backslash$prod & $\coprod$ & $\backslash$coprod & $\int$ & $\backslash$int\\
-	$\oint$ & $\backslash$oint & $\bigcap$ & $\backslash$bigcap & $\bigcup$ & $\backslash$bigcup & $\bigsqcup$ & $\backslash$bigsqcup\\
-	$\bigvee$ & $\backslash$bigvee & $\bigwedge$ & $\backslash$bigwedge & $\bigodot$ & $\backslash$bigodot & $\bigoplus$ & $\backslash$bigoplus\\
-	$\bigotimes$ & $\backslash$bigotimes & $\biguplus$ & $\backslash$biguplus & $\iint$ & $\backslash$iint & $\iiint$ & $\backslash$iiint\\
-	$\iiiint$ & $\backslash$iiiint & $\idotsint$ & $\backslash$idotsint\\
+\begin{tabular}{l l l l l l l l l}
+    \hline
+    inline & display & 代码 & inline & display & 代码 & inline & display & 代码\\
+    \hline
+    $\sum$ & $\displaystyle\sum$ & \textbackslash sum & $\prod$ & $\displaystyle\prod$ & \textbackslash prod & $\coprod$ & $\displaystyle\coprod$ & \textbackslash coprod\\
+    $\int$ & $\displaystyle\int$ & \textbackslash int & $\oint$ & $\displaystyle\oint$ & \textbackslash oint & $\bigcap$ & $\displaystyle\bigcap$ & \textbackslash bigcap\\
+    $\bigcup$ & $\displaystyle\bigcup$ & \textbackslash bigcup & $\bigsqcup$ & $\displaystyle\bigsqcup$ & \textbackslash bigsqcup & $\bigvee$ & $\displaystyle\bigvee$ & \textbackslash bigvee\\
+    $\bigwedge$ & $\displaystyle\bigwedge$ & \textbackslash bigwedge & $\bigodot$ & $\displaystyle\bigodot$ & \textbackslash bigodot & $\bigoplus$ & $\displaystyle\bigoplus$ & \textbackslash bigoplus\\
+    $\bigotimes$ & $\displaystyle\bigotimes$ & \textbackslash bigotimes & $\biguplus$ & $\displaystyle\biguplus$ & \textbackslash biguplus & $\iint$ & $\displaystyle\iint$ & \textbackslash iint\\
+    $\iiint$ & $\displaystyle\iiint$ & \textbackslash iiint & $\iiiint$ & $\displaystyle\iiiint$ & \textbackslash iiiint & $\idotsint$ & $\displaystyle\idotsint$ & \textbackslash idotsint\\
 	\hline
 \end{tabular}\\[2mm]
 **最后四个积分符号需要amsmath宏包

@@ -1,4 +1,4 @@
-一、Demo(示例)01 -- inline formula
+一、Demo(示例)01 -- in-text formula
 \documentclass{article}
 \usepackage{amssymb}
 \begin{document}
@@ -8,7 +8,8 @@
 		x^2 = y^2 + z^2
 	\end{math}\\
 	\( a_1 > x^{2n}/y^{2n} \)\\
-	$\because y =\frac{x}{1}$, $\therefore y' = 1$
+	$\because y =\frac{x}{1}$, $\therefore y' = 1$\\
+	$\sqrt[3]{8}=2$
 \end{document}
 
 内容讲解
@@ -26,9 +27,11 @@
 
 7.\frac为分数的分子分母分割线
 
+8.\sqrt[root]{num}用于求数num的root次方根, root默认为2
 
 
-二、Demo(示例)02 - display formula
+
+二、Demo(示例)02 - one-line display formula
 \documentclass{article}
 \begin{document}
 	\begin{displaymath}
@@ -43,15 +46,42 @@
 内容讲解
 1.\begin{displaymath} ... \end{displaymath}用于行间公式环境
 
-2.\begin{equation} ... \end{equation}用于标号的行间公式环境
+2.\[ ... \]用于行间公式环境
 
-3.\[ ... \]用于行间公式环境
+3.\begin{equation} ... \end{equation}用于含编号的行间公式环境
 
 4.本示例所有环境为单行行间公式环境
 
 
 
-三、Demo(示例)03 - math font style
+三、Demo(示例)03 - multiline display formula
+\documentclass{article}
+\begin{document}
+\begin{eqnarray}
+    a & b & g\\
+    c & d & i\\
+    e & f & k
+\end{eqnarray}
+\begin{eqnarray}
+    \lefteqn{\sum_{i=0}^n a_i=} & \\
+    & a_1+a_2+\ldots+a_n
+\end{eqnarray}
+\end{document}
+
+内容讲解
+1.\begin{eqnarray} ... \end{eqnarray}用于限定多行公式环境, 列之间使用'&'分隔, 行之间使用'\\'分隔, 最多支持3列
+
+2.每行自动进行公式编号, 使用\nonumber可不参与编号
+
+3.\begin{eqnarray*} ... \end{eqnarray*}为不编号版本
+
+4.第一列和第三列使用display formula格式, 第二列使用in-text formula格式
+
+5.\lefteqn{}用于配置列的宽度为0. 常用于eqnarray环境中
+
+
+
+四、Demo(示例)04 - math font style
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -71,7 +101,7 @@
 
 
 
-四、Demo(示例)04 - binary operator
+五、Demo(示例)05 - binary operator
 \documentclass{article}
 \begin{document}
 	\mp\\
@@ -86,31 +116,45 @@
 
 
 
-五、Demo(示例)05 - array
+六、Demo(示例)06 - array
 \documentclass{article}
 \begin{document}
 \begin{displaymath}
 \begin{array}{l l l l}
-    a+b & c\\
-    c+d & e
+    a+b & \begin{array}[t]{c}
+    a\\b
+    \end{array}\\
+    c+d & \begin{array}{c}
+    c\\d
+    \end{array}
 \end{array}
 \end{displaymath}
 \end{document}
 
 内容讲解
-1.\begin{array}{horiz_aligns...} ... \end{array}用于指定数学公式表格环境, aligns用于指定列数和每列的水平对齐方式. 对齐方式列表: l/c/r
+1.\begin{array}{horiz_aligns...} ... \end{array}用于指定数学公式表格环境, aligns可使用如下内容:
+	l - 当前列的每一行左对齐
+	c - 当前列的每一行中间对齐
+	r - 当前列的每一行右对齐
+	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
+	@{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
+			  text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
+			  text为<null>时, 列之间无分隔符
+			  text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐
+	*{num}{cols} - 指定num个连续列都采用cols指定格式
 
-2.\begin{array}[vert_align]{horiz_aligns...} ... \end{array}, 如代码所示, 可使用可选参数vert_align指定垂直对齐方式, 对齐方式列表: t/b
+2.\begin{array}[vert_align]{horiz_aligns...} ... \end{array}, vert_align表示使用指定位置对齐中线位置, 可选列表: b/c/t, 默认为c
 
 3.数组的列之间使用'&'分隔, 行之间使用'\\'分隔
 
 4.最后一行末尾不能使用'\\'
 
-5.数组需要置于数学公式环境中
+5.array只能用于math mode
 
 
 
-六、Demo(示例)06 - Overlining and Underlining
+七、Demo(示例)07 - Overlining and Underlining
 \documentclass{article}
 \begin{document}
 	$\overline{x+y}$\\
@@ -130,7 +174,7 @@
 
 
 
-七、Demo(示例)07 - math accent
+八、Demo(示例)08 - math accent
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -152,7 +196,7 @@
 
 
 
-八、Demo(示例)08 - stacking symbols
+九、Demo(示例)09 - stacking symbols
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -166,7 +210,7 @@
 
 
 
-九、Demo(示例)09 - space
+十、Demo(示例)10 - space
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -181,7 +225,7 @@
 \end{document}
 
 内容讲解
-1.\!代表缩小与\,相同的间隔距离
+1.\!代表缩小与\,相同的间隔距离, 但\!为反向空格
 
 2.间隔距离汇总: \! < <space> < \, < \: < \; < \<space>
 
@@ -189,48 +233,46 @@
 
 
 
-十、Demo(示例)10 - font type style
+十一、Demo(示例)11 - theorem
 \documentclass{article}
-\usepackage{amsmath}
+\newtheorem{pythagorean}{pythagorean theorem}
+\newtheorem{mass-energy}[pythagorean]{conservation of mass-energy theorem}
 \begin{document}
-\begin{gather}
-    different\\
-    \mathit{different}
-\end{gather}
-\end{document}
-
-内容讲解
-1.\mathit指定italic字体, 详情参考symbol_summary
-
-
-
-十一、Demo(示例)11 - newcommand
-\documentclass{article}
-\newcommand{\gn}{$\Gamma_{i}$}
-\newcommand{\cn}{\ensuremath{\Delta_{j}}}
-\begin{document}
-    Let \gn\ in the first line\\
-    Let \cn\ in the second line\\
-    Let $\cn$ in the third line
-\end{document}
-
-内容讲解
-1.\newcommand{\cmd}[num]{content}用于新建指令, cmd为指令名称; num代表新建指令的参数个数; content为指令代表的内容, 可使用#1,#2...引用指令传递的参数. 该指令位于preable区
-
-2.\ensuremath{}用于确保内容位于math mode. 而原生math mode偶数层嵌套会取消math环境
-
-
-
-十二、Demo(示例)12 - theorem
-\documentclass{article}
-\newtheorem{guess}{pythagorean theorem}
-\begin{document}
-\begin{guess}
+\begin{pythagorean}
     $3^2+4^2=5^2$
-\end{guess}
+\end{pythagorean}
+\begin{mass-energy}
+    $E=mc^2$
+\end{mass-energy}
 \end{document}
 
 内容讲解
-1.\newtheorem{env_name}{theorem_label}用于新建定理环境, env_name为定理环境名称, theorem_label为定理显示的标签名称. 通常放置于preamble区
+1.\newtheorem{env_name1}[env_name2]{theorem_label}用于新建定理环境, env_name1为当前定理环境名称, env_name2为当与之使用相同定理编号计数器的定理环境; theorem_label为定理显示的标签名称. 通常放置于preamble区
 
-2.\begin{env_name} ... \end{env_name}用于定理内容环境, 代表定理的内容描述
+2.\newtheorem{env_name}{theorem_label}[section]也用于新建定理环境, section用于以section为单位区分定理计数器, 也可以为其他chapter/subsection等
+
+3.\begin{env_name}[abbre_descript] ... \end{env_name}用于定理内容环境, 代表定理的内容描述, abbre_descript为theorem_label之后的定理标签简短描述
+
+
+
+十二、Demo(示例)12 - switch math style
+\documentclass{article}
+\begin{document}
+	$\sum$\\
+	$\displaystyle\sum$\\
+	\[\sum\]\\
+	\[\textstyle\sum\]\\
+	a_i\\
+	a_{\textstyle i}\\
+	a_{i^j}\\
+	a_{i^{\scriptstyle j}}
+\end{document}
+
+内容讲解
+1.\displaystyle将后续内容指定为display formula格式
+
+2.\textstyle将后续内容指定为in-text formula格式
+
+3.\scriptstyle将后续内容指定为script formula格式
+
+4.\scriptscriptstyle将后续内容指定为scriptscript formula格式

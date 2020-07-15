@@ -1,0 +1,5 @@
+1.warning: overfull \hbox
+diagnosis: 行内容超出该行正常容纳的字符数
+
+2.
+
