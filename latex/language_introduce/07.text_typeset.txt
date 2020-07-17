@@ -185,15 +185,18 @@ Comment çava? Où se trouve l'aéroport?
 
 八、Demo(示例)08 - hyphenate
 \documentclass{article}
-\hyphenation{acr-onym}
+\hyphenation{acr-onym he-llo}
 \begin{document}
-	    \begin{minipage}{3cm}
+	\begin{minipage}{3cm}
+		ali\-ce begin to go to school.
         TUG is an acronym.It means \TeX\ User Group.
     \end{minipage}
 \end{document}
 
 内容讲解
-1.\hyphenation用于指定可能的连字符位置
+1.\-用于指定可断行位置, 只在指定处适用一次
+
+2.\hyphenation{}用于指定可能的可断行位置, 使用空格分隔多个断行规则, 适用于后续所有出现指定断行规则的位置
 
 
 

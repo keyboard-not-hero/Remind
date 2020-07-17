@@ -1,5 +1,8 @@
 1.warning: overfull \hbox
 diagnosis: 行内容超出该行正常容纳的字符数
 
-2.
+2.warning: underfull \hbox
+diagnosis: 多行出现如下情况, 单词之间出现过多水平空白
 
+3.warning: underfull \vbox
+diagnosis: 出个页面出现过多的垂直空白

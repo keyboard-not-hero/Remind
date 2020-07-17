@@ -22,7 +22,7 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 
 	final|draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记
 
-	oneside|twoside - oneside代表所有页面统计对齐显示, article/report文档类型默认选项; twoside代表左右页面对称显示, 偶数页为左侧, 奇数页为右侧, book文档类型默认选项
+	oneside|twoside - oneside代表所有页面统一对齐显示, article/report文档类型默认选项; twoside代表左右页面对称显示, 偶数页为左侧, 奇数页为右侧, book文档类型默认选项
 
 	openright|openany - openright代表新chapter只从right-hand开启, book文档类的默认选项; openany代表新chapter可从两侧开启, report文档类默认选项
 
@@ -32,7 +32,7 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 
 	notitlepage|titlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表\maketitle生成单独标题页, \begin{abstract} ... \end{abstract}生成单独摘要页, report/book文档类默认选项
 
-	openbib - bibliography为open style
+	openbib - 参考文件列表, 每一项的第二行开始进行缩进. 默认不缩进
 
 	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
 
@@ -43,7 +43,7 @@ doc_class - 类型列表: article/report/book/slides/letter, 路径: /usr/local/
 
 
 2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
-pac_name<N> - 导入的包名
+pac_name<N> - 导入的包名, 文件后缀为.sty
 
 
 3.\begin{document}之前的部分为document preamble
@@ -61,6 +61,9 @@ pac_name<N> - 导入的包名
 \begin{document}
 \maketitle
 \tableofcontents
+\begin{abstract}
+this is abstract information
+\end{abstract}
 \section{Hello}
 	Hello World!!
 \section{Introduction}
@@ -96,7 +99,9 @@ report - [part] -> chapter -> section -> subsection...
 	i. 生成.toc文件
 	ii.生成目标文件
 
-4.\section用于标记小节起始位置
+4.\begin{abstract} ... \end{abstract}为摘要信息环境
+
+5.\section用于标记小节起始位置
 
 
 
@@ -147,11 +152,23 @@ close by her.
 1.\pagestyle{type}用于指定页面类型, 页面包含head/body/foot属性, type可选列表:
 	plain - head为空, foot属性包含页码
 	empty - head和foot都为空
-	headings - head包含章/节信息和页码, foot为空
+	headings - head包含章/节信息和页码, foot为空. 可使用如下两个指令替换章节信息:
+		\markright{right_head} - 指定right_hand附加内容信息
+		\markboth{left_head}{right_head} - 指定left_hand和right_hand附加内容信息
+		其中, 两个指令处于LR mode
+	myheadings - head包含页码, foot为空. 可使用如下两个指令添加head附加信息:
+		\markright{right_head} - 指定right_hand附加内容信息
+		\markboth{left_head}{right_head} - 指定left_hand和right_hand附加内容信息
+		其中, 两个指令处于LR mode
+2.\thispagestyle{type}语法与\pagestyle一致, 但只作用于当前页
 	
-2.\pagenumbering{num_style}用于指定页码格式, num_style指定格式, 列表如下:
+3.\pagenumbering{num_style}用于指定页码格式, num_style指定格式, 列表如下:
 	arabic - 阿拉伯数字
 	roman - 小写罗马数字
 	Roman - 大写罗马数字
 	alph - 小写字母
 	Alph - 大写字母
+
+4.\flushbottom为declaration指令, 用于指定所有页面的高度一致, 当存在某页没有填充满时, 会造成其他页面出现过多垂直空白
+
+5.\raggedbottom为declaration指令, 用于指定所有页面不需要高度一致, 尽量填充满页面

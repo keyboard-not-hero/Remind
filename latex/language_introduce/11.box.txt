@@ -1,4 +1,4 @@
-一、Demo(示例)01 - specify width
+一、Demo(示例)01 - parbox
 \documentclass{article}
 \begin{document}
     \parbox[c]{2cm}{TUG is an acronym.It means \TeX\ User Group.}
@@ -7,15 +7,15 @@
 \end{document}
 
 内容讲解
-1.\parbox[align]{width}{content}用于限定一个指定垂直对齐方式和宽度的盒子, align为文本的t/c/b对齐盒子垂直中线; width为盒子宽度; content为内容
+1.\parbox[align]{width}{content}用于指定一个paragraph mode的盒子, align为文本的t/c/b对齐盒子基准线; width为盒子宽度; content为内容
 
 
 
-二、Demo(示例)02 - page in page
+二、Demo(示例)02 - minipage
 \documentclass{article}
 \begin{document}
     \begin{minipage}[c]{2cm}
-        TUG is an acronym.It means \TeX\ User Group.
+        TUG is an acronym.It means \TeX\footnote{typeset language}\ User Group.
     \end{minipage}
     \begin{minipage}[t]{1.8cm}
         this is top text
@@ -26,16 +26,83 @@
 \end{document}
 
 内容讲解
-1.\begin{minipage}[align]{width} ... \end{minipage}页面中的页面, 参数类似于\parbox, 并且可内嵌\footnote
+1.\begin{minipage}[align]{width} ... \end{minipage}用于创建paragraph mode的盒子, 代表页面中的小页面, 参数类似于\parbox, 并且可内嵌\footnote
 
 
 
-三、Demo(示例)03 - reject break line
+三、Demo(示例)03 - makebox
 \documentclass{article}
 \begin{document}
+    Good \makebox[1in][c]{gnus}are here at last\\
+
+    Good \makebox[1in][l]{gnus}are here at last\\
+
+    Good \makebox[1in][r]{gnus}are here at last\\
+
     the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored\\
     \mbox{the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored. this is append text, you can ignore}
 \end{document}
 
 内容讲解
-1.\mbox{content}用于限定内容为LR mode, 不能在内容中进行换行
+1.\makebox[width][hor_align]{content}用于限定内容为LR mode, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
+
+2.\mbox{content}为makebox的简写方式, 但不能携带可选参数
+
+
+
+四、Demo(示例)04 - framebox
+\documentclass{article}
+\begin{document}
+    Good \framebox[1in][c]{gnus}are here at last\\
+
+    Good \framebox[1in][l]{gnus}are here at last\\
+
+    Good \framebox[1in][r]{gnus}are here at last\\
+
+    the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored\\
+    \fbox{the whole line is entire, you can't break line from anywhere, you can just try, it will be ignored. this is append text, you can ignore}
+\end{document}
+
+内容讲解
+1.\framebox[width][hor_align]{content}用于限定内容为LR mode, 并且在盒子周围增加线条边框, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
+
+2.\fbox{content}为framebox的简写方式, 但不能携带可选参数
+
+
+
+五、Demo(示例)05 - rule
+\documentclass{article}
+\begin{document}
+    this is demo\rule{1mm}{3mm} text
+\end{document}
+
+内容讲解
+1.\rule[distance]{width}{height}作一个实心矩形, distance代表矩形底部距离基准线的距离; width为矩形的宽度; height为矩形的高
+
+
+
+六、Demo(示例)06 - raisebox
+\documentclass{article}
+\begin{document}
+    \raisebox{-0.6ex}{this} is \raisebox{0.6ex}{demo} text
+\end{document}
+
+内容讲解
+1.\raisebox{distance}{content}创建LR mode盒子, 用于将内容上升或下沉, distance为内容底部距离基准线的距离, 距离方向为从下向上
+
+
+
+七、Demo(示例)07 - savebox
+\documentclass{article}
+\begin{document}
+    \newsavebox{\tony}
+    \savebox{\tony}[2cm]{see}
+    \usebox{\tony} you, \usebox{\tony} mee
+\end{document}
+
+内容讲解
+1.\newsavebox{box_name}创建盒子
+
+2.\savebox{box_name}[width]{content}保存内容到盒子中, width为盒子宽度, 内容在盒子内水平居中
+
+3.\usebox{box_name}使用盒子内容

@@ -40,15 +40,22 @@ steven@~$ tex --version
 
 
 3.TexLive字体查找配置
-# 系统字体
+# 系统字体(windows会自动查找)
 steven@~$ sudo vi /usr/local/texlive/2020/texmf.cnf
 OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
 
 # texlive附带字体
 steven@~$ sudo cp /usr/local/texlive/2020/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
 
+# windows默认自带宋体/楷书/黑体/仿宋, ubuntu默认自带宋体/楷书
+# 安装字体(黑体)
+steven@~$ sudo apt install fonts-wqy-zenhei font-wqy-microhei
+
 # 刷新fontconfig的字体缓存
 steven@~$ sudo fc-cache -fsv
+
+# 查看中文字体
+steven@~$ sudo fc-list :lang=zh-cn
 
 
 4.安装TeXworks编辑器

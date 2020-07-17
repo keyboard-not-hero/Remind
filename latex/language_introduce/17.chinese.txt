@@ -1,0 +1,11 @@
+一、Demo(示例)01 - basic demo
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+	北京欢迎你!!
+\end{document}
+
+内容讲解
+1.\documentclass[UTF8,fontset]{ctexart}可选参数必须使用UTF8指定中文的编码规则, Linux必须指定特殊字符集ubuntu; 必选参数文档类型列表与源类型列表对照如下:
+	ctexart - article
+	ctexrep - report
+	ctexbook - book

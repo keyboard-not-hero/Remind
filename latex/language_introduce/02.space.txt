@@ -17,9 +17,8 @@
 
 4.\linebreak[number]也用于段落内换行, 但当前行内容填充满当前行, number代表换行的意愿, 范围为[0,4]依次增强. 例: 0代表允许, 4代表强制, 默认为4
 
-5.\nolinebreak[number]阻止在当前位置换行, number代表意愿, 范围为[0,4]依次增强
+5.距离单位参考symbol_summary
 
-6.~用于阻止在当前空白位置换行
 
 
 二、Demo(示例)02 -- paragraphy break
@@ -34,7 +33,8 @@ this is paragraph two
 1.空白行用于段落的结束
 
 
-三、Demo(示例)03 -- short space
+
+三、Demo(示例)03 -- space
 \documentclass{article}
 \begin{document}
     "'Fi' or 'fum'" he said
@@ -44,14 +44,50 @@ this is paragraph two
     " 'f\/i' or 'fum' " he said
 
     " 'f{}i' or 'fum' " he said
+
+    this\hspace{1cm} is a big space\\
+    \hspace{5cm} this is no space
+
+    \hspace*{2cm} this is b \vspace{2cm}biger space\\
+	this is a long vertical space
+
+	Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do.
+
+	Alice was beginning to get\hfill very tired of sitting by her sister on the
+bank, and of having nothing to do
+
+	Alice was beginning to get\hfill very tired\\ of sitting by her sister on the
+bank, and of having nothing to do
 \end{document}
 
 内容讲解
-1.\,用于比<space>更短的空格, 用于分隔'与"
+1.'\,'用于比<space>更短的空格, 用于分隔'与"
 
-2.\/用于解决字母之间的连接过于紧密问题, 空间小于\,. 如: f与i, --分离
+2.'\/'用于解决字母之间的连接过于紧密问题, 空间小于'\,'. 如: f与i, --分离
 
 3.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳
+
+4.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
+
+5.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
+
+6.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束
+
+7.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
+
+8.\hfill为\hspace{\fill}简写版本, 动态填充水平空白, 当前行内容被填满时, 留置一个略宽的空白; 当前行过早换行时, 将hfill左边内容对齐左边框, 右边对齐右边框, 剩余空白被hfill占据. 不适用于行/段落起始和行/段落结束
+
+9.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
+
+10.\hspace*{\fill}为\hfill的适用于行/段落起始和行/段落结束版本
+
+11.\vspace*{\fill}为\vfill的适用于页起始/结束版本
+
+12.\dotfill类似于hfill, 但使用'.'代替空白
+
+13.\hrulefill类似于hfill, 但是用下划线替代空白
+
 
 
 四、Demo(示例)04 -- 破折号
@@ -70,6 +106,7 @@ this is paragraph two
 2.--用于表示数字范围
 
 3.---用于主句与从句
+
 
 
 五、Demo{示例}05 -- 句子结束相关的空格
@@ -126,6 +163,7 @@ this is paragraph two
 2.\begin{quotation} ... \end{quotation}用于段首缩进的多段落引用, 引用本身全体也缩进
 
 
+
 七、Demo(示例)07 - indent
 \documentclass{article}
 \begin{document}
@@ -137,6 +175,7 @@ this is paragraph two
 1.\noindent取消段落内的当前行缩进
 
 2.\indent开启段落内的当前缩进
+
 
 
 八、Demo(示例)08 - vertical space
@@ -167,4 +206,29 @@ just newline
 \end{document}
 
 内容讲解
-1.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异
+1.\parindent代表段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
+
+2.\textwidth指定page body的宽度, 配置方法: \setlength{\textwidth}{1cm}
+
+3.\textheight指定page body的高度, 配置方法: \setlength{\textheight}{1cm}
+
+4.\parskip指定段落之间的间隔高度, 配置方法: \setlength{\parskip}{1cm}
+
+5.\baselineskip指定段落之内当前行内容基线与下一行内容基线的高度(text_height+space_between_line), 配置方法: \setlength{\baselineskip}{2ex}. 通常不设置该参数
+
+6.\baselinestretch为baselineskip的系数, 基线距=baselinestretch * baselineskip, 配置方法: \renewcommand{\baselinestretch}{2}
+
+7.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异
+
+
+
+十、Demo(示例)10 - character occupied
+\documentclass{article}
+\begin{docuemnt}
+	\phantom{i am a good man. }please don't hurt me.
+
+	i am a good man. please don't hurt me.
+\end{document}
+
+内容讲解
+1.\phantom{content}用于留置与内容content等宽的空格

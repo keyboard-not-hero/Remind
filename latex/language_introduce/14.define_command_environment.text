@@ -34,3 +34,31 @@ this paragraph is normal
 1.\newenvironment{env_name}[env_arg_num]{begin_cmd}{end_cmd}用于定义新环境, env)name为环境名称; env_arg_num为新环境使用时携带的必选参数个数; begin_cmd为引用的\begin环境; end_cmd为引用的\end环境
 
 2.\renewenvironment语法与\newenvironment类似, 用于重定义已存在环境名称
+
+
+
+三、Demo(示例)03 - length
+\documentclass{article}
+\setlength{\parindent}{0cm}
+\begin{document}
+this is first paragraph
+
+\setlength{\parindent}{2cm}
+this is second paragraph
+
+\addtolength{\parindent}{0.5\parskip}
+this is third paragraph
+
+\setlength{\parindent}{0cm}
+smallthis is fourth paragraph
+
+\settowidth{\parindent}{\em small}
+this is fifth paragraph
+\end{document}
+
+内容讲解
+1.\setlength{\parindent}{0cm}用于配置\parindent指令的长度
+
+2.\addtolength{\parindent}{0.5\parindent}用于添加0.5个原parindent长度到parindent上
+
+3.\settowidth{\parindent}{\em small}用于配置parindent长度，该长度与强调格式的'small'字符串长度一致

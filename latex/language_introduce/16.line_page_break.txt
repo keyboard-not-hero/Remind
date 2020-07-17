@@ -1,0 +1,53 @@
+一、Demo(示例)01 - line break
+\documentclass{article}
+\hyphenation{acro-pym}
+\begin{document}
+	TUG is the acropym of \TeX\ User Gr-oup.	
+\end{document}
+
+内容讲解
+1.-为当前建议断行点
+
+2.\hyphenation{}为指定断行规则建议, 使用空格分隔多个单词断行规则. 适用于所有出现指定单词的位置
+
+3.\begin{sloppypar} ... \end{sloppypar}用于将出现断行问题的paragraph放入该环境, 可解决断行问题
+
+4.\breakline[intensity]在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制断行(默认). 断行之前的内容平铺到行
+
+5.~阻止在当前位置断行
+
+6.\mbox{content}表示盒子内content为LR mode, 不能断行
+
+7.\nobreakline[intensity]阻止在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制不断行(默认)
+
+
+
+二、Demo(示例)02 - page break
+\documentclass{article}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do: once or twice she had peeped into
+the book her sister was reading, but it had no pictures or
+conversations in it, “and what is the use of a book,” thought Alice
+“without pictures or conversations?”
+\clearpage
+
+So she was considering in her own mind (as well as she could, for the
+hot day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{document}
+
+内容讲解
+1.\pagebreak[intensity]在段落之间使用, 直接换新页, 增加之前的段落之间距离, 以垂直平铺内容到当前页面; 在段落之中使用, 在正常断行之后换新页, 增强之前的段落之间的距离. intensity代表强度, 范围为[0,4], 4代表强制换页(默认选项)
+
+2.\nopagebreak[intensity]不允许在该位置换页. intensity代表强度, 范围为[0,4], 4代表强制不允许换页(换页)
+
+3.\newpage直接在指定位置换页, 剩余位置留空白, 当文档为twoclumn时, 开启新column
+
+4.\clearpage类似于\newpage, 但当文档为twocolumn时, 开启新page
+
+5.多个\newpage和\clearpage与一个相同, 所以无法造成空白页, 需要在空白页使用\mbox{}来占位放置空内容, 然后再使用一次\newpage或\clearpage
+
+6.\cleardoublepage在twoside文档时, 在章节结尾使用, 可强制使下一章节起始于right-hand页. 其他情况下使用, 与newpage与clearpage类似

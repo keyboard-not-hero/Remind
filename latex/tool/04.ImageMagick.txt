@@ -1,0 +1,24 @@
+ImageMagick - 指令行图形转换工具
+安装: sudo apt install imagemagick
+
+指令
+convert
+
+语法
+convert [src_option] <src_fmt_pic> [dst_option] <dst_fmt_pic>
+
+参数释义
+-border <percent>
+	图像周围增加比例边框
+
+-flip
+	图像上下翻转
+
+-resize <percent>
+	图像成比例放大/缩小
+
+-rotate <degrees>
+	图像顺时针旋转角度
+
+-scale <percent>
+	图像成比例拉伸/缩放

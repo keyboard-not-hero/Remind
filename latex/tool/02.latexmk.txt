@@ -48,12 +48,12 @@ latexmk [options] [files]
 
 -pv
 	生成目标文件后, 使用默认的viewer进行结果预览. 不同格式模式使用的viewer:
-		dvi - xdvi
-		ps - gv
-		pdf - acroread(adobe acrobat reader), adobe 2013年停止对Linux版本的支持
+		dvi - xdvi, TeXLive自带
+		ps - rungs, TeXLive自带. 建议从apt源下载ghostscript: sudo apt install ghostscript
+		pdf - evince, Linux自带. adobe 2013年停止对Linux版本的支持
 	viewer修改方式 - 目标文件~/.latexmkrc或./.latexmkrc, 变量列表:
 		$dvi_previewer = 'start xdvi %O %S'
-		$ps_previewer = 'start gv %O %S'
+		$ps_previewer = 'start ghostscript %O %S'
 		$pdf_previewer = 'start evince %O %S'	
 
 -pvc
