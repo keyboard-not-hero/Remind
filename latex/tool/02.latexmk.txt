@@ -38,7 +38,7 @@ latexmk [options] [files]
 	不生成dvi格式文件, 选项可被覆盖
 
 -pdf
-	指定目标文件为pdf格式. 步骤: .tex -> .pdf
+	指定目标文件为pdf格式. 默认使用pdflatex编译器. 步骤: .tex -> .pdf
 
 -ps
 	指定目标文件为ps格式. 步骤: .tex -> .dvi -> .ps
@@ -73,3 +73,10 @@ latexmk [options] [files]
 
 **files - 指定.tex文件, 后缀可省略; 当未指定该参数时，默认为当前工作目录的所有.tex文件
 
+
+例子:
+使用pdflatex编译器
+latexmk -pdf -pv <tex_file>
+
+使用xelatex编译器
+latexmk -xelatex -pv <tex_file>

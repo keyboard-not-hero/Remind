@@ -134,50 +134,24 @@ Comment çava? Où se trouve l'aéroport?
 七、Demo(示例)07 - font size
 \documentclass{article}
 \begin{document}
-	\noindent\tiny m\scriptsize m\footnotesize m\small m\normalsize m\large m\Large m\LARGE m\huge m\Huge m
+	\noindent\tiny tiny\small small
     \begin{tiny}
         tiny
     \end{tiny}
-
-    \begin{scriptsize}
-        scriptsize
-    \end{scriptsize}
-
-    \begin{footnotesize}
-        footnotesize
-    \end{footnotesize}
-
-    \begin{small}
-        small
-    \end{small}
-
-    \begin{normalsize}
-        normalsize
-    \end{normalsize}
-
-    \begin{large}
-        large
-    \end{large}
-
-    \begin{Large}
-        Large
-    \end{Large}
-
-    \begin{LARGE}
-        LARGE
-    \end{LARGE}
-
-    \begin{huge}
-        huge
-    \end{huge}
-
-    \begin{Huge}
-        Huge
-    \end{Huge}
 \end{document}
 
 内容讲解
-1.以上指令, 除了\noindent, 其他都是字体大小指令, 并且字体依次增大
+1.\tiny和\small指定字体大小, 字体从小到大可选列表如下:
+	tiny
+	scriptsize
+	footnotesize
+	small
+	normalsize
+	large
+	Large
+	LARGE
+	huge
+	Huge
 
 2.\begin{huge}...\end{huge}为\huge的environment版本, 其他环境指令对应其declaration指令
 
@@ -231,3 +205,53 @@ Comment çava? Où se trouve l'aéroport?
 1.`代表‘
 
 2.'代表’
+
+
+
+十一、Demo(示例)11 - ASCII symbols
+\documentclass{article}
+\begin{document}
+    \symbol{26}
+    \symbol{'32}
+    \symbol{"1A}
+\end{document}
+
+内容讲解
+1.\symbol{num}用于指定ASCII指定编码的字符
+
+2.\symbol{'num}为symbol的八进制版本
+
+3.\symbol{"num}为symbol的十六进制版本
+
+
+
+十二、Demo(示例)12 - color
+\documentclass{article}
+\usepackage{color}
+\begin{document}
+    \pagecolor[rgb]{0.9,0.9,0.9}
+    \definecolor{mygray}{gray}{0.75}
+    this \textcolor{mygray}{is} color \textcolor{red}{text}.
+
+    \textcolor[rgb]{0.8,0.85,1}{the whole line is color text.}
+
+    \fcolorbox{red}{green}{this is box text}
+\end{document}
+
+内容讲解
+1.\usepackage{color}使用color宏包, 该宏包包含颜色内容. 色彩模式如下:
+	gray - 灰度, 一个数字表示, 范围[0,1]
+	rgb - RGB模式, 三个数字表示, 每个数字范围[0,1]
+	cmyk - CMYK模式, 四个数字表示, 每个数字范围[0,1]
+
+2.\pagecolor[model]{model_num}用于指定页面背景颜色, model为色彩模式; model_num为指定模式对应的数字组, 多个数字使用','分隔. 其他语法\pagecolor{color_name}、\nopagecolor
+
+3.\definecolor{color_name}{model}{model_num}用于自定义颜色, color_name为自定义颜色名称; model为颜色模式; model_num为对应颜色模式的数字
+
+4.\textcolor{color_name}{text}用于对指定文字上色, color_name为颜色名称; text为指定文本. 对应的declaration指令为\color{color_name}
+
+5.\textcolor[model]{model_num}{text}用于灵活对文字上色, 颜色采用model自定义模式. 对应的declaration指令为\color[model]{model_num}
+
+6.\colorbox{color_name}{text}用于指定背景色的盒子. \colorbox[model]{model_num}{text}灵活指定盒子背景色
+
+7.\fcolorbox{frame_color_name}{bg_color_name}{text}指定边框色和背景色的盒子. \fcolorbox[model]{frame_model_num}{bg_model_num}{text}灵活定义边框色和背景色

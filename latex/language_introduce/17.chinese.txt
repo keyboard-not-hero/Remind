@@ -1,3 +1,4 @@
+!!warning: 中文强烈建议使用xelatex编译, 编译速度量级跨越
 一、Demo(示例)01 - basic demo
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
@@ -9,3 +10,36 @@
 	ctexart - article
 	ctexrep - report
 	ctexbook - book
+
+
+
+二、Demo(示例)02 - font size
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+	\zihao{1} 一号字体
+
+	\zihao{-6} 小六号字体
+
+	\zihao{8} 八号字体
+\end{document}
+
+内容讲解
+1.\zihao{font_size}用于设置字体大小, 范围[0,8]; 额外的, 使用范围[-6, -0]代表小号字体
+
+
+
+三、Demo(示例)03 - font style
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+    \songti 宋体
+
+    \heiti 黑体
+
+    \kaishu 楷书
+\end{document}
+
+内容讲解
+1.Windows默认自带宋体/黑体/仿宋/楷书, Linux自带宋体/楷书. Linux安装黑体:
+	sudo apt install fonts-wqy-microhei fonts-wqy-zenhei
+
+2.\songti对应于宋体, \heiti对应于黑体, \kaishu对应于楷书
