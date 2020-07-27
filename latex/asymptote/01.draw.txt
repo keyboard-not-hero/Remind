@@ -1,0 +1,198 @@
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - basic line
+draw((0,0)--(100,100));
+
+// draw((start_coor)--(end_coor)); 作一条从坐标start_coor到坐标end_coor的直线, --代表线条类型为直线. 默认长度单位为bp, 1 bp=1/72 inch, 默认长度为0.5 bp
+
+// draw(picture pic=currentpicture, Label L="", path g, align align=NoAlign, pen p=currentpen, arrowbar arrow=None, arrowbar bar=None, margin margin=NoMargin, Label legend="", marker marker=nomarker)
+// pic - 默认为currentpicture
+// L - 直线的注解label
+// g - 作图路径
+// align - 注解相对于直线中心的位置. 可选N/S/W/E及其组合. 默认为下方(自左至右)
+// p - 注解字体大小(fontsize对象)或图形线条粗细(linewidth对象)或图形颜色名称, 字体大小/图形粗细和图像颜色可使用'+'组合. 如: p=fontsize(10)+blue
+// arrow - 箭头类型. 箭头位置如下:
+		None - 没有箭头
+		Blank - 没有箭头
+		BeginArrow - 起始位置放置箭头, 接受箭头类型参数
+		MidArrow - 中间位置放置箭头, 接受箭头类型参数 
+		EndArrow - 结束位置放置箭头, 接受箭头类型参数. Arrow与之含义相同
+		Arrows - 起始和结束位置放置箭头, 接受箭头类型参数
+	箭头类型, 以Arrow为例(BeginArrow格式为BeginArcArrow), 可选列表如下:
+		Arrow()
+		ArcArrow()
+		Arrow(SimpleHead)
+		ArcArrow(SimpleHead)
+		Arrow(HookHead)
+		ArcArrow(HookHead)
+		Arrow(TexHead)
+		ArcArrow(TeXHead)
+// bar - bar类型. 可选位置如下:
+		None - 没有bar
+		BeginBar - 起始位置放置bar, 可接受bar大小参数
+		EndBar - 结束位置放置bar, 可接受bar大小参数. Bar与之含义相同
+		Bars - 起始和结束位置放置bar, 可接受bar大小参数
+// margin - 路径起始或结尾处的边距, 可选列表如下:
+		NoMargin - 不包含margin
+		BeginMargin - path起始处包含margin
+		EndMargin - path结尾处包含margin
+		Margins - path起始和结尾处包含margin
+		TrueMargin(begin_margin, end_margin) - 用于详细指定起始和结尾处的margin尺寸, 详情见例11
+// legend - 线条图例名称
+// marker - 线条的描点, 为Mark/MarkFill数组元素, Mark数组包含7个元素, MarkFill包含5个元素
+
+
+
+二、Demo(示例)02 - size
+size(100);
+draw((0,0)--(1,1));
+
+// size(100, 100)设定方向允许的最大长度, 图像按长宽比例进行调整, 但都不能大于对应方向指定的长度. size(100)/size(0,100)/size(100,0)都等同于size(100,100), 默认单位为bp, 可选单位列表:
+	1 bp = 172 inch
+	1 pt = 172.27 inch
+	1 cm 
+	1 mm
+	1 inch
+
+// draw((0,0)--(1,1)); 作一条横向和纵向都为单位长度的直线
+
+
+
+三、Demo(示例)03 - unit size
+unitsize(100);
+draw((0,0)--(2,2));
+
+// unitsize(100, 100)设定方向单位长度, 规则类似于size, 覆盖size值, 不论语句顺序先后
+
+// draw((0,,0)--(2,2)); 作一条可以在方向上指定长度系数的直线, 这里与size不同的地方在于, 任意方向系数可以随意指定
+
+
+
+四、Demo(示例)04 - arraw
+size(3cm);
+draw((0,0)--(1,1), arrow=Arrow);
+
+// draw((0,0)--(1,1), arrow=Arrow); 作一条路径为直线, 终点为箭头的图像. 箭头列表:
+	Arrow()
+	ArcArrow()
+	Arrow(SimpleHead)
+	ArcArrow(SimpleHead)
+	Arrow(HookHead)
+	ArcArrow(HookHead)
+	Arrow(TexHead)
+
+
+
+五、Demo(示例)05 - cycle
+size(3cm);
+draw((0,0)--(1,0)--(1,1)--(0,1)--cycle);
+
+// draw((0,0)--(1,0)--(1,1)--(0,1)--cycle); 作一条闭环路径, cycle用于连接线条的终点和起点, 使其闭环
+
+
+
+六、Demo(示例)06 - unit shape
+unitsize(1cm);
+draw(unitsquare);
+
+// unitsquare为边长为单位长度的正方形, 可选单位图像如下:
+//		unitsquare - 左下角为(0,0), 边长为单位长度的正方形
+//		unitcircle - 圆心为(0,0), 半径为单位长度的圆形
+//      polygon - 限定在单位圆内的正多边形
+
+
+七、Demo(示例)07 - path
+size(100,0);
+path p=(1,0){up}..{left}(0,1)
+draw(p, arrow=Arrow);
+
+// path p=(1,0){up}..{left}(0,1) 定义一条坐标(1,0)到坐标(0,1)的路径, ..代表线条类型为曲线; (1,0){up}的up代表从(1,0)的出向切线为(0,1), {left}(0,1)的left代表从(0,1)的入向切线为(-1,0). 
+	path连接方式列表:
+	-- - 直线
+	.. - 曲线
+	^^ - 无连接
+	切线方向列表:
+	up - (0,1)
+	down - (0,-1)
+	left - (-1,0)
+	right - (1,0)
+	可使用(x,y)灵活定义切线方向
+
+
+
+八、Demo(示例)08 - circle/ellipse
+unitsize(1cm);
+draw(circle((0,0),5), pen=green);
+draw(ellipse((0,0),5,2), pen=blue);
+
+// circle((0,0),5)是圆心为(0,0), 半径为5的圆
+
+// ellipse((0,0),5,2)是圆心为(0,0), 水平直径为10, 垂直直径为4的椭圆
+
+
+
+九、Demo(示例)09 - box/polygon
+unitsize(1cm);
+draw(box((0,0),(1,1)));
+draw(unitcircle);
+draw(polygon(6));
+
+// box(pair a, pair b); 作长为a, 宽为b的长方形
+
+// polygon(int n); 限定在单位圆内的正n边形
+
+
+
+十、Demo(示例)10 - transform
+unitsize(1cm);
+path p=box((0,0),(1,1));
+draw(shift(1.2)*p, blue);
+draw(xscale(1.4)*p, green);
+draw(yscale(1.6)*p, orange);
+draw(scale(1.8)*p, red);
+draw(rotate(60)*p, purple);
+path q=scale(2)*rotate(60)*p;
+draw(q);
+
+// shift(x, y)在水平方向平移n*宽度, 在垂直方向平移n*高度
+// xscale(n)将图形在水平方向拉伸/缩小为n倍
+// yscale(n)将图形在垂直方向拉伸/缩小为n倍
+// scale(n)将图形在水平和垂直方向拉伸/缩小为n倍
+// rotate(degree)将图形逆时针旋转degree度
+// 可使用*操作符连接多个图像转化操作
+
+
+
+十一、Demo(示例)11 - arc/margin
+unitsize(1cm);
+pen p=linewidth(5pt);
+real line=labelmargin(p);
+margin ArrowMargin = TrueMargin(0.8*line, 0.8line);
+draw((0,0)--(0,6), p=p);
+draw((0,0)--(6,0), p=p);
+draw(arc((0,0),5,0,90), red, arrow=Arrow(), margin=ArrowMargin);
+draw(arc((0,0),(5,0),(0,5),CW), blue, arrow=Arrow(), margin=ArrowMargin);
+
+// linewidth(5pt)指定线条宽度, 并返回pen对象
+// labelmargin(p)返回pen对象p需要与外部拉开的边距, 该边距略大于0.5倍线条宽度, 返回对象为real类型
+// TrueMargin(0.8*line, 0.8*line)指定path的起始边距和结束边距, 返回margin对象
+
+
+
+十二、Demo(示例)12 - others plot cmd
+void dot(picture pic=currentpicture, pair z, pen p=currentpen, filltype filltype=dotfilltype)
+	画一个实心圆点, 参数列表如下
+	z - 圆心位置
+	p - 该圆实质为空心圆, 该参数指定边框的颜色
+	filltype - 填充类型, 默认dotfilltype填充圆心. 详情参考label参数
+	
+
+void fill(picture pic=currentpicture, path g, pen p=currentpen)
+	填充包围区域
+
+void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
+	填充包围区域和边框
+	

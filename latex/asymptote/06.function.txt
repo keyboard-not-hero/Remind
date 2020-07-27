@@ -1,0 +1,72 @@
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - create/use function
+unitsize(1cm);
+import graph;
+real f(real x) {
+	return sqrt(x);
+}
+path g=graph(f,0,2);
+draw(g);
+
+// import graph; 导入graph包, function必须借助该包
+
+// 以下是定义函数:
+	real f(real x) {
+		return sqrt(x);
+	}
+
+// path g=graph(f,0,2); 调用函数f, 并且定义域区间为[0,2]
+
+// graph原型:
+	guide graph(picture pic=currentpicture, real f(real), real a, real b, int n=ngraph, real T(real)=identity, interpolate join=operator --)
+	调用已定义函数API, 参数如下:
+	f - 调用的自定义函数
+	a - 定义域左区间
+	b - 定义域右区间
+	n - 区间样本数
+	T - 转化函数, 将a/b转化后再配置[T(a),T(b)]为f的定义域
+	join - 线条类型, 列表如下:
+		operator -- 
+			直线
+		operator ..
+			分段式贝塞尔曲线
+		Hermite
+			Hermite曲线
+
+二、Demo(示例)02 - promote precision
+unitsize(1cm);
+import graph;
+real f1(real x) {
+    return sin(x)*cos(57*x);
+}
+path g=graph(f1,0,pi);
+draw(g);
+
+real f2(real x) {
+    return sin(x)*cos(57*x)-2;
+}
+path g2=graph(f2,0,pi,n=1000);
+draw(g2);
+
+real f3(real x) {
+    return sin(x)*cos(57*x)-4;
+}
+path g3=graph(f3,0,pi,operator ..);
+draw(g3);
+
+real f4(real x) {
+    return sin(x)*cos(57*x)-6;
+}
+path g4=graph(f4,0,pi,Hermite);
+draw(g4);
+
+// g2为利用n提升精度
+
+// g3为利用operator ..提升精度
+
+// g4为利用Hermite提升精度
+

@@ -40,7 +40,7 @@
 	\begin{equation}
 		x'+y^2=z_i^2
 	\end{equation}
-	\[x'+y^2=z_i^2\]
+	\[x'+y^2=z_i^2 \text{this is formula}\]
 \end{document}
 
 内容讲解
@@ -50,11 +50,13 @@
 
 3.\begin{equation} ... \end{equation}用于含编号的行间公式环境
 
-4.本示例所有环境为单行行间公式环境
+4.\text用于在math mode中输入paragraph mode格式文字. 包含在amsmath宏包中
+
+5.本示例所有环境为单行行间公式环境
 
 
 
-三、Demo(示例)03 - multiline display formula
+三、Demo(示例)03 - eqnarray
 \documentclass{article}
 \begin{document}
 \begin{eqnarray}
@@ -69,7 +71,7 @@
 \end{document}
 
 内容讲解
-1.\begin{eqnarray} ... \end{eqnarray}用于限定多行公式环境, 列之间使用'&'分隔, 行之间使用'\\'分隔, 最多支持3列
+1.\begin{eqnarray} ... \end{eqnarray}用于限定多行公式环境, 列之间使用'&'分隔, 行之间使用'\\'分隔, 最多支持3列, 第一列右对齐, 第二列居中对齐, 第三列左对齐
 
 2.每行自动进行公式编号, 使用\nonumber可不参与编号
 
@@ -79,9 +81,53 @@
 
 5.\lefteqn{}用于配置列的宽度为0. 常用于eqnarray环境中
 
+6.\begin{eqnarray*} ... \end{eqnarray*}为不带编号版本
 
 
-四、Demo(示例)04 - math font style
+
+四、Demo(示例)04 - align
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{align}
+    x+y+z & c+d & e\\
+    f*g & h & i+j*k
+\end{align}
+\end{document}
+
+内容讲解
+1.\begin{align} ... \end{align}为多行多列公式环境, \\分隔行, &分隔列, 每行各包含一个编号, 奇数列右对齐, 偶数列左对齐. 包含在amsmath宏包中
+
+2.\begin{align*} ... \end{align*}为不带编号版本
+
+3.\begin{aligned} ... \end{aligned}为放置于math mode中的版本, 并且不带编号
+
+4.\begin{flalign} ... \end{flalign}为align的水平空间尽量拉伸版本, \begin{flalign*} ... \end{flalign*}为flalign无编号版本
+
+5.\begin{alignat} ... \end{alignat}为align的水平空间列之间无间隙版本, \begin{alignat*} ... \end{alignat*}为alignat无编号版本
+
+
+
+五、Demo(示例)05 - gather
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+    x+y+z\\
+    f*g
+\end{gather}
+\end{document}
+
+内容讲解
+1.\begin{gather} ... \end{gather}为多行单列公式环境, \\分隔行, 每行各包含一个编号. 包含在amsmath宏包中
+
+2.\begin{gather*} ... \end{gather*}为不带编号的版本
+
+3.\begin{gathered} ... \end{gathered}为放置于math mode环境的版本, 并且不带编号
+
+
+
+六、Demo(示例)06 - math font style
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -101,7 +147,7 @@
 
 
 
-五、Demo(示例)05 - binary operator
+七、Demo(示例)07 - binary operator
 \documentclass{article}
 \begin{document}
 	\mp\\
@@ -116,7 +162,7 @@
 
 
 
-六、Demo(示例)06 - array
+八、Demo(示例)08 - array
 \documentclass{article}
 \begin{document}
 \begin{displaymath}
@@ -154,7 +200,7 @@
 
 
 
-七、Demo(示例)07 - Overlining and Underlining
+九、Demo(示例)09 - Overlining and Underlining
 \documentclass{article}
 \begin{document}
 	$\overline{x+y}$\\
@@ -174,7 +220,7 @@
 
 
 
-八、Demo(示例)08 - math accent
+十、Demo(示例)10 - math accent
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -196,7 +242,7 @@
 
 
 
-九、Demo(示例)09 - stacking symbols
+十一、Demo(示例)11 - stacking symbols
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -210,7 +256,7 @@
 
 
 
-十、Demo(示例)10 - space
+十二、Demo(示例)12 - space
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -233,8 +279,12 @@
 
 
 
-十一、Demo(示例)11 - theorem
+十三、Demo(示例)13 - theorem
 \documentclass{article}
+\usepackage{ntheorem}
+\theoremstyle{plain}
+\theoremheaderfont{\heiti}
+\theorembodyfont{\normalfont}
 \newtheorem{pythagorean}{pythagorean theorem}
 \newtheorem{mass-energy}[pythagorean]{conservation of mass-energy theorem}
 \begin{document}
@@ -247,15 +297,71 @@
 \end{document}
 
 内容讲解
-1.\newtheorem{env_name1}[env_name2]{theorem_label}用于新建定理环境, env_name1为当前定理环境名称, env_name2为当与之使用相同定理编号计数器的定理环境; theorem_label为定理显示的标签名称. 通常放置于preamble区
+1.\newtheorem{env_name1}[env_name2]{theorem_label}[section]用于新建定理环境, env_name1为当前定理环境名称; env_name2为当与之使用相同定理编号计数器的定理环境; theorem_label为定理显示的标签名称; section用于以section为单位区分定理计数器, 也可以为其他chapter/subsection等. 通常放置于preamble区
 
-2.\newtheorem{env_name}{theorem_label}[section]也用于新建定理环境, section用于以section为单位区分定理计数器, 也可以为其他chapter/subsection等
+2.\newframedtheorem与\newtheorem语法类似, 创建带边框的定理环境. 需调用framed宏包; 包含在ntheorem宏包中, 并且需要携带framed可选参数
 
-3.\begin{env_name}[abbre_descript] ... \end{env_name}用于定理内容环境, 代表定理的内容描述, abbre_descript为theorem_label之后的定理标签简短描述
+3.\newshadedtheorem与\newtheorem语法类似, 创建带阴影的定理环境. 需调用framed和pstricks宏包; 包含在ntheorem红包中, 并且需要携带framed可选参数. 默认使用gray背景阴影, 在该定义之前使用\shadecolor{color}重新上色; 也可使用\def\theoremframecommand{box_type}重新选择盒子类型(参考pstricks), 类型如下:
+	\psframebox[fillstyle,fillcolor,framearc,linecolor,linewidth] - 单层边框盒子, fillstyle代表填充风格(列表参考后续), fillcolor指定填充颜色(需指定fillstyple), framearc指定边框的圆角系数, linecolor指定边框颜色, linewidth指定边框宽度. fillstyle列表:
+		crosshatch - 交叉栅栏. 不可填充背景色
+		crosshatch* - 交叉栅栏. 可填充背景色
+		solid - 实心填充. 可填充背景色
+		
+	\psdblframebox - 双层边框盒子
+
+	\psshadowbox - 带阴影的单层边框盒子
+	默认配置: \def\theoremframecommand{\psframebox[fillstyle=solid,fillcolor=gray,linecolor=gray]}
+
+3.\theoremstyle{style}设定定理格式风格. 包含在ntheorem宏包中. style参数如下:
+	plain - 与系统默认提供的格式相同. 如: <定理标签> <定理号> [副标签] <正文>
+	break - 标签头自成一行. 如: <定理标签> <定理号> [副标签]\Enter <正文>
+	change - 定理标签与序号位置互换. 如: <定理号> <定理标签> [副标签] <正文>
+	changebreak - 定理标签与序号位置互换, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签]\Enter <正文>
+	margin - 序号置于左边margin处. 如: <定理号> <定理标签> [副标签] <正文>
+	marginbreak - 序号置于左边margin处, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签]\Enter <正文> 
+	nonumberplain - 与plain类似, 但没有序号. 如: <定理标签> [副标签] <正文>
+	nonumberbreak - 与break类似, 但没有序号. 如: <定理标签> [副标签]\Enter <正文> 
+	empty - 没有标签和序号, 可以有副标签
+	
+4.\theoremheaderfont{header_font}设置头部字体格式. 包含在ntheorem宏包中
+
+5.\theorembodyfont{body_font}设置正文字体格式. 包含在ntheorem宏包中
+
+6.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '.包含在ntheorem宏包中
+
+7.\theorempreskip{length}和\theorempostskip{length}分别用于指定定理环境与之前和之后正文的垂直距离. 包含在ntheorem宏包中
+
+8.\theoremindentlength中, length指定定理环境的缩进
+
+9.\theoremsymbol{end_symbol}设置定义结束符, 位于正文右下角. 包含在ntheorem宏包中, 并且该指令需要使用宏包的thmmarks可选参数
+
+10.\theoremnumbering{counter_format}设置序号计数格式. 包含在ntheorem宏包中. 格式列表如下:
+	arabic - 阿拉伯数字
+	alph - 小写字母
+	Alph - 大写字母
+	roman - 小写罗马数字
+	Roman - 大写罗马数字
+	greek - 小写希腊字母
+	Greek - 大写希腊字母
+	chinese - 汉语数字. 如: 一/二
+	fnsymbol - 特殊符号
+
+11.ntheorem.sty默认配置:
+	\theoremstyle{plain}
+	\theoremheaderfont{\normalfont\bfseries}
+	\theorembodyfont{\itshape}
+	\theoremseparator{}
+	\theorempreskip{\topsep}
+	\theorempostskip{\topsep}
+	\theoremindent0cm
+	\theoremnumbering{arabic}
+	\theoremsymbol{}
+
+12.\begin{env_name}[aux_label] ... \end{env_name}用于定理内容环境, 代表定理的内容描述, abbre_descript为theorem_label之后的副标签
 
 
 
-十二、Demo(示例)12 - switch math style
+十四、Demo(示例)14 - switch math style
 \documentclass{article}
 \begin{document}
 	$\sum$\\

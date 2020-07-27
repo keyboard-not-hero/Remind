@@ -1,0 +1,23 @@
+ldd - 打印二进制文件依赖的动态库
+
+语法
+ldd [option] file
+
+参数释义
+--version
+	版本信息
+
+-v, --verbose
+	打印详细信息
+
+-u, --unused
+	当前未使用的依赖
+
+-d, --data-relocs
+	重新查找依赖, 并打印依赖列表
+
+-r, --function-relocs
+	打印依赖库和方法
+
+--help
+	帮助文档

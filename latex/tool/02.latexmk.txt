@@ -73,6 +73,8 @@ latexmk [options] [files]
 
 **files - 指定.tex文件, 后缀可省略; 当未指定该参数时，默认为当前工作目录的所有.tex文件
 
+配置文件: ~/.latexmkrc
+
 
 例子:
 使用pdflatex编译器

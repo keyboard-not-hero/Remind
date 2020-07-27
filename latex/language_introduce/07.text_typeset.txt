@@ -255,3 +255,20 @@ Comment çava? Où se trouve l'aéroport?
 6.\colorbox{color_name}{text}用于指定背景色的盒子. \colorbox[model]{model_num}{text}灵活指定盒子背景色
 
 7.\fcolorbox{frame_color_name}{bg_color_name}{text}指定边框色和背景色的盒子. \fcolorbox[model]{frame_model_num}{bg_model_num}{text}灵活定义边框色和背景色
+
+
+
+十三、Demo(示例)13 - font in circle
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pifont}
+\setlength{\parindent}{0pt}
+\begin{document}
+    \ding{172} \ding{173}\\
+    \ding{182} \ding{183}\\
+    \ding{192} \ding{193}\\
+    \ding{202} \ding{203}
+\end{document}
+
+内容讲解
+1.\ding{n}用于指定限定于圆形内的数字, n为可用编码范围, 区间为[172, 211]. 包含在pifont宏包中

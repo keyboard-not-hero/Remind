@@ -1,0 +1,16 @@
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - clip
+unitsize(1cm);
+path box1=box((0,0),(1,1));
+path box2=shift(0.5,0.5)*box1;
+path box3=shift(-0.5,-0.5)*box1;
+fill(box1, blue);
+draw(box2, green);
+clip(box1);
+draw(box3, red);
+
+// clip(box1); 裁剪图像只剩下box1区域，只作用于clip指令之前的内容, clip之后的内容不影响

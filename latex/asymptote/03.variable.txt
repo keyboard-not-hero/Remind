@@ -1,0 +1,53 @@
+// warning: Asymptote的变量为C-like变量, 变量为强类型, 赋值/使用之前需要声明类型
+
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - path
+unitsize(1cm);
+path p=(0,0)--(1,1);
+draw(p);
+
+// path p=(0,0)--(1,1); 定义一个path(路径)类型的变量p
+
+
+
+二、Demo(示例)02 - arrowbar
+unitsize(1cm);
+arrowbar arrow=Arrow();
+arrowbar bar=BeginBar;
+draw((0,0)--(1,1), arrow=arrow, bar=bar);
+
+// arrowbar arrow=Arrow(); 定义一个arrowbar(箭头/bar)类型的变量arrow
+
+
+
+三、Demo(示例)03 - real number
+unitsize(1cm);
+
+real xmin=-0.1;
+real xmax=2;
+real ymin=-0.1;
+real ymax=2;
+
+path s=(0,0){up} .. (1,1) .. (xmax,sqrt(xmax));
+fill(s--(xmax,0)--cycle, mediumgray);
+draw(s);
+
+arrowbar axisarrow=Arrow(TeXHead);
+draw((xmin,0)--(xmax,0), arrow=axisarrow);
+draw((0,ymin)--(0,ymax), arrow=axisarrow);
+
+// real xmin=-0.1; 定义一个real(实数)类型变量xmin
+
+
+
+四、Demo(示例)04 - pair
+unitsize(1cm);
+pair c=(0,0);
+real radius=2;
+draw(circle(c,radius));
+
+// pair c=(0,0); 定义一个pair(坐标)类型变量c

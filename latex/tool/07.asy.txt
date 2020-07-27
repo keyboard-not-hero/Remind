@@ -1,0 +1,41 @@
+asy - Asymptote矢量图语言编译工具
+
+语法
+asy [option] [file...]
+
+参数释义
+<null>
+	interactive模式
+
+-auto3D
+	自动激活3D渲染. 默认开启
+
+-cmyk
+	转化rgb模式为cymk模式
+
+-f, -outformat <format>
+	指定输出格式
+
+-gray
+	转化所有颜色到灰度模式
+
+-h, -help
+	帮助文档
+
+-o, -outname <name>
+	指定输出文件名. 默认只取第一个'.'之前的文件名
+
+-r, -render <n>
+	在3D模式中, n pixel/bp像素渲染
+
+-rgb
+	转化cmyk模式为rgb模式. 默认为false
+
+-v, -verbose
+	详细输出信息
+
+-V, -View
+	显示输出内容
+
+-version
+	版本信息

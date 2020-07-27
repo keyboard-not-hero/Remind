@@ -1,0 +1,18 @@
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+
+// '//'为注释符, ';'为每条语句结束标识符
+
+// import settings; 导入settings包
+
+// outformat; 设置输出格式. 默认为eps
+
+// pdfviewer; 设置pdf格式预览器. 默认为adobe reader
+
+// config文件搜索路径, 按优先级序排列:
+// 1.当前工程目录
+// 2.环境变量ASYMPTOTE_DIR的值(UNIX使用:分隔目录, Windows使用;分隔目录)
+// 3.环境变量ASYMPTOTE_HOME的值或~/.asy目录
+// 4.system级目录(UNIX - /usr/local/share/asymptote, Windows - C:\Program Files\Asymptote)
