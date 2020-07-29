@@ -5,13 +5,15 @@
 \usepackage{amssymb}
 \usepackage{framed}
 \usepackage[framed]{ntheorem}
+\usepackage{bm}
 \theorembodyfont{\normalfont}
 \theoremstyle{nonumberplain}
 \newtheorem{definition}{定义}
 \theoremstyle{break}
 \newtheorem{theorem}{定理}
-\theoremstyle{nonumberbreak}
-\newframedtheorem{law}{$\mathbb{R}^n$中向量的代数性质}
+\theoremstyle{empty}
+\theoremseparator{\\}
+\newframedtheorem{law}{定律}
 \begin{document}
 线性方程:
 	\[ a_{1}x_{1}+a_{2}x_{2}+\cdots +a_{n}x_{n}=b \]
@@ -200,7 +202,7 @@ x_1 & - & 2x_2 & + &  x_3 & =0\\
 
 向量$\left[\begin{array}{r}x\\y\end{array}\right]$的几何含义: 由原点(0,0)指向点(x,y)的有向线段\\
 所有元素都是零的向量称为\textbf{零向量}, 用\textbf{0}表示(\textbf{0}中元素的个数可由上下文确定)\\
-\begin{law}
+\begin{law}[$\mathbb{R}^n$中向量的代数性质]\ \\
 对$\mathbb{R}^n$中一切向量$\mathbf{u}$,$\mathbf{v}$,$\mathbf{w}$以及标量$c$和$d$:
 \begin{equation*}
 \begin{array}{l@{}c@{}l l l@{}c@{}l l}
@@ -217,6 +219,100 @@ x_1 & - & 2x_2 & + &  x_3 & =0\\
 \begin{definition}
 若$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$是$\mathbb{R}^n$中的向量, 则$v_1$,$v_2$,$\cdots$,$v_p$的所有线性组合所成的组合用记号Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}表示, 称为\textbf{$\text{由}\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_p\text{所生成的}\mathbb{R}^n\text{的子集}$}. 也就是说, Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}是所有形如
 	\[c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p\]
-的向量的集合, 其中$v_1$,$v_2$,$\cdots$,$v_p$为标量.
+的向量的集合, 其中$v_1$,$v_2$,$\cdots$,$v_p$为标量.\\[2ex]
 \end{definition}
+\begin{definition}
+若$A$是$m\times n$矩阵, 它的各列为$\bm{a}_1$,$\cdots$,$\bm{a}_n$. 若$\bm{x}$是$\mathbb{R}^n$中的向量, 则\textbf{$A$与$\bm{x}$的积}(记为$A\bm{x}$)就是\textbf{$A$的各列以$\bm{x}$中对应元素为权的线性组合}, 即
+	\[A\bm{x}=[\bm{a}_1\ \bm{a}_2\ \cdots\ \bm{a}_n]\left[\begin{array}{c}x_1\\x_2\\\vdots\\x_n\end{array}\right]=x_1\bm{a}_1+x_2\bm{a}_2+\cdots+x_n\bm{a}_n\]
+注意$A\bm{x}$仅当$A$的列数等于$\bm{x}$中的元素个数时才有意义.\\[2ex]
+\end{definition}
+\begin{theorem}
+若$A$是$m\times n$矩阵, 它的各列为$\bm{a}_1$,$\cdots$,$\bm{a}_n$, 而$\bm{b}$属于$\mathbb{R}^n$, 则矩阵方程
+\[A\bm{x}=\bm{b}\]
+与向量方程
+\[x_1\bm{a}_1+x_2\bm{a}_2+\cdots+x_n\bm{a}_n=\bm{b}\]
+有相同的解集. 它又与增广矩阵为
+\[[\bm{a}_1\ \bm{a}_2\ \cdots\ \bm{a}_n\ \bm{b}]\]
+的线性方程组有相同的解集.\\[2ex]
+\end{theorem}
+\begin{theorem}
+设$A$是$m\times n$矩阵, 则下列命题是逻辑上等价的. 也就是说, 对某个$A$, 它们都成立或者都不成立.\\
+\begin{tabular}{l@{\,}l}
+a. & 对$\mathbb{R}^m$中每个$\bm{b}$, 方程$A\bm{x}=\bm{b}$有解.\\
+b. & $\mathbb{R}^m$中的每个$\bm{b}$都是$A$的列的一个线性组合.\\
+c. & $A$的各列生成$\mathbb{R}^m$.\\
+d. & $A$在每一行都有一个主元位置.\\[2ex]
+\end{tabular}
+\end{theorem}
+\begin{law}[计算$A\bm{x}$的行--向量规则]\ \\
+若乘积$A\bm{x}$有定义, 则$A\bm{x}$中的第$i$个元素是$A$的第$i$行元素与$\bm{x}$的相应元素乘积之和.
+\end{law}
+矩阵的主对角线上元素为1, 其他位置上元素为0, 这个矩阵称为\textbf{单位矩阵}, 并记为$I$.\\
+如果矩阵为$n\times n$单位矩阵, 记为$I_n$.\\[2ex]
+\begin{theorem}
+若$A$是$m\times n$矩阵, $\bm{u}$和$\bm{v}$是$\mathbb{R}^n$中向量, c是标量, 则\\
+\begin{tabular}{l@{\,}l}
+a. & $A(\bm{u}+\bm{v})=A\bm{u}+A\bm{v}$\\
+b. & $A(c\bm{u})=c(A\bm{u})$
+\end{tabular}
+\end{theorem}
+若线性方程组可写成
+\[A\bm{x}=\bm{0}\]
+的形式, 则称为\textbf{齐次线性方程组}. 其中, $A$是$m\times n$矩阵, $\bm{0}$是$\mathbb{R}^m$中的零向量.\\
+齐次线性方程组至少有一个解, 即$\bm{x}=\bm{0}$($\mathbb{R}^n$中的零向量), 这个解称为它的\textbf{平凡解}.\\
+如果有一个非零向量$\bm{x}$, 满足$A\bm{x}=\bm{0}$, 这个解称为它的\textbf{非平凡解}.\\[2ex]
+\begin{law}
+齐次方程$A\bm{x}=\bm{0}$有非平凡解当且仅当方程至少有一个自由变量.
+\end{law}
+$\bm{x}=s\bm{u}+t\bm{v}$为$A\bm{x}=\bm{0}$的\textbf{参数向量形式}. 其中, $s$,$t$为自由变量\\
+$\bm{x}=\bm{p}+t\bm{v}$为$A\bm{x}=\bm{b}$的\textbf{参数向量形式}. 其中, $t$为自由变量\\
+因此, $A\bm{x}=\bm{b}$的解集是一条通过$\bm{p}$而平行于$A\bm{x}=\bm{0}$的解集的直线. 也称为将$\bm{v}$沿着$\bm{p}$进行直线移动.\\[2ex]
+\begin{theorem}
+设方程$A\bm{x}=\bm{b}$对某个$\bm{b}$是相容的, $\bm{p}$为一个特解, 则$A\bm{x}=\bm{b}$的解集是所有形如$\bm{w}=\bm{p}+\bm{v}_h$的向量的集, 其中$\bm{v}_h$时齐次方程$A\bm{x}=\bm{b}$的任意一个解.
+\end{theorem}
+\begin{law}[把(相容方程组的)解集表示成参数向量形式]\ \\
+1.把增广矩阵简化为简化阶梯形.\\
+2.把每个基本变量用自由变量表示.\\
+3.把一般解$\bm{x}$表示成向量, 如果有自由变量, 其元素依赖于自由变量.\\
+4.把$\bm{x}$分解为向量(元素为常数)的线性组合, 用自由变量作为参数.
+\end{law}
+线性方程组的应用:\\
+1.经济学 - 部分的收支平衡\\
+2.化学式 - 等号两边原子守恒\\
+3.网络流 - 节点的进/出流量恒等\\
+\begin{definition}
+$\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线性无关}的, 若向量方程
+\[x_1\bm{v}_1+x_2\bm{v}_2+\cdots+x_p\bm{v}_p=\bm{0}\]
+仅由平凡解. 向量组(集)\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线性相关}的, 若存在不全为零的权$c_1$,$\cdots$,$c_p$, 使
+\[c_1\bm{v}_1+c_2\bm{v}_2+\cdots+c_p\bm{v}_p=\bm{0}\]
+\end{definition}
+\begin{law}
+矩阵$A$的各列线性无关, 当且仅当方程$A\bm{x}=\bm{0}$仅有平凡解.
+\end{law}
+\begin{law}
+两个向量的集合\{$\bm{v}_1$,$\bm{v}_2$\}线性相关, 当且仅当其中一个向量是另一个向量的倍数. 这个集合线性无关, 当且仅当其中任一个向量都不是另一个向量的倍数.
+\end{law}\ \\
+\begin{theorem}[线性相关集的特征]
+两个或更多个向量的集合$S=\{\bm{v}_1,\cdots,\bm{v}_p\}$线性相关, 当且仅当S中至少有一个向量是其他向量的线性组合. 事实上, 若S线性相关, 且$\bm{v}_1\neq\bm{0}$, 则某个$\bm{v}_j$($j>1$)是它前面向量$\bm{v}_1$,$\cdots$,$\bm{v}_{j-1}$的线性组合.\\[2ex]
+\end{theorem}
+\begin{theorem}
+若一个向量组的向量个数超过每个向量的元素个数, 那么这个向量组线性相关. 就是说, $\mathbb{R}^n$中任意向量组\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}当$p>n$时线性相关.\\[2ex]
+\end{theorem}
+\begin{theorem}
+若$\mathbb{R}^n$中向量组$S=\{\bm{v}_1,\cdots,\bm{v}_p\}$包含零向量, 则它线性相关.
+\end{theorem}
+由$\bm{x}$到$A\bm{x}$的对应是由一个向量集到另一个向量集的函数\\
+\begin{definition}
+变换(或映射)$T$称为\textbf{线性}的, 若\\
+\begin{tabular}{l@{}c@{}l@{}l}
+( & i & ) & 对$T$的定义域中一切$\bm{u}$,$\bm{v}$,$T(\bm{u}+\bm{v})=T(\bm{u})+T(\bm{v})$.\\
+( & ii & ) & 对$T$的定义域中的一切$\bm{u}$和数$c$, $T(c\bm{u})=cT(\bm{u})$.
+\end{tabular}\ \\
+\end{definition}
+\begin{law}
+若T是线性变换, 则
+\[T(\bm{0})=\bm{0}\]
+且对$T$的定义域中一切向量$\bm{u}$和$\bm{v}$以及数$c$和$d$, 有:
+\[T(c\bm{u}+d\bm{v})=cT(\bm{u})+dT(\bm{v})\]
+\end{law}
 \end{document}

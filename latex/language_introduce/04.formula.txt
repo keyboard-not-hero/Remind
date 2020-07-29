@@ -130,13 +130,15 @@
 六、Demo(示例)06 - math font style
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{bm}
 \begin{document}
 \begin{gather}
     \mathit{ABCDabcd1234}\\
     \mathbf{ABCDabcd1234}\\
     \mathrm{ABCDabcd1234}\\
     \mathsf{ABCDabcd1234}\\
-    \mathtt{ABCDabcd1234}
+    \mathtt{ABCDabcd1234}\\
+	\bm{ABCDabcd1234}
 \end{gather}
 \end{document}
 
@@ -144,6 +146,8 @@
 1.\begin{gather} ... \end{gather}用于含多行公式的行间公式环境, 包含在amsmath宏包中
 
 2.\mathit为斜体公式, \mathbf为粗体公式, \mathrm为roman体, \mathsf为无衬线体, \mathtt为打印机字体. 详情参考symbol_summary
+
+3.\bm{}可使大小写字母成为斜体并加粗. 包含在bm宏包中. math字体不可嵌套
 
 
 
@@ -321,13 +325,16 @@
 	marginbreak - 序号置于左边margin处, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签]\Enter <正文> 
 	nonumberplain - 与plain类似, 但没有序号. 如: <定理标签> [副标签] <正文>
 	nonumberbreak - 与break类似, 但没有序号. 如: <定理标签> [副标签]\Enter <正文> 
-	empty - 没有标签和序号, 可以有副标签
+	empty - 没有标签和序号, 可以有副标签(此时副标签没有括号)
 	
 4.\theoremheaderfont{header_font}设置头部字体格式. 包含在ntheorem宏包中
 
 5.\theorembodyfont{body_font}设置正文字体格式. 包含在ntheorem宏包中
 
-6.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '.包含在ntheorem宏包中
+6.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '. 包含在ntheorem宏包中. 不支持empty的theoremstyle, 使用如下格式:
+	\begin{env_name}[aux_label]\ \\
+		<content>
+	\end{env_name}
 
 7.\theorempreskip{length}和\theorempostskip{length}分别用于指定定理环境与之前和之后正文的垂直距离. 包含在ntheorem宏包中
 
