@@ -37,11 +37,17 @@ latexmk [options] [files]
 -dvi-
 	不生成dvi格式文件, 选项可被覆盖
 
+-lualatex
+	使用lualatex编译. 默认生成pdf文件, 并关闭生成dvi和postscript文件
+
 -pdf
-	指定目标文件为pdf格式. 默认使用pdflatex编译器. 步骤: .tex -> .pdf
+	指定目标文件为pdf格式. 默认使用pdflatex编译器, 不生成dvi和postscript文件
+
+-pdflatex
+	使用pdflatex编译. 默认生成pdf文件, 并关闭生成dvi和postscript文件
 
 -ps
-	指定目标文件为ps格式. 步骤: .tex -> .dvi -> .ps
+	指定目标文件为ps格式
 
 -ps-
 	不生成ps格式文件
@@ -59,6 +65,9 @@ latexmk [options] [files]
 -pvc
 	类似于-pv, 但修改源文件并保存到disk时, 预览效果实时更新
 
+-r <rcfile>
+	指定读取配置文件
+
 -recorder
 	利用latex/pdflatex生成.fls文件, 方便下次编译时进行校对. 
 	fls文件包含输入输出文件列表. 
@@ -68,13 +77,10 @@ latexmk [options] [files]
 	不生成.fls文件
 
 -xelatex
-	使用xelatex编译, 生成pdf文件
+	使用xelatex编译. 默认生成pdf文件(含xdv中间文件). 配合-no-pdf选项只生成xdv格式文件
 
 
 **files - 指定.tex文件, 后缀可省略; 当未指定该参数时，默认为当前工作目录的所有.tex文件
-
-配置文件: ~/.latexmkrc
-
 
 例子:
 使用pdflatex编译器
@@ -82,3 +88,61 @@ latexmk -pdf -pv <tex_file>
 
 使用xelatex编译器
 latexmk -xelatex -pv <tex_file>
+
+
+
+配置文件查找顺序(优先级从低到高):
+(1)sys级配置文件
+Linux(按查找顺序):
+/opt/local/share/latexmk/LatexMk
+/usr/local/share/latexmk/LatexMk
+/usr/local/lib/latexmk/LatexMk
+Windows:
+C:\latexmk\LatexMK
+
+(2)user级配置文件
+traditional: ~/.latexmkrc
+modern: ~/.config/latexmk/latexmkrc
+
+(3)current project配置文件
+latexmkrc或.latexmkrc
+
+(4)latexmk -r指定的配置文件
+
+** RC文件使用perl语言指令
+** '#'代表注释行
+** perl变量简短入门:
+** $bibtex = 'bibtex %O %B'; #用于给变量赋予字符串
+** $preview_mode = 1; #用于给变量赋予整数
+** @default_files = ('paper', 'paper1'); #用于给变量赋予数组
+** push @default_files, 'paper2'; #用于给数组变量append一个元素
+** $latex = 'elatex --shell-escape %O %S'; #%O,%S表示占位符, 占位符列表如下:
+	%A - tex源文件的basename
+	%B - 当前指令使用源文件的basename. 如: demo.dvi -> demo.ps, basename为demo
+	%D - 当前指令目标文件名
+	%O - options参数
+	%R - 主tex文件的basename
+	%S - 当前指令源文件名
+	%T - 主tex文件名
+	%Y - AUX文件所在目录. 与$aux_dir组合, 即$aux_dit[/]{%Y}, 当$aux_dir为空, 默认为$out_dit值
+	%Z - 结果文件所在目录. 与$out_dir组合, 即$out_dit[/]{%Z}
+** '%%'为'%'字符原样输出
+	
+重要配置参数:
+$clean_ext = '';
+	指定-c和-C参数额外删除指定格式的文件, 不同格式之间使用空格分隔. 如:
+	$clean_ext = '%R.thm %R.xdv';
+
+$clean_full_ext = '';
+	指定-C参数额外删除指定格式的文件. 如:
+	$clean_full_ext = '%R.thm %R.xdv';
+
+$fdb_ext = 'fdb_latexmk';
+	包含编译信息及生成指定类型文件列表的数据库, 其文件类型
+
+@generated_exts = ('aux', 'bbl', 'idx', 'inf', 'lof', 'lot', 'out', 'toc', $fdb_ext);
+	1.指定-c和-C需要额外删除的指定格式文件;
+	2.重新编译时, 需要重新生成的指定格式文件. 如:
+	push @generated_exts, "end";
+
+** -c由$clean_ext和$generated_exts共同决定

@@ -314,5 +314,11 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 \[T(\bm{0})=\bm{0}\]
 且对$T$的定义域中一切向量$\bm{u}$和$\bm{v}$以及数$c$和$d$, 有:
 \[T(c\bm{u}+d\bm{v})=cT(\bm{u})+dT(\bm{v})\]
-\end{law}
+\end{law}\ \\
+\begin{theorem}
+设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$为线性变换, 则存在唯一的矩阵$A$, 使得对$\mathbb{R}^n$中一切$\bm{x}$, 有
+\[T(\bm{x})=A\bm{x}\]
+事实上, $A$是$m\times n$矩阵, 它的第$j$列是向量$T(\bm{e}_j)$, 其中$\bm{e}_j$是$\mathbb{R}^n$中单位矩阵$\bm{I}_n$的第$j$列:
+\[A=[T(\bm{e}_1)\ \cdots\ T(\bm{e}_n)]\]
+\end{theorem}
 \end{document}
