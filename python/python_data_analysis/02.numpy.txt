@@ -210,18 +210,15 @@ eig(a)
 	返回矩阵a的特征值w和特征向量v的tuple。公式：AV=WV
 
 inv(a)
-	返回a的逆矩阵，a必须为方阵。公式：ab=ba=np.eye(a.shape[0])
+	返回a的逆矩阵，a必须为NxN矩阵。公式：ab=ba=np.eye(a.shape[0])
+
+matrix_power(a,n)
+	返回n个矩阵a相乘的结果
 
 solve(a, b)
 	求解线性方程组. 公式ax=b
 	a - array或sequence类型, 系数矩阵
 	b - array或sequence类型, 结果向量
-
-类：
-numpy.poly1d
-方法：
-detiv(m=1)：返回导数多项式poly1d对象。m代表求导次数
-integ(m=1)：返回反导多项式poly1d对象。m代表反导次数
 
 module
 numpy.random

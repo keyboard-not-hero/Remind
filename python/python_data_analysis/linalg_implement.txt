@@ -1,0 +1,23 @@
+1.LU分解实现
+## 暂不适用于U的主元位置包含0的矩阵, 待后续优化
+import numpy as np
+import copy
+A=np.array([[3,-6,3],[6,-7,2],[-1,7,0]])
+m=len(A)
+n=len(A[0])
+L=np.zeros((m,m))
+U=copy.deepcopy(A)
+# i为对角序列
+for i in range(m):
+    if A[i][i] != 0:
+        # j为矩阵的行
+        for j in range(i,m):
+            if j == i:
+                L[j][i]=1
+            else:
+                # L元素赋值
+                L[j][i]=U[j][i]/U[i][i]
+                # A到U的化简
+                if U[j][i] != 0:
+                    U[j]=U[j]+(-1)*L[j][i]*U[i]
+

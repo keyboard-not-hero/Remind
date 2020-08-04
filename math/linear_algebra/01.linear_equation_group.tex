@@ -12,7 +12,6 @@
 \theoremstyle{break}
 \newtheorem{theorem}{定理}
 \theoremstyle{empty}
-\theoremseparator{\\}
 \newframedtheorem{law}{定律}
 \begin{document}
 线性方程:
@@ -319,6 +318,30 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$为线性变换, 则存在唯一的矩阵$A$, 使得对$\mathbb{R}^n$中一切$\bm{x}$, 有
 \[T(\bm{x})=A\bm{x}\]
 事实上, $A$是$m\times n$矩阵, 它的第$j$列是向量$T(\bm{e}_j)$, 其中$\bm{e}_j$是$\mathbb{R}^n$中单位矩阵$\bm{I}_n$的第$j$列:
-\[A=[T(\bm{e}_1)\ \cdots\ T(\bm{e}_n)]\]
+\[A=[T(\bm{e}_1)\ \cdots\ T(\bm{e}_n)]\]\\
 \end{theorem}
+\begin{definition}
+映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为到$\mathbb{R}^m$上的映射, 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至少一个$\bm{x}$的像.(也称为\textbf{满射}.)\\
+\end{definition}
+\begin{definition}
+映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为\textbf{一对一映射}(或1:1), 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至多一个$\bm{x}$的像.(也称为\text{单射}.)\\[2ex]
+\end{definition}
+\begin{theorem}
+设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$为线性变换, 则$T$是一对一的当且仅当方程$A\bm{x}=\bm{0}$仅有平凡解.\\[2ex]
+\end{theorem}
+\begin{theorem}
+设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$是线性变换, 设$A$为$T$的标准矩阵, 则\\
+\begin{tabular}{l@{\ }l}
+a. & $T$把$\mathbb{R}^n$映上到$\mathbb{R}^m$, 当且仅当$A$的列生成$\mathbb{R}^m$.\\
+b. & $T$是一对一的, 当且仅当$A$的列线性无关.
+\end{tabular}
+\end{theorem}
+\begin{law}[基尔霍夫电压定律]\ \\
+围绕一条回路同一方向的电压降$RI$的代数和等于围绕该回路的同一方向电动势的代数和.
+\end{law}
+\begin{law}
+如果有矩阵$A$使$\bm{x}_1=A\bm{x}_0$,$\bm{x}_2=A\bm{x}_1$, 一般地,
+\[\bm{x}_{k+1}=A\bm{x}_k\text{,\ }k=0,1,2,\cdots\]
+则称为\textbf{线性差分方程}(或\textbf{递归关系}).
+\end{law}
 \end{document}

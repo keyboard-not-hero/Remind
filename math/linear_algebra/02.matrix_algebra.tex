@@ -1,0 +1,216 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{parskip}
+\usepackage{amssymb}
+\usepackage{framed}
+\usepackage[framed]{ntheorem}
+\theorembodyfont{\normalfont}
+\theorempreskip{2ex}
+\theorempostskip{2ex}
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}
+\theoremstyle{nonumberplain}
+\newtheorem{definition}{定义}
+\theoremstyle{empty}
+\newframedtheorem{law}{定律}
+\begin{document}
+$m\times n$矩阵$A=[a_{ij}]$的\textbf{对角线元素}是$a_{11}$,$a_{22}$,$a_{33}$,$\cdots$, 它们组成$A$的\textbf{主对角线}.\\
+\textbf{对角矩阵}是一个方阵, 它的非对角线元素全是0. 例如$n\times n$单位矩阵$\bm{I}_n$.\\
+元素全是0的$m\times n$矩阵称为\textbf{零矩阵}, 用$\bm{0}$表示.\\
+若两个矩阵有相同的维数(即有相同的行数和列数), 而且对应元素相同, 则称该两个矩阵\textbf{相等}\\
+若$r$是标量而$A$是矩阵, 则\textbf{标量乘法}$rA$是一个矩阵, 它的每一列是$A$的对应列的$r$倍.\\
+\begin{theorem}
+设$A$,$B$,$C$是相同维数的矩阵, $r$与$s$为数, 则有\\
+\begin{tabular}{l@{\ }l@{\hspace{5em}}l@{\ }l}
+a. & $A+B=B+A$ & b. & $(A+B)+C=A+(B+C)$\\
+c. & $A+0=A$ & d. & $r(A+B)=rA+rB$\\
+e. & $(r+s)A=rA+sA$ & f. & $r(sA)=(rs)A$
+\end{tabular}
+\end{theorem}\ \\
+\begin{definition}
+若$A$是$m\times n$矩阵, $B$是$n\times p$矩阵, $B$的列是$\bm{b}_1$,$\cdots$,$\bm{b}_p$, 则乘积$AB$是$m\times p$矩阵, 它的各列是$A\bm{b}_1$,$\cdots$,$A\bm{b}_p$, 即
+\[AB=A[\bm{b}_1\ \bm{b}_2\ \cdots\ \bm{b}_p]=[A\bm{b}_1\ A\bm{b}_2\ \cdots\ A\bm{b}_p]\]
+\end{definition}
+\begin{law}
+$AB$的每一列都是$A$的各列的线性组合, 以$B$的对应列的元素为权.
+\end{law}
+\begin{law}[计算$AB$的行列法则]\ \\
+若乘积$AB$有定义, 则$AB$的第$i$行第$j$列的元素是$A$的第$i$行与$B$的第$j$列对应元素乘积之和. 若($AB$)${}_{ij}$表示$AB$的($i$,$j$)元素, $A$为$m\times n$矩阵, 则
+\[(AB)_{ij}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{in}b_{nj}\]
+\end{law}\ \\
+\begin{theorem}
+设$A$为$m\times n$矩阵, $B$和$C$的维数使下列各式的乘积有意义.\\
+\begin{tabular}{l@{\ }l l}
+a. & $A(BC)=(AB)C$ & (乘法结合律)\\
+b. & $A(B+C)=AB+AC$ & (乘法左分配律)\\
+c. & $(B+C)A=BA+CA$ & (乘法右分配律)\\
+d. & $r(AB)=(rA)B=A(rB)$, r为任意数 &\\
+e. & $\bm{I}_mA=A=A\bm{I}_m$ & (矩阵乘法的恒等式)
+\end{tabular}
+\end{theorem}
+乘积$AB$的因子关系为: $A$被$B$\textbf{右乘}, 或$B$被$A$\textbf{左乘}\\
+若$AB$=$BA$, 我们称$A$和$B$彼此\textbf{可交换}\\[2ex]
+\textbf{警告}\\
+1.一般情况下, $AB\neq BA$.\\
+2.消去律对矩阵乘法不成立, 即若$AB=AC$, 一般情况下, $B=C$并不成立.\\
+3.若乘积$AB$是零矩阵, 一般情况下, 不能断定A=0或B=0.\\[2ex]
+给定$m\times n$矩阵, 则$A$的\textbf{转置}是一个$n\times m$矩阵, 用$A^T$表示, 它的列是由$A$的对应行构成的.\\[2ex]
+\begin{theorem}
+设$A$与$B$表示矩阵, 其维数使下列和与积有定义, 则\\
+\begin{tabular}{l@{\ }l}
+a. & $(A^T)^T=A$.\\
+b. & $(A+B)^T=A^T+B^T$.\\
+c. & 对任意数$r$, $(rA)^T=rA^T$.\\
+d. & $(AB)^T=B^TA^T$.
+\end{tabular}
+\end{theorem}\ \\
+\begin{law}
+若干个矩阵的乘积的转置等于它们的转置的乘积, 但相乘的顺序相反.
+\end{law}
+$A$为$n\times n$矩阵, 若存在一个$n\times n$矩阵$C$, 使得
+\[CA=\bm{I}_n\qquad\text{且}AC=\bm{I}_n\]
+则称$A$\textbf{可逆}, 并且$C$是$A$的\textbf{逆}.\\[2ex]
+若$A$可逆, 它的逆是唯一的, 我们将它记为$A^{-1}$, 则
+\[A_{-1}A=I\qquad\text{且}AA^{-1}=I\]
+不可逆矩阵也称为\textbf{奇异矩阵}.\\
+可逆矩阵也称为\textbf{非奇异矩阵}.\\
+\begin{theorem}
+设$A=\left[\begin{array}{r r}3 & 4\\5 & 6\end{array}\right]$. 若$ad-bc\neq 0$, 则$A$可逆且
+\[A^{-1}=\frac{1}{ad-bc}\left[\begin{array}{l l}d & -b\\-c & a\end{array}\right]\]
+若$ad-bc=0$, 则$A$不可逆.
+\end{theorem}
+数$ad-bc$称为$A$的\textbf{行列式}, 记为
+\[\det A=ad-bc\]
+\begin{theorem}
+若$A$是可逆$n\times n$矩阵, 则对每一$\mathbb{R}^n$中的$\bm{b}$, 方程$A\bm{x}=\bm{b}$有唯一解$\bm{x}=A^{-1}\bm{b}$.
+\end{theorem}\ \\
+\begin{law}[胡克定律]\ \\
+公式如下
+\[\bm{y}=D\bm{f}\]
+其中$D$为\textbf{弹性矩阵}, 它的逆称为\textbf{刚性矩阵}, $\bm{f}$表示它在各个点受的力, $\bm{y}$表示各个点的形变量.
+\end{law}
+\begin{theorem}\ \\
+a.若$A$是可逆矩阵, 则$A^{-1}$也可逆而且$(A^{-1})^{-1}=A$.\\
+b.若$A$和$B$都是$n\times n$可逆矩阵, 则$AB$也可逆, 且其逆是$A$和$B$的逆矩阵按相反顺序的乘积, 即
+\[(AB)^{-1}=B^{-1}A^{-1}\]
+c.若$A$可逆, 则$A^T$也可逆, 且其逆是$A^{-1}$的转置, 即$(A^T)^{-1}=(A^{-1})^T$.
+\end{theorem}
+\begin{law}
+若干个$n\times n$可逆矩阵的积也是可逆的, 其逆等于这些矩阵的逆按相反顺序的乘积.
+\end{law}
+把单位矩阵进行一次初等行变换, 就得到\textbf{初等矩阵}.\\
+\begin{law}
+若对$m\times n$矩阵$A$进行某种初等行变换, 所得矩阵可写成$EA$, 其中$E$是$m\times m$矩阵, 是由$I_m$进行同一行变换所得.\\
+\end{law}
+\begin{law}
+每个初等矩阵$E$是可逆的, $E$的逆是一个同类型的初等矩阵, 它把$E$变回$I$.
+\end{law}\ \\
+\begin{theorem}
+$n\times n$矩阵$A$是可逆的, 当且仅当$A$行等价于$I_n$, 这时, 把$A$化简为$I_m$的一系列初等行变化同时把$I_n$变成$A^{-1}$.
+\end{theorem}
+\begin{law}[求$A^{-1}$的算法]\ \\
+把增广矩阵$[A\ I]$进行行化简. 若$A$行等价于$I$, 则$[A\ I]$行等价于$[I\ A^{-1}]$, 否则$A$没有逆.
+\end{law}
+\begin{theorem}[可逆矩阵定理]
+设$A$为$n\times n$矩阵, 则下列命题是等价的, 即对某一特定的$A$, 它们同时为真或同时为假.\\
+\begin{tabular}{l@{\ }l}
+a. & $A$是可逆矩阵.\\
+b. & $A$行等价于$n\times n$单位矩阵.\\
+c. & $A$有$n$个主元位置.\\
+d. & 方程$A\bm{x}=\bm{0}$仅有平凡解.\\
+e. & $A$的各列线性无关.\\
+f. & 线性变换$\bm{x}\mapsto A\bm{x}$是一对一的.\\
+g. & 对$\mathbb{R}^n$中任意$\bm{b}$, 方程$A\bm{x}=\bm{b}$至少有一个解.\\
+h. & $A$的各列生成$\mathbb{R}^n$,\\
+i. & 线性变换$\bm{x}\mapsto A\bm{x}$把$\mathbb{R}^n$映上到$\mathbb{R}^n$.\\
+j. & 存在$n\times n$矩阵$C$使$CA=I$.\\
+k. & 存在$n\times n$矩阵$D$使$AD=I$.\\
+l. & $A^T$是可逆矩阵.
+\end{tabular}
+\end{theorem}
+\begin{law}
+设$A$和$B$为方阵, 若$AB=I$, 则$A$和$B$都是可逆的, 且$B=A^{-1}$, $A=B^{-1}$.
+\end{law}
+\begin{theorem}
+设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^n$为线性变换, $A$为$T$的标准矩阵. 则$T$可逆当且仅当$A$是可逆矩阵.
+\end{theorem}
+形如
+\[A=\left[
+\begin{array}{r r r|r r|r}
+3 & 0 & -1 & 5 & 9 & -2\\
+-5 & 2 & 4 & 0 & -3 & 1\\\hline
+-8 & -6 & 3 & 1 & 7 & -4
+\end{array}
+\right]\]
+为矩阵$A$的$2\times 3$\textbf{分块矩阵}, 也可表示为
+\[A=\left[
+\begin{array}{l l l}
+A_{11} & A_{12} & A_{13}\\
+A_{21} & A_{22} & A_{23}
+\end{array}
+\right]\]
+设$A$为$m\times n$矩阵, $B$为$n\times p$矩阵, 当$A$的列的分法与$B$的行的分法一致时, 可计算$AB$. 如下
+\[A=\left[
+\begin{array}{r r r|r r}
+2 & -3 & 1 & 0 & -4\\
+1 & 5 & -2 & 3 & -1\\\hline
+0 & -4 & -2 & 7 & -1
+\end{array}
+\right]=\left[
+\begin{array}{l l}
+A_{11} & A_{12}\\
+A_{21} & A_{22}
+\end{array}
+\right]\text{,}
+B=\left[
+\begin{array}{r r}
+6 & 4\\
+-2 & 1\\
+-3 & 7\\\hline
+-1 & 3\\
+5 & 2
+\end{array}
+\right]=\left[
+\begin{array}{l}
+B_1\\
+B_2
+\end{array}
+\right]\]
+\[AB=\left[
+\begin{array}{l l}
+A_{11} & A_{12}\\
+A_{21} & A_{22}
+\end{array}
+\right]\left[
+\begin{array}{l}
+B_1\\
+B_2
+\end{array}
+\right]=\left[
+\begin{array}{l}
+A_{11}B_1+A_{12}B_2\\
+A_{21}B_1+A_{22}B_2
+\end{array}
+\right]=\left[
+\begin{array}{r r}
+-5 & 4\\
+-6 & 2\\\hline
+2 & 1
+\end{array}
+\right]\]
+\begin{theorem}[$AB$的列行展开]\ \\
+若$A$是$m\times n$矩阵, $B$是$n\times p$矩阵, 则
+\[\begin{array}{l@{}l}
+AB & =[col_1(A)\ col_2(A)\ \cdots\ col_n(A)]\left[
+\begin{array}{c}
+row_1(B)\\
+row_2(B)\\
+\vdots\\
+row_n(B)
+\end{array}
+\right]\\
+& =col_1(A)row_1(B)+\cdots+col_n(A)row_n(B)
+\end{array}\]
+\end{theorem}
+\end{document}
