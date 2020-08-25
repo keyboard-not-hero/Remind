@@ -1,4 +1,4 @@
-1.替换阿里云源
+1.替换Ubuntu18.04的阿里云源
 steven@~$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
 steven@~$ sudo vi /etc/apt/sources.list
@@ -72,10 +72,10 @@ steven@~$ rfkill list all
 
 steven@~$ lsmod|grep ideapad
 
-steven@~$ modprobe -r ideapad_laptop
+steven@~$ sudo modprobe -r ideapad_laptop
 
 永久关闭
-steven@~$ vi /etc/modprobe.d/blacklist.conf
+steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
 blacklist ideapad_laptop
 
 

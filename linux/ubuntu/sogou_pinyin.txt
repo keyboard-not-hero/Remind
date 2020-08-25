@@ -1,5 +1,4 @@
 一、安装搜狗输入法
-Ubuntu 20.04之前的方案
 1.移除ibus
 sudo apt-get purge ibus
 
@@ -10,8 +9,8 @@ sudo apt-get install fcitx-pinyin fcitx-config-gtk
 老版本：im-switch -s fcitx
 新版本：im-config -n fcitx
 
-4.下载并安装搜狗拼音
-下载地址：http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb?st=hwBYCLwM0juEEmjKBaLIiQ&e=1590304938&fn=sogoupinyin_2.3.1.0112_amd64.deb
+4.下载并安装搜狗拼音(Ubuntu20.04 LTS使用特殊版本)
+下载地址：https://pinyin.sogou.com/linux/?r=pinyin
 sudo dpkg -i sogoupinyin_<version>.deb
 
 5.解决依赖
@@ -27,32 +26,6 @@ fcitx-config-gtk3
 
 9.输入法皮肤透明问题(X11支持问题)
 fcitx配置 >> 附加组件 >> 勾选高级 >> 勾选"X11支持"
-
-Ubuntu 20.04及之后的方案
-1.移除ibus
-sudo apt-get purge ibus
-
-2.安装fcitx
-sudo apt-get install fcitx-pinyin fcitx-libs fcitx-config-gtk
-
-3.切换输入法框架：
-老版本：im-switch -s fcitx
-新版本：im-config -n fcitx
-
-4.下载并安装搜狗拼音
-gitee地址：https://gitee.com/laomocode/fcitx-sogouimebs
-sudo dpkg -i sogouimebs_<version>.deb
-
-5.解决依赖
-sudo apt-get -f install
-
-6.继续安装
-sudo dpkg -i sogouimebs_<version>.deb
-
-7.重启
-
-8.打开fcitx配置页面
-fcitx-config-gtk3
 
 
 二、配置事项
