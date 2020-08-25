@@ -44,7 +44,7 @@
 \end{document}
 
 内容讲解
-1.\makebox[width][hor_align]{content}用于限定内容为LR mode, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
+1.\makebox[width][hor_align]{content}用于限定内容为LR mode, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r, 其中, s代表弹性伸展, 单词之间需要留空, 汉字不需要, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
 
 2.\mbox{content}为makebox的简写方式, 但不能携带可选参数
 
@@ -64,13 +64,56 @@
 \end{document}
 
 内容讲解
-1.\framebox[width][hor_align]{content}用于限定内容为LR mode, 并且在盒子周围增加线条边框, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
+1.\framebox[width][hor_align]{content}用于限定内容为LR mode, 并且在盒子周围增加线条边框, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r/s, 其中, s代表弹性伸展, 单词之间需要留空, 汉字不需要, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
 
-2.\fbox{content}为framebox的简写方式, 但不能携带可选参数
+2.fboxrule设置边框线宽度
+
+3.fboxsep设置边框线距离文字的距离
+
+4.\fbox{content}为framebox的简写方式, 但不能携带可选参数
 
 
 
-五、Demo(示例)05 - rule
+五、Demo(示例)05 - shadowbox
+\documentclass{article}
+\usepackage{fancybox}
+\begin{document}
+\shadowbox{I love you}
+\end{document}
+
+内容讲解
+1.\shadowbox{}指定一个阴影边框. 包含在fancybox宏包中
+
+2.\fboxrule指定边框的宽度
+
+3.\fboxsep指定边框和文字内容的距离
+
+4.\shadowsize指定阴影宽度
+
+
+
+六、Demo(示例)06 - colorbox
+\documentclass{article}
+\usepackage{xcolor}
+\begin{document}
+\definecolor{lightgray}{rgb}{0.7,0.7,0.7}
+\colorbox{lightgray}{I love you}
+\end{document}
+
+内容讲解
+1.\definecolor{name}{model}{content}用于自定义颜色, name代表自定义颜色名称; model为颜色模式, 列表: gray/rgb/cymk; content为定义颜色的参数. 包含在xcolor宏包中
+
+2.\color{name}{content}指定文字颜色. 包含在xcolor宏包中
+
+3.\colorbox{name}{content}用于指定背景色的盒子. 包含在xcolor宏包中
+
+4.\fcolorbox{frame_color}{bg_color}{content}用于指定边框和背景色的边框盒子. 包含在xcolor宏包中
+
+5.\fboxsep指定背景边缘距离内容的宽度
+
+
+
+七、Demo(示例)07 - rule
 \documentclass{article}
 \begin{document}
     this is demo\rule{1mm}{3mm} text
@@ -81,7 +124,7 @@
 
 
 
-六、Demo(示例)06 - raisebox
+八、Demo(示例)08 - raisebox
 \documentclass{article}
 \begin{document}
     \raisebox{-0.6ex}{this} is \raisebox{0.6ex}{demo} text
@@ -92,7 +135,7 @@
 
 
 
-七、Demo(示例)07 - savebox
+九、Demo(示例)09 - savebox
 \documentclass{article}
 \begin{document}
     \newsavebox{\tony}

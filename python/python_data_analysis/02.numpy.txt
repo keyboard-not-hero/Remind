@@ -24,6 +24,9 @@ asarray(a, dtype=None, order=None)
 linspace(start,stop,num,endpoint=True)
 	在start和stop平均分成num个数，endpoint决定stop是否闭合。返回一个ndarray对象
 
+dot(a, b[, out])
+	矩阵a与b的点乘运算结果，返回ndarray对象
+
 ones(shape)
 	创建全1数组。返回一个ndarray对象
 
@@ -159,9 +162,6 @@ resize(tuple)
 copy()
 	返回复制的ndarray
 
-dot(a, b[, out])
-	矩阵a与b的点乘运算结果，返回ndarray对象
-
 运算符
 	ndarray执行元素级运算，矩阵运算使用@符号或者dot函数
 
@@ -220,10 +220,8 @@ solve(a, b)
 	a - array或sequence类型, 系数矩阵
 	b - array或sequence类型, 结果向量
 
-module
-numpy.random
-
-function
+numpy.random module
+function:
 seed(int)
 	配置伪随机数种子
 

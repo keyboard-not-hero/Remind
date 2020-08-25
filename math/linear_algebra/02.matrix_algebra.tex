@@ -3,6 +3,8 @@
 \usepackage{bm}
 \usepackage{parskip}
 \usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage{framed}
 \usepackage[framed]{ntheorem}
 \theorembodyfont{\normalfont}
@@ -14,6 +16,9 @@
 \newtheorem{definition}{定义}
 \theoremstyle{empty}
 \newframedtheorem{law}{定律}
+\definecolor{lightgray}{gray}{0.7}
+\definecolor{gray}{gray}{0.5}
+\definecolor{white}{gray}{1}
 \begin{document}
 $m\times n$矩阵$A=[a_{ij}]$的\textbf{对角线元素}是$a_{11}$,$a_{22}$,$a_{33}$,$\cdots$, 它们组成$A$的\textbf{主对角线}.\\
 \textbf{对角矩阵}是一个方阵, 它的非对角线元素全是0. 例如$n\times n$单位矩阵$\bm{I}_n$.\\
@@ -213,4 +218,88 @@ row_n(B)
 & =col_1(A)row_1(B)+\cdots+col_n(A)row_n(B)
 \end{array}\]
 \end{theorem}
+设$A$是$m\times n$矩阵, 它可以行化简为阶梯形(化简步骤不包含对换变换), 则$A$可写成$A=LU$. 其中, $L$是$m\times m$下三角矩阵, 主对角线元素全是1; $U$是$A$的一个$m\times n$阶梯形矩阵.
+\begin{law}[$LU$分解的算法]\ \\
+1.如果可能的话, 用一系列的行倍加变换把$A$化为阶梯形$U$.\\
+2.填充$L$的元素使相同的行变换把$L$变为$I$.
+\end{law}
+$LU$分解图解:\\
+\[\begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c@{}c@{}c}
+A= & \left[\hspace{-1ex}\begin{array}{>{\columncolor{lightgray}[0pt]}r r r r}
+\cellcolor{gray}2 & 4 & 5 & -2\\
+-4 & -5 & -8 & 1\\
+2 & -5 & 1 & 8\\
+-6 & 0 & -3 & 1
+\end{array}\hspace{-1ex}\right] & \Rightarrow & \left[\!\begin{array}{r >{\columncolor{white}[0pt]}r r r}
+2 & 4 & 5 & -2\\
+0 & \cellcolor{gray}3 & 2 & -3\\
+0 & \cellcolor{lightgray}-9 & -4 & 10\\
+0 & \cellcolor{lightgray}12 & 12 & -5
+\end{array}\hspace{-1ex}\right] & \Rightarrow & \left[\!\begin{array}{r r >{\columncolor{white}[6pt][0pt]}r r}
+2 & 4 & 5 & -2\\
+0 & 3 & 2 & -3\\
+0 & 0 & \cellcolor{gray}2 & 1\\
+0 & 0 & \cellcolor{lightgray}4 & 7
+\end{array}\hspace{-1ex}\right] & \Rightarrow & \left[\!\begin{array}{r r r >{\columncolor{white}[0pt]}r}
+2 & 4 & 5 & -2\\
+0 & 3 & 2 & -3\\
+0 & 0 & 2 & 1\\
+0 & 0 & 0 & \cellcolor{gray}5
+\end{array}\hspace{-1ex}\right] & =U\\
+& \downarrow & & \downarrow & & \downarrow & & \downarrow &\\
+L= & \left[\hspace{-1ex}\begin{array}{>{\columncolor{lightgray}[0pt]}r r r r}
+\cellcolor{gray}1 & 0 & 0 & 0\\
+-2 & 1 & 0 & 0\\
+1 & & 1 & 0\\
+-3 & & & 1
+\end{array}\hspace{-1ex}\right] & & \left[\!\begin{array}{r >{\columncolor{white}[0pt]}r r r}
+1 & 0 & 0 & 0\\
+-2 & \cellcolor{gray}1 & 0 & 0\\
+1 & \cellcolor{lightgray}-3 & 1 & 0\\
+-3 & \cellcolor{lightgray}4 & & 1
+\end{array}\hspace{-1ex}\right] & & \left[\!\begin{array}{r r >{\columncolor{white}[6pt][0pt]}r r}
+1 & 0 & 0 & 0\\
+-2 & 1 & 0 & 0\\
+1 & -3 & \cellcolor{gray}1 & 0\\
+-3 & 4 & \cellcolor{lightgray}2 & 1
+\end{array}\hspace{-1ex}\right] & & \left[\!\begin{array}{r r r >{\columncolor{white}[6pt][0pt]}r}
+1 & 0 & 0 & 0\\
+-2 & 1 & 0 & 0\\
+1 & -3 & 1 & 0\\
+-3 & 4 & 2 & \cellcolor{gray}1
+\end{array}\!\right] &
+\end{array}\]
+\begin{law}[列昂惕夫投入产出模型或生产方程]\ \\
+\[\bm{x}=C\bm{x}+\bm{d}\]
+\end{law}
+\begin{theorem}
+设$C$为某一经济体系的消耗矩阵, $\bm{d}$为最终需求. 若$C$和$\bm{d}$的元素非负, $C$的每一列的和小于1, 则$(I-C)^{-1}$存在, 产出向量
+\[\bm{x}=(I-C)^{-1}\bm{d}\]
+有非负元素, 且是下列方程的唯一解:
+\[\bm{x}=C\bm{x}+d\]
+\end{theorem}
+物体的平移并不直接对应于矩阵乘法, 因为平移并非线性变换, 引入\textbf{齐次坐标}\\
+$\mathbb{R}^2$中每个点$(x,y)$对应于$\mathbb{R}^3$中的点$(x,y,1)$, $(x,y,1)$为$(x,y)$的\textbf{齐次坐标}\\
+$(x,y,1)\mapsto(x+h,y+k,1)$的平移变换实现:\\
+\[\left[\begin{array}{r r r}
+1 & 0 & h\\
+0 & 1 & k\\
+0 & 0 & 1
+\end{array}\right]
+\left[\begin{array}{r}
+x\\
+y\\
+1
+\end{array}\right]=
+\left[\begin{array}{c}
+x+h\\
+y+k\\
+1
+\end{array}\right]\]
+$mathbb{R}^2$中任意线性变换可以通过齐次坐标乘以分块矩阵$\left[\begin{array}{r r}A & 0\\0 & 1\end{array}\right]$实现, 其中$A$是$2\times 2$矩阵.\\
+$(x,y,z,1)$是$\mathbb{R}^3$中点$(x,y,z)$的齐次坐标.\\
+若$H\neq 0$, 则$(X,Y,Z,H)$为$(x,y,z)$的齐次坐标, 且
+\[x=\frac{X}{H},y=\frac{Y}{H},z=\frac{Z}{H}\]
+点$(x,y,z)$在$xy$平面上的透视投影坐标为$(\frac{x}{1-z/d}, \frac{y}{1-z/d}, 0)$. 其中, $d$为$z$轴观测位置$(0,0,d)$\\
+绕$\mathbb{R}^2$中一点$p$的旋转是这样实现的: 首先把图形平移$-p$, 然后绕原点旋转, 最后平移$p$.
 \end{document}
