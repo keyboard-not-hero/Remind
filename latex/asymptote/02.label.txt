@@ -15,7 +15,7 @@ label("Hello World");
 // pic - 默认为currentpicture
 // L - 字符串内容, 符合LaTeX规则. 如: $...$为公式内容
 // position - 内容放置坐标
-// align - 内容偏移位置. 列表: N/S/W/E, 可任意组合
+// align - 内容偏移位置. 列表: N/S/W/E, 可任意组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
 // p - 文字大小, fontsize对象或颜色名称, 可使用'+'进行组合. 如: p=fontsize(10)
 // filltype - 背景色和边框填充类型, 列表如下:
 	FillDraw(real xmargin=0, real ymargin=xmargin, pen fillpen=nullpen, pen drawpen=null)
@@ -70,7 +70,7 @@ draw((2,0) -- (2,4), arrow=Arrow(TeXHead), L=Lz);
 		Midpoint - path中间, 等于Relative(0.5). 默认值
 		Beginpoint - path起始端, 等于Relative(0)
 		Relative(real) - Label位置位于path总长的比值, 区间为[0,1]
-	align - 相对于原始位置的方位, 列表: N/S/W/E或其组合(可与任意数字组合)
+	align - 相对于原始位置的方位, 列表: N/S/W/E或其组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
 	p - 字符串的大小或颜色, 可使用'+'进行组合. 如: fontsize(5pt)+blue
 	embed - 允许进行的转换操作, 列表如下:
 		Shift - 只能进行平移
@@ -130,6 +130,6 @@ label(L4,p);
 // 参数列表如下:
 	L - 字符串或Label对象
 	g - Label需要添加到的路径
-	align - 路径相对于原位置的偏移, 可选: N/S/W/E或其组合(可与数字组合)
+	align - 路径相对于原位置的偏移, 列表: N/S/W/E, 可任意组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
 	p - label大小或颜色名称, 可使用'+'组合. 如: fontsize(5pt)+blue
 	filltype - 填充类型, 参考Label参数列表

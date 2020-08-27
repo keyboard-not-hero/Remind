@@ -1,4 +1,3 @@
-更新时间: 2020-07-10
 1a.离线安装Texlive
 # 下载texlive镜像
 # 点击下载后，会自动切换到国内镜像源下载
@@ -30,7 +29,7 @@ cd install-tl-*
 
 
 2.配置PATH
-steven@~$ vi .bashrc
+steven@~$ vi ~/.bashrc
 export PATH=${PATH}:/usr/local/texlive/2020/bin/x86_64-linux
 
 steven@~$ source .bashrc
@@ -49,7 +48,7 @@ steven@~$ sudo cp /usr/local/texlive/2020/texmf-var/fonts/conf/texlive-fontconfi
 
 # windows默认自带宋体/楷书/黑体/仿宋, ubuntu默认自带宋体/楷书
 # 安装字体(黑体)
-steven@~$ sudo apt install fonts-wqy-zenhei font-wqy-microhei
+steven@~$ sudo apt install fonts-wqy-zenhei fonts-wqy-microhei
 
 # 刷新fontconfig的字体缓存
 steven@~$ sudo fc-cache -fsv
@@ -72,3 +71,5 @@ steven@~$ sudo apt-get install texworks
 1.TeX User Group: https://tug.org
 2.LaTeX: https://www.latex-project.org
 3.CTAN: https://www.ctan.org
+
+最后编辑于: 2020-08-26

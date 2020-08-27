@@ -53,7 +53,7 @@ latexmk [options] [files]
 	不生成ps格式文件
 
 -pv
-	生成目标文件后, 使用默认的viewer进行结果预览. 不同格式模式使用的viewer:
+        生成目标文件后, 使用默认的viewer进行结果预览. 不同格式模式使用的viewer:
 		dvi - xdvi, TeXLive自带
 		ps - rungs, TeXLive自带. 建议从apt源下载ghostscript: sudo apt install ghostscript
 		pdf - evince, Linux自带. adobe 2013年停止对Linux版本的支持
@@ -140,9 +140,20 @@ $clean_full_ext = '';
 $fdb_ext = 'fdb_latexmk';
 	包含编译信息及生成指定类型文件列表的数据库, 其文件类型
 
+$dvi_previewer = 'start xdvi %O %S'
+	dvi格式文件预览器
+
+$ps_previewer = 'start ghostscript %O %S'
+	ps格式文件预览器
+
+$pdf_previewer = 'start evince %O %S'
+	pdf格式文件预览器
+
 @generated_exts = ('aux', 'bbl', 'idx', 'inf', 'lof', 'lot', 'out', 'toc', $fdb_ext);
 	1.指定-c和-C需要额外删除的指定格式文件;
 	2.重新编译时, 需要重新生成的指定格式文件. 如:
 	push @generated_exts, "end";
 
 ** -c由$clean_ext和$generated_exts共同决定
+
+最后编辑于: 2020-08-26

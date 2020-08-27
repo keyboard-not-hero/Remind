@@ -12,7 +12,7 @@ real f(real x) {
 path g=graph(f,0,2);
 draw(g);
 
-// import graph; 导入graph包, function必须借助该包
+// import graph; 导入graph包, graph function必须借助该包
 
 // 以下是定义函数:
 	real f(real x) {
@@ -36,6 +36,7 @@ draw(g);
 			分段式贝塞尔曲线
 		Hermite
 			Hermite曲线
+
 
 二、Demo(示例)02 - promote precision
 unitsize(1cm);
@@ -69,4 +70,3 @@ draw(g4);
 // g3为利用operator ..提升精度
 
 // g4为利用Hermite提升精度
-

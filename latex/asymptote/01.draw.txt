@@ -179,6 +179,9 @@ draw(arc((0,0),(5,0),(0,5),CW), blue, arrow=Arrow(), margin=ArrowMargin);
 // linewidth(5pt)指定线条宽度, 并返回pen对象
 // labelmargin(p)返回pen对象p需要与外部拉开的边距, 该边距略大于0.5倍线条宽度, 返回对象为real类型
 // TrueMargin(0.8*line, 0.8*line)指定path的起始边距和结束边距, 返回margin对象
+// arc(pair c, real r, real angle1, real angle2)代表画一个圆弧, 圆心为c, 半径为r, 起始角度为angle1, 结束角度为angle2
+// arc(pair c, real r, real angle1, real angle2, bool direction=CCW)为带方向的版本, direction可选参数: CCW为逆时针, CW为顺时针
+// arc(pair c, explicit pair z1, explicit pair z2, bool direction=CCW)为作指定起始点和结束点的圆弧, 并保证|z1-c|=|z2-c|
 
 
 
