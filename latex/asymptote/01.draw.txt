@@ -13,7 +13,29 @@ draw((0,0)--(100,100));
 // L - 直线的注解label
 // g - 作图路径
 // align - 注解相对于直线中心的位置. 可选N/S/W/E及其组合. 默认为下方(自左至右)
-// p - 注解字体大小(fontsize对象)或图形线条粗细(linewidth对象)或图形颜色名称, 字体大小/图形粗细和图像颜色可使用'+'组合. 如: p=fontsize(10)+blue
+// p - 线条颜色/类型/宽度, label大小, 详情见后续.可使用'+'组合, 如: p=fontsize(10)+blue
+    1.线条颜色
+    pen gray(real g); g为灰度, 范围[0,1], 0代表黑色
+    pen rgb(real r, real g, real b); r/g/b分别为rgb颜色深度, 范围[0,1]
+    pen RGB(int r, int g, int b); r/g/b分别为rgb颜色深度, 范围[0,255]
+    pen cmyk(real c, real m, real y, real k); c/m/y/k分别为cmyk颜色深度, 范围[0,1]
+    pen invisible; 设置为不可见, 可通过invisible(pen p)查看pen是否可见 
+    可通过colorspace(pen p)查看色彩模式, 默认颜色为black
+    2.线条类型
+    pen linetype(real[] a, real offset=0, bool scale=true, bool adjust=true); 指定线条类型, a[0]代表第一个虚线的宽度, a[1]代表第一个虚线之间的间隔, a[2]代表第二个虚线的宽度, a[3]代表第二个虚线间隔..., 元素以此循环类推, a元素单位长度参考linewidth的0.5bp; offset代表
+    预定义线条: 
+	pen solid - linetype(new real[]);
+	pen dotted - linetype(new real[]{0,4});
+	pen dashed - linetype(new real[]{8,8});
+	pen longdashed - linetype(new real[]{24,8});
+	pen dashdotted - linetype(new real[]{8,8,0,8});
+	pen longdashdotted - linetype(new real[]{24,8,0,8});
+	pen Dotted - linetype(new real[]{0,3})+2*linewidth(currentpen);
+    默认为solid实线
+    3.线条宽度
+    pen linewidth(real width); width指定线条宽度, 默认为0.5bp
+    4.label大小
+    pen fontsize(real size, real lineskip=1.2*size); 指定label字体大小, size为字体大小, 默认单位为pt, 默认大小为12pt; lineskip为行距(字体高度+行间隔)
 // arrow - 箭头类型. 箭头位置如下:
 		None - 没有箭头
 		Blank - 没有箭头

@@ -1,6 +1,7 @@
 \documentclass[UTTF8, fontset=ubuntu]{ctexart}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{float}
 \begin{document}
 如图.\\
 \includegraphics{triangel.pdf}
@@ -24,4 +25,38 @@
 \hline
 \end{array}
 \end{displaymath}
+
+求三角函数值步骤:\\
+1.找出角所在象限;\\
+2.当角在x/y轴上, 参考三角函数图像;\\
+3.如果角不在x/y轴上, 找出该角与x轴形成的最小角度, 即\textbf{参考角};\\
+4.当参考角为特殊角时,参考常见三角函数值表;\\
+5.利用ASTC(all/sin/tan/cos)决定是否需要添加负号.
+
+三角函数图像:\\
+\begin{figure}[H]
+\centering
+\includegraphics{sin.pdf}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics{cos.pdf}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics{tan.pdf}\qquad\includegraphics{cot.pdf}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics{sec.pdf}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics{csc.pdf}
+\end{figure}
+
+毕达哥拉斯定理:\\
+\begin{center}
+\framebox{$\cos^2(x)+\sin^2(x)=1$}
+\end{center}
 \end{document}
