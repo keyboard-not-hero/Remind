@@ -72,6 +72,8 @@
 
 4.\fbox{content}为framebox的简写方式, 但不能携带可选参数
 
+5.可在framebox内部放置minipage环境, 用于文字换行
+
 
 
 五、Demo(示例)05 - shadowbox

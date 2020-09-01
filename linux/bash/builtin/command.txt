@@ -555,7 +555,7 @@ shopt - 修改bash选项
 语法
 shopt [option] [optname...]
 
-参数释义
+参数释义(option)
 -o    限制optname为可通过set -o获取的值
 
 -p    打印bash选项已配置列表
@@ -568,7 +568,7 @@ shopt [option] [optname...]
 
 **当提供多个optname时，所有操作生效才返回status code=0
 
-bash选项列表
+选项名称列表(optname)
 autocd - 当command为一个目录时，自动将其作为cd指令的参数目录
 
 cdable_vars - 当cd指令的参数不是一个目录时，将其视为包含目录值的变量

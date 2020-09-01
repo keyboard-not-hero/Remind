@@ -76,7 +76,7 @@ bank, and of having nothing to do
 
 5.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
 
-6.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束
+6.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
 
 7.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
 
