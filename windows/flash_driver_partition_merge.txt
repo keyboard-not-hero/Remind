@@ -1,0 +1,15 @@
+1.进入cmd
+
+2.进入diskpart工具, 指令: diskpart
+
+3.显示所有磁盘细节, 指令: list disk
+
+4.选择U盘对应磁盘, 指令: select disk <number>
+
+5.清除U盘下的所有分区, 指令: clean
+
+6.创建一个U盘主分区, 指令: create partition primary
+
+7.激活主分区, 指令: active
+
+8.将主分区快速格式化为fat32格式, 指令: format fs=fat32 quick

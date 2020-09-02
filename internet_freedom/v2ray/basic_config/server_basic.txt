@@ -67,3 +67,6 @@ v2ray须知：
 1.io:read/write on closed pipe
 问题：服务器与客户端时间差距问题 或 V2rayNG客户端没有填写伪装域名
 解决：关闭自动更新时间并手动修改 或 填写伪装域名
+
+2.客户端提示 Socks: unknown Socks version
+解答：v2ray配置inbound为socks，而浏览器代理协议使用http

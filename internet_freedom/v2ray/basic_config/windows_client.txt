@@ -40,8 +40,3 @@
 二选其一
 v2ray.exe - 命令行显示log
 wv2ray.exe - 后台执行
-
-
-错误报告集锦：
-1.客户端提示 Socks: unknown Socks version
-解答：v2ray配置inbound为socks，而浏览器代理协议使用http
