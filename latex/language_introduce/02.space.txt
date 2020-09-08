@@ -228,7 +228,7 @@ just newline
 
 十、Demo(示例)10 - character occupied
 \documentclass{article}
-\begin{docuemnt}
+\begin{document}
 	\phantom{i am a good man. }please don't hurt me.
 
 	i am a good man. please don't hurt me.

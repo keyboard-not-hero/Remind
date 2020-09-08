@@ -1,0 +1,57 @@
+badblocks - 查找设备坏轨点
+
+语法
+badblocks [options] <partition> [last_block] [first_block]
+
+option选项
+-b <block_size>
+    单次检测的单个块大小. 默认为1024 bytes
+
+-B
+    使用buffer I/O, 而非direct I/O
+
+-c <number>
+    单次检测的块数量. 默认为64
+
+-d <read_delay_factor>
+    当遇到坏轨时, 等待时间为单次检测时间的倍数, 公式: factor=倍数*100
+
+-e <max_bad_block_count>
+    当坏轨数量达到count数量时, 退出检测. 默认为0, 即无限制
+
+-f
+    强制检测已挂载分区. 普通状态下, 不可检测已挂载分区
+
+-i <input_file>
+    读取已坏轨地址列表, 不再检测列表内地址, 并且输出不包含列表内地址
+    可使用'-'从stdin读取内容
+
+-n
+    使用非破坏性读写模式, 适用于已格式化分区
+    默认使用非破坏性只读模式
+    与-w选项互斥
+
+-o <output_file>
+    将坏轨列表写入指定文件
+    默认坏轨列表写出到stdout
+    输出格式适用于e2fsck和mke2fs的-l选项
+
+-p <num_pass>
+    重复扫描num_pass次磁盘
+    num_pass默认为0, 即只扫描1次
+
+-s
+    显示扫描进度条
+
+-t <test_pattern>
+    检测模式, 模式列表:
+        1.0~unsign_long_max-1 - 写入指定数字, 适用于write模式
+        2.random - 随机写入内容, 适用于read-only/write模式
+
+-v
+    verbose模式, 将读取/写入错误数量输出到stderr
+
+-w
+    读写模式测试, 适用于未格式化分区
+    写入指定内容(0x00, 0x55, 0xaa, 0xff)到块, 然后读取比较
+    与-n选项相斥

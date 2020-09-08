@@ -140,13 +140,13 @@ $clean_full_ext = '';
 $fdb_ext = 'fdb_latexmk';
 	包含编译信息及生成指定类型文件列表的数据库, 其文件类型
 
-$dvi_previewer = 'start xdvi %O %S'
+$dvi_previewer = 'start xdvi %O %S';
 	dvi格式文件预览器
 
-$ps_previewer = 'start ghostscript %O %S'
+$ps_previewer = 'start ghostscript %O %S';
 	ps格式文件预览器
 
-$pdf_previewer = 'start evince %O %S'
+$pdf_previewer = 'start evince %O %S';
 	pdf格式文件预览器
 
 @generated_exts = ('aux', 'bbl', 'idx', 'inf', 'lof', 'lot', 'out', 'toc', $fdb_ext);
