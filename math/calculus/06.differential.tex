@@ -1,0 +1,79 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{amssymb}
+\usepackage{parskip}
+\begin{document}
+1.使用定义求导\\
+\framebox{$\displaystyle\frac{d}{dx}(x)=1$}\\
+证明:\\
+$\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{(x+h)-x}{h}=\lim_{h\to 0}\frac{h}{h}=1$\\[4ex]
+
+\framebox{$\displaystyle\frac{d}{dx}(\sqrt{x})=\frac{1}{2\sqrt{x}}$}\\
+证明:\\
+\begin{math}
+\begin{array}{l}
+\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{\sqrt{x+h}-\sqrt{x}}{h}=\lim_{h\to 0}\frac{\sqrt{x+h}-\sqrt{x}}{h}\times\frac{\sqrt{x+h}+\sqrt{x}}{\sqrt{x+h}+\sqrt{x}}\\
+\displaystyle\phantom{\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}}=\lim_{h\to 0}\frac{h}{h(\sqrt{x+h}+\sqrt{x})}=\lim_{h\to 0}\frac{1}{\sqrt{x+h}+\sqrt{x}}=\frac{1}{2\sqrt{x}}
+\end{array}
+\end{math}\\[4ex]
+
+\framebox{$\displaystyle\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$}\\
+证明:\\
+\begin{math}
+\begin{array}{l}
+\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{\frac{1}{x+h}-\frac{1}{x}}{h}=\lim_{h\to 0}\frac{-\frac{h}{x(x+h)}}{h}\\
+\displaystyle\phantom{\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}}=\lim_{h\to 0}-\frac{1}{x(x+h)}=-\frac{1}{x^2}
+\end{array}
+\end{math}\\[4ex]
+
+\framebox{$\displaystyle\frac{d}{dx}(x^a)=ax^{a-1}$}\\[4ex]
+
+2.运算法则\\
+(1)常数倍\\
+$\displaystyle\frac{d}{dx}(Cx^a)=(Ca)x^{a-1}$\\[4ex]
+(2)加/减法法则\\
+$\displaystyle\frac{d}{dx}(x^a+\sqrt{x})=\frac{d}{dx}(x^a)+\frac{d}{dx}(\sqrt{x})$\\[4ex]
+(3)乘积法则\\[-6ex]
+\begin{center}
+\framebox{\textbf{乘积法则(版本1)}\qquad 如果$h(x)=f(x)g(x)$, 那么$h'(x)=f'(x)g(x)+f(x)g'(x)$.}\\[2ex]
+\framebox{
+\begin{minipage}[c]{6cm}
+\textbf{乘积法则(版本2)}\quad 如果$y=uv$, 则
+\[\frac{dy}{dx}=v\frac{du}{dx}+u\frac{dv}{dx}\]
+\end{minipage}}\\[4ex]
+\framebox{
+\begin{minipage}[c]{7cm}
+\textbf{乘积法则(三个变量)}\quad 如果$y=uvw$, 则
+\[\frac{dy}{dx}=\frac{du}{dx}vw+u\frac{dv}{dx}w+uv\frac{dw}{dx}\]
+\end{minipage}}
+\end{center}\vspace{4ex}
+(4)商法则\\[-4ex]
+\begin{center}
+\framebox{
+\begin{minipage}[c]{8cm}
+\textbf{商法则(版本1)}\quad 如果$h(x)=\frac{f(x)}{g(x)}$, 那么
+\[h'(x)=\frac{f'(x)g(x)-f(x)g'(x)}{(g(x))^2}\]
+\end{minipage}}\\[2ex]
+\framebox{
+\begin{minipage}[c]{6cm}
+\textbf{商法则(版本2)}\quad 如果$y=\frac{u}{v}$, 那么
+\[\frac{dy}{dx}=\frac{v\frac{du}{dx}-u\frac{dv}{dx}}{v^2}\]
+\end{minipage}}
+\end{center}\vspace{4ex}
+(5)链式求导法则\\[-6ex]
+\begin{center}
+\framebox{\textbf{链式求导法则(版本1)}\quad 如果$h(x)=f(g(x))$, 那么$h'(x)=f'(g(x))g'(x)$.}\\[2ex]
+\framebox{
+\begin{minipage}[c]{12cm}
+\textbf{链式求导法则(版本2)}\quad 如果$y$是$u$的函数, 并且$u$是$x$的函数, 那么
+\[\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}\]
+\end{minipage}}
+\end{center}\vspace{4ex}
+
+3.导数伪装的极限\\
+例.\\
+$\displaystyle\lim_{h\to 0}\frac{\sqrt[5]{32+h}-2}{h}$\\
+证明:\\
+设$f(x)=\sqrt[5]{x}$\\
+$\displaystyle\because f'(x)=\lim_{h\to 0}\frac{\sqrt[5]{x+h}-x}{h}=\frac{1}{5}x^{-\frac{4}{5}}$\\
+$\displaystyle\therefore f'(32)=\lim_{h\to 0}\frac{\sqrt[5]{32+h}-\sqrt[5]{32}}{h}=\lim_{h\to 0}\frac{\sqrt[5]{32+h}-2}{h}=\frac{1}{5}\times 32^{-\frac{4}{5}}=\frac{1}{5}\times\frac{1}{16}=\frac{1}{80}$\\
+\end{document}

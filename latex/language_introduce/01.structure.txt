@@ -45,7 +45,7 @@ doc_class - 类型列表: article/report/book/slides/letter, 路径: /usr/local/
 2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
 arg<N> - 可选参数列表
 pac_name<N> - 导入的包名, 文件后缀为.sty
-** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, preamble区使用\let\<command>\undefined即可; 先导入包独有的指令不可用
+** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, 可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
 
 
 3.\begin{document}之前的部分为document preamble
