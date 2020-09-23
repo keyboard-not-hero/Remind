@@ -1,21 +1,21 @@
-1.替换Ubuntu18.04的阿里云源
+1.替换Ubuntu 20.04的阿里云源
 steven@~$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
 steven@~$ sudo vi /etc/apt/sources.list
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 
 steven@~$ sudo apt-get update
 
@@ -79,7 +79,7 @@ steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
 blacklist ideapad_laptop
 
 
-8.Nvidia显卡驱动安装(拯救者Y7000笔记本)
+8.Nvidia显卡驱动安装
 ## 更新pci列表
 steven@~$ sudo update-pciids
 
@@ -116,8 +116,9 @@ steven@~$ sudo update-initramfs -u
 
 ## 进入CLI模式
 steven@~$ sudo telinit 3
+ctrl+alt+<F2>
 
-## 安装NVIDIA驱动
+## 安装NVIDIA驱动(需要gcc/make工具)
 steven@~$ sudo chmod a+x NVIDIA-XXX.run
 steven@~$ sudo ./NVIDIA-XXX.run --no-opengl-files
 选择Continue installation
