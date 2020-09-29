@@ -1,5 +1,5 @@
 1.配置文件
-全局配置文件：/etc/vimrc
+全局配置文件：/etc/vim/vimrc
 用户级配置文件：~/.vimrc
 ** 在配置文件中，"之后的内容为注释
 ** 配置文件中的语法与vim常规模式语法一致
@@ -61,6 +61,11 @@
 :set virtualedit=all    表格化编辑(j/k直接移动到光标下/上方，为空字符串''则关闭)
 
 :set arabic    配置arabic模式(文字从右向左)
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+保留上次离开文件时的光标停留位置
 
 
 3.查看配置格式(backup为例)

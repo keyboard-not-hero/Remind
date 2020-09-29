@@ -1,4 +1,5 @@
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{parskip}
 \begin{document}
@@ -76,4 +77,32 @@ $\displaystyle\lim_{h\to 0}\frac{\sqrt[5]{32+h}-2}{h}$\\
 设$f(x)=\sqrt[5]{x}$\\
 $\displaystyle\because f'(x)=\lim_{h\to 0}\frac{\sqrt[5]{x+h}-x}{h}=\frac{1}{5}x^{-\frac{4}{5}}$\\
 $\displaystyle\therefore f'(32)=\lim_{h\to 0}\frac{\sqrt[5]{32+h}-\sqrt[5]{32}}{h}=\lim_{h\to 0}\frac{\sqrt[5]{32+h}-2}{h}=\frac{1}{5}\times 32^{-\frac{4}{5}}=\frac{1}{5}\times\frac{1}{16}=\frac{1}{80}$\\
+
+4.分段函数的导数\\
+检验方式: 分段函数再连接点上极限相等, 并且导数再连接点上的极限也相等\\
+例.\\
+$f(x)=\left\{
+\begin{array}{l l}
+1 & \text{如果}x\leqslant0,\\
+x^2+1 & \text{如果}x>0.    
+\end{array}
+\right.$\\
+$\because f(x)$在连接点$x=0$上的左极限:\\
+$\phantom{\because}\displaystyle\lim_{x\to0^-}f(x)=\lim_{x\to0^-}1=1$\\
+$\phantom{\because}f(x)$在连接点$x=0$上的右极限:\\
+$\phantom{\because}\displaystyle\lim_{x\to0^+}f(x)=\lim_{x\to0^+}(x^2+1)=1$\\
+$\therefore\displaystyle\lim_{x\to0}f(x)=1$\\[2ex]
+由于, $f'(x)=\left\{
+\begin{array}{l l}
+	0 & \text{如果}x\leqslant 0,\\
+	2x & \text{如果}x>0.
+\end{array}
+\right.$\\
+$\because f'(x)$在连接点$x=0$上的左极限:\\
+$\phantom{\because}\displaystyle\lim_{x\to0^-}f'(x)=\lim_{x\to0^-}0=0$\\
+$\phantom{\because}f'(x)$在连接点$x=0$上的右极限:\\
+$\phantom{\because}\displaystyle\lim_{x\to0^+}f'(x)=\lim_{x\to0^+}2x=0$\\
+$\therefore\displaystyle\lim_{x\to0}f'(x)=0$\\
+
+5.直接画出导函数的图像
 \end{document}
