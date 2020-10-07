@@ -1,349 +1,240 @@
-wget - 非交互式网络下载器
+wget - 非交互式网络下载器, 支持HTTP/HTTPS/FTP协议，并支持HTTP代理
 
 语法
 wget [option]... [url]...
 
 参数释义
--V, --version
-    版本信息
+-a <logfile>
+--append-output=<logfile>
+    将所有信息输出到logfile文件(append式)
+
+-b, --background
+    后台下载, 不直接在stdout输出信息
+    当没有配合-o使用时，输出信息位置参考wget-log
+
+--backups=<backups>
+	当下载覆盖文件时, 已存在的文件使用'.1'后缀(VMS使用'_1'), 递归为'.2'/'.3'...
+
+--bind-address=<ip_address>
+    指定client使用的网卡接口/主机名地址。适用于主机含多个网卡接口
+
+--bind-dns-address=<address>
+	使用指定的路由器地址, 改地址再指向DNS服务器, 需要libcares的支持
+	配合--dns-server使用
+
+-B <url>, --base=<url>
+	当指定以HTML格式读取url时, 使用该参数进行url读取
+
+-c, --continue
+	当服务器支持断点下载时, 从本地文件的断裂处开始断点下载
+	当服务器不支持断点下载, 文件会重新开始下载
+	从version 1.7开始, 当本地文件大于等于服务器文件的大小, wget会拒绝下载并给出原因
+	该选项仅支持带Range header的FTP/HTTP服务器
+
+--config=<file>
+	使用指定的启动配置文件, 替代默认的配置文件
+
+-d, --debug
+    输出debug信息
+	需要在编译wget时, 添加对debug的支持
+
+--dns-server=<address>
+	使用指定的DNS服务器, 覆盖/etc/resolv.conf内容, 需要libcares的支持
+
+-e <command>
+--execute <command>
+    添加到.wgetrc尾部的指令，以覆盖.wgetrc之前的directive
+
+-F, --force-html
+	当通过文件读取url时, 强制以HTML格式读取. 即文件中以<base href="url">格式读取, cmd以--base格式读取
 
 -h, --help
     帮助信息
 
--b, --background
-    后台下载
-    当没有配合-o使用时，stdout和stderr信息参考wget-log
+-i <file>
+--input-file=<file>
+    通过指定文件读取url
+	支持通过'-'读取标准输入
+    当与cmd同时提供url时，cmd先读取
+    当与--force-html同时提供时，文件内格式为<base href="url">, cmd格式为--base=<url>
+    当未提供--force-html，文件内的url格式为每行一个url
+	当file为远程文件, 如果Content-Type为text/html, 则自动视为html格式文件
 
--e <command>
---execute <command>
-    在.wgetrc之后调用，以覆盖.wgetrc的directive
+--input-metalink=<file>
+	通过metalink格式文件下载
+	metalink为metadata格式文件, metadata格式为html头部内容或.metalink(metalink3.0)/.meta4后缀(metalink 4.0)
 
--o <logfile>
---output-file=<logfile>
-    将err信息输出到指定文件
-    默认输出到stderr
+--keep-badhash
+	当metalink文件与远端的hash不匹配时, 维持下载, 并给文件添加.badhash后缀
+	不会覆盖已下载文件
 
--a <logfile>
---append-output=<logfile>
-    将err信息append到指定文件
+-l <depth>, --level=<depth>
+	配置递归查找深度
 
--d, --debug
-    启动debug模式
+--limit-rate=<amount>
+	限制下载速度为指定bytes/s
+	可在amount数字后面添加'k'/'m'指定限制下载单位为KB/s和MB/s
 
--q, --quiet
-    静默模式
+--metalink-over-http
+	使用HTTP HEAD请求替代GET请求, 进入metalink下载. 当metalink无效时, 后退到GET下载	
 
--v, --verbose
-    详细输出模式(默认)
+-metalink-index=<number>
+	设置application/metalink4+xml的值, 取值范围为1~指定值
+	0/inf代表选择第一个最佳值
+
+-nc, --no-clobber
+	当本地存在该文件时, 不再下载该文件
+
+-nd, --no-directories
+	当在服务器使用递归查找下载时, 本地不创建子文件夹, 文件全部下载到指定总文件夹下
+
+--no-cache
+	不使用proxy端的缓存文件, 从服务器读取最新内容
+
+--no-config
+	不读取配置文件
+	当与--config一起使用时, 该参数被忽略
+
+--no-cookies
+	本地端不保存cookies内容
+
+--no-http-keep-alive
+	不使用http-keep-alive特性
+
+--no-if-modified-since
+	不发送If-Modified-Since header
+	必须配合-N使用
+
+--no-netrc
+	不从.netrc获取证书信息
+	默认从.netrc获取必要证书信息
+
+--no-use-server-timestamps
+	本地文件使用当前时间戳, 不适用服务器上的时间戳
 
 -nv, --no-verbose
     非verbose模式
 
+-N, --timestamping
+	比较本地(ls -l)与远程服务器(Last-Modified)的timestamp记录
+
+-o <logfile>
+--output-file=<logfile>
+    将所有信息输出到指定文件(overwrite式)
+    默认输出到stderr
+
+-0 <file>, --output-document=<file>
+	指定下载文件的文件名
+    file为'-'时，代表信息输出到stdout
+    不支持与-N一起使用
+    由于所有url下载的内容都保存到file(version 1.11.1除外)，所有与-r和-p一起使用，会出现非期望结果
+    只有当文件不存在时，可以与-nc同时使用
+    当只有一个URL时，可以配合-k使用
+
+-p, --page-requisites
+	下载展示HTML页面所必须的软件
+
+--preferred-location
+	设置首选metalink资源定位, 适用于当多个资源含有相同优先级
+
+--progress=<type>
+	配置进度条类型, 可选列表: dot/bar(默认)
+	非TTY只支持dot进度条
+
+-q, --quiet
+    静默模式, 关闭信息输出
+
+-r, --recursive
+	开启递归查找, 并下载页面
+	默认深度为5
+
+--rejected-log=<logfile>
+	拒绝访问的url记录存储文件
+
 --report-speed=<type>
     输出带宽类型，唯一选项为bits
 
--i <file>
---input-file=<file>
-    通过指定文件读取url
-    当与cmd url同时提供时，cmd url先读取
-    当与--force-html同时提供时，格式为<base href="url">
-    当未提供--force-html，文件内的url格式为每行一个url
+--secure-protocol=<protocol>
+	指定使用的SSL/TLS协议版本, 列表: auto(默认)/SSLv2/SSLv3/TLSv1/TLSv1_1/TLSv1_2/TLSv1_3/PFS
 
---input-metalink=<file>
-    通过指定文件指定metalink格式链接下载
-    metalink 3.0(.metalink)和metalinkn 4.0(.meta4)都支持
-
---keep-badhash
-    当使用metalink下载时，可下载hash不匹配的内容，添加.badhash后缀
-
---metalink-over-http
-    使用HEAD请求取代GET请求，并从response header中提取metalink metadata，从而切换到metalink下载
-    当无法从response header中提取到metalink时，维持http下载
-
--F, --force-html
-    强制读取的file视为html格式
-
--B <url>
---base=<url>
-    指定相对url路径。
-    需配合-o使用
-
---config=<file>
-    指定配置文件
-
---bind-address=<ip_address>
-    指定client使用的网卡接口地址。适用于主机含多个网卡接口
-
---dns-servers=<dns_server_ip>
-    指定nameserver地址，覆盖/etc/resolv.conf内容
-
--t <number>
---tries=<number>
-    重新连接次数，默认20
-    fatal error或404不重连
-    0或inf代表无线重连
-
--0 <file>
---output-document=<file>
-    指定下载内容保存文件名
-    file为'-'时，代表stdout
-    不支持与-N一起使用
-    由于所有url下载的内容都保存到file(version 1.11.1除外)，所有与-r和-p一起使用，会出现非期望结果
-    只有当file文件不存在时，可以与-nc同时使用
-    当只有一个URL时，可以配合-k使用
-
--nc, --no-clobber
-    当多次下载同名文件时，保留已存在同名文件的旧内容
-    默认第一次下载为file，第二次为file.1，第三次为file.2，以此类推
-    只有当指定文件名不存在时，可与-0一起使用
-    
--r
-    当多次下载同名文件时，使用新内容覆盖旧内容
-
--p
-    当多次下载同名文件时，使用新内容覆盖旧内容
-
--N
-    当多次下载同名文件时，根据时间戳和文件大小，决定是否将新内容覆盖旧内容
-    覆盖-r或-p选项
-
---backups=<backups>
-    当覆盖同名文件旧内容时，旧内容备份到.1后缀文件，并依次拓展到(.2)...(.n)
-
---no-netrc
-    不从.netrc配置文件获取证书信息
-
--c, --continue
-    根据已下载同名文件的断开连接处，继续进行下载(断点续传)
-    如果服务器不支持，则新内容覆盖旧内容
-    自version 1.7，当服务器文件大小小于等于client同名文件大小时，不进行下载
-    当本地含同名文件，下载长度为length(remote)-length(local)
-    再次下载时，无法验证断点之前的部分
-
---start-pos=<offset>
-    从基于0开始的offset处开始下载，默认单位为byte，可指定为k/m/g等
-    当与-c一起使用，-c被忽略
-    server必须支持continue下载
-
---progress=<type>
-    选择进度指示器，可选dot或bar(默认)
-    如果输出不是TTY，则dot为默认指示器类型
-    
 --show-progress
-    强制显示进度指示器，默认指示器只在verbose模式显示
-
--N, --timestamping
-    打开时间戳
-
---no-if-modified-since
-    不发送If-Modified-Since头部，必须配合-N使用
-
---no-use-server-timestamps
-    不适用server端文件时间戳作为本地端文件的时间戳，保留下载时间的时间戳作为本地文件时间戳
-
--S, --server-response
-    打印HTTP server的响应头部和FTP server的响应码
+	强制显示进度条. 默认只有在verbose mode下显示
 
 --spider
-    只测试server是否存在url指向的文件，不实际下载
+	不下载page内容, 只验证page是否可用
 
--T <seconds>
---timeout=<seconds>
-    连接超时时间限制
-    默认为900s
-    0代表关闭超时限制
+--start-pos=<offset>
+	从基于0的offset字节处开始下载, 服务器需要支持断点续传
+	单位可以为byte(默认)/k/m
+	该选项优先级高于-c
 
---dns-timeout=<seconds>
-    DNS超时时间限制
-    默认不开启
+-S, --server-response
+	显示HTTP/FTP服务器的相应header
 
---connect-timeout=<seconds>
-    连接超时时间限制，如TCP准备时间过长
-    默认不开启
+-t <num>, --tries=<num>
+	重新尝试连接次数, 默认为20
+	0/'inf'代表无限次尝试
+	connection refused或not found(404)不会重新尝试连接
 
---read-timeout=<seconds>
-    读取超时限制，在指定时间没有接收到任何数据，则读取失败并重新启动下载
-    不计入总下载时长
-    默认为900s
+-T <seconds>, --timeout=<seconds>
+	等待超时时间, 默认为900s
 
---limit-rate=<amount>
-    限制下载速率为，默认为bytes/s，可指定单位为k/m/g等，并可使用浮点数
-    原理：单位时间内下载足够字节后，进行sleep
+-v, --verbose
+    详细输出模式(默认)
 
--w <seconds>
---wait=<seconds>
-    指定多次查找指定文件之间的时间间隔，默认为s，可指定为m/h/d等
-    该参数被--random-wait影响
+-V, --version
+    版本信息
 
---waitretry=<seconds>
-    下载失败时的重试等待时间上限，默认为10s
-    原理：第一次失败后等待1s，第二次失败后等待2s，第三次失败后等待3s，根据线性补偿以此类推，直到达到指定上限
-
---random-wait
-    启动查找间隔随机等待时间，等待时间为0.5~1.5倍等待间隔
-    间隔时间由-w指定
-
---no-proxy
-    不适用代理，即使*_proxy环境变量被定义
-
--Q <quota>
---quota=<quota>
-    限定下载文件可使用空间，针对单个文件或所有的cmd url无效，对-i或递归有效
-    0或inf代表取消限制
-
---no-dns-cache
-    关闭DNS的缓存记录
-    DNS缓存只针对当前wget进程有效
-
---restrict-file-names=<modes>
-    限制文件名可使用的字符，可选：unix/windows/ascii/nocontrol/lowercase/uppercase
-    uninx - escape '/'字符和0-31和128-159号字符。类unix操作系统默认模式
-    windows - escape '\','|','/',':','?','"','*','<','>'字符和0-31和128-159号字符。其中，':'替换为'+'，'?'替换为'@'。windows操作系统默认模式
-    nocontrol - 不对control字符进行escape，使用ｇUTF-8编码表示
-    ascii - 所有大于127号码的都进行escape
-
--4, --inet4-only
-    强制连接到server的IPv4地址
-
--6, --inet6-only
-    强制连接到server的IPv6地址
-    
---prefer-family={none|IPv4|IPv6}
-    优先解析指定类型的IP地址
-
---retry-connrefused
-    当server拒绝访问时，进行重试
-    适用于server短暂宕机
-
---user=<user>
-    连接使用的用户名，可被--ftp-user或--http-user覆盖
-
---password=<password>
-    连接用户使用的密码，可被--ftp-password或--http-password覆盖
-
---no-iri
-    关闭国际化URI支持，默认开启IRI支持
-
---local-encoding=<encoding>
-    指定url使用本地系统编码。用于通过本地编码解码url，再转化成UTF-8后进行网络传输
-
---remote-encoding=<encoding>
-
-    
-目录选项
--nd, --no-directories
-    在递归查找远程文件中，本地不逐层创建目录，所有文件保存在本地当前目录。不同目录出现同名文件时，使用后缀.n来区分
-
--x, --force-directories
-    与-nd相反，在本地逐层创建所需目录
-    例：wget -x http://fly.srk.fer.hr/robots.txt在本地的完整路径为./fly.srk.fer.hr/robots.txt
-
--nH, --no-host-directories
-    与-x类似，但不创建主机名称目录
-    例：wget -nH http://fly.srk.fer.hr/robots.txt在本地的完整路径为./robots.txt
-    
---protocol-directories
-    与-x类似，并加上协议目录
-    例：wget --protocol-directories http://fly.srk.fer.hr/robots.txt在本地的完整路径为./http/fly.srk.fer.hr/robots.txt
-
---cut-dirs=<number>
-    忽略的路径层数，从主机名的后一项开始
-    例：wget -x --cut-dirs=1 http://fly.srk.fer.hr/pub/robots.txt在本地的完整路径为./fly.srk.fer.hr/robots.txt
-
--P <prefix>
---directory-prefix=<prefix>
-    本地文件目录的根目录，默认为.(当前目录)
+-w <seconds>, --wait=<seconds>
+	在每次查找期间等待指定时间, 默认单位为s
+	可使用m/h/d指定等待单位为分钟/小时/天
 
 
-HTTP选项
---default-page=<name>
-    默认下载的文件名，适用于当URL以/结尾的情况，取代默认的index.html
 
--E, --adjust-extension
-    当请求的文件返回的content type为application/xhtml+xml或text/html时，如果请求的文件名称不以正则\.[Hh][Tt][Mm][Ll]?结尾，则本地文件加上html后缀
-    自version 1.12起，添加当content type为text/css时，添加.css后缀功能
-    自version 1.19.2起，添加当Content-Encoding为br/compress/deflate/gzip，添加.br/.Z/.zlib/.gz后缀
+Exit Status:
+0
+	没有出现问题
 
---http-user=<user>
-    指定请求HTTP server的用户名，可覆盖--user选项
+1
+	寻常错误码
 
---http-password=<password>
-    指定请求HTTP server的用户密码，可覆盖--password选项
+2
+	转化错误, 如: cmd option和wgetrc directive
 
---no-http-keep-alive
-    关闭HTTP下载的keep-alive特性
+3
+	文件I/O错误
 
---no-cache
-    关闭文件缓存，适用于proxy server从data server重新获取最新data
-    cache默认开启
+4
+	网络错误
 
---no-cookies
-    关闭cookies
-    连接期间的cookies默认开启，但保存cookies默认不开启
+5
+	SSL验证失败
 
---load-cookies <file>
-    加载的cookies文件的完整路径
-    Netscape 4.x - ~/.netscape/cookies.txt
-    Mozilla and Netscape 6.x - ~/.mozilla/firefox/<str>.default-release/cookies.sqlite
-    
---save-cookies <file>
-    保存cookies文件的完整路径
+6
+	用户名/密码认证失败
 
---keep-session-cookies
-    保存session cookies，即当前wget的cookies
+7
+	协议错误
 
---ignore-length
-    忽略server发送的Content-Length头部
-
---header=<header-line>
-    额外请求的头部信息
-
---compression=<type>
-    请求压缩类型，可选auto/gzip/none(默认)
-    当取值为auto和gzip时，都为gzip压缩
-    该选项为实验选项
-
---max-redirect=<number>
-    最大重定向次数
-    默认为20
-
---proxy-user=<user>
-    代理的用户名
-
---proxy-password=<password>
-    代理的用户密码
-
---referer=<url>
-    当前请求页面的上一个页面地址
-
---save-headers
-    保存HTTP server发送的headers，放置于正文内容之前，并且使用空行分隔
-
--U <agent-string>
---user-agent=<agent-string>
-    当前client的user-agent header，wget默认使用Wget/<version>
-
---post-data=<string>
---post-file=<file>
-    请求使用POST方法，string为额外头部信息，格式为key1=val1&key2=val2
-
---method=<http_method>
-    请求使用的方法
-
---body-data=<data_string>
---body-file=<data_file>
-    类似于--post-data，但更通用，适用于所有方法，与--method一起使用
-
---content-on-error
-    启动该选项时，当server发送error响应码时，不进行忽略
+8
+	服务器给出错误响应
 
 
-HTTPS选项
---secure-protocol=<protocol>
-    选择安全协议类型，可选类型：auto/SSLv2/SSLv3/TLSv1/TLSv1_1/TLSv1_2/TLSv1_3/PFS
 
---
-    option结束标记
+startup file:
+global: /usr/local/etc/wgetrc. 当wget没有安装在/usr/local下时, /usr/local替换为相应前缀
+user: 由WGETRC变量指定, 否则为$HOME/.wgetrc
 
-支持HTTP/HTTPS/FTP协议，并支持HTTP代理
+配置文件规则:
+1.不区分大小写, 忽视'-'和'_'. 例: ‘DIr__PrefiX’/‘DIr-PrefiX’/‘dirprefix’相同
+2.'#'开头表示注释
+3.语法为: <key>=<value>. 例: bind-address=<address>
 
+
+
+实例
+1.简单下载内容(包括SSL/TLS协议下载)
+wget http://fly.srk.fer.hr/
+
+2.从文件读取url
+wget -i url_file.txt

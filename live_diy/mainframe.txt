@@ -81,10 +81,9 @@ xmp: 内存超频, 需要在bios中打开
 2.SATA类型 - 使用SATA协议, 性能较M.2类型低, 但依然远远强于机械硬盘
 
 闪存颗粒优劣排行:
-1.slc
-2.mlc
-3.tlc
-4.qlc
+1.slc(Single-Level Cells) - 每个单元存放1 bit数据, 速度最快, 寿命最长
+2.mlc(Multi-Level Cells) - 每个单元存放2 bit数据, 速度居中，寿命居中
+3.tlc(Triple-Level Cells) - 每个单元存放3 bit数据, 速度最慢, 寿命最短
 
 
 

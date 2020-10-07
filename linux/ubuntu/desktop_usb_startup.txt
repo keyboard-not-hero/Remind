@@ -27,7 +27,7 @@
 二、在Ubuntu环境下制作
 1.下载ubuntu镜像文件
 
-2.使用startup disk creator制作可引导U盘, 该软件可在ubuntu软件商店获取
+2.使用startup disk creator(program: usb-creator-gtk)制作可引导U盘, 该软件可在ubuntu软件商店获取
 
 3.写入完成后, 重启系统, 进入boot界面, 检查是否配置为由U盘启动. 如果是安装ubuntu 20.04, 配置可自由切换显卡: configuration--graphic device为switchable graphics
 

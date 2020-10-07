@@ -1,0 +1,250 @@
+curl - 非交互式传输url内容. 支持的协议列表: DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS,  IMAP, IMAPS,  LDAP,  LDAPS,  POP3,  POP3S,  RTMP, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET and TFTP
+
+语法
+curl [option] [url...]
+
+option列表
+-a, --append
+	当上传文件到服务器时, 将内容添加到文件末尾, 而非默认的覆盖源文件
+	适用于FTP/SFTP
+
+-A, --user-agent <agent>
+	指定发送到服务器的User-Agent header内容
+	适用于HTTP协议
+
+-b, --cookie <data|file>
+	将数据放在Cookie header中发送给服务器, 格式为: NAME1=VALUE1; NAME2=VALUE2.必须保证上一次从服务器接收包含Set-Cookie header
+	当data中没有包含'='符号, 则认为指定包含cookie信息的文件名称file
+	可使用'-'从stdin读取输入
+
+--basic
+	使用基础用户名认证
+	适用于HTTP协议
+
+-c, --cookie-jar <file>
+	指定cookie保存的文件
+	当file使用'-'时, 代表输出到stdout
+	适用于HTTP协议
+
+--cacert <file>
+	指定证书文件, 该文件必须为PEM格式
+	适用于TLS协议
+
+--capath <dir>
+	指定证书文件所在目录, 可以使用':'分隔多个目录, 该文件必须为PEM格式
+	使用TLS协议
+
+--cert-status
+	查看服务器的证书有效状态
+
+-cert-type <type>
+	客户端使用证书类型, 列表: PEM(默认)/DER/ENG/P12
+
+--compressed
+	客户端请求将内容在压缩后再进行传输, 并且在接收端解压缩
+	当服务器不支持时, 报告错误
+	适用于HTTP协议
+
+--compressed-ssh
+	请求进行ssh压缩, 需要服务器支持
+	适用于SCP/SFTP协议
+
+--connect-timeout <seconds>
+	连接超时时间
+
+--connect-to <HOST1:PORT1:HOST2:PORT2>
+	将HOST1:PORT1重导向HOST2:PORT2
+	当HOST1和PORT1都为空字符串时, 代表所有请求到重导向HOST2:PORT2
+	当HOST2和PORT2都为空字符串时, 代表所有请求按原路发出
+
+--create-dirs
+	当与-o配合使用时, 创建必要的目录
+
+--crlf
+	在上传的时候, 将LF转化为CRLF. 适用于MVS(OS/390)
+
+-C, --continue-at <offset>
+	从指定偏移量offset(从0起始)byte处开始下载
+	offset为'-'时, 自动检测恢复下载的位置
+
+-d, --data <data>
+	HTTP POST请求的data部分
+	当data以'@'开头, 代表从指定文件读取data
+	当data为'-'时, 代表从stdin读取输入
+
+--data-ascii <data>
+	与-d类似
+
+--data-raw <data>
+	与-d类似, 但'@'作为寻常字符输入
+
+--digest
+	使用digest用户名认证, 即在传输前进行hash操作
+	对应于Basic authtication的Base64编码更安全
+	适用于HTTP协议
+
+--disallow-username-in-url
+	当url中包含用户名时, 直接退出连接
+
+--dns-interface <interface>
+	发出DNS请求的本地网络接口名称(非接口IP地址)
+
+--dns-ipv4-address <address>
+	发出DNS请求的本地网络接口(IPv4)地址
+
+--dns-ipv6-address <address>
+	发出DNS请求的本地网络接口(IPv6)地址
+
+--dns-servers <address>
+	指定DNS服务器列表, 替换系统默认DNS服务器
+	多个服务器地址之间使用','分隔
+
+-D, --dump-header <file>
+	接收协议的header保存到指定文件
+	适用于FTP/HTTP协议
+
+--engine <engine_name>
+	使用的OpenSSL加密引擎
+	可使用--engine list查看支持的引擎列表
+
+-f, --fail
+	当连接服务器失败时, 不返回服务器的HTTP错误信息
+	适用于HTTP协议
+
+--fail-early
+	返回多个url中最早出现连接错误的错误码
+	默认返回最后出错url的错误码
+
+--false-start
+	在三项握手中, 在最后一步确认之前就开始发送数据信息
+	适用于TLS协议
+
+--ftp-create-dirs
+	在服务器上创建必要的目录
+	适用于FTP/SFTP协议
+
+--ftp-pasv
+	使用passive连接模式
+	适用于FTP协议
+
+-F, --form <name=content>
+	指定发送到服务器的header名称(name)和内容(content)
+	当content以'@'开始, 代表上传指定文件到服务器
+	当content以'<'开始, 代表上传指定文件内的内容到服务器
+
+-G, --get
+	使用GET请求方法发送数据, 数据内容添加在url后面, 并使用'?'分隔
+	适用于HTTP协议
+
+-h, --help
+	帮助信息
+
+-H, --header <header/@file>
+	发送到服务器的额外header内容, 格式为: key: value
+	当内容以'@'开头时, 表示从文件中读取header内容
+
+-i, --include
+	在输出中包含服务器的响应header
+
+--ignore-content-length
+	在HTTP中, 忽略content-length header. 适用于Apache 1.x, 在该版本中, 当content-length超过2GB会报错
+	在FTP中, 跳过RETR, 在下载文件之前直接计算文件大小
+
+--interface <name>
+	使用指定的网络接口进行连接操作, 该接口可以为接口名称/IP地址/主机名
+	当多次使用该参数时, 最后一个生效
+
+-I, --head
+	使用HEAD请求方法
+	适用于HTTP协议
+
+-k, --insecure
+	在验证SSL/TLS的过程中, 即使证书无效也连接
+	默认认证必须正确有效
+
+--keepalive-time <seconds>
+	每次发送keepalive探测的间隔时间, 默认为60s
+
+--key <key>
+	指定私钥文件名称, 默认搜索如下文件: ~/.ssh/id_rsa、~/.ssh/id_dsa、./id_rsa、./id_dsa
+
+--key-type <type>
+	使用的私钥文件类型, 可选列表: PEM/DER/ENG, 默认为PEM
+
+-K, --config <file>
+	指定文本文件为启动配置文件
+	文件内语法格式: <key> [=:] <value>	或 --<option> [=: ] <value>
+	'#'起始的行为注释行
+	file可使用'-'从stdin读取内容
+	默认配置文件查找顺序(.curlrc):
+		1.CURL_HOME
+		2.HOME
+
+--limit-rate <speed>
+	最大上传/下载速度, 默认单位为Byte/seconds
+	可指定k/m/g指定单位为KB/S等, 并且不区分大小写
+
+--local-port <port|range>
+	用于连接的端口或端口区间
+
+-L, --location
+	当服务器返回重定向响应时, 将所有请求替换为GET方法重新向返回的重定向地址进行请求
+	适用于HTTP协议
+
+-m, --max-time <seconds>
+	限定完整操作指令内容下载时间, 单位大小为s
+
+--max-filesize <bytes>
+	可下载的最大文件大小, 默认单位为bytes
+	当请求的文件大小大于指定大小时, 不进行下载, 并返回错误码63
+	可指定k/m/g后缀修改文件大小单位, 不区分大小写
+
+-M, --manual
+	详细帮助文档
+
+-n, --netrc
+	从用户家目录下查找.netrc文件, 并从中读取用户名和密码
+
+--netrc-file <filename>
+	指定.netrc启动配置文件的绝对/相对完整路径文件
+
+--no-keepalive
+	不使用keepalive特性
+	默认使用keepalive特性
+
+--no-progress-meter
+	不显示进度度量内容
+
+--noproxy <no_proxy_list>
+	不使用proxy连接的域名列表, entry之间使用','分隔
+
+-N, --no-buffer
+	不使用输出流buffering
+
+-o, --output <file>
+	将下载内容保存到指定文件file
+	默认输出到stdout
+	可使用{}指定url部分内容的指定列表. 如: curl https://www.{baidu,google}.com
+	可使用[]指定url部分内容的多个相似连续部分. 如: curl https://www.baidu.com/text_[1-5].txt
+
+-P, --ftp-port <address>
+	服务器使用指定地址进行active模式连接
+	适用于FTP协议
+
+-q, --disable
+	当作为第一个参数时, 不读取启动配置文件
+
+-4, --ipv4
+	在主机名解析中, 将主机名解析为IPv4地址
+
+-6, --ipv6
+	在主机名解析中, 将主机名解析为IPv6地址
+
+-:, --next
+	后续的每个URL使用不同的option参数
+
+
+
+实例
+1.通过socks5 proxy下载文件
+curl --socks5 127.0.0.1:<port> --output spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
