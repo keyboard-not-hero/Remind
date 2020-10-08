@@ -3,10 +3,13 @@ fork：拷贝一个项目副本，并且拥有更开放的写权限。副本内�
 连接方式：
 http：所有人以只读权限访问。格式：https://github.com/<user>/<project_name>
 ssh：可读写权限，必须上传公钥到后台。格式：git@github.com:<user>/<project_name>
-添加public key步骤：
-1.账号"settings"
-2.选择"SSH and GPG keys"
-3.点击"New SSH key"
+添加public key到github步骤：
+1.查看是否存在SSH keys, 指令: ls -al ~/.ssh
+2.如果不存在(存在则跳过该步骤), 生成SSH keys, 指令: ssh-keygen -t rsa -b 4096 -C "<email_address>"
+3.复制公钥到剪切板, 步骤如下: 
+	sudo apt-get install xclip
+	xclip -sel clip < ~/.ssh/id_rsa.pub
+4.github - 右上角账号 - "settings" - 选择"SSH and GPG keys" - 点击"New SSH key" - 将公钥粘贴到内容框(key) -- 点击"Add SSH key"
 
 github collaborator：仓库级权限，collaborator可web在线编辑你的仓库
 步骤：

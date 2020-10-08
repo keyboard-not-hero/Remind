@@ -103,6 +103,9 @@ option列表
 	接收协议的header保存到指定文件
 	适用于FTP/HTTP协议
 
+-e, --referer <url>
+	传送referrer header给服务器
+
 --engine <engine_name>
 	使用的OpenSSL加密引擎
 	可使用--engine list查看支持的引擎列表
@@ -227,12 +230,225 @@ option列表
 	可使用{}指定url部分内容的指定列表. 如: curl https://www.{baidu,google}.com
 	可使用[]指定url部分内容的多个相似连续部分. 如: curl https://www.baidu.com/text_[1-5].txt
 
+-O, --remote-name
+	下载文件时, 在本地当前目录, 保存文件名为服务器对应文件名
+
+--parallel-max
+	允许同时并行连接数量, 默认为50
+	配合-Z使用
+
+--pass <phrase>
+	私钥的密码
+	适用于SSH/TLS协议
+
+--pinnedpubkey <hashes>
+	指定使用指定的pub key文件, 文件格式为PEM或DER
+	适用于TLS协议
+
+--post301|post302|post303
+	重定向301|302|303时, 不将POST请求转化为GET请求
+	配合-L使用
+
+--preproxy [protocol://]host[:port]
+	使用指定代理, 可指定代理协议类型(HTTP/SOCKS等)
+	默认使用SOCKS4协议代理
+	默认使用1080端口
+	适用于HTTP(包括HTTPS)协议
+
+--proto-default <protocol>
+	使用指定协议scheme, 用于url协议类型
+
+--proto-redir <protocols>
+	允许指定协议进行重定向, 协议之间使用','分隔, all代表支持的所有协议
+	默认允许HTTP/HTTPS/FTP/FTPS进行重定向
+
+--proto <protocols>
+	代表允许使用的协议, 协议之间使用','分隔, all代表支持的所有协议
+	其他符号含义:
+		+ -- 在原有支持协议的基础上, 增加对指定协议的支持
+		- -- 在原有支持协议的基础上, 减少对指定协议的支持
+		= -- 忽略原有支持协议, 只对指定协议进行支持
+
+--proxy-basic
+	与proxy通信时, 使用基础认证
+
+--proxy-cacert <file>
+	类似于--cacert, 但用于与proxy通信
+
+--proxy-capath <dir>
+	类似于--capath, 但用于与proxy通信
+
+--proxy-cert-type <type>
+	类似于--cert-type, 但用于与proxy通信
+
+--proxy-digest
+	类似于--digest, 但用于与proxy通信
+
+--proxy-header <header/@file>
+	类似于--header, 但用于与proxy通信
+
+--proxy-insecure
+	类似于--insecure, 但用于与proxy通信
+
+--proxy-pass <phrase>
+	类似于--pass, 但用于与proxy通信
+
+--proxy-pinnedpubkey <hashes>
+	类似于--pinnedpubkey, 但用于与proxy通信
+
+--proxy1.0 <host[:port]>
+	使用HTTP1.0连接代理
+	port默认为1080
+
+--public <key>
+	使用的公钥文件
+	适用于SCP/SFTP协议
+
 -P, --ftp-port <address>
 	服务器使用指定地址进行active模式连接
 	适用于FTP协议
 
 -q, --disable
 	当作为第一个参数时, 不读取启动配置文件
+
+-r, --range <range>
+	查找文件的指定bytes范围部分, 如: 500-1000代表获取500字节至1000字节处
+	适用于HTTP/FTP/SFTP/FILE协议
+
+--random-file <file>
+	用于SSL连接中的随机数引擎seed文件	
+
+--raw
+	不将内容进行解码, 直接传送已编码内容
+	适用于HTTP协议
+
+--retry <num>
+	允许重连次数
+
+--retry-delay <seconds>
+	失败重连等待时间
+
+--retry-max-time <seconds>
+	允许重连的最长时间限制
+
+-R, --remote-time
+	下载文件时, 本地文件的时间戳与服务器对应文件的时间戳一致
+
+-s, --silent
+	静默模式
+
+--socks4 <host:[port]>
+	使用socks4代理
+	port默认为1080
+
+--socks4a <host:[port]>
+	使用socks4a代理
+	port默认为1080
+
+--socks5 <host:[port]>
+	使用socks5代理
+	port默认为1080
+
+--socks5-basic 
+	使用带基础认证的socks5代理
+
+--ssl
+	尝试使用SSL连接, 当服务器不支持时, 返回非SSL连接
+
+--stderr
+	将全部输出重导向到stderr
+
+--styled-output
+	使用风格字体, 如HTTP的header使用宽字体
+
+-S, --show-error
+	显示error信息
+	必须配合-s使用
+
+--tcp-fastopen
+	开启TCP连接的fastopen特性
+
+--tls-max <version>
+	支持的最高TLS版本, 默认为最新release TLS版本
+	version列表如下:
+		1.0 - 最高支持到TLSv1.0
+		1.1 - 最高支持到TLSv1.1
+		1.2 - 最高支持到TLSv1.2
+		1.3 - 最高支持到TLSv1.3
+
+--trace <file>
+	保存记录备份到指定文件
+
+-T, --upload-file <file>
+	上传指定文件到服务器
+
+-u, --user <user:password>
+	用于认证的用户名/密码
+
+--url <url>
+	指定获取资源的url, 通常用于配置文件内
+
+-U, --proxy-user <user:password>
+	指定proxy认证的用户名/密码
+
+-v, --verbose
+	详细信息输出模式
+	
+-V, --version
+	显示curl/libcurl版本信息
+
+-w, --write-out <format>
+	传输完成后显示信息到stdout, 并指定显示信息格式
+	以'@'开头表示从指定文件读取信息格式, 并可使用'-'替代文件名称, 从stdin读取格式
+	格式entry: %{VAR_NAME}, VAR_NAME列表如下:
+		content_type - 请求的Content-Type header
+		filename_effective - 下载内容保存的文件名, 需要-o或-O参数指定
+		http_code - http/ftp服务器最后返回的响应码
+		http_connect - proxy最后返回的响应码
+		http_version - 实际使用的HTTP版本
+		local_ip - 当前连接的本地IP接口
+		local_port - 当前连接的本地端口
+		num_connects - 当前传输发起的新连接数
+		num_redirects - 当前请求的重定向次数
+		redirect_url - 应当重定向但没有实际重定向的url. 如: 没有使用-L参数或重定向到达限制数
+		remote_ip - 当前连接的远端IP地址
+		remote_port - 当前连接的远端端口
+		scheme - 当前连接使用的协议
+		size_download - 当前连接下载内容大小
+		size_header - 当前连接的下载内容的header内容大小
+		size_request - 当前连接的请求内容大小
+		size_upload - 当前连接上传内容大小
+		speed_download - 当前连接的平均下载速度
+		speed_upload - 当前连接的平均上传速度
+		ssl_verify_result - peer端证书验证结果, 0代表成功
+		stderr - 使-w参数的结果输出到stderr
+		stdout - 使-w参数的结果输出到stdout
+		time_appconnect - SSL连接使用的时间
+		time_connect - TCP三相握手使用的时间
+		time_namelookup - 域名解析使用的时间
+		time_pretransfer - 起始到文件准备下载的预传输所花时间
+		time_redirect - 所有重定向到最终传输之前所花的时间
+		time_starttransfer - 起始到文件开始下载的时间, 包含time_pretransfer和服务器准备资源时间
+		time_totle - 从开始到下载完毕消耗的时间
+		url_effective - 最终有效url
+	
+
+-x, --proxy [protocol://]host[:port]
+	使用指定协议的代理
+	protocol默认为HTTP
+	port默认为1080
+
+-X, --request <command>
+	指定请求的方法
+	适用于HTTP协议
+
+-z, --time-cond <time>
+	请求在指定时间之后修改的文件
+	当time以'-'开头, 则在指定时间之前修改的文件
+	适用于HTTP/FTP协议
+
+-Z, --parallel
+	使用并行连接方式, 默认为串行连接
 
 -4, --ipv4
 	在主机名解析中, 将主机名解析为IPv4地址
@@ -243,8 +459,24 @@ option列表
 -:, --next
 	后续的每个URL使用不同的option参数
 
+-#, --progress-bar
+	使用简单进度条, 进度条使用'#'显示
+
+
+
+启动配置文件:
+~/.curlrc
+
 
 
 实例
-1.通过socks5 proxy下载文件
-curl --socks5 127.0.0.1:<port> --output spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+1.普通下载
+curl -o robot.jpg https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/2019/08/Robots-Square-300x300.jpg
+
+2.通过socks5 proxy下载文件
+curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+
+curl --preproxy socks5://127.0.0.1:1080 -O https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+
+
+最后编辑于: 2020-10-08
