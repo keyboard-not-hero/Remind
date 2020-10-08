@@ -37,7 +37,6 @@ git config --global user.email EMAIL
 git config --global core.editor vim
 配置代理
 git config --global http.proxy 'socks5://127.0.0.1:1080'  #http://
-git config --global core.gitproxy 'socks5://127.0.0.1:1080'  #git://
 查看配置
 git config --global user.name
 罗列配置
