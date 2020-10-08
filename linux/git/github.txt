@@ -1,7 +1,7 @@
 fork：拷贝一个项目副本，并且拥有更开放的写权限。副本内容新鲜度保留在fork时刻
 
 连接方式：
-http：所有人以只读权限访问。格式：https://github.com/<user>/<project_name>
+http：所有人以只读权限访问, 也可在提示中手动输入github账号/密码进行写入。格式：https://github.com/<user>/<project_name>
 ssh：可读写权限，必须上传公钥到后台。格式：git@github.com:<user>/<project_name>
 添加public key到github步骤：
 1.查看是否存在SSH keys, 指令: ls -al ~/.ssh
