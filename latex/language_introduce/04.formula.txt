@@ -44,11 +44,16 @@
 \end{document}
 
 内容讲解
-1.\begin{displaymath} ... \end{displaymath}用于行间公式环境
+1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 公式居中
 
 2.\[ ... \]用于行间公式环境
 
-3.\begin{equation} ... \end{equation}用于含编号的行间公式环境
+3.\begin{equation} ... \end{equation}用于含编号的行间公式环境, 公式居中. \renewcommand{\theequation}{\alph{equation}}用于修改equation编号类型, 列表如下:
+	arabic - 数字
+	alph - 小写英文字母
+	Alph - 大写英文字母
+	roman - 小写罗马字母
+	Roman - 大写罗马字母
 
 4.\text用于在math mode中输入paragraph mode格式文字. 包含在amsmath宏包中
 

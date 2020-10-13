@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+\draw(0,0)--(2,0)--(0,2)--(0,0);
+\draw[line width=2cm](4,0)--(4,4);
+\draw(0,0) circle(2cm);
+\draw(0,0) ellipse(2cm and 3cm);
+\draw[rotate=45](0,0) ellipse(2cm and 3cm);
+\draw[scale=2](0,0) circle(2cm);
+\draw[step=0.5cm,gray,thick](-1,-1) grid (1,1);
+\draw(0,0)rectangle(2,4);
+\draw(0,-1)arc(-90:90:1cm);
+\end{tikzpicture}
+\end{document}
+
+
+
+内容讲解
+1.\draw(0,0)--(2,0)--(0,2)--(0,0); 代表作三个顶点分别为(0,0)/(2,0)/(0,2)的三角形, 单位长度的默认单位为cm， 作图语句必须以';'结束
+
+2.\draw[line width=5mm](4,0)--(4,4); 指定线条宽度为5mm
+
+3.\draw(0,0) circle(2cm); 作圆心为(0,0), 半径为2cm的圆
+
+4.\draw(0,0) ellipse(20pt and 30pt); 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆
+
+5.\draw[rotate=45](0,0) ellipse(2cm and 3cm); 作一个圆心为(0,0), x-axis半径为2cm, y-axis半径为3cmd的逆时针旋转45度的椭圆
+
+6.\draw[scale=2](0,0) circle(2cm); 作一个圆心为(0,0), 半径为2cm的伸缩系数为2的圆
+
+7.\draw[step=0.5cm,gray,thick](-1,-1) grid (1,1); 作一个两个对角为(-1,-1)/(1,1), 格子宽度为0.5cm, 颜色为灰色的栅栏
+
+8.\draw(0,0)rectangle(2,4); 作长宽分别为2和4的长方形
+
+9.\draw(0,-1)arc(-90:90:1cm); 作起始点为(0,-1), 从-90到90度的半径为1为圆弧

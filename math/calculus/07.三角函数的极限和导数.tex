@@ -1,0 +1,29 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{amssymb}
+\usepackage{parskip}
+\begin{document}
+1.三角函数的极限:\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{\sin(x)}{x}=1$}\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{\tan(x)}{x}=1$}\\[2ex]
+实例.\\
+$\displaystyle\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}=\lim_{x\to 0}\frac{[\frac{(\sin(2x))^3}{(2x)^3}\times (2x)^3]\cos(5x^{19})}{x[\frac{\tan(5x^2)}{5x^2}\times (5x^2)]}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\lim_{x\to 0}\frac{\frac{(\sin(2x))^3}{(2x)^3}\cdot\cos(5x^{19})}{\frac{\tan(5x^2)}{5x^2}}\times\frac{(2x)^3}{x(5x^2)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\lim_{x\to 0}\frac{(\frac{\sin(2x)}{2x})^3\cos(5x^{19})}{\frac{\tan(5x^2)}{5x^2}}\times\frac{8x^3}{5x^3}=\frac{8}{5}$\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{1-\cos(x)}{x}=0$}\\[2ex]
+证明:\\[2ex]
+$\displaystyle\lim_{x\to 0}\frac{1-\cos(x)}{x}=\lim_{x\to 0}\frac{1-\cos(x)}{x}\times\frac{1+\cos(x)}{1+\cos(x)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\frac{1-\cos^2(x)}{x}\times\frac{1}{1+\cos(x)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\frac{\sin^2(x)}{x}\times\frac{1}{1+\cos(x)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\sin(x)\times\frac{\sin(x)}{x}\times\frac{1}{1+\cos(x)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=0\times 1\times\frac{1}{1+1}=0$\\[2ex]
+对于任意的$x$,\framebox{$-1\leqslant\sin(x)\leqslant 1$}和\framebox{$-1\leqslant\cos(x)\leqslant 1$}\\[2ex]
+面对$x\to a$的极限, 而$a\neq 0$时, 有一个很好的一般原则, 那就是用$t=x-a$作替换, 将问题转化为$t\to 0$\\[2ex]
+
+2.三角函数的导数\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\sin(x)=\cos(x)$}\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\cos(x)=-\sin(x)$}\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\tan(x)=\sec^2(x)$}\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\cot(x)=-\csc^2(x)$}\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\sec(x)=\sec(x)\tan(x)$}\\[2ex]
+\framebox{$\displaystyle\frac{d}{dx}\csc(x)=-\csc(x)\cot(x)$}\\[2ex]
+\end{document}

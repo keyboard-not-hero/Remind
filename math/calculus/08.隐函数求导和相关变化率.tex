@@ -1,0 +1,71 @@
+\documentclass[UTF8, fontset=ubuntu, fleqn]{ctexart}
+\usepackage{parskip}
+\renewcommand{\theequation}{\roman{equation}}
+\setlength{\mathindent}{0ex}
+\begin{document}
+1.隐函数求导\\
+例.\\
+$x^2+y^2=4$\\[2ex]
+推导过程:\\
+设$u=y^2$, 则$\frac{du}{dx}=\frac{du}{dy}\frac{dy}{dx}=2y\frac{dy}{dx}$\\
+原函数两边对$x$求导:\\[1ex]
+$\displaystyle\frac{d}{dx}(x^2)+\frac{d}{dx}(y^2)=0\quad\Rightarrow\quad 2x+2y\frac{dy}{dx}=0\Rightarrow\frac{dy}{dx}=-\frac{x}{y}$\\[2ex]
+
+2.隐函数求二阶导数\\
+例.\\
+$2y+\sin(y)=\frac{x^2}{\pi}+1$\\[2ex]
+推导过程:\\
+设$u=\sin(y)$, 则$\frac{du}{dx}=\frac{du}{dy}\frac{dy}{dx}=\cos(y)\frac{dy}{dx}$\\
+原函数两边对$x$求导:\\[1ex]
+$\displaystyle 2\frac{dy}{dx}+\cos(y)\frac{dy}{dx}=\frac{2x}{\pi}\quad\Rightarrow\quad\frac{dy}{dx}=\frac{2x}{\pi(2+\cos(y))}$\\[1ex]
+两边再次对$x$求导:\\[1ex]
+$\displaystyle 2\frac{d^2y}{dx^2}+\frac{d}{dx}(\cos(y)\frac{dy}{dx})=\frac{2}{\pi}\quad\Rightarrow\quad 2\frac{d^2y}{dx^2}-\sin(y)(\frac{dy}{dx})^2+\cos(y)\frac{d^2y}{dx^2}=\frac{2}{\pi}\quad\Rightarrow$\\
+$\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}-\sin(y)(\frac{dy}{dx})^2=\frac{2}{\pi}$\\[1ex]
+将$\frac{dy}{dx}=\frac{2x}{\pi(2+\cos(y))}$带入结果:\\[1ex]
+$\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}=\frac{2}{\pi}+\sin(y)(\frac{2x}{\pi(2+\cos(y))})^2\quad\Rightarrow\quad\frac{d^2y}{dx^2}=\frac{2}{\pi(2+\cos(y))}+\sin(y)\cdot\frac{4x^2}{\pi^2(2+\cos(y))^3}$\\[2ex]
+
+3.相关变化率\\[-3ex]
+\begin{center}
+\framebox{如果$Q$是某个量, 那么$Q$的变化率是$\displaystyle\frac{dQ}{dt}$}\\
+\end{center}\vspace{-1ex}
+\begin{center}
+\framebox{
+\begin{minipage}[c]{10cm}
+设$x=f(t)$和$y=g(t)$为两个变量的变化率, 由于$x$和$y$都是关于时间$t$的函数, 所以$x$与$y$必定存在某种关系, 这种关系称为\textbf{相对变化率}
+\end{minipage}
+}
+\end{center}
+求解相关变化率的方法:\\
+(1)识别出哪一个量需要求相关变化率;\\
+(2)写出一个关联所有量的方程;\\
+(3)对方程关于时间t做隐函数求导;\\
+(4)将已知值带入方程中做替换.\\
+
+例1.\\
+用打气筒给一个完美球体的气球充气. 空气以常数速率$12\pi$立方英寸每秒进入气球.\\
+(1)当气球的半径达到$2$英寸时, 气球的半径的变化率是多少?\\
+(2)从外, 当气球的体积达到$36\pi$立方英寸时, 气球的半径的变化率又是多少?
+
+解:\\
+球体体积公式:\\[-2ex]
+\begin{center}
+\framebox{$\displaystyle V=\frac{4}{3}\pi r^3$}
+\end{center}
+方程对时间t进行隐式求导:
+\begin{equation}
+\displaystyle\frac{dV}{dt}=4\pi r^2\frac{dr}{dx}
+\end{equation}
+(1)将$r=2$和$\frac{dV}{dt}=12\pi$代入公式(i), 得:\\[1ex]
+\phantom{(1)}$\displaystyle 4\pi\times 2^2\frac{dr}{dx}=12\pi\quad\Rightarrow\quad\frac{dr}{dx}=\frac{3}{4}$\\[1ex]
+(2)根据球体体积公式, 得:\\[1ex]
+\phantom{(2)}$\displaystyle\frac{4}{3}\pi r^3=36\pi\quad\Rightarrow\quad r=3$\\[1ex]
+\phantom{(2)}将$r=3$和$\frac{dv}{dt}=12\pi$代入公式(i), 得:\\[1ex]
+\phantom{(2)}$\displaystyle 4\pi\times 3^2\frac{dr}{dx}=12\pi\quad\Rightarrow\quad\frac{dr}{dx}=\frac{1}{3}$\\[2ex]
+
+例2.\\
+假设有两辆汽车A和B. 汽车A在一条路上径直向北行驶远离你家, 而汽车B在另一条路上径直向西行驶接近你家. 汽车A以55英里/小时的速度行驶, 而汽车B以45英里/小时的速度行驶. 当A到达你家北面21英里, 而B到达你家东面28英里时, 两辆汽车间的距离的变化率是多少?
+
+解:\\
+如图.\\
+
+\end{document}

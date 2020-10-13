@@ -174,7 +174,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-九、Demo(示例)09 - align
+九、Demo(示例)09 - alignment
 \documentclass{article}
 \begin{document}
     \noindent TUG is an acronym. It means \TeX\ User Group.\\
