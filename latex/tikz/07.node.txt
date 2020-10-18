@@ -1,0 +1,38 @@
+\documentclass{article}
+\begin{document}
+\begin{tikzpicture}
+\draw (6,6) node{6,6};
+\node at (0,2) [shape=circle,draw,fill=blue!50]{};
+\node (hello) at (0,1) [shape=rectangle,draw]{};
+\node (world) [below of=hello] [shape=circlei,draw]{}; 
+\node (world) [below of=hello,label=above:$s\leq 2$] [shape=circle,draw]{};
+\end{tikzpicture}
+\end{document}
+
+
+
+内容讲解
+1.\draw (6,6) node{6,6}; 在坐标(6,6)添加文字'6,6', node特性:
+	(1)可使用\verb!<content>!来逐字打印包含特殊字符和关键字的内容
+	(2)图像默认在文字的水平和垂直方向居中, 可使用node[anchor=north]来指定图像位于文字的方向, anchor值列表:north/south/east/west/north east等八个方向
+	(3)文字默认在图像的水平和垂直方向居中, 可使用node[right]来指定文字位于图像的指定量便宜方向, 可选参数值列表: below/above/left/right/below right等八个方向
+	(4)可使用可选参数node[fill=<color>]来填充文字background
+	(5)node作用于线条位置分布如下:
+		\draw (0,0)node{N} -- (2,2); - 位于线条起始, 即第一个坐标点居中
+		\draw (0,0) -- node[very near start]{N}(2,2); 非常接近线条起始位置
+		\draw (0,0) -- node[near start]{N}(2,2); 接近线条起始位置
+		\draw (0,0) -- node{N}(2,2); - 位于线条中间位置
+		\draw (0,0) -- node[near end]{N}(2,2); 接近线条结束位置
+		\draw (0,0) -- node[very near end]{N}(2,2); 非常接近线条结束位置
+		\draw (0,0) -- (2,2)node{N}; - 位于线条结束, 即第二个坐标点居中
+	(6)使用可选参数node[sloped]指定文字方向跟随线条方向
+
+2.\node at (0,0) [shape=circle,draw,fill=blue,inner sep=2mm]{}; 在指定坐标上作一个小圆圈, 可选参数draw代表作小图形在字符串周围; fill代表填充背景色; inner sep=2mm指定图像大小, 但minimum size更精确, 可使图形随node{content}内容变换大小, minimum height/width为minimum的height/width分离设置版本
+
+3.\node (hello) at (0,0) [shape=circle,draw]{}; 作一个小三角形, 第一个小括号内用于node命名, 方便后续引用
+
+4.\node (world) [below of=hello] [shape=circle,draw]{}; 用于作一个小三角形, 该三角形名为world, 位于hello下方一个单位, 第一个方括号内为相对位置
+
+5.\node (world) [below of=hello,label=above:$s\leq 2$] [shape=circle,draw]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, 相对位置列表:
+	below/above/left/right - 正下/上/左/右方
+	数字 - 坐标轴上逆时针旋转角度

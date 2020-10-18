@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{tikz}
+\usetikzlibrary{arrows,snakes,backgrounds}
 \begin{document}
 \begin{tikzpicture}
 \draw(0,0)--(2,0)--(0,2)--(0,0);
@@ -11,4 +12,6 @@
 内容讲解
 1.\usepackage{tikz}使用tikz宏包
 
-2.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定
+2.\usetikzlibrary{arrows,snakes,backgrounds}代表额外使用的tikz库
+
+3.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定. 也可以使用\tikz后跟随单一语句(以';'结束)

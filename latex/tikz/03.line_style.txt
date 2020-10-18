@@ -1,0 +1,17 @@
+\documentclass{article}
+\begin{document}
+\begin{tikzpicture}
+\tikzstyle help=[color=blue!100, very thin, dashed]
+\draw[style=help] (0,0) grid (5,5);
+\end{tikzpicture}
+\end{document}
+
+
+
+内容讲解
+1.\tikzstyle <style_name>=<style_list> 用于定义一组style. style列表:
+	color - 线条颜色, 格式为<color>!<percent>[!<accu_color>]. 如: blue!20代表20%强度蓝色, blue!20!green代表20%蓝色和80%(1-20%)绿色混合
+	very thin - 线条粗细
+	dashed - 线条类型, 列表: solid(默认)/loosely dashed/densely dashed/loosely dotted/densely dotted
+
+2.\draw[style=<style_name>] (0,0) grid (5,5); 作一组栅栏, 该栅栏的style采用已定义的style名称
