@@ -1,11 +1,46 @@
 \documentclass{article}
 \begin{document}
 \begin{tikzpicture}
+\tikzstyle every label=red
 \draw (6,6) node{6,6};
 \node at (0,2) [shape=circle,draw,fill=blue!50]{};
 \node (hello) at (0,1) [shape=rectangle,draw]{};
-\node (world) [below of=hello] [shape=circlei,draw]{}; 
-\node (world) [below of=hello,label=above:$s\leq 2$] [shape=circle,draw]{};
+\node (world) [below of=hello,label=right:$s\leq 2$] [shape=circle,draw]{};
+\node (shaft) [left of=world] [shape=rectangle,draw]{};
+\draw[->] (world.north) -- (hello.south);
+\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north);
+\draw [bend right] (hello) to (world);
+
+\node (a) at (0:1) {$0^\circ$};
+\node (b) at (120:1) {$120^\circ$};
+\node (c) at (240:1) {$240^\circ$};
+\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b);
+\draw[auto,bend right] (b) to node {2} node[swap] {2'} (c);
+\draw[auto,bend right] (c) to node {3} node[swap] {3'} (a);
+
+\draw[snake=snake] (0,0) -- (2,0); 
+
+draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (2,0);
+
+draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (3,0)
+node[above,text width=2cm,text centered,midway]{replacement of the capacity by tow place};
+
+\node (top) [shape=circle,draw]{};
+\node (center) [below of=top] [shape=circle,draw]{};
+\node (bottom) [below of=center] [shape=circle,draw]{};
+\node (left) [left of=center] [shape=rectangle,draw]{};
+\node (right) [right of=center] [shape=rectangle,draw]{};
+\draw[->,bend right] (right) to (top);
+\draw[->,bend right] (top) to (left);
+\draw[->,bend right] (left) to (bottom);
+\draw[->,bend right] (bottom) to (right);
+\draw[->] (left) to (center);
+\draw[->] (center) to (right);
+\begin{pgfonlayer}{background}
+\filldraw[fill=black!30,draw=red] (left.west |- bottom.south) rectangle (right.east |- top.north);
+\end{pgfonlayer}
+
+\node (center) [below of=top] [minimum size=6mm,shape=circle,draw,tokens=3]{};
 \end{tikzpicture}
 \end{document}
 
@@ -36,3 +71,40 @@
 5.\node (world) [below of=hello,label=above:$s\leq 2$] [shape=circle,draw]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, 相对位置列表:
 	below/above/left/right - 正下/上/左/右方
 	数字 - 坐标轴上逆时针旋转角度
+
+6.\tikzstyle every label=[red] 特殊style名称every label用于配置所有label的颜色为red
+
+7.\draw[->] (world.north) -- (hello.south); 作一个带尾端箭头的直线, 该直线起始于node world的北面, 终止于node hello的南面. 简明表达语句:
+	\draw[->] (world) to (hello);
+
+8.\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north); 作一个尾端带箭头的曲线, 该曲线起始于node hello的西面, 终止于node shaft的北面. 注意: controls的第二个括号内的相对位置针对的是后续紧跟的绝对位置. 简明表达语句:
+	\draw[->] (hello) to [out=180,in=90] (shaft);
+	或
+	\draw[->] (hello) to [bend right=45] (shaft);
+
+9.\draw [bend right] (hello) to (world); 作一条连接node hello和node world的连接线, 并且沿方向享有弯曲
+
+10.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 内容解析:
+	(1)作一条node a到node b的线条, \draw (a) to (b)
+	(2)在线条方向上向右弯曲, \draw[bend right]
+	(3)添加label 1, node {1}
+	(4)使label 1在曲线一侧, 而非与曲线重叠, draw[auto]
+	(5)添加label 1', 该label与label 1关于曲线成镜像, node[swap] 1'
+
+11.\draw[snake=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[snake=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{snakes}
+
+12.draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (2,0); 作一条带箭头的蛇形曲线, segment amplitude指定波的振幅; segment length指定波长; line after snake指定箭头距离曲线的宽度
+
+13.draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (3,0)
+node[above,text width=2cm,text centered,midway]{replacement of the capacity by tow place}; 在蛇形曲线上附带一段文字. 文字特性在可选参数中:
+	(1)above - 文字位于曲线上方
+	(2)text width - 限制文字宽度
+	(3)text centered - 西文单词不可断词, 内容居中
+	(4)midway - 文字与曲线中部垂直对齐
+
+14.\begin{pgfonlayer}{background}
+\filldraw[fill=black!30,draw=red] (left.west |- bottom.south) rectangle (right.east |- top.north);
+\end{pgfonlayer}
+
+15.\node (center) [below of=top] [minimum size=6mm,shape=circle,draw,tokens=3]{}; 作一个node center的小圆圈, tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
+用于作图形的背景, 需要使用额外tikz库backgrounds, 语法: \usetikzlibrary{backgrounds}
