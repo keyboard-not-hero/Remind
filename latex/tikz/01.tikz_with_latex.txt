@@ -10,8 +10,10 @@
 
 
 内容讲解
-1.\usepackage{tikz}使用tikz宏包
+1.tikz全称"TikZ ist kein Zeichenprogramm", 即"TikZ is not a drawing program"的德语版本
 
-2.\usetikzlibrary{arrows,snakes,backgrounds}代表额外使用的tikz库
+2.\usepackage{tikz}使用tikz宏包, tikz的backend为pgf. pgf在texlive软件包中的TDS兼容路径: /usr/local/texlive/2020/texmf-dist/tex/{generic | plain | latex}
 
-3.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定. 也可以使用\tikz后跟随单一语句(以';'结束)
+3.\usetikzlibrary{arrows,snakes,backgrounds}代表额外使用的tikz库
+
+4.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定. 也可以使用\tikz后跟随单一语句(以';'结束)

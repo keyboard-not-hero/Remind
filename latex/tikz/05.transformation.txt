@@ -1,18 +1,21 @@
 \documentclass{article}
 \begin{document}
 \begin{tikzpicture}
-\draw[rotate=45] (0,0) ellipse (2cm and 3cm);
-\draw[scale=2] (0,0) circle (2cm);
+\draw[rotate=45] (0,0) ellipse [x radius=2cm, y radius=3cm];
+
+\draw[scale=2] (0,0) circle [radius=2cm];
+
 \draw[xshift=1cm,yshift=1cm] (0,0) rectangle (1,1);
+
 \draw[yslant=1] (0,0) rectangle (1,1);
 \end{tikzpicture}
 \end{document}
 
 
 内容讲解
-1.\draw[rotate=45] (0,0) ellipse (2cm and 3cm); 作一个圆心为(0,0), x-axis半径为2cm, y-axis半径为3cmd的逆时针旋转45度的椭圆
+1.\draw[rotate=45] (0,0) ellipse [x radius=2cm, y radius=3cm]; 作一个圆心为(0,0), x-axis半径为2cm, y-axis半径为3cmd的逆时针旋转45度的椭圆
 
-2.\draw[scale=2] (0,0) circle (2cm); 作一个圆心为(0,0), 半径为2cm的伸缩系数为2的圆. scale可用于tikzpicture环境的可选参数, 作用于整个环境. 可使用xscale和yscale分别指定x/y轴上的伸缩系数
+2.\draw[scale=2] (0,0) circle (2cm); 作一个圆心为(0,0), 半径为2cm的伸缩系数为2的圆. scale用于指定伸缩比例, 可使用xscale和yscale分别指定x/y轴上的伸缩系数, 当xscale=-1时, 图像关于垂直线成镜像
 
 3.\draw[xshift=1cm,yshift=1cm] (0,0) rectangle (1,1); 作一个对角分别为(0,0)和(1,1)的长方形, 并且图形x轴平移1cm, y轴平移1cm
 

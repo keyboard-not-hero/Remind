@@ -1,28 +1,50 @@
 \documentclass{article}
 \usepackage{tikz}
+\usetikzlibrary{intersections}
 \begin{document}
 \begin{tikzpicture}
 \draw (0,0) -- (2,0) -- (0,2) -- (0,0);
+
 \draw[line width=2cm] (4,0) -- (4,4);
-\draw (0,0) circle (2cm);
-\draw (0,0) ellipse (2cm and 3cm);
-\draw[step=0.5cmgray,thick] (-1,-1) grid (1,1);
-\draw (0,0) rectangle (2,4);
-\draw (0,-1) arc (-90:90:1cm);
-\draw (-1,0) .. controls (-1,0.555) and (-0.555,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0);
-\draw (0,0) parabola (4,16);
-\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0);
-\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+
+\draw[color=blue] (0,0) -- (2,2);
+
 \draw[->] (-1.5,0) -- (1.5,0);
-\draw (1,0) -- (intersection of 1,0 -- 1,1 and 0,0 -- 45,1cm);
+
+\draw[rounded corners=4pt] (0,0) rectangle (2,2);
+
+\draw[dashed] (0,0) -- (3,3);
+
+\draw (0,0) circle [radius=2cm];
+
+\draw (0,0) ellipse [x radius=2,y radius=3];
+
+\draw[step=0.5cm] (-1,-1) grid (1,1);
+
+\draw (0,0) rectangle (2,4);
+
+\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm];
+
+\draw (-1,0) .. controls (-1,0.555) and (-0.555,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0);
+
+\draw (0,0) rectangle (1,1) (0,0) parabola (1,1);
+
+\draw (0,0) parabola bend (4,16) (6,12);
+
+\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0);
+
+\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+
+\draw[color=blue] (30:1) -- (30:1cm |- 0,0);
+
+\path[name path=upward line] (1,0) -- (1,1);
+\path[name path=sloped line] (0,0) -- (30:1.5);
+\draw[name intersections={of=upward line and sloped line, by=x}][orange] (1,0) -- (x);
+
 \begin{scope}[blue]
 	\draw (5,5) -- (6,6);
 	\draw (0,0) circle (5cm);
 \end{scope}
-\draw (6,6) -- (7,7);
-\draw[color=blue] (30:1) -- (30:1cm |- 0,0);
-\draw (2,0) .. controls(2,1.11) and (1.11,2) .. node{middle}(0,2) .. controls(-1.11,2) and (-2,1.11) .. (-2,0);
-\draw[rounded corners=4pt] (0,0) rectangle (2,2);
 \end{tikzpicture}
 \end{document}
 
@@ -34,15 +56,9 @@
 	相对坐标1 - 当前坐标相对于前一个绝对坐标的位置, 如: (1,1) -- +(2,3) -- +(1,1), 第二个坐标为(1+2,1+3), 第三个点为(1+1,1+1); 
 	相对坐标2 - 当前坐标相对于前一个绝对坐标的位置, 并将当前点转化为绝对坐标, 如: (0,0) -- ++(1,1) -- +(1,1), 第二个点的坐标为(0+1,0+1), 并转化为绝对坐标, 使第三个点依据第二个点进行计算
 	极坐标 - 相对于原点, 逆时针旋转指定角度, 并且指定长度的点, 如: (30:1), 旋转30度, 并且长度为1cm的点. 极坐标除了角度, 也可以使用如下四个关键字方位: up/down/left/right
-	**相对坐标1符号也适用于极坐标
+	**相对坐标1/2符号也适用于极坐标
 
-2.\draw[line width=5mm] (4,0) -- (4,4); 指定线条宽度为5mm
-
-3.\draw (0,0) circle (2cm); 作圆心为(0,0), 半径为2cm的圆
-
-4.\draw (0,0) ellipse (2cm and 3cm); 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆
-
-5.\draw[step=0.5cm,gray,thick] (-1,-1) grid (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, step代表格子宽度为0.5cm, 也可使用xstep和ystep分别指定x/y轴上的格子宽度; 颜色为灰色; 线条宽度为thick(较宽). 线条宽度列表:
+2.\draw[line width=5mm] (4,0) -- (4,4); 指定线条宽度为5mm. 也可使用内置特定线条宽度, 该值没有对应key(与line width无关), 列表:
 	ultra thin - 非常细的线条
 	very thin - 较细的线条
 	thin - 略细的线条
@@ -51,27 +67,61 @@
 	very thick - 较粗的线条
 	ultra thick - 非常粗的线条
 
-6.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
+3.\draw[color=blue] (0,0) -- (2,2); 作一条直线, color指定线条颜色, 颜色格式:
+	blue - 直接蓝色
+	red!30 - 指定30%浓度红色
+	green!20!blue - 指定20%浓度绿色和80%(1-20%)浓度蓝色混合
 
-7.\draw (0,-1) arc (-90:90:1cm); 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 1cm替换为2cm and 3cm可用于作椭圆圆弧
-
-8.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.5,1) and (1,0.5) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,0.555), (0,1)的切线方向指向(-0.555,1); 一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 注意: controls的第二个括号内使用相对坐标, 是针对于后续紧跟的绝对坐标位置
-
-9.\draw (0,0) parabola (4,16); 作一个(0,0)到(4,16)的抛物线. 可使用bend指定弯曲点, 如: \draw (-4,16) parabola bend(0,0) (4,16);
-
-10.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. sin关键字为切线斜率变化由高到低, cos关键字为切线斜率变化由低到高, 而非传统意义的三角曲线
-
-11.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
-
-12.\draw[->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数'->'代表在末端添加箭头. 箭头类型列表:
+4.\draw[->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数'->'代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头; 也可使用>=指定箭头类型
+	箭头所在端列表:
 	-> - 末端箭头
 	<- - 起始端箭头
 	<-> - 起始段和末端箭头
+	箭头类型列表:
+	stealth - 实心箭头
 
-13.\draw (1,0) -- (intersection of 1,0 -- 1,1 and 0,0 -- 45,1cm); 作一条(1,0)到另一个点(两条直线交点, 1,0 -- 1,1和0,0 -- 45,1cm)的直线
+5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度
 
-14.\begin{scope}[] ... \end{scope} 用于将环境的可选参数只应用于该范围内
+6.\draw[dashed] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dashed代表线条类型为虚线. 线条类型列表:
+	dashed - 普通虚线
+	loosely dashed
+	densely dashed
+	dotted - 普通点阵线
+	loosely dotted
+	densely dotted
 
-15.\draw[color=blue] (30:1) -- (30:1cm |- 0,0); 作一条直线, <p> |- <q>代表经过点p得到垂直线与经过q的水平线的交点
+7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆
 
-16.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, 并且角具有半径为4pt的弧度
+8.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆
+
+9.\draw[step=0.5cm] (-1,-1) grid (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, step代表格子宽度为0.5cm, 也可使用xstep和ystep分别指定x/y轴上的格子宽度. 
+
+10.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
+
+11.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可分别使用x radius和y radius作椭圆圆弧
+
+12.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,1), (0,1)的切线方向也指向(-1,1); 另一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 
+**注意: 如果controls的第二个括号内使用相对坐标, 是针对于后续紧跟的绝对坐标位置. 如: (0,1) .. controls(0.555,1) and +(0,0.555) .. (1,0); (1,0)的切线指向(1+0,0+0.555)
+
+13.\draw (0,0) rectangle (1,1) (0,0) parabola (1,1); 作一个对角线为(0,0)/(1,1)的矩形, 另外作一个(0,0)到(1,1)的抛物线
+
+14.\draw (0,0) parabola bend (4,16) (6,12); 作一个(0,0)到(6,12)的抛物线, 并且中间在(4,16)拐弯
+
+15.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度, sin关键字为切线斜率变化由高到低, cos关键字为切线斜率变化由低到高, 而非传统意义的三角曲线
+
+16.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
+
+17.\draw (30:1) -- (30:1cm |- 0,0); 作一条直线, <p> |- <q>代表经过点p的垂直线与经过q的水平线的交点. 其他, <p> -| <q>代表经过p的水平线与经过q的垂直线的交点
+
+18.\path[name path=upward line] (1,0) -- (1,1); 
+代表命名一条(1,0)到(1,1)的直线路径为upward line, name path指定路径名称, 包含在tikz特别包intersections中, 指令: \usetikzlibrary{intersections}
+
+\path[name path=sloped line] (0,0) -- (30:1.5);
+
+\draw[name intersections={of=upward line and sloped line, by=x}][orange] (1,0) -- (x);
+求路径upward line与sloped line的交点(务必确保两条路径足够长, 能够有实际相交), 交点为x, 并作一条(1,0)到(x)的直线
+
+19.\begin{scope}[] ... \end{scope} 用于将环境的可选参数只应用于该范围内. 三种范围如下:
+	tikzpicture - 作用于当前图的所有指令
+	scope - 作用于该范围内的指令
+	draw/fill/clip/shade - 只作用于当前指令

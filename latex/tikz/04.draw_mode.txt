@@ -2,32 +2,40 @@
 \usepackage{tikz}
 \begin{document}
 \begin{tikzpicture}
-\clip (0,0) rectangle (2,2);
 \draw (-2.5,0) -- (2.5,0);
-\draw (0,-2.5) -- (0,2.5);
-\filldraw[fill=red!20,draw=blue!30] (0,0) circle (2cm);
+
 \fill[color=green!20] (0,0) circle (1cm);
+
+\filldraw[fill=red!20,draw=blue!30] (0,0) circle (2cm);
+
 \shade (0,0) rectangle (4,2);
+
 \shadedraw[left color=black, right color=green, draw=blue] (0,0) rectangle (4,2);
+
+\clip (0,0) rectangle (2,2);
+
+\path[draw, clip] (0,0) rectangle (2,2);
 \end{tikzpicture}
 \end{document}
 
 
 
 内容讲解
-1.\draw (-2.5,0) -- (2.5,0); 作一条(-2.5,0)到(2.5,0)的直线
+1.\draw (-2.5,0) -- (2.5,0); 作一条(-2.5,0)到(2.5,0)的直线. \path[draw]的缩写形式
 
-2.\fill[color=green!20] (0,0) circle (1cm); 作一个填充颜色为20%绿色的圆, 圆心为(0,0), 半径为1cm
+2.\fill[color=green!20] (0,0) circle (1cm); 作一个填充颜色为20%绿色的圆, 圆心为(0,0), 半径为1cm. \path[fill]的缩写形式
 
-3.\filldraw[fill=red!20,draw=blue!30] (0,0) circle (2cm); 作一个填充颜色为20%红色, 边框为30%绿色的圆, 圆心为(0,0), 半径为2cm
+3.\filldraw[fill=red!20,draw=blue!30] (0,0) circle (2cm); 作一个填充颜色为20%红色, 边框为30%绿色的圆, 圆心为(0,0), 半径为2cm. \path[fill,draw]的缩写形式
 
-4.\shade (0,0) rectangle (4,2); 作一个长方形, 并且从上到下进行颜色渐变, 默认渐变方向为从上到下, 颜色为黑色到白色. 渐变方向和颜色可使用可选参数列表:
+4.\shade (0,0) rectangle (4,2); 作一个长方形, 并且从上到下进行颜色渐变, 默认渐变方向为从上到下, 颜色为黑色到白色. \path[shade]的缩写形式. 渐变方向和颜色可使用可选参数列表:
 	top color/bottom color - 由上到下
 	left color/right color - 由左到右
 	inner color/outer color - 由内到外
 	ball color - 球形光照效果, 由接近左上角一点, 向外扩散, 白色到指定颜色深度加深
 
-5.\shadedraw[left color=black, right color=green, draw=blue] (0,0) rectangle (4,2); 作一个长方形, 并且从左到右进行颜色渐变, 并指定边框颜色
+5.\shadedraw[left color=black, right color=green, draw=blue] (0,0) rectangle (4,2); 作一个长方形, 并且从左到右进行颜色渐变, 并指定边框颜色. \path[shade,draw]的缩写形式
 
-6.\clip (0,0) rectangle (2,2); 剪切指定图形区域, 只能作用于之后的作图. 即添加一个顶层画布, 并只能在规定区域作画. 可使用\clip[draw]增加边框效果
+6.\clip (0,0) rectangle (2,2); 剪切指定图形区域, 只能作用于之后的作图. 即添加一个顶层画布, 并只能在规定区域作画. \path[clip]的缩写形式
+
+7.\path[draw,clip] (0,0) rectangle (2,2); 剪切指定区域, 并作用于之后的作图, 并在边缘画线条
 
