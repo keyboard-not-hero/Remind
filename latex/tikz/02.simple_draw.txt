@@ -45,6 +45,14 @@
 	\draw (5,5) -- (6,6);
 	\draw (0,0) circle (5cm);
 \end{scope}
+
+\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0);
+\coordinate [label=right:\textcolor{red}{$B$}] (B) at (1.25,0.25);
+\draw[color=green] (A) -- (B);
+
+\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $);
+\coordinate [label=right:\textcolor{red}{$B$}] (B) at ($ (1.25,0.25) + 0.1*(rand,rand) $);
+\draw[color=green] (A) -- (B);
 \end{tikzpicture}
 \end{document}
 
@@ -125,3 +133,9 @@
 	tikzpicture - 作用于当前图的所有指令
 	scope - 作用于该范围内的指令
 	draw/fill/clip/shade - 只作用于当前指令
+
+20.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0); 定义一个坐标点, 该坐标点位于(0,0), 并且命名为A, 给该坐标点添加蓝色标签A, 该标签位于坐标点的左边
+
+\draw[color=green] (A) -- (B); 作一条直线, 该直线连接坐标点A/B, 直线为绿色
+
+21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数, ($ $)表示对内部算式进行计算, 该操作符包含在tikz库calc中, 语法: \usetikzlibrary{calc}

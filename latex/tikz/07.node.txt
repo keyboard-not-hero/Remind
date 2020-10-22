@@ -1,15 +1,37 @@
 \documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{positioning, decorations.pathmorphing}
 \begin{document}
 \begin{tikzpicture}
-\tikzstyle every label=red
-\draw (0,0) -- (2,2) node{point - 2,2};
-\node at (0,2) [shape=circle,draw,fill=blue!50]{};
-\node (hello) at (0,1) [shape=rectangle,draw]{};
-\node (world) [below of=hello,label=right:$s\leq 2$] [shape=circle,draw]{};
-\node (shaft) [left of=world] [shape=rectangle,draw]{};
+\tikzset{every label/.style={red}}
+
+\draw (0,0) -- (2,2) node {point - 2,2};
+
+\draw (0,0) -- (2,2) node {Text at \verb!\node 1!};
+
+\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens};
+
+\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance};
+
+\draw (0,0) node [fill=blue]{since 1989};
+
+\draw (0,0) -- node{origin}(2,2);
+
+\draw (0,0) -- node[sloped]{origin}(2,2);
+
+\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{};
+
+\node at (0,1) [shape=rectangle, draw, name=hello]{};
+
+\node [shape=circle, draw, below=of hello, name=world]{};
+
+\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world, node distance=2cm]{};
+
+\node [shape=circle, draw, below=of hello, label={[blue]above:$s\leq 2$}, name=world]{}; 
+
 \draw[->] (world.north) -- (hello.south);
+
 \draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north);
-\draw [bend right] (hello) to (world);
 
 \node (a) at (0:1) {$0^\circ$};
 \node (b) at (120:1) {$120^\circ$};
@@ -18,29 +40,23 @@
 \draw[auto,bend right] (b) to node {2} node[swap] {2'} (c);
 \draw[auto,bend right] (c) to node {3} node[swap] {3'} (a);
 
-\draw[snake=snake] (0,0) -- (2,0); 
+\draw[decorate, decoration=snake] (0,0) -- (2,0); 
 
-draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (2,0);
+\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0);
 
-draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (3,0)
-node[above,text width=2cm,text centered,midway]{replacement of the capacity by tow place};
+\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
+node[above, text width=2cm, align=center, midway]{replacement of the capacity by tow place};
 
-\node (top) [shape=circle,draw]{};
-\node (center) [below of=top] [shape=circle,draw]{};
-\node (bottom) [below of=center] [shape=circle,draw]{};
-\node (left) [left of=center] [shape=rectangle,draw]{};
-\node (right) [right of=center] [shape=rectangle,draw]{};
-\draw[->,bend right] (right) to (top);
-\draw[->,bend right] (top) to (left);
-\draw[->,bend right] (left) to (bottom);
-\draw[->,bend right] (bottom) to (right);
-\draw[->] (left) to (center);
-\draw[->] (center) to (right);
-\begin{pgfonlayer}{background}
-\filldraw[fill=black!30,draw=red] (left.west |- bottom.south) rectangle (right.east |- top.north);
-\end{pgfonlayer}
+\node (top) [shape=circle, draw]{};
+\node (center) [below=of top] [shape=circle, draw]{};
+\node (bottom) [below=of center] [shape=circle, draw]{};
+\node (left) [left=of center] [shape=rectangle, draw]{};
+\node (right) [right=of center] [shape=rectangle, draw]{};
+\begin{scope}[on background layer]
+\node [fill=black!30, fit=(top)(left)(center)(right)(bottom)]{};
+\end{scope}
 
-\node (center) [below of=top] [minimum size=6mm,shape=circle,draw,tokens=3]{};
+\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{};
 
 \node at (0,0) {pgf version:\pgftypesetversion};
 \end{tikzpicture}
@@ -49,17 +65,34 @@ node[above,text width=2cm,text centered,midway]{replacement of the capacity by t
 
 
 内容讲解
-1.\draw (0,0) -- (2,2) node{point(2,2)}; 在坐标(2,2)添加文字'point(6,6)'
+1.\draw (0,0) -- (2,2) node{point(2,2)}; 作一条(0,0)到(2,2)的直线, 并在坐标(2,2)添加文字'point(6,6)'
 
-2.node{content}文字内容部分可使用\verb!<content>!来逐字打印包含特殊字符和关键字的内容, 并且'!'可替换为两个其他字符. 如: node{Text at \verb!\node 1!}
+2.\draw (0,0) -- (2,2) node {Text at \verb!\node 1!}; 作一条(0,0)到(2,2)的直线, 并且在(2,2)添加文字注释'Text at \node 1', \verb!<str>!用于逐字打印包含特殊字符的内容, '!!'可替换成其他成对符号
 
-3.point默认相对于文字水平和垂直方向居中, 可使用node[anchor=north]来指定point相对于文字的方向, anchor值列表:north/south/east/west/north east等八个方向
+3.\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens}; 作一个圆, 并且作一个node, 该圆位于node的北方i(可选参数anchor指定). anchor可选列表如下:
+	north - point位于node的北方, 即node位于point南方
+	south - point位于node的南方
+	east - point位于node的东方
+	west - point位于node的西方
+	north east - point位于node的东北方
+	north west - point位于node的西北方
+	south east - point位于node的东南方
+	south west - point位于node的西南方
 
-4.文字默认相对于point水平和垂直方向居中, 可使用node[right]来指定文字相对于图像的指定方向, 并可指定相对偏移量, 如: node[right=1cm]{text}. 可选参数值列表: below/above/left/right/below right等八个方向
+4.\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance}; 作一个长方形, 并且在长方形右边作一个node(可选参数right指定, 并且可指定长度). 位置参数列表:
+	left - node位于point左边
+	right - node位于point右边
+	above - node位于point上方
+	below - node位于point下方
+	above left - node位于point左上方
+	above right - node位于point右上方
+	below left - node位于point左下方
+	below right - node位于point右下方
+	
+5.\draw (0,0) node [fill=blue]{since 1989}; 填充node的背景色为蓝色
 
-5.可使用可选参数node[fill=<color>]来填充文字background
 
-6.node作用于线条位置分布如下:
+6.\draw (0,0) -- node{origin}(2,2); 作一条(0,0)到(2,2)的直线, 并且在直线中间添加node. node作用于线条位置分布如下:
 	\draw (0,0)node{N} -- (2,2); - 位于线条起始, 即第一个坐标点居中
 	\draw (0,0) -- node[very near start]{N}(2,2); 非常接近线条起始位置
 	\draw (0,0) -- node[near start]{N}(2,2); 接近线条起始位置
@@ -68,65 +101,68 @@ node[above,text width=2cm,text centered,midway]{replacement of the capacity by t
 	\draw (0,0) -- node[very near end]{N}(2,2); 非常接近线条结束位置
 	\draw (0,0) -- (2,2)node{N}; - 位于线条结束, 即第二个坐标点居中
 
-7.使用可选参数node[sloped]指定文字方向跟随线条方向
+7.\draw (0,0) -- node[sloped]{origin}(2,2); 作一条直线并且中间添加node, 使用可选参数sloped指定文字方向跟随线条方向
 
-8.\node at (0,0) [shape=circle, draw, fill=blue, inner sep=2mm]{}; 在指定坐标上添加文字内容, 并使用一个圆包围该文字. 参数含义如下:
+8.\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{}; 在指定坐标上添加文字内容, 并使用一个圆包围该文字. 参数含义如下:
 	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle
-	draw - 代表画出该图形
+	draw - 代表画出该包围图形
 	fill - 代表填充背景色
 	inner sep - 指定包围文字的图像大小, 但minimum size更精确
 	minimum size - 当包围图形内不包含内容时的最小图形大小, 可使包围图形随文字内容变换大小, minimum height/width为minimum的x/y轴分离设置版本
 	相同含义的其他语法: 
 	\path (0,0) node [shape=circle, draw, fill=blue, inner sep=2mm]{};
 
-9.\node at (0,0) [shape=circle,draw,name=mouse]{};在指定坐标(0,0)上添加文字, 并使用圆包围该文字, 并且使用可选参数name命名该圆为hello, 用于后续引用. 也可以使用圆括号额外命名包围图形, 语法如下:
+9.\node at (0,1) [shape=rectangle, draw, name=hello]{};在指定坐标(0,0)上添加文字, 并使用圆包围该文字, 并且使用可选参数name命名该圆为hello, 用于后续引用(名称不能包含','/'.'/'('/')'/':'等, 但可以包含'_'/'-'). 也可以使用圆括号额外命名包围图形, 语法如下:
 	\node (hello) at (0,0) [shape=circle,draw]{}; 
 
-10.\node [shape=circle,draw,below of=hello,name=world]{}; 在hello命名图形下添加一段文字, 并使用circle包围该文字, 该三角形名为world. 参数含义如下:
+10.\node [shape=circle, draw, below=of hello, name=world, node distance=2cm]{}; 在hello命名图形下添加一段文字, 并使用circle包围该文字, 该三角形名为world. 参数含义如下:
 	shape - 包围文字的图形
 	draw - 将包围图形画出来
-	below of - 相对于其他命名图形的位置
+	below - 相对于其他命名图形的位置, 可选列表: below/above/left/right, 需额外导入tikz库positioning, 语法: \usetikzlibrary{positioning}
 	name - 包围图形的名称
+	node distance - 用于指定相对位置差距时, node之间的距离. 当on grid参数指定时(true), 为node的中心之间的距离; 当on grid参数未指定时(false), 为node的最近边界之间的距离
 
-11.\node (world) [below of=hello,label=above:$s\leq 2$] [shape=circle,draw]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, 相对位置列表:
-	below/above/left/right - 正下/上/左/右方
+11.\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label的相对位置列表:
+	below/above/left/right/below left/below right/above left/above right - 下/上/左/右/左下/右下/左上/右上方
 	数字 - 坐标轴上逆时针旋转角度
 
-12.\tikzstyle every label=[red] 特殊style名称every label用于配置所有label的颜色为red
+12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red
+
+13.\node [below=of hello, label={[blue]above:$s\leq 2$}, shape=circle, draw, name=world]{}; 作一个位于node hello之下, 并且使用circle包围内容的node, 该node名称为world, 并在该node之上添加一个label为s<=2, 并且指定当前label颜色为blue. label={[blue]above:$s\leq 2$}用于指定当前label的颜色
 
 13.\draw[->] (world.north) -- (hello.south); 作一个带尾端箭头的直线, 该直线起始于node world的北面, 终止于node hello的南面. 简明表达语句:
 	\draw[->] (world) to (hello);
 
-14.\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north); 作一个尾端带箭头的曲线, 该曲线起始于node hello的西面, 终止于node shaft的北面. 注意: controls的第二个括号内的相对位置针对的是后续紧跟的绝对位置. 简明表达语句:
+14.\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north); 作一个尾端带箭头的曲线, 该曲线起始于node hello的西面, 并且切线偏向左方5mm, 终止于node shaft的北面, 并且切线偏向于上方5mm. 注意: controls的第二个括号内的相对位置针对的是后续紧跟的绝对位置. 简明表达语句:
 	\draw[->] (hello) to [out=180,in=90] (shaft);
 	或
 	\draw[->] (hello) to [bend right=45] (shaft);
 
-15.\draw [bend right] (hello) to (world); 作一条连接node hello和node world的连接线, 并且沿方向享有弯曲
-
-16.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 内容解析:
+15.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 内容解析:
 	(1)作一条node a到node b的线条, \draw (a) to (b)
 	(2)在线条方向上向右弯曲, \draw[bend right]
 	(3)添加label 1, node {1}
 	(4)使label 1在曲线一侧, 而非与曲线重叠, draw[auto]
-	(5)添加label 1', 该label与label 1关于曲线成镜像, node[swap] 1'
+	(5)添加label 1', 该label在曲线另一面, node[swap] 1'
 
-17.\draw[snake=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[snake=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{snakes}
+16.\draw[decorate,decoration=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[decorate,decoration=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{decorations.pathmorphing}
 
-18.draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (2,0); 作一条带箭头的蛇形曲线, segment amplitude指定波的振幅; segment length指定波长; line after snake指定箭头距离曲线的宽度
+17.draw[->,decorate,decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0); 作一条带箭头的蛇形曲线, amplitude指定波的振幅; segment length指定波长; post length指定箭头距离蛇形曲线的宽度
 
-19.draw[->,snake=snake,segment amplitude=0.8mm,segment length=4mm,line after snake=2mm] (0,0) -- (3,0)
-node[above,text width=2cm,text centered,midway]{replacement of the capacity by tow place}; 在蛇形曲线上附带一段文字. 文字特性在可选参数中:
+18.\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
+node[above, text width=2cm, align=center, midway]{replacement of the capacity by tow place}; 在蛇形曲线上附带一段文字. 文字特性在可选参数中:
 	(1)above - 文字位于曲线上方
 	(2)text width - 限制文字宽度
-	(3)text centered - 西文单词不可断词, 内容居中
+	(3)align - 多行文字垂直对齐方式, 可选列表: left/center/right
 	(4)midway - 文字与曲线中部垂直对齐
 
-20.\begin{pgfonlayer}{background}
-\filldraw[fill=black!30,draw=red] (left.west |- bottom.south) rectangle (right.east |- top.north);
-\end{pgfonlayer}
-
-21.\node (center) [below of=top] [minimum size=6mm,shape=circle,draw,tokens=3]{}; 作一个node center的小圆圈, tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
+19.\begin{scope}{on background layer}
+\node [fill=black!30, fit=(top)(left)(center)(right)(bottom)]{};
+\end{scope}
+计算包含所有图形的背景, on background layer指定内容位于背景层, fit用于适配前景图像并计算大小
 用于作图形的背景, 需要使用额外tikz库backgrounds, 语法: \usetikzlibrary{backgrounds}
+fit参数计算图形便捷, 需要额外使用tikz库fit, 语法: \usetikzlibrary{fit}
 
-22.\node at (0,0) {pgf version:\pgftypesetversion}; 显示当前安装pgf版本, \pgftypesetversion代表pgf版本
+20.\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{}; 作一个node center的小圆圈, 可选参数tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
+
+21.\node at (0,0) {pgf version:\pgftypesetversion}; 显示当前安装pgf版本, \pgftypesetversion代表pgf版本
