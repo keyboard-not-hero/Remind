@@ -4,61 +4,106 @@
 \begin{document}
 \begin{tikzpicture}
 \tikzset{every label/.style={red}}
+%
+%\draw (0,0) -- (2,2) node {point - 2,2};
+%
+%\draw (0,0) -- (2,2) node {Text at \verb!\node 1!};
+%
+%\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens};
+%
+%\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance};
+%
+%\draw (0,0) node [fill=blue]{since 1989};
+%
+%\draw (0,0) -- node{origin}(2,2);
+%
+%\draw (0,0) -- node[sloped]{origin}(2,2);
+%
+%\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{};
+%
+%\node at (0,1) [shape=rectangle, draw, name=hello]{};
+%
+%\node [shape=circle, draw, below=of hello, name=world]{};
+%
+%\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world, node distance=2cm]{};
+%
+%\node [shape=circle, draw, below=of hello, label={[blue]above:$s\leq 2$}, name=world]{}; 
+%
+%\draw[->] (world.north) -- (hello.south);
+%
+%\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north);
+%
+%\node (a) at (0:1) {$0^\circ$};
+%\node (b) at (120:1) {$120^\circ$};
+%\node (c) at (240:1) {$240^\circ$};
+%\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b);
+%\draw[auto,bend right] (b) to node {2} node[swap] {2'} (c);
+%\draw[auto,bend right] (c) to node {3} node[swap] {3'} (a);
+%
+%\draw[decorate, decoration=snake] (0,0) -- (2,0); 
+%
+%\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0);
+%
+%\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
+%node[above, text width=2cm, align=center, midway]{replacement of the capacity by tow place};
+%
+%\node (top) [shape=circle, draw]{};
+%\node (center) [below=of top] [shape=circle, draw]{};
+%\node (bottom) [below=of center] [shape=circle, draw]{};
+%\node (left) [left=of center] [shape=rectangle, draw]{};
+%\node (right) [right=of center] [shape=rectangle, draw]{};
+%\begin{scope}[on background layer]
+%\node [fill=black!30, fit=(top)(left)(center)(right)(bottom)]{};
+%\end{scope}
+%
+%\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{};
+%
+%\node at (0,0) {pgf version:\pgftypesetversion};
+%
+%\coordinate [label=left:$A$] (A) at (0,0);
+%\coordinate [label=right:$B$] (B) at (1.25,0.25);
+%\draw (A) -- (B);
+%\node [draw, circle through=(B), label=left:$D$] at (A) {};
+%
+%\coordinate [label=left:$A$] (A) at (0,0);
+%\coordinate [label=right:$B$] (B) at (1.25,0.25);
+%\draw (A) -- (B);
+%\node (D) [name path=D, draw, circle through=(B), label=left:$D$] at (A) {};
+%\node (E) [name path=E, draw, circle through=(A), label=right:$E$] at (B) {};
+%\path [name intersections={of=D and E}];
+%\coordinate [label=above:$C$] (C) at (intersection-1);
+%\coordinate [label=below:$F$] (F) at (intersection-2);
+%\draw [red] (A) -- (C);
+%\draw [red] (B) -- (C);
+%\draw [blue] (C) -- (F);
+%
+%\coordinate [label=left:$A$] (A) at (0,0);
+%\coordinate [label=right:$B$] (B) at (1.25,0.25);
+%\draw (A) -- (B);
+%\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
+%\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
+%\draw (A) -- (D) -- (B);
 
-\draw (0,0) -- (2,2) node {point - 2,2};
+%完整实例
+\coordinate [label=left:$A$] (A) at (0,0);
+\coordinate [label=right:$B$] (B) at (0.75,0.25);
+\coordinate [label=above:$C$] (C) at (1,1.5);
+\draw (A) -- (B) -- (C);
+\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
+\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
+\draw (A) -- (D) -- (B);
+\node (H) [name path=H, label=135:$H$, draw, circle through=(C)] at (B){};
+\coordinate [label=below:$F$] (F) at ($ (D) !3.5! (B) $);
+\coordinate [label=below:$E$] (E) at ($ (D) !3.5! (A) $);
+\draw (F) -- (D) -- (E);
+\path [name path=B--F] (B) -- (F);
+\path [name intersections={of=H and B--F, by={[label=left:$G$]G}}];
+\fill[red,opacity=.5] (G) circle (2pt);
+\node (I) [name path=I, label=45:$I$, draw, circle through=(G)] at (D){};
+\path [name path=A--E] (A) -- (E);
+\path [name intersections={of=I and A--E, by={[label=below left:$J$]J}}];
+\fill[red,opacity=0.5] (J) circle (2pt);
 
-\draw (0,0) -- (2,2) node {Text at \verb!\node 1!};
-
-\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens};
-
-\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance};
-
-\draw (0,0) node [fill=blue]{since 1989};
-
-\draw (0,0) -- node{origin}(2,2);
-
-\draw (0,0) -- node[sloped]{origin}(2,2);
-
-\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{};
-
-\node at (0,1) [shape=rectangle, draw, name=hello]{};
-
-\node [shape=circle, draw, below=of hello, name=world]{};
-
-\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world, node distance=2cm]{};
-
-\node [shape=circle, draw, below=of hello, label={[blue]above:$s\leq 2$}, name=world]{}; 
-
-\draw[->] (world.north) -- (hello.south);
-
-\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north);
-
-\node (a) at (0:1) {$0^\circ$};
-\node (b) at (120:1) {$120^\circ$};
-\node (c) at (240:1) {$240^\circ$};
-\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b);
-\draw[auto,bend right] (b) to node {2} node[swap] {2'} (c);
-\draw[auto,bend right] (c) to node {3} node[swap] {3'} (a);
-
-\draw[decorate, decoration=snake] (0,0) -- (2,0); 
-
-\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0);
-
-\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
-node[above, text width=2cm, align=center, midway]{replacement of the capacity by tow place};
-
-\node (top) [shape=circle, draw]{};
-\node (center) [below=of top] [shape=circle, draw]{};
-\node (bottom) [below=of center] [shape=circle, draw]{};
-\node (left) [left=of center] [shape=rectangle, draw]{};
-\node (right) [right=of center] [shape=rectangle, draw]{};
-\begin{scope}[on background layer]
-\node [fill=black!30, fit=(top)(left)(center)(right)(bottom)]{};
-\end{scope}
-
-\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{};
-
-\node at (0,0) {pgf version:\pgftypesetversion};
 \end{tikzpicture}
 \end{document}
 
@@ -166,3 +211,23 @@ fit参数计算图形便捷, 需要额外使用tikz库fit, 语法: \usetikzlibra
 20.\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{}; 作一个node center的小圆圈, 可选参数tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
 
 21.\node at (0,0) {pgf version:\pgftypesetversion}; 显示当前安装pgf版本, \pgftypesetversion代表pgf版本
+
+22.\node [draw, circle through=(B), label=left:$D$] at (A) {}; 在坐标A的位置作一个node, 该node的label为D并位于坐标的左方, circle througn作用: 
+	1.指定该node为圆形; 
+	2.圆的半径为圆心A到点B的距离.
+	该可选参数位于tikz库through中, 语法: \usetikzlibrary{through}
+
+23.\node (D) [name path=D, draw, circle through=(B), label=left:$D$] at (A) {};
+node命名为D, 并且path名称为D
+
+\path [name intersections={of=D and E}];
+求node D/E的交点, 交点坐标数组存放在intersection数组中
+
+\coordinate [label=above:$C$] (C) at (intersection-1);
+取出intersection数组坐标中的第一个坐标, 并命名该坐标为C, 并且在该坐标之上放置一个label
+
+24.\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
+作一个node, 该node位于点A与B之间. ($ (A)!0.5!(B) $)中, ($ $)代表对坐标进行运算, 需要使用tikz库calc, 语法: \usetikzlibrary{calc}
+
+\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
+($ (X) !{sin(60)*2}! 90:(B) $)代表先将(X)到(B)的直线旋转90度, 然后找一个距离点X距离为sin(60)*2*(length_of_XB)的点

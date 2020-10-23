@@ -3,56 +3,67 @@
 \usetikzlibrary{intersections}
 \begin{document}
 \begin{tikzpicture}
-\draw (0,0) -- (2,0) -- (0,2) -- (0,0);
+%\draw (0,0) -- (2,0) -- (0,2) -- (0,0);
+%
+%\draw[line width=2cm] (4,0) -- (4,4);
+%
+%\draw[color=blue, opacity=0.5] (0,0) -- (2,2);
+%
+%\draw[->] (-1.5,0) -- (1.5,0);
+%
+%\draw[rounded corners=4pt] (0,0) rectangle (2,2);
+%
+%\draw[dashed] (0,0) -- (3,3);
+%
+%\draw (0,0) circle [radius=2cm];
+%
+%\draw (0,0) ellipse [x radius=2,y radius=3];
+%
+%\draw[step=0.5cm] (-1,-1) grid (1,1);
+%
+%\draw (0,0) rectangle (2,4);
+%
+%\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm];
+%
+%\draw (-1,0) .. controls (-1,0.555) and (-0.555,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0);
+%
+%\draw (0,0) rectangle (1,1) (0,0) parabola (1,1);
+%
+%\draw (0,0) parabola bend (4,16) (6,12);
+%
+%\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0);
+%
+%\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+%
+%\draw[color=blue] (30:1) -- (30:1cm |- 0,0);
+%
+%\path[name path=upward line] (1,0) -- (1,1);
+%\path[name path=sloped line] (0,0) -- (30:1.5);
+%\draw[name intersections={of=upward line and sloped line, by=x}][orange] (1,0) -- (x);
+%
+%\begin{scope}[blue]
+%	\draw (5,5) -- (6,6);
+%	\draw (0,0) circle (5cm);
+%\end{scope}
+%
+%\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0);
+%\coordinate [label=right:\textcolor{red}{$B$}] (B) at (1.25,0.25);
+%\draw[color=green] (A) -- (B);
+%
+%\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $);
+%\coordinate [label=right:\textcolor{red}{$B$}] (B) at ($ (1.25,0.25) + 0.1*(rand,rand) $);
+%\draw[color=green] (A) -- (B);
 
-\draw[line width=2cm] (4,0) -- (4,4);
-
-\draw[color=blue] (0,0) -- (2,2);
-
-\draw[->] (-1.5,0) -- (1.5,0);
-
-\draw[rounded corners=4pt] (0,0) rectangle (2,2);
-
-\draw[dashed] (0,0) -- (3,3);
-
-\draw (0,0) circle [radius=2cm];
-
-\draw (0,0) ellipse [x radius=2,y radius=3];
-
-\draw[step=0.5cm] (-1,-1) grid (1,1);
-
-\draw (0,0) rectangle (2,4);
-
-\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm];
-
-\draw (-1,0) .. controls (-1,0.555) and (-0.555,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0);
-
-\draw (0,0) rectangle (1,1) (0,0) parabola (1,1);
-
-\draw (0,0) parabola bend (4,16) (6,12);
-
-\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0);
-
-\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
-
-\draw[color=blue] (30:1) -- (30:1cm |- 0,0);
-
-\path[name path=upward line] (1,0) -- (1,1);
-\path[name path=sloped line] (0,0) -- (30:1.5);
-\draw[name intersections={of=upward line and sloped line, by=x}][orange] (1,0) -- (x);
-
-\begin{scope}[blue]
-	\draw (5,5) -- (6,6);
-	\draw (0,0) circle (5cm);
-\end{scope}
-
-\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0);
-\coordinate [label=right:\textcolor{red}{$B$}] (B) at (1.25,0.25);
-\draw[color=green] (A) -- (B);
-
-\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $);
-\coordinate [label=right:\textcolor{red}{$B$}] (B) at ($ (1.25,0.25) + 0.1*(rand,rand) $);
-\draw[color=green] (A) -- (B);
+\coordinate [label=left:$A$] (A) at (0,0);
+\coordinate [label=right:$B$] (B) at (1.25,0.25);
+\draw (A) -- (B);
+\draw 
+let 
+\p1 = ($ (B) - (A) $),
+\n2 = {veclen(\x1,\y1)}
+in
+(A) circle (\n2)
+(B) circle (\n2);
 \end{tikzpicture}
 \end{document}
 
@@ -75,10 +86,12 @@
 	very thick - 较粗的线条
 	ultra thick - 非常粗的线条
 
-3.\draw[color=blue] (0,0) -- (2,2); 作一条直线, color指定线条颜色, 颜色格式:
-	blue - 直接蓝色
-	red!30 - 指定30%浓度红色
-	green!20!blue - 指定20%浓度绿色和80%(1-20%)浓度蓝色混合
+3.\draw[color=blue, opacity=0.5] (0,0) -- (2,2); 作一条直线.
+	color指定线条颜色, 颜色格式:
+		blue - 直接蓝色
+		red!30 - 指定30%浓度红色, 参考xcolor package
+		green!20!blue - 指定20%浓度绿色和80%(1-20%)浓度蓝色混合, 参考xcolor package
+	opacity指定透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
 
 4.\draw[->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数'->'代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头; 也可使用>=指定箭头类型
 	箭头所在端列表:
@@ -90,13 +103,16 @@
 
 5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度
 
-6.\draw[dashed] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dashed代表线条类型为虚线. 线条类型列表:
+6.\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dash pattern代表线条类型为特定虚线. 也可使用预定义线条, 预定义线条类型列表:
+	solid - 实线(默认)
 	dashed - 普通虚线
-	loosely dashed
-	densely dashed
+	loosely dashed - 松散虚线
+	densely dashed - 密集虚线
 	dotted - 普通点阵线
-	loosely dotted
-	densely dotted
+	loosely dotted - 松散点阵线
+	densely dotted - 密集点阵线
+	dash dot - 虚线和点阵线混合
+	dash dot dot - 类似于dash dot, 但循环排列的点阵多一个
 
 7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆
 
@@ -138,4 +154,34 @@
 
 \draw[color=green] (A) -- (B); 作一条直线, 该直线连接坐标点A/B, 直线为绿色
 
-21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数, ($ $)表示对内部算式进行计算, 该操作符包含在tikz库calc中, 语法: \usetikzlibrary{calc}
+21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数. 
+($ $)表示对coordinate进行计算, 该操作符包含在tikz库calc中, 语法: \usetikzlibrary{calc}. 详细语法如下:
+	总结构: ([options]$<coordinate computation>$)
+	结构剖析:
+	coordinate computation结构: <factor>*<coordinate><modifiers>
+		factor是可选的, 当其为一个复杂表达式(加减乘除)时, 使用'{}'限定;
+		coordinate代表坐标; 
+		modifiers也是可选的, 用于连接其他coordinate. 列表如下:
+			1. <coordinate_1> + <factor>*<coordinate_2> - 坐标运算平移
+			例: ($ (0,0) + 0.2*(2,1) $) - 坐标(0,0)向x轴平移0.4个单位, 向y轴平移0.2个单位后的位置
+			2. <coordinate_1>!<number>!<coordinate_2> - 在直线上按比例查找点
+			例: ($ (0,0)!0.75!(2,2) $) - 在(0,0)到(2,2)线段上, 距离(0,0)有0.75个该线段长度的点位置
+			3. <coordinate_1>!<number>!<angle>:<coordinate_2> - 在直线上按比例查找点, 并旋转角
+			例: ($ (0,0)!0.75!90:9(2,2) $) - 在(0,0)到(2,2)线段上, 距离(0,0)有0.75个该线段长度, 并且逆时针旋转90度的点位置
+			4. <coordinate_1>!<dimension>!<coordinate_2> - 在直线上按长度寻找点(也可旋转角)
+			例: ($ (0,0)!2pt!(2,2) $) - 在(0,0)到(2,2)线段上, 距离(0,0)有2pt距离的点位置
+			5. <coordinate_1>!<projection_coordinate>!<coordinate_2> - projection坐标垂直投射到两个坐标的连线上(可旋转角)
+			例: ($ (0,0)!(0,2)!(2,2) $) - 坐标(0,2)在直线(0,0)--(2,2)上的垂直投射点
+	** ($ $)不能作用于可选参数位置
+	
+22.
+\draw 
+let 
+\p1 = ($ (B) - (A) $),
+\n2 = {veclen(\x1,\y1)}
+in
+(A) circle (\n2)
+(B) circle (\n2);
+let .. in内可将值赋予任意宏(\path相关指令才能使用), 如: \p1=($ (B) - (A) $), 将(x_b-x_a, y_b-y_a)赋予\p1, \p1为x_b-x_a, y_b-y_a, 不是坐标(x_b-x_a, y_b-y_a), 并且\p1的元素都携带坐标
+\x1=x_b-x_a, \y2=y_b-y_a, veclen为计算线段长度(带单位), 即: \sqrt((x_b-x_a)^2, (y_b-y_a)^2), 并将结果赋予\n2, \n2结果为<dimension>, 如: 5pt
+** \p指代point, \x指代x轴坐标, \y指代y轴坐标, \n指代带单位的number
