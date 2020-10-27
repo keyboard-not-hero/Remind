@@ -144,7 +144,7 @@ tlmgr option repository ctan|<url>
 **url格式参考: https://mirrors.aliyun.com/CTAN/systems/texlive/tlnet
 **ctan代表距离最近镜像, 等于: http://mirror.ctan.org/systems/texlive/tlnet
 
-查看package是否已安装
+查看package状态和信息
 tlmgr info <package>
 
 更新tlmgr版本

@@ -1,0 +1,157 @@
+%\documentclass{article}
+%\usepackage{tikz}
+%\begin{document}
+%\begin{tikzpicture}
+%\node{1}
+%    child{node{2}}
+%    child{node{3}}
+%    child{node{4}};
+%\end{tikzpicture}
+%\end{document}
+%
+%
+%\documentclass{article}
+%\usepackage{tikz}
+%\begin{document}
+%\begin{tikzpicture}
+%\node{1}
+%    child{node{2}
+%        child{node{5}}
+%        child{node{6}}
+%    }
+%    child{node{3}
+%        child{node{7}}
+%        child{node{8}}
+%        child{node{9}}
+%    }
+%    child{node{4}
+%        child{node{10}}
+%    };
+%\end{tikzpicture}
+%\end{document}
+%
+%
+%\documentclass{article}
+%\usepackage{tikz}
+%\begin{document}
+%\begin{tikzpicture}[font=\footnotesize, grow=right, level distance=5cm]
+%\tikzset{level 1/.style={sibling distance=6em},
+%level 2/.style={sibling distance=1em}
+%}
+%\node{1}
+%    child{node{2}
+%        child{node{5}}
+%        child{node{6}}
+%    }
+%    child{node{3}
+%        child{node{7}}
+%        child{node{8}}
+%        child{node{9}}
+%    }
+%    child{node{4}
+%        child{node{10}}
+%    };
+%\end{tikzpicture}
+%\end{document}
+%
+%
+%\documentclass{article}
+%\usepackage{tikz}
+%\usetikzlibrary{trees}
+%\begin{document}
+%\begin{tikzpicture}[font=\footnotesize, grow cyclic, level distance=5cm]
+%\tikzset{level 1/.style={sibling angle=120},
+%level 2/.style={sibling angle=30}
+%}
+%\node{1} 
+%	child{node{2}
+%		child{node{5}}
+%		child{node{6}}
+%		child{node{7}}
+%		child{node{8}}
+%	}
+%	child{node{3}
+%		child{node{9}}
+%		child{node{10}}
+%		child{node{11}}
+%		child{node{12}}
+%		child{node{13}}
+%		child{node{14}}
+%		child{node{15}}
+%	}
+%	child{node{4}
+%		child{node{16}}
+%		child{node{17}}
+%		child{node{18}}
+%		child{node{19}}
+%		child{node{20}}
+%		child{node{21}}
+%		child{node{22}}
+%	};
+%\end{tikzpicture}
+%\end{document}
+
+
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\begin{document}
+\begin{tikzpicture}[mindmap, concept color=red!50]
+\tikzset{
+every node/.style={concept}
+}
+\node{Root concept}
+    child[grow=right]{node{Child concept}};
+\end{tikzpicture}
+\end{document}
+
+
+
+
+内容讲解
+1.\node{1}
+	child{node{2}}
+	child{node{3}}
+	child{node{4}};
+用于只有一层子结构的分支树
+
+
+2.\node{1}
+    child{node{2}
+        child{node{5}}
+        child{node{6}}
+    }
+    child{node{3}
+        child{node{7}}
+        child{node{8}}
+        child{node{9}}
+    }
+    child{node{4}
+        child{node{10}}
+    };
+用于包含两层子结构的分支树. 该tree的缺点:
+	(1)内容文字重叠
+	(2)固定自上而下的垂直模式
+
+
+3.\begin{tikzpicture}[font=\footnotesize, grow=right, level distance=5cm]
+可选参数font=\footnotesize指定文字为脚注大小
+grow=right指定结构为从左向右的水平模式
+level distance指定不同分支层级之间的距离
+
+\tikzset{level 1/.style={sibling distance=6em},
+level 2/.style={sibling distance=1em}
+}
+level <n>的style指定当前层级的属性(root层为0, 第二层为1...), 其中, sibling distance代表当前层级兄弟node的间隔
+
+
+4.\begin{tikzpicture}[font=\footnotesize, grow cyclic, level distance=5cm]
+\tikzset{level 1/.style={sibling angle=120},
+level 2/.style={sibling angle=30}
+}
+grow cyclic代表以圆周向外层扩散分支树, 需配合在level <n>的style中使用sibling angle(而非sibling distance)来注明sibling之间的角度距离. 该选项包含在tikz库trees中, 语法: \usetikzlibrary{trees}
+
+
+5.\begin{tikzpicture}[mindmap, concept color=red!50] 可选参数mindmap指定图像为思维导图, 需要使用tikz库mindmap; concept color指定连接线的颜色
+
+every node/.style={concept} 使用连接线颜色填充node背景

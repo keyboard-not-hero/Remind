@@ -25,7 +25,9 @@
 %
 %\node [shape=circle, draw, below=of hello, name=world]{};
 %
-%\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world, node distance=2cm]{};
+%\begin{scope}[node distance=2cm]
+%\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world, xshift=1cm]{};
+%\end{scope
 %
 %\node [shape=circle, draw, below=of hello, label={[blue]above:$s\leq 2$}, name=world]{}; 
 %
@@ -36,9 +38,9 @@
 %\node (a) at (0:1) {$0^\circ$};
 %\node (b) at (120:1) {$120^\circ$};
 %\node (c) at (240:1) {$240^\circ$};
-%\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b);
-%\draw[auto,bend right] (b) to node {2} node[swap] {2'} (c);
-%\draw[auto,bend right] (c) to node {3} node[swap] {3'} (a);
+%\draw[auto, bend right] (a) to node {1} node[swap] {1'} (b);
+%\draw[auto, bend right] (b) to node {2} node[swap] {2'} (c);
+%\draw[auto, loop above] (c) to (c);
 %
 %\draw[decorate, decoration=snake] (0,0) -- (2,0); 
 %
@@ -104,6 +106,25 @@
 \path [name intersections={of=I and A--E, by={[label=below left:$J$]J}}];
 \fill[red,opacity=0.5] (J) circle (2pt);
 
+\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
+\node (dot) at (0,0) [draw] {.};
+\node (digit) [draw, right=of dot] {digit};
+\node (E) [draw, right=of digit]{E};
+\draw[->] (dot) to (digit);
+\draw[->] (digit) to (E);
+\draw[->] ($ (digit.east) + (2mm, 0) $)
+-- ++(0, -0.5)
+-| ($ (digit.west) - (2mm,0) $);
+\end{scope}
+
+\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape}}
+\tikzset{terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily}}
+\matrix[row sep=1mm, column sep=5mm]{
+& & & & \node[terminal] {+}; & \\
+\node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
+& & & & \node[terminal] {-}; &\\
+};
+
 \end{tikzpicture}
 \end{document}
 
@@ -114,7 +135,7 @@
 
 2.\draw (0,0) -- (2,2) node {Text at \verb!\node 1!}; 作一条(0,0)到(2,2)的直线, 并且在(2,2)添加文字注释'Text at \node 1', \verb!<str>!用于逐字打印包含特殊字符的内容, '!!'可替换成其他成对符号
 
-3.\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens}; 作一个圆, 并且作一个node, 该圆位于node的北方i(可选参数anchor指定). anchor可选列表如下:
+3.\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens}; 作一个圆, 并且作一个node, 该圆位于node的北方(可选参数anchor指定). anchor可选列表如下:
 	north - point位于node的北方, 即node位于point南方
 	south - point位于node的南方
 	east - point位于node的东方
@@ -149,7 +170,7 @@
 7.\draw (0,0) -- node[sloped]{origin}(2,2); 作一条直线并且中间添加node, 使用可选参数sloped指定文字方向跟随线条方向
 
 8.\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{}; 在指定坐标上添加文字内容, 并使用一个圆包围该文字. 参数含义如下:
-	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle
+	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle/rounded rectangle, rounded rectangle包含在tikz库shapes.misc中
 	draw - 代表画出该包围图形
 	fill - 代表填充背景色
 	inner sep - 指定包围文字的图像大小, 但minimum size更精确
@@ -160,13 +181,16 @@
 9.\node at (0,1) [shape=rectangle, draw, name=hello]{};在指定坐标(0,0)上添加文字, 并使用圆包围该文字, 并且使用可选参数name命名该圆为hello, 用于后续引用(名称不能包含','/'.'/'('/')'/':'等, 但可以包含'_'/'-'). 也可以使用圆括号额外命名包围图形, 语法如下:
 	\node (hello) at (0,0) [shape=circle,draw]{}; 
 
-10.\node [shape=circle, draw, below=of hello, name=world, node distance=2cm]{}; 在hello命名图形下添加一段文字, 并使用circle包围该文字, 该三角形名为world. 参数含义如下:
+10.\begin{scope}[node distance=2cm]
+\node [shape=circle, draw, below=of hello, name=world, xshift=1cm]{}; 在hello命名图形下添加一段文字, 并使用circle包围该文字, 该三角形名为world. 参数含义如下:
 	shape - 包围文字的图形
 	draw - 将包围图形画出来
-	below - 相对于其他命名图形的位置, 可选列表: below/above/left/right, 需额外导入tikz库positioning, 语法: \usetikzlibrary{positioning}
+	below - 相对于其他命名图形的位置, 可选列表: below/above/left/right/above left/below left/above right/below right, 需额外导入tikz库positioning, 语法: \usetikzlibrary{positioning}
 	name - 包围图形的名称
-	node distance - 用于指定相对位置差距时, node之间的距离. 当on grid参数指定时(true), 为node的中心之间的距离; 当on grid参数未指定时(false), 为node的最近边界之间的距离
-
+	node distance - 用于指定相对位置差距时, node之间的距离. 当on grid参数指定时(true), 为node的中心之间的距离; 当on grid参数未指定时(false), 为node的最近边界之间的距离. 该参数只能用于scope或tikzpicture环境的可选参数, 指定环境内的node之间间隔. 格式: node distance=<distance> 或者 node distance=<x_distance> and <y_distance>
+	xshift - 用于指定单个node距离相对其他node的水平平移距离
+	yshift - 用于指定单个node距离相对其他node的垂直平移距离
+	
 11.\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label的相对位置列表:
 	below/above/left/right/below left/below right/above left/above right - 下/上/左/右/左下/右下/左上/右上方
 	数字 - 坐标轴上逆时针旋转角度
@@ -183,12 +207,17 @@
 	或
 	\draw[->] (hello) to [bend right=45] (shaft);
 
-15.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 内容解析:
+15.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 
+\draw[auto, loop above] (c) to (c);
+内容解析:
 	(1)作一条node a到node b的线条, \draw (a) to (b)
 	(2)在线条方向上向右弯曲, \draw[bend right]
 	(3)添加label 1, node {1}
 	(4)使label 1在曲线一侧, 而非与曲线重叠, draw[auto]
 	(5)添加label 1', 该label在曲线另一面, node[swap] 1'
+	(6)方向在node上方的自连接线条, \draw[loop above]
+
+
 
 16.\draw[decorate,decoration=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[decorate,decoration=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{decorations.pathmorphing}
 
@@ -231,3 +260,17 @@ node命名为D, 并且path名称为D
 
 \node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
 ($ (X) !{sin(60)*2}! 90:(B) $)代表先将(X)到(B)的直线旋转90度, 然后找一个距离点X距离为sin(60)*2*(length_of_XB)的点
+
+25.\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
+rounded rectangle代表带圆角的矩形, 包含在shapes.misc tikz包中; font代表字体类型
+\draw[->] ($ (digit.east) + (2mm, 0) $)
+-- ++(0, -0.5)
+-| ($ (digit.west) - (2mm,0) $);
+作一条折线, 起始位置a为digit.east偏右2mm, 然后到点b(a偏下0.5cm), 最后根据b/b与d交点c/点d(digit偏左2mm), 依次连接b与c, c与d. (<coordinate_1>) -| (<coordinate_2>)代表coordinate_1与{coordinate_1与coordinate_2组成的交点n}的连线, n与coordinate_2的连线组成的折线
+
+26.\matrix[row sep=1mm, column sep=5mm]{
+& & & & \node[terminal] {+}; & \\
+\node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
+& & & & \node[terminal] {-}; &\\
+};
+\matrix用于排列矩阵形式的node(类似于latex的table/array), row sep用于行间隔距离; column sep用于列间隔距离; '&'用于分隔列元素; '\\'用于分隔行
