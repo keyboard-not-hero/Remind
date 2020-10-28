@@ -24,3 +24,5 @@
 \node at (0,0) [place]{};
 \node at (2,2) [place=yellow]{};
 在place/.style的fill可选参数值中, 使用#1引用后续place/.default的值, 并且在使用时, 可指定值用于覆盖该默认值
+
+4.\tikzset{every picture/.style={line width=3mm}} every picture为特殊style, 类似于\begin{tikzpicture}[line width=3mm]

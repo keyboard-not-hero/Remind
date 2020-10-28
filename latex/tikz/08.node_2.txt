@@ -2,14 +2,15 @@
 %\usepackage{tikz}
 %\usetikzlibrary{positioning, calc, shapes.misc, graphs}
 %\begin{document}
-%\begin{tikzpicture}
-%\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
+%\tikzset{
+%nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
 %terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily},
 %point/.style={shape=circle, inner sep=0pt, minimum size=2pt, fill=red},
 %skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}},
 %hv path/.style={to path={-| (\tikztotarget)}},
 %vh path/.style={to path={|- (\tikztotarget)}}
 %}
+%\begin{tikzpicture}
 %\matrix[row sep=1mm, column sep=2mm]{
 %
 %& & & & & & & & & & & \node (plus) [terminal] {+}; \\
@@ -39,11 +40,13 @@
 %\usepackage{tikz}
 %\usetikzlibrary{arrows.meta, positioning, calc, shapes.misc, graphs}
 %\begin{document}
-%\begin{tikzpicture}[>={Stealth[round]}, thick, black!50, text=black]
-%\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
+%\tikzset{
+%nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
 %terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily},
 %point/.style={shape=circle, inner sep=0pt, minimum size=2pt, fill=red},
-%skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}},
+%skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}
+%}
+%\begin{tikzpicture}[>={Stealth[round]}, thick, black!50, text=black]
 %hv path/.style={to path={-| (\tikztotarget)}},
 %vh path/.style={to path={|- (\tikztotarget)}},
 %graphs/every graph/.style={edges=rounded corners},
@@ -88,11 +91,12 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, calc, shapes.misc, graphs}
 \begin{document}
-\begin{tikzpicture}[>={Stealth[round]}, thick, black!50, text=black]
-\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
+\tikzset{
+nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape},
 terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily},
 point/.style={shape=circle, inner sep=0pt, minimum size=2pt, fill=red},
 }
+\begin{tikzpicture}[>={Stealth[round]}, thick, black!50, text=black]
 \graph[grow right sep]{
     unsigned integer[nonterminal] -> "."[terminal] -> digit[terminal] -> E[terminal]
 };

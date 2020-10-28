@@ -1,9 +1,9 @@
-\documentclass{article}
-\usepackage{tikz}
-\usetikzlibrary{positioning, decorations.pathmorphing}
-\begin{document}
-\begin{tikzpicture}
-\tikzset{every label/.style={red}}
+%\documentclass{article}
+%\usepackage{tikz}
+%\usetikzlibrary{positioning, decorations.pathmorphing}
+%\begin{document}
+%\tikzset{every label/.style={red}}
+%\begin{tikzpicture}
 %
 %\draw (0,0) -- (2,2) node {point - 2,2};
 %
@@ -86,7 +86,14 @@
 %\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
 %\draw (A) -- (D) -- (B);
 
+
 %完整实例
+
+\documenclass{article}
+\begin{document}
+\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape}}
+\tikzset{terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily}}
+\begin{tikzpicture}
 \coordinate [label=left:$A$] (A) at (0,0);
 \coordinate [label=right:$B$] (B) at (0.75,0.25);
 \coordinate [label=above:$C$] (C) at (1,1.5);
@@ -117,8 +124,6 @@
 -| ($ (digit.west) - (2mm,0) $);
 \end{scope}
 
-\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape}}
-\tikzset{terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily}}
 \matrix[row sep=1mm, column sep=5mm]{
 & & & & \node[terminal] {+}; & \\
 \node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
@@ -195,7 +200,7 @@
 	below/above/left/right/below left/below right/above left/above right - 下/上/左/右/左下/右下/左上/右上方
 	数字 - 坐标轴上逆时针旋转角度
 
-12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red
+12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red. \tikzset位于\begin{tikzpicture}之前
 
 13.\node [below=of hello, label={[blue]above:$s\leq 2$}, shape=circle, draw, name=world]{}; 作一个位于node hello之下, 并且使用circle包围内容的node, 该node名称为world, 并在该node之上添加一个label为s<=2, 并且指定当前label颜色为blue. label={[blue]above:$s\leq 2$}用于指定当前label的颜色
 
