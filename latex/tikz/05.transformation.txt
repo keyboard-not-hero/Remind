@@ -20,3 +20,10 @@
 3.\draw[xshift=1cm,yshift=1cm] (0,0) rectangle (1,1); 作一个对角分别为(0,0)和(1,1)的长方形, 并且图形x轴平移1cm, y轴平移1cm. shift的默认平移单位为pt, 如需要使用其他单位, 需单独显示指定
 
 4.\draw[yslant=1] (0,0) rectangle (1,1); 作一个正方形, 并且在y轴上倾斜一个单位
+
+总结:
+1.当scale与shift同时存在, 若scale在shift之前出现, 则先进行伸缩再平移, 并且平移的单位也进行scale; 若shift在scale之前, 则先进行平移再伸缩, 平移单位不受影响
+
+2.当rotate与shift同时存在, 不论顺序如何, 先执行shift, 再执行rotate
+
+所以, 优先级: shift = scale > rotate

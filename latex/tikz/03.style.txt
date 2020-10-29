@@ -1,9 +1,17 @@
+% Demo 1/2/3
+%\documentclass{article}
+%\begin{document}
+%\begin{tikzpicture}
+%\tikzset{steven option/.style={color=blue!100, very thin, dashed}}
+%\draw[style=steven option] (0,0) grid (5,5);
+%\end{tikzpicture}
+%\end{document}
+
+
+% Demo 4
 \documentclass{article}
 \begin{document}
 \begin{tikzpicture}
-\tikzset{steven option/.style={color=blue!100, very thin, dashed}}
-\draw[style=steven option] (0,0) grid (5,5);
-
 \tikzset{place/.style={circle, draw=blue!50, fill=#1!20, thick}}
 \tikzset{place/.default=red}
 \node at (0,0) [place]{};
@@ -12,17 +20,45 @@
 \end{document}
 
 
+% Demo 5
+\documentclass{article}
+\begin{document}
+\begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50}, outline/.default=orange]
+\node [outline=red] at (0,1) {red};
+\node [outline=blue] at (0,0) {blue};
+\end{tikzpicture}
+\end{document}
+
+
+
+
 
 内容讲解
-1.\tikzset{<style_name>/.style=<style_list>} 用于定义一组可选参数的宏. 列表参考draw/fill/shade/clip等指令的可选参数. 预定义style名列表:
+1.\tikzset{<style_name>/.style=<style_attrs>} 用于定义一组可选参数的宏. 列表参考draw/fill/shade/clip等指令的可选参数. 预定义style名列表:
 	every label - 作用于所有label
+	every picture - 适用于所有与\path有关的属性
 
-2.\draw[style=<style_name>] (0,0) grid (5,5); 作一组栅栏, 该栅栏的可选参数采用已定义的宏名称
 
-3.\tikzset{place/.style={circle, draw=blue!50, fill=#1!20, thick}}
+2.\tikzset{<defined_style_name/.append style=<style_attrs>} 用于给已有style添加属性. 例: 已有help lines原有属性{black!50, very thin}, \tikzset{help lines/.append style={blue!50}}, 结果为help line属性列表{black!50, very thin, blue!50}, 重叠属性blue!50覆盖之前的black!50, 所有实际为{very thin, blue!50}
+
+与/.append style相对, /.prefix style为在style_attrs列表头部添加style属性
+
+
+3.\draw[style=<style_name>] (0,0) grid (5,5); 作一组栅栏, 该栅栏的可选参数采用已定义的宏名称
+
+
+4.\tikzset{place/.style={circle, draw=blue!50, fill=#1!20, thick}}
 \tikzset{place/.default=red}
 \node at (0,0) [place]{};
 \node at (2,2) [place=yellow]{};
 在place/.style的fill可选参数值中, 使用#1引用后续place/.default的值, 并且在使用时, 可指定值用于覆盖该默认值
 
-4.\tikzset{every picture/.style={line width=3mm}} every picture为特殊style, 类似于\begin{tikzpicture}[line width=3mm]
+
+5.\begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50}
+outline/.default=orange
+]
+style的属性列表中, #1代表使用下面的值: 引用style时的<value>
+/.default用于设置#1的默认值
+
+\node [outline=red] at (0,1) {red};
+使用outline, 并给#1赋值

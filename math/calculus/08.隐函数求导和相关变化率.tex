@@ -1,5 +1,5 @@
 \documentclass[UTF8, fontset=ubuntu, fleqn]{ctexart}
-\usepackage{parskip}
+\usepackage{parskip, tikz}
 \renewcommand{\theequation}{\roman{equation}}
 \setlength{\mathindent}{0ex}
 \begin{document}
@@ -67,5 +67,53 @@ $\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}=\frac{2}{\pi}+\sin(y)(\frac{2x}{\pi(
 
 解:\\
 如图.\\
+\begin{tikzpicture}
+\draw[color=white] (0,0) -- (5,0);
+\draw[color=white] (0,0) -- (0,5);
+\begin{scope}[xshift=3cm]
+% 三角形
+\draw[auto,swap] (0,0) node[below left=2mm]{H} -- node{b} (4,0) node[below=2mm]{B} -- node{c} (0,3) node[above left=2mm]{A} -- node{a} cycle;
+% 小屋子
+\begin{scope}[xshift=-3.5mm, yshift=1mm, scale=0.5]
+\draw (0,0) -- (45:1);
+\draw (45:2 |- 0,0) -- +(135:1);
+\draw (45:0.3) -- (45:0.3 |- 0,-0.7);
+\draw (45:2 |- 0,0) +(135:0.3) -- (45:1.7 |- 0,-0.7);
+\draw (45:0.3 |- 0,-0.7) -- (45:1.7 |- 0,-0.7);
+\draw (45:0.8 |- 0,-0.3) rectangle (45:1.2 |- 0,0);
+\draw (45:2 |- 0,0) +(135:0.6) -- +(135:0.4) -- (45:1.6 |- 0,0.5) -- (45:1.4 |- 0,0.5) -- cycle;
+\end{scope}
+% 小货车
+\begin{scope}[rotate=-90, xshift=-3cm, yshift=-1mm, scale=0.5]
+\draw[rounded corners=3pt] (-1,0) rectangle (1,0.46);
+\filldraw[fill=white] (-0.5,0.04) circle (0.19);
+\filldraw[fill=white] (0.6,0.04) circle (0.19);
+\draw[rounded corners=2pt] (-0.7,0.46) -- (-0.44,0.76) -- (-0.03,0.76) -- (-0.03,0.46);
+\end{scope}
+% 小汽车
+\begin{scope}[xshift=4cm, yshift=-1.5mm, scale=0.5]
+\draw[rounded corners=4pt] (-1,0) rectangle (1,0.4);
+\filldraw[fill=white] (-0.6,0.05) circle (0.15);
+\filldraw[fill=white] (0.6,0.05) circle (0.15);
+\draw (-0.5,0.4) -- (-0.3,0.64) -- (0.3,0.64) -- (0.6,0.4);
+\draw (0,0.4) -- (0,0.64);
+\draw (0.25,0.64) -- (0.36,0.4);
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+由图可知:\\
+\[a^2+b^2=c^2\]
+对时间t作隐函数求导:\\
+\begin{equation}
+2a\frac{da}{dt}+2b\frac{db}{dt}=2c\frac{dc}{dt}
+\end{equation}
+由于A在远离H, 所以距离随着时间增加:\\[1ex]
+$\displaystyle\frac{da}{dt}=55$\\[1ex]
+而B在靠近H, 所以距离随着时间减少:\\[1ex]
+$\displaystyle\frac{db}{dt}=-45$\\[1ex]
+将结果带入公式(ii), 得:\\[1ex]
+$\displaystyle\frac{dc}{dt}=-3$\\[2ex]
+
+例3.\\
 
 \end{document}

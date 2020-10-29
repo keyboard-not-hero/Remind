@@ -151,14 +151,14 @@
 	south west - point位于node的西南方
 
 4.\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance}; 作一个长方形, 并且在长方形右边作一个node(可选参数right指定, 并且可指定长度). 位置参数列表:
-	left - node位于point左边
-	right - node位于point右边
-	above - node位于point上方
-	below - node位于point下方
-	above left - node位于point左上方
-	above right - node位于point右上方
-	below left - node位于point左下方
-	below right - node位于point右下方
+	left[=<length>] - node位于point左边, 长度可指定
+	right[=<length>] - node位于point右边, 长度可指定
+	above[=<length>] - node位于point上方, 长度可指定
+	below[=<length>] - node位于point下方, 长度可指定
+	above left[=<length>] - node位于point左上方, 长度可指定
+	above right[=<length>] - node位于point右上方, 长度可指定
+	below left[=<length>] - node位于point左下方, 长度可指定
+	below right[=<length>] - node位于point右下方, 长度可指定
 	
 5.\draw (0,0) node [fill=blue]{since 1989}; 填充node的背景色为蓝色
 

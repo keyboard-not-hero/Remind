@@ -45,6 +45,7 @@
 %	\draw (5,5) -- (6,6);
 %	\draw (0,0) circle (5cm);
 %\end{scope}
+%\draw (0,0) -- (1,1) {[rounded corners] -- (2,0) -- (3,1)} -- (3,0) -- (2,1);
 %
 %\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0);
 %\coordinate [label=right:\textcolor{red}{$B$}] (B) at (1.25,0.25);
@@ -69,13 +70,23 @@ in
 
 
 
+
+
 内容讲解
 1.\draw (0,0) -- (2,0) -- (0,2) -- (0,0); 代表作三个顶点分别为(0,0)/(2,0)/(0,2)的三角形, 单位长度的默认单位为cm, 可使用可选属性x和y指定单位长度, 作图语句必须以';'结束. 坐标点格式:
-	绝对坐标 - 在坐标上的位置, 如: (2,4)
+	([options] <coordinate>)
+	options范例:
+	xshift=3pt
+	shift=(150:3cm)
+
+	coordinate类型:
+	绝对坐标(canvas) - 在x/y轴坐标上的位置, 如: (2,5)
+	绝对坐标(xyz) - 在x/y/z轴坐标上的位置, 如: (5,2,4)
 	相对坐标1 - 当前坐标相对于前一个绝对坐标的位置, 如: (1,1) -- +(2,3) -- +(1,1), 第二个坐标为(1+2,1+3), 第三个点为(1+1,1+1); 
 	相对坐标2 - 当前坐标相对于前一个绝对坐标的位置, 并将当前点转化为绝对坐标, 如: (0,0) -- ++(1,1) -- +(1,1), 第二个点的坐标为(0+1,0+1), 并转化为绝对坐标, 使第三个点依据第二个点进行计算
-	极坐标 - 相对于原点, 逆时针旋转指定角度, 并且指定长度的点, 如: (30:1), 旋转30度, 并且长度为1cm的点. 极坐标除了角度, 也可以使用如下四个关键字方位: up/down/left/right
+	极坐标(canvas polar) - 相对于x/y轴原点, 逆时针旋转指定角度, 并且指定长度的点, 如: (30:1), 旋转30度, 并且长度为1cm的点. 极坐标除了角度, 也可以使用如下关键字方位: up/down/left/right/north/south/east/west/north east/north west/south east/south west
 	**相对坐标1/2符号也适用于极坐标
+
 
 2.\draw[line width=5mm] (4,0) -- (4,4); 指定线条宽度为5mm. 也可使用内置特定线条宽度, 该值没有对应key(与line width无关), 列表:
 	ultra thin - 非常细的线条
@@ -86,12 +97,14 @@ in
 	very thick - 较粗的线条
 	ultra thick - 非常粗的线条
 
+
 3.\draw[color=blue, opacity=0.5] (0,0) -- (2,2); 作一条直线.
 	color指定线条颜色, 颜色格式:
 		blue - 直接蓝色
 		red!30 - 指定30%浓度红色, 参考xcolor package
 		green!20!blue - 指定20%浓度绿色和80%(1-20%)浓度蓝色混合, 参考xcolor package, 也可参考demo/color.pdf
 	opacity指定透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
+
 
 4.\draw[->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数'->'代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头; 也可使用>=指定箭头类型
 	箭头所在端列表:
@@ -101,7 +114,9 @@ in
 	箭头类型列表:
 	stealth - 实心箭头
 
+
 5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度
+
 
 6.\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dash pattern代表线条类型为特定虚线. 也可使用预定义线条, 预定义线条类型列表:
 	solid - 实线(默认)
@@ -114,29 +129,41 @@ in
 	dash dot - 虚线和点阵线混合
 	dash dot dot - 类似于dash dot, 但循环排列的点阵多一个
 
+
 7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆
+
 
 8.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆
 
+
 9.\draw[step=0.5cm] (-1,-1) grid (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, step代表格子宽度为0.5cm, 也可使用xstep和ystep分别指定x/y轴上的格子宽度. 
+
 
 10.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
 
+
 11.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可分别使用x radius和y radius作椭圆圆弧
+
 
 12.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,1), (0,1)的切线方向也指向(-1,1); 另一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 
 **注意: 如果controls的第二个括号内使用相对坐标, 是针对于后续紧跟的绝对坐标位置. 如: (0,1) .. controls(0.555,1) and +(0,0.555) .. (1,0); (1,0)的切线指向(1+0,0+0.555)
 
+
 13.\draw (0,0) rectangle (1,1) (0,0) parabola (1,1); 作一个对角线为(0,0)/(1,1)的矩形, 另外作一个(0,0)到(1,1)的抛物线
+
 
 14.\draw (0,0) parabola bend (4,16) (6,12); 作一个(0,0)到(6,12)的抛物线, 并且中间在(4,16)拐弯
 
+
 15.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度, sin关键字为切线斜率变化由高到低, cos关键字为切线斜率变化由低到高, 而非传统意义的三角曲线
+
 
 16.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
 
+
 17.\draw (30:1) -- (30:1cm |- 0,0); 作一条直线, (<p> |- <q>)代表经过点p的垂直线与经过q的水平线的交点; 另外, (<p> -| <q>)代表经过p的水平线与经过q的垂直线的交点.
 (<p>) -| (<q>)代表点p与{p与q的交点}之间的连线, {p与q交点}与q的连线; (<p>) |- (<q>)同理
+
 
 18.\path[name path=upward line] (1,0) -- (1,1); 
 代表命名一条(1,0)到(1,1)的直线路径为upward line, name path指定路径名称, 包含在tikz特别包intersections中, 指令: \usetikzlibrary{intersections}
@@ -146,14 +173,20 @@ in
 \draw[name intersections={of=upward line and sloped line, by=x}][orange] (1,0) -- (x);
 求路径upward line与sloped line的交点(务必确保两条路径足够长, 能够有实际相交), 交点为x, 并作一条(1,0)到(x)的直线
 
+
 19.\begin{scope}[] ... \end{scope} 用于将环境的可选参数只应用于该范围内. 三种范围如下:
 	tikzpicture - 作用于当前图的所有指令
 	scope - 作用于该范围内的指令
 	draw/fill/clip/shade - 只作用于当前指令
 
+\draw (0,0) -- (1,1) {[rounded corners] -- (2,0) -- (3,1)} -- (3,0) -- (2,1);
+使用'{}'隐式指定一个scope, 使该scope内的角为圆滑过渡角
+
+
 20.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0); 定义一个坐标点, 该坐标点位于(0,0), 并且命名为A, 给该坐标点添加蓝色标签A, 该标签位于坐标点的左边
 
 \draw[color=green] (A) -- (B); 作一条直线, 该直线连接坐标点A/B, 直线为绿色
+
 
 21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数. 
 ($ $)表示对coordinate进行计算, 该操作符包含在tikz库calc中, 语法: \usetikzlibrary{calc}. 详细语法如下:
@@ -174,9 +207,9 @@ in
 			5. <coordinate_1>!<projection_coordinate>!<coordinate_2> - projection坐标垂直投射到两个坐标的连线上(可旋转角)
 			例: ($ (0,0)!(0,2)!(2,2) $) - 坐标(0,2)在直线(0,0)--(2,2)上的垂直投射点
 	** ($ $)不能作用于可选参数位置
+
 	
-22.
-\draw 
+22.\draw 
 let 
 \p1 = ($ (B) - (A) $),
 \n2 = {veclen(\x1,\y1)}
