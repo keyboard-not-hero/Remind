@@ -36,7 +36,9 @@
 内容讲解
 1.\tikzset{<style_name>/.style=<style_attrs>} 用于定义一组可选参数的宏. 列表参考draw/fill/shade/clip等指令的可选参数. 预定义style名列表:
 	every label - 作用于所有label
-	every picture - 适用于所有与\path有关的属性
+	every path - 适用于所有path和node相关
+	every circle - 适用于所有circle和ellipse
+	help lines - [gray, thin]的path属性
 
 
 2.\tikzset{<defined_style_name/.append style=<style_attrs>} 用于给已有style添加属性. 例: 已有help lines原有属性{black!50, very thin}, \tikzset{help lines/.append style={blue!50}}, 结果为help line属性列表{black!50, very thin, blue!50}, 重叠属性blue!50覆盖之前的black!50, 所有实际为{very thin, blue!50}

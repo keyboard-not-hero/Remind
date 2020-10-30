@@ -88,47 +88,49 @@
 
 
 %完整实例
+%\documenclass{article}
+%\begin{document}
+%\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape}}
+%\tikzset{terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily}}
+%\begin{tikzpicture}
+%\coordinate [label=left:$A$] (A) at (0,0);
+%\coordinate [label=right:$B$] (B) at (0.75,0.25);
+%\coordinate [label=above:$C$] (C) at (1,1.5);
+%\draw (A) -- (B) -- (C);
+%\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
+%\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
+%\draw (A) -- (D) -- (B);
+%\node (H) [name path=H, label=135:$H$, draw, circle through=(C)] at (B){};
+%\coordinate [label=below:$F$] (F) at ($ (D) !3.5! (B) $);
+%\coordinate [label=below:$E$] (E) at ($ (D) !3.5! (A) $);
+%\draw (F) -- (D) -- (E);
+%\path [name path=B--F] (B) -- (F);
+%\path [name intersections={of=H and B--F, by={[label=left:$G$]G}}];
+%\fill[red,opacity=.5] (G) circle (2pt);
+%\node (I) [name path=I, label=45:$I$, draw, circle through=(G)] at (D){};
+%\path [name path=A--E] (A) -- (E);
+%\path [name intersections={of=I and A--E, by={[label=below left:$J$]J}}];
+%\fill[red,opacity=0.5] (J) circle (2pt);
+%\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
+%\node (dot) at (0,0) [draw] {.};
+%\node (digit) [draw, right=of dot] {digit};
+%\node (E) [draw, right=of digit]{E};
+%\draw[->] (dot) to (digit);
+%\draw[->] (digit) to (E);
+%\draw[->] ($ (digit.east) + (2mm, 0) $)
+%-- ++(0, -0.5)
+%-| ($ (digit.west) - (2mm,0) $);
+%\end{scope}
+%\matrix[row sep=1mm, column sep=5mm]{
+%& & & & \node[terminal] {+}; & \\
+%\node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
+%& & & & \node[terminal] {-}; &\\
+%};
 
-\documenclass{article}
-\begin{document}
-\tikzset{nonterminal/.style={shape=rectangle, minimum size=6mm, very thick, draw=red!50!black, top color=white, bottom color=red!50!black!20, font=\itshape}}
-\tikzset{terminal/.style={shape=rounded rectangle, minimum size=6mm, very thick, draw=black!50, top color=white, bottom color=black!50, font=\ttfamily}}
-\begin{tikzpicture}
-\coordinate [label=left:$A$] (A) at (0,0);
-\coordinate [label=right:$B$] (B) at (0.75,0.25);
-\coordinate [label=above:$C$] (C) at (1,1.5);
-\draw (A) -- (B) -- (C);
-\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
-\node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
-\draw (A) -- (D) -- (B);
-\node (H) [name path=H, label=135:$H$, draw, circle through=(C)] at (B){};
-\coordinate [label=below:$F$] (F) at ($ (D) !3.5! (B) $);
-\coordinate [label=below:$E$] (E) at ($ (D) !3.5! (A) $);
-\draw (F) -- (D) -- (E);
-\path [name path=B--F] (B) -- (F);
-\path [name intersections={of=H and B--F, by={[label=left:$G$]G}}];
-\fill[red,opacity=.5] (G) circle (2pt);
-\node (I) [name path=I, label=45:$I$, draw, circle through=(G)] at (D){};
-\path [name path=A--E] (A) -- (E);
-\path [name intersections={of=I and A--E, by={[label=below left:$J$]J}}];
-\fill[red,opacity=0.5] (J) circle (2pt);
-
-\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
-\node (dot) at (0,0) [draw] {.};
-\node (digit) [draw, right=of dot] {digit};
-\node (E) [draw, right=of digit]{E};
-\draw[->] (dot) to (digit);
-\draw[->] (digit) to (E);
-\draw[->] ($ (digit.east) + (2mm, 0) $)
--- ++(0, -0.5)
--| ($ (digit.west) - (2mm,0) $);
-\end{scope}
-
-\matrix[row sep=1mm, column sep=5mm]{
-& & & & \node[terminal] {+}; & \\
-\node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
-& & & & \node[terminal] {-}; &\\
-};
+\draw[help lines] (0,0) grid (3,2);
+\coordinate (a) at (3,2);
+\node [circle,draw] (c) at (1,1) [minimum size=40pt] {$c$};
+\draw[red] (a) -- (tangent cs:node=c,point={(a)},solution=1) -- (c.center) -- (tangent cs:node=c,point={(a)},solution=2) -- cycle;
 
 \end{tikzpicture}
 \end{document}
@@ -138,7 +140,9 @@
 内容讲解
 1.\draw (0,0) -- (2,2) node{point(2,2)}; 作一条(0,0)到(2,2)的直线, 并在坐标(2,2)添加文字'point(6,6)'
 
+
 2.\draw (0,0) -- (2,2) node {Text at \verb!\node 1!}; 作一条(0,0)到(2,2)的直线, 并且在(2,2)添加文字注释'Text at \node 1', \verb!<str>!用于逐字打印包含特殊字符的内容, '!!'可替换成其他成对符号
+
 
 3.\draw (0,0) circle [radius=1mm] node [anchor=north]{siemens}; 作一个圆, 并且作一个node, 该圆位于node的北方(可选参数anchor指定). anchor可选列表如下:
 	north - point位于node的北方, 即node位于point南方
@@ -150,6 +154,7 @@
 	south east - point位于node的东南方
 	south west - point位于node的西南方
 
+
 4.\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance}; 作一个长方形, 并且在长方形右边作一个node(可选参数right指定, 并且可指定长度). 位置参数列表:
 	left[=<length>] - node位于point左边, 长度可指定
 	right[=<length>] - node位于point右边, 长度可指定
@@ -159,6 +164,7 @@
 	above right[=<length>] - node位于point右上方, 长度可指定
 	below left[=<length>] - node位于point左下方, 长度可指定
 	below right[=<length>] - node位于point右下方, 长度可指定
+
 	
 5.\draw (0,0) node [fill=blue]{since 1989}; 填充node的背景色为蓝色
 
@@ -172,10 +178,12 @@
 	\draw (0,0) -- node[very near end]{N}(2,2); 非常接近线条结束位置
 	\draw (0,0) -- (2,2)node{N}; - 位于线条结束, 即第二个坐标点居中
 
+
 7.\draw (0,0) -- node[sloped]{origin}(2,2); 作一条直线并且中间添加node, 使用可选参数sloped指定文字方向跟随线条方向
 
+
 8.\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{}; 在指定坐标上添加文字内容, 并使用一个圆包围该文字. 参数含义如下:
-	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle/rounded rectangle, rounded rectangle包含在tikz库shapes.misc中
+	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle/ellipse/rounded rectangle, ellipse包含在shapes.geometric tikz库中, rounded rectangle包含在tikz库shapes.misc中
 	draw - 代表画出该包围图形
 	fill - 代表填充背景色
 	inner sep - 指定包围文字的图像大小, 但minimum size更精确
@@ -183,8 +191,10 @@
 	相同含义的其他语法: 
 	\path (0,0) node [shape=circle, draw, fill=blue, inner sep=2mm]{};
 
+
 9.\node at (0,1) [shape=rectangle, draw, name=hello]{};在指定坐标(0,0)上添加文字, 并使用圆包围该文字, 并且使用可选参数name命名该圆为hello, 用于后续引用(名称不能包含','/'.'/'('/')'/':'等, 但可以包含'_'/'-'). 也可以使用圆括号额外命名包围图形, 语法如下:
 	\node (hello) at (0,0) [shape=circle,draw]{}; 
+
 
 10.\begin{scope}[node distance=2cm]
 \node [shape=circle, draw, below=of hello, name=world, xshift=1cm]{}; 在hello命名图形下添加一段文字, 并使用circle包围该文字, 该三角形名为world. 参数含义如下:
@@ -195,24 +205,30 @@
 	node distance - 用于指定相对位置差距时, node之间的距离. 当on grid参数指定时(true), 为node的中心之间的距离; 当on grid参数未指定时(false), 为node的最近边界之间的距离. 该参数只能用于scope或tikzpicture环境的可选参数, 指定环境内的node之间间隔. 格式: node distance=<distance> 或者 node distance=<x_distance> and <y_distance>
 	xshift - 用于指定单个node距离相对其他node的水平平移距离
 	yshift - 用于指定单个node距离相对其他node的垂直平移距离
+
 	
 11.\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label的相对位置列表:
 	below/above/left/right/below left/below right/above left/above right - 下/上/左/右/左下/右下/左上/右上方
 	数字 - 坐标轴上逆时针旋转角度
 
+
 12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red. \tikzset位于\begin{tikzpicture}之前
+
 
 13.\node [below=of hello, label={[blue]above:$s\leq 2$}, shape=circle, draw, name=world]{}; 作一个位于node hello之下, 并且使用circle包围内容的node, 该node名称为world, 并在该node之上添加一个label为s<=2, 并且指定当前label颜色为blue. label={[blue]above:$s\leq 2$}用于指定当前label的颜色
 
-13.\draw[->] (world.north) -- (hello.south); 作一个带尾端箭头的直线, 该直线起始于node world的北面, 终止于node hello的南面. 简明表达语句:
+
+14.\draw[->] (world.north) -- (hello.south); 作一个带尾端箭头的直线, 该直线起始于node world的北面, 终止于node hello的南面. 简明表达语句:
 	\draw[->] (world) to (hello);
 
-14.\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north); 作一个尾端带箭头的曲线, 该曲线起始于node hello的西面, 并且切线偏向左方5mm, 终止于node shaft的北面, 并且切线偏向于上方5mm. 注意: controls的第二个括号内的相对位置针对的是后续紧跟的绝对位置. 简明表达语句:
+
+15.\draw[->] (hello.west) .. controls +(left:5mm) and +(up:5mm) .. (shaft.north); 作一个尾端带箭头的曲线, 该曲线起始于node hello的西面, 并且切线偏向左方5mm, 终止于node shaft的北面, 并且切线偏向于上方5mm. 注意: controls的第二个括号内的相对位置针对的是后续紧跟的绝对位置. 简明表达语句:
 	\draw[->] (hello) to [out=180,in=90] (shaft);
 	或
 	\draw[->] (hello) to [bend right=45] (shaft);
 
-15.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 
+
+16.\draw[auto,bend right] (a) to node {1} node[swap] {1'} (b); 
 \draw[auto, loop above] (c) to (c);
 内容解析:
 	(1)作一条node a到node b的线条, \draw (a) to (b)
@@ -223,35 +239,41 @@
 	(6)方向在node上方的自连接线条, \draw[loop above]
 
 
+17.\draw[decorate,decoration=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[decorate,decoration=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{decorations.pathmorphing}
 
-16.\draw[decorate,decoration=snake] (0,0) -- (2,0); 作一条(0,0)到(2,0)的蛇形线, \draw[decorate,decoration=snake]代表形状为蛇形, 该可选参数需使用额外tikz库, 语法:\usetikzlibrary{decorations.pathmorphing}
 
-17.draw[->,decorate,decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0); 作一条带箭头的蛇形曲线, amplitude指定波的振幅; segment length指定波长; post length指定箭头距离蛇形曲线的宽度
+18.draw[->,decorate,decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (2,0); 作一条带箭头的蛇形曲线, amplitude指定波的振幅; segment length指定波长; post length指定箭头距离蛇形曲线的宽度
 
-18.\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
+
+19.\draw[->, decorate, decoration={snake, amplitude=0.8mm, segment length=4mm, post length=2mm}] (0,0) -- (3,0)
 node[above, text width=2cm, align=center, midway]{replacement of the capacity by tow place}; 在蛇形曲线上附带一段文字. 文字特性在可选参数中:
 	(1)above - 文字位于曲线上方
 	(2)text width - 限制文字宽度
 	(3)align - 多行文字垂直对齐方式, 可选列表: left/center/right
 	(4)midway - 文字与曲线中部垂直对齐
 
-19.\begin{scope}{on background layer}
+
+20.\begin{scope}{on background layer}
 \node [fill=black!30, fit=(top)(left)(center)(right)(bottom)]{};
 \end{scope}
 计算包含所有图形的背景, on background layer指定内容位于背景层, fit用于适配前景图像并计算大小
 用于作图形的背景, 需要使用额外tikz库backgrounds, 语法: \usetikzlibrary{backgrounds}
 fit参数计算图形便捷, 需要额外使用tikz库fit, 语法: \usetikzlibrary{fit}
 
-20.\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{}; 作一个node center的小圆圈, 可选参数tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
 
-21.\node at (0,0) {pgf version:\pgftypesetversion}; 显示当前安装pgf版本, \pgftypesetversion代表pgf版本
+21.\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{}; 作一个node center的小圆圈, 可选参数tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
 
-22.\node [draw, circle through=(B), label=left:$D$] at (A) {}; 在坐标A的位置作一个node, 该node的label为D并位于坐标的左方, circle througn作用: 
+
+22.\node at (0,0) {pgf version:\pgftypesetversion}; 显示当前安装pgf版本, \pgftypesetversion代表pgf版本
+
+
+23.\node [draw, circle through=(B), label=left:$D$] at (A) {}; 在坐标A的位置作一个node, 该node的label为D并位于坐标的左方, circle througn作用: 
 	1.指定该node为圆形; 
 	2.圆的半径为圆心A到点B的距离.
 	该可选参数位于tikz库through中, 语法: \usetikzlibrary{through}
 
-23.\node (D) [name path=D, draw, circle through=(B), label=left:$D$] at (A) {};
+
+24.\node (D) [name path=D, draw, circle through=(B), label=left:$D$] at (A) {};
 node命名为D, 并且path名称为D
 
 \path [name intersections={of=D and E}];
@@ -260,22 +282,29 @@ node命名为D, 并且path名称为D
 \coordinate [label=above:$C$] (C) at (intersection-1);
 取出intersection数组坐标中的第一个坐标, 并命名该坐标为C, 并且在该坐标之上放置一个label
 
-24.\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
+
+25.\node [fill=red, inner sep=1pt, label=below:$X$] (X) at ($ (A)!0.5!(B) $){};
 作一个node, 该node位于点A与B之间. ($ (A)!0.5!(B) $)中, ($ $)代表对坐标进行运算, 需要使用tikz库calc, 语法: \usetikzlibrary{calc}
 
 \node [fill=blue, inner sep=1pt, label=above:$D$] (D) at ($ (X) !{sin(60)*2}! 90:(B) $){};
 ($ (X) !{sin(60)*2}! 90:(B) $)代表先将(X)到(B)的直线旋转90度, 然后找一个距离点X距离为sin(60)*2*(length_of_XB)的点
 
-25.\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
+
+26.\begin{scope}[shape=rounded rectangle, minimum size=5mm, font=\ttfamily]
 rounded rectangle代表带圆角的矩形, 包含在shapes.misc tikz包中; font代表字体类型
 \draw[->] ($ (digit.east) + (2mm, 0) $)
 -- ++(0, -0.5)
 -| ($ (digit.west) - (2mm,0) $);
 作一条折线, 起始位置a为digit.east偏右2mm, 然后到点b(a偏下0.5cm), 最后根据b/b与d交点c/点d(digit偏左2mm), 依次连接b与c, c与d. (<coordinate_1>) -| (<coordinate_2>)代表coordinate_1与{coordinate_1与coordinate_2组成的交点n}的连线, n与coordinate_2的连线组成的折线
 
-26.\matrix[row sep=1mm, column sep=5mm]{
+
+27.\matrix[row sep=1mm, column sep=5mm]{
 & & & & \node[terminal] {+}; & \\
 \node[nonterminal] {unsigned integer}; & \node[terminal] {.}; & \node[terminal] {digit}; & \node[terminal] {E}; & & \node[nonterminal] {unsigned integer}; \\
 & & & & \node[terminal] {-}; &\\
 };
 \matrix用于排列矩阵形式的node(类似于latex的table/array), row sep用于行间隔距离; column sep用于列间隔距离; '&'用于分隔列元素; '\\'用于分隔行
+
+
+28.\draw[red] (a) -- (tangent cs:node=c,point={(a)},solution=1) -- (c.center) -- (tangent cs:node=c,point={(a)},solution=2) -- cycle;
+(tangent cs:node=c,point={(a)}),solution)代表坐标点a到node所作的切线其中之一

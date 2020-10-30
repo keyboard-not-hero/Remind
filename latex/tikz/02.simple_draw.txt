@@ -65,6 +65,8 @@ let
 in
 (A) circle (\n2)
 (B) circle (\n2);
+
+\draw (0,0) -- (1,1) [insert path={circle [radius=2pt]}] -- (2,0) -- (3,1) -- (3,0) -- (2,1);
 \end{tikzpicture}
 \end{document}
 
@@ -80,11 +82,14 @@ in
 	shift=(150:3cm)
 
 	coordinate类型:
-	绝对坐标(canvas) - 在x/y轴坐标上的位置, 如: (2,5)
-	绝对坐标(xyz) - 在x/y/z轴坐标上的位置, 如: (5,2,4)
+	绝对坐标(canvas) - 在x/y轴坐标上的位置. 显式: (canvas cs:x=2cm,y=5cm); 隐式: (2,5)
+	绝对坐标(xyz) - 在x/y/z轴坐标上的位置, 显式: (xyz cs:x=5cm,y=2cm,z=4cm); 隐式: (5,2,4)
 	相对坐标1 - 当前坐标相对于前一个绝对坐标的位置, 如: (1,1) -- +(2,3) -- +(1,1), 第二个坐标为(1+2,1+3), 第三个点为(1+1,1+1); 
 	相对坐标2 - 当前坐标相对于前一个绝对坐标的位置, 并将当前点转化为绝对坐标, 如: (0,0) -- ++(1,1) -- +(1,1), 第二个点的坐标为(0+1,0+1), 并转化为绝对坐标, 使第三个点依据第二个点进行计算
-	极坐标(canvas polar) - 相对于x/y轴原点, 逆时针旋转指定角度, 并且指定长度的点, 如: (30:1), 旋转30度, 并且长度为1cm的点. 极坐标除了角度, 也可以使用如下关键字方位: up/down/left/right/north/south/east/west/north east/north west/south east/south west
+	极坐标(canvas polar) - 相对于x/y轴原点, 在指定半径的圆/椭圆上逆时针旋转指定角度
+		圆 - 显式: (canvas polar cs:angle=30, radius=1cm); 隐式: (30:1). 在半径为1的圆上旋转30度
+		椭圆 - 显式: (canvas polar cs:angle=30, x radius=2cm, y radius=1cm); 隐式: (30:2cm and 1cm). 在x轴半径为2, y轴半径为1的椭圆上旋转30度
+		极坐标除了角度, 也可以使用如下关键字方位: up/down/left/right/north/south/east/west/north east/north west/south east/south west
 	**相对坐标1/2符号也适用于极坐标
 
 
@@ -106,17 +111,48 @@ in
 	opacity指定透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
 
 
-4.\draw[->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数'->'代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头; 也可使用>=指定箭头类型
+4.\draw[arrows=->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数arrows=->代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头
 	箭头所在端列表:
-	-> - 末端箭头
-	<- - 起始端箭头
-	<-> - 起始段和末端箭头
-	箭头类型列表:
-	stealth - 实心箭头
+		|- - 起始端bar
+		<- - 起始端箭头
+		>- - 起始端箭头, 箭头指向线段
+		-| - 末端bar
+	 	-> - 末端箭头
+		-< - 末端箭头, 箭头指向线段
+		-stealth - 末端箭头, 箭头为实心
+		-{stealth[red]} - 末端箭头, 箭头为实心, 并指定颜色
+		<-> - 起始段和末端箭头
+		->>.> - 包含多个末端箭头的箭头, '.'代表线段的终止位置, 所以>>与最后一个>没有连接
+		以下箭头包含在arrows.meta tikz库中
+		-Stealth - 末端箭头, 箭头为实心(比stealth更大), 箭头尾部内凹
+		-Latex - 末端箭头, 箭头为实心, 箭头尾部为直线(斜边内凹)
+		-Kite - 末端箭头, 箭头为实心, 箭头尾部外凸, 类似于红缨枪枪头
+		-Diamond - 末端箭头, 箭头为实心, 箭头为菱形
+		-Triangle - 末端箭头, 箭头为实心, 箭头为三角形
+		-Classical TikZ Rightarrow - 末端箭头, 尺码比>略小的原始箭头
+		-{Stealth[color=red]} - 末端箭头, 箭头为实心, 并且指定箭头颜色. 可选参数列表:
+			color - 指定箭头draw颜色, 默认箭头颜色与路径颜色一致
+			fill - 箭头内部填充颜色, 默认与color一致. none代表透明
+			length - 指定箭头长度
+			width - 指定箭头宽度
+			inset - 箭头尾部凹进去的长度, 只适用于Stealth
+			angle - 格式为: <angle>:<L>, angle代表箭头两斜边组成的角, L代表箭头斜边长, 箭头长度为L*cos(angle/2), 箭头宽度为2*L*sin(angle/2)
+			scale - 箭头整体大小伸缩系数
+			scale length - 水平方向伸缩系数, 作用于length和inset
+			scale width - 垂直方向伸缩系数, 作用于width
+			reversed - 箭头方向反置
+			harpoon - 只打印沿着线段到箭头方向的左半端	
+			swap - 与harpoon一起使用, 只打印沿着线段到箭头方向的右半端
+			round - 箭头角为平滑过度角
+			open - fill=none的简写
+			
+		
 
+5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度. sharp corners为尖角
 
-5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度
+\draw (0,0) -- (1,1) [rounded corners] -- (2,0) -- (3,1) [sharp corners] -- (3,0) -- (2,1); 角的可选参数影响后续角的圆滑或尖锐, 即(2,0)/(3,1)为圆滑角, (3,0)及后续恢复尖锐角
 
+\draw (0,0) -- (1,1) [color=red] -- (2,0) -- (3,1) [color=blue] -- (3,0) -- (2,1); 线段的可选参数影响所有线段, 并且取最后定义的属性, 即当前线段全部为蓝色
 
 6.\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dash pattern代表线条类型为特定虚线. 也可使用预定义线条, 预定义线条类型列表:
 	solid - 实线(默认)
@@ -130,19 +166,32 @@ in
 	dash dot dot - 类似于dash dot, 但循环排列的点阵多一个
 
 
-7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆
+7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆. 可选参数列表:		radius - 圆的半径
+	x radius - 圆的x轴半径
+	y radius - 圆的y轴半径
+	at - 额外指定圆心
 
 
-8.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆
+8.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆. 已使用circle替代
 
 
-9.\draw[step=0.5cm] (-1,-1) grid (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, step代表格子宽度为0.5cm, 也可使用xstep和ystep分别指定x/y轴上的格子宽度. 
+9.\draw (-1,-1) grid[step=0.5cm] (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, 格子宽度为0.5cm. 可选参数列表:
+	step - 指定x/y轴格子宽度
+	xstep - 指定x轴格子宽度
+	ystep - 指定y轴格子宽度
+	(x,y) - 分别指定x/y轴格子宽度
 
 
 10.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
 
 
-11.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可分别使用x radius和y radius作椭圆圆弧
+11.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可选参数列表:
+	start angle - 起始角度
+	end angle - 结束角度
+	delta angle - 间隔角度, <delta_angle>=<end_angle> - <start_angle>, 当三个都指定时, delta angle被忽略
+	radius - 指定圆弧的x/y轴半径
+	x radius - 指定圆弧的x轴半径
+	y radius - 指定圆弧的y轴半径
 
 
 12.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,1), (0,1)的切线方向也指向(-1,1); 另一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 
@@ -155,7 +204,9 @@ in
 14.\draw (0,0) parabola bend (4,16) (6,12); 作一个(0,0)到(6,12)的抛物线, 并且中间在(4,16)拐弯
 
 
-15.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度, sin关键字为切线斜率变化由高到低, cos关键字为切线斜率变化由低到高, 而非传统意义的三角曲线
+15.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度. 关键字解释:
+	sin - [0, pi/2]区间的sin图像或关于x轴的镜像
+	cos - [0, pi/2]区间的cos图像或关于x轴的镜像
 
 
 16.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
@@ -181,6 +232,10 @@ in
 
 \draw (0,0) -- (1,1) {[rounded corners] -- (2,0) -- (3,1)} -- (3,0) -- (2,1);
 使用'{}'隐式指定一个scope, 使该scope内的角为圆滑过渡角
+	{}内有效的可选参数:
+	作用于点 - rounded corners/shift
+	{}内无效的可选参数:
+	作用于线 - color
 
 
 20.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0); 定义一个坐标点, 该坐标点位于(0,0), 并且命名为A, 给该坐标点添加蓝色标签A, 该标签位于坐标点的左边
@@ -216,6 +271,23 @@ let
 in
 (A) circle (\n2)
 (B) circle (\n2);
-let .. in内可将值赋予任意宏(\path相关指令才能使用), 如: \p1=($ (B) - (A) $), 将(x_b-x_a, y_b-y_a)赋予\p1, \p1为x_b-x_a, y_b-y_a, 不是坐标(x_b-x_a, y_b-y_a), 并且\p1的元素都携带坐标
-\x1=x_b-x_a, \y2=y_b-y_a, veclen为计算线段长度(带单位), 即: \sqrt((x_b-x_a)^2, (y_b-y_a)^2), 并将结果赋予\n2, \n2结果为<dimension>, 如: 5pt
-** \p指代point, \x指代x轴坐标, \y指代y轴坐标, \n指代带单位的number
+
+let 
+<assignment_1>,<assignment_2>... 
+in
+...;
+可将值赋予任意宏(\path相关指令才能使用), 宏列表:
+	\p<registor>={<formula>} - 由x/y轴距离组成的排列, 即\x<registor>, \y<registor>排列. 如: \p1=(1pt,2pt), 则\p1为1pt,2pt 
+	\x<registor> - x轴距离长度. 如: \p1=(1pt,2pt), 则\x1为1pt
+	\y<registor> - y轴距离长度. 如: \p1=(1pt,2pt), 则\y1为2pt
+	\n<registor>={<formula>} - 一个纯数字或带单位的dimension. 如: \n1={2+1}, 则\n1为3; \n2={2pt+1pt}, 则\n2为3pt
+上述四个macro只能用于in后的表达式部分
+
+例子解释: \p1=($ (B) - (A) $), 将(x_b-x_a, y_b-y_a)赋予\p1
+\x1=x_b-x_a, \y2=y_b-y_a
+veclen为计算长度, 即: \sqrt((x_b-x_a)^2, (y_b-y_a)^2), 并将结果赋予\n2, \n2此处结果为<dimension>, 如: 5pt
+** \p指代point, \x指代x轴坐标, \y指代y轴坐标, \n指代number或dimension
+
+23.\draw (0,0) -- (1,1) [insert path={circle [radius=2pt]}] -- (2,0) -- (3,1) -- (3,0) -- (2,1); 
+可选参数insert path用于在路径中间添加一个路径, 适用于自定义style, 上述等效:
+\draw (0,0) -- (1,1) circle [radius=2pt] -- (2,0) -- (3,1) -- (3,0) -- (2,1);
