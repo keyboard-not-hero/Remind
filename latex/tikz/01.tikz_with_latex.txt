@@ -26,6 +26,7 @@
 		total=<macro> - 交点数量宏, 格式为\t, 可用于后续引用, 交点列表{1,...,\t}
 		by=<name_list> - 交点个性化命名, <prefix>-<number>仍有效
 		sort by=<name_path> - 根据指定path进行交点排序
+	positioning - node相对于点更精确地放置
 	
 
 4.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定. 也可以使用\tikz后跟随单一语句(以';'结束)

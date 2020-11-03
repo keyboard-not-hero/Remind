@@ -15,6 +15,8 @@
 \clip (0,0) rectangle (2,2);
 
 \path[draw, clip] (0,0) rectangle (2,2);
+
+\useasboundingbox (0,0) circle [radius=2cm];
 \end{tikzpicture}
 \end{document}
 
@@ -23,19 +25,28 @@
 内容讲解
 1.\draw (-2.5,0) -- (2.5,0); 作一条(-2.5,0)到(2.5,0)的直线. \path[draw]的缩写形式
 
-2.\fill[color=green!20] (0,0) circle (1cm); 作一个填充颜色为20%绿色的圆, 圆心为(0,0), 半径为1cm. \path[fill]的缩写形式
+
+2.\fill[color=green!20] (0,0) circle (1cm); 作一个填充颜色为20%绿色的圆, 圆心为(0,0), 半径为1cm. \path[fill]的缩写形式. fill主要用于填充闭合路线背景色
+
 
 3.\filldraw[fill=red!20,draw=blue!30] (0,0) circle (2cm); 作一个填充颜色为20%红色, 边框为30%绿色的圆, 圆心为(0,0), 半径为2cm. \path[fill,draw]的缩写形式
 
-4.\shade (0,0) rectangle (4,2); 作一个长方形, 并且从上到下进行颜色渐变, 默认渐变方向为从上到下, 颜色为黑色到白色. \path[shade]的缩写形式. 渐变方向和颜色可使用可选参数列表:
-	top color/bottom color - 由上到下
-	left color/right color - 由左到右
-	inner color/outer color - 由内到外
-	ball color - 球形光照效果, 由接近左上角一点, 向外扩散, 白色到指定颜色深度加深
+
+4.\shade[shading=axis] (0,0) rectangle (4,2); 作一个长方形, 并且从上到下进行黑色到白色的颜色渐变. shading代表渐变方向, 该指令为\path[shade]的缩写形式. 渐变方向和配套颜色指定列表:
+	axis - 由上到下(配合top/bottom color)或者由左到右(配合left/right color)
+	radial - 由圆心扩散到外部(配合inner/outer color)
+	ball - 球形光照效果, 由接近左上角一点, 向外扩散, 白色到指定颜色深度加深(配合ball color)
+	其他相关可选参数:
+	shading angle - 以axis模式从上到下的方向, 逆时针旋转渐变方向. 不可配合left/right/top/bottom color参数
+	
 
 5.\shadedraw[left color=black, right color=green, draw=blue] (0,0) rectangle (4,2); 作一个长方形, 并且从左到右进行颜色渐变, 并指定边框颜色. \path[shade,draw]的缩写形式
 
+
 6.\clip (0,0) rectangle (2,2); 剪切指定图形区域, 只能作用于之后的作图. 即添加一个顶层画布, 并只能在规定区域作画. \path[clip]的缩写形式
+
 
 7.\path[draw,clip] (0,0) rectangle (2,2); 剪切指定区域, 并作用于之后的作图, 并在边缘画线条
 
+
+8.\useasboundingbox (0,0) circle [radius=2cm]; 一个与tikzpicture环境外的内容不重叠的圆, 圆的半径为2cm, 圆心为(0,0)

@@ -9,11 +9,15 @@
 %
 %\draw[color=blue, opacity=0.5] (0,0) -- (2,2);
 %
+%\draw[color=red, double=blue] (0,0) -- (2,2); 
+%
 %\draw[->] (-1.5,0) -- (1.5,0);
 %
 %\draw[rounded corners=4pt] (0,0) rectangle (2,2);
 %
-%\draw[dashed] (0,0) -- (3,3);
+%\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3);
+%
+%draw[pattern=dots] (0,0) circle [radius=1cm];
 %
 %\draw (0,0) circle [radius=2cm];
 %
@@ -93,7 +97,7 @@ in
 	**相对坐标1/2符号也适用于极坐标
 
 
-2.\draw[line width=5mm] (4,0) -- (4,4); 指定线条宽度为5mm. 也可使用内置特定线条宽度, 该值没有对应key(与line width无关), 列表:
+2.\draw[line width=5mm] (4,0) -- (4,4); 指定线条宽度为5mm. 也可使用预定义style的线条宽度, 列表:
 	ultra thin - 非常细的线条
 	very thin - 较细的线条
 	thin - 略细的线条
@@ -111,7 +115,11 @@ in
 	opacity指定透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
 
 
-4.\draw[arrows=->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数arrows=->代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头
+4.\draw[color=red, double=blue] (0,0) -- (2,2); 作两条并行直线. 原理: 首先使用color颜色作一条较粗的直线, 然后在中间使用double颜色(默认为white)作一条较细的直线. 其他相关参数:
+	double distance - 较细直线的宽度. 较粗直线的宽度2*(line width)+(double distance)
+
+
+5.\draw[arrows=->] (-1.5,0) -- (1.5,0); 作一条(-1.5,0)到(1.5,0)的直线, 可选参数arrows=->代表在末端添加箭头, 可使用多个'>'在末尾跟随多个箭头
 	箭头所在端列表:
 		|- - 起始端bar
 		<- - 起始端箭头
@@ -147,14 +155,14 @@ in
 			open - fill=none的简写
 			
 		
-
-5.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度. sharp corners为尖角
+6.\draw[rounded corners=4pt] (0,0) rectangle (2,2); 作一个长方形, rounded corners指定角具有特定半径的弧度. sharp corners为尖角
 
 \draw (0,0) -- (1,1) [rounded corners] -- (2,0) -- (3,1) [sharp corners] -- (3,0) -- (2,1); 角的可选参数影响后续角的圆滑或尖锐, 即(2,0)/(3,1)为圆滑角, (3,0)及后续恢复尖锐角
 
 \draw (0,0) -- (1,1) [color=red] -- (2,0) -- (3,1) [color=blue] -- (3,0) -- (2,1); 线段的可选参数影响所有线段, 并且取最后定义的属性, 即当前线段全部为蓝色
 
-6.\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dash pattern代表线条类型为特定虚线. 也可使用预定义线条, 预定义线条类型列表:
+
+7.\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,3); 作一条(0,0)到(3,3)的虚线, 可选参数dash pattern代表线条类型为特定虚线. 也可使用预定义线条, 预定义线条类型列表:
 	solid - 实线(默认)
 	dashed - 普通虚线
 	loosely dashed - 松散虚线
@@ -164,28 +172,47 @@ in
 	densely dotted - 密集点阵线
 	dash dot - 虚线和点阵线混合
 	dash dot dot - 类似于dash dot, 但循环排列的点阵多一个
+	相关参数:
+	dash phase - 将起始位置向右偏移尺寸
 
 
-7.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆. 可选参数列表:		radius - 圆的半径
+8.draw[pattern=dots] (0,0) circle [radius=1cm]; 作一个半径为1cm的圆, 圆心为(0,0). pattern=dots代表圆内填充满原点, 该参数包含在tikz库patterns中. 填充图形列表:
+	horizontal lines - 水平线
+	vertical lines - 垂直线
+	north east lines - 右上到左下的线条
+	north west lines - 左上到右下的线条
+	grid - 栅栏
+	crosshatsh - 斜向栅栏
+	dots - 点
+	crosshatch dots - 斜向点
+	fivepointed stars - 五角星
+	sixpointed stars - 六角星
+	bricks - 积木
+	checkerboard - 棋盘格
+	其他相关参数:
+	pattern color - pattern的填充颜色
+
+
+8.\draw (0,0) circle [radius=2cm]; 作圆心为(0,0), 半径为2cm的圆. 可选参数列表:		radius - 圆的半径
 	x radius - 圆的x轴半径
 	y radius - 圆的y轴半径
 	at - 额外指定圆心
 
 
-8.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆. 已使用circle替代
+9.\draw (0,0) ellipse [x radius=2, y radius=3]; 作圆心为(0,0), x-axis半径为2cm, y-axis半径为3cm的椭圆. 已使用circle替代
 
 
-9.\draw (-1,-1) grid[step=0.5cm] (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, 格子宽度为0.5cm. 可选参数列表:
+10.\draw (-1,-1) grid[step=0.5cm] (1,1); 作一个两个对角为(-1,-1)/(1,1)的栅栏, 格子宽度为0.5cm. 可选参数列表:
 	step - 指定x/y轴格子宽度
 	xstep - 指定x轴格子宽度
 	ystep - 指定y轴格子宽度
 	(x,y) - 分别指定x/y轴格子宽度
 
 
-10.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
+11.\draw (0,0) rectangle (2,4); 作对角点分别为(0,0)和(2,4)的长方形
 
 
-11.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可选参数列表:
+12.\draw (0,-1) arc [start angle=-90, end angle=90, radius=1cm]; 作起始点为(0,-1), 从-90到90度的半径为1为圆弧. 可选参数列表:
 	start angle - 起始角度
 	end angle - 结束角度
 	delta angle - 间隔角度, <delta_angle>=<end_angle> - <start_angle>, 当三个都指定时, delta angle被忽略
@@ -194,29 +221,29 @@ in
 	y radius - 指定圆弧的y轴半径
 
 
-12.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,1), (0,1)的切线方向也指向(-1,1); 另一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 
+13.\draw (-1,0) .. controls (-1,1) .. (0,1) .. controls (0.555,1) and (1,0.555) .. (1,0); 作两段圆弧, 一段是(-1,0)到(0,1)的圆弧, 其中(-1,0)的切线方向指向(-1,1), (0,1)的切线方向也指向(-1,1); 另一段是(0,1)到(1,0)的切线, 其中(0,1)的切线方向指向(0.555,1), (1,0)的切线方向指向(1,0.555). 
 **注意: 如果controls的第二个括号内使用相对坐标, 是针对于后续紧跟的绝对坐标位置. 如: (0,1) .. controls(0.555,1) and +(0,0.555) .. (1,0); (1,0)的切线指向(1+0,0+0.555)
 
 
-13.\draw (0,0) rectangle (1,1) (0,0) parabola (1,1); 作一个对角线为(0,0)/(1,1)的矩形, 另外作一个(0,0)到(1,1)的抛物线
+14.\draw (0,0) rectangle (1,1) (0,0) parabola (1,1); 作一个对角线为(0,0)/(1,1)的矩形, 另外作一个(0,0)到(1,1)的抛物线
 
 
-14.\draw (0,0) parabola bend (4,16) (6,12); 作一个(0,0)到(6,12)的抛物线, 并且中间在(4,16)拐弯
+15.\draw (0,0) parabola bend (4,16) (6,12); 作一个(0,0)到(6,12)的抛物线, 并且中间在(4,16)拐弯
 
 
-15.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度. 关键字解释:
+16.\draw[x=1.57cm,y=1cm] (0,0) sin (1,1) cos (2,0); 作一个[0,pi]区间的sin曲线. 并指定x/y上的单位长度. 关键字解释:
 	sin - [0, pi/2]区间的sin图像或关于x轴的镜像
 	cos - [0, pi/2]区间的cos图像或关于x轴的镜像
 
 
-16.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
+17.\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle; 作一个正方形, cycle代表从(0,1)连接到起始点(0,0), 进行图形封闭
 
 
-17.\draw (30:1) -- (30:1cm |- 0,0); 作一条直线, (<p> |- <q>)代表经过点p的垂直线与经过q的水平线的交点; 另外, (<p> -| <q>)代表经过p的水平线与经过q的垂直线的交点.
+18.\draw (30:1) -- (30:1cm |- 0,0); 作一条直线, (<p> |- <q>)代表经过点p的垂直线与经过q的水平线的交点; 另外, (<p> -| <q>)代表经过p的水平线与经过q的垂直线的交点.
 (<p>) -| (<q>)代表点p与{p与q的交点}之间的连线, {p与q交点}与q的连线; (<p>) |- (<q>)同理
 
 
-18.\path[name path=upward line] (1,0) -- (1,1); 
+19.\path[name path=upward line] (1,0) -- (1,1); 
 代表命名一条(1,0)到(1,1)的直线路径为upward line, name path指定路径名称, 包含在tikz特别包intersections中, 指令: \usetikzlibrary{intersections}
 
 \path[name path=sloped line] (0,0) -- (30:1.5);
@@ -225,7 +252,7 @@ in
 求路径upward line与sloped line的交点(务必确保两条路径足够长, 能够有实际相交), 交点为x, 并作一条(1,0)到(x)的直线
 
 
-19.\begin{scope}[] ... \end{scope} 用于将环境的可选参数只应用于该范围内. 三种范围如下:
+20.\begin{scope}[] ... \end{scope} 用于将环境的可选参数只应用于该范围内. 三种范围如下:
 	tikzpicture - 作用于当前图的所有指令
 	scope - 作用于该范围内的指令
 	draw/fill/clip/shade - 只作用于当前指令
@@ -238,12 +265,12 @@ in
 	作用于线 - color
 
 
-20.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0); 定义一个坐标点, 该坐标点位于(0,0), 并且命名为A, 给该坐标点添加蓝色标签A, 该标签位于坐标点的左边
+21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at (0,0); 定义一个坐标点, 该坐标点位于(0,0), 并且命名为A, 给该坐标点添加蓝色标签A, 该标签位于坐标点的左边
 
 \draw[color=green] (A) -- (B); 作一条直线, 该直线连接坐标点A/B, 直线为绿色
 
 
-21.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数. 
+22.\coordinate [label=left:\textcolor{blue}{$A$}] (A) at ($ (0,0) + 0.1*(rand,rand) $); 定义一个坐标点, 该坐标点在(0+-0.1,0+-0.1)波动, rand代表[-1,-1]范围随机数. 
 ($ $)表示对coordinate进行计算, 该操作符包含在tikz库calc中, 语法: \usetikzlibrary{calc}. 详细语法如下:
 	总结构: ([options]$<coordinate computation>$)
 	结构剖析:
@@ -264,7 +291,7 @@ in
 	** ($ $)不能作用于可选参数位置
 
 	
-22.\draw 
+23.\draw 
 let 
 \p1 = ($ (B) - (A) $),
 \n2 = {veclen(\x1,\y1)}
@@ -288,6 +315,6 @@ in
 veclen为计算长度, 即: \sqrt((x_b-x_a)^2, (y_b-y_a)^2), 并将结果赋予\n2, \n2此处结果为<dimension>, 如: 5pt
 ** \p指代point, \x指代x轴坐标, \y指代y轴坐标, \n指代number或dimension
 
-23.\draw (0,0) -- (1,1) [insert path={circle [radius=2pt]}] -- (2,0) -- (3,1) -- (3,0) -- (2,1); 
+24.\draw (0,0) -- (1,1) [insert path={circle [radius=2pt]}] -- (2,0) -- (3,1) -- (3,0) -- (2,1); 
 可选参数insert path用于在路径中间添加一个路径, 适用于自定义style, 上述等效:
 \draw (0,0) -- (1,1) circle [radius=2pt] -- (2,0) -- (3,1) -- (3,0) -- (2,1);

@@ -13,7 +13,11 @@
 %
 %\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance};
 %
-%\draw (0,0) node [fill=blue]{since 1989};
+%\fill [fill=blue!50, draw=blue, very thick] 
+%(0,0) node [behind path, fill=red!50] {first node} 
+%-- (1.5,0) node [behind path, fill=green!50] {second node}
+%-- (1,5,1) node [begind path, fill=brown!50] {third node}
+%-- (0,1) node [fill=blue!30] {fourth node};
 %
 %\draw (0,0) -- node{origin}(2,2);
 %
@@ -153,6 +157,7 @@
 	north west - point位于node的西北方
 	south east - point位于node的东南方
 	south west - point位于node的西南方
+	center - point位于node的正中
 
 
 4.\draw (0,0) rectangle (1mm,1mm) node [right]{newbalance}; 作一个长方形, 并且在长方形右边作一个node(可选参数right指定, 并且可指定长度). 位置参数列表:
@@ -164,9 +169,20 @@
 	above right[=<length>] - node位于point右上方, 长度可指定
 	below left[=<length>] - node位于point左下方, 长度可指定
 	below right[=<length>] - node位于point右下方, 长度可指定
+	centered - node位于point正中
+	扩展tikz库 - positioning, 该库支持一下四种参数值格式:
+	(1)1pt - 带单位的dimension
+	(2)1 - 不带单位的长度, 使用默认单位
+	(3)1pt and 2mm - 指定不同方向的偏移. 如: above left=5mm and 2mm
+	(4)[<dimension>] of <node_name> - 相对于其他node的偏移距离. 当使用on grid参数时(on grid位于位置参数之前), 表示中心距离; 当on grid为设置时, 代表最近的边框距离
 
 	
-5.\draw (0,0) node [fill=blue]{since 1989}; 填充node的背景色为蓝色
+5.\fill [fill=blue!50, draw=blue, very thick] 
+(0,0) node [behind path, fill=red!50] {first node} 
+-- (1.5,0) node [behind path, fill=green!50] {second node}
+-- (1,5,1) node [begind path, fill=brown!50] {third node}
+-- (0,1) node [fill=blue!30] {fourth node};
+node[behind path]用于将当前node至于当前path的图层之后, 可选列表: behind path/in front of path; fill可选参数用于填充node背景色
 
 
 6.\draw (0,0) -- node{origin}(2,2); 作一条(0,0)到(2,2)的直线, 并且在直线中间添加node. node作用于线条位置分布如下:
@@ -177,17 +193,26 @@
 	\draw (0,0) -- node[near end]{N}(2,2); 接近线条结束位置
 	\draw (0,0) -- node[very near end]{N}(2,2); 非常接近线条结束位置
 	\draw (0,0) -- (2,2)node{N}; - 位于线条结束, 即第二个坐标点居中
+	或者使用pos可选参数指定(可用于arc曲线):
+	\draw (0,0) -- (3,1) node[pos=0.5]{0};
+	指定前一个coordinate到当前coordinate直线/曲线的百分比位置
+	** 在(coor_1) -| (coor_2)的交叉线中, pos=0.5代表拐点位置
 
 
 7.\draw (0,0) -- node[sloped]{origin}(2,2); 作一条直线并且中间添加node, 使用可选参数sloped指定文字方向跟随线条方向
 
 
 8.\node at (0,0) [shape=circle, draw, fill=blue!50, inner sep=2mm]{}; 在指定坐标上添加文字内容, 并使用一个圆包围该文字. 参数含义如下:
-	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle/ellipse/rounded rectangle, ellipse包含在shapes.geometric tikz库中, rounded rectangle包含在tikz库shapes.misc中
+	shape - 代表包围该文字的图形, 默认预定义图形: circle/rectangle/ellipse/diamond/rounded rectangle, ellipse/diamond包含在shapes.geometric tikz库中, rounded rectangle包含在tikz库shapes.misc中
+	shape aspect - 当shape为dianond时, 指定宽高比
 	draw - 代表画出该包围图形
 	fill - 代表填充背景色
-	inner sep - 指定包围文字的图像大小, 但minimum size更精确
-	minimum size - 当包围图形内不包含内容时的最小图形大小, 可使包围图形随文字内容变换大小, minimum height/width为minimum的x/y轴分离设置版本
+	inner sep - 文字距离边框的距离. inner xsep/inner ysep为分别设置水平和垂直方向的距离
+	minimum size - 当包围图形内不包含内容时的最小图形大小, minimum height/width为minimum的x/y轴分离设置版本
+	color - 边框和文字的颜色
+	text - 文本的颜色
+	text opacity - 文本透明度, 区间[0,1]
+	font - 字体类别. 如: \tiny、\small、\italic、\itshape
 	相同含义的其他语法: 
 	\path (0,0) node [shape=circle, draw, fill=blue, inner sep=2mm]{};
 
@@ -207,9 +232,13 @@
 	yshift - 用于指定单个node距离相对其他node的垂直平移距离
 
 	
-11.\node [shape=circle, draw, below=of hello, label=above:$s\leq 2$, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label的相对位置列表:
-	below/above/left/right/below left/below right/above left/above right - 下/上/左/右/左下/右下/左上/右上方
-	数字 - 坐标轴上逆时针旋转角度
+11.\node [shape=circle, draw, below=of hello, label={above:$s\leq 2$}, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label参数详解:
+	格式: [<options>]<angle>:<text>
+	options - 使用'[]'包围, 指定label的颜色
+	angle - label相对于node的角度位置, 可指定为角度number或above/left/center等格式
+	text - 文字内容
+	** 可在scope/kitipicture范围中使用label distance可选参数指定label和node的距离
+	** pin类似于label, 只是在node与pin之间会有直线连接
 
 
 12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red. \tikzset位于\begin{tikzpicture}之前
@@ -258,7 +287,7 @@ node[above, text width=2cm, align=center, midway]{replacement of the capacity by
 \end{scope}
 计算包含所有图形的背景, on background layer指定内容位于背景层, fit用于适配前景图像并计算大小
 用于作图形的背景, 需要使用额外tikz库backgrounds, 语法: \usetikzlibrary{backgrounds}
-fit参数计算图形便捷, 需要额外使用tikz库fit, 语法: \usetikzlibrary{fit}
+fit参数计算图形边界, 便于将所需要的图形包含进边界. 需要额外使用tikz库fit, 语法: \usetikzlibrary{fit}
 
 
 21.\node [shape=circle, draw, below=of top, name=center, minimum size=6mm, tokens=3]{}; 作一个node center的小圆圈, 可选参数tokens代表在小圆圈内放置3个小黑点, 需要使用额外的tikz库petri, 语法: \usetikzlibrary{petri}
@@ -308,3 +337,9 @@ rounded rectangle代表带圆角的矩形, 包含在shapes.misc tikz包中; font
 
 28.\draw[red] (a) -- (tangent cs:node=c,point={(a)},solution=1) -- (c.center) -- (tangent cs:node=c,point={(a)},solution=2) -- cycle;
 (tangent cs:node=c,point={(a)}),solution)代表坐标点a到node所作的切线其中之一
+
+
+29.node多行环境:
+(1)在内容区域使用latex的\tabular环境
+(2)使用\\进行断行, 但是配合node的align可选参数使用
+(3)使用text width可选参数

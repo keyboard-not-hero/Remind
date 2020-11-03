@@ -38,6 +38,7 @@
 	every label - 作用于所有label
 	every path - 适用于所有path和node相关
 	every circle - 适用于所有circle和ellipse
+	every <shape> node - 适用于指定shape的node
 	help lines - [gray, thin]的path属性
 
 
