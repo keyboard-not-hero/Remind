@@ -17,9 +17,9 @@ please see section \ref{section:two}, you can find something
 \end{document}
 
 内容讲解
-1.\label{label}紧跟在\section之后, 对section编号做标记
+1.\label{label_name}紧跟在\section之后, 对section编号做标记
 
-2.\ref{label}使用section编号标记
+2.\ref{label_name}使用section编号标记
 
 3.\pageref{label}使用label的页码
 
@@ -62,6 +62,29 @@ please reference equation \ref{eq:one}
 \end{document}
 
 内容讲解
-1.\label{label}跟随在每个编号公式之后
+1.\label{label_name}用于给公式做标记
 
-2.\ref{label}引用公式编号
+2.\ref{label_name}引用公式编号, 格式为: <number>
+
+3.\eqref{label_name}引用公式编号, 格式为: (<number>). 由amsmath宏包提供
+
+
+
+四、Demo(示例)04 - reference gather
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{gather}
+\tan(\alpha)=\frac{2000}{p}\label{ga:one}\\
+\tan(\beta)=\frac{h}{1000}\\
+\theta=\beta-\alpha
+\end{gather}
+from formula\eqref{ga:one}, result:
+\end{document}
+
+内容讲解
+1.\label{label_name}用于给公式做标记
+
+2.\ref{label_name}引用公式编号, 格式为: <number>
+
+3.\eqref{label_name}引用公式编号, 格式为: (<number>). 由amsmath宏包提供
