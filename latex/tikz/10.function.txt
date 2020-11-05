@@ -1,0 +1,65 @@
+%\documentclass{article}
+%\usepackage{tikz}
+%\begin{document}
+%\begin{tikzpicture}
+%% 示例1
+%\draw plot coordinates {(0,0)(1,1)(2,0)(3,1)};
+
+%% 示例2
+%\draw plot file {demo.tn};
+%% 文件内容如下:
+%%0 0
+%%1 1
+%%2 0 
+%%3 1 
+
+%% 示例3
+%\draw[->] (0,-5) -- (0,5);
+%\draw[->] (-5,0) -- (5,0);
+%\draw[samples=10, domain=-pi:pi, smooth] plot (\x,{sin(\x r)});
+%\end{tikzpicture}
+%\end{document}
+
+
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{datavisualization.formats.functions}
+\begin{document}
+\begin{tikzpicture}
+\datavisualization [school book axes, visualize as smooth line]
+data [format=function] {
+var x : interval [-2:2];
+func y = \value x*\value x + 1;
+};
+\end{tikzpicture}
+\end{document}
+
+内容讲解
+1.tikz作函数图的方法:
+	(1)使用plot指令. 需手动添加坐标轴和刻度
+	(2)使用tikz的datavisualization.formats.functions库. 例: \usetikzlibrary{datavisualization.formats.functions}
+	(3)使用latex的pgfplots库(依赖于pgf). 例: \usepackage{pgfplots}
+
+
+2.plot语法:
+	plot coordinates {<coor_1> <coor_2>...} - 连接多个点, 显示指定坐标. 如示例1
+	plot file {<file_name>} - 连接多个点, 从文件中读取点坐标. 如示例2
+		文件规定格式:
+		(1)每一行包含一个坐标, x/y轴数字使用空格分隔
+		(2)空行或以'#'/'%'开头的行忽略, 并不会连接忽略行之前一行和之后一行坐标
+	plot <coordinate expression> - 使用指定的坐标表达式. 如示例3
+		可选参数列表:
+			variable - 使用的变量宏, 默认为x
+			samples - 样本数, 默认为25
+			domain - 样本区间, 默认为[-5,5]
+			samples at - 样本取值, 覆盖samples和domain值. 如: samples at={1,3,5,9}
+		** 示例3中的sin(\x r)中的r代表将x的值视为弧度值			
+
+
+3.
+
+
+
+
+
+
