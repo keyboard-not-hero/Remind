@@ -21,6 +21,7 @@
 %\end{document}
 
 
+% 示例4
 \documentclass{article}
 \usepackage{tikz}
 \usetikzlibrary{datavisualization.formats.functions}
@@ -33,6 +34,9 @@ func y = \value x*\value x + 1;
 };
 \end{tikzpicture}
 \end{document}
+
+
+
 
 内容讲解
 1.tikz作函数图的方法:
@@ -56,9 +60,58 @@ func y = \value x*\value x + 1;
 		** 示例3中的sin(\x r)中的r代表将x的值视为弧度值			
 
 
-3.
+3.datavisualization语法:
+\usetikzlibrary{datavisualization.formats.functions}
+使用tikz库datavisualization.formats.functions
 
-
+\datavisualization [school book axes, visualize as smooth line]
+data [format=function] {
+var x : interval [-2:2];
+func y = \value x*\value x + 1;
+};
+\datavisualization代表数据可视化指令, 可选参数school book axes代表传统书本坐标轴; 可选参数visualize as smooth line以曲线画出图形. 
+	坐标轴类型列表:
+		school book axes - 传统书本上的坐标轴
+		scientific axes - 科学文章坐标轴
+	线条类型:
+		visualize as line - 直线
+		visualize as smooth line - 曲线
+		visualize as scatter - 坐标点标记
+data{}代表数据点集合. 可选参数列表:
+	format - 数据集合格式, 默认为table. 数据集合格式详情:
+		(1)table - 每行一个坐标点, x/y值默认使用','分隔, 第一行为列标题. 例:
+			data {
+				x, y
+				0, 0
+				1, 1
+				2, 0
+				3, 1
+			};
+		(2)named - 每行一个坐标点, x/y值默认使用','分隔, 并且详细指定key. 例:
+			data [format=named]{
+				x=0, y=0
+				x=1, y=1
+				x=2, y=0
+				x=3, y=1
+			};
+		(3)function - 函数定义域/值域声明. 例:
+			% format=function代表x/y坐标点使用function的自变量和值域方法获得
+			data [format=function] {
+				% 定义域三种方法
+				% i   var声明x为变量, interval指定定义域区间, samples指定样本量
+				var x : interval [-2,2] samples 7; 
+				% ii  step指定步进
+				var x : interval [-2,2] step 0.5;
+				% iii 指定样本列表
+				var x : {-2,-1,0,1,2}; 
+				% func代表y由function方法获得, 并且使用\value x指定引用变量
+				func y= \value x * \value x; 
+			};
+		(4)*从文件读取. 例:
+			% 文件为csv格式, 即每行一个坐标, 默认使用','分隔x/y值, 第一行为列标题
+			data [read from file=<file_name.csv>];
+	separator - 指定x/y之间的分隔符, 默认为','. 如: \space/';'等
+	headline - 第一行的列名称列表
 
 
 
