@@ -35,6 +35,24 @@ func y = \value x*\value x + 1;
 \end{tikzpicture}
 \end{document}
 
+% 示例5
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{datavisualization.formats.functions}
+\begin{document}
+\begin{tikzpicture}
+\datavisualization [scientific axes=clean, x axis={ticks={step=(0.5*pi)}}, visualize as smooth line/.list={sin, cos}, sin={label in legend={text=$sin$}}, cos={label in legend={text=$cos$}}, style sheet=vary thickness]
+data [set=sin, format=function] {
+var x : interval [-pi:pi] samples 100;
+func y = sin(\value x r);
+}
+data [set=cos, format=function] {
+var x : interval [-pi:pi] samples 100;
+func y = cos(\value x r);
+};
+\end{tikzpicture}
+\end{document}
+
 
 
 
@@ -67,16 +85,99 @@ func y = \value x*\value x + 1;
 \datavisualization [school book axes, visualize as smooth line]
 data [format=function] {
 var x : interval [-2:2];
-func y = \value x*\value x + 1;
+func y = \value{x} * \value{x} + 1;
 };
 \datavisualization代表数据可视化指令, 可选参数school book axes代表传统书本坐标轴; 可选参数visualize as smooth line以曲线画出图形. 
 	坐标轴类型列表:
 		school book axes - 传统书本上的坐标轴
-		scientific axes - 科学文章坐标轴
-	线条类型:
-		visualize as line - 直线
-		visualize as smooth line - 曲线
-		visualize as scatter - 坐标点标记
+			standard labels - x轴label位于x轴最右端, y轴label位于y轴最上方. 默认且唯一
+		scientific axes[=<options>] - 科学文章坐标轴, options可选值:
+			刻度线类型:
+			inner ticks - 刻度线向内部(x轴向上, y轴向右)
+			outer ticks - 刻度线向外部(x轴向下, y轴向左). 默认值
+			clean - 将刻度线从图像中分离
+			labels放置位置:
+			standard labels - x轴label位于x轴下方, y轴label位于y轴左方并逆时针旋转90度方向. 默认选项
+			upright labels - x轴label位于x轴下方, y轴label位于y轴左方
+			end labels - x轴label位于x轴最右端, y轴label位于y轴最上方
+	线条类型列表:
+		visualize as line[=<line_name>] - 直线. 可配置曲线名称, 用于data集中使用set列引用该名称, 标明该行属于对应数据集. 如: visualize as line=sin. 当多个数据集含有相同类型线条时, 使用/.list指示. 如: visualize as line/.list={sin, cos, tan}
+		visualize as smooth line - 曲线. 可配置曲线名称
+		visualize as scatter - 散点图. 可配置曲线名称
+	线条属性配置:
+		<line_name>=<options> - 指定线条属性, 属性列表如下:
+			style - 配置线条的颜色/宽度/风格(dotted/dashed/solid)/mark类型等
+			label in legend={options} - 给对应线条配置legend注解内容. 默认在图像右方. 参考示例5. options列表:
+				text - legend文本
+				text colored - 注解文字上色
+				node style - 指定legend entry文字的属性
+			label in data={option} - 类似于label in legend, 但注解在线条上
+				text - legend文本
+				when - 表示指定在指定坐标轴的指定位置上, 语法: {x|y} is <number>
+				text colored - 注解文字上色
+				index - 注解在第n个数据点上
+				pos - 注解在线条的指定百分比上
+			pin in data={options} - 类似于label in legend, 但注解离线条较近, 并且与线条之间使用直线连接
+				text - legend文本
+				when - 注解点在指定坐标轴的指定位置上
+				pin angle - 连接线的角度
+				pin length - 连接线的长度
+		style sheet - 预定义的线条差异化style. 预定义值列表如下:
+			vary dashing - 线条不同dashed风格
+			vary thickness - 线条不同粗细
+			vary dashing and thickness - 线条搭配不同dashed风格和粗细使用
+			strong colors - 线条不同配色, 只有六种配色
+			vary hue - 线条不同配色
+			cross marks - 线条/scatter搭配不同mark
+			shades of blue - 不同颜色深度的蓝色
+			shades of red - 不同颜色深度的红色
+			gray scale - 不同灰度, 只有三种配色
+	legend配置:
+		legend - 配置legend内容, 分布在矩阵中. 列表如下:
+			east outside - 指定legend在图像右方, 同right, 默认值. 可选值: west outside(left)/north outside(above)/south outside(below)/north east outside/north west outside/south east outside/south west outside
+			east inside - 指定legend在图像内部右方. 可选值: west inside/north inside/south inside/north east inside/north west inside/south east inside/south west inside
+			opaque - 使用指定颜色填充legend背景色
+			transparent - legend背景色为透明
+			at value - legend中心在图像指定坐标位置
+			right of - legend在图像指定坐标的右边. 可选列表: left of/above of/below of/above right of/above left of/below right of/below left of
+			rows - 指定legend矩阵分配的行数
+			columns - 指定legend矩阵分配的行数
+			right then down - legend entry矩阵先向右填充, 再向下, 默认选项. 其他值:down then right/down then left/up then right/up then left/left then up/left then down/right then up
+			matrix node style - 作用于legend矩阵的配置. 如: matrix node style={fill=red!20}, 填充legend背景色, 或draw=red!10为legend画边框
+			at - 作图(data bounding box)/可视图(data visualization bounding box)的位置, 可视图比作图内容略多空白位置
+			anchor - legend的位置锚点
+		    **anchor与at搭配示例: anchor=north west, at=(data visualization bounding box.north east), 代表legend矩阵的西北方紧邻可视图东北方(data visualization bounding box代表可视图)
+			label style - legend的label属性配置.列表:
+				text left - legend中, text位于label左方
+				text right - text位于label右方
+				text only - legend中, 只有text
+	坐标轴属性配置:
+		all axes - 配置x/y轴的属性
+		x axis - 配置x轴的属性
+		y axis - 配置y轴的属性
+		子属性列表, 适用于以上三种情况:
+			attribute - 指定对应轴使用的列名对应的值
+			logarithmic - 根据数值的log值进行等值步进(指数级步进). 默认为线性步进
+			unit length - 指定轴单元长度, 指定值为: <dimension> [per <number> units]
+			power unit length - 指定指数级单位长度, 刻度呈指数级递增. 如: power unit length=1mm, 代表刻度1到刻度10为1mm, 同理刻度10到刻度100也为1mm
+			length - 指定轴总长度
+			ticks - 刻度点属性设置. 列表:
+				step - 步进, 默认为1
+				minor steps between steps - tick之间划分次级tick的个数, 默认为9
+				about - 设置对应轴至少拥有的主刻度数, 预设定列表: none/few(3)/some(5)/many(10)
+				major - 手动指定放置主刻度的位置. 如: x axis={ticks={major={at={1,2,5}}}}. 子参数列表:
+					at - 重新配置刻度放置位置
+					also at - 在step/about的基础上, 增加刻度位置
+					options at - 在指定刻度上进行option操作. 语法: <value> as [<option>]. 如: major={options at=3 as [no tick text]}
+					style - 配置刻度属性(颜色等)
+				minor - 手动指定放置次要刻度的位置
+				subminor - 手动指定放置二级次要刻度的位置
+				tick unit - 对应轴刻度的单位
+				node style - 配置刻度label和坐标轴label属性(颜色等)
+			grid - 在指定轴上的刻度上添加栅栏, 所有ticks子参数适用于当前
+			ticks and grid - ticks与grid一起配置, 所有ticks子参数适用于当前
+			include value - 指定轴上必须包含的刻度
+			label - 坐标轴的名称, 格式: label{[<options>]<text>}
 data{}代表数据点集合. 可选参数列表:
 	format - 数据集合格式, 默认为table. 数据集合格式详情:
 		(1)table - 每行一个坐标点, x/y值默认使用','分隔, 第一行为列标题. 例:
@@ -104,14 +205,15 @@ data{}代表数据点集合. 可选参数列表:
 				var x : interval [-2,2] step 0.5;
 				% iii 指定样本列表
 				var x : {-2,-1,0,1,2}; 
-				% func代表y由function方法获得, 并且使用\value x指定引用变量
-				func y= \value x * \value x; 
+				% func代表y由function方法获得, 并且使用\value{x}指定引用变量
+				func y= \value{x} * \value{x} + 1; 
 			};
 		(4)*从文件读取. 例:
 			% 文件为csv格式, 即每行一个坐标, 默认使用','分隔x/y值, 第一行为列标题
 			data [read from file=<file_name.csv>];
 	separator - 指定x/y之间的分隔符, 默认为','. 如: \space/';'等
 	headline - 第一行的列名称列表
+	set - 数据集对应的线条名称. 配合\datavisualization指令的visualize as ...参数使用, 注意最后一个\data之后才能使用';'结束
 
 
 

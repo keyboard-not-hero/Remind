@@ -30,3 +30,5 @@
 	
 
 4.\begin{tikzpicture} ... \end{tikzpicture}为作图环境限定. 也可以使用\tikz后跟随单一语句(以';'结束)
+
+参考: pgfmanual.pdf
