@@ -214,7 +214,3 @@ data{}代表数据点集合. 可选参数列表:
 	separator - 指定x/y之间的分隔符, 默认为','. 如: \space/';'等
 	headline - 第一行的列名称列表
 	set - 数据集对应的线条名称. 配合\datavisualization指令的visualize as ...参数使用, 注意最后一个\data之后才能使用';'结束
-
-
-
-

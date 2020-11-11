@@ -1,5 +1,6 @@
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \usepackage{parskip}
+\usepackage{amsmath}
 \begin{document}
 1.指数法则:\\
 (1)\quad$b^0=1$\\
@@ -49,4 +50,27 @@ $\displaystyle\lim_{h\to 0}\frac{\ln(1+h)}{h}=\lim_{h\to 0}\frac{\ln(1+h)-\ln(1)
 10.对数函数在0附近的行为\\[1ex]
 (1)\quad$\displaystyle\lim_{x\to 0^+}\ln(x)=-\infty$\\[1ex]
 (2)\quad$\displaystyle\lim_{x\to 0^+}x^a\ln(x)=0$\\[1ex]
+
+11.取对数求导法\\
+当函数的底数和指数均为关于$x$的函数时, 通过对函数进行取对数, 让指数转化为乘数, 从而使用复合求导中的乘数求导法则解决问题\\
+例.\\[1ex]
+$\displaystyle y=x^{\sin(x)}$\\[1ex]
+由原方程式等号两边取对数, 得:\\
+\begin{equation}
+\ln(y)=\sin(x)\ln(x)\label{eq:logarithm}
+\end{equation}
+公式\eqref{eq:logarithm}两边关于$x$隐式求导, 得:\\[1ex]
+$\displaystyle\frac{1}{y}\frac{dy}{dx}=\ln(x)\cos(x)+\frac{\sin(x)}{x}$\\[1ex]
+$\displaystyle\frac{dy}{dx}=\ln(x)\cos(x)x^{\sin(x)}+\sin(x)x^{\sin(x)-1}$\\[1ex]
+
+12.指数增长与指数衰变\\
+(1)指数增长方程: $P(t)=P_0e^{kt}$\\
+(2)指数衰变方程: $P(t)=P_0e^{-kt}$\\
+
+13.双曲函数\\[1ex]
+(1)双曲余弦: $\displaystyle\cosh(x)=\frac{e^x+e^{-x}}{2}$\\[1ex]
+(2)双曲正弦: $\displaystyle\sinh(x)=\frac{e^x-e^{-x}}{2}$\\[1ex]
+(3)双曲线方程: $\cosh^2(x)-\sinh^2(x)=1$\\[1ex]
+(4)导数:\\[1ex]
+$\displaystyle\frac{d}{dx}\sinh(x)=\cosh(x)$\qquad$\displaystyle\frac{d}{dx}\cosh(x)=\sinh(x)$\\[1ex]
 \end{document}
