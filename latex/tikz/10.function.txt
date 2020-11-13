@@ -25,12 +25,16 @@
 \documentclass{article}
 \usepackage{tikz}
 \usetikzlibrary{datavisualization.formats.functions}
+\def\mytypesetter#1{%
+\pgfmathparse{#1/pi}%
+\pgfmathprintnumber{\pgfmathresult}$\pi$%
+}
 \begin{document}
 \begin{tikzpicture}
-\datavisualization [school book axes, visualize as smooth line]
+\datavisualization [school book axes, visualize as smooth line, x axis={ticks={step=(pi/2), tick typesetter/.code=\mytypesetter{##1}}}]
 data [format=function] {
-var x : interval [-2:2];
-func y = \value x*\value x + 1;
+var x : interval [-pi:pi];
+func y = sin(\value x r);
 };
 \end{tikzpicture}
 \end{document}
@@ -63,6 +67,7 @@ func y = cos(\value x r);
 	(3)使用latex的pgfplots库(依赖于pgf). 例: \usepackage{pgfplots}
 
 
+
 2.plot语法:
 	plot coordinates {<coor_1> <coor_2>...} - 连接多个点, 显示指定坐标. 如示例1
 	plot file {<file_name>} - 连接多个点, 从文件中读取点坐标. 如示例2
@@ -76,6 +81,7 @@ func y = cos(\value x r);
 			domain - 样本区间, 默认为[-5,5]
 			samples at - 样本取值, 覆盖samples和domain值. 如: samples at={1,3,5,9}
 		** 示例3中的sin(\x r)中的r代表将x的值视为弧度值			
+
 
 
 3.datavisualization语法:
@@ -100,10 +106,12 @@ func y = \value{x} * \value{x} + 1;
 			standard labels - x轴label位于x轴下方, y轴label位于y轴左方并逆时针旋转90度方向. 默认选项
 			upright labels - x轴label位于x轴下方, y轴label位于y轴左方
 			end labels - x轴label位于x轴最右端, y轴label位于y轴最上方
+
 	线条类型列表:
 		visualize as line[=<line_name>] - 直线. 可配置曲线名称, 用于data集中使用set列引用该名称, 标明该行属于对应数据集. 如: visualize as line=sin. 当多个数据集含有相同类型线条时, 使用/.list指示. 如: visualize as line/.list={sin, cos, tan}
 		visualize as smooth line - 曲线. 可配置曲线名称
 		visualize as scatter - 散点图. 可配置曲线名称
+
 	线条属性配置:
 		<line_name>=<options> - 指定线条属性, 属性列表如下:
 			style - 配置线条的颜色/宽度/风格(dotted/dashed/solid)/mark类型等
@@ -132,6 +140,7 @@ func y = \value{x} * \value{x} + 1;
 			shades of blue - 不同颜色深度的蓝色
 			shades of red - 不同颜色深度的红色
 			gray scale - 不同灰度, 只有三种配色
+
 	legend配置:
 		legend - 配置legend内容, 分布在矩阵中. 列表如下:
 			east outside - 指定legend在图像右方, 同right, 默认值. 可选值: west outside(left)/north outside(above)/south outside(below)/north east outside/north west outside/south east outside/south west outside
@@ -151,12 +160,13 @@ func y = \value{x} * \value{x} + 1;
 				text left - legend中, text位于label左方
 				text right - text位于label右方
 				text only - legend中, 只有text
+
 	坐标轴属性配置:
 		all axes - 配置x/y轴的属性
 		x axis - 配置x轴的属性
 		y axis - 配置y轴的属性
 		子属性列表, 适用于以上三种情况:
-			attribute - 指定对应轴使用的列名对应的值
+			attribute - 用于table和named数据集格式的轴命名
 			logarithmic - 根据数值的log值进行等值步进(指数级步进). 默认为线性步进
 			unit length - 指定轴单元长度, 指定值为: <dimension> [per <number> units]
 			power unit length - 指定指数级单位长度, 刻度呈指数级递增. 如: power unit length=1mm, 代表刻度1到刻度10为1mm, 同理刻度10到刻度100也为1mm
@@ -164,7 +174,12 @@ func y = \value{x} * \value{x} + 1;
 			ticks - 刻度点属性设置. 列表:
 				step - 步进, 默认为1
 				minor steps between steps - tick之间划分次级tick的个数, 默认为9
-				about - 设置对应轴至少拥有的主刻度数, 预设定列表: none/few(3)/some(5)/many(10)
+				about - 设置对应轴至少拥有的主刻度数
+				** 预设定主刻度数关键字列表: 
+					none - 无主刻度
+					few - 三个主刻度
+					some - 五个主刻度
+					many - 十个主刻度
 				major - 手动指定放置主刻度的位置. 如: x axis={ticks={major={at={1,2,5}}}}. 子参数列表:
 					at - 重新配置刻度放置位置
 					also at - 在step/about的基础上, 增加刻度位置
@@ -172,7 +187,17 @@ func y = \value{x} * \value{x} + 1;
 					style - 配置刻度属性(颜色等)
 				minor - 手动指定放置次要刻度的位置
 				subminor - 手动指定放置二级次要刻度的位置
-				tick unit - 对应轴刻度的单位
+				tick suffix - 对应轴刻度的后缀内容
+				tick unit - 类似于tick suffix={$\,\rm<roman math text>$}
+				tick typesetter - 刻度显示的格式. 示例:
+					% 定义指令mytypesetter后的#1~#9分别声明为使用指令时第n个'{}'内的内容([#1]代表第一个可选参数'[]'内的内容), 用于后续{#1 #2}内容引用
+					\def\mytypesetter#1{%
+					% \pgfmathparse{<expression>}将括号内的表达式结果, 返回无单位结果到\pgfmathresult; #1为引用上述#1内容
+					\pgfmathparse{#1/pi}%
+					限定、pgfmathresult使用的实数格式, frac代表分数(默认为小数), frac whole=false代表使用假分数(默认为真分数), frac denom指定分母数字
+					\pgfkeys{pgf/number format/.cd,frac, frac whole=false, frac denom=2}
+					% \pgfmathprintnumber以pretty-print输出x的值
+					\pgfmathprintnumber{\pgfmathresult}$\pi$%
 				node style - 配置刻度label和坐标轴label属性(颜色等)
 			grid - 在指定轴上的刻度上添加栅栏, 所有ticks子参数适用于当前
 			ticks and grid - ticks与grid一起配置, 所有ticks子参数适用于当前

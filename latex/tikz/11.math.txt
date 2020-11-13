@@ -1,0 +1,110 @@
+% 示例01
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\begin{document}
+\begin{tikzpicture}
+\tikzmath{
+int \a,\b;
+real \c;
+coordinate \d;
+\a=4*5+6;
+\b=log2(1024);
+\c=pi;
+\d=(40:10pt);
+let \e=4*5+6 ;
+print{$a=\a$,$b=\b$,$c=\c$,$d=\d$,$e=\e$};
+}
+\end{tikzpicture}
+\end{document}
+
+
+% 示例02
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\begin{document}
+\begin{tikzpicture}
+\tikzmath{
+    int \x, \v;
+    \v=1;
+    for \x in {1,...,{random(6,10)}}{
+        \v=\v*2;
+    };
+    print{$x=\x, v=\v$};
+}
+\end{tikzpicture}
+\end{document}
+
+
+% 示例03
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\begin{document}
+\begin{tikzpicture}
+\tikzmath{
+    int \a;
+    \a=11;
+    if \a==10 then {print{$a=10$};} else {print{$a!=10$};};
+}
+\end{tikzpicture}
+\end{document}
+
+
+% 示例04
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\begin{document}
+\begin{tikzpicture}
+\tikzmath{
+    int \x;
+    for \x in {2,4,6,8}{
+        if \x==2 then {let \c=red;} else {
+            if \x==4 then {let \c=yellow;} else {
+                if \x==6 then {let \c=blue;} else {let \c=green;};
+            };
+        };
+        {\draw[color=\c] (0,0) circle [radius=\x];};
+    };
+}
+\end{tikzpicture}
+\end{document}
+
+
+
+
+内容讲解
+1.\tikzmath{<expression>}代表数学计算公式相关环境, 需要使用math tikz库, 语法: usetikzlibrary{math}
+
+
+2.math中, 变量类型需提前声明(默认为real), 变量有三种类型(参考示例01):
+	(1)int - 整型, 通过truncate小数部分获得
+	(2)real - 实数, 即浮点数. 默认类型
+	(3)coordinate - 类似于坐标的两个带单位的实数, 如: 3pt, 4pt. 且可通过<macro>x<suffix>获取第一个数字, <macro>y<sufix>获取第二个数字
+
+
+3.let \b使字符串原样保留, 前置空格省略('='之后), 后置空格(';'之前)不省略. 如示例01
+
+
+4.for <macro> in {<list>} {<expression>}; 为tikz中\foreach的裁剪版本, 特性如下:
+	(1)当list中的item包含','符号时, 使用'{}'限定内容, 如示例02
+	(2)list中, 可根据连续的第1/2个数字计算步进, 如: {1,3,...,9}为{1,3,5,7,9}
+	(3)list中, 可使用...符号指代中间的连续数字, 如: {1,...,3}为{1,2,3}
+
+
+5.if <condition> then {<true-statement>}; 为类似于C语言if(condition):expression;的语法
+if <condition> then {<true-statement>} else {false-statement}; 为类似于C语言if():{<statement>}else:{};语法, 参考示例03
+
+
+6.function <func_name>(<macro_args>){<definition>}; 用于定义函数, 特性如下:
+	(1)当macro_args不包含macro时, 省略'()'符号
+	(2)数组不能传递进macro_args
+	(3)不建议对函数进行嵌套
+
+
+7.print{}; 用于打印变量值, 参考示例02
+
+
+8.{<statement>}; 用于执行tikz指令, 参考示例04
