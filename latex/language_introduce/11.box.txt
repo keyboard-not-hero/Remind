@@ -7,7 +7,7 @@
 \end{document}
 
 内容讲解
-1.\parbox[align]{width}{content}用于指定一个paragraph mode的盒子, align为文本的t/c/b对齐盒子基准线; width为盒子宽度; content为内容
+1.\parbox[align]{width}{content}用于指定一个paragraph mode的盒子, align为文本的t/c/b对齐盒子基准线; width为盒子宽度, 可使用\linewidth指定常规行宽; content为内容
 
 
 
@@ -26,7 +26,7 @@
 \end{document}
 
 内容讲解
-1.\begin{minipage}[align]{width} ... \end{minipage}用于创建paragraph mode的盒子, 代表页面中的小页面, 参数类似于\parbox, 并且可内嵌\footnote
+1.\begin{minipage}[align]{width} ... \end{minipage}用于创建paragraph mode的盒子, 代表页面中的小页面, 参数类似于\parbox, align代表t/c/b对齐方式; width指定每行宽度, 可使用\linewidth指定常规行宽. 并且可内嵌\footnote
 
 
 

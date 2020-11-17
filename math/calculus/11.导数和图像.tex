@@ -1,5 +1,54 @@
 \documentclass[UTF8, fontset=ubuntu]{ctexart}
 \usepackage{parskip}
+\usepackage[framed]{ntheorem}
+\usepackage{framed}
+\theoremstyle{empty}
+\theoremheaderfont{\heiti}
+\newframedtheorem{theorem}{sandbox}
 \begin{document}
+1.函数的极值
+\begin{theorem}[极值定理]
+假设函数$f$定义在开区间$(a,b)$内, 并且点$c$在$(a,b)$区间内. 如果点$c$为函数的局部最大值或最小值, 那么点$c$一定为该函数的临界点. 也就是说, $f'(c)=0$或$f'(c)$不存在.
+\end{theorem}
 
+求解闭区间$[a,b]$内的全局最大值和最小值步骤:\\
+(1)求出$f'(x)$, 并列出在$(a,b)$中$f'(x)$不存在或$f'(x)=0$的点. 也就是说, 列出在开区间$(a,b)$内所有的临界点.\\
+(2)把端点$x=a$和$x=b$放入列表.\\
+(3)对于上述列表中的每个点, 将它们带入$y=f(x)$求出对应函数值.\\
+(4)找出最大的函数值以及它所对应的$x$值, 得到全局最大值.\\
+(5)类似于(4), 得到全局最小值.\\[2ex]
+
+2.罗尔定理
+\begin{theorem}[罗尔定理]
+假设函数$f$在闭区间$[a,b]$内连续, 在开区间$(a,b)$内可导. 如果$f(a)=f(b)$, 那么在开区间$(a,b)$内至少存在一点$c$, 使得$f'(c)=0$.
+\end{theorem}\vspace{4ex}
+
+3.中值定理
+\begin{theorem}[中值定理]
+假设函数$f$在闭区间$[a,b]$内连续, 在开区间$(a,b)$内可导, 那么在开区间$(a,b)$内至少有一点$c$使得
+\[f'(x)=\frac{f(b)-f(a)}{b-a}\]
+\end{theorem}
+\framebox{
+\begin{minipage}{\linewidth}
+如果对于在定义域$(a,b)$内的所有$x$, 都有$f'(x)=0$, 那么函数$f$在开区间$(a,b)$内为常数函数.
+\end{minipage}}\\[2ex]
+\framebox{
+\begin{minipage}{\linewidth}
+如果对于任意实数$x$都有$f'(x)=g'(x)$, 那么有$f(x)=g(x)+C$($C$为常数).
+\end{minipage}}\\[4ex]
+
+4.二阶导数与图像\\[2ex]
+\framebox{如果$x=c$点是函数$f$的拐点, 则有$f''(c)=0$.}\\[2ex]
+\framebox{如果$f''(c)=0$, 则$c$点不一定都是函数$f$的拐点.}\\[2ex]
+
+5.导数为零的汇总\\
+纯1阶导数分析 - 假设$f'(c)=0$, 此时情况如下:\\
+(1)如果从左往右通过$c$点, $f'(x)$的符号由正变负, 那么$c$点为局部最大值;\\
+(2)如果从左往右通过$c$点, $f'(x)$的符号由负变正, 那么$c$点为局部最小值;\\
+(3)如果从左往右通过$c$点, $f'(x)$的符号不发生变化, 那么$c$点为水平拐点.
+
+1/2阶导数综合分析 - 假设$f'(x)=0$, 则有:\\
+(1)如果$f''(c)<0$, 那么$x=c$为局部最大值;\\
+(1)如果$f''(c)>0$, 那么$x=c$为局部最小值;\\
+(1)如果$f''(c)=0$, 那么无法判断, 需借助纯1阶分析\\
 \end{document}

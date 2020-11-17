@@ -308,7 +308,7 @@
 \end{document}
 
 内容讲解
-1.\newtheorem{env_name1}[env_name2]{theorem_label}[section]用于新建定理环境, env_name1为当前定理环境名称; env_name2为当与之使用相同定理编号计数器的定理环境; theorem_label为定理显示的标签名称; section用于以section为单位区分定理计数器, 也可以为其他chapter/subsection等. 通常放置于preamble区
+1.\newtheorem{env_name1}[env_name2]{theorem_label}[section]用于新建定理环境, env_name1为当前定理环境名称; env_name2为使用相同定理编号计数器的其他定理环境; theorem_label为定理显示的主标签名称; section用于以section为单位区分定理计数器, 也可以为其他chapter/subsection等. 通常放置于preamble区
 
 2.\newframedtheorem与\newtheorem语法类似, 创建带边框的定理环境. 需调用framed宏包; 包含在ntheorem宏包中, 并且需要携带framed可选参数
 
@@ -323,33 +323,33 @@
 	\psshadowbox - 带阴影的单层边框盒子
 	默认配置: \def\theoremframecommand{\psframebox[fillstyle=solid,fillcolor=gray,linecolor=gray]}
 
-3.\theoremstyle{style}设定定理格式风格. 包含在ntheorem宏包中. style参数如下:
+4.\theoremstyle{style}设定定理格式风格. 包含在ntheorem宏包中. style参数如下:
 	plain - 与系统默认提供的格式相同. 如: <定理标签> <定理号> [副标签] <正文>
-	break - 标签头自成一行. 如: <定理标签> <定理号> [副标签]\Enter <正文>
+	break - 标签头自成一行. 如: <定理标签> <定理号> [副标签] <Enter> <正文>
 	change - 定理标签与序号位置互换. 如: <定理号> <定理标签> [副标签] <正文>
-	changebreak - 定理标签与序号位置互换, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签]\Enter <正文>
+	changebreak - 定理标签与序号位置互换, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签] <Enter> <正文>
 	margin - 序号置于左边margin处. 如: <定理号> <定理标签> [副标签] <正文>
-	marginbreak - 序号置于左边margin处, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签]\Enter <正文> 
+	marginbreak - 序号置于左边margin处, 并且标签头自成一行. 如: <定理号> <定理标签> [副标签] <Enter> <正文> 
 	nonumberplain - 与plain类似, 但没有序号. 如: <定理标签> [副标签] <正文>
-	nonumberbreak - 与break类似, 但没有序号. 如: <定理标签> [副标签]\Enter <正文> 
+	nonumberbreak - 与break类似, 但没有序号. 如: <定理标签> [副标签] <Enter> <正文> 
 	empty - 没有标签和序号, 可以有副标签(此时副标签没有括号)
 	
-4.\theoremheaderfont{header_font}设置头部字体格式. 包含在ntheorem宏包中
+5.\theoremheaderfont{header_font}设置头部字体格式. 包含在ntheorem宏包中
 
-5.\theorembodyfont{body_font}设置正文字体格式. 包含在ntheorem宏包中
+6.\theorembodyfont{body_font}设置正文字体格式. 包含在ntheorem宏包中
 
-6.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '. 包含在ntheorem宏包中. 不支持empty的theoremstyle, 使用如下格式:
+7.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '. 包含在ntheorem宏包中. 不支持empty的theoremstyle, 使用如下格式:
 	\begin{env_name}[aux_label]\ \\
 		<content>
 	\end{env_name}
 
-7.\theorempreskip{length}和\theorempostskip{length}分别用于指定定理环境与之前和之后正文的垂直距离. 包含在ntheorem宏包中
+8.\theorempreskip{length}和\theorempostskip{length}分别用于指定定理环境与之前和之后正文的垂直距离. 包含在ntheorem宏包中
 
-8.\theoremindentlength中, length指定定理环境的缩进
+9.\theoremindentlength中, length指定定理环境的缩进
 
-9.\theoremsymbol{end_symbol}设置定义结束符, 位于正文右下角. 包含在ntheorem宏包中, 并且该指令需要使用宏包的thmmarks可选参数
+10.\theoremsymbol{end_symbol}设置定义结束符, 位于正文右下角. 包含在ntheorem宏包中, 并且该指令需要使用宏包的thmmarks可选参数
 
-10.\theoremnumbering{counter_format}设置序号计数格式. 包含在ntheorem宏包中. 格式列表如下:
+11.\theoremnumbering{counter_format}设置序号计数格式. 包含在ntheorem宏包中. 格式列表如下:
 	arabic - 阿拉伯数字
 	alph - 小写字母
 	Alph - 大写字母
@@ -360,7 +360,7 @@
 	chinese - 汉语数字. 如: 一/二
 	fnsymbol - 特殊符号
 
-11.ntheorem.sty默认配置:
+12.ntheorem.sty默认配置:
 	\theoremstyle{plain}
 	\theoremheaderfont{\normalfont\bfseries}
 	\theorembodyfont{\itshape}
@@ -371,7 +371,7 @@
 	\theoremnumbering{arabic}
 	\theoremsymbol{}
 
-12.\begin{env_name}[aux_label] ... \end{env_name}用于定理内容环境, 代表定理的内容描述, abbre_descript为theorem_label之后的副标签
+13.\begin{env_name}[aux_label] ... \end{env_name}用于定理内容环境, 代表定理的内容描述, aux_descript为theorem_label之后的副标签
 
 
 

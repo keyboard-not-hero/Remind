@@ -80,17 +80,21 @@ blacklist ideapad_laptop
 
 
 8.Nvidia显卡驱动安装
-## 更新pci列表
-steven@~$ sudo update-pciids
+## 查看显卡列表
+steven@~$ lspci|grep -i vga
 
-## 查看显卡驱动(GeForce GTX 1650)
-steven@~$ lshw -numeric -C display
+## 显卡详细信息(以GeFore GTX 1650 Mobile为例)
+steven@~$ sudo lshw -C display
   *-display                 
        description: VGA compatible controller
        product: TU117M [GeForce GTX 1650 Mobile / Max-Q] [10DE:1F91]
        vendor: NVIDIA Corporation [10DE]
 
-## 查看推荐显卡驱动(如下图显示，默认为nouveau，建议安装nvidia-driver-435)
+## 当前使用显卡驱动
+steven@~$ sudo lshw -C display|grep configuration
+	configuration: driver=nouveau latency=0 
+
+## 查看推荐显卡驱动(如下图显示，建议安装nvidia-driver-435)
 steven@~$ ubuntu-drivers devices
 modalias : pci:v000010DEd00001F91sv000017AAsd00003FFBbc03sc00i00
 vendor   : NVIDIA Corporation
@@ -98,50 +102,25 @@ driver   : nvidia-driver-430 - distro non-free
 driver   : nvidia-driver-435 - distro non-free recommended
 driver   : xserver-xorg-video-nouveau - distro free builtin
 
-## 手动下载官网驱动安装
-下载驱动：https://www.geforce.cn/drivers
-
-删除原有nvidia驱动残留
-sudo apt purge nvidia*
-
 ## 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
 steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
 blacklist nouveau
 options nouveau modeset=0
 
-## 更新内核模块
-steven@~$ sudo update-initramfs -u
-
-## 重启,关闭secure boot
-
-## 进入CLI模式
-steven@~$ sudo telinit 3
-ctrl+alt+<F2>
-
-## 安装NVIDIA驱动(需要gcc/make工具)
-steven@~$ sudo chmod a+x NVIDIA-XXX.run
-steven@~$ sudo ./NVIDIA-XXX.run --no-opengl-files
-选择Continue installation
-是否安装386兼容库? 否
-是否使用xconfig自动更新? 否
+## 安装nvidia驱动
+steven@~$ sudo apt install nvidia-driver-435
 
 ## 重启
 
+## 查看驱动安装情况
+steven@~$ sudo lshw -C display|grep configuration
+	configuration: driver=nvidia latency=0 
 
-9.使ubuntu 18.04下的nvidia独显可调整屏幕亮度
-cd /usr/share/X11/xorg.conf.d
-vi 10-nvidia.conf
-#添加如下内容到文件末尾
-Section "Device"
-    Identifier "Device0"
-    Driver "nvidia"
-    VendorName "NVIDIA Corporation"
-    BoardName "GeForce GTX 1650"
-    Option "RegistryDwords" "EnableBrightnessControl=1"
-EndSection
+## nvidia显卡用例及版本
+steven@~$ nvidia-smi
 
 
-10.安装翻译字典
+9.安装翻译字典
 安装goldendict
 sudo apt-get install goldendict
 
