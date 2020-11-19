@@ -1,0 +1,18 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{parskip}
+\begin{document}
+类型$A$: $\displaystyle\frac{0}{0}$\\
+\framebox{如果$f(a)=g(a)=0$, 那么$\displaystyle\lim_{x\to a}\frac{f(a)}{g(a)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}$}\\
+
+类型$A$: $\displaystyle\frac{\pm\infty}{\pm\infty}$\\
+\framebox{如果$f(a)=g(a)=\pm\infty$, 那么$\displaystyle\lim_{x\to a}\frac{f(a)}{g(a)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}$}\\
+
+类型$B1$: $\infty -\infty$\\
+通过通分或者分子/分母同时乘以共轭表达式来转化为类型$A$\\
+
+类型$B2$: $0\times\pm\infty$\\
+通过将部分转移到分母, 从而转化为类型$A$\\
+
+类型$C$: $1^{\pm\infty}$,$0^0$,$\infty^0$\\
+通过取对数, 获得类型$B2$或$A$, 计算获得极限$L$, 再以$e$为底/$L$为幂获取最终结果
+\end{document}
