@@ -27,7 +27,9 @@
 
 7.\frac为分数的分子分母分割线
 
-8.\sqrt[root]{num}用于求数num的root次方根, root默认为2
+8.\dfrac为displaystyle格式\frac, \tfrac为textstyle格式\frac, 在amsmath宏包中定义. displaystyle和textstyle格式参考Demo14
+
+9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
 
 
 
@@ -414,4 +416,39 @@
 
 3._为下角标, ^为上脚标
 
-最后编辑于: 2020-09-09
+
+
+十六、Demo(示例)16 - differential and integral
+\documentclass{article}
+\usepackage[compat1]{wasysym}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\begin{document}
+$\frac{dy}{dx}=x$
+
+$\frac{\dif y}{\dif x}=x$
+
+$\displaystyle\int x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
+
+$\displaystyle\varint x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
+\end{document}
+
+内容讲解
+1.\newcommand*{\dif}{\mathop{}\!\mathrm{d}} 定义一个新指令\dif, 指令解释如下:
+	\mathop{} - 将括号内解释为一个数学操作符整体, 因此可在正上/下方添加supscript/subscript
+	\! - 代表math mode下的negative thin space
+	\mathrm{} - 指定math mode内容为罗马直立字体
+
+
+2.普通数学模式的微分算式符号为斜体, 但标准应该为直立体, 所以需要借助步骤1来进行定义新指令
+
+
+3.$\displaystyle\int x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
+指定使用英文文献格式(积分符号向右倾斜)指定积分符号
+
+$\displaystyle\varint x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
+指定使用德文文献格式(积分符号直立)指定积分符号
+
+使用德文文献格式积分符号需要使用wasysym宏包, 并且使用compat1可选项, 用于使用\varint指定德文文献格式, /int语义不变; 当使用integrals替换compat1可选项时, \var指定德文文献格式的积分符号, 无英文文献格式积分符号
+
+
+最后编辑于: 2020-11-20

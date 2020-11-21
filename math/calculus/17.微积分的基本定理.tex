@@ -1,0 +1,54 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage[framed]{ntheorem}
+\usepackage{framed}
+\usepackage[integrals]{wasysym}
+\theoremstyle{empty}
+\theoremheaderfont{\heiti}
+\newframedtheorem{theorem}{定理}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\begin{document}
+1.第一基本定理\\[-4ex]
+\begin{theorem}[微积分的第一基本定理:]
+如果函数$f$在闭区间$[a,b]$上是连续的, 定义$F$为
+\[F(x)=\int_a^xf(t)dt,\ x\in[a,b]\]
+则$F$在开区间$(a,b)$内是可导函数, 而且$F'(x)=f(x)$.
+\end{theorem}\vspace{4ex}
+
+2.第二基本定理\\[-4ex]
+\begin{theorem}[微积分的第二基本定理:]
+如果函数$f$在闭区间$[a,b]$上是连续的, $F$是$f$的任意一个反导数$(\text{关于}x)$, 那么有
+\[\int_a^bf(x)dx=F(b)-F(a)=F(x)\Big|_a^b\]
+\end{theorem}\vspace{4ex}
+
+3.不定积分法则\\[1ex]
+\framebox{如果$\displaystyle\frac{d}{dx}F(x)=f(x)$, 那么$\displaystyle\int f(x)dx=F(x)+C$.}\\[4ex]
+
+4.不定积分运算法则\\[-4ex]
+\begin{center}
+\framebox{$\displaystyle\int (f(x)+g(x))dx=\int f(x)dx+\int g(x)dx$}\\[2ex]
+\framebox{$\displaystyle\int Cf(x)dx=C\int f(x)dx$}
+\end{center}\vspace{4ex}
+
+5.微分和积分对照公式\\
+\begin{displaymath}
+\begin{array}{l l}
+\dfrac{\dif}{\dif x}x^a=ax^{a-1} & \displaystyle\int x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)\\[2ex]
+\dfrac{\dif}{\dif x}\ln(x)=\dfrac{1}{x} & \displaystyle\int\dfrac{1}{x}\dif x=\ln|x|+C\\[2ex]
+\dfrac{\dif}{\dif x}e^x=e^x & \displaystyle\int e^x\dif x=e^x+C\\[2ex]
+\dfrac{\dif}{\dif x}b^x=b^x\ln(b) & \displaystyle\int b^x\dif x=\dfrac{b^x}{\ln(b)}+C\\[2ex]
+\dfrac{\dif}{\dif x}\sin(x)=\cos(x) & \displaystyle\int \cos(x)\dif x=\sin(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\cos(x)=-\sin(x) & \displaystyle\int \sin(x)\dif x=-\cos(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\tan(x)=\sec^2(x) & \displaystyle\int \sec^2(x)\dif x=\tan(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\sec(x)=\sec(x)\tan(x) & \displaystyle\int \sec(x)\tan(x)\dif x=\sec(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\cot(x)=-\csc^2(x) & \displaystyle\int \csc^2(x)\dif x=-\cot(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\csc(x)=-\csc(x)\cot(x) & \displaystyle\int \csc(x)\cot(x)\dif x=-\csc(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\sin^{-1}(x)=\dfrac{1}{\sqrt{1-x^2}} & \displaystyle\int \dfrac{1}{\sqrt{1-x^2}}\dif x=\sin^{-1}(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\tan^{-1}(x)=\dfrac{1}{1+x^2} & \displaystyle\int \dfrac{1}{1+x^2}\dif x=\tan^{-1}(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\sec^{-1}(x)=\dfrac{1}{|x|\sqrt{x^2-1}} & \displaystyle\int \dfrac{1}{|x|\sqrt{x^2-1}}\dif x=\sec^{-1}(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\sinh(x)=\cosh(x) & \displaystyle\int \cosh(x)\dif x=\sinh(x)+C\\[2ex]
+\dfrac{\dif}{\dif x}\cosh(x)=\sinh(x) & \displaystyle\int \sinh(x)\dif x=\cosh(x)+C
+\end{array}
+\end{displaymath}
+\end{document}

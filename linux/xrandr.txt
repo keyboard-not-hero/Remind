@@ -1,0 +1,73 @@
+xrandr - 用于配置RandR(X11拓展)的原始指令
+
+指令格式
+xrandr [interface] [options...]
+
+interface列表
+--output <interface_name>
+	输出接口名称, 通常为<interface_type>-<number>
+
+option列表
+--auto
+	开启指定接口显示, 并默认包含--same-as
+
+--brightness <brightness>
+	指定接口亮度, 浮点数范围[0,1]
+
+--dryrun
+	测试指令和参数内容, 不进行实际改变
+
+--gamma red:green:blue
+	配置接口RGB色彩, 每个颜色模式浮点范围[0,1]
+
+--left-of/--right-of/--above/--below <interface_name>
+	指定目标接口相对于<interface_name>接口的位置
+
+--off
+	关闭指定接口显示
+
+-q, --query
+	显示各个接口的粗略信息
+
+--q1
+	强制使用RandR 1.1版本
+
+--q12
+	强制使用RandR 1.2版本
+
+-r, --rate, --refresh <rate>
+	指定屏幕刷新率
+
+--reflect <reflection>
+	指定接口内容成镜像显示. 列表: normal/x(在x轴方向上关于y轴成镜像)/y(在y轴方向上关于x轴成镜像)/xy
+
+--rotate <rotation>
+	屏幕显示内容方向, 可选列表: normal(正向)/inverted(垂直反向)/left(逆时针旋转90)/right(逆时针270)
+
+--same-as <interface_name>
+	指定目标接口与<interface_name>接口内容一致
+
+-v, --version
+	版本信息
+
+--verbose
+	相较于指令不带任何参数, 显示显卡接口更详细信息
+
+
+
+
+实例
+1.显示各个接口的粗略信息
+xrandr -q
+
+2.设置指定接口为primary
+xrandr --output DP-1 --primary
+
+3.设置多屏之间的相对位置
+xrandr --output DP-1 --left-of DP-2
+
+4.设置指定接口的分辨率模式(包含在xrandr罗列的接口信息中, 多个接口分辨率不同不可兼容)
+xrandr --output DP-1 --mode 1920x1080
+
+5.设置指定接口的屏幕刷新率
+xrandr --output DP-1 --rate 60

@@ -10,13 +10,20 @@
 \end{document}
 
 内容讲解
-1.\newcommand{\cmd}[num]{content}用于新建指令, cmd为指令名称; num代表新建指令的b必选参数个数; content为指令代表的内容, 可使用#1,#2...引用新建指令传递的参数. 该指令位于preamble区
+1.\newcommand{\cmd}[num][default_val]{content}用于新建指令, 参数如下:
+	\cmd - 指令名称, 不能与已有指令和环境重名, 并且不能以\end开头; 
+	num - 新建指令的参数个数, 范围为0~9, 默认为0; 
+	default_val - 指令第一个参数的默认值, 使之称为新建指令的可选参数;
+	content - 指令代表的内容, 可使用#1,#2...引用新建指令传递的参数. 
+	该指令位于preamble区时, 新建指令可作用于正文所有区域; 位于正文时, 新建指令只作用于该指令之后
 
-2.\ensuremath{}用于确保内容位于math mode. 而原生math mode偶数层嵌套会取消math环境
+2.\newcommand*{\cmd}[num][default_val]{content}为\newcommand的带'*'模式, 即新建指令参数中不能包含换段落指令(\par或者空行)
 
-3.\xspace用于指定当后续字符为字母时, 自定义新指令后添加空格. 包含在xspace宏包中
+3.\ensuremath{}用于确保内容位于math mode. 而原生math mode偶数层嵌套会取消math环境
 
-4.\renewcommand{\cmd}[num]{content}用于充定义指令
+4.\xspace用于指定当后续字符为字母时, 自定义新指令后添加空格. 包含在xspace宏包中
+
+5.\renewcommand{\cmd}[num]{content}用于充定义指令
 
 
 

@@ -28,7 +28,8 @@
 \begin{document}
 this is paragraph one
 
-this is paragraph two
+this is paragraph two\par
+this is paragraph three
 \end{document}
 
 内容讲解
@@ -68,7 +69,7 @@ bank, and of having nothing to do
 内容讲解
 1.'\,'用于比<space>更短的空格, 用于分隔'与"
 
-2.'\/'用于解决字母之间的连接过于紧密问题, 空间小于'\,'. 如: f与i, --分离
+2.'\/'用于解决字母之间的连接过于紧密问题, 或者词距补偿(直立体之间插入斜体, 斜体左边比右边词距大, 在右边插入该符号), 空间小于'\,'. 如: f与i, --分离
 
 3.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳
 

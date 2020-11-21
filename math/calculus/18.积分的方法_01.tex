@@ -1,0 +1,19 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[integrals]{wasysym}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\begin{document}
+1.换元法\\[1ex]
+\framebox{$\displaystyle\int\frac{f'(x)}{f(x)}\dif x=\ln|f(x)|+C$.}\\[1ex]
+例.\\[1ex]
+$\displaystyle\int\frac{x}{x^2+8}\dif x$\\[1ex]
+推断过程:\\[1ex]
+$\displaystyle\because\frac{\dif}{\dif x}(x^2+8)=2x$\\[1ex]
+$\therefore$使用换元法, 设$t=x^2+8$.\\[1ex]
+\phantom{$\therefore$}得到$\dif t=2x\dif x$\\[1ex]
+$\therefore\displaystyle\int\frac{x}{x^2+8}\dif x=\frac{1}{2}\int\frac{1}{t}\dif t=\frac{1}{2}\ln|t|+C=\frac{1}{2}\ln|x^2+8|+C$\\[2ex]
+
+2.
+\end{document}
