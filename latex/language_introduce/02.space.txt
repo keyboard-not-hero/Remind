@@ -39,7 +39,24 @@ this is paragraph three
 
 
 
-三、Demo(示例)03 -- space
+三、Demo(示例)03 -- new page
+\documentclass{article}
+\begin{document}
+this is page one\newpage
+this is page two
+\end{document}
+
+内容讲解
+1.\newpage用于立即在当前位置进行换页
+
+2.\clearpage也用于在当前位置立即换页
+
+3.\newpage与\clearpage的区别:
+(1)在twocolumn模式中(documentclass带twocolumn可选参数, 一页分为两大列), newpage跳过当前列, clearpage跳过当前页
+
+
+
+四、Demo(示例)04 -- space
 \documentclass{article}
 \begin{document}
     "'Fi' or 'fum'" he said
@@ -95,7 +112,7 @@ bank, and of having nothing to do
 
 
 
-四、Demo(示例)04 -- 破折号
+五、Demo(示例)05 -- 破折号
 \documentclass{article}
 \begin{document}
     An intra-word dash or hyphen, as in X-ray.
@@ -114,7 +131,7 @@ bank, and of having nothing to do
 
 
 
-五、Demo{示例}05 -- 句子结束相关的空格
+六、Demo{示例}06 -- 句子结束相关的空格
 \documentclass{article}
 \begin{document}
     this is the line onE. but nothing more\\
@@ -144,7 +161,7 @@ bank, and of having nothing to do
 
 
 
-六、Demo(示例)06 -- quotation
+七、Demo(示例)07 -- quotation
 \documentclass{article}
 \begin{document}
 	\noindent The following is an example of a short displayed quotation.
@@ -169,7 +186,7 @@ bank, and of having nothing to do
 
 
 
-七、Demo(示例)07 - indent
+八、Demo(示例)08 - indent
 \documentclass{article}
 \begin{document}
 	\noindent this is disable paragraphy indent\\
@@ -181,9 +198,11 @@ bank, and of having nothing to do
 
 2.\indent开启段落内的当前缩进
 
+3.\parindent代表段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
 
 
-八、Demo(示例)08 - vertical space
+
+九、Demo(示例)09 - vertical space
 \documentclass{article}
 \begin{document}
     this is first line\\
@@ -198,7 +217,7 @@ bank, and of having nothing to do
 
 
 
-九、Demo(示例)09 - paragraphy style
+十、Demo(示例)10 - paragraphy style
 \documentclass{article}
 \usepackage{parskip}
 \begin{document}
@@ -211,23 +230,23 @@ just newline
 \end{document}
 
 内容讲解
-1.\parindent代表段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
+1.\textwidth指定page body的宽度, 配置方法: \setlength{\textwidth}{1cm}
 
-2.\textwidth指定page body的宽度, 配置方法: \setlength{\textwidth}{1cm}
+2.\textheight指定page body的高度, 配置方法: \setlength{\textheight}{1cm}
 
-3.\textheight指定page body的高度, 配置方法: \setlength{\textheight}{1cm}
+3.\parskip指定段落之间的间隔高度, 配置方法: \setlength{\parskip}{1cm}
 
-4.\parskip指定段落之间的间隔高度, 配置方法: \setlength{\parskip}{1cm}
+4.\baselineskip指定段落之内当前行内容基线与下一行内容基线的最小高度(text_height+space_between_line), 配置方法: \setlength{\baselineskip}{2ex}. 该长度会被LaTeX随时重置, 所以不通过设置该参数调整行间距
 
-5.\baselineskip指定段落之内当前行内容基线与下一行内容基线的高度(text_height+space_between_line), 配置方法: \setlength{\baselineskip}{2ex}. 通常不设置该参数
+5.\baselinestretch为baselineskip的系数, 基线距=baselinestretch * baselineskip, 配置方法: \renewcommand{\baselinestretch}{2}. 调整行间距时使用\baselinestretch而不是\baselineskip
 
-6.\baselinestretch为baselineskip的系数, 基线距=baselinestretch * baselineskip, 配置方法: \renewcommand{\baselinestretch}{2}
+6.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异. 可选参数列表如下:
+	skip=<dimension> - 指定段落之间的间隔高度
+	indent[=<dimension>] - 设定段落开头的缩进, 长度可选, 不带长度时使用系统默认缩进(大概两个字符). 当不带该参数时, 缩进为0
 
-7.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异
 
 
-
-十、Demo(示例)10 - character occupied
+十一、Demo(示例)11 - character occupied
 \documentclass{article}
 \begin{document}
 	\phantom{i am a good man. }please don't hurt me.
@@ -236,4 +255,4 @@ just newline
 \end{document}
 
 内容讲解
-1.\phantom{content}用于留置与内容content等宽的空格
+1.\phantom{content}用于留置与内容content等宽的空格, 可用于paragraph mode或math mode

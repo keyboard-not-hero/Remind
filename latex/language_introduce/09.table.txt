@@ -1,4 +1,4 @@
-一、Demo(示例)01 - tabbing
+一、Demo(示例)01 -- tabbing
 \documentclass{article}
 \begin{document}
 \begin{tabbing}
@@ -17,7 +17,7 @@
 
 
 
-二、Demo(示例)02 - basic tabular
+二、Demo(示例)02 -- basic tabular
 \documentclass{article}
 \begin{document}
 \begin{tabular}{l|l|l l}
@@ -74,7 +74,7 @@
 
 
 
-三、Demo(示例)03 - span column of tabular
+三、Demo(示例)03 -- span column of tabular
 \documentclass{article}
 \begin{document}
 \begin{tabular}{l|l|l|l}
@@ -93,7 +93,7 @@
 
 
 
-四、Demo(示例)04 - cross-reference
+四、Demo(示例)04 -- cross-reference
 \documentclass{article}
 \begin{document}
 \begin{table}

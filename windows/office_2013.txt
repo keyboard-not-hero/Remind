@@ -1,0 +1,22 @@
+一、安装:
+建议安装VOL版本, 易于激活
+
+
+二、通过注册表修复office图标(通常用于卸载wps后的注册表清除替换)
+修复office 2013的word icon
+1.进入注册表(cmd--regedit)
+2.进入菜单HKEY_CLASS_ROOT\.docx, 确保默认key的数据值为Word.Document.12
+3.进入菜单HKEY_CLASS_ROOT\Word.Document.12, 默认key的数据值为新建文档名
+4.进入菜单HKEY_CLASS_ROOT\Word.Document.12\DefaultIcon, 将默认key的数据值修改为word icon完整路径(如office 2013安装在C:\Program Files\Microsoft Office, 则icon路径为C:\Program Files\Microsoft Office\Office15\WORDICON.EXE). 最终格式: icon_path,0
+
+修复office 2013的excel icon
+1.进入注册表(cmd--regedit)
+2.进入菜单HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.xlsx, 确保默认key的数据值为Excel.Sheet.12
+3.进入菜单HKEY_CLASS_ROOT\Excel.Sheet.12, 默认key的数据值为新建工作簿名
+4.进入菜单HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Excel.Sheet.12\DefaultIcon, 将默认key的数据值修改为excel icon完整路径(如office 2013安装在C:\Program Files\Microsoft Office, 则icon路径为C:\Program Files\Microsoft Office\Office15\XLICONS.EXE). 最终格式: icon_path,0
+
+修复office 2013的ppt icon
+1.进入注册表(cmd--regedit)
+2.进入菜单HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.pptx, 确保默认key的数据值为PowerPoint.Show.12
+3.进入菜单HKEY_CLASS_ROOT\PowerPoint.Show.12, 默认key的数据值为新建演示文稿名
+4.进入菜单HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PowerPoint.Show.12\DefaultIcon, 将默认key的数据值修改为ppt icon完整路径(如office 2013安装在C:\Program Files\Microsoft Office, 则icon路径为C:\Program Files\Microsoft Office\Office15\PPTICO.EXE). 最终格式: icon_path,0

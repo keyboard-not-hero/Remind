@@ -421,6 +421,8 @@
 十六、Demo(示例)16 - differential and integral
 \documentclass{article}
 \usepackage[compat1]{wasysym}
+\usepackage{scalerel}
+\def\stretchint[#1]#2{\vcenter{\hbox{\scaleto[#1]{\displaystyle\int}{#2}}}}
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 \begin{document}
 $\frac{dy}{dx}=x$
@@ -430,6 +432,8 @@ $\frac{\dif y}{\dif x}=x$
 $\displaystyle\int x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
 
 $\displaystyle\varint x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
+
+$\stretchint[4ex]{10ex}x^a\dif x$
 \end{document}
 
 内容讲解
@@ -449,6 +453,15 @@ $\displaystyle\varint x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
 指定使用德文文献格式(积分符号直立)指定积分符号
 
 使用德文文献格式积分符号需要使用wasysym宏包, 并且使用compat1可选项, 用于使用\varint指定德文文献格式, /int语义不变; 当使用integrals替换compat1可选项时, \var指定德文文献格式的积分符号, 无英文文献格式积分符号
+
+
+4.\def\stretchint[#1]#2{\vcenter{\hbox{\scaleto[#1]{\displaystyle\int}{#2}}}}
+定义新指令\stretchint, 指令包含一个可选参数和一个必选参数, 指令内容如下:
+	\vcenter - 内容垂直居中
+	\scaleto[max_width]{object}{height} - 将内容伸缩到指定宽度和高度, max_width为最大宽度; object为内容区域, 默认处于math mode模式; height为内容的高度. 包含在scalerel宏包中
+
+$\stretchint[4ex]{10ex}x^a\dif x$
+指定新格式\int的宽度为4ex, 高度为10ex
 
 
 最后编辑于: 2020-11-20

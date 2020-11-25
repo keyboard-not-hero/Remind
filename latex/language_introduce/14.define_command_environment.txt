@@ -44,7 +44,21 @@ this paragraph is normal
 
 
 
-三、Demo(示例)03 - length
+三、Demo(示例)03 - def
+\documentclass{article}
+\def\stretchint#1{\vcenter{\hbox{\stretchto[440]{\displaystyle\int}{#1}}}}
+\begin{document}
+\end{document}
+
+内容讲解
+1.\def <command><parameter>{<content>}为TeX原生指令, 用于定义新指令, 参数列表如下:
+	command - 新指令名称; 
+	parameter - 指令参数, 参数格式为#1~#9, 用于指代使用新指令时, 必选参数内容, 并且可用于content内容对其进行引用, [#1]代表第一个参数为可选参数;
+	content - 指令执行的操作内容
+
+
+
+四、Demo(示例)04 - set length
 \documentclass{article}
 \setlength{\parindent}{0cm}
 \begin{document}

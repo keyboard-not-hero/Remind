@@ -9,11 +9,64 @@
 \framebox{$\displaystyle\int\frac{f'(x)}{f(x)}\dif x=\ln|f(x)|+C$.}\\[1ex]
 例.\\[1ex]
 $\displaystyle\int\frac{x}{x^2+8}\dif x$\\[1ex]
-推断过程:\\[1ex]
+推导过程:\\[1ex]
 $\displaystyle\because\frac{\dif}{\dif x}(x^2+8)=2x$\\[1ex]
 $\therefore$使用换元法, 设$t=x^2+8$.\\[1ex]
 \phantom{$\therefore$}得到$\dif t=2x\dif x$\\[1ex]
 $\therefore\displaystyle\int\frac{x}{x^2+8}\dif x=\frac{1}{2}\int\frac{1}{t}\dif t=\frac{1}{2}\ln|t|+C=\frac{1}{2}\ln|x^2+8|+C$\\[2ex]
 
-2.
+2.形如$\sqrt[b]{ax+b}$的积分\\[1ex]
+\framebox{在换掉$\sqrt[n]{ax+b}$之前, 设$t=\sqrt[n]{ax+b}$并对等式$t^n=ax+b$两端求导.}\\[1ex]
+例.\\[1ex]
+$\displaystyle\int x\sqrt[5]{3x+2}\dif x$\\[1ex]
+推导过程:\\[1ex]
+设$t=\sqrt[5]{3x+2}$, 得:\\[1ex]
+$\displaystyle x=\frac{1}{3}(t^5-2)$\\[1ex]
+等式两端$5$次方并求导, 得:\\[1ex]
+$\displaystyle\dif x=\frac{5}{3}t^4\dif t$\\[1ex]
+$\displaystyle\therefore\int x\sqrt[5]{3x+2}\dif x=\frac{5}{9}\int(t^{10}-2t^5)\dif t=\frac{5}{9}\int t^{10}\dif t-\frac{10}{9}\int t^5\dif t$\\[1ex]
+$\displaystyle\phantom{\therefore\int x\sqrt[5]{3x+2}\dif x}=\frac{5}{99}t^{11}-\frac{5}{27}t^6+C$\\[1ex]
+将$t=\sqrt[5]{3x+2}$代入上述等式, 得:\\[1ex]
+$\displaystyle\int x\sqrt[5]{3x+2}\dif x=\frac{5}{99}(3x+2)^{\frac{11}{5}}-\frac{5}{27}(3x+2)^{\frac{6}{5}}+C$\\[2ex]
+
+3.分部积分法\\[1ex]
+\framebox{$\displaystyle\int u\frac{\dif v}{\dif x}\dif x=uv-\int v\frac{\dif u}{\dif x}\dif x$.}\\[1ex]
+例.\\[1ex]
+$\displaystyle\int xe^x\dif x$\\[1ex]
+推导过程:\\[1ex]
+设$u=x$, $v=e^x$, 得:\\[1ex]
+$\displaystyle\int xe^x\dif x=xe^x-\int e^x\dif x$\\[1ex]
+$\displaystyle\int xe^x\dif x=xe^x-e^x+C$\\[2ex]
+
+4.部分分式\\[1ex]
+\framebox{
+\begin{minipage}{\linewidth}
+部分分式处理步骤:\\
+(1)查看分子分母最高项的次数, 如有必要(分子次数$\geqslant$分母次数)做除法;\\
+(2)对分母进行因式分解;\\
+(3)进行"分部", 分部类别如下:\\[1ex]
+	\phantom{\qquad}1)\,线性式:$\displaystyle\frac{A}{x+a}$\\[1ex]
+	\phantom{\qquad}2)\,线性式的平方:$\displaystyle\frac{A}{(x+a)^2}+\frac{B}{x+a}$\\[1ex]
+	\phantom{\qquad}3)\,二次多项式:$\displaystyle\frac{Ax+B}{x^2+ax+b}$\\[1ex]
+	\phantom{\qquad}4)\,线性式的三次方:$\displaystyle\frac{A}{(x+a)^3}+\frac{B}{(x+a)^2}+\frac{C}{x+a}$\\[1ex]
+	\phantom{\qquad}5)\,线性式的四次方:$\displaystyle\frac{A}{(x+a)^4}+\frac{B}{(x+a)^3}+\frac{C}{(x+a)^2}+\frac{D}{x+a}$\\
+(4)计算分部中分子常数的值;\\
+(5)求解分母为线性项次幂的积分, 即(3)中的1)/2)/4)/5)类型. 涉及到对数或负次幂;\\
+(6)求解分母为二次多项式的积分, 即(3)中的3)类型. 具体方法: 先配方, 再换元. 涉及到对数和正切函数.
+\end{minipage}}\\[1ex]
+例.\\[1ex]
+$\displaystyle\int\frac{x+2}{x^2-1}\dif x$\\[1ex]
+推导过程:\\[1ex]
+对分母$x^2-1$进行因式分解:\\[1ex]
+$x^2-1=(x+1)(x-1)$\\[1ex]
+进行分部:\\[1ex]
+$\displaystyle\frac{x+2}{x^2-1}=\frac{A}{x+1}+\frac{B}{x-1}$\\[1ex]
+求分子常数的值:\\[1ex]
+$\displaystyle A(x-1)+B(x+1)=x+2\quad\Rightarrow\quad\left\{
+\begin{array}{l}
+A+B=1\\
+B-A=2
+\end{array}\right.\quad\Rightarrow\quad A=-\frac{1}{2},B=\frac{3}{2}$\\[1ex]
+求解分母为线性次幂的积分:\\[1ex]
+$\displaystyle\int\frac{x+2}{x^2-1}\dif x=\frac{3}{2}\int\frac{1}{x-1}\dif x-\frac{1}{2}\int\frac{1}{x+1}\dif x=\frac{3}{2}\ln|x-1|-\frac{1}{2}\ln|x+1|+C$
 \end{document}
