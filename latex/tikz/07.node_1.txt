@@ -142,7 +142,7 @@
 
 
 内容讲解
-1.\draw (0,0) -- (2,2) node{point(2,2)}; 作一条(0,0)到(2,2)的直线, 并在坐标(2,2)添加文字'point(6,6)'
+1.\draw (0,0) -- (2,2) node{point(2,2)}; 作一条(0,0)到(2,2)的直线, 并在坐标(2,2)添加文字'point(2,2)'
 
 
 2.\draw (0,0) -- (2,2) node {Text at \verb!\node 1!}; 作一条(0,0)到(2,2)的直线, 并且在(2,2)添加文字注释'Text at \node 1', \verb!<str>!用于逐字打印包含特殊字符的内容, '!!'可替换成其他成对符号
@@ -232,13 +232,14 @@ node[behind path]用于将当前node至于当前path的图层之后, 可选列�
 	yshift - 用于指定单个node距离相对其他node的垂直平移距离
 
 	
-11.\node [shape=circle, draw, below=of hello, label={above:$s\leq 2$}, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$, label参数详解:
-	格式: [<options>]<angle>:<text>
-	options - 使用'[]'包围, 指定label的颜色
-	angle - label相对于node的角度位置, 可指定为角度number或above/left/center等格式
-	text - 文字内容
-	** 可在scope/kitipicture范围中使用label distance可选参数指定label和node的距离
-	** pin类似于label, 只是在node与pin之间会有直线连接
+11.\node [shape=circle, draw, below=of hello, label={above:$s\leq 2$}, name=world]{}; 用于作一个小三角形, 位于hello下方, 并且在该图形上方(above)放置一个label, 内容为latex数学模式内容$s\leq 2$.
+	label参数详解:
+		格式: [<options>]<angle>:<text>
+		options - 使用'[]'包围, 指定label的颜色
+		angle - label相对于node的角度位置, 可指定为角度number或above/below/left/right/center/above left/above right/below left等格式
+		text - 文字内容
+		** 可在scope/kitipicture范围中使用label distance可选参数指定label和node的距离
+		** pin类似于label, 只是在node与pin之间会有直线连接
 
 
 12.\tikzset{every label/.style={red}} 特殊style名称every label用于配置所有label的颜色为red. \tikzset位于\begin{tikzpicture}之前

@@ -6,6 +6,7 @@
 \usepackage{framed}
 \usepackage[framed]{ntheorem}
 \usepackage{bm}
+\usepackage{tikz}
 \theorembodyfont{\normalfont}
 \theoremstyle{nonumberplain}
 \newtheorem{definition}{定义}
@@ -206,6 +207,20 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 \[cu=5\left[\begin{array}{c}3\\-1\end{array}\right]=\left[\begin{array}{c}15\\-5\end{array}\right]\]
 
 向量$\left[\begin{array}{r}x\\y\end{array}\right]$的几何含义: 由原点(0,0)指向点(x,y)的有向线段\\
+\begin{law}[向量加法的平行四边形法则]\ \\
+若$\mathbb{R}^2$中向量$\mathbf{u}$和$\mathbf{v}$用平面上的点表示, 则$\mathbf{u+v}$对应于以$\mathbf{u}$,$\mathbf{0}$和$\mathbf{v}$为三个顶点的平行四边形的第4个顶点, 如图.\\[2ex]
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+\draw[->] (-1,0) -- (9,0) node[right]{$x_1$};
+\draw[->] (0,-1) -- (0,5) node[above]{$x_2$};
+\draw[color=white, fill=black!10] (0,0) -- (6,1) -- (8,4) -- (2,3) -- cycle;
+\draw[-stealth, thick, auto] (0,0) -- (2,3) node[pos=0.5]{$u$};
+\draw[-stealth, thick, auto, swap] (0,0) -- (6,1) node[pos=0.5]{$v$};
+\draw[-stealth, thick, auto] (0,0) -- (8,4) node[pos=0.5]{$u+v$};
+\node at (0,0) [label=below left:$0$]{};
+\end{tikzpicture}
+\end{center}
+\end{law}
 所有元素都是零的向量称为\textbf{零向量}, 用\textbf{0}表示(\textbf{0}中元素的个数可由上下文确定)\\
 \begin{law}[$\mathbb{R}^n$中向量的代数性质]\ \\
 对$\mathbb{R}^n$中一切向量$\mathbf{u}$,$\mathbf{v}$,$\mathbf{w}$以及标量$c$和$d$:

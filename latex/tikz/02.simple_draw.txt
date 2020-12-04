@@ -107,12 +107,13 @@ in
 	ultra thick - 非常粗的线条
 
 
-3.\draw[color=blue, opacity=0.5] (0,0) -- (2,2); 作一条直线.
-	color指定线条颜色, 颜色格式:
+3.\draw[color=blue, fill=green, opacity=0.5] (0,0) -- (2,2) -- (2,0) -- (0,0); 作一个封闭三角形.
+	color - 指定线条颜色, 颜色格式:
 		blue - 直接蓝色
 		red!30 - 指定30%浓度红色, 参考xcolor package
 		green!20!blue - 指定20%浓度绿色和80%(1-20%)浓度蓝色混合, 参考xcolor package, 也可参考demo/color.pdf
-	opacity指定透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
+	fill - 填充包围的封闭图形的背景颜色
+	opacity - 指定color和fill的透明度, 取值区间为[0,1], 0代表完全透明, 1代表完全不透明
 
 
 4.\draw[color=red, double=blue] (0,0) -- (2,2); 作两条并行直线. 原理: 首先使用color颜色作一条较粗的直线, 然后在中间使用double颜色(默认为white)作一条较细的直线. 其他相关参数:
