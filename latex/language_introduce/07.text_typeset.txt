@@ -272,3 +272,5 @@ Comment çava? Où se trouve l'aéroport?
 
 内容讲解
 1.\ding{n}用于指定限定于圆形内的数字, n为可用编码范围, 区间为[172, 211]. 包含在pifont宏包中
+
+2.列表参考symbol_summary.pdf

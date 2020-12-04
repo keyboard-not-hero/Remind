@@ -239,6 +239,7 @@ just newline
 4.\baselineskip指定段落之内当前行内容基线与下一行内容基线的最小高度(text_height+space_between_line), 配置方法: \setlength{\baselineskip}{2ex}. 该长度会被LaTeX随时重置, 所以不通过设置该参数调整行间距
 
 5.\baselinestretch为baselineskip的系数, 基线距=baselinestretch * baselineskip, 配置方法: \renewcommand{\baselinestretch}{2}. 调整行间距时使用\baselinestretch而不是\baselineskip
+	默认行间距大概为3个x的高度, 所以增加1ex的行间距大概为0.3系数
 
 6.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异. 可选参数列表如下:
 	skip=<dimension> - 指定段落之间的间隔高度

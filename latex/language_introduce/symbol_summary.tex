@@ -13,6 +13,7 @@
 \usepackage{ragged2e}
 \usepackage{texnames}
 \usepackage{threeparttable}
+\usepackage{pifont}
 \let\mathdollar\undefined
 \begin{document}
 
@@ -311,17 +312,17 @@
 	\hline
 	单位 & 说明\\
 	\hline
-	mm & 1 mm=2.845 pt\\
+	sp & 65536 sp=1 pt\\
 	pt & 1 pt=0.351 mm\\
 	bp & 1 bp=0.353 mm$\approx$ 1 pt\\
 	dd & 1 dd=0.376 mm=1.07 pt\\
-	pc & 1 pc=4.218 mm=12 pt\\
-	sp & 65536 sp=1 pt\\
-	cm & 1 cm=10 mm=28.453 pt\\
-	cc & 1 cc =4.513 mm=12 dd=12.84 pt\\
-	in & 1 in=25.4 mm=72.27 pt\\
+	mm & 1 mm=2.845 pt\\
 	ex & 1 ex=当前字体中x的高度\\
 	em & 1 em=当前字体尺寸$\approx$ M的宽度\\
+	pc & 1 pc=4.218 mm=12 pt\\
+	cc & 1 cc =4.513 mm=12 dd=12.84 pt\\
+	cm & 1 cm=10 mm=28.453 pt\\
+	in & 1 in=25.4 mm=72.27 pt\\
 	\hline
 \end{tabular}
 \caption{通用长度单位}
@@ -359,21 +360,39 @@
 \end{table}
 
 \begin{table}[H]
-	\begin{tabular}{l l l}
-		\hline
-		标识符 & 符号指令 & 所需宏包\\\hline
-		\TeX & \textbackslash TeX &\\
-		\LaTeX & \textbackslash LaTeX &\\
-		\LaTeXe & \textbackslash LaTeXe &\\
-		\AMS & \textbackslash AMS & texnames\\
-		\AMSTeX & \textbackslash AMSTeX & texnames\\
-		\BibTeX & \textbackslash BibTeX & texnames\\
-		\XeTeX & \textbackslash XeTeX & metalogo\\
-		\XeLaTeX & \textbackslash XeLaTeX & metalogo\\
-		\LuaTeX & \textbackslash LuaTeX & metalogo\\
-		\LuaLaTeX & \textbackslash LuaLaTeX & metalogo\\
-		\hline
-	\end{tabular}
-	\caption{TeX家族标识符}
+\begin{tabular}{l l l}
+	\hline
+	标识符 & 符号指令 & 所需宏包\\\hline
+	\TeX & \textbackslash TeX &\\
+	\LaTeX & \textbackslash LaTeX &\\
+	\LaTeXe & \textbackslash LaTeXe &\\
+	\AMS & \textbackslash AMS & texnames\\
+	\AMSTeX & \textbackslash AMSTeX & texnames\\
+	\BibTeX & \textbackslash BibTeX & texnames\\
+	\XeTeX & \textbackslash XeTeX & metalogo\\
+	\XeLaTeX & \textbackslash XeLaTeX & metalogo\\
+	\LuaTeX & \textbackslash LuaTeX & metalogo\\
+	\LuaLaTeX & \textbackslash LuaLaTeX & metalogo\\
+	\hline
+\end{tabular}
+\caption{TeX家族标识符}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{l l|l l|l l|l l}
+\hline
+172 & \ding{172} & 182 & \ding{182} & 192 & \ding{192} & 202 & \ding{202}\\
+173 & \ding{173} & 183 & \ding{183} & 193 & \ding{193} & 203 & \ding{203}\\
+174 & \ding{174} & 184 & \ding{184} & 194 & \ding{194} & 204 & \ding{204}\\
+175 & \ding{175} & 185 & \ding{185} & 195 & \ding{195} & 205 & \ding{205}\\
+176 & \ding{176} & 186 & \ding{186} & 196 & \ding{196} & 206 & \ding{206}\\
+177 & \ding{177} & 187 & \ding{187} & 197 & \ding{197} & 207 & \ding{207}\\
+178 & \ding{178} & 188 & \ding{188} & 198 & \ding{198} & 208 & \ding{208}\\
+179 & \ding{179} & 189 & \ding{189} & 199 & \ding{199} & 209 & \ding{209}\\
+180 & \ding{180} & 190 & \ding{190} & 200 & \ding{200} & 210 & \ding{210}\\
+181 & \ding{181} & 191 & \ding{191} & 201 & \ding{201} & 211 & \ding{211}\\
+\hline
+\end{tabular}
+\caption{圆圈内数字}
 \end{table}
 \end{document}

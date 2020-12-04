@@ -4,43 +4,50 @@
 \usepackage{amssymb}
 \usepackage[integrals]{wasysym}
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\renewcommand{\baselinestretch}{1.8}
 \begin{document}
-1.三角恒等式\\[1ex]
-(1)形如$\sqrt{1\pm\cos(x)}$\\[1ex]
-例.\\[1ex]
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x$\\[1ex]
-推导过程:\\[1ex]
-由$\cos(2x)=1-2\sin^2(x)$, 得:\\[1ex]
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=\sqrt{2}\int_0^{\frac{\pi}{2}}|\sin(x)|\dif x$\\[1ex]
-由于$\sin(x)$在定义域区间$[0,\frac{\pi}{2}]$内为正, 所以:\\[1ex]
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=-\sqrt{2}\cos(x)\Big{|}_0^{\frac{\pi}{2}}=0-(-\sqrt{2})=\sqrt{2}$\\[1ex]
+1.三角恒等式\\
+(1)形如$\sqrt{1\pm\cos(x)}$\\
+例.\\
+$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x$\\
+推导原理:\\
+将一个数与三角函数的运算, 转化为该三角函数半角的三角函数平方, 便于开根号\\
+推导过程:\\
+由$\cos(2x)=1-2\sin^2(x)$, 得:\\
+$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=\sqrt{2}\int_0^{\frac{\pi}{2}}|\sin(x)|\dif x$\\
+由于$\sin(x)$在定义域区间$[0,\frac{\pi}{2}]$内为正, 所以:\\
+$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=-\sqrt{2}\cos(x)\Big{|}_0^{\frac{\pi}{2}}=0-(-\sqrt{2})=\sqrt{2}$\\
 
-(2)形如$\sqrt{1-\sin^2(x)}/\sqrt{1+\tan^2(x)}$\\[1ex]
-例.\\[1ex]
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x$\\[1ex]
-推导过程:\\[1ex]
-由$\sin^2(x)=1-\cos^2(x)$, 得:\\[1ex]
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sqrt{sin^2(x)}\dif x=\int_0^{\pi}|\sin(x)|\dif x$\\[1ex]
-由于$\sin(x)$在区间$[0,\pi]$内为正, 所以:\\[1ex]
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sin(x)\dif x=-\cos(x)\Big{|}_0^{\pi}=1-(-1)=2$\\[1ex]
+(2)形如$\sqrt{1-\sin^2(x)}/\sqrt{1+\tan^2(x)}$\\
+例.\\
+$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x$\\
+推导原理:\\
+将根号下一个数字与三角函数平方的运算, 转化为该三角函数角的另一个三角函数的平方, 便于开根号\\
+推导过程:\\
+由$\sin^2(x)=1-\cos^2(x)$, 得:\\
+$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sqrt{sin^2(x)}\dif x=\int_0^{\pi}|\sin(x)|\dif x$\\
+由于$\sin(x)$在区间$[0,\pi]$内为正, 所以:\\
+$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sin(x)\dif x=-\cos(x)\Big{|}_0^{\pi}=1-(-1)=2$\\
 
-(3)形如$\displaystyle\frac{1}{\sec(x)-1}$\\[1ex]
-例.\\[1ex]
-$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$\\[1ex]
-推导过程:\\[1ex]
-$\displaystyle\int\frac{1}{\sec(x)-1}\dif x=\int\frac{1}{\sec(x)-1}\times\frac{\sec(x)+1}{\sec(x)+1}\dif x=\int\frac{\sec(x)+1}{\sec^2(x)-1}\dif x$\\[1ex]
-\phantom{$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$}$\displaystyle=\int\frac{\sec(x)}{\tan^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x=\int\frac{\cos(x)}{\sin^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x$\\[1ex]
-设$t=\sin(x)$, 则$\dif t=\cos(x)\dif x$, 得:\\[1ex]
-$\displaystyle\int\frac{\cos(x)}{\sin^2(x)}\dif x=\int\frac{1}{t^2}\dif t=-\frac{1}{t}+C=-\csc(x)+C$\\[1ex]
-由$\frac{\dif}{\dif x}(\cot(x))=-\csc^2(x)$, 得:\\[1ex]
-$\displaystyle\int\frac{1}{\tan^2(x)}\dif x=\int\cot^2(x)\dif x=\int\csc^2(x)\dif x-\int\dif x=-\cot(x)-x+C$\\[1ex]
-$\therefore\displaystyle\int\frac{1}{\sec(x)-1}\dif x=-\csc(x)-\cot(x)-x+C$\\[1ex]
+(3)形如$\displaystyle\frac{1}{\sec(x)-1}$\\
+例.\\
+$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$\\
+推导原理:\\
+将分子分母同时乘以分母的共轭式\\
+推导过程:\\
+$\displaystyle\int\frac{1}{\sec(x)-1}\dif x=\int\frac{1}{\sec(x)-1}\times\frac{\sec(x)+1}{\sec(x)+1}\dif x=\int\frac{\sec(x)+1}{\sec^2(x)-1}\dif x$\\
+\phantom{$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$}$\displaystyle=\int\frac{\sec(x)}{\tan^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x=\int\frac{\cos(x)}{\sin^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x$\\
+设$t=\sin(x)$, 则$\dif t=\cos(x)\dif x$, 得:\\
+$\displaystyle\int\frac{\cos(x)}{\sin^2(x)}\dif x=\int\frac{1}{t^2}\dif t=-\frac{1}{t}+C=-\csc(x)+C$\\
+由$\displaystyle\frac{\dif}{\dif x}\cot(x)=-\csc^2(x)$, 得:\\
+$\displaystyle\int\frac{1}{\tan^2(x)}\dif x=\int\cot^2(x)\dif x=\int\csc^2(x)\dif x-\int\dif x=-\cot(x)-x+C$\\
+$\therefore\displaystyle\int\frac{1}{\sec(x)-1}\dif x=-\csc(x)-\cot(x)-x+C$\\
 
-(4)形如$\sin(\alpha)\cos(\beta)$\\[1ex]
-例.\\[1ex]
-$\displaystyle\int\sin(19x)\cos(3x)\dif x$\\[1ex]
-推导过程:\\[1ex]
-和/差角公式:\\[-4ex]
+(4)形如$\sin(\alpha)\cos(\beta)$\\
+例.\\
+$\displaystyle\int\sin(19x)\cos(3x)\dif x$\\
+推导原理:\\
+利用和/差角公式:\\[-4ex]
 \begin{center}
     \framebox{$\sin(A+B)=\sin(A)\cos(B)+\cos(A)\sin(B)$}\\[2ex]
     \framebox{$\cos(A+B)=\cos(A)\cos(B)-\sin(A)\sin(B)$}\\[2ex]
@@ -53,8 +60,13 @@ $\displaystyle\int\sin(19x)\cos(3x)\dif x$\\[1ex]
 	\framebox{$\cos(A)\cos(B)=\dfrac{1}{2}(\cos(A+B)+\cos(A-B))$}\\[2ex]
 	\framebox{$\sin(A)\sin(B)=\dfrac{1}{2}(\cos(A-B)-\cos(A+B))$}\\[2ex]
 \end{center}\newpage
-$\displaystyle\therefore\int\sin(19x)\cos(3x)\dif x=\frac{1}{2}\int(\sin(19x+3x)+\sin(19x-3x))\dif x$\\[1ex]
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\int(\sin(22x)+\sin(16x))\dif x$\\[1ex]
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\left(-\frac{\cos(22x)}{22}-\frac{\cos(16x)}{16}\right)+C$\\[1ex]
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=-\frac{\cos(22x)}{44}-\frac{\cos(16x)}{32}+C$\\[1ex]
+推导过程:\\
+$\displaystyle\therefore\int\sin(19x)\cos(3x)\dif x=\frac{1}{2}\int(\sin(19x+3x)+\sin(19x-3x))\dif x$\\
+$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\int(\sin(22x)+\sin(16x))\dif x$\\
+$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\left(-\frac{\cos(22x)}{22}-\frac{\cos(16x)}{16}\right)+C$\\
+$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=-\frac{\cos(22x)}{44}-\frac{\cos(16x)}{32}+C$\\[4ex]
+
+二、关于三角函数的幂的积分\\
+(1)$\sin$或$\cos$的幂\\
+例.\\
 \end{document}
