@@ -16,7 +16,7 @@
 
 
 
-二、Demo(示例)02 - emphasize
+二、Demo(示例)02 - font decorate
 \documentclass{article}
 \begin{document}
 	it is a normal text\\
@@ -28,6 +28,8 @@
 	\begin{em}
 		it is italic text
 	\end{em}
+	\underline{this is underline text}\\
+	\sout{this is delete text}
 \end{document}
 
 内容讲解
@@ -36,6 +38,10 @@
 2.\em用于将当前环境(指令之后第一个\end或}之前的环境)剩余文本配置为斜体, 为\emph的declaration版本
 
 3.\begin{em} ... \end{em}为\emph{}的环境版本模式
+
+4.\underline{}用于字体下划线
+
+5.\sout{}用于字体水平删除线, 并只能用于paragraph mode, 但可以使用\sout{$$}限定公式内容. 包含在ulem宏包中
 
 
 

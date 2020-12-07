@@ -1,0 +1,40 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{cancel}
+\begin{document}
+一、行列式介绍\\[1ex]
+有$3\times 3$矩阵$A$
+\[\left[\begin{array}{l l l}
+a_{11} & a_{12} & a_{13}\\
+a_{21} & a_{22} & a_{23}\\
+a_{31} & a_{32} & a_{33}
+\end{array}\right]\]
+其中
+\[\Delta=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}-a_{13}a_{22}a_{31}\]
+$\Delta$称为$3\times 3$矩阵$A$的\textbf{行列式}, 也可以写成\\
+$\Delta=(a_{11}a_{22}a_{33}-a_{11}a_{23}a_{32})-(a_{12}a_{21}a_{33}-a_{12}a_{23}a_{31})+(a_{13}a_{21}a_{32}-a_{13}a_{22}a_{31})$\\[1ex]
+$\phantom{\Delta}=a_{11}\cdot\det\left[\begin{array}{l l}
+a_{22} & a_{23}\\
+a_{32} & a_{33}
+\end{array}\right]-a_{12}\cdot\det\left[\begin{array}{l l}
+a_{21} & a_{23}\\
+a_{31} & a_{33}
+\end{array}\right]+a_{13}\cdot\det\left[\begin{array}{l l}
+a_{21} & a_{22}\\
+a_{31} & a_{32}
+\end{array}\right]$\\[1ex]
+$\phantom{\Delta}=a_{11}\cdot\det A_{11}-a_{12}\cdot\det A_{12}+a_{13}\cdot\det A_{13}$\\
+其中, $A_{ij}$表示去除矩阵第$i$行和第$j$列元素后的内容.\\
+例. $A_{11}$表示如下:\\
+\[\left[\begin{array}{l l l}
+\cancel{a_{11}} & \cancel{a_{12}} & \cancel{a_{13}}\\
+\cancel{a_{21}} & a_{22} & a_{23}\\
+\cancel{a_{31}} & a_{32} & a_{33}
+\end{array}\right]\]
+即
+\[\left[\begin{array}{l l}
+a_{22} & a_{23}\\
+a_{32} & a_{33}
+\end{array}\right]\]
+\end{document}

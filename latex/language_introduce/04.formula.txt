@@ -231,6 +231,8 @@
 
 4.\underbrace{}用于水平下括号, 并可对指令使用_{}添加备注
 
+5.\cancel{}用于斜线方向删除线, \bcancel{}用于反斜线方向删除线. 包含在cancel宏包中
+
 
 
 十、Demo(示例)10 - math accent
