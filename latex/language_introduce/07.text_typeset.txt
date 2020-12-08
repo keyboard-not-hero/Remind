@@ -73,7 +73,9 @@
 
 4.\textrm为roman(罗马, 也称serif, 默认)字体, 适用于正文; \textsf为sans serif(无衬线)字体, 适用于标题; \texttt为typewriter(打字机, 也称monospaced)字体
 
-5.style cmd对应的declaration版本, 列表如下:
+5.\textnormal用于定义未指定的shape/bold/family为默认选项
+
+6.style cmd对应的declaration版本, 列表如下:
 	\textup - \upshape
 	\textit - \itshape
 	\textsl - \slshape
@@ -83,8 +85,9 @@
 	\textrm - \rmfamily
 	\textsf - \sffamily
 	\texttt - \ttfamily
+	\textnormal - \normalfont
 
-5.字体默认仅适用于paragraph mode和left-to-right mode
+7.字体默认仅适用于paragraph mode和left-to-right mode
 
 
 
