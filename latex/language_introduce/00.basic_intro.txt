@@ -6,6 +6,12 @@ latex目标文件: 后缀为.dvi/.ps/.pdf等的文件
 
 
 
+LaTeX历史:
+LaTeX 2.09 - 释出于1985年
+LaTeX 2e - 释出于1994年
+
+
+
 LaTeX继承自Tex的三种模式:
 1.paragraph mode - 默认的文字段落模式
 
@@ -36,7 +42,15 @@ i hate you
 3.enviroment - 形如\begin{document} ... \end{document}, 限定\begin与\end之间的内容
 
 
+
+编译器选择建议:
+英文文档 - pdflatex
+中文文档 - xelatex
+
+
+
+LaTeX不是WYSIWYG(what you see is what you get)工具
+
 reference:
-[1]LaTeX: A document preparation system, User’s guide and reference manual-Leslie Lamport
-[2]The LaTeX Companion(Second Edition) - Frank Mittelbach
-[3]LaTeX入门-刘海洋
+[1]A document preparation system, Leslie Lamport
+[2]The LaTeX Companion(Second Edition), Frank Mittelbach

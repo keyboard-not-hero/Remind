@@ -12,7 +12,7 @@
 \end{document}
 
 内容讲解
-1.\begin{verse} ... \end{verse}用于指定诗歌环境
+1.\begin{verse} ... \end{verse}用于指定诗歌环境, 该环境内的行内自动断行会进行缩进
 
 
 
@@ -67,15 +67,17 @@
 内容讲解
 1.\textup为upright(直立, 默认)字体, \textit为italic(倾斜)字体, \textsl为slanted(倾斜)字体, \textsc为small caps(小号大写)字体
 
-2.shape字体可嵌套使用, 综合功能. 当嵌套同一个指令偶数次时, 还原字体为默认字体(upright)
+2.\textmd为medium(中号, 默认)字体, \textbf为boldface(粗体)字体
 
-3.\textmd为medium(中号, 默认)字体, \textbf为boldface(粗体)字体
+3.\textrm为roman(罗马, 也称serif, 默认)字体, 适用于正文; \textsf为sans serif(无衬线)字体, 适用于标题; \texttt为typewriter(打字机, 也称monospaced, 所有字体等宽)字体, 适用于代码或url地址
 
-4.\textrm为roman(罗马, 也称serif, 默认)字体, 适用于正文; \textsf为sans serif(无衬线)字体, 适用于标题; \texttt为typewriter(打字机, 也称monospaced)字体
+4.以上单个指令嵌套多次使用时, 效果无任何变化. 如: \textbf{\textbf{bold}}与\textbf{bold}效果一致
 
-5.\textnormal用于定义未指定的shape/bold/family为默认选项
+5.shape/bold/family可以嵌套使用, 指定多种效果
 
-6.style cmd对应的declaration版本, 列表如下:
+6.\textnormal用于定义未指定的shape/bold/family为默认选项
+
+7.style cmd对应的declaration版本, 列表如下:
 	\textup - \upshape
 	\textit - \itshape
 	\textsl - \slshape
@@ -87,11 +89,24 @@
 	\texttt - \ttfamily
 	\textnormal - \normalfont
 
-7.字体默认仅适用于paragraph mode和left-to-right mode
+8.字体默认仅适用于paragraph mode和left-to-right mode
 
 
 
-四、Demo(示例)04 - input accents
+四、Demo(示例)04 - special characters
+\documentclass{article}
+\begin{document}
+Statement \#1:\\
+50\% of \$100 makes \$50.\\
+More special symbols are \&, \_, \{ and \}.
+\end{document}
+
+内容讲解
+1.\#用于跳脱含有特殊含义的'#'字符, 特殊字符列表参考symbol_summary
+
+
+
+五、Demo(示例)05 - input accents
 \documentclass{article}
 \begin{document}
     \={a} \'{a} \v{a} \`{a}\\
@@ -109,7 +124,7 @@
 
 
 
-五、Demo(示例)05 - direct copy/paste accents
+六、Demo(示例)06 - direct copy/paste accents
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \begin{document}
@@ -122,7 +137,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-六、Demo(示例)06 - symbol
+七、Demo(示例)07 - symbol
 \documentclass{article}
 \begin{document}
 	\oe\\
@@ -140,7 +155,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-七、Demo(示例)07 - font size
+八、Demo(示例)08 - font size
 \documentclass{article}
 \begin{document}
 	\noindent\tiny tiny\small small
@@ -166,7 +181,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-八、Demo(示例)08 - hyphenate
+九、Demo(示例)09 - hyphenate
 \documentclass{article}
 \hyphenation{acr-onym he-llo}
 \begin{document}
@@ -183,7 +198,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-九、Demo(示例)09 - alignment
+十、Demo(示例)10 - alignment
 \documentclass{article}
 \begin{document}
     \noindent TUG is an acronym. It means \TeX\ User Group.\\
@@ -204,9 +219,10 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-十、Demo(示例)10 - 引号
+十一、Demo(示例)11 - 引号
 \documentclass{article}
 \begin{document}
+	thompson said:`you should sleep'.
     peter said:``you should run''.
 \end{document}
 
@@ -215,9 +231,11 @@ Comment çava? Où se trouve l'aéroport?
 
 2.'代表’
 
+3.双引号为两个单引号叠加
 
 
-十一、Demo(示例)11 - ASCII symbols
+
+十二、Demo(示例)12 - ASCII symbols
 \documentclass{article}
 \begin{document}
     \symbol{26}
@@ -234,7 +252,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-十二、Demo(示例)12 - color
+十三、Demo(示例)13 - color
 \documentclass{article}
 \usepackage{color}
 \begin{document}
@@ -267,7 +285,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-十三、Demo(示例)13 - font in circle
+十四、Demo(示例)14 - font in circle
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{pifont}
@@ -283,3 +301,29 @@ Comment çava? Où se trouve l'aéroport?
 1.\ding{n}用于指定限定于圆形内的数字, n为可用编码范围, 区间为[172, 211]. 包含在pifont宏包中
 
 2.列表参考symbol_summary.pdf
+
+
+
+十五、Demo(示例)15 - quote
+\documentclass{article}
+\begin{document}
+\begin{quote}
+this is line one\\
+
+this is line two\\
+
+this is line three
+\end{quote}
+\begin{quotation}
+this is paragraph one\\
+
+this is paragraph two\\
+
+this is paragraph three
+\end{quotation}
+\end{document}
+
+内容讲解
+1.\begin{quote}...\end{quote}用于标记不分段落的简短quote环境
+
+2.\begin{quotation}...\end{quotation}用于标记分段落的多行quote环境

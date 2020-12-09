@@ -1,0 +1,10 @@
+1.添加PPA地址
+下载地址: https://www.tug.org/texworks/
+选择Getting TeXworks -- Ubuntu
+
+根据指示添加ppa, 如:
+sudo add-apt-repository ppa:texworks/stable
+sudo apt-get update
+
+2.安装
+sudo apt-get install texworks

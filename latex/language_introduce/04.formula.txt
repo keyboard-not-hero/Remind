@@ -21,7 +21,7 @@
 
 4._用于指定公式的subscript, ^用于指定公式的supscript
 
-5.'在公式中为求导符号
+5.'在公式中为微分符号
 
 6.数学公式中, \because和\therefore为几何的因为/所以符号, 在amssymb宏包中定义
 
@@ -46,9 +46,9 @@
 \end{document}
 
 内容讲解
-1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 公式居中
+1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 公式居中显示
 
-2.\[ ... \]用于行间公式环境
+2.\[ ... \]用于行间公式环境, 公式居中显示
 
 3.\begin{equation} ... \end{equation}用于含编号的行间公式环境, 公式居中. \renewcommand{\theequation}{\alph{equation}}用于修改equation编号类型, 列表如下:
 	arabic - 数字
@@ -352,11 +352,11 @@
 		<content>
 	\end{env_name}
 
-8.\theorempreskip{length}和\theorempostskip{length}分别用于指定newtheorem定理环境与之前/之后正文的垂直距离. 包含在ntheorem宏包中
+8.\theorempreskip{dimen}和\theorempostskip{dimen}分别用于指定newtheorem定理环境与之前/之后正文的垂直距离(适用于ntheorem v1.32及以后, 之前版本使用\theorempreskipamount<dimen>和\theorempostskipamount<dimen>) 包含在ntheorem宏包中
 
-9.\theoremframepreskip和\theoremframepostskip分别用于指定newframedtheorem定理环境与之前/之后正文的垂直距离. 包含在ntheorem宏包中
+9.\theoremframepreskip{}和\theoremframepostskip{}分别用于指定newframedtheorem定理环境与之前/之后正文的垂直距离. 包含在ntheorem宏包中
 
-10.\theoreminframepreskip和\theoreminframepostskip分别用于指定newframedtheorem定理内容与边框上/下边界的垂直距离. 包含在ntheorem宏包中
+10.\theoreminframepreskip{}和\theoreminframepostskip{}分别用于指定newframedtheorem定理内容与边框上/下边界的垂直距离. 包含在ntheorem宏包中
 
 11.\theoremindent<dimen>中, dimen指定定理环境的所有内容缩进宽度
 

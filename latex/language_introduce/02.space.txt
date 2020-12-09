@@ -13,7 +13,10 @@
 
 2.\quad表示一个较大的空格, \qquad表示两个\quad距离
 
-3.\\用于段落内换行, \\[value]用于指定与下一行的行间距, \\*[value]指定与下一行的行间距, 并且不允许在当前行之后换页(可将当前行移动到下一页)
+3.\\用于段落内换行
+\\*用于段落内换行, 并且不允许在当前行之后马上进行换页(可将当前也移动到下一页)
+\\[value]用于换行, 并指定与下一行的行间距
+\\*[value]用于换行, 并指定与下一行的行间距, 且不允许在当前行之后换页(可将当前行移动到下一页)
 
 4.\newline用于段落内换行, 类似于\\
 
@@ -56,59 +59,64 @@ this is page two
 
 
 
-四、Demo(示例)04 -- space
+四、Demo(示例)04 -- distance
 \documentclass{article}
 \begin{document}
-    "'Fi' or 'fum'" he said
+    ```fi\ i' or `fum''' he said
 
-    "\,'Fi' or 'fum'\," he said
+    ```f\,i' or `fum''' he said
 
-    " 'f\/i' or 'fum' " he said
+    ```f\/i' or `fum''' he said
 
-    " 'f{}i' or 'fum' " he said
+    ```f{}i' or `fum''' he said
+
+    ```fi' or `fum''' he said
 
     this\hspace{1cm} is a big space\\
     \hspace{5cm} this is no space
 
     \hspace*{2cm} this is b \vspace{2cm}biger space\\
-	this is a long vertical space
+    this is a long vertical space
 
-	Alice was beginning to get very tired of sitting by her sister on the
+    Alice was beginning to get very tired of sitting by her sister on the
 bank, and of having nothing to do.
 
-	Alice was beginning to get\hfill very tired of sitting by her sister on the
+    Alice was beginning to get\hfill very tired of sitting by her sister on the
 bank, and of having nothing to do
 
-	Alice was beginning to get\hfill very tired\\ of sitting by her sister on the
+    Alice was beginning to get\hfill very tired\\ of sitting by her sister on the
 bank, and of having nothing to do
 \end{document}
 
 内容讲解
-1.'\,'用于比<space>更短的空格, 用于分隔'与"
+1.'\ '用于使用一个较大水平距离分隔字母, 用于分隔英文单词之间的距离
 
-2.'\/'用于解决字母之间的连接过于紧密问题, 或者词距补偿(直立体之间插入斜体, 斜体左边比右边词距大, 在右边插入该符号), 空间小于'\,'. 如: f与i, --分离
+2.'\,'用于比'\ '更短的空格, 用于分隔'与"
 
-3.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳
+3.'\/'用于解决字母之间的连接过于紧密问题, 或者词距补偿(直立体之间插入斜体, 斜体左边比右边词距大, 在右边插入该符号), 空间小于'\,'. 如: f与i, --分离
 
-4.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
+4.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳. 水平距离大小如下:
+	\<space> > \, > \/ > {}
 
-5.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
+5.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
 
-6.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
+6.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
 
-7.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
+7.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
 
-8.\hfill为\hspace{\fill}简写版本, 动态填充水平空白, 当前行内容被填满时, 留置一个略宽的空白; 当前行过早换行时, 将hfill左边内容对齐左边框, 右边对齐右边框, 剩余空白被hfill占据. 不适用于行/段落起始和行/段落结束
+8.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
 
-9.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
+9.\hfill为\hspace{\fill}简写版本, 动态填充水平空白, 当前行内容被填满时, 留置一个略宽的空白; 当前行过早换行时, 将hfill左边内容对齐左边框, 右边对齐右边框, 剩余空白被hfill占据. 不适用于行/段落起始和行/段落结束
 
-10.\hspace*{\fill}为\hfill的适用于行/段落起始和行/段落结束版本
+10.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
 
-11.\vspace*{\fill}为\vfill的适用于页起始/结束版本
+11.\hspace*{\fill}为\hfill的适用于行/段落起始和行/段落结束版本
 
-12.\dotfill类似于hfill, 但使用'.'代替空白
+12.\vspace*{\fill}为\vfill的适用于页起始/结束版本
 
-13.\hrulefill类似于hfill, 但是用下划线替代空白
+13.\dotfill类似于hfill, 但使用'.'代替空白
+
+14.\hrulefill类似于hfill, 但是用下划线替代空白
 
 
 
@@ -123,7 +131,7 @@ bank, and of having nothing to do
 \end{document}
 
 内容讲解
-1.-用于表示连字符
+1.-用于表示连字符, 即连接字母
 
 2.--用于表示数字范围
 
@@ -134,11 +142,11 @@ bank, and of having nothing to do
 六、Demo{示例}06 -- 句子结束相关的空格
 \documentclass{article}
 \begin{document}
-    this is the line onE. but nothing more\\
-    this is the line onE.\ but nothing more\\
-    this is the line onE\@. but nothing more\\
+    this is the line on@. but nothing more\\
     this is the line one. but nothing more\\
     this is the line one.\ but nothing more\\
+    this is the line onE. but nothing more\\
+    this is the line onE\@. but nothing more\\
 	this is the line (one.) but nothing more\\
 	this is the line (one.)\ but nothing more
 \end{document}
@@ -147,17 +155,15 @@ bank, and of having nothing to do
 1.word之间的的空格为\<space>, 句子结束时的空格为<space>, \<space>的空间小于<space>
 	空格空间大小: {} < \/ < \,  <  \<space>  <  <space>
 
-2.在.之前为大写字母时, 默认不是句子结束, 后续<space>默认为\<space>, 即单词之间的空格
+2.当.之前为非大写字母(小写字母和其他字符)时, 后续代表句子结束, 后续<space>默认为<space>. 可强制使用\<space>定义单词之间的空格
 
-3.当.之前为非大写字母时, 后续代表句子结束, 后续<space>默认为<space>. 可强制使用\<space>定义单词之间的空格
+3.在.之前为大写字母时, 默认不是句子结束, 后续<space>默认为\<space>, 即单词之间的空格. 可强制在'.'之前使用\@指定句子结束, 使用<space>空格
 
-4.当.之前为大写字母时, 默认不是句子结束. 但可在.之前使用\@来指定.为句子结束标志
+4.当.之后有)/'/"时，规则同上述2
 
-5.当.之后有)/'/"时，规则同.结尾
+5.?/!/:语句结束符号效果同.效果一致
 
-6.?/!/:效果同.效果一致
-
-7.\frenchspacing可用于将正文中的句子结束的水平间距调整为与word之间的水平间距一致. 在preamble区域使用
+6.\frenchspacing可用于将正文中的句子结束的水平间距调整为与word之间的水平间距一致. 在preamble区域使用
 
 
 
@@ -257,3 +263,14 @@ just newline
 
 内容讲解
 1.\phantom{content}用于留置与内容content等宽的空格, 可用于paragraph mode或math mode
+
+
+
+十二、Demo(示例)12 - TeX family text
+\documentclass{article}
+\begin{document}
+Some people use plain \TeX, but I prefer \LaTeX.
+\end{document}
+
+内容讲解
+1.\TeX生成TeX的logo标志, logo后空格必须使用\<space>指定, 其他TeX family logo详见symbol_summary

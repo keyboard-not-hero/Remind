@@ -1,7 +1,6 @@
 1a.离线安装Texlive
-# 下载texlive镜像
-# 点击下载后，会自动切换到国内镜像源下载
-# 下载地址：https://ctan.org/tex-archive/systems/texlive/Images  
+# 下载地址: https://www.tug.org/texlive/acquire-iso.html
+# 选择download from a nearby CTAN mirror
 
 # 校验完整性
 steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5

@@ -2,6 +2,7 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath}
 \begin{document}
+	% this is comment
 	This is first demo!!
 \end{document}
 
@@ -54,6 +55,9 @@ pac_name<N> - 导入的包名, 文件后缀为.sty
 4.begin{document} ... \end{document}指定正文内容部分. \end{document}后的所有内容被忽略
 
 
+5.%之后的当前行内容都是注释
+
+
 
 二、Demo(示例)02 -- 基础结构
 \documentclass{article}
@@ -93,11 +97,15 @@ report - [part] -> chapter -> section -> subsection...
 
 
 内容讲解
-1.\title、\author是标题必选指令, \date是标题可选指令
+1.\title{}为标题内容
 
-2.\maketitle为生成标题的指令，位于正文部分
+2.\author{}为作者名字, 多个名字使用\and进行分隔
 
-3.\tableofcontents生成目录索引, 包含两个步骤:
+3.\date{}为日期(可选), 可使用\today生成当前日期
+
+4.\maketitle为生成标题的指令，位于正文部分
+
+5.\tableofcontents生成目录索引, 包含两个步骤:
 	i. 生成.toc文件
 	ii.生成目标文件
 ** 可使用\usepackage{hyperref}, 使目录超链接到指定页码, 并确保该宏包最后导入
@@ -105,9 +113,9 @@ report - [part] -> chapter -> section -> subsection...
 	colorlinks=true - 链接边框模式修改为字体颜色模式
 	linkcolor=red - 修改链接字体颜色
 
-4.\begin{abstract} ... \end{abstract}为摘要信息环境
+6.\begin{abstract} ... \end{abstract}为摘要信息环境
 
-5.\section用于标记小节起始位置
+7.\section用于标记小节起始位置, section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote
 
 
 

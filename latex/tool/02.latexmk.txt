@@ -83,10 +83,10 @@ latexmk [options] [files]
 **files - 指定.tex文件, 后缀可省略; 当未指定该参数时，默认为当前工作目录的所有.tex文件
 
 例子:
-使用pdflatex编译器
+使用pdflatex编译器(英文文档建议使用)
 latexmk -pdf -pv <tex_file>
 
-使用xelatex编译器
+使用xelatex编译器(中文文档建议使用)
 latexmk -xelatex -pv <tex_file>
 
 
