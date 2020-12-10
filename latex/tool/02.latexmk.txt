@@ -90,6 +90,11 @@ latexmk -pdf -pv <tex_file>
 latexmk -xelatex -pv <tex_file>
 
 
+编译错误提示行指令:
+<enter> - 跳过当前错误, 继续执行, 用于发现多个error
+x - 退出执行
+\stop - 用于在出现'*'错误提示时, 退出执行
+
 
 配置文件查找顺序(优先级从低到高):
 (1)sys级配置文件

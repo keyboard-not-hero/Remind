@@ -9,11 +9,11 @@
 \end{document}
 
 内容讲解
-1.\begin{thebibliography}{len_of_content} ... \end{thebibliography}限定文献引用的具体内容环境, len_of_content用于指定文献引用编号的长度(取该字符串的长度)
+1.\begin{thebibliography}{len_of_content} ... \end{thebibliography}限定文献引用的具体内容环境, len_of_content用于指定文献引用编号的长度(取该字符串的长度, 如: 99为两个字符长度)
 
 2.\bibitem[num]{label}用于定义文献引用的具体内容, num代表指定引用文献的排列编号; label代表引用文献的标签，用于正文引用; 后接文献引用的正文(author/title/year etc.)
 
-3.\cite{label}用于在正文中引用文献, 并且显示在引用文献列表中, label为文献内容item的标签
+3.\cite[extra_info]{label}用于在正文中引用文献, 并且显示在引用文献列表中, extra_info为引用文献的额外备注信息; label为文献内容item的标签, 并且可同时引用多个, 多个使用','分隔
 
 
 
@@ -37,7 +37,7 @@
 
 3.\nocite{label}在引用文献列表中显示, 但正文引用处不显示内容; 当label为'*'时, 文献列表中显示文献数据库中的所有item
 
-4.编译步骤: .tex --> .bib --> .tex --> .tex
+4.编译步骤: .tex --> .bbl --> .tex --> .tex
 
 database file(.bib)内容
 @article{how,

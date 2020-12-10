@@ -2,6 +2,15 @@ latex源文件: 后缀为.tex的文件
 
 latex目标文件: 后缀为.dvi/.ps/.pdf等的文件
 
+其他相关后缀文件:
+log - 编译相关log信息
+toc - \tableofcontents目录相关信息
+lof - \listoffigures目录相关信息
+lot - \listoftables目录相关信息
+aux - bibliography相关内容
+
+
+
 编译工具: latexmk
 
 

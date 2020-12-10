@@ -1,5 +1,6 @@
 一、Demo(示例)01 - newcommand and renewcommand
 \documentclass{article}
+\usepackage{xspace}
 \newcommand{\gn}{$\Gamma_{i}$}
 \newcommand{\cn}{\ensuremath{\Delta_{j}}\xspace}
 \renewcommand{\gn}{$x+y=z$}
@@ -19,11 +20,11 @@
 
 2.\newcommand*{\cmd}[num][default_val]{content}为\newcommand的带'*'模式, 即新建指令参数中不能包含换段落指令(\par或者空行)
 
-3.\ensuremath{}用于确保内容位于math mode. 而原生math mode偶数层嵌套会取消math环境
+3.\ensuremath{}用于确保内容位于math mode. 即位于paragraph mode/LR mode时, 内容为$$; 位于math mode时, 内容为<content>
 
 4.\xspace用于指定当后续字符为字母时, 自定义新指令后添加空格. 包含在xspace宏包中
 
-5.\renewcommand{\cmd}[num]{content}用于充定义指令
+5.\renewcommand{\cmd}[num]{content}用于重新定义指令
 
 
 

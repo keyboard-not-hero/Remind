@@ -84,7 +84,7 @@
 \end{document}
 
 内容讲解
-1.\shadowbox{}指定一个阴影边框. 包含在fancybox宏包中
+1.\shadowbox{}指定一个LR mode的阴影边框. 包含在fancybox宏包中
 
 2.\fboxrule指定边框的宽度
 
@@ -107,9 +107,9 @@
 
 2.\color{name}{content}指定文字颜色. 包含在xcolor宏包中
 
-3.\colorbox{name}{content}用于指定背景色的盒子. 包含在xcolor宏包中
+3.\colorbox{name}{content}用于指定LR mode的包含背景色的盒子. 包含在xcolor宏包中
 
-4.\fcolorbox{frame_color}{bg_color}{content}用于指定边框和背景色的边框盒子. 包含在xcolor宏包中
+4.\fcolorbox{frame_color}{bg_color}{content}用于指定LR mode的包含边框色和背景色的边框盒子. 包含在xcolor宏包中
 
 5.\fboxsep指定背景边缘距离内容的宽度
 

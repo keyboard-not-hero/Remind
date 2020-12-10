@@ -147,6 +147,7 @@
     \mathrm{ABCDabcd1234}\\
     \mathsf{ABCDabcd1234}\\
     \mathtt{ABCDabcd1234}\\
+	\mathcal{ABCHIJ}
 	\bm{ABCDabcd1234}
 \end{gather}
 \end{document}
@@ -154,7 +155,13 @@
 内容讲解
 1.\begin{gather} ... \end{gather}用于含多行公式的行间公式环境, 包含在amsmath宏包中
 
-2.\mathit为斜体公式, \mathbf为粗体公式, \mathrm为roman体, \mathsf为无衬线体, \mathtt为打印机字体. 详情参考symbol_summary
+2.\mathit为斜体公式
+\mathbf为粗体公式
+\mathrm为roman体
+\mathsf为无衬线体
+\mathtt为打印机字体
+\mathcal位花式体
+详情参考symbol_summary
 
 3.\bm{}可使大小写字母成为斜体并加粗. 包含在bm宏包中. math字体不可嵌套
 
@@ -195,22 +202,40 @@
 	l - 当前列的每一行左对齐
 	c - 当前列的每一行中间对齐
 	r - 当前列的每一行右对齐
-	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
-	@{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
-			  text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
-			  text为<null>时, 列之间无分隔符
-			  text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐
-	*{num}{cols} - 指定num个连续列都采用cols指定格式
+	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度. 默认使用空格分隔
+	@{text} - 使用指定字符text作为列之间的分割线或左/右侧边线, text可选格式如下:
+		\hspace{width} - 使用指定长度空白作为当前列分隔符
+		<null> - 列之间无分隔符
+		\extracolsep{width} - 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐. 
+		类似于\parbox[t]{width}, 并且由于LR mode, 不能包含\\, 除非内嵌minipage等paragraph mode盒子
+	*{num}{cols} - 指定num个连续列都采用指定对齐格式(l/r/c)
 
 2.\begin{array}[vert_align]{horiz_aligns...} ... \end{array}, vert_align表示使用指定位置对齐中线位置, 可选列表: b/c/t, 默认为c
 
-3.数组的列之间使用'&'分隔, 行之间使用'\\'分隔
+3.数组的列之间使用'&'分隔
 
-4.最后一行末尾不能使用'\\'
+4.\multicolumn{num}{col}{item}用于合并多列为1列, num指定合并的列数; col代表合并后内容的水平对齐方式(l/r/c)或|或@{text}; item为合并后填充的内容
 
-5.array只能用于math mode
+5.\vline填充当前列之间整个行高度的垂直线
 
+6.\hline用于添加表格行之间的填充整行的水平线, 需要在第一行之前或紧跟\\之后
+
+7.\cline{<col_1>-<col_2>}用于添加表格行之间的填充指定列的水平线, 需要在第一行之前或紧跟\\之后
+
+8.\\用于换行
+\\*可阻止当前行后换页
+\\[2ex]用于换行, 并指定当前行与下一行的垂直距离
+\\*[2ex]用于换行, 并阻止当前行后换页, 且指定当前行与下一行的垂直距离
+最后一行末尾不能使用'\\'
+
+9.array只能用于math mode环境内
+
+10.其他参数设置, 列表如下:
+	\arraycolsep - 表格列之间空格距离的1/2长度, 语法:\setlength{\arraycolsep}{2ex}
+	\arrayrulewidth - '|'、\hline、\cline、\vline线条宽度, 语法:\setlength{\arrayrulewidth}{2pt}
+	\doublerulesep - 两个连续'|'或\hline之间的距离, 语法:\setlength{\doublerulesep}{1ex}
+	\arraystretch - 行之间垂直距离的系数, 语法:\renewcommand{\arraystretch}{1.5}
 
 
 九、Demo(示例)09 - Overlining and Underlining
@@ -286,11 +311,17 @@
 \end{document}
 
 内容讲解
-1.\!代表缩小与\,相同的间隔距离, 但\!为反向空格
+1.math mode环境中, 忽视所有空格符号
 
-2.间隔距离汇总: \! < <space> < \, < \: < \; < \<space>
+2.\!代表缩小与\,相同的间隔距离, 但\!为反向空格
 
-3.所有空格适用于paragraph mode和LR mode
+3.空格距离汇总: \! < <space> < \, < \: < \; < \<space>
+
+4.\hspace{}用于指定水平空格距离
+\hspace*{}用于指定水平空格距离, 并且当其位于行首或行尾时, 也不移除该水平空格
+
+5.\vspace{}用于段落之间的垂直距离
+\vspace*{}用于段落之间的垂直距离, 并且当其位于页首或页尾时, 也不移除该垂直距离
 
 
 

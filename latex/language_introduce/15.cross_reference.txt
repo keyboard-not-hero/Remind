@@ -7,8 +7,7 @@ bank, and of having nothing to do: once or twice she had peeped into
 the book her sister was reading, but it had no pictures or
 conversations in it, “and what is the use of a book,” thought Alice
 “without pictures or conversations?”
-\section{The Pool of Tears}
-\label{section:two}
+\section{The Pool of Tears}\label{section:two}
     Just then her head struck against the roof of the hall: in fact she was
 now more than nine feet high, and she at once took up the little golden
 key and hurried off to the garden door.
@@ -39,8 +38,7 @@ please see section \ref{section:two}, you can find something
 	steven & male & two & 92\\
 	\hline
 \end{tabular}
-\caption{score table}
-\label{tab:one}
+\caption{score table}\label{tab:one}
 \end{table}
 the score rank reference \ref{tab:one}
 \end{document}
@@ -49,6 +47,8 @@ the score rank reference \ref{tab:one}
 1.\label{label}在\caption之后, 引用caption生成的编号
 
 2.\ref{label}引用编号
+
+3.\pageref{label}使用label的页码
 
 
 
@@ -67,6 +67,8 @@ please reference equation \ref{eq:one}
 2.\ref{label_name}引用公式编号, 格式为: <number>
 
 3.\eqref{label_name}引用公式编号, 格式为: (<number>). 由amsmath宏包提供
+
+4.\pageref{label}使用label的页码
 
 
 
@@ -88,3 +90,5 @@ from formula\eqref{ga:one}, result:
 2.\ref{label_name}引用公式编号, 格式为: <number>
 
 3.\eqref{label_name}引用公式编号, 格式为: (<number>). 由amsmath宏包提供
+
+4.\pageref{label}使用label的页码

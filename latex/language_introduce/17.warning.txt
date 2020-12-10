@@ -1,0 +1,26 @@
+格式:
+! LaTeX Error: \begin{enumerate} on input line 167 ended by \end{enumerae}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.174          \end{enumerae}
+
+错误讲解
+1. LaTeX Error代表LaTeX错误
+\begin{enumerate} on input line 167 ended by \end{enumerae}代表具体的错误原因
+
+2.l.174代表出现错误的行数为174
+
+
+
+错误案例
+1.warning: overfull \hbox
+diagnosis: 行内容超出该行正常容纳的字符数
+
+2.warning: underfull \hbox
+diagnosis: 多行出现如下情况, 单词之间出现过多水平空白
+
+3.warning: underfull \vbox
+diagnosis: 页面出现过多的垂直空白

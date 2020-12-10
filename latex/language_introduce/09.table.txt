@@ -11,9 +11,11 @@
 内容讲解
 1.\begin{tabbing} ... \end{tabbing}用于指定表格环境
 
-2.\=设定下一列的起始位置, \>跳转到下一列, \\换行符, \kill不显示当前行
+2.\=设定下一列的起始位置(锚), \>跳转到下一列(定位), \\换行符, \kill不显示当前行
 
 3.tabbing可跨页
+
+4.tabbing只适用于paragraph mode
 
 
 
@@ -64,13 +66,25 @@
 
 10.\arraystretch配置行之间距离的系数. 配置示例: \renewcommand{\arraystretch}{2}
 
-11.tabular不可跨页
+11.\columncolor[modle]{model-spec}[left_margin][right_margin]用于指定表格的列背景色, model为颜色模式, 列表: gray/rgb/cymk; model-spec用于指定颜色模式参数, 当model未提供, 为提供的颜色名称; left_margin代表列内容左边界延伸宽度, 默认为\tabcolsep宽度; right_margin代表列内容右边界延伸宽度, 默认为left_margin内容. \columncolor只能用于tabular/array的aligns参数列表的>{}格式中. 包含在colortbl宏包中, 并依赖于xcolor宏包
 
-12.\columncolor[modle]{model-spec}[left_margin][right_margin]用于指定表格的列背景色, model为颜色模式, 列表: gray/rgb/cymk; model-spec用于指定颜色模式参数, 当model未提供, 为提供的颜色名称; left_margin代表列内容左边界延伸宽度, 默认为\tabcolsep宽度; right_margin代表列内容右边界延伸宽度, 默认为left_margin内容. \columncolor只能用于tabular/array的aligns参数列表的>{}格式中. 包含在colortbl宏包中, 并依赖于xcolor宏包
+12.\rawcolor[model]{model-spec}[left_margin][right_margin]参数与\columncolor一致, 用于指定表格的行背景色. 用于表格一行的起始位置. 包含在colortbl宏包中, 并依赖于xcolor宏包
 
-13.\rawcolor[model]{model-spec}[left_margin][right_margin]参数与\columncolor一致, 用于指定表格的行背景色. 用于表格一行的起始位置. 包含在colortbl宏包中, 并依赖于xcolor宏包
+13.\cellcolor[model]{model-spec}用于指定表格单元格的背景色. 包含在colortbl宏包中, 并依赖于xcolor宏包
 
-14.\cellcolor[model]{model-spec}用于指定表格单元格的背景色. 包含在colortbl宏包中, 并依赖于xcolor宏包
+14.tabular不可跨页
+
+15.tabular适用于math mode/paragraph mode/LR mode所有模式
+
+
+tabbing与tabular的不同点:
+1.tabbing只能用于paragraph mode; tabular可用于所有模式
+
+2.tabbing可以跨页; tabular不可跨页, 需借助table
+
+3.tabbing需设定列的锚点和跨列位置; tabular自动检测列的宽度
+
+4.tabbing从环境中间改变格式更为容易
 
 
 

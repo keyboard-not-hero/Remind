@@ -18,7 +18,8 @@
 \theoremstyle{empty}
 \newframedtheorem{law}{定律}
 \begin{document}
-一、线性方程组\\[1ex]
+\tableofcontents
+\section{一、线性方程组}
 线性方程:
 	\[ a_{1}x_{1}+a_{2}x_{2}+\cdots +a_{n}x_{n}=b \]
 其中, $b$与系数$a_{1}$,$a_{2}$,$\cdots$,$a_{n}$是实数或复数, 通常为已知数. n为任意正整数\\[2ex]
@@ -139,7 +140,7 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 \end{array}\right]\]
 \framebox{若两个线性方程组的增广矩阵是行等价的, 则它们具有相同的解集}\vspace{6ex}
 
-二、行化简与阶梯形矩阵\\[1ex]
+\section{二、行化简与阶梯形矩阵}
 非零行(列): 矩阵中至少包含一个非零元素的行(列)\\
 先导元素: 该行最左边的非零元素\\
 \begin{definition}
@@ -178,7 +179,7 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 4.写出简化阶梯形矩阵对应的方程组\\
 5.将每个非零方程改写为使用自由变量表示基本变量的形式\\[4ex]
 
-三、向量方程\\[1ex]
+\section{三、向量方程}
 列向量: 仅含一列的矩阵, 简称为向量. 如:
 \[u=\left[\begin{array}{c}
 	3\\
@@ -267,7 +268,7 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 的向量的集合, 其中$c_1$,$c_2$,$\cdots$,$c_p$为标量.\\[2ex]
 \end{definition}\vspace{4ex}
 
-四、矩阵方程$A\mathbf{x}=\mathbf{b}$\\[-2ex]
+\section{四、矩阵方程$A\mathbf{x}=\mathbf{b}$}
 \begin{definition}
 若$A$是$m\times n$矩阵, 它的各列为$\bm{a}_1$,$\cdots$,$\bm{a}_n$. 若$\bm{x}$是$\mathbb{R}^n$中的向量, 则\textbf{$A$与$\bm{x}$的积}(记为$A\bm{x}$)就是\textbf{$A$的各列以$\bm{x}$中对应元素为权的线性组合}, 即
 	\[A\bm{x}=[\bm{a}_1\ \bm{a}_2\ \cdots\ \bm{a}_n]\left[\begin{array}{c}x_1\\x_2\\\vdots\\x_n\end{array}\right]=x_1\bm{a}_1+x_2\bm{a}_2+\cdots+x_n\bm{a}_n\]
@@ -309,7 +310,7 @@ b. & $A(c\bm{u})=c(A\bm{u})$
 \end{tabular}
 \end{theorem}\vspace{6ex}
 
-五、线性方程组的解集\\[1ex]
+\section{五、线性方程组的解集}
 若线性方程组可写成
 \[A\bm{x}=\bm{0}\]
 的形式, 则称为\textbf{齐次线性方程组}. 其中, $A$是$m\times n$矩阵, $\bm{0}$是$\mathbb{R}^m$中的零向量.\\
@@ -367,12 +368,12 @@ $\\[1ex]
 4.把$\bm{x}$分解为向量(元素为常数)的线性组合, 用自由变量作为参数.
 \end{law}\vspace{4ex}
 
-六、线性方程组的应用:\\[1ex]
+\section{六、线性方程组的应用}
 1.经济学 - 部分的收支平衡\\
 2.化学式 - 等号两边原子守恒\\
 3.网络流 - 节点的进/出流量恒等\\[4ex]
 
-七、线性无关\\[-2ex]
+\section{七、线性无关}
 \begin{definition}
 $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线性无关}的, 若向量方程
 \[x_1\bm{v}_1+x_2\bm{v}_2+\cdots+x_p\bm{v}_p=\bm{0}\]
@@ -400,7 +401,7 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 若$\mathbb{R}^n$中向量组$S=\{\bm{v}_1,\cdots,\bm{v}_p\}$包含零向量, 则它线性相关.
 \end{theorem}\vspace{4ex}
 
-八、线性变换介绍\\[1ex]
+\section{八、线性变换介绍}
 由$\bm{x}$到$A\bm{x}$的对应是由一个向量集到另一个向量集的函数\\[2ex]
 
 \begin{definition}
@@ -418,7 +419,7 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 \[T(c\bm{u}+d\bm{v})=cT(\bm{u})+dT(\bm{v})\]
 \end{law}\vspace{6ex}
 
-九、线性变换的矩阵\\[-2ex]
+\section{九、线性变换的矩阵}
 \begin{theorem}
 设$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$为线性变换, 则存在唯一的矩阵$A$, 使得对$\mathbb{R}^n$中一切$\bm{x}$, 有
 \[T(\bm{x})=A\bm{x}\]
@@ -446,7 +447,7 @@ b. & $T$是一对一的, 当且仅当$A$的列线性无关.
 \end{tabular}
 \end{theorem}\vspace{6ex}
 
-十、商业、科学和工程中的线性模型\\[-2ex]
+\section{十、商业、科学和工程中的线性模型}
 \begin{law}[基尔霍夫电压定律]\ \\
 围绕一条回路同一方向的电压降$RI$的代数和等于围绕该回路的同一方向电动势的代数和.
 \end{law}\vspace{4ex}
