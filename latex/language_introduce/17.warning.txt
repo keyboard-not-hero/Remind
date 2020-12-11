@@ -18,9 +18,17 @@ l.174          \end{enumerae}
 错误案例
 1.warning: overfull \hbox
 diagnosis: 行内容超出该行正常容纳的字符数
+解决:
+	(1)使用-断词单个单词或\hyphenation{word1 word2 ...}指定单词的断词
+	(2)使用\begin{sloppypar}...\end{sloppypar}限定段落内的单词进行间隔调整, 或使用声明方式\sloppy
+	(3)使用\linebreak或\\或\newline进行强制换行
 
 2.warning: underfull \hbox
 diagnosis: 多行出现如下情况, 单词之间出现过多水平空白
+解决:
+	(1)使用~阻止指定位置断词
+	(2)使用\mbox阻止指定box内的内容进行断词
+	(3)使用\nolinebreak阻止指定位置进行换行
 
 3.warning: underfull \vbox
 diagnosis: 页面出现过多的垂直空白

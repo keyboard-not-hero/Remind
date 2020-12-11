@@ -1,27 +1,28 @@
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{amsmath}
-\usepackage{bm}
-\usepackage{parskip}
-\usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{framed}
-\usepackage[framed]{ntheorem}
-\theoremheaderfont{\normalfont\bfseries}
-\theorembodyfont{\slshape}
-\theoremseparator{\hspace{2ex}}
-\theoremindent2ex
-\theoremstyle{plain}
-\newtheorem{theorem}{定理}
-\theoremstyle{nonumberplain}
-\newtheorem{definition}{定义}
-\theoremstyle{empty}
-\newframedtheorem{law}{定律}
-\definecolor{lightgray}{gray}{0.7}
-\definecolor{gray}{gray}{0.5}
-\definecolor{white}{gray}{1}
-\begin{document}
-一、矩阵运算\\[1ex]
+% \documentclass[UTF8,fontset=ubuntu]{ctexart}
+% \usepackage{amsmath}
+% \usepackage{bm}
+% \usepackage{parskip}
+% \usepackage{amssymb}
+% \usepackage{xcolor}
+% \usepackage{colortbl}
+% \usepackage{framed}
+% \usepackage[framed]{ntheorem}
+% \theoremheaderfont{\normalfont\bfseries}
+% \theorembodyfont{\slshape}
+% \theoremseparator{\hspace{2ex}}
+% \theoremindent2ex
+% \theoremstyle{plain}
+% \newtheorem{theorem}{定理}
+% \theoremstyle{nonumberplain}
+% \newtheorem{definition}{定义}
+% \theoremstyle{empty}
+% \newframedtheorem{law}{定律}
+% \definecolor{lightgray}{gray}{0.7}
+% \definecolor{gray}{gray}{0.5}
+% \definecolor{white}{gray}{1}
+% \begin{document}
+\part{矩阵代数}
+\section{一、矩阵运算}
 $m\times n$矩阵$A=[a_{ij}]$的\textbf{对角线元素}是$a_{11}$,$a_{22}$,$a_{33}$,$\cdots$, 它们组成$A$的\textbf{主对角线}.\\[1ex]
 \textbf{对角矩阵}是一个方阵, 它的非对角线元素全是0. 例如$n\times n$单位矩阵$\bm{I}_n$.\\[1ex]
 元素全是0的$m\times n$矩阵称为\textbf{零矩阵}, 用$\bm{0}$表示.\\[1ex]
@@ -86,7 +87,7 @@ d. & $(AB)^T=B^TA^T$.
 若干个矩阵的乘积的转置等于它们的转置的乘积, 但相乘的顺序相反.
 \end{law}\vspace{8ex}
 
-二、矩阵的逆\\[1ex]
+\section{二、矩阵的逆}
 $A$为$n\times n$矩阵, 若存在一个$n\times n$矩阵$C$, 使得
 \[CA=\bm{I}_n\qquad\text{且}AC=\bm{I}_n\]
 则称$A$\textbf{可逆}, 并且$C$是$A$的\textbf{逆}.\\[2ex]
@@ -143,7 +144,7 @@ $n\times n$矩阵$A$是可逆的, 当且仅当$A$行等价于$I_n$, 这时, 把$
 把增广矩阵$[A\ I]$进行行化简. 若$A$行等价于$I$, 则$[A\ I]$行等价于$[I\ A^{-1}]$, 否则$A$没有逆.
 \end{law}\vspace{8ex}
 
-三、可逆矩阵的特征\\[-3ex]
+\section{三、可逆矩阵的特征}
 \begin{theorem}[可逆矩阵定理]
 设$A$为$n\times n$矩阵, 则下列命题是等价的, 即对某一特定的$A$, 它们同时为真或同时为假.\\
 \begin{tabular}{l@{\ }l}
@@ -173,7 +174,7 @@ l. & $A^T$是可逆矩阵.
 若一个$m\times n$矩阵的主对角线以下元素全为0, 则称之为\textbf{上三角矩阵}.\\[1ex]
 若一个$m\times n$矩阵的主对角线以上元素全为0, 则称之为\textbf{下三角矩阵}.\\[4ex]
 
-四、分块矩阵\\[1ex]
+\section{四、分块矩阵}
 形如
 \[A=\left[
 \begin{array}{r r r|r r|r}
@@ -249,7 +250,7 @@ row_n(B)
 \end{array}\]
 \end{theorem}\vspace{8ex}
 
-五、矩阵因式分解\\[1ex]
+\section{五、矩阵因式分解}
 设$A$是$m\times n$矩阵, 它可以行化简为阶梯形(化简步骤不包含对换变换), 则$A$可写成$A=LU$. 其中, $L$是$m\times m$下三角矩阵, 主对角线元素全是1; $U$是$A$的一个$m\times n$阶梯形矩阵.\\[2ex]
 
 \begin{law}[$LU$分解的算法]\ \\
@@ -304,7 +305,7 @@ A= & \left[\hspace{-1ex}\begin{array}{>{\columncolor{lightgray}[0pt]}r r r r}
 \end{array}\!\right] & =L
 \end{array}\]\\[4ex]
 
-六、列昂惕夫投入产出模型\\[-3ex]
+\section{六、列昂惕夫投入产出模型}
 \begin{law}[列昂惕夫投入产出模型或生产方程]\ \\
 \[\bm{x}=C\bm{x}+\bm{d}\]
 \end{law}\vspace{4ex}
@@ -316,7 +317,7 @@ A= & \left[\hspace{-1ex}\begin{array}{>{\columncolor{lightgray}[0pt]}r r r r}
 \[\bm{x}=C\bm{x}+d\]
 \end{theorem}\vspace{8ex}
 
-七、计算机图形学中的应用\\[1ex]
+\section{七、计算机图形学中的应用}
 物体的平移并不直接对应于矩阵乘法, 因为平移并非线性变换, 所以引入\textbf{齐次坐标}\\[1ex]
 $\mathbb{R}^2$中每个点$(x,y)$对应于$\mathbb{R}^3$中的点$(x,y,1)$, $(x,y,1)$为$(x,y)$的\textbf{齐次坐标}\\[1ex]
 $(x,y,1)\mapsto(x+h,y+k,1)$的平移变换实现:\\
@@ -340,4 +341,4 @@ $(x,y,z,1)$是$\mathbb{R}^3$中点$(x,y,z)$的齐次坐标. 若$H\neq 0$, 则$(X
 \[x=\frac{X}{H},y=\frac{Y}{H},z=\frac{Z}{H}\]\\[1ex]
 点$(x,y,z)$在$xy$平面上的透视投影坐标为$(\dfrac{x}{1-z/d}, \dfrac{y}{1-z/d}, 0)$. 其中, $d$为$z$轴观测位置$(0,0,d)$\\[2ex]
 绕$\mathbb{R}^2$中一点$p$的旋转是这样实现的: 首先把图形平移$-p$, 然后绕原点旋转, 最后平移$p$.
-\end{document}
+% \end{document}

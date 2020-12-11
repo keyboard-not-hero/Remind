@@ -29,66 +29,88 @@
 1.\bibliographystyle{plain}指定文献引用条目的显示内容, plain为其中一个类型, 列表如下:
 	plain - 文献引用列表根据title内容字母排序, 并使用数字编号
 	unsrt - 文献引用列表根据正文引用顺序排序, 并使用数字编号
-	alpha - 文献引用列表根据title内容字母排序, 并使用author+year组合方式进行编号
+	alpha - 文献引用列表根据title内容字母排序, 并使用author(lastname首字母组合)+year(后两位)组合方式进行编号
 	abbrv - 类似于plain, 但first name/month/journal为缩写形式
 
 
 2.\bibliography{sample} - 导入数据库条目文件, 该文件后缀必须为.bib, 并且可指定多个文件, 文件之间使用','分隔
 
-3.\nocite{label}在引用文献列表中显示, 但正文引用处不显示内容; 当label为'*'时, 文献列表中显示文献数据库中的所有item
+
+3.\nocite{label}在引用文献列表中显示, 但正文引用处不显示编号; 当label为'*'时, 文献列表中显示文献数据库中的所有item
+
 
 4.编译步骤: .tex --> .bbl --> .tex --> .tex
 
+
 database file(.bib)内容
-@article{how,
-	author = "Mortimer J.Adler",
-	title = "How to read a book",	
+@BOOK{how,
+    AUTHOR = "David R. Anderson and Dennis J. Sweeney and Thomas A. Williams",
+    TITLE = "How to Read a Book",
+    PUBLISHER = "Simon Schuster",
+    YEAR = "1940"
 }
 
+@BOOK{dream,
+    AUTHOR = "Mortimer J.Adler and Charles Van Doren",
+    TITLE = "Statitics for Business and Economics",
+    PUBLISHER = "South-Western College Pub",
+    YEAR = "2010",
+    EDITION = "11"
+}
+
+
 database内容剖析
-1.article代表文献类型, 并且不同文献类型都分别包含不同的required/optional/ignore键值对, 列表如下:
-	article - 杂志/文刊内的文章, required: author/title/journal/year, optional: volumn/number/pages/month/note, 余下为ignore
-	book - 出版图书, required: {author|editor}/title/publisher/year, optional: {volumn|number}/series/address/edition/month/note, 余下为ignore
-	booklet - 手册, required: title, optional: author/howpublished/address/month/year/note, 余下为ignore
-	manual - 技术文档, required: title, optional: author/organization/address/edition/month/year/note
-	
+1.ARTICLE代表文献类型, 类型列表如下:
+	article - 杂志/文刊内的文章, 引用类型列表:
+		required - author/title/journal/year
+		optional - volume/number/pages/month/note
+	book - 出版图书
+		required - {author|editor}/title/publisher/year
+		optional - {volume|number}/series/address/edition/month/note
+	booklet - 内部不公开文档
+		required - title
+		optional - author/howpublished/address/month/year/note
+	inbook - book的其中一个章节或指定范围页
+		required - {author|editor}/title/{chapter|pages}/publisher/year
+		optional - {volume|number}/series/type/address/edition/month/note
+	manual - 技术文档
+		required - title
+		optional - author/organization/address/edition/month/year/note	
+
 2.how代表引用标签, 用于在正文引用当前文献item
 
-3.key = value代表文献具体引用内容, 列表如下:
-	address - 出版社或机构地址
-	author - 作者, 格式: {first_name last_name}或{last_name, first_name}
-	editor - 编辑者
-	institution - 赞助机构名称
-	ISBN - 书号
-	journal - 期刊名称
-	month - 出版物发行日期或非出版物完成日期, 格式为jan/feb类似
-	note - 备注内容, 第一个单词首字母需大写
-	number - 杂志/期刊/技术报告的当前号码数
-	pages - 内容所在的页数范围, 格式为7或9--11类似
-	publisher - 出版社
-	title - 标题
-	volume - 杂志或书籍所处卷数
-	year - 出版年份
+3.key = value代表文献具体引用内容, 并使用','分隔entry.
+	entry类型如下:
+	required - 必须提供的key, 根据文献类型不同而不同
+	optional - 可选的key, 根据文献类型不同而不同
+	ignored - 未知的被忽略key, 根据文献类型不同而不同
 
+	key列表如下:
+	ADDRESS - 出版社或机构地址
+	AUTHOR - 作者
+	CHAPTER - 章节号
+	EDITION - 版本号
+	EDITOR - 编辑者, 格式类似于AUTHOR
+	HOWPUBLISHED - 发表过程
+	INSTITUTION - 主办/赞助机构名称
+	JOURNAL - 期刊名称
+	MONTH - 出版物发行月份或非出版物完成月份, 使用abbreviation格式
+	NOTE - 帮助理解的备注内容
+	NUMBER - 杂志/期刊/技术报告的当前号码数
+	PAGES - 内容所在的页数范围, 格式为7或9--11类似
+	PUBLISHER - 出版社名称
+	SERIES - 系列书籍的编号
+	TITLE - 标题
+	VOLUME - 杂志或书籍卷数号码
+	YEAR - 出版物发行年份或非出版物完成年份
 
+	value类型列表如下:
+		name - {first_name last_name}或{last_name, first_name}, 多个作者使用and分隔
+		title - 标题首字母/':'符号后字母需大写, {}限定的字母大小写固定
+		abbreviation - 引用已有的缩写组合, 该形式以字母为起始的字符串, 并且不包含空格或以下10个符号:
+			" # % ' ( ) , = { }
+			自定义缩写组合:
+				@string{jgg1="Journal of Gnats and Gnus, Series~1"}
+			** 自定义可以放置在任何位置, 但需要在引用位置之前
 
-三、Demo(示例)03 - index with LaTeX
-\documentclass{article}
-\usepackage{imakeidx}
-\makeindex
-\begin{document}
-    this is a\index{an} test file\\
-    \indent the test for index\index{index} of glossary
-	\printindex
-\end{document}
-
-内容讲解
-1.\makeindex生成.idx格式的索引文件, 位于preamble区域. 可使用可选参数定制, 列表如下:
-	tile - index列表的标题, 参数格式为key=value
-	columns - index列表的列数, 参数格式为key=value, value为整数
-	intoc - index标题位于目录中
-	columnsep - index列之间的分隔符, 参数为key=value, 如: columnsep=2em
-
-2.index{idx_name}对单词配置索引, idx_name为索引名称. 其在.idx中对应的item格式为\indexentry{idx_name}{page_num}
-
-3.\printindex显示index列表. 包含在imakeidx宏包中
+4.文献类型/引用名/entry key不在意大小写, 但引用名与\cite引用的需一致

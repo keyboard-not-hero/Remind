@@ -1,19 +1,20 @@
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{parskip}
-\usepackage{cancel}
-\usepackage{ntheorem}
-\theoremheaderfont{\normalfont\bfseries}
-\theorembodyfont{\slshape}
-\theoremseparator{\hspace{2ex}}
-\theoremindent2ex
-\theoremstyle{nonumberplain}
-\newtheorem{definition}{定义}
-\theoremstyle{plain}
-\newtheorem{theorem}{定理}
-\begin{document}
-一、行列式介绍\\[1ex]
+% \documentclass[UTF8, fontset=ubuntu]{ctexart}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{parskip}
+% \usepackage{cancel}
+% \usepackage{ntheorem}
+% \theoremheaderfont{\normalfont\bfseries}
+% \theorembodyfont{\slshape}
+% \theoremseparator{\hspace{2ex}}
+% \theoremindent2ex
+% \theoremstyle{nonumberplain}
+% \newtheorem{definition}{定义}
+% \theoremstyle{plain}
+% \newtheorem{theorem}{定理}
+% \begin{document}
+\part{行列式}
+\section{一、行列式介绍}
 有$3\times 3$矩阵$A$
 \[\left[\begin{array}{l l l}
 a_{11} & a_{12} & a_{13}\\
@@ -73,7 +74,7 @@ $n\times n$矩阵A的行列式可按任意行或列的余因子展开式来计�
 若A为三角阵, 则$\det A$等于A的主对角线上元素的乘积
 \end{theorem}\vspace{8ex}
 
-二、行列式的性质\\[-3ex]
+\section{二、行列式的性质}
 \begin{theorem}[行变换]\ \\
 令A是一个方阵.\\
 a.若A的某一行的倍数加到另一行得矩阵B, 则$\det B=\det A$\\
@@ -93,7 +94,7 @@ c.若A的某行乘以k倍得到矩阵B, 则$\det B=k\det A$
 若A和B均为$n\times n$矩阵, 则$\det AB=(\det A)(\det V)$
 \end{theorem}\vspace{8ex}
 
-三、克拉默法则、体积和线性变换\\[1ex]
+\section{三、克拉默法则、体积和线性变换}
 对任意$n\times n$矩阵A和任意的$\mathbb{R}^n$中向量b, 令$A_i(b)$表示A中第i列由向量$\mathbf{b}$替换得到的矩阵
 \[A_i(b)=[\mathbf{a}_1\hspace{1ex}\cdots\hspace{1ex}\mathbf{b}\hspace{1ex}\cdots\hspace{1ex}\mathbf{a}_n]\]\\[-1ex]
 
@@ -129,4 +130,4 @@ C_{1n} & C_{2n} & \cdots & C_{nn}
 若T是一个由$3\times 3$矩阵A确定的线性变换, 而S是$R^3$中的一个平行六面体, 则
 \[\{T(S)\text{的体积}\}=|\det A|\cdot\{\text{S的体积}\}\]
 \end{theorem}
-\end{document}
+% \end{document}

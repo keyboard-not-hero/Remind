@@ -7,7 +7,9 @@ log - 编译相关log信息
 toc - \tableofcontents目录相关信息
 lof - \listoffigures目录相关信息
 lot - \listoftables目录相关信息
-aux - bibliography相关内容
+bbl - BibTeX相关内容
+idx/ind - MakeIndex相关内容
+ilg - MakeIndex的错误信息
 
 
 

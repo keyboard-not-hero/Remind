@@ -1,4 +1,4 @@
-一、Demo(示例)01 - line break
+一、Demo(示例)01 - line-break hyphenate
 \documentclass{article}
 \hyphenation{acro-pym}
 \begin{document}
@@ -6,23 +6,25 @@
 \end{document}
 
 内容讲解
-1.-为当前建议断行点
+1.-为当前建议断行点, 用于临时单个断词
 
 2.\hyphenation{}为指定断行规则建议, 使用空格分隔多个单词断行规则. 适用于所有出现指定单词的位置
 
-3.\begin{sloppypar} ... \end{sloppypar}用于将出现断行问题的paragraph放入该环境, 可解决断行问题
+3.\begin{sloppypar} ... \end{sloppypar}用于将出现断行问题的paragraph放入该环境, 可解决断行问题. 或者使用声明形式\sloppy
 
-4.\breakline[intensity]在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制断行(默认). 断行之前的内容平铺到行
+4.\breakline[intensity]在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制断行(默认). 断行之前的内容调整间距铺满整行
 
-5.~阻止在当前位置断行
+5.\\或\newline也可用于强制断行, 不调整间距铺满整行
 
-6.\mbox{content}表示盒子内content为LR mode, 不能断行
+6.~阻止在当前位置断行
 
-7.\nobreakline[intensity]阻止在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制不断行(默认)
+7.\mbox{content}表示盒子内content为LR mode, 不能断行
+
+8.\nobreakline[intensity]阻止在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制不断行(默认)
 
 
 
-二、Demo(示例)02 - page break
+二、Demo(示例)02 - page-break hyphenate
 \documentclass{article}
 \begin{document}
 Alice was beginning to get very tired of sitting by her sister on the

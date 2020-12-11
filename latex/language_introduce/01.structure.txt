@@ -30,6 +30,8 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 	onecolumn|twocolumn - 指定一页分为单列或双列显示, 默认选项为onecolumn. 
 		可在preamble区域使用\columnsep调整twocolumn的间隔宽度, 如: \setlength{\columnsep}{2pt}. 
 		可在preamble区域使用\columnseprule调整twocolumn的分割线宽度, 如: \setlength{\columnseprule}{2pt}. 默认为0pt
+		\twocolumn用于启动新页, 并在新页使用双列模式
+		\onecolumn用于启动新页, 并在新页使用单列模式
 
 	notitlepage|titlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表\maketitle生成单独标题页, \begin{abstract} ... \end{abstract}生成单独摘要页, report/book文档类默认选项
 
@@ -40,7 +42,8 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 	fleqn - 公式左对齐, 包含统一缩进. 默认为居中对齐
 		可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
 
-doc_class - 类型列表: article/report/book/slides/letter, 路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls
+doc_class - 类型列表: article/report/book/slides/letter
+	模板路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls
 
 
 2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
@@ -119,32 +122,51 @@ report - [part] -> chapter -> section -> subsection...
 
 
 
-三、Demo(示例)03 - split input
-root file(root.tex):
+三、Demo(示例)03 - split document of input
+% root file(root.tex):
 \documentclass{article}
 \begin{document}
 	this is root file content\\
 	\input{aux}
 \end{document}
 
-auxiliary file(aux.tex):
+% auxiliary file(aux.tex):
 this is auxiliary file content
 
 内容讲解:
-1.\input{file_name}用于导入其他文件的全部内容(类似于将辅助文件的内容全部粘贴到根文件), file_name为辅助文件的名称(不带文件后缀, 默认为.tex). 特性:
-	不能包含preamble区域内容、\begin{document}和\end{document}
-	直接在当前页开始嵌入内容
-	可在辅助文件中再使用\input导入其他文件内容, 嵌套特性
+1.\input{file_name}用于导入其他文件的全部内容(类似于将辅助文件的内容全部粘贴到根文件), file_name为辅助文件的名称(不带文件后缀, 默认为.tex). aux文件特性:
+	(1)不能包含\documentclass{}、preamble区域内容、\begin{document}
+	(2)直接在当前页开始嵌入内容, 不适用新page
+	(3)可在辅助文件中再使用\input导入其他文件内容, 嵌套特性
 
-2.\include{file_name}类似于input, 特性:
-	不能包含preamble区域内容、\begin{document}和\end{document}
-	开启新page - 在新的一页中, 进行内容导入
-	不可在辅助文件中再使用\include导入其他文件, 但可以使用\input
-	联合includeonly - 联合preamble区域的\includeonly, 只有包含在\includeonly内的文件名, 能被导入
+2.\input常用语定义新指令或配置长度的集合
 
 
 
-四、Demo(示例)04 - page style
+四、Demo(示例)04 - split document of include
+% root file
+\documentclass{article}
+\begin{document}
+
+\end{document}
+
+% aux file
+
+内容讲解
+1.\include{file_name}类似于input, 特性:
+	(1)不能包含\documentclass{}、preamble区域内容、\begin{document}
+	(2)开启新page - 在新的一页中, 进行内容导入
+	(3)不可在辅助文件中再使用\include导入其他文件, 但可以使用\input. 即不可嵌套
+	(4)联合includeonly - 联合\includeonly, 只有包含在\includeonly内的文件名, 能被导入
+
+2.\includeonly{file1,file2,...}用于限定能被\include导入的文件列表. 规则如下:
+	(1)没有该指令时, 所有文件可被\include导入;
+	(2)file列表为空时, 所有文件不可被\include导入
+	(3)在preamble区域使用
+
+
+
+五、Demo(示例)05 - page style
 \documentclass{article}
 \begin{document}
 	\pagestyle{plain}
@@ -164,20 +186,18 @@ close by her.
 
 内容讲解
 1.\pagestyle{type}用于指定页面类型, 页面包含head/body/foot属性, type可选列表:
-	plain - head为空, foot属性包含页码
+	plain - head为空, foot包含页码. article/report文档类型的默认类型
 	empty - head和foot都为空
-	headings - head包含章/节信息和页码, foot为空. 可使用如下两个指令替换章节信息:
-		\markright{right_head} - 指定right_hand附加内容信息
-		\markboth{left_head}{right_head} - 指定left_hand和right_hand附加内容信息
+	headings - head包含章/节信息(信息由文档类型决定)和页码, foot为空. 可使用如下两个指令替换章节信息:
+	myheadings - 类似于headings, 但可指定head显示的信息. 可使用如下两个指令添加head附加信息:
+		\markright{right_head} - 用于oneside文档, 指定right_hand附加内容信息
+		\markboth{left_head}{right_head} - 用于twoside文档, 指定left_hand和right_hand附加内容信息
 		其中, 两个指令处于LR mode
-	myheadings - head包含页码, foot为空. 可使用如下两个指令添加head附加信息:
-		\markright{right_head} - 指定right_hand附加内容信息
-		\markboth{left_head}{right_head} - 指定left_hand和right_hand附加内容信息
-		其中, 两个指令处于LR mode
+
 2.\thispagestyle{type}语法与\pagestyle一致, 但只作用于当前页
 	
-3.\pagenumbering{num_style}用于指定页码格式, num_style指定格式, 列表如下:
-	arabic - 阿拉伯数字
+3.\pagenumbering{num_style}用于指定页码从当前页从1起始, num_style指定格式, 列表如下:
+	arabic - 阿拉伯数字, 默认
 	roman - 小写罗马数字
 	Roman - 大写罗马数字
 	alph - 小写字母
