@@ -133,7 +133,7 @@
 \end{document}
 
 内容讲解
-1.\raisebox{distance}{content}创建LR mode盒子, 用于将内容上升或下沉, distance为内容底部距离基准线的距离, 距离方向为从下向上
+1.\raisebox{distance}[extend-above][extend-below]{content}创建LR mode盒子, 用于将内容上升或下沉, distance为内容底部距离基准线的距离; extend-above与上一行底部的距离; extend-below为内容底部与下一行顶部的距离
 
 
 

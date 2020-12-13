@@ -1,0 +1,66 @@
+格式:
+! LaTeX Error: \begin{enumerate} on input line 167 ended by \end{enumerae}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.174          \end{enumerae}
+
+错误讲解
+1. LaTeX Error代表LaTeX错误
+\begin{enumerate} on input line 167 ended by \end{enumerae}代表具体的错误原因
+
+2.l.174代表出现错误的行数为174
+
+
+
+错误案例
+1.warning: overfull \hbox
+diagnosis: 行内容超出该行正常容纳的字符数或图片超出边界
+解决:
+	(1)使用-断词单个单词或\hyphenation{word1 word2 ...}指定单词的断词
+	(2)使用\begin{sloppypar}...\end{sloppypar}限定段落内的单词进行间隔调整, 或使用声明方式\sloppy
+	(3)使用\linebreak或\\或\newline进行强制换行
+	(4)将图片进行缩小
+
+2.warning: underfull \hbox
+diagnosis: 多行出现如下情况, 单词之间出现过多水平空白
+解决:
+	(1)使用~阻止指定位置断词
+	(2)使用\mbox阻止指定box内的内容进行断词
+	(3)使用\nolinebreak阻止指定位置进行换行
+
+3.warning: underfull \vbox
+diagnosis: 页面出现过多的垂直空白
+解决:
+	使用\nopagebreak不允许在指定位置换页
+
+4.warning: overfull \vbox
+diagnosis: 无法找到合适的位置进行page break, 导致当前页面的内容行过多
+解决:
+	使用\pagebreak或\newpage或\clearpage或\cleardoublepage进行主动换页
+
+5.warning: Bad math environment delimiter
+diagnosis: \[或\( math mode限定符没有出现匹配的关闭限定符; 或相反
+解决:
+	添加指定匹配的math mode限定符
+
+6.warning: \begin{} on input line ... ended by \end{}
+diagnosis: \end{}没有发现对应的\begin{}指定
+解决:
+	在合适位置添加对应的\begin{}或删除多余的\end{}
+
+7.warning: Can be used only in preamble
+diagnosis: 指定只能用于preamble区域
+解决:
+	将正文内的指令移动到preamble区域
+
+8.warning: Command ... already defined
+diagnosis: 当使用/newcommand、\newenvironment、\newlength、\newsavebox、\newtheorem、\newcounter定义内容时, 该内容已被定义
+解决:
+	在定义中使用新名称
+
+更多参考Leslie Lamport - A Document Preparation System第八章
+编辑于: 2020-12-14
+

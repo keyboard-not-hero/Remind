@@ -238,7 +238,7 @@ just newline
 内容讲解
 1.\textwidth指定page body的宽度, 配置方法: \setlength{\textwidth}{1cm}
 
-2.\textheight指定page body的高度, 配置方法: \setlength{\textheight}{1cm}
+2.\textheight指定page body的高度(不包含page head/page foot高度), 配置方法: \setlength{\textheight}{1cm}
 
 3.\parskip指定段落之间的间隔高度, 配置方法: \setlength{\parskip}{1cm}
 

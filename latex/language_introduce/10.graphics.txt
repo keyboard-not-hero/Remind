@@ -24,9 +24,11 @@ Hello World
 
 3.\resizebox{horizontal_size}{vertical_size}{content}将内容按指定长度进行拉伸/缩小, horizontal_size为水平拉伸尺寸; vertical_size为垂直拉伸尺寸. horizontal_size或vertical_size为!时, 根据另一个拉伸尺寸进行成比例拉伸
 
-4.\rotatebox{angle}{content}将内容按指定角度逆时针旋转, 旋转过程引用点(基准线与左侧想交点)高度不变. angle为旋转角度
+4.\scalebox与\resizebox处于LR mode, 并且前后的reference point自始至终没有改变
 
-5.\reflectbox{content}为内容的垂直镜像, 即以y轴为对称的镜像
+5.\rotatebox{angle}{content}将内容按指定角度逆时针旋转, 旋转过程引用点(基准线与左侧相交点)高度不变, angle为旋转角度. 该盒子处于LR mode
+
+6.\reflectbox{content}为内容的垂直镜像, 即以y轴为对称的镜像
 
 
 

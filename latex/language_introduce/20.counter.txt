@@ -1,0 +1,68 @@
+一、Demo(示例)01 - number
+\documentclass[titlepage]{article}
+\begin{document}
+\setcounter{footnote}{10}
+Because\footnote{...}
+\addtocounter{footnote}{-2}
+counters\footnote{...}are stepped before being used
+
+now footnote counter number is \thefootnote
+\end{document}
+
+内容讲解
+1.\setcounter{counter}{num}用于设置指定计数器counter的当前序列号为num
+
+2.\addtocounter{counter}{num}用于将指定计数器counter的序列号加上指定数字
+
+3.\the<counter>用于显示指定计数器当前的序号
+
+
+
+二、Demo(示例)02 - format
+\documentclass[titlepage]{article}
+\renewcommand{\thefootnote}{\Roman{footnote}}
+\begin{document}
+counters\footnote{...}are stepped before being used
+\end{document}
+
+内容讲解
+1.\renewcommand{\thefootnote}{\Roman{footnote}}用于指定当前计数器序号格式为Roman格式. 格式列表如下:
+	arabic - 阿拉伯数字
+	roman - 小写罗马数字
+	Roman - 大写罗马数字
+	alph - 小写英文字母
+	Alph - 大写英文字母
+
+	取消计数器显示: \renewcommand{\thesection}{}
+
+
+
+三、Demo(示例)03 - new counter
+\documentclass[titlepage]{article}
+\newcounter{fly}
+\begin{document}
+\setcounter{fly}{2}
+the new counter number is \thefly
+\end{document}
+
+内容讲解
+1.\newcounter{counter}用于生成新counter名, 并默认起始号为0, 格式为阿拉伯数字. 只能在preamble中使用
+
+2.已有计数器列表:
+	part - 部分计数器
+	chapter - 章计数器
+	section - 节计数器
+	subsection - 子节计数器
+	subsubsection - 二级子节计数器
+	paragraph - 段落计数器
+	subparagraph - 子段落计数器
+	page - 页计数器
+	equation - 公式计数器
+	figure - 图片计数器
+	table - 表格计数器
+	footnote - 脚注计数器
+	mpfootnote - minipage环境中的脚注计数器
+	enumi - enumerate主计数器
+	enumii - enumerate子计数器
+	enumiii - enumerate二级子计数器
+	enumiv - enumerate三级子计数器

@@ -170,7 +170,7 @@ Comment çava? Où se trouve l'aéroport?
 	scriptsize
 	footnotesize
 	small
-	normalsize
+	normalsize(默认大小)
 	large
 	Large
 	LARGE

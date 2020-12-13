@@ -12,7 +12,7 @@
 
 3.\begin{sloppypar} ... \end{sloppypar}用于将出现断行问题的paragraph放入该环境, 可解决断行问题. 或者使用声明形式\sloppy
 
-4.\breakline[intensity]在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制断行(默认). 断行之前的内容调整间距铺满整行
+4.\linebreak[intensity]在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制断行(默认). 断行之前的内容调整间距铺满整行
 
 5.\\或\newline也可用于强制断行, 不调整间距铺满整行
 
@@ -20,7 +20,7 @@
 
 7.\mbox{content}表示盒子内content为LR mode, 不能断行
 
-8.\nobreakline[intensity]阻止在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制不断行(默认)
+8.\nolinebreak[intensity]阻止在当前位置进行断行, intensity为建议强度, 范围为[0,4], 数字越大强度越高, 4为强制不断行(默认)
 
 
 
@@ -42,14 +42,15 @@ close by her.
 \end{document}
 
 内容讲解
-1.\pagebreak[intensity]在段落之间使用, 直接换新页, 增加之前的段落之间距离, 以垂直平铺内容到当前页面; 在段落之中使用, 在正常断行之后换新页, 增强之前的段落之间的距离. intensity代表强度, 范围为[0,4], 4代表强制换页(默认选项)
+1.\pagebreak[intensity]在段落之间使用, 直接换新页, 后续垂直空间留空; 在段落之中使用, 在当前行结束之后换新页, 剩余垂直空间留空. intensity代表强度, 范围为[0,4], 4代表强制换页(默认选项)
 
-2.\nopagebreak[intensity]不允许在该位置换页. intensity代表强度, 范围为[0,4], 4代表强制不允许换页(换页)
+2.\newpage直接在指定位置换页, 后续垂直空间留空, 当文档为twoclumn时, 开启新column
 
-3.\newpage直接在指定位置换页, 剩余位置留空白, 当文档为twoclumn时, 开启新column
+3.\clearpage类似于\newpage, 但当文档为twocolumn时, 开启新page
 
-4.\clearpage类似于\newpage, 但当文档为twocolumn时, 开启新page
+4.\cleardoublepage在twoside文档时, 在章节结尾使用, 可强制使下一章节起始于right-hand页. 其他情况下使用, 与newpage与clearpage类似
 
 5.多个\newpage和\clearpage与一个相同, 所以无法造成空白页, 需要在空白页使用\mbox{}来占位放置空内容, 然后再使用一次\newpage或\clearpage
 
-6.\cleardoublepage在twoside文档时, 在章节结尾使用, 可强制使下一章节起始于right-hand页. 其他情况下使用, 与newpage与clearpage类似
+6.\nopagebreak[intensity]不允许在该位置换页. intensity代表强度, 范围为[0,4], 4代表强制不允许换页(换页)
+

@@ -83,4 +83,12 @@ this is fifth paragraph
 
 2.\addtolength{\parindent}{0.5\parindent}用于添加0.5个原parindent长度到parindent上
 
-3.\settowidth{\parindent}{\em small}用于配置parindent长度，该长度与强调格式的'small'字符串长度一致
+3.\newlength{\cmd}配置一个新长度指令, 并且长度为0in
+
+4.\settowidth{\parindent}{\em small}用于配置parindent长度与指定文本长度一致, 该文本处于LR mode
+
+5.\settoheight, \settodepth与\settowidth类似, 但用于设置垂直高度指令, 使该指令高度与文本的height/depth一致. 相关概念如下:
+	reference point - 引用点, 位于字母t的左下方
+	base line - 基线, 穿过引用点的水平线
+	height - 基线到最高字母的顶部
+	depth - 基线到字母g的底部
