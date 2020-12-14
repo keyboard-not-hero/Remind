@@ -32,10 +32,12 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 		可在preamble区域使用\columnseprule调整twocolumn的分割线宽度, 如: \setlength{\columnseprule}{2pt}. 默认为0pt
 		\twocolumn用于启动新页, 并在新页使用双列模式
 		\onecolumn用于启动新页, 并在新页使用单列模式
+		\columnsep用于设置twocolumn模式下, column之间的水平宽度. 如: \setlength{\columnsep}{2cm}
+		\columnseprule用于设置twocolumn模式下, column之间的垂直分割线宽度(默认为0pt不可见), 如: \setlength{\columnseprule}{2ex}
 
 	notitlepage|titlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表\maketitle生成单独标题页, \begin{abstract} ... \end{abstract}生成单独摘要页, report/book文档类默认选项
 
-	openbib - 参考文件列表, 每一项的第二行开始进行缩进. 默认不缩进
+	openbib - 参考文献entry的author/title都各占一行. slides/letter文档类型无法使用该参数
 
 	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
 
@@ -86,14 +88,23 @@ this is abstract information
 目录 - \tableofcontents \listoffigures \listoftables
 
 内容结构
-	\part(in report/book)         level-1
+	article document class
 	\part(in article)             level0
+    \section                      level1
+	\subsection                   level2
+	\subsubsection                level3
+	\paragraph                    level4
+	\subparagraph                 level5
+
+	report/book document class
+	\part(in report/book)         level-1
 	\chapter(only report/book)    level0
     \section                      level1
 	\subsection                   level2
 	\subsubsection                level3
 	\paragraph                    level4
 	\subparagraph                 level5
+
 document类别对应的层级序列:
 article - [part] -> section -> subsection...
 report - [part] -> chapter -> section -> subsection...	
@@ -106,9 +117,11 @@ report - [part] -> chapter -> section -> subsection...
 
 3.\date{}为日期(可选), 可使用\today生成当前日期
 
-4.\maketitle为生成标题的指令，位于正文部分
+4.\thanks{}可用于给title/author/date内容作脚注
 
-5.\tableofcontents生成目录索引, 包含两个步骤:
+5.\maketitle为生成标题的指令，位于正文部分
+
+6.\tableofcontents生成目录索引, 包含两个步骤:
 	i. 生成.toc文件
 	ii.生成目标文件
 ** 可使用\usepackage{hyperref}, 使目录超链接到指定页码, 并确保该宏包最后导入
@@ -116,9 +129,19 @@ report - [part] -> chapter -> section -> subsection...
 	colorlinks=true - 链接边框模式修改为字体颜色模式
 	linkcolor=red - 修改链接字体颜色
 
-6.\begin{abstract} ... \end{abstract}为摘要信息环境
+7.\listoffigures生成entry依据为\begin{figure}...\end{figure}中的\caption内容, \listoftables类似
 
-7.\section用于标记小节起始位置, section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote
+8.\addcontentsline{file_extend}{sec_unit}{entry}用于给toc/lof/lot文件添加entry, file_extend为添加的entry文件后缀, 列表: toc/lof/lot; sec_unit代表添加的单元, toc有part/section/subsection等, lof为figure, lot为table; entry为entry内容, 可以为heading或\protect\numberline{sec_num}{heading}进行手动编号. 在toc/lof/lot中的位置依据上下如\section位置顺序
+
+9.\addtocontents{file_extend}{text}用于给toc/lof/lot文件添加文本(通常为垂直距离, 字符串文本无法添加), file_extend为添加的文本文件后缀; text为添加的文本内容, 如: \protect\addvspace{5ex}
+
+10.\begin{abstract} ... \end{abstract}为摘要信息环境
+
+11.\section[toc_entry]{heading}用于设置节的目录名称(toc_entry)和节名称(heading), section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote
+
+12.\section*{heading}为section的当前位置不参与编号版本, 并且不被目录toc收录
+
+13.fncychap宏包用于定制化chapter标题, 可选参数指定不同类型定制, 列表如下: Lenny/Sonny/Glenn/Conny/Rejne/Bjarne/Bjornstrup
 
 
 
@@ -147,10 +170,12 @@ this is auxiliary file content
 % root file
 \documentclass{article}
 \begin{document}
-
+this is first line
+\include{aux.tex}
 \end{document}
 
 % aux file
+this is second line
 
 内容讲解
 1.\include{file_name}类似于input, 特性:

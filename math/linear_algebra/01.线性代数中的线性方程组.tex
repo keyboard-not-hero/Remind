@@ -1,31 +1,4 @@
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{bm}
-\usepackage{cancel}
-\usepackage{colortbl}
-\usepackage{framed}
-\usepackage[framed]{ntheorem}
-\usepackage{parskip}
-\usepackage{pifont}
-\usepackage{tikz}
-\usepackage{xcolor}
-\theoremheaderfont{\normalfont\bfseries}
-\theorembodyfont{\slshape}
-\theoremseparator{\hspace{2ex}}
-\theoremindent2ex
-\theoremstyle{plain}
-\newtheorem{theorem}{定理}
-\theoremstyle{nonumberplain}
-\newtheorem{definition}{定义}
-\theoremstyle{empty}
-\newframedtheorem{law}{定律}
-\definecolor{lightgray}{gray}{0.7}
-\definecolor{gray}{gray}{0.5}
-\definecolor{white}{gray}{1}
-\renewcommand{\thesection}{}
-\begin{document}
-\part{线性代数中的线性方程组}
+\chapter{线性代数中的线性方程组}
 \section{一、线性方程组}
 线性方程:
 	\[ a_{1}x_{1}+a_{2}x_{2}+\cdots +a_{n}x_{n}=b \]
@@ -270,7 +243,7 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 \end{minipage}}\\[4ex]
 
 \begin{definition}
-若$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$是$\mathbb{R}^n$中的向量, 则$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$的所有线性组合所成的组合用记号Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}表示, 称为\textbf{$\text{由}\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_p\text{所生成的(\textmd{或}张成)}\mathbb{R}^n\text{的子集}$}. 也就是说, Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}是所有形如
+若$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$是$\mathbb{R}^n$中的向量, 则$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$的所有线性组合所成的组合用记号Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}表示, 称为\textbf{由}$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\textbf{所生成的}(或\textbf{张成})$\mathbb{R}^n$\textbf{的子集}. 也就是说, Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}是所有形如
 	\[c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p\]
 的向量的集合, 其中$c_1$,$c_2$,$\cdots$,$c_p$为标量.\\[2ex]
 \end{definition}\vspace{4ex}
@@ -464,6 +437,3 @@ b. & $T$是一对一的, 当且仅当$A$的列线性无关.
 \[\bm{x}_{k+1}=A\bm{x}_k\text{,\ }k=0,1,2,\cdots\]
 则称为\textbf{线性差分方程}(或\textbf{递归关系}).
 \end{law}
-\include{02.矩阵代数}
-\include{03.行列式}
-\end{document}

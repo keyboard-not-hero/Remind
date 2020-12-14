@@ -10,6 +10,8 @@ lot - \listoftables目录相关信息
 bbl - BibTeX相关内容
 idx/ind - MakeIndex相关内容
 ilg - MakeIndex的错误信息
+dvi - 输出内容文件
+aux - cross-reference文件
 
 
 
