@@ -148,8 +148,8 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 线性方程组相容的充要条件是增广矩阵的最右列不是主元列. 也就是说, 增广矩阵的阶梯形没有形如
 	\[[0\ \cdots\ 0\ b], b\neq 0\]
 的行. 若线性方程组相容, 则它的解集可能有两种情形:\\
-1)当没有自由变量时, 有唯一解;\\
-2)若至少有一个自由变量, 则有无穷多解.
+1）当没有自由变量时, 有唯一解;\\
+2）若至少有一个自由变量, 则有无穷多解.
 \end{theorem}\vspace{2ex}
 
 应用行化简算法解线性方程组:\\
@@ -243,14 +243,14 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 \end{minipage}}\\[4ex]
 
 \begin{definition}
-若$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$是$\mathbb{R}^n$中的向量, 则$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$的所有线性组合所成的组合用记号Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}表示, 称为\textbf{由}$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\textbf{所生成的}(或\textbf{张成})$\mathbb{R}^n$\textbf{的子集}. 也就是说, Span\{$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$\}是所有形如
+若$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$是$\mathbb{R}^n$中的向量, 则$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$的所有线性组合所成的组合用记号$\Span\{\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p\}$表示, 称为由$\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p$所\textbf{生成}（或\textbf{张成}）\textbf{的$\mathbb{R}^n$的子集}. 也就是说, $\Span\{\mathbf{v}_1$,$\mathbf{v}_2$,$\cdots$,$\mathbf{v}_p\}$是所有形如
 	\[c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p\]
 的向量的集合, 其中$c_1$,$c_2$,$\cdots$,$c_p$为标量.\\[2ex]
 \end{definition}\vspace{4ex}
 
 \section{四、矩阵方程$A\mathbf{x}=\mathbf{b}$}
 \begin{definition}
-若$A$是$m\times n$矩阵, 它的各列为$\bm{a}_1$,$\cdots$,$\bm{a}_n$. 若$\bm{x}$是$\mathbb{R}^n$中的向量, 则\textbf{$A$与$\bm{x}$的积}(记为$A\bm{x}$)就是\textbf{$A$的各列以$\bm{x}$中对应元素为权的线性组合}, 即
+若$A$是$m\times n$矩阵, 它的各列为$\bm{a}_1$,$\cdots$,$\bm{a}_n$. 若$\bm{x}$是$\mathbb{R}^n$中的向量, 则\textbf{$A$与$\bm{x}$的积}（记为$A\bm{x}$）就是\textbf{$A$的各列以$\bm{x}$中对应元素为权的线性组合}, 即
 	\[A\bm{x}=[\bm{a}_1\ \bm{a}_2\ \cdots\ \bm{a}_n]\left[\begin{array}{c}x_1\\x_2\\\vdots\\x_n\end{array}\right]=x_1\bm{a}_1+x_2\bm{a}_2+\cdots+x_n\bm{a}_n\]
 注意$A\bm{x}$仅当$A$的列数等于$\bm{x}$中的元素个数时才有意义.\\[2ex]
 \end{definition}
@@ -275,7 +275,7 @@ d. & $A$在每一行都有一个主元位置.\\[2ex]
 \end{tabular}
 \end{theorem}\vspace{2ex}
 
-\begin{law}[计算$A\bm{x}$的行--向量规则]\ \\
+\begin{law}[计算$A\bm{x}$的行---向量规则]\ \\
 若乘积$A\bm{x}$有定义, 则$A\bm{x}$中的第$i$个元素是$A$的第$i$行元素与$\bm{x}$的相应元素乘积之和.
 \end{law}\vspace{2ex}
 
@@ -345,7 +345,7 @@ $\\[1ex]
 1.把增广矩阵简化为简化阶梯形.\\
 2.把每个基本变量用自由变量表示.\\
 3.把一般解$\bm{x}$表示成向量, 如果有自由变量, 其元素依赖于自由变量.\\
-4.把$\bm{x}$分解为向量(元素为常数)的线性组合, 用自由变量作为参数.
+4.把$\bm{x}$分解为向量（元素为常数）的线性组合, 用自由变量作为参数.
 \end{law}\vspace{4ex}
 
 \section{六、线性方程组的应用}
@@ -355,9 +355,9 @@ $\\[1ex]
 
 \section{七、线性无关}
 \begin{definition}
-$\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线性无关}的, 若向量方程
+$\mathbb{R}^n$中一组向量$\{\bm{v}_1$,$\cdots$,$\bm{v}_p\}$称为\textbf{线性无关}的, 若向量方程
 \[x_1\bm{v}_1+x_2\bm{v}_2+\cdots+x_p\bm{v}_p=\bm{0}\]
-仅有平凡解. 向量组(集)\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线性相关}的, 若存在不全为零的权$c_1$,$\cdots$,$c_p$, 使
+仅有平凡解. 向量组（集）$\{\bm{v}_1$,$\cdots$,$\bm{v}_p\}$称为\textbf{线性相关}的, 若存在不全为零的权$c_1$,$\cdots$,$c_p$, 使
 \[c_1\bm{v}_1+c_2\bm{v}_2+\cdots+c_p\bm{v}_p=\bm{0}\]
 \end{definition}\vspace{2ex}
 
@@ -366,15 +366,15 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 \end{law}\vspace{2ex}
 
 \begin{law}
-两个向量的集合\{$\bm{v}_1$,$\bm{v}_2$\}线性相关, 当且仅当其中一个向量是另一个向量的倍数. 这个集合线性无关, 当且仅当其中任一个向量都不是另一个向量的倍数.
+两个向量的集合$\{\bm{v}_1$,$\bm{v}_2\}$线性相关, 当且仅当其中一个向量是另一个向量的倍数. 这个集合线性无关, 当且仅当其中任一个向量都不是另一个向量的倍数.
 \end{law}\vspace{4ex}
 
 \begin{theorem}[线性相关集的特征]
-两个或更多个向量的集合$S=\{\bm{v}_1,\cdots,\bm{v}_p\}$线性相关, 当且仅当S中至少有一个向量是其他向量的线性组合. 事实上, 若S线性相关, 且$\bm{v}_1\neq\bm{0}$, 则某个$\bm{v}_j$($j>1$)是它前面向量$\bm{v}_1$,$\cdots$,$\bm{v}_{j-1}$的线性组合.
+两个或更多个向量的集合$S=\{\bm{v}_1,\cdots,\bm{v}_p\}$线性相关, 当且仅当S中至少有一个向量是其他向量的线性组合. 事实上, 若S线性相关, 且$\bm{v}_1\neq\bm{0}$, 则某个$\bm{v}_j$$(j>1)$是它前面向量$\bm{v}_1$,$\cdots$,$\bm{v}_{j-1}$的线性组合.
 \end{theorem}\vspace{4ex}
 
 \begin{theorem}
-若一个向量组的向量个数超过每个向量的元素个数, 那么这个向量组线性相关. 就是说, $\mathbb{R}^n$中任意向量组\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}当$p>n$时线性相关.
+若一个向量组的向量个数超过每个向量的元素个数, 那么这个向量组线性相关. 就是说, $\mathbb{R}^n$中任意向量组$\{\bm{v}_1$,$\cdots$,$\bm{v}_p\}$当$p>n$时线性相关.
 \end{theorem}\vspace{4ex}
 
 \begin{theorem}
@@ -386,9 +386,9 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 
 \begin{definition}
 变换(或映射)$T$称为\textbf{线性}的, 若\\
-\begin{tabular}{l@{}c@{}l@{}l}
-( & i & ) & 对$T$的定义域中一切$\bm{u}$,$\bm{v}$,$T(\bm{u}+\bm{v})=T(\bm{u})+T(\bm{v})$.\\
-( & ii & ) & 对$T$的定义域中的一切$\bm{u}$和数$c$, $T(c\bm{u})=cT(\bm{u})$.
+\begin{tabular}{l@{}c@{}l@{\hspace{2pt}}l}
+$($ & i & $)$ & 对$T$的定义域中一切$\bm{u}$,$\bm{v}$,$T(\bm{u}+\bm{v})=T(\bm{u})+T(\bm{v})$.\\
+$($ & ii & $)$ & 对$T$的定义域中的一切$\bm{u}$和数$c$, $T(c\bm{u})=cT(\bm{u})$.
 \end{tabular}
 \end{definition}\vspace{4ex}
 
@@ -408,11 +408,11 @@ $\mathbb{R}^n$中一组向量\{$\bm{v}_1$,$\cdots$,$\bm{v}_p$\}称为\textbf{线
 \end{theorem}\vspace{4ex}
 
 \begin{definition}
-映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为到$\mathbb{R}^m$上的映射, 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至少一个$\bm{x}$的像.(也称为\textbf{满射}.)
+映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为到$\mathbb{R}^m$上的映射, 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至少一个$\bm{x}$的像（也称为\textbf{满射}）.
 \end{definition}\vspace{4ex}
 
 \begin{definition}
-映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为\textbf{一对一映射}(或1:1), 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至多一个$\bm{x}$的像.(也称为\text{单射}.)
+映射$T$:$\mathbb{R}^n\rightarrow\mathbb{R}^m$称为\textbf{一对一映射}（或1:1）, 若$\mathbb{R}^m$中每个$\bm{b}$是$\mathbb{R}^n$中至多一个$\bm{x}$的像（也称为\text{单射}）.
 \end{definition}\vspace{4ex}
 
 \begin{theorem}
@@ -435,5 +435,5 @@ b. & $T$是一对一的, 当且仅当$A$的列线性无关.
 \begin{law}
 如果有矩阵$A$使$\bm{x}_1=A\bm{x}_0$,$\bm{x}_2=A\bm{x}_1$, 一般地,
 \[\bm{x}_{k+1}=A\bm{x}_k\text{,\ }k=0,1,2,\cdots\]
-则称为\textbf{线性差分方程}(或\textbf{递归关系}).
+则称为\textbf{线性差分方程}（或\textbf{递归关系}）.
 \end{law}

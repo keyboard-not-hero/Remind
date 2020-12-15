@@ -21,10 +21,14 @@
 \newtheorem{definition}{定义}
 \theoremstyle{empty}
 \newframedtheorem{law}{定律}
-\definecolor{lightgray}{gray}{0.7}
-\definecolor{gray}{gray}{0.5}
+\definecolor{lightgray}{gray}{0.8}
+\definecolor{gray}{gray}{0.6}
 \definecolor{white}{gray}{1}
 \renewcommand{\thesection}{}
+\DeclareMathOperator{\Span}{Span}
+\newcolumntype{R}{>{$}w{r}{4.5mm}<{$}}
+\newcolumntype{B}{>{\columncolor{lightgray}[0pt]$}w{r}{4.5mm}<{$}}
+\newcolumntype{W}{>{\columncolor{white}[0pt]$}w{r}{4.5mm}<{$}}
 \begin{document}
 \include{01.线性代数中的线性方程组}
 \include{02.矩阵代数}
