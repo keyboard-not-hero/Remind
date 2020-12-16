@@ -59,9 +59,11 @@
 
 4.\text用于在math mode中输入paragraph mode格式文字. 包含在amsmath宏包中
 
-5.\abovedisplayshortskip用于设置行间公式与之前正文的垂直距离, 如: \setlength\abovedisplayshortskip{10pt}; \belowdisplayshortskip用于设置行间公式与之后正文的垂直距离。建议在preamble区使用
+5.\abovedisplayshortskip/\abovedisplayskip用于设置行间公式与之前正文的垂直距离, 如: \setlength\abovedisplayshortskip{10pt}; \belowdisplayshortskip/\belowdisplayskip用于设置行间公式与之后正文的垂直距离。建议在preamble区使用
 
-6.本示例所有环境为单行行间公式环境
+6.行间公式默认包含额外的缩进, 使用\mathindent进行设置(需配合\documentclass的fleqn可选项). 如: \setlength{\mathindent}{0pt}
+
+7.本示例所有环境为单行行间公式环境
 
 
 

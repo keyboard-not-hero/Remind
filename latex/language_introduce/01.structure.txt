@@ -41,8 +41,8 @@ arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不�
 
 	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
 
-	fleqn - 公式左对齐, 包含统一缩进. 默认为居中对齐
-		可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
+	fleqn - 行间公式左对齐, 包含统一缩进. 默认为居中对齐
+		默认行间公式还额外存在缩进, 可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
 
 doc_class - 类型列表: article/report/book/slides/letter
 	模板路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls

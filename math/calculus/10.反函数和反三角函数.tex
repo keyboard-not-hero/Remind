@@ -1,13 +1,4 @@
-\documentclass[UTF8, fontset=ubuntu]{ctexart}
-\usepackage{parskip}
-\usepackage{tikz}
-\usepackage{amssymb}
-\usetikzlibrary{datavisualization.formats.functions}
-\def\mytypesetter#1{%
-\pgfmathparse{#1/pi}%
-\pgfmathprintnumber{\pgfmathresult}$\pi$%
-}
-\begin{document}
+\chapter{反函数和反三角函数}
 1.导数与反函数\\
 如果$f$在其定义域$(a,b)$上可导且满足以下条件中的任意一条:\\
 (1)对于所有的在$(a,b)$中的$x$, $f'(x)>0$;\\
@@ -111,4 +102,3 @@ func x = 1/sin(\value y r);
 (2)对于所有的实数$x$, $\displaystyle\frac{d}{dx}\sinh^{-1}(x)=\frac{1}{\sqrt{x^2+1}}$.\\[1ex]
 (3)$\cosh^{-1}$既不是奇函数也不是偶函数; 其定义域是$[1,\infty)$且值域是$[0,\infty)$.\\[1ex]
 (4)对于$x>1$, $\displaystyle\frac{d}{dx}\cosh^{-1}(x)=\frac{1}{\sqrt{x^2-1}}$.\\[1ex]
-\end{document}

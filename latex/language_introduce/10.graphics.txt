@@ -35,8 +35,8 @@ Hello World
 二、Demo(示例)02 - import graphics
 \documentclass{article}
 \usepackage{graphicx}
-\begin{document}
 \graphicspath{{./pic/}}
+\begin{document}
 \includegraphics[scale=0.5, angle=45]{demo01.jpg}
 \end{document}
 

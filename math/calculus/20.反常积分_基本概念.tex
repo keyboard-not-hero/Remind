@@ -1,0 +1,28 @@
+\chapter{反常积分:基本概念}
+1.当$\int_a^bf(x)\dif x$出现以下情况, 称为反常积分:\\
+(1)函数$f$在$[a,b]$内是无界的(垂直渐近线)\\
+(2)$b=\infty$\\
+(3)$a=-\infty$\\[2ex]
+
+(1)函数在$[a,b]$内无界\\
+破裂点: 当函数$f$在$x=a$处有垂直渐近线时, $x=a$为其\textbf{破裂点}.\\[2ex]
+\framebox{\begin{minipage}{\textwidth}
+如果仅仅在$x$接近于$a$点该函数$f(x)$是无界的, 则定义
+\[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_{a+\varepsilon}^bf(x)\dif x\]
+\end{minipage}}\\
+如果上述极限存在, 则积分收敛, 否则积分发散\\
+例1.\\
+$\displaystyle\int_0^1\frac{1}{x}\dif x$\\
+推导过程:\\
+$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
+\int_0^1\frac{1}{x}\dif x & =\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{x}\dif x\\
+& =\lim_{\varepsilon\to 0^+}\ln|x|\big|_{\varepsilon}^1\\
+& =\lim_{\varepsilon\to 0^+}(\ln(1)-\ln(\varepsilon))\\
+& =\infty
+\end{array}$\\
+所以, 反常积分$\displaystyle\int_0^1\frac{1}{x}\dif x$发散\\[2ex]
+
+例2.\\
+$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$\\
+推导过程:\\
+
