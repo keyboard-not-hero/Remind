@@ -1,0 +1,204 @@
+\chapter{反常积分:如何解题}
+1.拆分积分步骤\\
+(1)确定区间$[a,b]$上的所有瑕点;\\
+(2)将积分拆分为若干个积分之和，使每个积分只包含一个瑕点，这些瑕点作为相应积分的上限或下限;\\
+(3)分别讨论每个积分，如果某一积分发散，则整个积分发散，如果每个积分都收敛，则整个积分收敛.\\[2ex]
+
+2.如何处理负函数值\\
+(1)如果被积函数$f(x)$在区间$[a,b]$上既有正值又有负值，考虑使用绝对收敛判别法\\
+例.\\
+$\displaystyle\int_1^{\infty}\frac{\sin(x)}{x^2}\dif x$\\
+推导过程:\\
+$\displaystyle\because|\frac{\sin(x)}{x^2}|\leqslant\frac{1}{x^2}$\\
+$\therefore$根据比较判别法:\\
+$\displaystyle\int_1^{\infty}\frac{|\sin(x)|}{x^2}\dif x\leqslant\int_1^{\infty}\frac{1}{x^2}\dif x$\\
+$\because$根据P判别法\\
+$\displaystyle\phantom{\because}\int_1^{\infty}\frac{1}{x^2}\dif x$收敛\\[1ex]
+$\displaystyle\therefore\int_1^{\infty}\frac{|\sin(x)|}{x^2}\dif x$收敛\\
+$\therefore$根据绝对收敛判别法\\
+$\displaystyle\phantom{\therefore}\int_1^{\infty}\frac{\sin(x)}{x^2}$收敛\\[2ex]
+
+(2)如果被积函数$f(x)$在区间$[a,b]$上恒为负，即在$[a,b]$上$f(x)\leqslant 0$，则:\\
+\[\int_a^bf(x)\dif x=-\int_a^b(-f(x))\dif x\]
+例.\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x$\\
+推导过程:\\
+$\because$在区间$[0,\frac{1}{2}]$上，$\ln(x)<0$\\
+$\displaystyle\therefore\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x=-\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln(x)|}\dif x$\\
+$\because$当$x\in(0,1)$时，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{\frac{1}{2}}}$(参考4.4, 位于第\pageref{integral:num_01}页)\\
+$\displaystyle\therefore\frac{1}{|\ln(x)|}\geqslant\frac{x^{\frac{1}{2}}}{C}$\\
+$\displaystyle\phantom{\therefore}\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln(x)|}\dif x\geqslant\frac{1}{C}\int_0^{\frac{1}{2}}\frac{1}{x^{\frac{3}{2}}}\dif x$\\
+$\because$根据P判别法\\
+$\displaystyle\phantom{\because}\int_0^{\frac{1}{2}}\frac{1}{x^{\frac{3}{2}}}\dif x=\infty$\\
+$\displaystyle\therefore\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x$发散\\[2ex]
+
+(3)如果被积函数$f(x)$在区间$[a,b]$上既有正值又有负值，但$f(x)$为震荡函数\\
+例.\\
+$\displaystyle\int_0^{\infty}\cos(x)\dif x$\\
+推导过程:\\
+$\displaystyle\int_0^{\infty}\cos(x)\dif x=\lim_{N\to\infty}\int_0^N\cos(x)\dif x=\lim_{N\to\infty}\sin(x)\Big|_0^N=\lim_{N\to\infty}(\sin(N)-0)=\lim_{N\to\infty}\sin(N)$\\
+所以，被积函数当前极限不存在，其发散\\[2ex]
+
+3.常见函数在$\infty$和$-\infty$附近的表现\\
+(1)多项式和多项式函数在$\infty$和$-\infty$附近的表现\\
+\begin{center}
+\framebox{若$P(x)$的最高次项是$ax^n$，则当$x\to\infty$或$x\to-\infty$时，有$P(x)\backsim ax^n$}
+\end{center}
+例1.\\
+$\displaystyle\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x$\\
+推导过程:\\
+$\because$在区间$[1,\infty)$上, $\infty$为$\displaystyle\frac{1}{2+20\sqrt{x}}$唯一瑕点\\
+\phantom{$because$}而$x\to\infty$时，$\displaystyle\frac{1}{2+20\sqrt{x}}\backsim\frac{1}{20\sqrt{x}}$\\
+$\displaystyle\therefore\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x=\int_1^{\infty}\frac{1}{20\sqrt{x}}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_1^{\infty}\frac{1}{20\sqrt{x}}\dif x$发散\\
+$\displaystyle\therefore\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x$发散\\[1ex]
+
+例2.\\
+$\displaystyle\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$\\
+推导过程:\\
+由于$\sqrt{x^4}$与$x^2$相消，所以:\\
+$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
+\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x & =\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\times\frac{\sqrt{x^4+8x^3-9}+x^2}{\sqrt{x^4+8x^3-9}+x^2}\dif x\\
+& =\int_9^{\infty}\frac{\sqrt{x^4+8x^3-9}+x^2}{8x^3-9}\dif x
+\end{array}$\\
+$\because$在区间$[9,\infty)$上，仅有$\infty$为瑕点\\
+\phantom{$\because$}而$\sqrt{x^4+8x^3-9}\backsim x^2$，$8x^3-9\backsim 8x^3$\\
+$\therefore\sqrt{x^4+8x^3-9}+x^2\backsim 2x^2$\\
+$\displaystyle\phantom{\therefore}\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x\backsim\int_9^{\infty}\frac{1}{4x}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_9^{\infty}\frac{1}{4x}\dif x$发散\\
+$\displaystyle\therefore\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$发散\\[2ex]
+
+(2)三角函数在$\infty$或$-\infty$附近的表现\\
+\begin{center}
+\framebox{$|\sin(A)|\leqslant 1$}
+\framebox{$|\cos(A)|\leqslant 1$}
+\end{center}
+例.\\
+$\displaystyle\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$\\
+推导过程:\\
+$\because$由比较判别法\\
+$\displaystyle\phantom{\because}\frac{|\sin(x^4)|}{\sqrt(x)+x^2}\leqslant\frac{1}{\sqrt{x}+x^2}$\\
+$\displaystyle\therefore\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x\leqslant\int_5^{\infty}\frac{1}{\sqrt{x}+x^2}\dif x$\\
+$\because$在$x\to\infty$时，$\displaystyle\frac{1}{\sqrt{x}+x^2}\backsim\frac{1}{x^2}$\\
+$\displaystyle\therefore\int_5^{\infty}\frac{1}{\sqrt{x}+x^2}\dif x=\int_5^{\infty}\frac{1}{x^2}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_5^{\infty}\frac{1}{x^2}\dif x$收敛\\
+$\displaystyle\therefore\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$收敛\\[2ex]
+
+(3)指数在$\infty$和$-\infty$附近表现\\
+\begin{center}
+\framebox{对所有的$x>0$，$e^{-x}\leqslant\frac{C}{x^n}$}
+\end{center}
+例1.\\
+$\displaystyle\int_1^{\infty}x^3e^{-x}\dif x$\\
+推导过程:\\
+$\displaystyle\int_1^{\infty}x^3e^{-x}\dif x\leqslant\int_1^{\infty}x^3\frac{C}{x^5}\dif x=C\int_1^{\infty}\frac{1}{x^2}\dif x<\infty$\\[1ex]
+
+例2.\\
+$\displaystyle\int_{10}^{\infty}(x^{1000}+x^2+\sin(x))e^{-x^2+6}\dif x$\\
+推导过程:\\
+$\because x\to\infty$时，$x^{1000}+x^2+\sin(x)\backsim x^{1000}$\\
+$\displaystyle\phantom{\because}e^{-x^2+6}\leqslant\frac{C}{x^{1002}}$\\
+$\displaystyle\therefore\int_{10}^{\infty}(x^{1000}+x^+\sin(x))e^{-x^2+6}\dif x\leqslant C\int_{10}^{\infty}\frac{1}{x^2}\dif x<\infty$\\[1ex]
+
+例3.\\
+$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x$\\
+推导过程:\\
+设$t=-x$，则$\dif t=-\dif x$，得:\\
+$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x=-\int_{\infty}^4(-t)^{1000}e^{-t}\dif t=\int_4^{\infty}t^{1000}e^{-t}\dif t$\\
+$\displaystyle\because e^{-t}\leqslant\frac{C}{t^{1002}}$\\
+$\displaystyle\therefore\int_{-\infty}^{-4}x^{1000}e^x\dif x=\int_4^{\infty}\frac{1}{t^2}\dif t$\\
+根据P判别法\\
+$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x<\infty$\\[2ex]
+
+(4)对数在$\infty$附近的表现\\
+\begin{center}
+\framebox{对所有$x>1$，$\ln(x)\leqslant Cx^{\alpha}$}
+\end{center}
+例1.\\
+$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$\\
+推导过程:\\
+$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x\leqslant\int_2^{\infty}\frac{Cx^{0.0005}}{x^{1.001}}\dif x=C\int_2^{\infty}\frac{1}{x^{1.0005}}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_2^{\infty}\frac{1}{x^{1.0005}}\dif x<\infty$\\
+$\displaystyle\therefore\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$收敛\\[1ex]
+
+例2.\\
+$\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x$\\
+推导过程:\\
+$\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x\geqslant\int_2^{\infty}\frac{1}{x^{1.001}\ln(2)}\dif x=\frac{1}{\ln(2)}\int_2^{\infty}\frac{1}{x^{1.001}}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\frac{1}{\ln(2)}\int_2^{\infty}\frac{1}{x^{1.001}}\dif x<\infty$\\
+$\displaystyle\therefore\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x$收敛\\[1ex]
+
+例3.\\
+$\displaystyle\int_2^{\infty}\dif x$\\
+推导过程:\\
+设$t=\ln(x)$，则$\dif t=\dfrac{1}{x}\dif x$，得:\\
+$\displaystyle\int_2^{\infty}\frac{1}{x\ln(x)}=\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t=\infty$\\
+$\displaystyle\therefore\int_2^{\infty}\frac{1}{x\ln(x)}\dif x$发散\\[4ex]
+
+4.常见函数在$0$附近的表现\\
+(1)多项式和多项式函数在$0$附近的表现\\
+\begin{center}
+\framebox{若$P(x)$的最低次项是$bx^m$，则当$x\to\infty$时，$P(x)\backsim bx^m$}
+\end{center}
+例.\\
+$\displaystyle\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$\\
+推导过程:\\
+$\because$当$x\to 0^+$时， $\displaystyle\frac{1}{x^2+\sqrt{x}}\backsim\frac{1}{\sqrt{x}}$\\
+\phantom{$\because$}由P判别法\\
+$\displaystyle\phantom{\because}\int_0^5\frac{1}{\sqrt{x}}\dif x<\infty$\\
+$\displaystyle\therefore\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$收敛\\[2ex]
+
+(2)三角函数在$0$附近的表现\\
+\begin{center}
+\framebox{当$x\to 0$，$\sin(x)\backsim x$，$\tan(x)\backsim x$且$\cos(x)\backsim 1$}
+\end{center}
+例1.\\
+$\displaystyle\int_0^1\frac{1}{\tan(x)}\dif x$\\
+推导过程:\\
+$\because$当$x\to 0$，$\tan(x)\backsim x$\\
+$\displaystyle\therefore\int_0^1\frac{1}{\tan(x)}\dif x=\int_0^1\frac{1}{x}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_0^1\frac{1}{\sqrt{x}}\dif x<\infty$\\
+$\displaystyle\therefore\int_0^1\frac{\sin(x)}{x^{\frac{3}{2}}}\dif x$收敛\\[2ex]
+
+(3)指数函数在$0$附近的表现\\
+\begin{center}
+\framebox{当$x\to 0$时，$e^x\backsim 1$和$e^x-1\backsim x$}
+\end{center}
+例1.\\
+$\displaystyle\int_0^1\frac{e^x}{x\cos(x)}\dif x$\\
+推导过程:\\
+$\because$当$x\to 0$时, $e^x\backsim 1$，$\cos(x)\backsim 1$\\
+$\displaystyle\therefore\int_0^1\frac{e^x}{x\cos(x)}\dif x=\int_0^1\frac{1}{x}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_0^1\frac{1}{x}\dif x=\infty$\\
+$\displaystyle\therefore\int_0^1\frac{e^x}{x\cos(x)}\dif x$发散\\[1ex]
+
+例2.\\
+$\displaystyle\int_0^2\frac{1}{\sqrt{e^x-1}}dif x$\\
+推导过程:\\
+$\because$当$x\to 0$时，$e^x-1\backsim x$\\
+$\displaystyle\therefore\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x=\int_0^2\frac{1}{\sqrt{x}}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_0^2\frac{1}{\sqrt{x}}\dif x<\infty$\\
+$\displaystyle\therefore\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x$收敛\\[2ex]
+
+(4)对数函数在$0$附近的表现\\
+\begin{center}
+\framebox{对于所有$0<x<1$，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{\alpha}}$\label{integral:num_01}}
+\end{center}
+例.\\
+$\displaystyle\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x$\\
+推导过程:\\
+$\because$当$0<x<1$时，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{0.05}}$\\
+$\displaystyle\therefore\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x=\int_0^1\frac{C}{x^{0.95}}\dif x$\\
+$\because$由P判别法\\
+$\displaystyle\phantom{\because}\int_0^1\frac{C}{x^{0.95}}\dif x<\infty$\\
+$\displaystyle\therefore\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x$收敛
