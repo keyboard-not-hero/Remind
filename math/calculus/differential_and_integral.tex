@@ -1,4 +1,4 @@
-\documentclass[UTF8, fontset=ubuntu, fleqn, oneside]{ctexbook}
+\documentclass[UTF8, fontset=ubuntu, oneside]{ctexbook}
 \usepackage{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -9,7 +9,6 @@
 \usepackage[framed]{ntheorem}
 \usepackage{framed}
 \usepackage[integrals]{wasysym}
-\setlength{\mathindent}{0pt}
 \usetikzlibrary{datavisualization.formats.functions}
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 \renewcommand{\theequation}{\roman{equation}}
@@ -22,7 +21,6 @@
 \pgfmathparse{#1/pi}%
 \pgfmathprintnumber{\pgfmathresult}$\pi$%
 }
-\includeonly{23.求解级数问题}
 \begin{document}
 \include{01.方法、图像和直线}
 \include{02.三角学回顾}
@@ -47,4 +45,7 @@
 \include{21.反常积分_如何解题}
 \include{22.数列和级数_基本概念}
 \include{23.求解级数问题}
+\include{24.泰勒多项式_泰勒级数_幂级数导论}
+\include{25.求解估算问题}
+\include{26.泰勒级数和幂级数_如何解题}
 \end{document}

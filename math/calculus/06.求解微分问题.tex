@@ -1,10 +1,10 @@
 \chapter{求解微分问题}
 1.使用定义求导\\
-\framebox{$\displaystyle\frac{d}{dx}(x)=1$}\\
+\framebox{$\displaystyle\frac{\dif}{\dif x}(x)=1$}\\
 证明:\\
 $\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{(x+h)-x}{h}=\lim_{h\to 0}\frac{h}{h}=1$\\[4ex]
 
-\framebox{$\displaystyle\frac{d}{dx}(\sqrt{x})=\frac{1}{2\sqrt{x}}$}\\
+\framebox{$\displaystyle\frac{\dif}{\dif x}(\sqrt{x})=\frac{1}{2\sqrt{x}}$}\\
 证明:\\
 \begin{math}
 \begin{array}{l}
@@ -13,7 +13,7 @@ $\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{(x+h)-x}{h}=
 \end{array}
 \end{math}\\[4ex]
 
-\framebox{$\displaystyle\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$}\\
+\framebox{$\displaystyle\frac{\dif}{\dif x}(\frac{1}{x})=-\frac{1}{x^2}$}\\
 证明:\\
 \begin{math}
 \begin{array}{l}
@@ -22,25 +22,25 @@ $\displaystyle\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to 0}\frac{(x+h)-x}{h}=
 \end{array}
 \end{math}\\[4ex]
 
-\framebox{$\displaystyle\frac{d}{dx}(x^a)=ax^{a-1}$}\\[4ex]
+\framebox{$\displaystyle\frac{\dif}{\dif x}(x^a)=ax^{a-1}$}\\[4ex]
 
 2.运算法则\\
 (1)常数倍\\
-$\displaystyle\frac{d}{dx}(Cx^a)=(Ca)x^{a-1}$\\[4ex]
+$\displaystyle\frac{\dif}{\dif x}(Cx^a)=(Ca)x^{a-1}$\\[4ex]
 (2)加/减法法则\\
-$\displaystyle\frac{d}{dx}(x^a+\sqrt{x})=\frac{d}{dx}(x^a)+\frac{d}{dx}(\sqrt{x})$\\[4ex]
+$\displaystyle\frac{\dif}{\dif x}(x^a+\sqrt{x})=\frac{\dif}{\dif x}(x^a)+\frac{\dif}{\dif x}(\sqrt{x})$\\[4ex]
 (3)乘积法则\\[-6ex]
 \begin{center}
 \framebox{\textbf{乘积法则(版本1)}\qquad 如果$h(x)=f(x)g(x)$, 那么$h'(x)=f'(x)g(x)+f(x)g'(x)$.}\\[2ex]
 \framebox{
 \begin{minipage}[c]{6cm}
 \textbf{乘积法则(版本2)}\quad 如果$y=uv$, 则
-\[\frac{dy}{dx}=v\frac{du}{dx}+u\frac{dv}{dx}\]
+\[\frac{\dif y}{\dif x}=v\frac{\dif u}{\dif x}+u\frac{\dif v}{\dif x}\]
 \end{minipage}}\\[4ex]
 \framebox{
 \begin{minipage}[c]{7cm}
 \textbf{乘积法则(三个变量)}\quad 如果$y=uvw$, 则
-\[\frac{dy}{dx}=\frac{du}{dx}vw+u\frac{dv}{dx}w+uv\frac{dw}{dx}\]
+\[\frac{\dif y}{\dif x}=\frac{\dif u}{\dif x}vw+u\frac{\dif v}{\dif x}w+uv\frac{\dif w}{\dif x}\]
 \end{minipage}}
 \end{center}\vspace{4ex}
 (4)商法则\\[-4ex]
@@ -53,7 +53,7 @@ $\displaystyle\frac{d}{dx}(x^a+\sqrt{x})=\frac{d}{dx}(x^a)+\frac{d}{dx}(\sqrt{x}
 \framebox{
 \begin{minipage}[c]{6cm}
 \textbf{商法则(版本2)}\quad 如果$y=\frac{u}{v}$, 那么
-\[\frac{dy}{dx}=\frac{v\frac{du}{dx}-u\frac{dv}{dx}}{v^2}\]
+\[\frac{\dif y}{\dif x}=\frac{v\frac{\dif u}{\dif x}-u\frac{\dif v}{\dif x}}{v^2}\]
 \end{minipage}}
 \end{center}\vspace{4ex}
 (5)链式求导法则\\[-6ex]
@@ -62,7 +62,7 @@ $\displaystyle\frac{d}{dx}(x^a+\sqrt{x})=\frac{d}{dx}(x^a)+\frac{d}{dx}(\sqrt{x}
 \framebox{
 \begin{minipage}[c]{12cm}
 \textbf{链式求导法则(版本2)}\quad 如果$y$是$u$的函数, 并且$u$是$x$的函数, 那么
-\[\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}\]
+\[\frac{\dif y}{\dif x}=\frac{\dif y}{\dif u}\frac{\dif u}{\dif x}\]
 \end{minipage}}
 \end{center}\vspace{4ex}
 

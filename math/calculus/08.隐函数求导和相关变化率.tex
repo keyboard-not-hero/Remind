@@ -3,26 +3,29 @@
 例.\\
 $x^2+y^2=4$\\[2ex]
 推导过程:\\
-设$u=y^2$, 则$\frac{du}{dx}=\frac{du}{dy}\frac{dy}{dx}=2y\frac{dy}{dx}$\\
+设$u=y^2$, 则:\\
+$\displaystyle\frac{\dif u}{\dif x}=\frac{\dif u}{\dif y}\frac{\dif y}{\dif x}=2y\frac{\dif y}{\dif x}$\\
 原函数两边对$x$求导:\\[1ex]
-$\displaystyle\frac{d}{dx}(x^2)+\frac{d}{dx}(y^2)=0\quad\Rightarrow\quad 2x+2y\frac{dy}{dx}=0\Rightarrow\frac{dy}{dx}=-\frac{x}{y}$\\[2ex]
+$\displaystyle\frac{\dif }{\dif x}(x^2)+\frac{\dif }{\dif x}(y^2)=0\quad\Rightarrow\quad 2x+2y\frac{\dif y}{\dif x}=0\Rightarrow\frac{\dif y}{\dif x}=-\frac{x}{y}$\\[2ex]
 
 2.隐函数求二阶导数\\
 例.\\
-$2y+\sin(y)=\frac{x^2}{\pi}+1$\\[2ex]
+$\displaystyle 2y+\sin(y)=\frac{x^2}{\pi}+1$\\[2ex]
 推导过程:\\
-设$u=\sin(y)$, 则$\frac{du}{dx}=\frac{du}{dy}\frac{dy}{dx}=\cos(y)\frac{dy}{dx}$\\
+设$u=\sin(y)$, 则:\\
+$\displaystyle\frac{\dif u}{\dif x}=\frac{\dif u}{\dif y}\frac{\dif y}{\dif x}=\cos(y)\frac{\dif y}{\dif x}$\\
 原函数两边对$x$求导:\\[1ex]
-$\displaystyle 2\frac{dy}{dx}+\cos(y)\frac{dy}{dx}=\frac{2x}{\pi}\quad\Rightarrow\quad\frac{dy}{dx}=\frac{2x}{\pi(2+\cos(y))}$\\[1ex]
+$\displaystyle 2\frac{\dif y}{\dif x}+\cos(y)\frac{\dif y}{\dif x}=\frac{2x}{\pi}\quad\Rightarrow\quad\frac{\dif y}{\dif x}=\frac{2x}{\pi(2+\cos(y))}$\\[1ex]
 两边再次对$x$求导:\\[1ex]
-$\displaystyle 2\frac{d^2y}{dx^2}+\frac{d}{dx}(\cos(y)\frac{dy}{dx})=\frac{2}{\pi}\quad\Rightarrow\quad 2\frac{d^2y}{dx^2}-\sin(y)(\frac{dy}{dx})^2+\cos(y)\frac{d^2y}{dx^2}=\frac{2}{\pi}\quad\Rightarrow$\\
-$\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}-\sin(y)(\frac{dy}{dx})^2=\frac{2}{\pi}$\\[1ex]
-将$\frac{dy}{dx}=\frac{2x}{\pi(2+\cos(y))}$带入结果:\\[1ex]
-$\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}=\frac{2}{\pi}+\sin(y)(\frac{2x}{\pi(2+\cos(y))})^2\quad\Rightarrow\quad\frac{d^2y}{dx^2}=\frac{2}{\pi(2+\cos(y))}+\sin(y)\cdot\frac{4x^2}{\pi^2(2+\cos(y))^3}$\\[2ex]
+$\displaystyle 2\frac{\dif ^2y}{\dif x^2}+\frac{\dif }{\dif x}\left(\cos(y)\frac{\dif y}{\dif x}\right)=\frac{2}{\pi}\quad\Rightarrow\quad 2\frac{\dif ^2y}{\dif x^2}-\sin(y)\left(\frac{\dif y}{\dif x}\right)^2+\cos(y)\frac{\dif ^2y}{\dif x^2}=\frac{2}{\pi}$\\
+$\Rightarrow\displaystyle (2+\cos(y))\frac{\dif ^2y}{\dif x^2}-\sin(y)(\frac{\dif y}{\dif x})^2=\frac{2}{\pi}$\\[1ex]
+将$\displaystyle\frac{\dif y}{\dif x}=\frac{2x}{\pi(2+\cos(y))}$带入结果:\\[1ex]
+$\displaystyle (2+\cos(y))\frac{\dif ^2y}{\dif x^2}=\frac{2}{\pi}+\sin(y)\left(\frac{2x}{\pi(2+\cos(y))}\right)^2$\\
+$\displaystyle\Rightarrow\quad\frac{\dif ^2y}{\dif x^2}=\frac{2}{\pi(2+\cos(y))}+\sin(y)\cdot\frac{4x^2}{\pi^2(2+\cos(y))^3}$\\[2ex]
 
 3.相关变化率\\[-3ex]
 \begin{center}
-\framebox{如果$Q$是某个量, 那么$Q$的变化率是$\displaystyle\frac{dQ}{dt}$}\\
+\framebox{如果$Q$是某个量, 那么$Q$的变化率是$\displaystyle\frac{\dif Q}{\dif t}$}\\
 \end{center}\vspace{-1ex}
 \begin{center}
 \framebox{
@@ -49,14 +52,14 @@ $\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}=\frac{2}{\pi}+\sin(y)(\frac{2x}{\pi(
 \end{center}
 方程对时间t进行隐式求导:
 \begin{equation}
-\displaystyle\frac{dV}{dt}=4\pi r^2\frac{dr}{dx}\label{eq:circle}
+\displaystyle\frac{\dif V}{\dif t}=4\pi r^2\frac{\dif r}{\dif x}\label{eq:circle}
 \end{equation}
-(1)将$r=2$和$\frac{dV}{dt}=12\pi$代入公式\eqref{eq:circle}, 得:\\[1ex]
-\phantom{(1)}$\displaystyle 4\pi\times 2^2\frac{dr}{dx}=12\pi\quad\Rightarrow\quad\frac{dr}{dx}=\frac{3}{4}$\\[1ex]
+(1)将$r=2$和$\frac{\dif V}{\dif t}=12\pi$代入公式\eqref{eq:circle}, 得:\\[1ex]
+\phantom{(1)}$\displaystyle 4\pi\times 2^2\frac{\dif r}{\dif x}=12\pi\quad\Rightarrow\quad\frac{\dif r}{\dif x}=\frac{3}{4}$\\[1ex]
 (2)根据球体体积公式, 得:\\[1ex]
 \phantom{(2)}$\displaystyle\frac{4}{3}\pi r^3=36\pi\quad\Rightarrow\quad r=3$\\[1ex]
-\phantom{(2)}将$r=3$和$\frac{dv}{dt}=12\pi$代入公式\eqref{eq:circle}, 得:\\[1ex]
-\phantom{(2)}$\displaystyle 4\pi\times 3^2\frac{dr}{dx}=12\pi\quad\Rightarrow\quad\frac{dr}{dx}=\frac{1}{3}$\\[2ex]
+\phantom{(2)}将$r=3$和$\frac{\dif v}{\dif t}=12\pi$代入公式\eqref{eq:circle}, 得:\\[1ex]
+\phantom{(2)}$\displaystyle 4\pi\times 3^2\frac{\dif r}{\dif x}=12\pi\quad\Rightarrow\quad\frac{\dif r}{\dif x}=\frac{1}{3}$\\[2ex]
 
 例2.\\
 假设有两辆汽车A和B. 汽车A在一条路上径直向北行驶远离你家, 而汽车B在另一条路上径直向西行驶接近你家. 汽车A以55英里/小时的速度行驶, 而汽车B以45英里/小时的速度行驶. 当A到达你家北面21英里, 而B到达你家东面28英里时, 两辆汽车间的距离的变化率是多少?
@@ -101,14 +104,14 @@ $\displaystyle (2+\cos(y))\frac{d^2y}{dx^2}=\frac{2}{\pi}+\sin(y)(\frac{2x}{\pi(
 \[a^2+b^2=c^2\]
 对时间t作隐函数求导:\\
 \begin{equation}
-2a\frac{da}{dt}+2b\frac{db}{dt}=2c\frac{dc}{dt}\label{eq:car}
+2a\frac{\dif a}{\dif t}+2b\frac{\dif b}{\dif t}=2c\frac{\dif c}{\dif t}\label{eq:car}
 \end{equation}
 由于A在远离H, 所以距离随着时间增加:\\[1ex]
-$\displaystyle\frac{da}{dt}=55$\\[1ex]
+$\displaystyle\frac{\dif a}{\dif t}=55$\\[1ex]
 而B在靠近H, 所以距离随着时间减少:\\[1ex]
-$\displaystyle\frac{db}{dt}=-45$\\[1ex]
+$\displaystyle\frac{\dif b}{\dif t}=-45$\\[1ex]
 将结果带入公式\eqref{eq:car}, 得:\\[1ex]
-$\displaystyle\frac{dc}{dt}=-3$\\[2ex]
+$\displaystyle\frac{\dif c}{\dif t}=-3$\\[2ex]
 
 例3.\\
 有一个奇怪的巨大的圆锥形水罐(锥尖在下方), 圆锥的高是圆锥半径的两倍. 如果水是以$8\pi$立方英尺/秒的速率注入水罐, 求:\\
@@ -134,13 +137,13 @@ $\displaystyle\frac{dc}{dt}=-3$\\[2ex]
 (1)将$V=18\pi$, $r=\frac{h}{2}$代入体积公式, 得:\\[1ex]
 \phantom{(1)}$\displaystyle\frac{1}{12}\pi h^3=18\pi\quad\Rightarrow\quad h=6$\\[1ex]
 \phantom{(1)}将$r=\frac{h}{2}$代入体积公式, 并对结果两边关于时间t隐式求导, 得:\\[1ex]
-\phantom{(1)}$\displaystyle\frac{dV}{dt}=\frac{\pi h^2}{4}\frac{dh}{dt}\quad\Rightarrow\quad 8\pi=9\pi\frac{dh}{dt}\quad\Rightarrow\quad\frac{dh}{dt}=\frac{8}{9}$\\[1ex]
+\phantom{(1)}$\displaystyle\frac{\dif V}{\dif t}=\frac{\pi h^2}{4}\frac{\dif h}{\dif t}\quad\Rightarrow\quad 8\pi=9\pi\frac{\dif h}{\dif t}\quad\Rightarrow\quad\frac{\dif h}{\dif t}=\frac{8}{9}$\\[1ex]
 (2)根据(1)得:\\
 \phantom{(2)}$h=6$\\
 \phantom{(2)}在当前秒, 水罐以$8\pi$立方英尺/秒注入水, 并以$18\pi$立方英尺/秒流出水, 所以:\\[1ex]
-\phantom{(2)}$\displaystyle\frac{dV}{dt}=8\pi-18\pi=-10\pi$\\[1ex]
+\phantom{(2)}$\displaystyle\frac{\dif V}{\dif t}=8\pi-18\pi=-10\pi$\\[1ex]
 \phantom{(2)}将$r=\frac{h}{2}$代入体积公式, 并对结果两边关于时间t隐式求导, 得:\\[1ex]
-\phantom{(2)}$\displaystyle\frac{dV}{dt}=\frac{\pi h^2}{4}\frac{dh}{dt}\quad\Rightarrow\quad -10\pi=9\pi\frac{dh}{dt}\quad\Rightarrow\quad\frac{dh}{dt}=-\frac{10}{9}$\\[2ex]
+\phantom{(2)}$\displaystyle\frac{\dif V}{\dif t}=\frac{\pi h^2}{4}\frac{\dif h}{\dif t}\quad\Rightarrow\quad -10\pi=9\pi\frac{\dif h}{\dif t}\quad\Rightarrow\quad\frac{\dif h}{\dif t}=-\frac{10}{9}$\\[2ex]
 
 例4.\\
 有一架飞机保持在$2000$英尺的高度远离你朝正东方向飞行. 飞机以$500$英尺每秒的常数速率飞行. 同时, 不久之前有一个跳伞员从直升飞机(它已经飞走了)上跳下来. 跳伞员在你东边$1000$英尺处上空垂直地以$10$英尺每秒的常数速率向下飘落, 跳伞员相对于你的方位角与飞机相对于你的方位角之差被标记为$\theta$. 求当飞机和跳伞员在同一高度, 但飞机在你东边$8000$英尺时, 角$\theta$的变化率是多少?\\
@@ -211,10 +214,10 @@ $\displaystyle\frac{dc}{dt}=-3$\\[2ex]
 \theta=\beta-\alpha\label{change_ratio:3}
 \end{gather}
 公式\eqref{change_ratio:1}两边对时间t进行隐式求导:\\[1ex]
-$\displaystyle\sec^2(\alpha)\frac{d\alpha}{dt}=-\frac{2000}{p^2}\frac{dp}{dt}\quad\Rightarrow\quad(\tan^2(\alpha)+1)\frac{d\alpha}{dt}=-\frac{2000}{8000^2}\frac{dp}{dt}\quad\Rightarrow$\\[1ex]
-$\displaystyle\frac{d\alpha}{dt}=-\frac{1}{32000}\times 500\times\frac{16}{17}\quad\Rightarrow\quad\frac{d\alpha}{dt}=-\frac{1}{68}$\\[1ex]
+$\displaystyle\sec^2(\alpha)\frac{\dif \alpha}{\dif t}=-\frac{2000}{p^2}\frac{\dif p}{\dif t}\quad\Rightarrow\quad(\tan^2(\alpha)+1)\frac{\dif \alpha}{\dif t}=-\frac{2000}{8000^2}\frac{\dif p}{\dif t}\quad\Rightarrow$\\[1ex]
+$\displaystyle\frac{\dif \alpha}{\dif t}=-\frac{1}{32000}\times 500\times\frac{16}{17}\quad\Rightarrow\quad\frac{\dif \alpha}{\dif t}=-\frac{1}{68}$\\[1ex]
 公式\eqref{change_ratio:2}两边对时间t进行隐式求导:\\[1ex]
-$\displaystyle\sec^2(\beta)\frac{d\beta}{dt}=\frac{1}{1000}\frac{dh}{dt}\quad\Rightarrow\quad(\tan^2(\beta)+1)\frac{d\beta}{dt}=-\frac{1}{100}\quad\Rightarrow$\\[1ex]
-$\displaystyle\frac{d\beta}{dt}=-\frac{1}{100}\times\frac{1}{5}\quad\Rightarrow\quad\frac{d\beta}{dt}=-\frac{1}{500}$\\[1ex]
+$\displaystyle\sec^2(\beta)\frac{\dif \beta}{\dif t}=\frac{1}{1000}\frac{\dif h}{\dif t}\quad\Rightarrow\quad(\tan^2(\beta)+1)\frac{\dif \beta}{\dif t}=-\frac{1}{100}\quad\Rightarrow$\\[1ex]
+$\displaystyle\frac{\dif \beta}{\dif t}=-\frac{1}{100}\times\frac{1}{5}\quad\Rightarrow\quad\frac{\dif \beta}{\dif t}=-\frac{1}{500}$\\[1ex]
 公式\eqref{change_ratio:3}两边对时间t进行隐式求导:\\[1ex]
-$\displaystyle\frac{d\theta}{dt}=\frac{d\beta}{dt}-\frac{d\alpha}{dt}=-\frac{1}{500}+\frac{1}{68}=\frac{-17+125}{8500}=\frac{27}{2125}$\\[1ex]
+$\displaystyle\frac{\dif \theta}{\dif t}=\frac{\dif \beta}{\dif t}-\frac{\dif \alpha}{\dif t}=-\frac{1}{500}+\frac{1}{68}=\frac{-17+125}{8500}=\frac{27}{2125}$\\[1ex]

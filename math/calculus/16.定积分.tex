@@ -1,6 +1,6 @@
 \chapter{定积分}
 1.公式
-\[\int_a^bf(x)dx\]
+\[\int_a^bf(x)\dif x\]
 为\textbf{定积分}, 表示``函数$f(x)$对于$x$从$a$到$b$的积分''.\\
 $f(x)$为\textbf{被积函数}.\\
 $a$和$b$为\textbf{积分极限}, 也称为\textbf{积分端点}.\\
@@ -8,46 +8,46 @@ $a$和$b$为\textbf{积分极限}, 也称为\textbf{积分端点}.\\
 2.有向面积积分:\\[1ex]
 \framebox{
 \begin{minipage}{\linewidth}
-$\int_a^bf(x)dx$是由曲线$y=f(x)$, 两条垂线$x=a$和$x=b$, 以及$x$轴所围成的有向面积(平方单位).
+$\int_a^bf(x)\dif x$是由曲线$y=f(x)$, 两条垂线$x=a$和$x=b$, 以及$x$轴所围成的有向面积(平方单位).
 \end{minipage}}\vspace{4ex}
 
 3.定积分公式:\\
 \begin{center}
-\framebox{$\displaystyle\int_b^af(x)dx=-\int_a^bf(x)dx$.}\\[2ex]
-\framebox{$\displaystyle\int_a^af(x)dx=0$.}\\[2ex]
-\framebox{$\displaystyle\int_a^bf(x)dx=\int_a^cf(x)dx+\int_c^bf(x)dx$.}\\[2ex]
-\framebox{$\displaystyle\int_a^bCf(x)dx=C\int_a^bf(x)dx$.}\\[2ex]
-\framebox{$\displaystyle\int_a^b(f(x)+g(x))dx=\int_a^bf(x)dx+\int_a^bg(x)dx$.}\\
+\framebox{$\displaystyle\int_b^af(x)\dif x=-\int_a^bf(x)\dif x$.}\\[2ex]
+\framebox{$\displaystyle\int_a^af(x)\dif x=0$.}\\[2ex]
+\framebox{$\displaystyle\int_a^bf(x)\dif x=\int_a^cf(x)\dif x+\int_c^bf(x)\dif x$.}\\[2ex]
+\framebox{$\displaystyle\int_a^bCf(x)\dif x=C\int_a^bf(x)\dif x$.}\\[2ex]
+\framebox{$\displaystyle\int_a^b(f(x)+g(x))\dif x=\int_a^bf(x)dx+\int_a^bg(x)\dif x$.}\\
 \end{center}\vspace{4ex}
 
 4.两条曲线之间的面积:\\[1ex]
-\framebox{在函数$f$和$g$之间的面积(平方单位)$\displaystyle =\int_a^b|f(x)-g(x)|dx$.}\\[2ex]
+\framebox{在函数$f$和$g$之间的面积(平方单位)$\displaystyle =\int_a^b|f(x)-g(x)|\dif x$.}\\[2ex]
 
 5.曲线与$y$轴围成的面积:\\[1ex]
 \framebox{
 \begin{minipage}{\linewidth}
-如果$f$存在反函数, $\displaystyle\int_A^Bf^{-1}(y)dy$就是由函数$y=f(x)$、直线$y=A$和$y=B$以及$y$轴所围成的面积(平方单位).
+如果$f$存在反函数, $\displaystyle\int_A^Bf^{-1}(y)\dif y$就是由函数$y=f(x)$、直线$y=A$和$y=B$以及$y$轴所围成的面积(平方单位).
 \end{minipage}}\vspace{4ex}
 
 6.积分比较:\\[1ex]
 \framebox{
 \begin{minipage}{\linewidth}
 如果对于在区间$[a,b]$内的所有$x$都有$f(x)\leqslant g(x)$, 那么就有
-\[\int_a^bf(x)dx\leqslant\int_a^bg(x)dx.\]
+\[\int_a^bf(x)\dif x\leqslant\int_a^bg(x)\dif x.\]
 \end{minipage}}\vspace{4ex}
 
 7.简单估算:\\[1ex]
 \framebox{
 \begin{minipage}{\linewidth}
 如果对于在$[a,b]$区间内的所有$x$有$m\leqslant f(x)\leqslant M$, 那么
-\[m(b-a)\leqslant\int_a^bf(x)dx\leqslant M(b-a).\]
+\[m(b-a)\leqslant\int_a^bf(x)\dif x\leqslant M(b-a).\]
 \end{minipage}}\vspace{4ex}
 
 8.积分的平均值:\\[1ex]
-\framebox{函数$f$在区间$[a,b]$内的平均值$\displaystyle=\frac{1}{b-a}\int_a^bf(x)dx$.}\vspace{4ex}
+\framebox{函数$f$在区间$[a,b]$内的平均值$\displaystyle=\frac{1}{b-a}\int_a^bf(x)\dif x$.}\vspace{4ex}
 
 9.积分的中值定理:\\[1ex]
 \framebox{
 \begin{minipage}{\linewidth}
-如果函数$f$在闭区间$[a,b]$上连续, 那么在开区间$(a,b)$内总有一点$c$, 满足$\displaystyle f(c)=\frac{1}{b-a}\int_a^bf(x)dx$.
+如果函数$f$在闭区间$[a,b]$上连续, 那么在开区间$(a,b)$内总有一点$c$, 满足$\displaystyle f(c)=\frac{1}{b-a}\int_a^bf(x)\dif x$.
 \end{minipage}}

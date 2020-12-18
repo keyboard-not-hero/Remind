@@ -116,4 +116,51 @@ $\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$收敛\\[2
 
 (7)上述皆不适用 --- 比式判别法/P判别法/极限比较判别法\\
 1)比较判别法\\
+\begin{center}
+\framebox{\begin{minipage}{\textwidth}
+\textbf{发散的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$发散，则找一个同样发散的较小的级数，即找一个使得对所有n都有$a_n\geqslant b_n$的正项数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$发散. 则
+\[\sum_{n=1}^{\infty}a_n\geqslant\sum_{n=1}^{\infty}b_n=\infty\]
+所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散
+\end{minipage}}\\[2ex]
+\framebox{\begin{minipage}{\textwidth}
+\textbf{收敛的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$收敛，则找一个同样收敛的较大的级数，即找一个使得对所有n都有$a_n\leqslant b_n$的数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$收敛. 则
+\[\sum_{n=1}^{\infty}a_n\leqslant\sum_{n=1}^{\infty}b_n<\infty\]
+所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$收敛
+\end{minipage}}
+\end{center}\vspace{4ex}
 
+2)极限比较判别法\\
+\begin{center}
+\framebox{\begin{minipage}{\textwidth}
+找一个简单级数$\displaystyle\sum_{n=1}^{\infty}b_n$，当$n\to\infty$时$a_n\backsim b_n$，则$\displaystyle\sum_{n=1}^{\infty}a_n$与$\displaystyle\sum_{n=1}^{\infty}a_n$同时收敛或同时发散
+\end{minipage}}
+\end{center}\vspace{4ex}
+
+3)P判别法\\
+\begin{center}
+\framebox{\begin{minipage}{\textwidth}
+若$a\geqslant 1$，级数
+\[\sum_{n=a}^{\infty}\frac{1}{n^p}\left\{\begin{array}{l l}
+\text{收敛} & \text{如果}p>1\\
+\text{发散} & \text{如果}p\leqslant 1
+\end{array}\right.\]
+\end{minipage}}
+\end{center}
+例1.\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$\\
+推导过程:\\
+$\because$由极限比较判别法\\
+$\phantom{\because}$当$n\to\infty$时，$\displaystyle\frac{2n^2+3n+7}{n^4+2n^3+1}\backsim\frac{2n^2}{n^4}=\frac{2}{n^2}$\\
+$\therefore\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}=\sum_{n=1}^{\infty}\frac{2}{n^2}$\\
+$\because$由P判别法\\
+$\phantom{\because}\displaystyle\sum_{n=1}^{\infty}\frac{2}{n^2},\infty$\\
+$\therefore\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$收敛\\[1ex]
+例2.\\
+$\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$\\
+推导过程:\\
+$\because$对于所有的$x>0$，$\displaystyle e^{-x}\leqslant\frac{C}{x^n}$\\
+$\therefore\displaystyle 2^{-n}\leqslant\frac{C}{n^{1002}}$\\
+$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}\leqslant\sum_{n=1}^{\infty}\frac{C}{n^{1002}}\times n^{1000}=\sum_{n=1}^{\infty}\frac{C}{n^2}=C\sum_{n=1}^{\infty}\frac{1}{n^2}$\\
+$\because$由P判别法\\
+$\phantom{\because}\displaystyle C\sum_{n=1}^{\infty}\frac{1}{n^2}<\infty$\\
+$\therefore\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$收敛

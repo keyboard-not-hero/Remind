@@ -8,12 +8,12 @@
 则$f$有反函数.\\[2ex]
 
 2.反函数的导数\\[1ex]
-\framebox{如果$\displaystyle y=f^{-1}(x)$, 则$\displaystyle\frac{dy}{dx}=\frac{1}{f'(y)}=\frac{1}{f'(f^{-1}(x))}$}\\[1ex]
+\framebox{如果$\displaystyle y=f^{-1}(x)$, 则$\displaystyle\frac{\dif y}{\dif x}=\frac{1}{f'(y)}=\frac{1}{f'(f^{-1}(x))}$}\\[1ex]
 ** $f(y)$是将$f(x)$中的$x$替换为$y$的版本, $f'(y)$类似.\\[2ex]
 
 3.反三角函数\\
 (1)$\sin^{-1}$是奇函数; 其定义域为$[-1,1]$, 值域为$\displaystyle[-\frac{\pi}{2},\frac{\pi}{2}]$\\[1ex]
-(2)$\displaystyle\frac{d}{dx}\sin^{-1}(x)=\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
+(2)$\displaystyle\frac{\dif }{\dif x}\sin^{-1}(x)=\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
 \begin{center}
 \begin{tikzpicture}
 \datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\sin^{-1}(x)$}, x axis={label=$x$}]
@@ -24,7 +24,7 @@ data[format=function]{
 \end{tikzpicture}\\[1ex]
 \end{center}
 (3)$\cos^{-1}$既不是偶函数也不是奇函数; 其定义域为$[-1,1]$, 值域为$[0,\pi]$.\\[1ex]
-(4)$\displaystyle\frac{d}{dx}\cos^{-1}(x)=-\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
+(4)$\displaystyle\frac{\dif }{\dif x}\cos^{-1}(x)=-\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
 \begin{center}
 \begin{tikzpicture}
 \datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\cos^{-1}(x)$}, x axis={label=$x$}]
@@ -35,7 +35,7 @@ data[format=function]{
 \end{tikzpicture}\\[1ex]
 \end{center}
 (5)$\tan^{-1}$是奇函数; 其定义域是$\mathbb{R}$且值域是$\displaystyle(-\frac{\pi}{2},\frac{\pi}{2})$.\\[1ex]
-(6)对于所有的实数$x$, $\displaystyle\frac{d}{dx}\tan^{-1}(x)=\frac{1}{1+x^2}$.\\[1ex]
+(6)对于所有的实数$x$, $\displaystyle\frac{\dif }{\dif x}\tan^{-1}(x)=\frac{1}{1+x^2}$.\\[1ex]
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={-1.6,1.6}, label=$\tan^{-1}(x)$}, x axis={ticks=none, label=$x$}]
@@ -48,7 +48,7 @@ data[format=function]{
 \end{tikzpicture}\\[1ex]
 \end{center}
 (7)$\cot^{-1}$既不是奇函数也不是偶函数; 其定义域为$\mathbb{R}$且值域是$(0,\pi)$\\[1ex]
-(8)对于所有的实数$x$, $\displaystyle\frac{d}{dx}\cot^{-1}(x)=-\frac{1}{1+x^2}$.\\[1ex]
+(8)对于所有的实数$x$, $\displaystyle\frac{\dif }{\dif x}\cot^{-1}(x)=-\frac{1}{1+x^2}$.\\[1ex]
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={3.2}, label=$\cot^{-1}(x)$}, x axis={ticks=none, label=$x$}]
@@ -60,7 +60,7 @@ data[format=function]{
 \end{tikzpicture}
 \end{center}
 (9)$\sec^{-1}$既不是奇函数也不是偶函数; 其定义域是$(-\infty,-1]\cup[1,\infty)$且值域是$\displaystyle[0,\frac{\pi}{2})\cup(\frac{\pi}{2},\pi]$.\\[1ex]
-(10)对于$x>1$或$x<-1$, $\displaystyle\frac{d}{dx}\sec^{-1}(x)=\frac{1}{|x|\sqrt{x^2-1}}$.\\[1ex]
+(10)对于$x>1$或$x<-1$, $\displaystyle\frac{\dif }{\dif x}\sec^{-1}(x)=\frac{1}{|x|\sqrt{x^2-1}}$.\\[1ex]
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \datavisualization[school book axes, visualize as smooth line/.list={sec1, sec2}, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\sec^{-1}(x)$}, x axis={ticks={major={at={-1,0,1}}}, label=$x$}]
@@ -76,7 +76,7 @@ func x = 1/cos(\value y r);
 \end{tikzpicture}
 \end{center}
 (11)$\csc^{-1}$是奇函数; 其定义域为$(-\infty,-1]\cup[1,\infty)$且值域是$\displaystyle[-\frac{\pi}{2},0)\cup(0,\frac{\pi}{2}]$.\\[1ex]
-(12)对于$x>1$或$x<-1$, $\displaystyle\frac{d}{dx}\csc^{-1}(x)=-\frac{1}{|x|\sqrt{x^2-1}}$.\\[2ex]
+(12)对于$x>1$或$x<-1$, $\displaystyle\frac{\dif }{\dif x}\csc^{-1}(x)=-\frac{1}{|x|\sqrt{x^2-1}}$.\\[2ex]
 \begin{center}
 \begin{tikzpicture}[scale=0.5]
 \datavisualization[school book axes, visualize as smooth line/.list={csc1, csc2}, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={-1.6,1.6}, label=$\csc^{-1}(x)$}, x axis={ticks={major={at={-1,0,1}}}, label=$x$}]
@@ -99,6 +99,6 @@ func x = 1/sin(\value y r);
 
 5.反双曲函数\\
 (1)$\sinh^{-1}$是奇函数; 其定义域和值域都是$\mathbb{R}$.\\[1ex]
-(2)对于所有的实数$x$, $\displaystyle\frac{d}{dx}\sinh^{-1}(x)=\frac{1}{\sqrt{x^2+1}}$.\\[1ex]
+(2)对于所有的实数$x$, $\displaystyle\frac{\dif }{\dif x}\sinh^{-1}(x)=\frac{1}{\sqrt{x^2+1}}$.\\[1ex]
 (3)$\cosh^{-1}$既不是奇函数也不是偶函数; 其定义域是$[1,\infty)$且值域是$[0,\infty)$.\\[1ex]
-(4)对于$x>1$, $\displaystyle\frac{d}{dx}\cosh^{-1}(x)=\frac{1}{\sqrt{x^2-1}}$.\\[1ex]
+(4)对于$x>1$, $\displaystyle\frac{\dif }{\dif x}\cosh^{-1}(x)=\frac{1}{\sqrt{x^2-1}}$.\\[1ex]
