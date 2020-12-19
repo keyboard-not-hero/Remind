@@ -241,6 +241,15 @@ g#    向上查找光标所在单词(包含目标单词部分即可)
 :w<ctrl+d>    显示以w开头的命令列表
 :w<tab>    补齐/切换w开头的命令
 :help [cmd]    关于cmd命令的帮助
+      WHAT                  PREPEND    EXAMPLE      
+  Normal mode command                  :help x
+  Visual mode command         v_       :help v_u
+  Insert mode command         i_       :help i_<Esc>
+  Command-line command        :        :help :quit
+  Command-line editing        c_       :help c_<Del>
+  Vim command argument        -        :help -r
+  Option                      '        :help 'textwidth'
+  Regular expression          /        :help /[
 :suspend    将vim放到后台停止状态(与ctrl+z类似)
 :shell    启动一个新的shell(使用exit退出)
 :oldfiles    各文件最新打开的时间
@@ -277,12 +286,24 @@ g#    向上查找光标所在单词(包含目标单词部分即可)
 <ctrl+n>    无视输入，查找下一条记录
 --------------------------------------------
 **在vim的命令行模式(即[:/]进入的模式)中，可使用<Up><Down>进行翻阅历史命令
+**在:s/old/new/flags中，可使用其他字符替代'/'符号
 **在:s/old/new/flags中，flags有g/c/e等，对应行所有单词/确认/无匹配不报错等
 **last, first转化为first last示例，:%s/\([^,]*\), \(*\)/\2 \1/g
 **逆序行序示例，:g/^/m 0
 **指令模式中，|为管道命令
-**适用于<old>匹配的特殊字符(需要使用'\'进行escape): \,[,]
-**适用于<new>匹配的特殊字符: \
+**适用于<old>匹配的特殊字符(需要使用'\'进行escape): 
+	\ - 跳脱字符
+	[ - 代表限定内的任意单个字符, 必须和]配合使用 
+	] - 代表限定内的任意单个字符, 必须和[配合使用
+	^ - 当前行起始位置
+	$ - 当前行结束位置
+	~ - 最后一次替换的字符串
+	. - 匹配所有单个字符(除linebreak符号外)
+**适用于<new>匹配的特殊字符: 
+	\ - 跳脱字符
+	~ - 最后一次替换的字符串
+**适用于<old>的linebreak/tab: \n,\t
+**适用于<new>的linebreak/tab: \r,\t
 
 --------------------------------------------文件列表
 :args    当前文件文件列表信息

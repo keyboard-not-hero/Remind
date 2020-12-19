@@ -5,11 +5,13 @@
 (3)$a=-\infty$\\[2ex]
 
 (1)函数在$[a，b]$内无界\\
-破裂点: 当函数$f$在$x=a$处有垂直渐近线时，$x=a$为其\textbf{破裂点}，也称为\textbf{瑕点}.\\[2ex]
+破裂点: 当函数$f$在$x=a$处有垂直渐近线时，$x=a$为其\textbf{破裂点}，也称为\textbf{瑕点}.
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 如果仅仅在$x$接近于$a$点该函数$f(x)$是无界的， 则定义
 \[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_{a+\varepsilon}^bf(x)\dif x\]
-\end{minipage}}\\
+\end{minipage}}
+\par}
 如果上述极限存在， 则积分收敛， 否则积分发散\\
 例1.\\
 $\displaystyle\int_0^1\frac{1}{x}\dif x$\\
@@ -29,26 +31,29 @@ $\begin{array}{>{\displaystyle}r >{\displaystyle}l}
 \int_0^1\frac{1}{\sqrt{x}}\dif x & =\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{\sqrt{x}}\dif x\\
 & =\lim_{\varepsilon\to 0^+}2\sqrt{x}\Big|_{\varepsilon}^1=\lim_{\varepsilon\to 0^+}(2-2\sqrt{\varepsilon})=2
 \end{array}$\\
-所以， 反常积分$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$收敛\\
-
+所以， 反常积分$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$收敛
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 如果函数仅仅在$x$接近于$b$点是无界的， 则定义
 \[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_a^{b-\varepsilon}f(x)\dif x\]
-\end{minipage}}\\
+\end{minipage}}
+\par}
 如果上述极限存在， 则积分收敛， 否则积分发散\\
 
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 如果函数在区间$[a，b]$内有破裂点$c$， 则定义
 \[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_a^{c-\varepsilon}f(x)\dif x+\lim_{\varepsilon\to 0^+}\int_{c+\varepsilon}^bf(x)\dif x\]
 \end{minipage}}
+\par}
 如果上述公式两部分的积分都收敛时，总积分收敛，否则发散\\
 
-(2)关于$\infty$区间上的积分\\
-\begin{center}
+(2)关于$\infty$区间上的积分
+{\par\centering
 \framebox{$\displaystyle\int_a^{\infty}f(x)\dif x=\lim_{N\to\infty}\int_a^Nf(x)\dif x$}
-\end{center}
-如果上述极限存在， 则积分收敛， 否则积分发散
-例\\
+\par}
+如果上述极限存在， 则积分收敛， 否则积分发散\\
+例.\\
 $\displaystyle\int_1^{\infty}\frac{1}{x}\dif x$\\
 推导过程：\\
 $\begin{array}{>{\displaystyle}r >{\displaystyle}l}
@@ -59,37 +64,38 @@ $\begin{array}{>{\displaystyle}r >{\displaystyle}l}
 \end{array}$\\
 所以，反常积分$\displaystyle\int_1^{\infty}\frac{1}{x}\dif x$发散\\
 
-(3)关于$-\infty$区间上的积分\\
-\begin{center}
+(3)关于$-\infty$区间上的积分
+{\par\centering
 \framebox{$\displaystyle\inf_{-\infty}^bf(x)\dif x=\lim_{N\to\infty}\int_{-N}^bf(x)\dif x$}
-\end{center}
+\par}
 如果上述极限存在，则积分收敛，否则积分发散\\[4ex]
 
-2.比较判别法(理论)\\
+2.比较判别法(理论)
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 如果在区间$(a,b)$内，函数$f(x)\geqslant g(x)\geqslant 0$，且积分$\displaystyle\int_a^bg(x)\dif x$是发散的，那么积分$\displaystyle\int_a^bf(x)\dif x$也是发散的. 即
 \[\int_a^bf(x)\dif x\geqslant\int_a^bg(x)\dif x=\infty\]
-\end{minipage}}
+\end{minipage}}\\[2ex]
 \framebox{\begin{minipage}{\textwidth}
 如果在区间$(a,b)$内，函数$0\leqslant f(x)\leqslant g(x)$，且积分$\displaystyle\int_a^bg(x)\dif x$是收敛的，那么积分$\displaystyle\int_a^bf(x)\dif x$也一定是收敛的. 即
 \[\int_a^bf(x)\dif x\leqslant\int_a^bg(x)\dif x<\infty\]
-\end{minipage}}\vspace{4ex}
-
-3.极限比较判别法(理论)\\
-\begin{center}
-\framebox{当$x\to a$时，$f(x)\backsim g(x)$同$\displaystyle\lim_{x\to a}\frac{f(x)}{g(x)}=1$有着同样的意义}
-\end{center}
-
-\framebox{\begin{minipage}{\textwidth}
-如果当$x\to a$时$f(x)\backsim g(x)$，且这两个函数在区间$[a,b]$上仅有$a$一个破裂点，那么积分$\displaystyle\int_a^bf(x)\dif x$和$\displaystyle\int_a^bg(x)\dif x$是同时收敛或同时发散的，这称为\textbf{极限比较判别法}
 \end{minipage}}
+\par}\vspace{4ex}
+
+3.极限比较判别法(理论)
+{\par\centering
+\framebox{当$x\to a$时，$f(x)\sim g(x)$同$\displaystyle\lim_{x\to a}\frac{f(x)}{g(x)}=1$有着同样的意义}\\[2ex]
+\framebox{\begin{minipage}{\textwidth}
+如果当$x\to a$时$f(x)\sim g(x)$，且这两个函数在区间$[a,b]$上仅有$a$一个破裂点，那么积分$\displaystyle\int_a^bf(x)\dif x$和$\displaystyle\int_a^bg(x)\dif x$是同时收敛或同时发散的，这称为\textbf{极限比较判别法}
+\end{minipage}}
+\par}
 例\\
 $\displaystyle\int_0^1\frac{1}{\sin(\sqrt{x})}\dif x$\\
 推导过程:\\
-$\because x\to 0$时，$\sin(x)\backsim x$\\
-$\therefore x\to 0^+$时，$\sin(\sqrt{x})\backsim\sqrt{x}$\\
+$\because x\to 0$时，$\sin(x)\sim x$\\
+$\therefore x\to 0^+$时，$\sin(\sqrt{x})\sim\sqrt{x}$\\
 \phantom{$\therefore$}两边取倒数, 得:\\
-$\displaystyle\phantom{\therefore}\frac{1}{\sin(\sqrt{x})\backsim\frac{1}{\sqrt{x}}}$\\
+$\displaystyle\phantom{\therefore}\frac{1}{\sin(\sqrt{x})}\sim\frac{1}{\sqrt{x}}$\\
 $\because[0,1]$区间上，仅有$0$为破裂点\\
 $\displaystyle\therefore\int_0^1\frac{1}{\sqrt{x}}\dif x=\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{\sqrt{x}}\dif x=\lim_{\varepsilon\to 0^+}2\sqrt{x}\Big|_{\varepsilon}^1=\lim_{\varepsilon\to 0^+}(2-2\sqrt{\varepsilon})=2$\\
 $\displaystyle\phantom{\therefore}\int_0^1\frac{1}{\sqrt{x}}\dif x$在区间$[0,1]$上收敛\\
@@ -103,10 +109,10 @@ $\displaystyle\cdot\int_0$的情况：对于任意有限值$a>0$，积分
 \[\int_0^a\frac{1}{x^p}\dif x\]
 \phantom{$\cdot$}在$p<1$时是收敛的，在$p\geqslant 1$时是发散的\\[4ex]
 
-5.绝对收敛判别法(理论)\\
-\begin{center}
+5.绝对收敛判别法(理论)
+{\par\centering
 \framebox{如果$\displaystyle\int_a^b|f(x)|\dif x$是收敛的，那么$\displaystyle\int_a^bf(x)\dif x$也是收敛的}
-\end{center}
+\par}
 例\\
 $\displaystyle\int_1^{\infty}\frac{\sin(x)}{x^2}\dif x$\\
 推导过程:\\

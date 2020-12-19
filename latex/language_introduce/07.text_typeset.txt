@@ -217,6 +217,8 @@ Comment çava? Où se trouve l'aéroport?
 
 3.\centering为中间对齐declaration指令, 对应environment指令为\begin{center} ... \end{center}
 
+4.环境式指令距离above文本有较大距离, 可使用{\par\centering ...\par}格式替换
+
 
 
 十一、Demo(示例)11 - 引号

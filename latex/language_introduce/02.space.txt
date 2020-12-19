@@ -59,7 +59,7 @@ this is page two
 
 
 
-四、Demo(示例)04 -- distance
+四、Demo(示例)04 -- horizontal space
 \documentclass{article}
 \begin{document}
     ```fi\ i' or `fum''' he said

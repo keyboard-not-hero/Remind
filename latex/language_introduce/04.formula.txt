@@ -408,16 +408,16 @@
 
 6.\theorembodyfont{body_font}设置正文字体格式. 包含在ntheorem宏包中
 
-7.\theoremseparator{sep}指定定理头部和正文的分隔符号, 默认为' '. 包含在ntheorem宏包中. 可使用':'/'.'/'\hspace{2ex}'等
+7.\theoremseparator{sep}指定定理头部和定理正文的分隔符号, 默认为' '. 包含在ntheorem宏包中. 可使用':'/'.'/'\hspace{2ex}'等
 ** theoremstyle的empty选项不支持该指令
 ** 使用如下格式强制在theorem header之后换行
 	\begin{env_name}[aux_label]\ \\
 		<content>
 	\end{env_name}
 
-8.\theorempreskip{dimen}和\theorempostskip{dimen}分别用于指定newtheorem定理环境与之前/之后正文的垂直距离(适用于ntheorem v1.32及以后, 之前版本使用\theorempreskipamount<dimen>和\theorempostskipamount<dimen>) 包含在ntheorem宏包中
+8.\theorempreskip{dimen}和\theorempostskip{dimen}分别用于指定newtheorem定理环境与之前/之后正文的垂直距离(适用于ntheorem v1.32及以后, 之前版本使用\theorempreskipamount<dimen>和\theorempostskipamount<dimen>), 需要放置在\newthorem之前(\theorempreskip{2pt}). 包含在ntheorem宏包中
 
-9.\theoremframepreskip{}和\theoremframepostskip{}分别用于指定newframedtheorem定理环境与之前/之后正文的垂直距离. 包含在ntheorem宏包中
+9.\theoremframepreskip{}和\theoremframepostskip{}分别用于指定newframedtheorem定理环境与之前/之后正文的垂直距离, 需放置在\newframedtheorem之前(\theoremframepreskip(2pt)). 包含在ntheorem宏包中
 
 10.\theoreminframepreskip{}和\theoreminframepostskip{}分别用于指定newframedtheorem定理内容与边框上/下边界的垂直距离. 包含在ntheorem宏包中
 

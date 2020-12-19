@@ -68,7 +68,7 @@
 
 2.fboxrule设置边框线宽度
 
-3.fboxsep设置边框线距离文字的距离
+3.fboxsep设置边框线距离文字的距离, left/right/above/below四个方向
 
 4.\fbox{content}为framebox的简写方式, 但不能携带可选参数
 

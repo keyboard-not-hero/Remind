@@ -9,21 +9,21 @@
 (7)上述皆不适用 --- 比较判别法/P判别法/极限比较判别法\\[2ex]
 
 2.具体解决方案\\
-(1)几何级数\\
-\begin{center}
-\framebox{若$-1<r<1$，无穷几何级数的和=$\displaystyle\frac{\text{首项}}{1-r}$}
-\end{center}
+(1)几何级数
+{\par\centering
+\framebox{若$-1<r<1$，无穷几何级数的和=$\displaystyle\frac{\text{首项}}{1-r}$}}
+
 例.\\
-$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}$\\
+$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}$\\[1ex]
 推导过程:\\
 $\displaystyle\because\frac{4}{3^n}=4(\frac{1}{3})^n$\\
 $\displaystyle\phantom{\because}-1<r=\frac{1}{3}<1$\\
 $\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}=\sum_{n=5}^{\infty}4(\frac{1}{3})^n=\frac{4\times(\frac{1}{3})^5}{1-\frac{1}{3}}=\frac{2}{81}$\\[2ex]
 
-(2)级数中的项是否趋于$0$ --- 第$n$项判别法\\
-\begin{center}
-\framebox{若$\displaystyle\lim_{n\to\infty}a_n\neq 0$或极限不存在，则级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散}
-\end{center}
+(2)级数中的项是否趋于$0$ --- 第$n$项判别法
+{\par\centering
+\framebox{若$\displaystyle\lim_{n\to\infty}a_n\neq 0$或极限不存在，则级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散}}
+
 该判别法不能用于级数收敛性的判定\\
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{n^2-3n+7}{4n^2+2n+1}$\\[1ex]
@@ -32,12 +32,12 @@ $\displaystyle\because\lim_{n\to\infty}\frac{n^2-3n+7}{4n^2+2n+1}=\frac{1}{4}\ne
 $\therefore$由第n项判别法\\
 $\displaystyle\phantom{\therefore}\frac{n^2-3n+7}{4n^2+2n+1}$发散\\[2ex]
 
-(3)级数中是否有阶乘 --- 比式判别法\\
-\begin{center}
+(3)级数中是否有阶乘 --- 比式判别法
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 若$\displaystyle L=\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|$，则$\displaystyle n=\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，比式判别法无效
-\end{minipage}}
-\end{center}
+\end{minipage}}}
+
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$\\[1ex]
 推导过程:\\
@@ -45,12 +45,12 @@ $\because\displaystyle\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|=\lim_{n\to\
 $\therefore$由比式判别法\\
 $\displaystyle\phantom{\therefore}\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$收敛\\[2ex]
 
-(4)级数中的指数是否包含$n$ --- 根式判别法\\
-\begin{center}
+(4)级数中的指数是否包含$n$ --- 根式判别法
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 若$\displaystyle L=\lim_{n\to\infty}|a_n|^{\frac{1}{n}}$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，根式判别法无效
-\end{minipage}}
-\end{center}
+\end{minipage}}}
+
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$\\[1ex]
 推导过程:\\
@@ -58,10 +58,10 @@ $\because\displaystyle\lim_{n\to\infty}|a_n|^{\frac{1}{n}}=\lim_{n\to\infty}\Big
 $\therefore$由根式判别法\\
 $\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$收敛性\\[2ex]
 
-(5)级数中是否含$\displaystyle\frac{1}{n}$或对数 --- 积分判别法\\
-\begin{center}
-\framebox{若对连续递减函数$f$有$a_n=f(n)$，则$\displaystyle\sum_{n=N}^{\infty}a_n$与$\displaystyle\int_N^{\infty}f(x)\dif x$同时收敛或发散}
-\end{center}
+(5)级数中是否含$\displaystyle\frac{1}{n}$或对数 --- 积分判别法
+{\par\centering
+\framebox{若对连续递减函数$f$有$a_n=f(n)$，则$\displaystyle\sum_{n=N}^{\infty}a_n$与$\displaystyle\int_N^{\infty}f(x)\dif x$同时收敛或发散}}
+
 例.\\
 $\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln(n)}$\\[1ex]
 推导过程:\\
@@ -92,10 +92,10 @@ $\because\displaystyle\lim_{n\to\infty}(-1)^nn^2$极限不为0\\
 $\therefore$由第n项判别法\\
 $\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}(-1)^nn^2$发散\\[2ex]
 
-3)若有些项为正，有些项为负，当$n\to\infty$时通项趋于0，用绝对收敛判别法\\
-\begin{center}
-\framebox{若$\displaystyle\sum_{n=1}^{\infty}|a_n|$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}
-\end{center}
+3)若有些项为正，有些项为负，当$n\to\infty$时通项趋于0，用绝对收敛判别法
+{\par\centering
+\framebox{若$\displaystyle\sum_{n=1}^{\infty}|a_n|$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}}
+
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{\sin(n)}{n^2}$\\[1ex]
 推导过程:\\
@@ -103,49 +103,56 @@ $\because\displaystyle\sum_{n=1}^{\infty}\frac{|\sin(n)|}{n^2}\leqslant\sum_{n=1
 $\therefore$由绝对收敛判别法\\
 $\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{\sin(n)}{n^2}$收敛\\[2ex]
 
-4)若有些项为正，有些项为负，并且级数不是绝对收敛，用交错级数判别法\\
-\begin{center}
-\framebox{若当$n\to\infty$时交错级数的通项的绝对值单调递减趋于0，则级数收敛}
-\end{center}
+4)若有些项为正，有些项为负，并且级数不是绝对收敛，用交错级数判别法
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+若级数$\displaystyle\sum_{n=1}^{\infty}a_n$是交错的，且各项的绝对值递减趋于$0$，则级数收敛\\
+收敛条件列表:\\
+(1)\,$a_n$正负交错. 如:$(-1)^n$\\
+(2)\,$|a_n|$递减\\
+(3)\,$\displaystyle\lim_{n\to\infty}|a_n|=0$
+\end{minipage}}}
+
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$\\[1ex]
 推导过程:\\
-$\because\displaystyle\lim_{n\to\infty}\Big|\frac{(-1)^n}{n}\Big|=\lim_{n\to\infty}\frac{1}{n}=0$，并且$\displaystyle\Big|\frac{(-1)^n}{n}\Big|=\frac{1}{n}$单调递减\\
+$\because$1)\,$\displaystyle\lim_{n\to\infty}\Big|\frac{(-1)^n}{n}\Big|=\lim_{n\to\infty}\frac{1}{n}=0$\\
+$\phantom{\because}$2)\,$\displaystyle\Big|\frac{(-1)^n}{n}\Big|=\frac{1}{n}$单调递减\\
+$\phantom{\because}$3)\,$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$正负交错\\
 $\therefore$由交错级数判别法\\
 $\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$收敛\\[2ex]
 
 (7)上述皆不适用 --- 比式判别法/P判别法/极限比较判别法\\
-1)比较判别法\\
-\begin{center}
+1)比较判别法
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 \textbf{发散的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$发散，则找一个同样发散的较小的级数，即找一个使得对所有n都有$a_n\geqslant b_n$的正项数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$发散. 则
 \[\sum_{n=1}^{\infty}a_n\geqslant\sum_{n=1}^{\infty}b_n=\infty\]
 所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散
-\end{minipage}}\\[2ex]
+\end{minipage}}}\\
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 \textbf{收敛的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$收敛，则找一个同样收敛的较大的级数，即找一个使得对所有n都有$a_n\leqslant b_n$的数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$收敛. 则
 \[\sum_{n=1}^{\infty}a_n\leqslant\sum_{n=1}^{\infty}b_n<\infty\]
 所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$收敛
-\end{minipage}}
-\end{center}\vspace{4ex}
+\end{minipage}}}\\[2ex]
 
-2)极限比较判别法\\
-\begin{center}
+2)极限比较判别法
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 找一个简单级数$\displaystyle\sum_{n=1}^{\infty}b_n$，当$n\to\infty$时$a_n\backsim b_n$，则$\displaystyle\sum_{n=1}^{\infty}a_n$与$\displaystyle\sum_{n=1}^{\infty}a_n$同时收敛或同时发散
-\end{minipage}}
-\end{center}\vspace{4ex}
+\end{minipage}}}\\[2ex]
 
-3)P判别法\\
-\begin{center}
+3)P判别法
+{\par\centering
 \framebox{\begin{minipage}{\textwidth}
 若$a\geqslant 1$，级数
 \[\sum_{n=a}^{\infty}\frac{1}{n^p}\left\{\begin{array}{l l}
 \text{收敛} & \text{如果}p>1\\
 \text{发散} & \text{如果}p\leqslant 1
 \end{array}\right.\]
-\end{minipage}}
-\end{center}
+\end{minipage}}}
+
 例1.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$\\
 推导过程:\\
