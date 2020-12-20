@@ -11,6 +11,7 @@ now footnote counter number is \thefootnote
 
 内容讲解
 1.\setcounter{counter}{num}用于设置指定计数器counter的当前序列号为num
+	\setcounter{secnumdepth}{1}用于给小于等于该层级的计数器编序号
 
 2.\addtocounter{counter}{num}用于将指定计数器counter的序列号加上指定数字
 
@@ -46,7 +47,7 @@ the new counter number is \thefly
 \end{document}
 
 内容讲解
-1.\newcounter{counter}用于生成新counter名, 并默认起始号为0, 格式为阿拉伯数字. 只能在preamble中使用
+1.\newcounter{counter}[super_counter]用于生成新counter名, 并默认起始号为0, 格式为阿拉伯数字; super_counter为父计数器, 当父计数器增加时, 当前计数器初始为0. 只能在preamble中使用
 
 2.已有计数器列表:
 	part - 部分计数器
@@ -66,3 +67,12 @@ the new counter number is \thefly
 	enumii - enumerate子计数器
 	enumiii - enumerate二级子计数器
 	enumiv - enumerate三级子计数器
+
+3.当前计数器层级:
+	\newcounter{part}
+	\newcounter{chapter}
+	\newcounter{section}[chapter]
+	\newcounter{subsection}[section]
+	\newcounter{subsubsection}[subsection]
+	\newcounter{paragraph}[subsubsection]
+	\newcounter{subparagraph}[paragraph]
