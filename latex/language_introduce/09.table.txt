@@ -133,3 +133,63 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 2.\ref{}用于引用指定名称的标记的编号
 
 3.\pageref{}用于引用指定名称标记的页码
+
+
+
+五、Demo(示例)05 - multi-page table
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{texnames}
+\usepackage{amssymb}
+\usepackage{longtable}
+\begin{document}
+\begin{longtable}{l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath\\
+	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash  wp & $\Re$ & \textbackslash  Re\\
+	$\Im$ & \textbackslash  Im & $\partial$ & \textbackslash  partial & $\infty$ & \textbackslash infty\\
+ 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash  nabla\\
+	$\surd$ & \textbackslash  surd & $\top$ & \textbackslash top & $\bot$ & \textbackslash  bot \\
+	$\angle$ & \textbackslash  angle & $\triangle$ & \textbackslash  triangle & $\forall$ & \textbackslash  forall \\
+	$\exists$ & \textbackslash  exists & $\neg$ & \textbackslash  neg & $\flat$ & \textbackslash  flat \\
+	$\natural$ & \textbackslash  natural & $\sharp$ & \textbackslash  sharp & $\clubsuit$ & \textbackslash  clubsuit\\
+	$\diamondsuit$ & \textbackslash  diamondsuit & $\heartsuit$ & \textbackslash  heartsuit & $\spadesuit$ & \textbackslash  spadesuit \\
+	\textbackslash & \textbackslash  backslash\footnotemark[1] & $\backprime$ & \textbackslash  backprime & $\hslash$ & \textbackslash  hslash \\
+	$\varnothing$ & \textbackslash  varnothing & $\vartriangle$ & \textbackslash  vartriangle & $\blacktriangle$ & \textbackslash  blacktriangel\\
+	$\triangledown$ & \textbackslash  triangledown & $\blacktriangledown$ & \textbackslash  blacktriangledown & $\square$ & \textbackslash  square\\
+	$\blacksquare$ & \textbackslash  blacksquare & $\lozenge$ & \textbackslash  lozenge & $\blacklozenge$ & \textbackslash  blacklozenge\\
+	$\circledS$ & \textbackslash  circledS & $\bigstar$ & \textbackslash  bigstar & $\sphericalangle$ & \textbackslash  sphericalangle \\
+	$\measuredangle$ & \textbackslash  measuredangle & $\nexists$ & \textbackslash  nexists & $\complement$ & \textbackslash  complement \\
+	$\mho$ & \textbackslash  mbo & $\eth$ & \textbackslash  eth & $\Finv$ & \textbackslash  Finv\\
+	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
+	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
+	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath\\
+	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash  wp & $\Re$ & \textbackslash  Re\\
+	$\Im$ & \textbackslash  Im & $\partial$ & \textbackslash  partial & $\infty$ & \textbackslash infty\\
+ 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash  nabla\\
+	$\surd$ & \textbackslash  surd & $\top$ & \textbackslash top & $\bot$ & \textbackslash  bot \\
+	$\angle$ & \textbackslash  angle & $\triangle$ & \textbackslash  triangle & $\forall$ & \textbackslash  forall \\
+	$\exists$ & \textbackslash  exists & $\neg$ & \textbackslash  neg & $\flat$ & \textbackslash  flat \\
+	$\natural$ & \textbackslash  natural & $\sharp$ & \textbackslash  sharp & $\clubsuit$ & \textbackslash  clubsuit\\
+	$\diamondsuit$ & \textbackslash  diamondsuit & $\heartsuit$ & \textbackslash  heartsuit & $\spadesuit$ & \textbackslash  spadesuit \\
+	\textbackslash & \textbackslash  backslash\footnotemark[1] & $\backprime$ & \textbackslash  backprime & $\hslash$ & \textbackslash  hslash \\
+	$\varnothing$ & \textbackslash  varnothing & $\vartriangle$ & \textbackslash  vartriangle & $\blacktriangle$ & \textbackslash  blacktriangel\\
+	$\triangledown$ & \textbackslash  triangledown & $\blacktriangledown$ & \textbackslash  blacktriangledown & $\square$ & \textbackslash  square\\
+	$\blacksquare$ & \textbackslash  blacksquare & $\lozenge$ & \textbackslash  lozenge & $\blacklozenge$ & \textbackslash  blacklozenge\\
+	$\circledS$ & \textbackslash  circledS & $\bigstar$ & \textbackslash  bigstar & $\sphericalangle$ & \textbackslash  sphericalangle \\
+	$\measuredangle$ & \textbackslash  measuredangle & $\nexists$ & \textbackslash  nexists & $\complement$ & \textbackslash  complement \\
+	$\mho$ & \textbackslash  mbo & $\eth$ & \textbackslash  eth & $\Finv$ & \textbackslash  Finv\\
+	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
+	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
+	\hline
+\caption{数学普通符号}
+\footnotetext[1]{\textbackslash  backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash  setminus}
+\footnotetext[99]{从\textbackslash  backprime开始是\AMS 符号, 包含在amssymb宏包中}
+\end{longtable}
+\end{document}
+
+内容讲解
+1.longtable宏包拥有与tabular类似的格式, 并且与table拥有相同的\caption/counter, 并且\listoftables也会生成目录item
+
+2.表格内容结束后必须立即接\caption指令

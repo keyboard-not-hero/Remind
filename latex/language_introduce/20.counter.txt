@@ -11,7 +11,8 @@ now footnote counter number is \thefootnote
 
 内容讲解
 1.\setcounter{counter}{num}用于设置指定计数器counter的当前序列号为num
-	\setcounter{secnumdepth}{1}用于给小于等于该层级的计数器编序号
+	\setcounter{secnumdepth}{1}用于给小于等于该层级的标题计数器编序号, 未编序号的层级依然在目录中
+	\setcounter{tocdepth}{1}用于只给小于等于指定层级的标题生成目录
 
 2.\addtocounter{counter}{num}用于将指定计数器counter的序列号加上指定数字
 

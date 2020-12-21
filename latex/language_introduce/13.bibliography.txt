@@ -33,7 +33,7 @@
 	abbrv - 类似于plain, 但first name/month/journal为缩写形式
 
 
-2.\bibliography{sample} - 导入数据库条目文件, 该文件后缀必须为.bib, 并且可指定多个文件, 文件之间使用','分隔
+2.\bibliography{sample} - 导入数据库条目文件, 文件名称为sample, 该文件后缀必须为.bib, 并且可指定多个文件, 文件之间使用','分隔
 
 
 3.\nocite{label}在引用文献列表中显示, 但正文引用处不显示编号; 当label为'*'时, 文献列表中显示文献数据库中的所有item
@@ -42,7 +42,7 @@
 4.编译步骤: .tex --> .bbl --> .tex --> .tex
 
 
-database file(.bib)内容
+database file(sample.bib)内容
 @BOOK{how,
     AUTHOR = "David R. Anderson and Dennis J. Sweeney and Thomas A. Williams",
     TITLE = "How to Read a Book",

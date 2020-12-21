@@ -1,0 +1,10 @@
+一、Demo(示例)01 - xspace
+\documentclass{article}
+\usepackage{xspace}
+\newcommand\eg{e.g.,\xspace }
+\begin{document}
+i love the \eg .punctuation.
+\end{document}
+
+内容讲解
+1.xspace用于定义新指令时, 主要指令为\xspace, 当\xspace后续非空格字符为符号时, 不添加空格; 当\xspace后续为字母时, 添加一个空格符号
