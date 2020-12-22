@@ -142,7 +142,8 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 \usepackage{amssymb}
 \usepackage{longtable}
 \begin{document}
-\begin{longtable}{l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+\begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+	\caption{数学普通符号}\\
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
@@ -183,13 +184,16 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
 	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
 	\hline
-\caption{数学普通符号}
+\begin{minipage}{\textwidth}
 \footnotetext[1]{\textbackslash  backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash  setminus}
 \footnotetext[99]{从\textbackslash  backprime开始是\AMS 符号, 包含在amssymb宏包中}
+\end{minipage}
 \end{longtable}
 \end{document}
 
 内容讲解
 1.longtable宏包拥有与tabular类似的格式, 并且与table拥有相同的\caption/counter, 并且\listoftables也会生成目录item
 
-2.表格内容结束后必须立即接\caption指令
+2.caption可位于表格前(需加\\)或表格后(表格内容结束后必须立即接\caption指令)
+
+3.第一列的宽度默认比较高, 建议使用p{width}指定第一列宽度

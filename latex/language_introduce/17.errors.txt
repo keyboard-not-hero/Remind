@@ -57,9 +57,11 @@ diagnosis: 指定只能用于preamble区域
 	将正文内的指令移动到preamble区域
 
 8.warning: Command ... already defined
-diagnosis: 当使用/newcommand、\newenvironment、\newlength、\newsavebox、\newtheorem、\newcounter定义内容时, 该内容已被定义
+diagnosis: 当使用/newcommand、\newenvironment、\newlength、\newsavebox、\newtheorem、\newcounter定义内容或使用重复定义的冲突包时, 该内容已被定义
 解决:
 	在定义中使用新名称
+	或
+	在preamble区, \let\<cmd>\undefined
 
 更多参考Leslie Lamport - A Document Preparation System第八章
 编辑于: 2020-12-14

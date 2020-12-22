@@ -2,16 +2,17 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bbm}
-\usepackage{eucal}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{latexsym}
 \usepackage{mathdots}
 \usepackage{mathrsfs}
+\usepackage{euscript}
 \usepackage{metalogo}
 \usepackage{mflogo}
 \usepackage{texnames}
 \usepackage{pifont}
+\usepackage{longtable}
 \let\mathdollar\undefined
 \renewcommand{\footnoterule}{\vspace*{-2mm}\rule{\textwidth}{0pt}}
 \renewcommand{\thempfootnote}{\arabic{mpfootnote}}
@@ -214,37 +215,35 @@
 \caption{带上下限的数学运算符}
 \end{table}
 
-\begin{table}
-\begin{minipage}{\textwidth}
-\begin{tabular}{l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+\begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+	\caption{数学普通符号}\\
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
 	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath\\
-	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash  wp & $\Re$ & \textbackslash  Re\\
-	$\Im$ & \textbackslash  Im & $\partial$ & \textbackslash  partial & $\infty$ & \textbackslash infty\\
- 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash  nabla\\
-	$\surd$ & \textbackslash  surd & $\top$ & \textbackslash top & $\bot$ & \textbackslash  bot \\
-	$\angle$ & \textbackslash  angle & $\triangle$ & \textbackslash  triangle & $\forall$ & \textbackslash  forall \\
-	$\exists$ & \textbackslash  exists & $\neg$ & \textbackslash  neg & $\flat$ & \textbackslash  flat \\
-	$\natural$ & \textbackslash  natural & $\sharp$ & \textbackslash  sharp & $\clubsuit$ & \textbackslash  clubsuit\\
-	$\diamondsuit$ & \textbackslash  diamondsuit & $\heartsuit$ & \textbackslash  heartsuit & $\spadesuit$ & \textbackslash  spadesuit \\
-	\textbackslash & \textbackslash  backslash\footnotemark[1] & $\backprime$ & \textbackslash  backprime & $\hslash$ & \textbackslash  hslash \\
-	$\varnothing$ & \textbackslash  varnothing & $\vartriangle$ & \textbackslash  vartriangle & $\blacktriangle$ & \textbackslash  blacktriangel\\
-	$\triangledown$ & \textbackslash  triangledown & $\blacktriangledown$ & \textbackslash  blacktriangledown & $\square$ & \textbackslash  square\\
-	$\blacksquare$ & \textbackslash  blacksquare & $\lozenge$ & \textbackslash  lozenge & $\blacklozenge$ & \textbackslash  blacklozenge\\
-	$\circledS$ & \textbackslash  circledS & $\bigstar$ & \textbackslash  bigstar & $\sphericalangle$ & \textbackslash  sphericalangle \\
-	$\measuredangle$ & \textbackslash  measuredangle & $\nexists$ & \textbackslash  nexists & $\complement$ & \textbackslash  complement \\
-	$\mho$ & \textbackslash  mbo & $\eth$ & \textbackslash  eth & $\Finv$ & \textbackslash  Finv\\
-	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
-	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
+	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash wp & $\Re$ & \textbackslash Re\\
+	$\Im$ & \textbackslash Im & $\partial$ & \textbackslash partial & $\infty$ & \textbackslash infty\\
+ 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash nabla\\
+	$\surd$ & \textbackslash surd & $\top$ & \textbackslash top & $\bot$ & \textbackslash bot \\
+	$\angle$ & \textbackslash angle & $\triangle$ & \textbackslash triangle & $\forall$ & \textbackslash forall \\
+	$\exists$ & \textbackslash exists & $\neg$ & \textbackslash neg & $\flat$ & \textbackslash flat \\
+	$\natural$ & \textbackslash natural & $\sharp$ & \textbackslash sharp & $\clubsuit$ & \textbackslash clubsuit\\
+	$\diamondsuit$ & \textbackslash diamondsuit & $\heartsuit$ & \textbackslash heartsuit & $\spadesuit$ & \textbackslash spadesuit \\
+	\textbackslash & \textbackslash backslash\footnotemark[1] & $\backprime$ & \textbackslash backprime & $\hslash$ & \textbackslash hslash \\
+	$\varnothing$ & \textbackslash varnothing & $\vartriangle$ & \textbackslash vartriangle & $\blacktriangle$ & \textbackslash blacktriangel\\
+	$\triangledown$ & \textbackslash triangledown & $\blacktriangledown$ & \textbackslash blacktriangledown & $\square$ & \textbackslash square\\
+	$\blacksquare$ & \textbackslash blacksquare & $\lozenge$ & \textbackslash lozenge & $\blacklozenge$ & \textbackslash blacklozenge\\
+	$\circledS$ & \textbackslash circledS & $\bigstar$ & \textbackslash bigstar & $\sphericalangle$ & \textbackslash sphericalangle \\
+	$\measuredangle$ & \textbackslash measuredangle & $\nexists$ & \textbackslash nexists & $\complement$ & \textbackslash complement \\
+	$\mho$ & \textbackslash mbo & $\eth$ & \textbackslash eth & $\Finv$ & \textbackslash Finv\\
+	$\diagup$ & \textbackslash diagup & $\Game$ & \textbackslash Game & $\diagdown$ & \textbackslash diagdown \\
+	$\Bbbk$ & \textbackslash Bbbk & $\because$ & \textbackslash because & $\therefore$ & \textbackslash therefore\\
 	\hline
-\end{tabular}
+\begin{minipage}{\textwidth}
 \footnotetext[1]{\textbackslash  backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash  setminus}
 \footnotetext[99]{从\textbackslash  backprime开始是\AMS 符号, 包含在amssymb宏包中}
 \end{minipage}
-\caption{数学普通符号}
-\end{table}
+\end{longtable}
 
 \begin{table}[H]
 \begin{minipage}{\textwidth}
@@ -300,9 +299,8 @@
 \caption{二元关系符}
 \end{table}
 
-\begin{table}[H]
-\begin{minipage}{\textwidth}
-\begin{tabular}{l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+\begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+	\caption{\LaTeX{}箭头符号}\\
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
@@ -318,11 +316,10 @@
     $\leftharpoondown$ & \textbackslash  leftharpoondown & $\rightharpoondown$ & \textbackslash  rightharpoondown & $\nwarrow$ & \textbackslash  nwarrow\\
     $\rightleftharpoons$ & \textbackslash  rightleftharpoons & $\leadsto$ & \textbackslash  leadsto\footnotemark[1]\\
     \hline
-\end{tabular}
+\begin{minipage}{\textwidth}
 \footnotetext[1]{包含在latexsym宏包中}
 \end{minipage}
-\caption{\LaTeX{}箭头符号}
-\end{table}
+\end{longtable}
 
 \begin{table}[H]
 \begin{minipage}{\textwidth}
@@ -387,7 +384,7 @@
 \caption{通用长度单位}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 \begin{minipage}{\textwidth}
 \begin{tabular}{l l l}
 	\hline
@@ -398,7 +395,7 @@
 	罗马体 & \textbackslash  mathrm & $\mathrm{ABCHIJXYZabchijxyz12345}$\\
 	无衬线体 & \textbackslash  mathsf & $\mathsf{ABCHIJXYZabchijxyz12345}$\\
 	打字机体 & \textbackslash  mathtt & $\mathtt{ABCHIJXYZabchijxyz12345}$\\
-	手写体(花体)\footnotemark[1] & \textbackslash  mathcal & $\mathcal{ABCHIJXYZ}$\\\hline
+	手写体(花体)\footnotemark[1] & \textbackslash mathcal & $\mathcal{ABCHIJXYZ}$\\\hline
 \end{tabular}
 \footnotetext[1]{\LaTeX{}默认只支持大写字母，使用专业字体包可支持小写字母}
 \end{minipage}
@@ -406,15 +403,18 @@
 \end{table}
 
 \begin{table}[H]
-\begin{tabular}{l l l l}
+\begin{minipage}{\textwidth}
+\begin{tabular}{l l l}
 	\hline
-	类别 & 字体命令 & 输出效果 & 宏包及说明\\\hline
-	黑板粗体 & \textbackslash mathbb & $\mathbb{ABCXYZ}$ & amssymb,仅大写字母\\
-			 & \textbackslash  mathbbm & $\mathbbm{ABCXYZabcxyz12}$ & bbm,数字仅有1和2\\
-	花体 & \textbackslash  mathscr & $\mathscr{ABCXYZ}$ & mathrsfs,仅大写字母\\
-		 & \textbackslash  mathcal & $\mathcal{ABCXYZ}$ & eucal,仅大写字母\\
-	哥特体 & \textbackslash  mathfrak & $\mathfrak{ABCXYZabcxyz123890}$ & amssymb或eufrak\\\hline
+	字体命令 & 输出效果 & 宏包及说明\\\hline
+	\textbackslash mathbb & $\mathbb{ABCXYZ}$ & amssymb,仅大写字母\\
+	\textbackslash  mathbbm & $\mathbbm{ABCXYZabcxyz12}$ & bbm,数字仅有1和2\\
+	\textbackslash  mathscr & $\mathscr{ABCXYZ}$ & mathrsfs,仅大写字母\\
+	\textbackslash  EuScript & $\EuScript{ABCXYZ}$ & euscript,仅大写字母\footnotemark[1]\\
+	\textbackslash  mathfrak & $\mathfrak{ABCXYZabcxyz123890}$ & amssymb或eufrak\\\hline
 \end{tabular}
+\footnotetext[1]{已废弃，但使用eucal宏包会覆盖原有的\textbackslash mathcal指令，参考链接：\\https://www.maths.usyd.edu.au/u/SMS/texdoc/euscript.pdf}
+\end{minipage}
 \caption{其他宏包字体}
 \end{table}
 

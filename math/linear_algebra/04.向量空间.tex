@@ -1,5 +1,5 @@
 \chapter{向量空间}
-\section{一、向量空间和子空间}
+\section{向量空间和子空间}
 \begin{definition}
 一个向量空间是由一些被称为向量的对象构成的非空集合V, 在这个集合上定义两个运算, 称为加法和标量乘法（标量取实数）, 服从以下公理（或法则）, 这些公理必须对V中所有向量$\mathbf{u}$,$\mathbf{v}$,$\mathbf{w}$及所有标量c和d均成立.\\
 1.\quad$\mathbf{u}$,$\mathbf{v}$之和表示为$\mathbf{u}+\mathbf{v}$, 仍在V中\\
@@ -12,6 +12,94 @@
 8.\quad$(c+d)\mathbf{u}=c\mathbf{u}+d\mathbf{u}$\\
 9.\quad$c(d\mathbf{u})=(cd)\mathbf{u}$\\
 10.\quad$1\mathbf{u=u}$\\
-\end{definition}
+\end{definition}\vspace{4ex}
 
+{\par\raggedright
+\framebox{\begin{minipage}{\textwidth}
+对V中每个向量$\mathbf{u}$和任意标量$c$，有
+\[0\mathbf{u=0}\]
+\[c\mathbf{0=0}\]
+\[-\mathbf{u}=(-1)\mathbf{u}\]
+\end{minipage}}
+\par}\vspace{4ex}
 
+\begin{definition}
+向量空间V的一个\textbf{子空间}是V的一个满足以下三个性质的子集H:
+\begin{enumerate}
+\item V中的零向量在H中
+\item H对向量加法封闭，即对H中任意向量$\mathbf{u}$,$\mathbf{v}$，和$\mathbf{u+v}$仍在H中
+\item H对标量乘法封闭，即对H中任意向量$\mathbf{u}$和任意标量$c$，向量$c\mathbf{u}$仍在H中
+\end{enumerate}
+\end{definition}\vspace{4ex}
+
+\begin{theorem}
+若$v_1$,$v_2$,$\cdots$,$v_p$在向量空间V中，则$\Span\{v_1,\cdots,v_p\}$是V的一个子空间
+\end{theorem}
+
+\section{零空间、列空间和线性变换}
+考虑下列齐次方程组：
+\begin{equation}
+\begin{array}{r@{\hspace{0pt}}l@{\hspace{0pt}}r@{\hspace{0pt}}l@{\hspace{0pt}}r@{\hspace{0pt}}l}
+x_1 & - & 3x_2 & - & 2x_3 & =0\\
+-5x_1 & + & 9x_2 & + & x_3 & =0
+\end{array}\label{eq:01}
+\end{equation}
+用矩阵的形式，此方程组可写成$A\mathbf{x=0}$，其中
+\[A=\left[\begin{array}{r r r}
+1 & -3 & -2\\
+-5 & 9 & 1
+\end{array}\right]\]
+所有满足\eqref{eq:01}的$\mathbf{x}$的集合称为方程组\eqref{eq:01}的\textbf{解集}\\
+我们成满足$A\mathbf{x=0}$的所有$\mathbf{x}$的集合为矩阵A的\textbf{零空间}\\[2ex]
+
+\begin{definition}
+矩阵A的零空间写成$\Nul A$，是齐次方程$A\mathbf{x=0}$的全体解的集合. 用集合符号表示，即
+\[\Nul A=\{\mathbf{x}:\mathbf{x}\in\mathbb{R}^n, A\mathbf{x=0}\}\]
+\end{definition}\vspace{4ex}
+
+\begin{theorem}
+$m\times n$矩阵A的零空间是$\mathbb{R}^n$的一个子空间. 等价地，$m$个方程，$n$个未知数的齐次线性方程组$A\mathbf{x=0}$的全体解的集合是$\mathbb{R}^n$的一个子空间
+\end{theorem}\vspace{4ex}
+
+\begin{definition}
+$m\times n$矩阵A的\textbf{列空间}（记为$\Col A$）是由A的列的所有线性组合组成的集合. 若$A=[\mathbf{a}_1,\cdots,\mathbf{a}_n]$，则$\Col A=\Span\{\mathbf{a}_1,\cdots,\mathbf{a}_n\}$
+\end{definition}\vspace{4ex}
+
+\begin{theorem}
+$m\times n$矩阵A的列空间是$\mathbb{R}^m$的一个子空间
+\end{theorem}\vspace{4ex}
+
+{\par\raggedright
+\framebox{\begin{minipage}{\textwidth}
+$m\times n$矩阵A的列空间等于$\mathbb{R}^m$当且仅当方程$A\mathbf{x=b}$对$\mathbb{R}^m$中每个$\mathbf{b}$有一个解
+\end{minipage}}
+\par}\vspace{4ex}
+
+\begin{table}[H]
+\caption{对$m\times n$矩阵A，$\Nul A$与$\Col A$之间的对比}
+\begin{tabular}{>{\scriptsize}p{6cm}|>{\scriptsize}p{6cm}}
+\hline
+$\Nul A$ & $\Col A$\\
+\hline
+\begin{enumerate}
+\item $\Nul A$是$\mathbb{R}^n$的一个子空间
+\item $\Nul A$是隐式定义的，即仅给出了一个$\Nul A$中向量必须满足的条件（$A\mathbf{x=0}$）
+\item 求$\Nul A$中的向量需要时间，需要对$[A\quad\mathbf{0}]$作行变换
+\item $\Nul A$与A的元素之间没有明显的关系
+\item $\Nul A$中的一个典型向量$\mathbf{v}$具有$A\mathbf{v=0}$的性质
+\item 给定一个特定的向量$\mathbf{v}$，容易判断$\mathbf{v}$是否在$\Nul A$中. 仅需计算$A\mathbf{v}$
+\item $\Nul A=\{\mathbf{0}\}$当且仅当方程$A\mathbf{x=0}$仅有一个平凡解
+\item $\Nul A=\{\mathbf{0}\}$当且仅当线性变换$\mathbf{x}\mapsto A\mathbf{x}$是一对一的
+\end{enumerate} & \begin{enumerate}
+\item $\Col A$是$\mathbb{R}^m$的一个子空间
+\item $\Col A$是显式定义的，即明确指出如何构建$\Col A$中的向量
+\item 容易求出$\Col A$中的向量. A的列就是$\Col A$中的向量，其余的可由A的列表示出来
+\item $\Col A$与A的元素之间有明显的关系，因为A的列就在$\Col A$中
+\item $\Col A$中一个典型向量$\mathbf{v}$具有方程$A\mathbf{x=v}$是相容的性质
+\item 给定一个特定的向量$\mathbf{v}$，弄清$\mathbf{v}$是否在$\Col A$中需要时间，需要对$[A\quad\mathbf{v}]$作行变换
+\item $\Col A=\mathbb{R}^m$当且仅当方程$A\mathbf{x=b}$对每一个$\mathbf{b}\in\mathbb{R}^m$有一个解
+\item $\Col A=\mathbb{R}^m$当且仅当线性变换$\mathbf{x}\mapsto A\mathbf{x}$将$\mathbb{R}^n$映上到$\mathbb{R}^m$
+\end{enumerate}\\
+\hline
+\end{tabular}
+\end{table}
