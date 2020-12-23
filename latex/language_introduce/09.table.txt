@@ -105,6 +105,8 @@ tabbing与tabular的不同点:
 内容讲解
 1.\multicolumn{num}{align}{content}用于合并多列, num为合并的列数; align为合并后内容的水平对齐方式, 可选为l/c/r, 合并列右侧不使用表格的列分隔符, |为手动添加到其后的列分隔符; content为合并单元格的内容
 
+2.\multicolumn也可用于单独cell对齐方式设置
+
 
 
 四、Demo(示例)04 -- cross-reference

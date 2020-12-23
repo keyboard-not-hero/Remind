@@ -56,6 +56,8 @@ $\Span{\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_n}$
 内容讲解
 1.\DeclareMathOperator{\Span}{Span}用于将Span指令定义为数学模式下字符串Span. 包含在amsmath宏包中
 
+2.\DeckareMathOperator*{\Con}{Con}用于在在math mode的\displaystyle下，使上/下标位于正上/下方
+
 
 
 四、Demo(示例)04 - set length

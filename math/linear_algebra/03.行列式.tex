@@ -1,5 +1,5 @@
 \chapter{行列式}
-\section{一、行列式介绍}
+\section{行列式介绍}
 有$3\times 3$矩阵$A$
 \[\left[\begin{array}{l l l}
 a_{11} & a_{12} & a_{13}\\
@@ -48,45 +48,45 @@ a_{32} & a_{33}
 \[\det A=a_{11}\cdot C_{11}+a_{12}\cdot C_{12}+\cdots+a_{1n}\cdot C_{1n}\]
 上述公式称为按$A$的\textbf{第一行的余因子展开式}\\[2ex]
 
-\begin{theorem}
+\begin{TheoremOne}
 $n\times n$矩阵A的行列式可按任意行或列的余因子展开式来计算. 按第i行的余因子展开式为:
 \[\det A=a_{i1}C_{i1}+a_{i2}C_{i2}+\cdots+a_{in}C_{in}\]
 按第j列的余因子展开式为:
 \[\det A=a_{1j}C_{1j}+a_{2j}C_{2j}+\cdots+a_{nj}C_{nj}\]
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 若A为三角阵, 则$\det A$等于A的主对角线上元素的乘积
-\end{theorem}\vspace{8ex}
+\end{TheoremOne}\vspace{8ex}
 
-\section{二、行列式的性质}
-\begin{theorem}[行变换]\ \\
+\section{行列式的性质}
+\begin{TheoremTwo}[行变换]
 令A是一个方阵.\\
 a.若A的某一行的倍数加到另一行得矩阵B, 则$\det B=\det A$\\
 b.若A的两行互换得矩阵B， 则$\det B=-\det A$\\
 c.若A的某行乘以k倍得到矩阵B, 则$\det B=k\det A$
-\end{theorem}\vspace{4ex}
+\end{TheoremTwo}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 方阵A是可逆的当且仅当$\det A\neq0$
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 若A为一个$n\times n$矩阵, 则$\det A^T=\det A$
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
-\begin{theorem}[乘法的性质]
+\begin{TheoremTwo}[乘法的性质]
 若A和B均为$n\times n$矩阵, 则$\det AB=(\det A)(\det V)$
-\end{theorem}\vspace{8ex}
+\end{TheoremTwo}\vspace{8ex}
 
-\section{三、克拉默法则、体积和线性变换}
+\section{克拉默法则、体积和线性变换}
 对任意$n\times n$矩阵A和任意的$\mathbb{R}^n$中向量b, 令$A_i(b)$表示A中第i列由向量$\mathbf{b}$替换得到的矩阵
 \[A_i(b)=[\mathbf{a}_1\hspace{1ex}\cdots\hspace{1ex}\mathbf{b}\hspace{1ex}\cdots\hspace{1ex}\mathbf{a}_n]\]\\[-1ex]
 
-\begin{theorem}[克拉默法则]
+\begin{TheoremTwo}[克拉默法则]
 设A是一个可逆的$n\times n$矩阵, 对$\mathbb{R}^n$中任意向量b, 方程Ax=b的唯一解可由下式给出
 \[x_i=\frac{\det A_i(b)}{\det A},i=1,2,\cdots,n\]
-\end{theorem}\vspace{4ex}
+\end{TheoremTwo}\vspace{4ex}
 
 \[A^{-1}=\frac{1}{\det A}\left[\begin{array}{c c c c}
 C_{11} & C_{21} & \cdots & C_{n1}\\
@@ -96,22 +96,22 @@ C_{1n} & C_{2n} & \cdots & C_{nn}
 \end{array}\right]\]
 其中, 余因子组成的矩阵称为A的\textbf{伴随矩阵}, 记为$adj\,A$\\[2ex]
 
-\begin{theorem}[逆矩阵公式]\ \\
+\begin{TheoremTwo}[逆矩阵公式]
 设A是一个可逆的$n\times n$矩阵, 则$A^{-1}=\dfrac{1}{\det A}adj\,A$
-\end{theorem}\vspace{4ex}
+\end{TheoremTwo}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 若A是一个$2\times 2$矩阵, 则由A的列确定的平行四边形的面积为$|\det A|$, 若A是一个$3\times 3$矩阵, 则由A的列确定的平行六面体的体积为$|\det A|$
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
 \framebox{
 \begin{minipage}{\linewidth}
 设$\mathbf{a}_1$和$\mathbf{a}_2$为非零向量, 则对任意数$c$, 由$\mathbf{a}_1$和$\mathbf{a}_2$确定的平行四边形的面积等于由$\mathbf{a}_1$和$\mathbf{a}_2+c\mathbf{a}_1$确定的平行四边形的面积
 \end{minipage}}\\[2ex]
 
-\begin{theorem}
+\begin{TheoremOne}
 设$T:\mathbb{R}^2\rightarrow\mathbb{R}^2$是由一个$2\times 2$矩阵A确定的线性变换, 若S是$\mathbb{R}^2$中一个平行四边形, 则
 \[\{T(S)\text{的面积}\}=|\det A|\cdot\{\text{S的面积}\}\]
 若T是一个由$3\times 3$矩阵A确定的线性变换, 而S是$R^3$中的一个平行六面体, 则
 \[\{T(S)\text{的体积}\}=|\det A|\cdot\{\text{S的体积}\}\]
-\end{theorem}
+\end{TheoremOne}

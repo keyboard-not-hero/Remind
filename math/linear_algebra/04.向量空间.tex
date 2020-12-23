@@ -32,9 +32,9 @@
 \end{enumerate}
 \end{definition}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 若$v_1$,$v_2$,$\cdots$,$v_p$在向量空间V中，则$\Span\{v_1,\cdots,v_p\}$是V的一个子空间
-\end{theorem}
+\end{TheoremOne}
 
 \section{零空间、列空间和线性变换}
 考虑下列齐次方程组：
@@ -57,17 +57,17 @@ x_1 & - & 3x_2 & - & 2x_3 & =0\\
 \[\Nul A=\{\mathbf{x}:\mathbf{x}\in\mathbb{R}^n, A\mathbf{x=0}\}\]
 \end{definition}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 $m\times n$矩阵A的零空间是$\mathbb{R}^n$的一个子空间. 等价地，$m$个方程，$n$个未知数的齐次线性方程组$A\mathbf{x=0}$的全体解的集合是$\mathbb{R}^n$的一个子空间
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
 \begin{definition}
 $m\times n$矩阵A的\textbf{列空间}（记为$\Col A$）是由A的列的所有线性组合组成的集合. 若$A=[\mathbf{a}_1,\cdots,\mathbf{a}_n]$，则$\Col A=\Span\{\mathbf{a}_1,\cdots,\mathbf{a}_n\}$
 \end{definition}\vspace{4ex}
 
-\begin{theorem}
+\begin{TheoremOne}
 $m\times n$矩阵A的列空间是$\mathbb{R}^m$的一个子空间
-\end{theorem}\vspace{4ex}
+\end{TheoremOne}\vspace{4ex}
 
 {\par\raggedright
 \framebox{\begin{minipage}{\textwidth}
@@ -79,7 +79,7 @@ $m\times n$矩阵A的列空间等于$\mathbb{R}^m$当且仅当方程$A\mathbf{x=
 \caption{对$m\times n$矩阵A，$\Nul A$与$\Col A$之间的对比}
 \begin{tabular}{>{\scriptsize}p{6cm}|>{\scriptsize}p{6cm}}
 \hline
-$\Nul A$ & $\Col A$\\
+\multicolumn{1}{c|}{$\Nul A$} & \multicolumn{1}{c}{$\Col A$}\\
 \hline
 \begin{enumerate}
 \item $\Nul A$是$\mathbb{R}^n$的一个子空间
@@ -102,4 +102,235 @@ $\Nul A$ & $\Col A$\\
 \end{enumerate}\\
 \hline
 \end{tabular}
-\end{table}
+\end{table}\vspace{4ex}
+
+\begin{definition}
+由向量空间V映射到向量空间W内的\textbf{线性变换}T是一个规划，它将V中每个向量$\mathbf{x}$映射成W中唯一向量$T(\mathbf{x})$，且满足：
+\begin{enumerate}
+\item $T(\mathbf{u+v})=T(\mathbf{u})+T(\mathbf{v})$，对V中所有$\mathbf{u}$,$\mathbf{v}$均成立
+\item $T(c\mathbf{u})=cT(\mathbf{u})$，对V中所有$\mathbf{u}$及所有数$c$均成立
+\end{enumerate}
+\end{definition}\vspace{4ex}
+
+\section{线性无关集和基}
+V中向量的一个指标集$\{v_1,\cdots,v_p\}$称为是\textbf{线性无关}的，如果向量方程
+\begin{equation}
+c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p=\mathbf{0}\label{eq:02}
+\end{equation}
+只有平凡解，即$c_1=0$,$\cdots$,$c_p=0$.\\
+集合$\{\mathbf{v}_1,\cdots,\mathbf{v}_p\}$称为\textbf{线性相关}，如果\eqref{eq:02}有一个非平凡的解，即存在某些权$c_1$,$\cdots$,$c_p$不全为零，使得\eqref{eq:02}式成立. 此时\eqref{eq:02}式称为$\mathbf{v}_1$,$\cdots$,$\mathbf{v}_p$之间的一个\textbf{线性相关关系}\vspace{4ex}
+
+\begin{TheoremOne}
+两个或多个向量组成的有编号的向量集合$\{\mathbf{v}_1,\cdots,\mathbf{v}_p\}$（如果$\mathbf{v}_1\neq\mathbf{0}$）是线性相关的，当且仅当某$\mathbf{v}_j(j>1)$是其前面向量$\mathbf{v}_1$,$\cdots$,$\mathbf{v}_{j-1}$的线性组合
+\end{TheoremOne}\vspace{4ex}
+
+\begin{definition}
+令H是向量空间V的一个子空间. V中向量的指标集$\mathcal{B}=\{\mathbf{b}_1,\cdots,\mathbf{b}_p\}$称为H的一个\textbf{基}，如果
+\begin{enumerate}
+\item $\mathcal{B}$是一线性无关集
+\item 由$\mathcal{B}$生成的子空间与H相同，即$H=\Span\{\mathbf{b}_1,\cdots,\mathbf{b}_p\}$
+\end{enumerate}
+\end{definition}\vspace{4ex}
+
+令A是一个可逆的$n\times n$矩阵，比如$A=\{\mathbf{a}_1,\cdots,\mathbf{a}_n\}$。则由可逆矩阵定理，A的列组成$\mathbb{R}^n$的一个基，这是因为它们是线性无关的且它们可以生成$\mathbb{R}^n$\\[2ex]
+
+令$\mathbf{e}_1$,$\cdots$,$\mathbf{e}_n$是$n\times n$单位矩阵$I_n$的列，即
+\[\mathbf{e}_1=\left[
+\begin{array}{c}
+1\\
+0\\
+\vdots\\
+0
+\end{array}
+\right],\mathbf{e}_2=\left[
+\begin{array}{c}
+0\\
+1\\
+\vdots\\
+0
+\end{array}
+\right],\cdots,\mathbf{e}_n=\left[
+\begin{array}{c}
+0\\
+\vdots\\
+0\\
+1
+\end{array}
+\right]\]
+集合$\{\mathbf{e}_1,\cdots,\mathbf{e}_n\}$称为$\mathbb{R}^n$的\textbf{标准基}\\[2ex]
+
+\begin{TheoremTwo}[生成集定理]
+令$S=\{\mathbf{v}_1,\cdots,\mathbf{v}_p\}$是V中的向量集，$H=\Span\{\mathbf{v}_1,\cdots,\mathbf{v}_p\}$
+\begin{enumerate}
+\item 若S中某一个向量（比如说$\mathbf{v}_k$）是S中其余向量的线性组合，则S中去掉$\mathbf{v}_k$后形成的集合仍然可以生成H
+\item 若$H\neq\{\mathbf{0}\}$，则S的某一子集是H的一个基
+\end{enumerate}
+\end{TheoremTwo}\vspace{4ex}
+
+当$\Nul A$包含非零向量时，我们的方法总可以产生一个线性无关集，从而由该方法可以得到$\Nul A$的一个基\\[2ex]
+
+\begin{TheoremOne}
+矩阵A的主元列构成$\Col A$的一个基
+\end{TheoremOne}\vspace{4ex}
+
+基是尽可能大的线性无关集
+
+\section{坐标系}
+\begin{TheoremTwo}[唯一表示定理]
+令$\mathcal{B}=\{\mathbf{b}_1,\cdots,\mathbf{b}_n\}$是向量空间V的一个基，则对V中每个向量$\bm{x}$，存在唯一的一组数$c_1,\cdots,c_n$使得
+\[\bm{x}=c_1\bm{b}_1+\cdots+c_n\bm{b}_n\]
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{definition}
+假设$\mathcal{B}=\{\bm{b}_1,\cdots,\bm{b}_n\}$是V的一个基，$\bm{x}$在V中，$\bm{x}$\textbf{相对于基}$\mathcal{B}$\textbf{的坐标}（或$\bm{x}$\textbf{的}$\mathcal{B}$-\textbf{坐标}）是使得$\bm{x}=c_1\bm{b}_1+\cdots+c_n\bm{b}_n$的权$c_1$,$\cdots$,$c_n$\\
+若$c_1$,$\cdots$,$c_n$是$\bm{x}$的$\mathcal{B}$-坐标，则$\mathbb{R}^n$中的向量
+\[[\bm{x}]_{\mathcal{B}}=\left[
+\begin{array}{c}
+c_1\\
+\vdots\\
+c_n
+\end{array}
+\right]\]
+是$\bm{x}$（\textbf{相对于}$\mathcal{B}$）\textbf{的坐标向量}或$\bm{x}$\textbf{的}$\mathcal{B}$-\textbf{坐标向量}，映射$x\mapsto[\bm{x}]_{\mathcal{B}}$称为（\textbf{由}$\mathcal{B}$\textbf{确定的}）\textbf{坐标映射}
+\end{definition}\vspace{4ex}
+
+令
+\[P_{\mathcal{B}}=[\bm{b}_1\quad\bm{b}_2\quad\cdots\quad\bm{b}_n]\]
+则向量方程
+\[\bm{x}=c_1\bm{b}_1+c_2\bm{b}_2+\cdots+c_n\bm{b}_n\]
+等价于
+\[\bm{x}=P_{\mathcal{B}}[\bm{x}]_{\mathcal{B}}\]
+我们称$P_{\mathcal{B}}$为从$\mathcal{B}$到$\mathbb{R}^n$中标准基的\textbf{坐标变换矩阵}\\[2ex]
+
+\begin{TheoremOne}
+令$\mathcal{B}=\{\bm{b}_1,\cdots,\bm{b}_n\}$是向量空间V的一个基，则坐标映射$\bm{x}\mapsto[\bm{x}]_{\mathcal{B}}$是一个由V映上到$\mathbb{R}^n$的一对一的线性变换
+\end{TheoremOne}\vspace{4ex}
+
+\section{向量空间的维数}
+\begin{TheoremOne}
+若向量空间V具有一组基$\mathcal{B}=\{\bm{b}_1,\cdots,\bm{b}_n\}$，则V中任意包含多余$n$个向量的集合一定线性相关
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremOne}
+若向量空间V有一组基含有$n$个向量，则V的每一组基一定恰好含有$n$个向量
+\end{TheoremOne}\vspace{4ex}
+
+\begin{definition}
+若V由一个有限集生成，则V称为\textbf{有限维的}，V的维数写成$\dim V$，是V的基中向量的个数. 零向量空间$\{\mathbf{0}\}$的维数定义为零. 如果V不是由一有限集生成，则V称为\textbf{无穷维的}
+\end{definition}\vspace{4ex}
+
+\begin{TheoremOne}
+令H是有限维向量空间V的子空间，若有必要的话，H中任一个线性无关集均可以扩充为H的一个基. H也是有限维的并且
+\[\dim H\leqslant\dim V\]
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremTwo}[基定理]
+令V是一个$p$维向量空间，$p\geqslant 1$，V中任意含有$p$个元素的线性无关集必然是V的一个基. 任意含有$p$个元素且生成V的集合自然是V的一个基
+\end{TheoremTwo}\vspace{4ex}
+
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+$\Nul A$的维数是方程$A\bm{x=0}$中自由变量的个数，$\Col A$的维数是A中主元列的个数
+\end{minipage}}
+\par}\vspace{4ex}
+
+\section{秩}
+矩阵A中线性无关列的最大个数和$A^T$中线性无关列的最大个数(即A中线性无关行的最大个数)是相同的，这个公共值是矩阵A的\textbf{秩}\\[2ex]
+
+若A是一个$m\times n$矩阵，A的每一行具有$n$个元素，即可以视为$\mathbb{R}^n$中一个向量. 其行向量的所有线性组合的集合称为A的\textbf{行空间}，记为$\Row A$\\[2ex]
+
+\begin{TheoremOne}
+若两个矩阵A和B行等价，则它们的行空间相同. 若B是阶梯形矩阵，则B的非零行构成A的行空间的一个基同时也是B的行空间的一个基
+\end{TheoremOne}\vspace{4ex}
+
+\begin{definition}
+A的秩即A的列空间的维数
+\end{definition}\vspace{4ex}
+
+\begin{TheoremTwo}[秩定理]
+$m\times n$矩阵A的列空间和行空间的维数相等，这个公共的维数（即A的秩）还等于A的主元位置的个数且满足方程
+\[\rank A+\dim\Nul A=n\]
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{TheoremTwo}[可逆矩阵定理（续）]
+令A是一个$n\times n$矩阵，则下列命题中的每一个均等价于A是可逆矩阵：
+\begin{list}{}{\setlength{\parsep}{0pt}\setlength{\parskip}{0pt}}
+\item[m.] A的列构成$\mathbb{R}^n$的一个基
+\item[n.] $\Col A=\mathbb{R}^n$
+\item[o.] $\dim\Col A=n$
+\item[p.] $\rank A=n$
+\item[q.] $\Nul A=\{\mathbf{0}\}$
+\item[r.] $\dim\Nul A=0$
+\end{list}
+\end{TheoremTwo}\vspace{4ex}
+
+\section{基的变换}
+\begin{TheoremOne}
+设$\mathcal{B}=\{\bm{b}_1,\cdots,\bm{b}_n\}$和$\mathcal{C}=\{\bm{c}_1,\cdots,\bm{c}_n\}$是向量空间V的基，则存在一个$n\times n$矩阵$\displaystyle\bm{\convert}_{\mathcal{C}\leftarrow\mathcal{B}}$使得
+\[[x]_{\mathcal{C}}=\displaystyle\bm{\convert}_{\mathcal{C}\leftarrow\mathcal{B}}[\bm{x}]_{\mathcal{B}}\]
+$\displaystyle\bm{\convert}_{\mathcal{C}\leftarrow\mathcal{B}}$的列是基$\mathcal{B}$中向量的$\mathcal{C}$-坐标向量，即
+\[\displaystyle\bm{\convert}_{\mathcal{C}\leftarrow\mathcal{B}}=[[\bm{b}_1]_{\mathcal{C}}\quad[\bm{b}_2]_{\mathcal{C}}\quad\cdots\quad[\bm{b}_n]_{\mathcal{C}}]\]
+\end{TheoremOne}\vspace{4ex}
+
+\section{差分方程中的应用}
+\begin{equation}
+\left[
+\begin{array}{l l l}
+u_k & v_k & w_k\\
+u_{k+1} & v_{k+1} & w_{k+1}\\
+u_{k+2} & v_{k+2} & w_{k+2}
+\end{array}
+\right]\left[
+\begin{array}{l}
+c_1\\
+c_2\\
+c_3
+\end{array}
+\right]=\left[
+\begin{array}{l}
+0\\
+0\\
+0
+\end{array}
+\right]\qquad\text{对所有}k\text{成立}\label{eq:03}
+\end{equation}\vspace{1ex}
+这个方程组的系矩阵称为信号的\textbf{Casorati矩阵}\\
+如果对至少一个$k$值Casorati矩阵可逆，则\eqref{eq:03}将蕴含$c_1=c_2=c_3=0$，这就证明这三个信号是线性无关的\\[2ex]
+
+给定数$a_0$,$\cdots$,$a_n$,$a_0$和$a_n$不为零，给定一个信号$\{z_k\}$，方程
+\[a_0y_{k+n}+a_1y_{k+n-1}+\cdots+a_{n-1}y_{k+1}+a_ny_k=z_k\qquad\text{对所有}k\text{成立}\]
+称为一个\textbf{$n$阶线性差分方程}（或\textbf{线性递归关系}）\\
+若$\{z_k\}$是零序列，则方程是\textbf{齐次的}；否则，方程为\textbf{非齐次的}\\[2ex]
+
+\begin{TheoremOne}
+若$a_n\neq 0$且$\{z_k\}$给定，只要$y_0$,$\cdots$,$y_{n-1}$给定，方程
+\[y_{k+n}+a_1y_{k+n-1}+\cdots+a_{n-1}y_{k+1}+a_ny_k=z_k\]\qquad\text{对所有}k\text{成立}
+有唯一解
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremOne}
+$n$阶齐次线性差分方程
+\[y_{k+n}+a_1y_{k+n-1}+\cdots+a_{n-1}y_{k+1}+a_ny_k=0\qquad\text{对所有}k\text{成立}\]
+的解集H是一个$n$维向量空间
+\end{TheoremOne}\vspace{4ex}
+
+一个具有非负元素且各元素的数值相加等于1的向量称为\textbf{概率向量}\\[2ex]
+
+各向量均为概率向量的方阵为\textbf{随机矩阵}\\[2ex]
+
+\textbf{马尔科夫链}是一个概率向量序列$\bm{x}_0$,$\bm{x}_1$,$\bm{x}_2$,$\cdots$和一个随机矩阵$P$，满足
+\[\bm{x}_1=P\bm{x}_0,\bm{x}_2=P\bm{x}_1,\bm{x}_3=P\bm{x}_2,\cdots\]
+用一阶差分方程描述：
+\[bm{x}_{k+1}=P\bm{x}_k,k=0,1,2,\cdots\]\\[2ex]
+
+若P是一个随机矩阵，则相对于P的\textbf{稳态向量}（或\textbf{平衡向量}）是一个满足\[P\bm{q=q}\]
+的概率向量$\bm{q}$\\
+每一个随机矩阵有一个稳态向量\\[2ex]
+
+如果矩阵的某次幂$P^k$仅包含严格正的元素，则随机矩阵是正则的\\[2ex]
+
+一个向量序列$\{\bm{x}_k:k=1,2,\cdots\}$当$k\to\infty$时\textbf{收敛}到一个向量$\bm{q}$，如果当$k$充分大时，$\bm{x}_k$中的元素无线接近$\bm{q}$中对应的元素\\[2ex]
+
+\begin{TheoremOne}
+若P是一个$n\times n$的正则随机矩阵, 则P具有唯一的稳态向量$\bm{q}$. 进一步,若$\bm{x}_0$是任一个初始状态, 且$\bm{x}_{k+1}=P\bm{x}_k,k=0,1,2,\cdots$, 则当$k\to\infty$时, 马尔科夫链$\{\bm{x}_k\}$收敛到$\bm{q}$
+\end{TheoremOne}

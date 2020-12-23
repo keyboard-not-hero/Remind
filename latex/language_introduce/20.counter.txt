@@ -36,6 +36,7 @@ counters\footnote{...}are stepped before being used
 	Alph - 大写英文字母
 
 	取消计数器显示: \renewcommand{\thesection}{}
+	设置enumerate item标签: \renewcommand{\labelenumi}{\roman{\enumi}}
 
 
 
@@ -68,6 +69,7 @@ the new counter number is \thefly
 	enumii - enumerate子计数器
 	enumiii - enumerate二级子计数器
 	enumiv - enumerate三级子计数器
+	% theorem counter名字与环境同名
 
 3.当前计数器层级:
 	\newcounter{part}

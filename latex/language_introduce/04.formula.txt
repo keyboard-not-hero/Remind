@@ -503,6 +503,7 @@ Definition(定义)建议配置:
     $\frac{3}{2}$\\
     $\sqrt{2}\\
     $a_{2}^{3}$\\
+	$\sum\limits_2$
 \end{document}
 
 内容讲解
@@ -511,6 +512,12 @@ Definition(定义)建议配置:
 2.\sqrt[n]{number}为求次方根, n为所求次方根, number为求次方根的数字
 
 3._为下角标, ^为上脚标
+
+4.\limits可以指定上/下标位于内容正上/下方, 但对象必须为数学操作符
+
+5.\nolimits可以指定上/下标位于右上/下方, 但对象必须为数学操作符
+
+5.\underset{under}{content}可以使under直接位于content下方
 
 
 
