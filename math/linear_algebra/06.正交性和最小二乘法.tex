@@ -1,0 +1,129 @@
+\chapter{正交性和最小二乘法}
+\section{内积、长度和正交性}
+如果$\bm{u}$和$\bm{v}$是$\mathbb{R}^n$中的向量，则可以将$\bm{u}$和$\bm{v}$作为$n\times 1$矩阵. 转置矩阵$\bm{u}^T$是$1\times n$矩阵，且矩阵乘积$\bm{u}^T\bm{v}$是一个$1\times 1$矩阵，我们将其记为一个不加括号的实数（标量）. 数$\bm{u}^T\bm{v}$称为$\bm{u}$和$\bm{v}$的\textbf{内积}，通常记作$\bm{u}\cdot\bm{v}$，也称为\textbf{点积}\\[2ex]
+
+\begin{TheoremOne}
+设$\bm{v}$,$\bm{u}$和$\bm{w}$是$\mathbb{R}^n$中的向量,$c$是一个数，那么\\
+a.\ $\bm{u\cdot v=v\cdot u}$\\
+b.\ $\bm{(u+v)\cdot w=u\cdot w+v\cdot w}$\\
+c.\ $(c\bm{u})\cdot v=c(\bm{u\cdot v})=\bm{u}\cdot(c\bm{v})$\\
+d.\ $\bm{u\cdot u}\geqslant 0$,并且$\bm{u\cdot u}=0$成立的充分必要条件是$\bm{u=0}$
+\end{TheoremOne}\vspace{4ex}
+
+\begin{definition}
+向量$\bm{v}$的\textbf{长度}（或\textbf{范数}）是非负数$||\bm{v}||$,定义为
+\[||\bm{v}||=\sqrt{\bm{v}\cdot \bm{v}}=\sqrt{v_1^2+v_2^2+\cdots+v_n^2}\text{\ 且\ }||\bm{v}||^2=\bm{v}\cdot \bm{v}\]
+\end{definition}\vspace{4ex}
+
+长度为1的向量称为\textbf{单位向量}. 如果把一个非零向量除以其自身的长度，即乘$\dfrac{1}{||\bm{v}||}$，就可以得到一个单位向量，即$\bm{u}=\dfrac{\bm{v}}{||\bm{v}||}$\\[1ex]
+
+把向量$\bm{v}$化成单位向量$\bm{u}$的过程，称为向量$\bm{v}$的\textbf{单位化}\\[2ex]
+
+\begin{definition}
+如果$\bm{u\cdot v}=0$，则$\mathbb{R}^n$中的两个向量$\bm{u}$和$\bm{v}$是（相互）\textbf{正交的}
+\end{definition}\vspace{4ex}
+
+\begin{TheoremTwo}[毕达哥拉斯（勾股）定理]
+两个向量$\bm{u}$和$\bm{v}$正交的充分必要条件是$||\bm{u+v}||^2=||\bm{u}||^2+||\bm{v}||^2$
+\end{TheoremTwo}\vspace{4ex}
+
+如果向量$\bm{z}$与$\mathbb{R}^n$的子空间W中的任意向量都正交，则称$\bm{z}$\textbf{正交于W}\\[1ex]
+
+与子空间W正交的向量$\bm{z}$的全体组成的集合称为W的\textbf{正交补}，记作$W^\bot$\\[2ex]
+
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+1.向量$\bm{x}$属于$W^\bot$的充分必要条件是向量$\bm{x}$与生成空间W的任一向量都正交\\
+2.$W^\bot$是$\mathbb{R}^n$的一个子空间
+\end{minipage}}
+\par}\vspace{4ex}
+
+\begin{TheoremOne}
+假设A是$m\times n$矩阵，那么A的行空间的正交补是A的零空间，且A的列空间的正交补是$A^T$的零空间:
+\[(\Row A)^\bot=\Nul A\text{\ 且\ }(\Col A)^\bot=\Nul A^T\]
+\end{TheoremOne}\vspace{4ex}
+
+\section{正交集}
+$\mathbb{R}^n$中的向量集合$\{\bm{u}_1,\cdots,\bm{u}_p\}$称为\textbf{正交集}，如果集合中的任意两个不同向量都正交，即当$i\neq j$时，$\bm{u_i\cdot u_j}=0$\\[2ex]
+
+\begin{TheoremOne}
+如果$S=\{\bm{u}_1,\cdots,\bm{u}_p\}$是由$\mathbb{R}^n$中非零向量构成的正交集，那么$S$是线性无关集，因此构成$S$所生成的子空间的一组基
+\end{TheoremOne}\vspace{4ex}
+
+\begin{definition}
+$\mathbb{R}^n$中子空间W的一个\textbf{正交基}是W的一个基，也是正交集
+\end{definition}\vspace{4ex}
+
+\begin{TheoremOne}
+假设$\{\bm{u}_1,\cdots,\bm{u}_p\}$是$\mathbb{R}^n$中子空间W的正交基，对W中的每个向量$\bm{y}$，线性组合$\bm{y}=c_1\bm{u}_1+\cdots+c_p\bm{u}_p$中的权可以由$c_j=\dfrac{\bm{y\cdot u_j}}{\bm{u_j\cdot u_j}}$（$j=1,\cdots,p$）计算
+\end{TheoremOne}\vspace{4ex}
+
+对$\mathbb{R}^n$中给出的非零向量$\bm{u}$，考虑$\mathbb{R}^n$中一个向量$\bm{y}$分解为两个向量之和的问题，一个向量是向量$\bm{u}$的倍数，另一个向量与$\bm{u}$正交. 我们期望写成
+\begin{equation}
+\bm{y}=\hat{\bm{y}}+\bm{z}\label{eq:08}
+\end{equation}
+其中$\hat{\bm{y}}=\alpha\bm{u}$，$\alpha$是一个数，$\bm{z}$是一个垂直于$\bm{u}$的向量. 对给定数$\alpha$，记$\bm{z}=\bm{y}-\alpha\bm{u}$，则方程\eqref{eq:08}可以满足. 那么$\bm{y}-\hat{\bm{y}}$和$\bm{u}$正交的充分必要条件是
+\[(\bm{y}-\alpha\bm{u})\cdot\bm{u}=\bm{y\cdot u}-(\alpha\bm{u})\cdot\bm{u}=\bm{y\cdot u}-\alpha(\bm{u\cdot u})=0\]
+也就是满足方程\eqref{eq:08}且$\bm{z}$与$\bm{u}$正交的充分必要条件是$\alpha=\dfrac{\bm{y\cdot u}}{\bm{u\cdot u}}$和$\hat{\bm{y}}=\proj_L\bm{y}=\dfrac{\bm{y\cdot u}}{\bm{u\cdot u}}\cdot\bm{u}$. 向量$\hat{\bm{y}}$称为\textbf{$\bm{y}$在$\bm{u}$上的正交投影}，向量$\bm{z}$称为\textbf{$\bm{y}$与$\bm{u}$正交的分量}\\[2ex]
+
+如果集合$\{\bm{u}_1,\cdots,\bm{u}_p\}$是由单位向量构成的正交集，那么它是一个\textbf{单位正交集}\\[1ex]
+
+如果W是一个由单位正交集合生成的子空间，那么$\{\bm{u}_1,\cdots,\bm{u}_p\}$是W的\textbf{单位正交基}\\[2ex]
+
+\begin{TheoremOne}
+一个$m\times n$矩阵$U$具有单位正交列向量的充分必要条件是$U^TU=I$
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremOne}
+假设$U$是一个具有单位正交列的$m\times n$矩阵，且$\bm{x}$和$\bm{y}$是$\mathbb{R}^n$中的向量，那么\\
+a.\ $||U\bm{x}||=||\bm{x}||$\\
+b.\ $(U\bm{x})\cdot(U\bm{y})=\bm{x\cdot y}$\\
+c.\ $(U\bm{x})\cdot(U\bm{y})=0$的充分必要条件是$\bm{x}\cdot\bm{y}=0$
+\end{TheoremOne}\vspace{4ex}
+
+\section{正交投影}
+对给定向量$\bm{y}$和$\mathbb{R}^n$中子空间W，存在属于W的向量$\hat{\bm{y}}$满足:\\
+(1)\ W中有唯一向量$\hat{\bm{y}}$，使得$\bm{y}-\hat{\bm{y}}$与W正交\\
+(2)\ $\hat{\bm{y}}$是W中唯一最接近$\bm{y}$的向量\\[2ex]
+
+\begin{TheoremTwo}[正交分解定理]
+若W是$\mathbb{R}^n$的一个子空间，那么$\mathbb{R}^n$中每一个向量$\bm{y}$可以唯一表示为
+\[\bm{y}=\hat{\bm{y}}+\bm{z}\]
+其中$\hat{\bm{y}}$属于W而$\bm{z}$属于$W^\bot$. 实际上，如果$\{\bm{u}_1,\cdots,\bm{u}_p\}$是W的任意正交基，那么
+\[\hat{\bm{y}}=\frac{\bm{y\cdot u_1}}{\bm{u_1\cdot u_1}}\bm{u}_1+\cdots+\frac{\bm{y\cdot u_p}}{\bm{u_p\cdot u_p}}\bm{u}_p\]
+且$\bm{z}=\bm{y}-\hat{\bm{y}}$
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{TheoremTwo}[最佳逼近定理]
+假设W是$\mathbb{R}^n$的一个子空间，$\bm{y}$是$\mathbb{R}^n$中的任意向量，$\hat{\bm{y}}$是$\bm{y}$在W上的正交投影，那么$\hat{\bm{y}}$是W中最接近$\bm{y}$的点，也就是
+\[||\bm{y}-\hat{\bm{y}}||<||\bm{y}-\bm{v}||\]
+对所有属于W又异于$\hat{\bm{y}}$的$\bm{v}$成立
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{TheoremOne}
+如果$\{\bm{u}_1,\cdots,\bm{u}_p\}$是$\mathbb{R}^n$中子空间W的单位正交基，那么
+\[\proj_W\bm{y}=(\bm{y}\cdot\bm{u}_1)\bm{u}_1+(\bm{y}\cdot\bm{u}_2)\bm{u}_2+\cdots+(\bm{y}\cdot\bm{u}_p)\bm{u}_p\]
+如果$U=[\bm{u}_1\quad\bm{u}_2\quad\cdots\quad\bm{u}_p]$，则
+\[\proj_W\bm{y}=UU^T\bm{y},\text{\ 对所有}\bm{y}\in\mathbb{R}^n\text{成立}\]
+\end{TheoremOne}\vspace{4ex}
+
+\section{格拉姆-施密特方法}
+\begin{TheoremTwo}[格拉姆-施密特方法]
+对$\mathbb{R}^n$的子空间W的一个基$\{\bm{x}_1,\cdots,\bm{x}_p\}$，定义
+\[\begin{array}{>{\displaystyle}r >{\displaystyle}l}
+\bm{v}_1 & =\bm{x}_1\\[1ex]
+\bm{v}_2 & =\bm{x}_2-\frac{\bm{x}_2\cdot\bm{v}_1}{\bm{v}_1\cdot\bm{v}_1}\bm{v}_1\\[2ex]
+\bm{v}_3 & =\bm{x}_3-\frac{\bm{x}_3\cdot\bm{v}_2}{\bm{v}_2\cdot\bm{v}_2}\bm{v}_2-\frac{\bm{x}_3\cdot\bm{v}_1}{\bm{v}_1\cdot\bm{v}_1}\bm{v}_1\\[1ex]
+\vdots &\\[1ex]
+\bm{v}_p & =\bm{x}_p-\frac{\bm{x}_p\cdot\bm{v}_{p-1}}{\bm{v}_{p-1}\cdot\bm{v}_{p-1}}\bm{v}_{p-1}-\cdots-\frac{\bm{x}_p\cdot\bm{v}_2}{\bm{v}_2\cdot\bm{v}_2}\bm{v}_2-\frac{\bm{x}_p\cdot\bm{v}_1}{\bm{v}_1\cdot\bm{v}_1}\bm{v}_1
+\end{array}\]
+那么$\{\bm{v}_1,\cdots,\bm{v}_p\}$是W的一个正交基. 此外，
+\[\Span\{\bm{v}_1,\cdots,\bm{v}_k\}=\Span\{\bm{x}_1,\cdots,\bm{x}_k\},\text{\ 其中}1\leqslant k\leqslant p\]
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{TheoremTwo}[QR分解]
+如果$m\times n$矩阵A的列线性无关，那么A可以分解为A=QR，其中Q是一个$m\times n$矩阵，其列形成$\Col A$的一个标准正交基，R是一个$n\times n$上三角可逆矩阵且在对角线上的元素为正数
+\end{TheoremTwo}\vspace{4ex}
+
+\section{最小二乘问题}
+
