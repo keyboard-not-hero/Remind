@@ -92,3 +92,22 @@ from formula\eqref{ga:one}, result:
 3.\eqref{label_name}引用公式编号, 格式为: (<number>). 由amsmath宏包提供
 
 4.\pageref{label}使用label的页码
+
+
+
+五、Demo(示例)05 - reference theorem
+\documentclass{article}
+\newtheorem{Theorem}{theorem}
+\begin{document}
+\begin{Theorem}\label{theor:01}
+this is theorem demo
+\end{Theorem}
+here, we reference theorem\ \ref{theor:01}
+\end{document}
+
+内容讲解
+1.\label{label_name}用于给定理做标记，可用于\begin{theorem_name}之后或定理内容之后，为了格式整洁，建议放置在\begin{theorem_name}之后
+
+2.\ref{label_name}引用定理编号, 格式为: <number>
+
+3.\pageref{label}使用label的页码

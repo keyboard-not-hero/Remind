@@ -126,4 +126,90 @@ c.\ $(U\bm{x})\cdot(U\bm{y})=0$的充分必要条件是$\bm{x}\cdot\bm{y}=0$
 \end{TheoremTwo}\vspace{4ex}
 
 \section{最小二乘问题}
+当方程组的解不存在但又需要求解时，最好的方法是寻求$\bm{x}$，使得$A\bm{x}$尽可能接近$\bm{b}$\\[2ex]
 
+\begin{definition}
+如果$m\times n$矩阵A和向量$\bm{b}$属于$\mathbb{R}^m$，则$A\bm{x}=\bm{b}$的\textbf{最小二乘解}是$\mathbb{R}^n$中的$\hat{\bm{x}}$，使得
+\[||\bm{b}-A\hat{\bm{x}}||\leqslant||\bm{b}-A\bm{x}||\]
+对所有$\bm{x}\in\mathbb{R}^n$成立
+\end{definition}\vspace{4ex}
+
+对给定的A和$\bm{b}$，应用最佳逼近定理于子空间$\Col A$. 取
+\[\hat{\bm{b}}=\proj_{\Col A}\bm{b}\]
+由于$\hat{\bm{b}}$属于A的列空间，故方程$A\bm{x}=\hat{\bm{b}}$是相容的且存在一个属于$\mathbb{R}^n$的$\hat{\bm{x}}$使得
+\begin{equation}
+A\hat{\bm{x}}=\hat{\bm{b}}\label{chap-six-sec-five:01}
+\end{equation}
+由于$\hat{\bm{b}}$是$\Col A$中最接近$\bm{b}$的点，因此一个向量$\hat{\bm{x}}$是$A\bm{x}=\bm{b}$的一个最小二乘解的充分必要条件是$\hat{\bm{x}}$满足\eqref{chap-six-sec-five:01}.这个属于$\mathbb{R}^n$的$\hat{\bm{x}}$是一系列由A的列构造的$\hat{\bm{b}}$的权\\[2ex]
+
+若$\hat{\bm{x}}$满足$A\hat{\bm{x}}=\hat{\bm{b}}$，则由正交分解定理，投影$\hat{\bm{b}}$具有性质$\bm{b}-\hat{\bm{b}}$与$\Col A$正交，即$\bm{b}-A\hat{\bm{x}}$正交于A的每一列. 如果$\bm{a}_j$是A的任意列，那么$\bm{a}_j\cdot(\bm{b}-A\hat{\bm{x}})=0$. 由于每一个$\bm{a}_j^T$是$A^T$的行，因此
+\[A^T(\bm{b}-A\hat{\bm{x}})=\bm{0}\]
+故有
+\[A^T\bm{b}-A^TA\hat{\bm{x}}=\bm{0}\]
+此计算表明$A\bm{x}=\bm{b}$的每个最小二乘解满足方程
+\begin{equation}
+A^TA\bm{x}=A^T\bm{b}\label{chap-six-sec-five:02}
+\end{equation}
+矩阵方程\eqref{chap-six-sec-five:02}表示的线性方程组常称为$A\bm{x}=\bm{b}$的\textbf{法方程}，\eqref{chap-six-sec-five:02}的解通常用$\hat{\bm{x}}$表示\\[2ex]
+
+\begin{TheoremOne}
+方程$A\bm{x}=\bm{b}$的最小二乘解集和法方程$A^TA\bm{x}=A^T\bm{b}$的非空解集一致
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremOne}
+设A是$m\times n$矩阵. 下面的条件是逻辑等价的:\\
+a)\ 对于$\mathbb{R}^m$中的每个$\bm{b}$,方程$A\bm{x}=\bm{b}$有唯一最小二乘解\\
+b)\ A的列是线性无关的\\
+c)\ 矩阵$A^TA$是可逆的\\
+当这些条件成立时,最小二乘解$\hat{\bm{x}}$有下面的表示:
+\[\hat{\bm{x}}=(A^TA)^{-1}A^T\bm{b}\]
+\end{TheoremOne}\vspace{4ex}
+
+\begin{TheoremOne}
+给定一个$m\times n$矩阵A,它具有线性无关的列，取$A=QR$是A类似定理12的$QR$分解,那么对每一个属于$\mathbb{R}^m$的$\bm{b}$,方程$A\bm{x}=\bm{b}$有唯一的最小二乘解,其解为
+\[\hat{\bm{x}}=R^{-1}Q^T\bm{b}\]
+\end{TheoremOne}\vspace{4ex}
+
+\section{线性模型中的应用}
+为了更容易应用所讨论的实际问题，将$A\bm{x}=\bm{b}$写成$X\bm{\beta}=\bm{y}$，且称$X$为\textbf{设计矩阵}，$\bm{\beta}$为\textbf{参数向量}，$\bm{y}$为\textbf{观测向量}\\[2ex]
+
+变量$x$和$y$之间最简单的关系是线性方程$y=\beta_0+\beta_1x$. 对应每一个数据点$(x_j,y_j)$，有一个在直线上的点$(x_j,\beta_0+\beta_1x_j)$具有同样的$x$坐标. 我们称$y_j$为$y$的\textbf{观测值}，而$\beta_0+\beta_1x_j$位$y$的\textbf{预测值}. 观测$y$值和预测$y$值之间的差称为\textbf{余差}\\[2ex]
+
+\textbf{最小二乘直线}$y=\beta_0+\beta_1x$是余差平方之和最小的，这条直线也被称为$\bm{y}$对$\bm{x}$的\textbf{回归直线}.直线的系数$\beta_0$,$\beta_1$被称为（线性）\textbf{回归系数}\\[2ex]
+
+计算$X\bm{\beta}=\bm{y}$的最小二乘问题等价于找出$\bm{\beta}$\\[2ex]
+
+在计算最小二乘直线之前，常见的联系是计算原来$x$值的平均$\bar{x}$，并形成一个新变量$x^*=x-\bar{x}$.新的$x$数据被称为\textbf{平均偏差形式}\\[2ex]
+
+在一些应用中，必须将数据点拟合为非直线形式. 引入\textbf{余差向量$\bm{\varepsilon}$}，定义为$\bm{\varepsilon}=\bm{y}-X\bm{\beta}$，并且记住
+\[\bm{y}=X\bm{\beta}+\bm{\varepsilon}\]
+任何具有这种形式的方程称为\textbf{线性模型}. 一旦$X$和$\bm{y}$被确定，使$\bm{\varepsilon}$长度达到最小化相当于找出$X\bm{\beta}=\bm{y}$的最小二乘解. 在每种情形下，最小二乘解$\hat{\bm{\beta}}$是下面法方程的解:
+\[X^TX\bm{\beta}=X^T\bm{y}\]\\[2ex]
+
+\section{内积空间}
+\begin{definition}
+向量空间V上的内积是一个函数，对每一对属于V的向量$\bm{u}$和$\bm{v}$，存在一个实数$\langle\bm{u},\bm{v}\rangle$满足下面公理，其中$\bm{u}$,$\bm{v}$,$\bm{w}$属于V，$c$为所有数:\\
+1.\ $\langle\bm{u},\bm{v}\rangle=\langle\bm{v},\bm{u}\rangle$\\
+2.\ $\langle\bm{u}+\bm{v},\bm{w}\rangle=\langle\bm{u},\bm{w}\rangle+\langle\bm{v},\bm{w}\rangle$\\
+3.\ $\langle c\bm{u},\bm{v}\rangle=c\langle\bm{u},\bm{v}\rangle$\\
+4.\ $\langle\bm{u},\bm{u}\rangle\geqslant 0\text{且}\langle\bm{u},\bm{u}\rangle=0\text{的充分必要条件是}\bm{u}=0$\\
+一个赋予上面内积的向量空间称为\textbf{内积空间}
+\end{definition}\vspace{4ex}
+
+设V是一个内积空间，其内积记作$\langle\bm{u},\bm{v}\rangle$. 像$\mathbb{R}^n$中一样，我们定义一个向量$\bm{v}$的\textbf{长度}或\textbf{范数}是数
+\[||\bm{v}||=\sqrt{\langle\bm{v},\bm{v}\rangle}\]
+即$||\bm{v}||=\langle\bm{v},\bm{v}\rangle$\\[2ex]
+
+一个单位向量是长度为1的向量，向量$\bm{u}$和$\bm{v}$之间的距离是$||\bm{u}-\bm{v}||$\\[1ex]
+
+向量$\bm{u}$和向量$\bm{v}$正交，如果$\langle\bm{u},\bm{v}\rangle=0$成立\\[2ex]
+
+\begin{TheoremTwo}[柯西-施瓦茨不等式]
+对V中任意向量$\bm{u}$和$\bm{v}$,有
+\[|\langle\bm{u},\bm{v}\rangle|\leqslant||\bm{u}||\ ||\bm{b}||\]
+\end{TheoremTwo}\vspace{4ex}
+
+\begin{TheoremTwo}[三角不等式]
+对属于V的所有向量$\bm{u}$,$\bm{v}$,有
+\[||\bm{u}+\bm{v}||=||\bm{u}||+||\bm{v}||\]
+\end{TheoremTwo}

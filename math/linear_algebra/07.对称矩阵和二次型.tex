@@ -1,0 +1,62 @@
+\chapter{对称矩阵和二次型}
+\section{对称矩阵的对角化}
+一个对称矩阵是一个满足$A^T=A$的矩阵A，这种矩阵当然是方阵，它的主对角线元素是任意的，但其他元素在主对角线的两边成对出现\\[2ex]
+
+\begin{TheoremOne}
+如果A是对称矩阵，那么不同特征空间的任意两个特征向量是正交的
+\end{TheoremOne}\vspace{4ex}
+
+一个矩阵A称为可\textbf{正交对角化}，如果存在一个正交矩阵$P$（满足$P^{-1}=P^T$）和一个对角矩阵$D$使得
+\[A=PDP^T=PDP^{-1}\]\\[2ex]
+
+\begin{TheoremOne}\label{chap-sev-sec-two:03}
+一个$n\times n$矩阵A可正交对角化的充分必要条件是A是对称矩阵
+\end{TheoremOne}\vspace{4ex}
+
+矩阵A的特征值的集合有时称为A的\textbf{谱}\\[2ex]
+
+\begin{TheoremTwo}[对称矩阵的谱定理]
+一个对称的$n\times n$矩阵A具有下述性质:\\
+a.\ A有$n$个实特征值,包含重复的特征值\\
+b.\ 对每一个特征值$\lambda$,对应的特征空间的维数等于$\lambda$作为特征方程的根的重数\\
+c.\ 特征空间相互正交,这种正交性是在特征向量对应于不同特征值的意义下成立的\\
+d.\ A可正交对角化
+\end{TheoremTwo}\vspace{4ex}
+
+\section{二次型}
+计算$\bm{x}^T\bm{x}$时的平方和及更一般形式的表达式称为\textbf{二次型}\\[2ex]
+
+$\mathbb{R}^n$上的一个二次型是一个定义在$\mathbb{R}^n$上的函数，它在向量$\bm{x}$处的值可由表达式$Q(\bm{x})=\bm{x}^TA\bm{x}$计算，其中A是一个$n\times n$对称矩阵. 矩阵A称为\textbf{关于二次型的矩阵}\\[2ex]
+
+如果$\bm{x}$表示$\mathbb{R}^n$中的向量变量，那么\textbf{变量代换}是下面形式的等式:
+\begin{equation}
+\bm{x}=P\bm{y}\ \text{或}\ \bm{y}=P^{-1}\bm{x}\label{chap-sev-sec-two:01}
+\end{equation}
+其中$P$是可逆矩阵且$\bm{y}$是$\mathbb{R}^n$中的一个新的向量变量. 这里$P$的列可确定$\mathbb{R}^n$的一个基，$\bm{y}$是相对于该基的向量$\bm{x}$的坐标向量.\\
+如果用变量代换\eqref{chap-sev-sec-two:01}处理二次型$\bm{x}^TA\bm{x}$，那么
+\begin{equation}
+\bm{x}^TA\bm{x}=(P\bm{y})^TA(P\bm{y})=\bm{y}^TP^TAP\bm{y}=\bm{y}^T(P^TAP)\bm{y}\label{chap-sev-sec-two:02}
+\end{equation}
+且新的二次型矩阵是$P^TAP$. 因为A是对称的，故由定理\ \ref{chap-sev-sec-two:03}，存在正交矩阵$P$，使得$P^TAP$是对角矩阵$D$，\eqref{chap-sev-sec-two:02}中的二次型变为$\bm{y}^TD\bm{y}$\\[2ex]
+
+\begin{TheoremTwo}[主轴定理]
+设A是一个$n\times n$对称矩阵,那么存在一个正交变量代换$bm{x}=P\bm{y}$,它将二次型$\bm{x}^TA\bm{x}$变换为不含交叉乘积项的二次型$\bm{y}^TD\bm{y}$
+\end{TheoremTwo}\vspace{4ex}
+
+矩阵$P$的列称为二次型$\bm{x}^TA\bm{x}$的\textbf{主轴}\\[2ex]
+
+\begin{definition}
+一个二次型$Q$是:\\
+a.\ \textbf{正定的}，如果对所有$x\neq 0$，有$Q(\bm{x})>0$\\
+b.\ \textbf{半正定的}，如果对所有$\bm{x}$，有$Q(\bm{x})\geqslant 0$\\
+c.\ \textbf{负定的}，如果对所有$x\neq 0$，有$Q(\bm{x})<0$\\
+d.\ \textbf{半负定的}，如果对所有$\bm{x}$，有$Q(\bm{x})\leqslant 0$\\
+e.\ \textbf{不定的}，如果$Q(\bm{x})$既有正值又有负值
+\end{definition}\vspace{4ex}
+
+\begin{TheoremTwo}[二次型与特征值]
+设A是$n\times n$对称矩阵,那么一个二次型$\bm{x}^TA\bm{x}$是:\\
+a.\ 正定的,当且仅当A的所有特征值是正数\\
+b.\ 负定的,当且仅当A的所有特征值是负数\\
+c.\ 不定的,当且仅当A既有正特征值,又有负特征值
+\end{TheoremTwo}
