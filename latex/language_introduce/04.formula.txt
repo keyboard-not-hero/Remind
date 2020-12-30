@@ -31,6 +31,10 @@
 
 9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
 
+10.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
+
+11.\dbinom为displaystyle格式\binom，\tbinom为textstyle格式\binom
+
 
 
 二、Demo(示例)02 - one-line display formula
