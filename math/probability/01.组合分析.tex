@@ -100,3 +100,84 @@ $\begin{array}{r l}
 (x+y)^3 & =\binom{3}{0}x^0y^3+\binom{3}{1}x^1y^2+\binom{3}{2}x^2y^1+\binom{3}{3}x^3y^0\\
 & =y^3+3xy^2+3x^2y+x^31
 \end{array}$
+
+\section{多项式系数}
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+{\par\centering\textbf{记号}\par}
+如果$n_1+n_2+\cdots+n_r=n$，则定义$\binom{n}{n_1,n_2,\cdots,n_r}$为
+\[\binom{n}{n_1,n_2,\cdots,n_r}=\frac{n!}{n_1!n_2!\cdots n_r!}\]
+因此，$\binom{n}{n_1,n_2,\cdots,n_r}$表示把$n$个不同的元素分成大小分别为$n_1,n_2,\cdots,n_r$的$r$个不同组的组合数
+\end{minipage}}
+\par}\vspace{2ex}
+
+例1.\ 将10个小孩平均分成A，B两队分别去参加两场不同的比赛，一共有多少种分法?\\
+解:\ 一共有$\displaystyle\binom{10}{5,5}=\frac{10!}{5!5!}=252$种分法\\[1ex]
+
+例2.\ 把10个孩子平均分成两组进行篮球比赛，一共有多少种分法?\\
+解:\ 相对于例1，本例不注重组间次序，所以，一共有$\displaystyle\frac{\frac{10!}{5!5!}}{2!}=126$种分法\\[2ex]
+
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+{\par\centering\textbf{多项式定理}\par}
+\[(x_1+x_2+\cdots+x_r)^n=\sum_{\substack{(n_1,\cdots,n_r):\\n_1+\cdots+n_r=n}}\binom{n}{n_1,n_2,\cdots,n_r}x_1^{n_1}x_2^{n_2}\cdots x_r^{n_r}\]
+上式的求和号是对满足$n_1+n_2+\cdots+n_r=n$的所有非负整数向量$(n_1,n_2,\cdots,n_r)$求和
+\end{minipage}}
+\par}\vspace{2ex}
+
+例.\ 在第一轮淘汰赛中有$n=2^m$名选手，这$n$名选手被分成$n/2$组，每组内都要进行比赛. 每一场比赛的败者将被淘汰而胜者将晋级下一轮，这个过程持续到只有一名选手留下. 假设我们有一场淘汰赛，其中有8名选手.\\
+(a)\ 第一轮之后有多少种可能的结果?(如一种结果是1赢了2，3赢了4，5赢了6，7赢了8)\\
+(b)\ 这场淘汰赛有多少种可能的结果，其中每个结果是否包含了所有轮次的完整信息?\\
+解:\\
+(a)\ 先将8名选手分为4组，分法为$\binom{8}{2,2,2,2}=\frac{8!}{2^4}$;\\
+当前我们不将分组编组序，有$\binom{8}{2,2,2,2}/4!=8!/(2^4\times 4!)$种可能;\\
+最后，进行比赛时，每组有2种可能，所以，总的有$8!\times 2^4/(2^4\times 4!)=8!/4!$种可能\\
+(b)\ 以此类推，4进2半决赛有$4!/2!$种可能，2进1决赛有$2!/1!$种可能，所以，最终结果有$(8!/4!)\times(4!/2!)\times(2!/1!)=8!$种可能\\[2ex]
+
+\section{方程的整数解个数}
+\begin{Theorem}
+共有$\dbinom{n-1}{r-1}$个不同的正整数向量$(x_1,x_2,\cdots,x_r)$满足
+\[x_1+x_2+\cdots+x_r=n\qquad x_i>0,i=1,\cdots,r\]
+\end{Theorem}\vspace{1ex}
+原理:如下\\
+{\par\centering
+\framebox{\begin{minipage}{4cm}
+{\par\centering$\underbrace{1|1|1|\cdots |1|1}_{n\text{个}1}$\par}
+\end{minipage}}
+\par}
+1.\ $n$个$1$代表总和为$n$;\\
+2.\ $|$代表切割数字的位置，使得$x_1$等于第一个切割位置之前的数字总和，$x_2$等于第一个切割位置和第二个切割位置之间的数字总和,$\cdots$,$x_r$等于最后一个切割位置之后的数字总和;\\
+3.\ 从$n-1$个间隔中，插入$r-1$切割符，使数字总共划分为$r$份.\\[2ex]
+
+\begin{Theorem}\label{chap-one:01}
+共有$\dbinom{n+r-1}{r-1}$个不同的非负整数向量$(x_1,x_2,\cdots,x_r)$满足
+\[x_1+x_2+\cdots+x_r=n\]
+\end{Theorem}\vspace{4ex}
+原理:\\
+因为$x_1+x_2+\cdots+x_r=n$的非负整数解个数与$y_1+y_2+\cdots+y_r=n+r$的正整数解个数是相同的(令$y_i=x_i+1,i=1,\cdots,r$)\\[1ex]
+
+例1.\ 一位投资者有2万美元可投资到4个项目上，且每种投资必须是1000美元的整数倍.\\
+(1)如果要求将2万美元全部投资，一共有多少种可行的投资方法?\\
+(2)如果不要求将钱全部投资呢?\\
+解:\\
+(1)根据已知和问题，可得如下方程:\\
+$x_1+x_2+x_3+x_4=20$\\
+根据命题\ref{chap-one:01}，得:\\[1ex]
+$\dbinom{20+4-1}{4-1}=1771$\\
+所以，一共有1771种可能的投资方式\\
+(2)可以将未投资的钱视为第五个"项目"，可得如下方程:\\
+$x_1+x_2+x_3+x_4+x_5=20$\\
+根据命题\ref{chap-one:01}，得:\\[1ex]
+$\dbinom{20+5-1}{5-1}=10626$\\
+所以，一共有10626种可能的投资方式\\[1ex]
+
+例2.\ 在$(x_1+x_2+\cdots+x_r)^n$的展开式中，一共有多少项?\\
+解:
+\[(x_1+x_2+\cdots+x_r)^n=\sum\binom{n}{n_1,\cdots,n_r}x_1^{n_1}\cdots x_r^{n_r}\]
+满足方程$n_1+n_2+\cdots+n_r=n$\\
+根据命题\ref{chap-one:01}，得:\\[1ex]
+$\dbinom{n+r-1}{r-1}$\\
+所以，一共有$\dbinom{n+r-1}{r-1}$项\\[2ex]
+
+
+
