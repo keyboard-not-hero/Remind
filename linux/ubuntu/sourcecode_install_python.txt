@@ -10,97 +10,81 @@ python3编译：
 2.openssl编译(需大于等于1.0.2)
 [thompson@~] cd /tmp && git clone https://github.com/openssl/openssl.git && cd openssl
 
-[thompson@~] make distclean
-
 # openssl默认安装路径为/usr/local(即--prefix=/usr/local)，对应动态库安装路径为/usr/local/lib
-[thompson@~] ./config
+[thompson@openssl] ./config
 
-[thompson@~] nproc
-4
+[thompson@openssl] nproc
+16
 
-[thompson@~] make -j4
+[thompson@openssl] make -j16
 
-[thompson@~] sudo make install
+[thompson@openssl] sudo make install
 
 
 3.tcl/tk编译
 下载地址：http://www.tcl.tk/software/tcltk/download.html
 
-[thompson@~] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/local/src
+[thompson@Downloads] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/local/src
 
-[thompson@~] cd /usr/local/src/tcl8.6.10/unix
+[thompson@Downloads] cd /usr/local/src/tcl8.6.10/unix
 
-[thompson@tcl8.6.10] make distclean
+[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
 
-[thompson@tcl8.6.10] sudo ./configure --prefix=/usr/local/tcl
+[thompson@unix] sudo make -j16
 
-[thompson@tcl8.6.10] sudo make -j4
-
-[thompson@tcl8.6.10] sudo make install
+[thompson@unix] sudo make install
 
 ------------------------------------------------------------
 
-[thompson@~] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/local/src
+[thompson@Downloads] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/local/src
 
-[thompson@~] cd /usr/local/src/tk8.6.10/unix
+[thompson@Downloads] cd /usr/local/src/tk8.6.10/unix
 
-[thompson@tcl8.6.10] sudo apt-get install libx11-dev
+[thompson@unix] sudo apt-get install libx11-dev
 
-[thompson@tcl8.6.10] make distclean
+[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
 
-[thompson@tcl8.6.10] sudo ./configure --prefix=/usr/local/tcl
+[thompson@unix] sudo make -j16
 
-[thompson@tcl8.6.10] sudo make -j4
+[thompson@unix] sudo make install
 
-[thompson@tcl8.6.10] sudo make install
+[thompson@unix] cd;sudo rm -rf /usr/local/src/tcl8.6.10;sudo rm -rf /usr/local/src/tk8.6.10
 
-[thompson@tcl8.6.10] sudo rm -rf /usr/local/src/tcl8.6.10
-
-[thompson@tcl8.6.10] sudo rm -rf /usr/local/src/tk8.6.10
 
 4.编译python
 下载python
-[thompson@~] wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
+[thompson@~] curl -O https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tar.xz
 
-[thompson@~] sudo tar -Jxf Python-3.8.1.tar.xz -C /usr/local/src
+[thompson@~] sudo tar -Jxf Python-3.9.1.tar.xz -C /usr/local/src
 
 # 试编译
-[thompson@~] cd /usr/local/src/Python3.8.1
+[thompson@~] cd /usr/local/src/Python3.9.1
 
-[thompson@3.8.1] sudo make distclean
+[thompson@Python3.9.1] sudo make distclean
 
-[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3
+[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3
 
-[thompson@3.8.1] sudo make -j4
-
-# 出现提示libssl.so.3和libcrypto.so.3 not found，这两个动态库属于程序openssl
-[thompson@~] ldd /usr/local/bin/openssl
-    libssl.so.3 ==> not found
-    libcrypto.so.3 ==> not found
-
-# 解决方法：系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
-[thompson@3.8.1] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
-[thompson@3.8.1] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
+[thompson@Python3.9.1] sudo make -j16
 
 # 重新编译
-[thompson@3.8.1] sudo make distclean
+[thompson@Python3.9.1] sudo make distclean
 
-[thompson@3.8.1] sudo ./configure --prefix=/usr/local/python3
+# 参考引用[1]
+[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3 --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
 
-[thompson@3.8.1] sudo make -j4
+[thompson@Python3.9.1] sudo make -j16
 
-[thompson@3.8.1] sudo make test
+[thompson@Python3.9.1] sudo make test
 
-[thompson@3.8.1] sudo make install
+[thompson@Python3.9.1] sudo make install
 
-[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/python3.8 /usr/bin/python3.8
+[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
 
-[thompson@3.8.1] sudo ln -s /usr/local/python3/bin/pip3.8 /usr/bin/pip3.8
+[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
 
-[thompson@3.8.1] sudo rm -rf /usr/local/src/Python3.8.1
+[thompson@Python3.9.1] cd;sudo rm -rf /usr/local/src/Python-3.9.1
 
-**warning: 最好不要修改默认python3，保持其指向系统默认安装版本
-
+** warning: 小心使用主版本(python3)软链接
 
 报错集：
 1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
@@ -150,3 +134,25 @@ sudo vi /usr/bin/gnome-terminal
 sudo apt purge python3-apt
 sudo apt autoremove
 sudo apt install python3-apt
+
+5.编译python出现提示libssl.so.3和libcrypto.so.3 not found，这两个动态库属于程序openssl
+[thompson@~] ldd /usr/local/bin/openssl
+    libssl.so.3 ==> not found
+    libcrypto.so.3 ==> not found
+
+解决:
+系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
+[thompson@Python3.9.1] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
+[thompson@Python3.9.1] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
+
+6.编译python出现提示_tkinter not found
+解决(setup.py的detect_tkinter_explicitly方法中注释内容):
+sudo ./configure添加如下参数:
+--with-tcltk-includes="-I/path/to/tclincludes -I/path/to/tkincludes"
+--with-tcltk-libs="-L/path/to/tcllibs -ltcl8.6 -L/path/to/tklibs -ltk8.6"
+
+引用:
+[1]tkinter error: https://bugs.python.org/issue31817
+
+
+编辑于: 2021-01-04

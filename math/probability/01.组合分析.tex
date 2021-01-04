@@ -179,5 +179,18 @@ $\dbinom{20+5-1}{5-1}=10626$\\
 $\dbinom{n+r-1}{r-1}$\\
 所以，一共有$\dbinom{n+r-1}{r-1}$项\\[2ex]
 
-
-
+如下图.\\
+\begin{tikzpicture}
+\draw (0,0) grid[step=1] (4,3);
+\draw[fill=black] (0,0) circle[radius=0.6mm] node[below left]{$A$};
+\draw[fill=black] (4,3) circle[radius=0.6mm] node[above right]{$B$};
+\end{tikzpicture}
+从位置A到达位置B的方式有多少种.\\
+假设从起始位置到目标位置需要水平方向移动$n$个单元，垂直方向移动$m$个单元，路径到达方式满足以下公式:
+\[\binom{n+m}{n}\]
+所以，当前解为:\\
+\[\binom{4+3}{4}=7\times 5=35\]
+并且，由于组合满足以下公式:\\
+\[\binom{n}{r}=\binom{n-1}{r-1}+\binom{n-1}{r}\qquad 1\leqslant r\leqslant n\]
+所以，该移动路径满足如下:\\
+\[R_nC_m=R_{n-1}C_m+R_nC_{m-1}\]
