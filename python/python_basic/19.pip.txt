@@ -181,19 +181,31 @@ Windows - python -m pip -U pip
 ** warning：Windows不能使用pip3 install -U pip升级pip，Windows会先卸载pip3,导致后续无法进行
 
 
-五、socks5 proxy配置
-永久配置
-1.GNU/Linux
-vi pip.conf
+五、socks5 proxy配置(需要pysocks支持)
+1.永久配置(per-user)
+GNU/Linux
+vi ~/.config/pip/pip.conf
 [global]
-proxy=socks5://<IP_ADDR>:<PORT>
+proxy=socks5://<ADDR>:<PORT>
 
-2.Windows
+Windows
+vi %APPDATA%\pip\pip.ini
 [global]
-proxy=socks5://<IP_ADDR>:<PORT>
+proxy=socks5://<ADDR>:<PORT>
 
-临时配置
-pip3 install --proxy socks5://<IP_ADDR>:<PORT> <package>
+2.永久配置(global)
+GNU/Linux
+vi /etc/pip.conf
+[global]
+proxy=socks5://<ADDR>:<PORT>
+
+Windows(Windows 7及以上版本)
+vi C:\ProgramData\pip\pip.ini
+[global]
+proxy=socks5://<ADDR>:<PORT>
+
+3.临时配置
+pip3 install --proxy socks5://<ADDR>:<PORT> <package>
 
 
 引用

@@ -78,6 +78,8 @@ python3编译：
 
 [thompson@Python3.9.1] sudo make install
 
+[thompson@Python3.9.1] sudo chown -R thompson:thompson /usr/local/python3
+
 [thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
 
 [thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
@@ -96,8 +98,9 @@ python3编译：
 
 2.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
 解决：
-# python添加socks支持
+# python添加socks支持(先取消proxy)
 [thompson@~] unset ALL_PROXY
+或注释配置文件proxy内容(#符号为注释符)
 
 [thompson@~] sudo pip3 install pysocks
 

@@ -1,0 +1,214 @@
+一、安装Python
+1.必要环境安装
+[thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
+
+
+2.openssl编译(需大于等于1.0.2)
+[thompson@~] cd /tmp && git clone https://github.com/openssl/openssl.git && cd openssl
+
+# openssl默认安装路径为/usr/local(即--prefix=/usr/local)，对应动态库安装路径为/usr/local/lib
+[thompson@openssl] ./config
+
+[thompson@openssl] nproc
+16
+
+[thompson@openssl] make -j16
+
+[thompson@openssl] sudo make install
+
+
+3.tcl/tk编译
+下载地址：http://www.tcl.tk/software/tcltk/download.html
+
+[thompson@Downloads] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/local/src
+
+[thompson@Downloads] cd /usr/local/src/tcl8.6.10/unix
+
+[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
+
+[thompson@unix] sudo make -j16
+
+[thompson@unix] sudo make install
+
+------------------------------------------------------------
+
+[thompson@Downloads] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/local/src
+
+[thompson@Downloads] cd /usr/local/src/tk8.6.10/unix
+
+[thompson@unix] sudo apt-get install libx11-dev
+
+[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
+
+[thompson@unix] sudo make -j16
+
+[thompson@unix] sudo make install
+
+[thompson@unix] cd;sudo rm -rf /usr/local/src/tcl8.6.10;sudo rm -rf /usr/local/src/tk8.6.10
+
+
+4.编译python
+下载python
+[thompson@~] curl -O https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tar.xz
+
+[thompson@~] sudo tar -Jxf Python-3.9.1.tar.xz -C /usr/local/src
+
+# 试编译
+[thompson@~] cd /usr/local/src/Python3.9.1
+
+[thompson@Python3.9.1] sudo make distclean
+
+[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3
+
+[thompson@Python3.9.1] sudo make -j16
+
+# 解决openssl/tkinter问题后重新编译
+[thompson@Python3.9.1] sudo make distclean
+
+[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3 --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
+
+[thompson@Python3.9.1] sudo make -j16
+
+[thompson@Python3.9.1] sudo make test
+
+[thompson@Python3.9.1] sudo make install
+
+[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
+
+[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
+
+[thompson@Python3.9.1] cd;sudo rm -rf /usr/local/src/Python-3.9.1
+
+
+二、安装Nvidia驱动
+## 查看显卡列表
+steven@~$ lspci|grep -i vga
+
+## 显卡详细信息(以GeFore GTX 1650 Mobile为例)
+steven@~$ sudo lshw -C display
+  *-display                 
+       description: VGA compatible controller
+       product: TU117M [GeForce GTX 1650 Mobile / Max-Q] [10DE:1F91]
+       vendor: NVIDIA Corporation [10DE]
+
+## 当前使用显卡驱动
+steven@~$ sudo lshw -C display|grep configuration
+	configuration: driver=nouveau latency=0 
+
+## 查看推荐显卡驱动(如下图显示，建议安装nvidia-driver-435)
+steven@~$ ubuntu-drivers devices
+modalias : pci:v000010DEd00001F91sv000017AAsd00003FFBbc03sc00i00
+vendor   : NVIDIA Corporation
+driver   : nvidia-driver-430 - distro non-free
+driver   : nvidia-driver-435 - distro non-free recommended
+driver   : xserver-xorg-video-nouveau - distro free builtin
+
+## 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
+steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
+blacklist nouveau
+options nouveau modeset=0
+
+## 安装nvidia驱动
+steven@~$ sudo apt install nvidia-driver-435
+
+## 重启
+
+## 查看驱动安装情况
+steven@~$ sudo lshw -C display|grep configuration
+	configuration: driver=nvidia latency=0 
+
+## nvidia显卡用例及版本
+steven@~$ nvidia-smi
+
+
+三、下载DL环境前提工具
+1.科学套件
+Numpy/Scipy/matplotlib
+BLAS - cpu张量运算库，Numpy库底层高性能基础
+
+sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
+pip3.9 install numpy scipy matplotlib pyyaml
+
+2.其他工具
+HDF5 - 二进制文件高效存储，h5py为中间接口库
+Graphviz/pydot-ng - Keras模型可视化，为中间接口库
+
+sudo apt-get install libhdf5-dev graphviz
+pip3.9 install pydot-ng h5py
+
+3.opencv包
+pip3.9 install opencv-python
+
+
+四、安装Docker版本TensorFlow(参考TensorFlow官方文档: https://www.tensorflow.org/install)
+1.安装Docker
+# 前提所需
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+# 下载docker
+下载地址: https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/
+# 安装docker
+sudo dpkg -i docker-ce-<version>.deb docker-ce-cli-<version>.deb containerd.io-<version>.deb
+#添加用户进docker组并切换用户到docker组使其生效(使普通用户不使用sudo来运行docker)
+sudo usermod -aG docker $USER
+newgrp docker
+# 验证是否安装成功
+docker run hello-world
+
+2.安装nvidia container toolkit(Docker添加GPU支持)
+# 添加容器
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+# 安装nvidia container toolkit
+sudo apt-get update
+sudo apt-get install -y nvidia-docker2
+# 重启docker使toolkit生效
+sudo systemctl restart docker
+# 测试
+docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+------------------------------------------
+# 注意Nvidia驱动版本和CUDA版本匹配, 参考链接(表2): https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+3.在Docker内安装TensorFlow
+docker pull tensorflow/tensorflow
+
+4.在docker中运行bash，可在其中运行python, -u $(id -u):$(id -g)指定以非root权限运行docker
+docker run -it -u $(id -u):$(id -g) tensorflow/tensorflow bash
+
+
+五、安装其他后端引擎
+1.Theano
+pip3 install theano
+
+配置theano使用GPU
+vi ~/.theanorc
+[global]
+floatX = float32
+device = gpu0
+
+[nvcc]
+fastmath = True
+
+2.CNTK
+依赖库安装(OpenMPI):
+sudo apt-get install openmpi-bin
+
+安装GPU版本CNTK
+pip3 install cntk-gpu
+
+
+六、安装Keras
+pip3 install keras
+keras运行一次后，自动生成配置文件~/.keras/keras.json
+
+
+故障排查:
+一.docker镜像下载过慢
+解决:
+1.打开阿里云
+2.登录，进入控制台--容器镜像服务--镜像中心--镜像加速器
+3.根据操作文档对应的关联系统manual进行操作
+
+
+引用:
+[1]Docker install manual: https://docs.docker.com/engine/install/
+
+编辑于: 2021-01-05
