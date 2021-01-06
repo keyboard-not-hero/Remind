@@ -1,0 +1,13 @@
+groups - 用户支持的组
+
+语法
+groups [option]... [user_name]...
+
+参数
+--help
+	帮助信息
+
+--version
+	版本信息
+
+当指定user_name，列出该用户支持的组. 否则，默认罗列当前用户支持的组

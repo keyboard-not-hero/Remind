@@ -476,7 +476,7 @@ curl -o robot.jpg https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/
 2.通过socks5 proxy下载文件
 curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
-curl --preproxy socks5://127.0.0.1:1080 -O https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+curl --preproxy socks5://127.0.0.1:<port> -O https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
 
 最后编辑于: 2020-10-08

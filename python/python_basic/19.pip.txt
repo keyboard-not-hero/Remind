@@ -151,7 +151,7 @@ Windows - C:\ProgramData\pip\pip.ini，支持Windows 7与之后的版本，Vista
 二、pip更换源
 永久更换
 1.Linux
-[thompson@.pip] vi pip.conf
+[thompson@.pip] vi ~/.config/pip/pip.conf
 [global]
 trusted-host=mirrors.aliyun.com
 index-url=http://mirrors.aliyun.com/pypi/simple/

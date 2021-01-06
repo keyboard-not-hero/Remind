@@ -1,4 +1,4 @@
-一、安装Python
+一、安装Python3.8(tensorflow最高支持到python3.8)
 1.必要环境安装
 [thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
 
@@ -49,35 +49,38 @@
 
 4.编译python
 下载python
-[thompson@~] curl -O https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tar.xz
+[thompson@~] curl -O https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tar.xz
 
-[thompson@~] sudo tar -Jxf Python-3.9.1.tar.xz -C /usr/local/src
+[thompson@~] sudo tar -Jxf Python-3.8.7.tar.xz -C /usr/local/src
 
 # 试编译
-[thompson@~] cd /usr/local/src/Python3.9.1
+[thompson@~] cd /usr/local/src/Python3.8.7
 
-[thompson@Python3.9.1] sudo make distclean
+[thompson@Python3.8.7] sudo make distclean
 
-[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3
+[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python
 
-[thompson@Python3.9.1] sudo make -j16
+[thompson@Python3.8.7] sudo make -j16
 
-# 解决openssl/tkinter问题后重新编译
-[thompson@Python3.9.1] sudo make distclean
+# 重新编译
+[thompson@Python3.8.7] sudo make distclean
 
-[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3 --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
+[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
 
-[thompson@Python3.9.1] sudo make -j16
+[thompson@Python3.8.7] sudo make -j16
 
-[thompson@Python3.9.1] sudo make test
+[thompson@Python3.8.7] sudo make test
 
-[thompson@Python3.9.1] sudo make install
+[thompson@Python3.8.7] sudo make install
 
-[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
+[thompson@Python3.8.7] sudo chown -R thompson:thompson /usr/local/python
 
-[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
+[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/python3.8 /usr/bin/python
 
-[thompson@Python3.9.1] cd;sudo rm -rf /usr/local/src/Python-3.9.1
+[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/pip3.8 /usr/bin/pip
+
+[thompson@Python3.8.7] cd;sudo rm -rf /usr/local/src/Python-3.8.7
+
 
 
 二、安装Nvidia驱动
@@ -88,20 +91,23 @@ steven@~$ lspci|grep -i vga
 steven@~$ sudo lshw -C display
   *-display                 
        description: VGA compatible controller
-       product: TU117M [GeForce GTX 1650 Mobile / Max-Q] [10DE:1F91]
-       vendor: NVIDIA Corporation [10DE]
+       product: TU104 [GeForce RTX 2070 SUPER]
+       vendor: NVIDIA Corporation
 
 ## 当前使用显卡驱动
 steven@~$ sudo lshw -C display|grep configuration
 	configuration: driver=nouveau latency=0 
 
-## 查看推荐显卡驱动(如下图显示，建议安装nvidia-driver-435)
+## 查看推荐显卡驱动(如下显示，建议安装nvidia-driver-455)
 steven@~$ ubuntu-drivers devices
-modalias : pci:v000010DEd00001F91sv000017AAsd00003FFBbc03sc00i00
 vendor   : NVIDIA Corporation
-driver   : nvidia-driver-430 - distro non-free
-driver   : nvidia-driver-435 - distro non-free recommended
+model    : TU104 [GeForce RTX 2070 SUPER]
+driver   : nvidia-driver-440-server - distro non-free
+driver   : nvidia-driver-450-server - distro non-free
+driver   : nvidia-driver-450 - third-party free
+driver   : nvidia-driver-455 - distro non-free recommended
 driver   : xserver-xorg-video-nouveau - distro free builtin
+
 
 ## 将默认的开源兼容性驱动nouveau加入黑名单，使其开机时无法被核心模块加载
 steven@~$ sudo vi /etc/modprobe.d/blacklist.conf
@@ -109,7 +115,7 @@ blacklist nouveau
 options nouveau modeset=0
 
 ## 安装nvidia驱动
-steven@~$ sudo apt install nvidia-driver-435
+steven@~$ sudo apt install nvidia-driver-455
 
 ## 重启
 
@@ -121,62 +127,65 @@ steven@~$ sudo lshw -C display|grep configuration
 steven@~$ nvidia-smi
 
 
+
 三、下载DL环境前提工具
 1.科学套件
 Numpy/Scipy/matplotlib
 BLAS - cpu张量运算库，Numpy库底层高性能基础
 
 sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
-pip3.9 install numpy scipy matplotlib pyyaml
+pip install numpy scipy matplotlib pyyaml
 
 2.其他工具
 HDF5 - 二进制文件高效存储，h5py为中间接口库
 Graphviz/pydot-ng - Keras模型可视化，为中间接口库
 
 sudo apt-get install libhdf5-dev graphviz
-pip3.9 install pydot-ng h5py
+pip install pydot-ng h5py
 
 3.opencv包
-pip3.9 install opencv-python
+pip install opencv-python
 
 
-四、安装Docker版本TensorFlow(参考TensorFlow官方文档: https://www.tensorflow.org/install)
-1.安装Docker
-# 前提所需
-sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-# 下载docker
-下载地址: https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/
-# 安装docker
-sudo dpkg -i docker-ce-<version>.deb docker-ce-cli-<version>.deb containerd.io-<version>.deb
-#添加用户进docker组并切换用户到docker组使其生效(使普通用户不使用sudo来运行docker)
-sudo usermod -aG docker $USER
-newgrp docker
-# 验证是否安装成功
-docker run hello-world
 
-2.安装nvidia container toolkit(Docker添加GPU支持)
-# 添加容器
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-# 安装nvidia container toolkit
+四、安装TensorFlow(参考TensorFlow官方文档: https://www.tensorflow.org/install, 本文示例以Nvidia RTX 2070super为例, Nvidia driver 455，CUDA 11.1，Tensorflow 2.4.0)
+如果显卡型号较老，请参考下面两个表格进行匹配安装
+Nvidia驱动与CUDA参照表(表2)
+https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+CUDA与TensorFlow参照表(CUDA可略高)
+https://www.tensorflow.org/install/source#linux
+
+1.安装CUDA
+CUDA下载列表: https://developer.nvidia.com/cuda-toolkit-archive
+curl -O https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+curl -O https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu2004-11-1-local/7fa2af80.pub
 sudo apt-get update
-sudo apt-get install -y nvidia-docker2
-# 重启docker使toolkit生效
-sudo systemctl restart docker
-# 测试
-docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
-------------------------------------------
-# 注意Nvidia驱动版本和CUDA版本匹配, 参考链接(表2): https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+sudo apt-get -y install cuda
+** 建议使用md5sum进行校验
 
-3.在Docker内安装TensorFlow
-docker pull tensorflow/tensorflow
+2.安装cuDNN
+登录Nvidia个人账号，进入下载界面: https://developer.NVIDIA.com/cudnn
+根据CUDA版本下载对应的cuDNN
+sudo dpkg -i dpkg -i libcudnn8*.deb
 
-4.在docker中运行bash，可在其中运行python, -u $(id -u):$(id -g)指定以非root权限运行docker
-docker run -it -u $(id -u):$(id -g) tensorflow/tensorflow bash
+3.安装TensorFlow
+pip install tensorflow
+
+4.测试是否获得GPU支持
+imort tensorflow as tf
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+出现如下提示说明已提供GPU支持:
+/job:localhost/replica:0/task:0/device:GPU:0 -> device: 0, name: GeForce RTX 2070 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
 
 
-五、安装其他后端引擎
+
+五、安装其他后端引擎(可选)
 1.Theano
-pip3 install theano
+pip install theano
 
 配置theano使用GPU
 vi ~/.theanorc
@@ -192,23 +201,19 @@ fastmath = True
 sudo apt-get install openmpi-bin
 
 安装GPU版本CNTK
-pip3 install cntk-gpu
+pip install cntk-gpu
+
 
 
 六、安装Keras
-pip3 install keras
+pip install keras
 keras运行一次后，自动生成配置文件~/.keras/keras.json
 
-
-故障排查:
-一.docker镜像下载过慢
-解决:
-1.打开阿里云
-2.登录，进入控制台--容器镜像服务--镜像中心--镜像加速器
-3.根据操作文档对应的关联系统manual进行操作
 
 
 引用:
 [1]Docker install manual: https://docs.docker.com/engine/install/
+[2]Theano github: https://github.com/Theano/Theano
+[3]TensorFlow GPU support test: https://stackoverflow.com/questions/38009682/how-to-tell-if-tensorflow-is-using-gpu-acceleration-from-inside-python-shell
 
 编辑于: 2021-01-05

@@ -53,45 +53,45 @@ python3编译：
 
 4.编译python
 下载python
-[thompson@~] curl -O https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tar.xz
+[thompson@~] curl -O https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tar.xz
 
-[thompson@~] sudo tar -Jxf Python-3.9.1.tar.xz -C /usr/local/src
+[thompson@~] sudo tar -Jxf Python-3.8.7.tar.xz -C /usr/local/src
 
 # 试编译
-[thompson@~] cd /usr/local/src/Python3.9.1
+[thompson@~] cd /usr/local/src/Python3.8.7
 
-[thompson@Python3.9.1] sudo make distclean
+[thompson@Python3.8.7] sudo make distclean
 
-[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3
+[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python
 
-[thompson@Python3.9.1] sudo make -j16
+[thompson@Python3.8.7] sudo make -j16
 
 # 重新编译
-[thompson@Python3.9.1] sudo make distclean
+[thompson@Python3.8.7] sudo make distclean
 
 # 参考引用[1]
-[thompson@Python3.9.1] sudo ./configure --prefix=/usr/local/python3 --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
+[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
 
-[thompson@Python3.9.1] sudo make -j16
+[thompson@Python3.8.7] sudo make -j16
 
-[thompson@Python3.9.1] sudo make test
+[thompson@Python3.8.7] sudo make test
 
-[thompson@Python3.9.1] sudo make install
+[thompson@Python3.8.7] sudo make install
 
-[thompson@Python3.9.1] sudo chown -R thompson:thompson /usr/local/python3
+[thompson@Python3.8.7] sudo chown -R thompson:thompson /usr/local/python
 
-[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
+[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/python3.8 /usr/bin/python
 
-[thompson@Python3.9.1] sudo ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
+[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/pip3.8 /usr/bin/pip
 
-[thompson@Python3.9.1] cd;sudo rm -rf /usr/local/src/Python-3.9.1
+[thompson@Python3.8.7] cd;sudo rm -rf /usr/local/src/Python-3.8.7
 
-** warning: 小心使用主版本(python3)软链接
+** warning: 使用python/pip指令名称，与系统自带python3版本区分
 
 报错集：
 1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
 解决:
-# lsb_release指定详细python版本
+# lsb_release指定详细系统自带python版本
 [thompson@~] sudo vi /usr/bin/lsb_release
 #!/usr/bin/python3.8
 
@@ -102,23 +102,23 @@ python3编译：
 [thompson@~] unset ALL_PROXY
 或注释配置文件proxy内容(#符号为注释符)
 
-[thompson@~] sudo pip3 install pysocks
+[thompson@~] sudo pip install pysocks
 
 
 3.安装完成后无法打开terminal，在ctrl+alt+F1输入gnome-terminal显示无'gi'模块
 解决方法1：
-## 系统自带gi模块目录：/usr/lib/python3/dist-packages/gi
+## 系统自带gi模块目录：/usr/lib/python/dist-packages/gi
 ## 如不在该目录，使用find / -name gi查找
 ## 使用情况: 
 	系统自带3.8及以上版本(ubuntu 20.04)，并且手动安装也是3.8及以上版本；
 	系统自带3.7及以下版本(ubuntu 18.04及以下系统版本)，并且手动安装也是3.7及以下版本
 	原因是ubuntu自带的python库在ubuntu 20.04做了很大变动，造成python库不兼容
 
-## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python3时，对应与/usr/local/pytnon3/lib/python3.7/site-packages)
-[thompson@~] cp -fr /usr/lib/python3/dist-packages/gi /usr/local/python3/lib/python3.7/site-packages
+## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python时，对应于/usr/local/pytnon/lib/python3.7/site-packages)
+[thompson@~] cp -fr /usr/lib/python/dist-packages/gi /usr/local/python/lib/python3.7/site-packages
 
 ## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例，主.次版本相同则不用修改)
-[thompson@~] cd /usr/local/python3/lib/python3.7/site-packages/gi
+[thompson@~] cd /usr/local/python/lib/python3.8/site-packages/gi
 
 [thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-37m-x86_64-linux-gnu.so
 
@@ -145,8 +145,8 @@ sudo apt install python3-apt
 
 解决:
 系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
-[thompson@Python3.9.1] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
-[thompson@Python3.9.1] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
+[thompson@Python3.8.7] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
+[thompson@Python3.8.7] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
 
 6.编译python出现提示_tkinter not found
 解决(setup.py的detect_tkinter_explicitly方法中注释内容):
