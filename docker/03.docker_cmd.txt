@@ -1,7 +1,22 @@
-docker
+docker run - 新建一个container，并在其中运行进程
 
 语法:
+docker run [options] image [command] [args]
 
 参数
--d 
+-a, --attach={stdin|stdout|stderr}
+	与stdin/stdout/stderr连接
+
+--add-host=host:ip
+	添加一条hostname到ip映射记录到/etc/hosts
+
+--cou-shares=0
+
+-d, --detach={true|false}
+	在background下运行，并打印container ID. 默认为false
 	
+-i, --interactive={true|false}
+	保持与stdin连接. 默认为false
+
+-t, --tty={true|false}
+	分配一个pseudo tty给container. 默认为false

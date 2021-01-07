@@ -60,8 +60,13 @@
 CUDA: GPU编程接口，将图形渲染代码交由GPU进行运算
 cuDNN(CUDA Deep Neural Network library): GPU深度卷积网络库
 TPU(Tensor Processing Unit，张量处理器): 谷歌专门为机器学习定制的专用集成电路
-过拟合: 模型在新数据上的性能比在训练数据上要差
-tersor(张量): 即轴的数量，也可视为数组维度。0阶张量为标量，1阶为向量，2阶为矩阵
-。深度学习一般处理0~5阶张量，视频数据为5阶
+过拟合: 模型在测试数据上的性能比在训练数据上要差
+tersor(张量): 即轴的数量，也可视为数组维度。
+	0阶张量 - 标量，通常为一个数字
+	1阶张量 - 向量，由数字组成的数组
+	2阶张量 - 矩阵，二维数组. 形状为(samples, features)
+	3阶张量 - 三维数组. 形状为(samples, timestamps, features)
+	4阶张量 - 四维数组. 适用于图片. 形状为(samples, height, width, channels)/(samples, channel, height, width), 前一种适用于TensorFlow, 后一种适用于Theano, Keras支持两种模式
+	5阶张量 - 五维数组. 适用于视频. 形状为(samples, frame, height, width, channel)
 
 

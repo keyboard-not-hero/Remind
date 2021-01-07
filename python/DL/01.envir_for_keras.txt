@@ -131,7 +131,7 @@ steven@~$ nvidia-smi
 三、下载DL环境前提工具
 1.科学套件
 Numpy/Scipy/matplotlib
-BLAS - cpu张量运算库，Numpy库底层高性能基础
+BLAS - 低层次的、高度并行的张量运算库，通常使用Fortran或C语言实现
 
 sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
 pip install numpy scipy matplotlib pyyaml

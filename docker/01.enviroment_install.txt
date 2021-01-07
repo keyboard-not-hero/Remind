@@ -19,3 +19,6 @@ sudo apt-get purge docker-ce docker-ce-cli containerd.io
 sudo rm -rf /var/lib/docker
 sudo gpasswd -d $USER docker
 sudo groupdel docker
+
+引用:
+[1]docker doc: https://docs.docker.com/
