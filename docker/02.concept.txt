@@ -6,6 +6,8 @@ dockerfile: 自行创建image的源文件
 docker registry: 保存image的位置
 docker hub: 公开使用的docker registry, 默认image下载地址. 地址: https://hub.docker.com/
 container: 执行image程序的进程，内部使用隔离的filesystem/network/process tree，与其他进程/主机隔离
+volumn: 每个container停止后，所做的改变被销毁，不会作用于host. volumn可以将container作的改变即时作用到host
+
 
 Docker使用client-server模式
 1.server: 系统常驻程序(daemon), 使用dockerd指令

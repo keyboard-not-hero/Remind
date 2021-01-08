@@ -1,0 +1,34 @@
+docker ps - container列表
+
+语法
+docker ps [option]
+
+参数
+-a, --all
+	显示所有的container(包含已停止的container)
+	默认只显示运行中的container
+
+-f, --filter=<str>
+	内容过滤器
+
+--format=<fmt>
+	输出的格式, 格式为go语法
+
+-h, --help
+	帮助文档
+
+-n, --last=<num>
+	显示最后创建的container内容(从-a内容中选取)
+	默认为-1
+
+-l, --latest
+	显示最后一条记录
+
+--no-trunc
+	显示完整信息, 完整ID
+
+-q, --quiet
+	只显示container ID
+
+-s, --size
+	显示所有文件的大小

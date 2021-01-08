@@ -1,0 +1,29 @@
+docker exec - 在运行的container中执行command
+
+语法
+docker exec [options] <container_id> <command> [args]
+
+参数
+-d, --detach[=true|false]
+	在background中执行command
+
+-e, --env=<variable>
+	设置环境变量
+
+--env-file=<file_name>
+	读取环境变量的文件，变量之间使用行分隔
+
+-h, --help
+	帮助文档
+
+-i, --interactive[=true|false]
+	保持与stdin连接
+
+--privileged={true|false}
+	给予command额外的权限，使其可以被其他设备读取
+
+-t, --tty[=true|false]
+	分配额外的pesudo tty
+
+-w, --workdir={dir}
+	在container中的工作目录

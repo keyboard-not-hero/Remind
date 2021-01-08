@@ -1,0 +1,39 @@
+docker image - 管理image
+
+语法
+docker image <command>
+
+指令列表
+build <dockfile_name>
+	从dockfile构建image
+
+history [option] <image_name>
+	查询名称为image_name的image的记录
+
+inspect [option] <image_name>...
+	显示单个/多个image的详细信息
+
+load [option]
+	从文件或stdin中读取image
+
+ls [option]
+	罗列当前已下载的image
+
+prune [option]
+	移除当前未使用的image
+
+pull [option] <image_name>
+	下载名称为image_name的image
+
+push [option] <image_name>
+	将名称为image_name的image上传到docker registry
+
+rm [option] <image_name>...
+	移除单个或多个image
+
+save [option] <image_name>...
+	将image保存到tar文件
+	默认输出到stdout
+
+tag <source_image> <target_image>
+	创建一个target_image，该image指向source_image
