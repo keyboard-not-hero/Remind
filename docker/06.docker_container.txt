@@ -1,23 +1,67 @@
 docker container - 管理container
 
-分指令集合
-docker container attach [option] <container>
+语法
+docker container <command>
+
+指令列表
+attach [option] <container>
 	将已运行的container与stdin/stdout/stderr连接
 
-docker container cp [option] <container>:<src_path> <host_dst_path>
-docker container cp [option] <host_src_path> <container>:<dst_path>
+cp [option] <container>:<src_path> <host_dst_path>
+cp [option] <host_src_path> <container>:<dst_path>
 	在container和主机之间拷贝文件
 	container可以是running/stopped状态
 	
-docker container create [option] <image_name> [command] [args]
-	创建一个container，但运行
+create [option] <image_name> [command] [args]
+	创建一个container，但不运行
 
-docker container inspect [option] <container>...
+inspect [option] <container>...
 	显示单个或多个container的详细信息
 
-docker container kill [option] <container>...
-	杀死一个或多个container
+kill [option] <container>...
+	杀死一个或多个container内的所有进程
 
-docker container ls [option]
+ls [option]
 	罗列container. 类似于docker ps
 	默认只罗列running container
+
+pause <container>...
+	暂停一个或多个container内的所有进程
+
+port <container> [PORT[/PROTO]]
+	显示container内的端口映射，可指定端口和协议(TCP/UDP)
+
+prune [option]
+	移除所有stopped状态的container
+
+rename <container> <new_name>
+	重命名container
+
+restart [option] <container>...
+	重启单个或多个container
+
+rm [option] <container>...
+	移除单个或多个container
+
+start [option] <container>...
+	启动单个或多个stopped状态的container
+
+stats [option] [container]...
+	显示单个或多个container的资源用例
+	未指定container时，默认显示所有running状态container的资源用例
+
+stop [option] <container>...
+	停止单个或多个running状态的container，使其变为stopped状态
+
+top <container> [ps_option]
+	显示container下的进程信息
+	ps_option为linux系统下的ps指令参数
+
+unpause <container>...
+	停止暂停单个或多个container下的所有进程
+
+update [option] <container>...
+	更新单个或多个container的配置信息
+
+wait <container>...
+	阻塞直到指定的container进入stopped状态，并打印exit code

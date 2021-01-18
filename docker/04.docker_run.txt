@@ -90,6 +90,9 @@ docker run [options] image [command] [args]
 	分配一个pseudo tty给container
 	默认为false
 
+-v, --volume=<volume_name>:<container_dir>
+	将volume映射到container的指定目录(绝对路径)
+
 
 container识别方式:
 1.完整UUID

@@ -1,8 +1,22 @@
 数据集默认缓存目录: ~/.keras/datasets
 
-由于服务器不可用，所以目前无法直接下载数据集，需手动下载
+
+
+数据集无法直接下载，出现如下报错:
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1125)
+
+解决方法(以MNIST数据集为例):
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1125)
+一、添加如下代码(PEP476, 适用于python3.4/3.5):
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
+二、Install Certificates.command(适用于MacOS)
+/Applications/Python <version>/Install Certificates.command
+
+三、手动下载数据集
 1.下载
-下载源: https://storage.googleapis.com/tensorflow/tf-keras-datasets/<file_name>
+下载源: https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
 备用下载源: https://www.kaggle.com/datasets
 
 2.将下载的数据集移动到~/.keras/datasets目录下

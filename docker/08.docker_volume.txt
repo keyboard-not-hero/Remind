@@ -1,0 +1,20 @@
+docker volume - 管理volume
+
+语法
+docker volume <command>
+
+指令列表
+create [option] <volume_name>
+	创建一个volume
+
+inspect [option] <volume_name>...
+	显示单个或多个volume的详细信息
+
+ls [option]
+	罗列已创建的volume
+
+prune [option]
+	移除所有未使用的volume
+
+rm [option] <volume_name>...
+	移除单个或多个volume
