@@ -4,56 +4,67 @@ date -- 显示和配置系统日期和时间
 date [option] [+format]
 
 参数释义：
--d, --date=<str>    输出指定字符串对应的日期和时间
+-d, --date=<str>
+	输出指定字符串对应的时间(日期和时间使用T分隔). 而不是当前时间
 
---debug    输出debug信息
+--debug
+	输出debug信息
 
--f, --file=<file>    输出指定文件内每行字符串对应的日期和时间
+-f, --file=<file>
+	输出指定文件内每行字符串对应的日期和时间
 
--I[FMT], --iso-8601[=FMT]    输出指定精度的iso-8601时间，FMT选项：date/hours/minutes/seconds/ns
+-I[FMT], --iso-8601[=FMT]
+	输出指定精度的iso-8601时间，FMT选项：date/hours/minutes/seconds/ns
 
--R, --rfc-email    以RFC 5322格式打印日期和时间
+-R, --rfc-email
+	以RFC 5322格式打印日期和时间
 
---rfc-3339=<FMT>    以RFC 3339格式指定精度打印日期和时间，FMT选项：date/seconds/ns
+--rfc-3339=<FMT>
+	以RFC 3339格式指定精度打印日期和时间，FMT选项：date/seconds/ns
 
--r, --reference=<file>    打印文件的最后内容修改时间
+-r, --reference=<file>
+	打印文件最后一次内容修改时间
 
--s, --set=<str>    设置时间为指定字符串对应的日期和时间
+-s, --set=<str>
+	设置时间为指定字符串对应的日期和时间
 
--u, --utc, --universal    显示或设置UTC时间
+-u, --utc, --universal
+	显示或设置UTC时间
 
---help    帮助文档
+--help
+	帮助文档
 
---version    版本信息
+--version
+	版本信息
 
 format选项(指定结果格式)：
 %%    字符%
 
-%a    区域weekday缩写
+%a    locale weekday缩写
 
-%A    区域weekday全称
+%A    locale weekday全称
 
-%b    区域month缩写
+%b    locale month缩写
 
-%B    区域month全称
+%B    locale month全称
 
-%c    区域日期和时间
+%c    locale日期和时间
 
 %C    世纪年(year/100)
 
-%d    day of month。只含个位数时，前置0
+%d    day of month. 只含个位数时，前置0
 
 %D    日期，格式%m/%d/%y
 
-%e    day of month。只含个位数时，前置空格
+%e    day of month. 只含个位数时，前置空格
 
-%F    日期，格式%Y-%m-%d
+%F    完整日期，格式%Y-%m-%d
 
-%g    ISO周的年(year%100)
+%g    ISO周的年的后两位(year%100). ISO周使用星期一作为周起始
 
 %G    ISO周的年
 
-%h    区域month缩写
+%h    locale month缩写
 
 %H    24小时制hour，时间只有一位时，前置0
 
@@ -65,31 +76,31 @@ format选项(指定结果格式)：
 
 %l    12小时制hour，时间只有一位时，前置空格
 
-%m    月份
+%m    月份，只有一位时，前置0
 
-%M    分钟数
+%M    分钟数，只有一位时，前置0
 
 %n    换行符
 
-%N    纳秒
+%N    纳秒(nanoseconds)
 
-%p    地区性AM或PM
+%p    locale AM或PM
 
-%P    地区性am或pm
+%P    locale am或pm
 
 %q    季度(1..4)
 
-%r    12小时制时间，格式%H:%M:%S %p
+%r    locale 12小时制时间，例如: 11:11:04 PM
 
-%R    24小时制hour和minutes，格式%H:%M
+%R    24小时制的小时和分钟，例如: 12:04
 
-%s    Unix时间(自1970-1-1经历的秒数)
+%s    Unix时间戳(自1970-1-1经历的秒数)
 
-%S    秒数
+%S    秒数(00..60)
 
 %t    制表符(\t)
 
-%T    24小时制时间，格式%H:%M:%S
+%T    24小时制时间，例如: 20:10:02
 
 %u    day of week(1..7，周一为1)
 
@@ -97,13 +108,13 @@ format选项(指定结果格式)：
 
 %V    ISO周数，周一作为周起始
 
-%w    day of week(0~6,0代表周日)
+%w    day of week(0~6，0代表周日)
 
 %W    week of year，周一作为周起始
 
-%x    区域性日期(如%m/%d/%Y)
+%x    locale日期(如%m/%d/%Y)
 
-%X    区域性时间(如%H:%M:%S)
+%X    locale时间(如%H:%M:%S)
 
 %y    年，格式year%100
 
@@ -118,7 +129,3 @@ format选项(指定结果格式)：
 %:::z    数字化时区，精度随需要而变更，如+05, -04:30
 
 %Z    字母化时区缩写，如CST
-
-
-
-

@@ -1,0 +1,7 @@
+1.raspberry pi A/B(B有RJ45网络接口)
+2.5V1A电源
+3.Micro-USB连接线
+4.USB键盘/鼠标
+5.HDMI接口的显示器/电视(HDMI接口线)
+6.SD卡(硬盘系统，用于放置系统和文件)
+7.USB无线网卡

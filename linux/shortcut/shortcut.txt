@@ -1,0 +1,14 @@
+X
+ctrl+alt+backspace    重启X
+
+切换桌面
+ctrl+alt+F1    默认桌面类型，图形桌面或文字桌面
+ctrl+alt+F2~F6    文字桌面
+
+terminal
+tab    补齐指令或档案名称
+ctrl+c    终端指令执行
+ctrl+d    退出当前环境
+shift+up    往后翻一页
+shift+down    往前翻一页
+

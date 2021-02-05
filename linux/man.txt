@@ -82,6 +82,7 @@ man [option] <command>
 
 -V, --version    版本信息
 
+
 mandb - 创建或更新手册页索引缓存
 
 语法：

@@ -1,0 +1,153 @@
+bc - 一个任意精度计算器
+
+语法
+bc [options] [file]...
+
+参数释义
+-h, --help
+	帮助文档
+
+-i, --interactive
+	强制进入交互模式
+
+-l, --mathlib
+	使用标准数学库. scale为20
+
+-q, --quiet
+	静默模式，不输出欢迎文字	
+
+-s, --standard
+	执行POSIX模式的bc程序
+
+-v, --version
+	版本信息
+
+-w, --warn
+	输出POSIX模式bc的warning信息
+
+
+数字
+数字作为bc的基本元素，可以使用任意精度，并且包含长度(length)和精度(scale)属性
+
+变量
+变量 - 一个字母后面跟随任意个字母/数字/下划线
+简单变量 - 变量包含单个值
+数组变量 - 变量包含多个值
+四种特殊变量:
+scale - 浮点数的精度
+ibase - 指定input的进制. 默认为十进制
+obase - 指定output的进制. 默认为十进制
+last - 之前最后一个表达式的值
+
+注释符
+单行注释符为#后的部分
+多行注释符以/*开始，并以*/结尾
+
+表达式
+计算运算符
+- exp - 表达式的负
+++ var - 自增符号，并且在表达式中使用新值
+-- var - 自减符号，并且在表达式中使用新值
+var ++ - 自增符号，并且在下一次使用变量时使用新值
+var -- - 自减符号，并且在下一次使用变量时使用新值
+exp + exp - 求和
+exp - exp - 求差
+exp * exp - 求积
+exp / exp - 求商. 精度使用scale指定
+exp % exp - 求余数. a-(a/b)*b，需根据scale来计算余数
+exp ^ exp - 求幂. 幂数必须为整数，否则出现warning并截取整数部分. 精度使用scale指定
+( exp ) - 强制优先计算括号内的运算
+var = exp - 给变量赋值
+var <op>= exp - 相当于var=var<op>exp
+关系运算符
+exp1 < exp2 - 当exp1小于exp2时，结果为1(true)
+exp1 <= exp2 - 当exp1小于等于exp2时，结果为1(true)
+exp1 > exp2 - 当exp1大于exp2时，结果为1(true)
+exp1 >= exp2 - 当exp1大于等于exp2时，结果为1(true)
+exp1 == exp2 - 当exp1等于exp2时，结果为1(true)
+exp1 != exp2 - 当exp1不等于exp2时，结果为1(true)
+布尔运算符
+!exp - 当exp结果为0(false)时，结果为1(true)
+exp && exp - 当所有exp为1(true)时，结果为1(true)
+exp || exp - 当任意一个exp为1(true)时，结果为1(true)
+运算符优先级
+++ --
+-(负号)
+^
+* / %
++ -
+=
+关系运算符
+!
+&&
+||
+
+语句
+语句使用';'或<newline>分割
+语句类型:
+1.expression
+赋值表达式 - 只给变量赋值，不打印变量值
+非赋值表达式 - 计算表达式的值，并打印该值
+2.string
+包含在双引号中的序列字符，打印该值，并且不新增换行符
+3.print list
+打印语句，list代表使用','分割的expression或string
+4.{statement_list}
+多个语句组合的语句列表
+5.if (expression) statement1 [else statement2]
+if分支语句
+6.while (expression) statement
+while循环语句
+7.for ([expression1];[expression2];[expression3]) statement
+for循环语句, expression1在循环开始之前进行测试，expression2在每次循环后进行测试，expression3在每次循环中执行的操作
+8.break
+退出当前内层循环的所有循环
+9.continue
+退出当前内层循环的当前循环，进入下一次循环
+10.halt
+退出bc的指令，适用于if分支语句
+11.return
+从function中返回值0
+12.return (expression)
+从function中返回expression的结果
+
+pseudo语句
+1.limits
+当前bc的限制
+2.quit
+退出bc
+3.warranty
+授权信息
+
+function
+function定义
+define <name>(<parameters>){
+	statement_list
+}
+function调用
+<name>(<parameters>)
+
+预定义function
+length(expression)
+	结果的位数
+
+read()
+	从stdin读取输入一个数
+
+scale(expression)
+	小数精确位数
+
+sqrt(expression)
+	求平方根. expression为负数时，出现run time错误
+
+数学函数库
+s(x)
+	sin值
+c(x)
+	cos值
+a(x)
+	arctangent值
+l(x)
+	求自然对数，以e为底
+e(x)
+	e的x次幂

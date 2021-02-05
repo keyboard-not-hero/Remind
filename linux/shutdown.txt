@@ -1,0 +1,39 @@
+shutdown - 暂停，关机或重启
+
+语法
+shutdown [option...] [time] [wall...]
+
+参数释义
+--help
+	帮助文档
+
+-H, --halt
+	暂停	
+
+-P, --poweroff
+	关机. 默认参数
+
+-r, --reboot
+	重启
+
+-h
+	等价于--poweroff
+
+-k
+	不进行暂停/关机/重启，只发送信息
+
+--no-wall
+	不发送信息
+
+-c
+	退出一个待定的shutdown操作
+
+
+time
+	指定关机时间. 时间格式:
+		hh:mm - 指定关机时间
+		+m - 从当前时间起的m分钟后. 默认为1+
+		now - 马上关机，即0+
+
+wall
+	发送给所有已登录用户的消息
