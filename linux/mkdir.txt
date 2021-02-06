@@ -1,0 +1,26 @@
+mkdir - 创建目录
+
+语法
+mkdir [option] dir
+
+参数释义
+--context[=CTX]
+	类似于-Z. 当指定CTX时，设置SELinux(Security Enhanced Linux)或SMACK(Simply Mandatory Access Control Kernel)为CTX
+
+--help
+	帮助信息
+
+-m, --mode=<mode>
+	指定文件的用户权限. 默认为a=rwx-umask
+
+-p, --parents
+	在需要时，同时创建父目录
+
+-v, --verbose
+	在每一次创建目录后，打印一条信息
+
+--version
+	版本信息
+
+-Z
+	设置创建目录的Security Enhanced Linux
