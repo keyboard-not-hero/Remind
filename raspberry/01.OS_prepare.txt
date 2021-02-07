@@ -1,0 +1,32 @@
+系统烧录:
+1.格式化U盘
+(1)Windows下使用sdformatter进行格式化
+
+2.下载所需软件
+下载Raspberry Pi OS(系统镜像):
+https://www.raspberrypi.org/software/operating-systems/
+
+下载Raspberry Pi Imager(烧录软件):
+https://www.raspberrypi.org/software/
+
+3.打开烧录软件imager，选择系统镜像(自定义镜像)和烧录SD卡
+
+
+错误修复:
+1.屏幕出现no signal
+解决方案1:
+编辑config.txt文件，加入以下内容:
+hdmi_safe=1
+overscan_left=-30
+overscan_right=-30
+overscan_top=-30
+overscan_bottom=-30
+hdmi_group=2
+hdmi_mode=4
+hdmi_drive=2
+config_hdmi_boost=4
+解决方案2:
+重新插拔连接到显示屏端的HDMI线
+
+引用:
+[1]系统准备: https://wiki.diustou.com/Raspberry_Pi_4_Model_B
