@@ -13,8 +13,7 @@ https://www.raspberrypi.org/software/
 
 
 错误修复:
-1.屏幕出现no signal
-解决方案1:
+1.第一次启动屏幕出现no signal或分辨率有误
 编辑config.txt文件，加入以下内容:
 hdmi_safe=1
 overscan_left=-30
@@ -25,8 +24,19 @@ hdmi_group=2
 hdmi_mode=4
 hdmi_drive=2
 config_hdmi_boost=4
-解决方案2:
+
+2.休眠唤醒后出现no signal
 重新插拔连接到显示屏端的HDMI线
+
+3.取消休眠
+sudo vi /etc/lightdm/lightdm.conf
+取消注解下列内容(第43行)
+[Seat:*]
+取消下列注释，并修改为以下内容(第52行)
+xserver-command=X -s 0 -dpms
+
+4.键盘无法在vim中输入esc
+切换到Windows模式
 
 引用:
 [1]系统准备: https://wiki.diustou.com/Raspberry_Pi_4_Model_B
