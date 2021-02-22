@@ -2,8 +2,9 @@ python是一种高级的解释型语言，可以做到一处编写，处处运�
 python相对于其他语言(如C/C++/Java)的优点：
 1.可以使用一个简单语句执行复杂运算
 2.使用缩进语句组，代替其他语言使用”{}”限定语句范围
-3.变量和参数不需要声明类型
+3.变量和参数不需要声明类型(弱类型)
 
+Windows版本python安装
 下载python解释器：
 下载地址：https://www.python.org/downloads/
 安装完成后，配置path路径，步骤如下：
@@ -18,12 +19,13 @@ python相对于其他语言(如C/C++/Java)的优点：
 在命令行输入python，进入python交互界面
 交互界面由首行提示符(>>>)和延续行提示符(…)组成
 
+Linux下安装python
+参考文件linux/ubuntu/sourcecode_install_python.txt
+
 Linux下指定源文件为python可执行文件
 #!/usr/bin/python3
 Mac下指定源文件为python可执行文件
 #!/usr/bin/env python3
-Windows下指定源文件为python可执行文件
-#!python3
 
 python默认源代码编码格式
 python源文件默认编码格式为UTF-8，在文件首行注明编码格式(当包含#!/usr/bin/env语句时，放置到第二行)，格式如下：

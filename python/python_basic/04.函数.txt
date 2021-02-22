@@ -1,58 +1,100 @@
 函数：用于步骤封装(黑盒)或对重复代码提取(整洁)
 
-函数步骤
+
+函数操作步骤
 1.定义函数
 def fun_name(formal_args):
     statement
     return None
 **定义函数时可指定返回值，默认为return None，可省略None为return
+**函数可同时返回多个值，但其本质为一个tuple
 **可使用pass，不做事情，作为占位符
+
 2.调用函数
 fun_name(actual_args)
 
 
 
 函数相关
-1.位置参数 - 调用函数时，严格按定义的形参顺序，赋予对应的实参值
-    1-1.必选参数 - 调用时，必须对每个形参赋值
+一、参数类型
+1.必选参数 - 调用时，必须对每个形参赋值
     格式：
     def NAME(key1):
         STATEMENT
 
-    1-2.默认参数 - 形参附带默认值，定义时，默认参数必须在位置参数之后；调用时，需按顺序将实参赋予形参，可省略后续默认参数的值
+2.默认参数 - 形参附带默认值，定义时，默认参数必须在位置参数之后；调用时，需按顺序将实参赋予形参，可省略后续默认参数的值
     格式：
     def NAME(key，key1=value):
         STATEMENT
+	**默认参数必须为不可变对象，否则多次调用时，上次改变的值被记录
 
 
-2.关键字参数 - 在调用函数时，使用key=val的模式赋值，可忽略赋值顺序。必选参数和默认参数都适用
-
-
-3.可变长度参数 - 在调用时，分别可传入可变数量的位置参数或关键字参数形式的实参
-格式：
-def NAME(key1, *args, **kwargs):
-    STATEMENT
+3.可选参数 - 传入可变数量的位置参数
+格式:
+def NAME(key1, *args):
+	STATEMENT
 
 *args - 调用时，代表可变数量位置实参，args为tuple。位于其后的形参，必须使用关键字参数
-**kwargs - 调用时，代表可变数量关键字参数，kwargs为dict
+
+
+4.关键字参数 - 可传入可变数量的含名称的参数
+格式：
+def NAME(key1, **kwargs):
+    STATEMENT
+
+**kwargs - 调用时，代表可变数量关键字参数，kwargs为带名称的参数tuple
 warning：定义函数时，形参*args必须在**kwargs之前
 
 
-4.特殊参数 - 指定实参只能使用位置参数或关键字参数形式
+5.命名关键字参数 - 指定名称的关键字参数. 
+(1)当之前没有可变参数时，定义函数时使用'*'分隔位置参数和命名关键字参数
 格式：
-def NAME(key1, /, key1, *, key2)
+def NAME(key1, *, key2):
     STATEMENT
-'/' - 分隔符，'/'之前的形参，赋予实参时，只能使用位置参数形式
-'*' - 分隔符，'*'之后的形参，赋予实参时，只能使用关键字参数形式
-warning：'/'与'*'之间的形参部分，可以使用位置参数或关键字参数形式赋予实参。当形参中不带'/'或'*'符号时，默认为该模式
+
+(2)当之前包含可变参数时，命名关键字之前不需要'*'符号
+格式:
+def NAME(key1, *args, key_arg1):
+	STATEMENT
+**命名关键字可指定默认值
+
+定义参数的顺序:
+必选参数
+默认参数
+可变参数
+命名关键字参数
+关键字参数
 
 
-5.解包 - 将
+二、解包
 * - 解包list或tuple为位置实参
 ** - 解包dict为关键字实参
 
 
-6.lambda表达式
+三、递归函数
+函数在内部调用本身
+例:
+def fact(n):
+	if n==1:
+		return 1
+	return n*fact(n-1)
+
+
+四、变量指向函数
+将函数名赋值给变量
+例:
+a=abs
+print(a(-10))
+
+
+五、高阶函数
+将函数作为实参传入函数
+例:
+def add(x, y, f):
+	return f(x)+f(y)
+
+
+六、lambda表达式
 格式：
 lambda a, b : a+b
 ==>
@@ -60,7 +102,7 @@ def fun(a, b):
     return a+b
 
 
-7.文档字符串
+七、文档字符串
 def my_function():
     """This is summary.
 
@@ -73,7 +115,7 @@ def my_function():
 剩余行 - 方法的详细介绍，参数及返回值等
 
 
-8.嵌套函数：
+八、嵌套函数：
 def outer_func():
     print(“this is out func”)
     def inner_func():
@@ -82,7 +124,7 @@ def outer_func():
     return inner_func
 
 
-9.装饰器(decorator) - 在不修改/了解函数(类/方法)原有功能(黑盒)的情况下，动态增加其他功能
+九、装饰器(decorator) - 在不修改/了解函数(类/方法)原有功能(黑盒)的情况下，动态增加其他功能
 # 定义初级decorator
 def invincible(func):
     def wrapper(*args, **kwargs):
@@ -191,7 +233,7 @@ class int(x, base=10)
     接受一个数字或字符串参数x，返回指定进制整数。当参数未提供时，返回整数0
 
 enumerate(iterable, start=0)
-	返回enumerate对象(generator), item为(num, item_of_iterable)的tuple格式
+	返回enumerate对象(generator), item为(index, item_of_iterable)的tuple格式
 
 isinstance(object, classinfo)
     检查object是否为classinfo类(子类)的实例，返回boolean类型
@@ -204,7 +246,7 @@ class list([iterable])
     根据可迭代对象iterable生成一个list对象。当未提供参数时，生成空list
 
 map(function, *iterables)
-    对后续多个iterable，对每个iterable相同索引元素执行function方法操作，指导最短的iterable遍历完毕。返回Iterator对象
+    对后续多个iterable，对每个iterable相同索引元素执行function方法操作，直到最短的iterable遍历完毕。返回Iterator对象
 
 open(file, mode='r', buffering=-1,encoding=None, errors=None, newline=None, closefd=True, opener=None)
 

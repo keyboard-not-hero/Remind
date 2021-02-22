@@ -4,15 +4,15 @@ List
 
 2.列表元素为mutable
 
-3.列表值代表整个列表(类比字符串)
+3.列表名称代表整个列表(类比字符串)
 
 4.list[n]代表列表内的元素值
 
 5.可嵌套
 
-6.负数索引代表反向索引。如a[-1]代表数组a的最后一个元素
+6.负数索引代表反向索引。如: a[-1]代表数组a的最后一个元素
 
-7.切片特性，list[begin,end]获得[begin,end)的子列表
+7.切片特性, list[begin, end]获得[begin, end)的子列表, 步进为1. list[begin, end, step]获得[begin, end)的子列表, 步进为step
 
 8.len(list)获取列表的长度
 
@@ -39,7 +39,7 @@ extend(iterable)：在列表尾部添加iterable内的所有item
 
 index(value[,start[,end]])：从列表中找出第一个值为value的索引，如未找到，引发ValueError异常。可指定搜索的起始start和终止end位置
 
-insert(index,value)：在index索引之前增加value
+insert(index, value)：在index索引处增加value
 
 pop([index])：删除index索引处的值并返回，如未指定，则删除最后一个item并返回
 
@@ -112,24 +112,23 @@ for x in range(10):
 
 
 嵌套列表推导式
-transposed = [[row[i] for row in matrix] for i in range(4)]
+transposed = [i*j for i in range(5,9) for j in range(5)]
 
 等效于
 transposed = []
-for i in range(4):
-  transposed.append([row[i] for row in matrix])
+for i in range(5,9):
+	for j in range(5):
+		transposed.append(i*j)
 
 
 str
 str与list特性一致，除了：
 1.元素为immutable
-2.变量名直接包含str值
 
 
 tuple
 tuple与list特性一致，以()限定(最外层tuple可不使用括弧)，除了：
 1.元素为immutable
-2.变量名直接包含tuple值
 
 空元素tuple：tuple1 = ()
 
@@ -177,6 +176,8 @@ dict为mutable，是key/value对的无序组合，并且key值在dict中具有�
 
 4.删除item：del dict[key]
 
+5.dict位可迭代对象(Iterable)
+
 方法：
 keys()
 	返回dict_keys，里面的元素为key
@@ -213,7 +214,7 @@ dict相比于list的优缺点：
 
 所以，dict即使用空间换取搜索时间
 
-**enumerate(iterable,start=0)：返回enumerate对象，对象的item为计数和iterable中的元素组成的tuple
+**enumerate(iterable,start=0)：返回enumerate对象，对象的item为位置索引和iterable中的元素组成的tuple
 
 **zip(*iterables)：返回zip对象(iterator)，对象的item为每个iterable的同位置元素组成的tuple，tuple长度由len最小的iterable决定
 
@@ -273,3 +274,20 @@ print(a)
 2.当两个sequence长度不同时，在比较的item内无法分出大小，则较长的sequence大
 
 3.当sequence内含嵌套sequence时，进行递归比较
+
+
+
+generator
+特性:
+1.在循环时推算后续元素item, 而不必在生成时占用空间. 即保存的是算法而非元素
+
+2.generator元素为immutable. 因为元素并没有被保存
+
+3.如果函数中包含yield, 则该函数为generator函数. 普通函数遇到return返回, generator函数执行遇到的第一个yield后返回, 下次直接从上次返回的yield之后执行
+
+4.generator为可迭代对象(Iterable对象), Iterable都可以使用for循环进行迭代
+
+5.generator是唯一的生成器(Iterator), Iterator可以被next()函数调用并返回下一个元素
+
+generator推导式
+g=(x*x for x in range(10))

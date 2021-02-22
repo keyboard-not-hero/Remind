@@ -8,6 +8,9 @@ import <module_name>
 form <module_name> import <func_name>/*
 **warning：*引进所有函数，但是以_开头的除外
 
+package
+为了避免模块名命名冲突, 引进目录层级结构, 称为为包(package)
+
 从包中导入模块
 from package import module/*
 **warning：from package import *代表导入package下__init__.py文件内，包含在__all__列表下的module；如__all__未定义，则不导入模块。直接使用module不需要包含在__all__内
