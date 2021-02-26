@@ -9,7 +9,7 @@ form <module_name> import <func_name>/*
 **warning：*引进所有函数，但是以_开头的除外
 
 package
-为了避免模块名命名冲突, 引进目录层级结构, 称为为包(package)
+为了避免模块名命名冲突, 引进目录层级结构, 称为为包(package). 包内必须包含__init__文件, 否则python将该目录视为普通目录
 
 从包中导入模块
 from package import module/*
@@ -47,7 +47,7 @@ package
 
 常用模块
 codecs - 编码/解码定义和基础类
-function:
+method:
 encode(obj, encoding='utf-8', errors='strict')
 	对obj进行编码格式为encoding的编码
 	errors - 字符串格式，表示对错误的处理方式，列表如下：
@@ -61,17 +61,8 @@ decode(obj, encoding='utf-8', errors='strict')
 		ignore - 当出现异常字符时，忽略该字符
 
 
-datetime - 日期和时间模块
-class timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
-	构造一个timedelta对象，保存在内部的只有day/seconds和microseconds，其他参数全部转化为该三个单位
-
-totle_seconds()
-	返回总共秒数
-
-class
-date
-
-classmethod:
+date - 日期相关模块
+class method:
 today()
 	返回当前时间的date对象格式
 
@@ -85,10 +76,9 @@ replace(year=self.year, month=self.month, day=self.day)
 timetuple()
 	返回date对象的time.struct_time对象格式
 
-class
-datetime
 
-classmethod:
+datetime - 日期和时间相关
+class method:
 fromtimestamp(timestamp, tz=None)
 	返回自epoch时间累计的秒数，转化的datetime对象
 
@@ -117,10 +107,8 @@ timedelta = datetime2 - datetime1
 datetime1 > datetime2
 
 
-
-
 json - 将内容在python格式和json之间进行转化
-function:
+method:
 dumps(obj, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
 	将python格式编码为json格式(统一表现为字符串格式)
 	参数见dump(*args, **kwargs)
@@ -159,7 +147,7 @@ number(real)	float
 true			True
 false			False
 null			None 
-	
+
 
 os - 具有可移植性的依赖于操作系统的方法
 variable:
@@ -178,7 +166,7 @@ supports_dir_fd
 supports_fd
     支持使用fd作为path参数的方法set
 
-function:
+method:
 chdir(path)
     切换到指定路径path下，path为字符串格式的路径
 
@@ -232,7 +220,7 @@ walk(top, topdown=True, onerror=None, followlinks=False)
 
 
 os.path - 路径操作方法
-function:
+method:
 abspath(path)
     指定绝对/相对路径的绝对路径表示方法
 
@@ -278,7 +266,6 @@ put(item, block=True, timeout=None)
 
 qsize()
 	队列当前item数量
-	
 
 class
 LifoQueue
@@ -323,6 +310,7 @@ uniform(a, b)
 	
 
 shutil - 对文件和目录进行的高级操作
+method:
 copy(src, dst, *, follow_symlinks=True)
     将源文件(不能是目录)src进行复制
         1.当dst为不存在或为已存在文件时，复制为文件(覆盖)；
@@ -362,13 +350,13 @@ variable:
 argv
     指令行参数列表，argv[0]代表脚本名称，argv[1]代表第一个额外读取参数，以此类推
 
-function:
+method:
 exit([code])
     以可选的退出码code退出python程序。code默认为0
 
 
 time - 相对epoch时间模块
-function:
+method:
 asctime(t=localtime)
 	返回struct_time结构时间t的字符串格式，t默认为localtime返回的当前时间
 	字符串格式参考：'Sun Jun  5 20:31:07 1980'
@@ -463,15 +451,8 @@ print_exc()
     打印追踪栈信息
 
 
-webbrowser - 显示基于web的文档
-function:
-open(url, new=0, autoraise=True)
-    使用浏览器打开url地址
-    当new=0，浏览器使用当前窗口打开页面；当new=1，浏览器使用新窗口打开页面；当new=2，浏览器在当前窗口打开新tab
-
-
 zipfile - 创建/读取/写入/添加/罗列一个ZIP文件
-function:
+method:
 ZipFile(file, mode='r', compression=ZIP_STORED, allowZip64=True, compresslevel=None, *, strict_timestamps=True)
     打开一个ZIP文件
     mode为打开方式，列表：
@@ -479,23 +460,3 @@ ZipFile(file, mode='r', compression=ZIP_STORED, allowZip64=True, compresslevel=N
         'w' - 以覆盖的写入方式
         'a' - 以添加的写入方式
         'x' - 以创建并写入的方式。文件存在抛出FileExistsError异常
-
-
-
-需额外安装模块
-pyperclip - 在剪切板上进行复制或粘贴
-安装方法 - pip3 install pyperclip
-**Linux需额外安装xsel或xclip工具，并且可能需要gtk或PyQt4库
-function:
-copy(str)
-    复制字符串内容str到剪切板
-
-paste()
-    从剪切板读取内容
-
-
-send2trash - 将文件发送到trash
-安装方法 - pip3 install send2trash
-function:
-send2trash(path)
-    将指定文件/目录递归发送到trash

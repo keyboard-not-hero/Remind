@@ -1,0 +1,298 @@
+pygame - 用于开发电子游戏的模块
+安装
+pip install pygame
+
+导入
+import pygame
+
+
+pygame module
+class:
+Surface
+method:
+blit(source, dest, area=None, special_flags=0) -> Rect
+	将source Surface放置到当前Surface中, 在当前Surface的位置为dest坐标. 参数如下:
+		source - 需要放置的Surface
+		dest - 放置Surface的左上角位于当前Surface的左上角坐标
+		area - 从source中截取区域部分. (x_start, y_start, x_length, y_length)格式
+
+function:
+init() -> (numpass, numfail)
+	初始化所有导入的pygame模块
+
+
+pygame.display module
+function:
+set_caption(title, icontitle=None) -> None
+	设置窗口的标题. 参数列表如下:
+		title - 窗口的标题
+		icontitle - 最小化窗口的标题, 部分系统适配
+
+set_icon(Surface) - None
+	设置窗口的icon. 适配32*32分辨率
+
+set_mode(size=(0, 0), flags=0, depth=0, display=0, vsync=0) -> Surface
+	创建一个显示平面, 参数列表如下:
+		size - 平面的宽和高. 没有指定时适配屏幕大小
+
+update(rectangle=None) -> None
+	更新指定矩形区域的平面. 当未指定rectangle参数时, 更新整个平面
+		
+
+pygame.image module
+function:
+load(filename) - Surface
+	加载一个图像文件. 返回Surface对象
+
+
+pygame.mixer module
+class:
+Sound
+method:
+__init__(filename) -> Sound
+	从音频文件构造Sound对象. 音频文件格式可以为OGG或WAV格式
+
+play(loops=0, maxtime=0, fade_ms=0) -> Channel
+	播放音频文件. 参数列表如下:
+		loops - 循环播放次数. 默认为0, -1代表无限次循环
+		maxtime - 指定音频只播放指定时间, 单位为ms
+
+stop() -> None
+	停止播放音频文件
+
+
+pygame.mixer.music module
+function:
+load(filename) -> None
+	加载一个音乐文件
+
+play(loops=0, start=0.0, fade_ms=0) -> None
+	播放已加载的音乐流. 参数如下:
+		loops - 代表播放循环次数. 默认为0. -1代表无限次循环
+		start - 从音乐的指定s位置开始播放. 默认为0.0
+
+
+pygame.font module
+class:
+Font
+method:
+__init__(filename, size) -> Font
+	使用字体文件构建Font对象. 参数列表如下:
+		filename - 字体文件的名称字符串
+		size - 字体的像素高度
+
+render(text, antialias, color, background=None) -> Surface
+	创建一个文字内容平面. 参数列表如下:
+		text - 文字内容字符串. 不支持换行符
+		antialias - 字体是否抗锯齿
+		color - 字体颜色, 使用RGB tuple
+		background - 字体背景, 使用RGB tuple. 默认为透明
+
+
+pygame.event module
+class:
+EventType
+attriibute:
+type
+	事件类型. 可选列表如下:
+		pygame.QUIT - 退出pygame窗口
+		pygame.KEYDOWN - 按下按键
+		pygame.KEYUP - 放开按键
+		pygame.MOUSEMOTION - 鼠标移动
+		pygame.MOUSEBUTTONUP - 鼠标按键释放
+		pygame.MOUSEBUTTONDOWN - 鼠标按键按下
+
+key
+	在KEYUP/KEYDOWN事件类型判断后, 键值类型判断. 如:
+		pygame.K_LEFT - 左方向键
+		pygame.K_RIGHT - 右方向键
+		pygame.K_SPACE - 空格键
+		pygame.K_0 - 数字0键
+
+function:
+get(eventtype=None) -> Eventlist
+	获取事件, 并从队列中移除. eventtype可指定操作的事件类型
+	** Eventlist为EventType实例列表
+
+
+例1.
+import pygame
+
+# 初始化pygame模块
+pygame.init()
+
+# 创建窗口
+screen = pygame.display.set_mode((800,600))
+
+# 标题和icon(图片期望32*32尺寸)
+pygame.display.set_caption("Space Invaders")
+icon = pygame.image.load('ufo.png')
+pygame.display.set_icon(icon)
+
+# 定义插入图像及放置位置
+playerImg = pygame.image.load('space-invaders.png')
+playerX = 370
+playerY = 480
+
+def player(x, y):
+    screen.blit(playerImg, (x, y))
+
+# 持续运行窗口，并接收事件
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # 背景颜色, 使用RGB模式
+    screen.fill((128, 128, 0))
+    # surface中插入并移动图片
+    if playerX <= 760:
+        playerX += 0.1
+    player(playerX, playerY)
+    pygame.display.update()
+
+
+例2.
+import pygame
+import math
+from pygame import mixer
+
+# icon download: https://www.flaticon.com/, 搜索spaceship(32*32)
+# plane download: https://www.flaticon.com/, 搜索arcade space(64*64)
+# enemy download: https://www.flaticon.com/, 搜索space invaders(64*64)
+# bullet download: https://www.flaticon.com/, 搜索bullet(64*64)
+# font download: https://www.dafont.com/
+# resource download: https://github.com/attreyabhatt/Space-Invaders-Pygame/
+
+
+# 初始化pygame模块
+pygame.init()
+
+# 创建窗口
+screen = pygame.display.set_mode((800,600))
+
+# 标题和icon(图片期望32*32尺寸)
+pygame.display.set_caption("Space Invaders")
+icon = pygame.image.load('ufo.png')
+pygame.display.set_icon(icon)
+
+# 定义插入飞机及放置位置
+playerImg = pygame.image.load('space-invaders.png')
+playerX = 370
+playerY = 480
+
+def player(x, y):
+    screen.blit(playerImg, (x, y))
+
+# 定义插入敌人及放置位置
+enemyImg = pygame.image.load('alien.png')
+enemyX = 370
+enemyY = 100
+enemyX_change = 3
+
+def enemy(x, y):
+    screen.blit(enemyImg, (x, y))
+
+# 背景图
+background = pygame.image.load('background.jpg')
+
+# 背景音乐
+mixer.music.load('background.wav')
+mixer.music.play(-1)
+
+# 定义插入子弹及放置位置
+bulletImg = pygame.image.load('bullet.png')
+bulletX = 0
+bulletY = 0
+bulletY_change = -0.3
+bullet_state = 'ready'
+
+def bullet_fire():
+    global bulletX
+    global bulletY
+    if bullet_state == 'fire':
+        bullet_sound = mixer.Sound('laser.wav')
+        bullet_sound.play()
+        bulletX = playerX
+        bulletY = playerY
+        screen.blit(bulletImg, (bulletX, bulletY))
+
+def bullet_move():
+    global bulletX
+    global bulletY
+    if bullet_state == 'fire':
+        screen.blit(bulletImg, (bulletX, bulletY))
+
+# 定义子弹碰撞检测
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt(math.pow(enemyX - bulletX,2) + math.pow(enemyY - bulletY,2))
+    if distance < 20:
+        return True
+    else:
+        return False
+
+# 定义得分显示方法
+score_value = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+textX = 10
+textY = 10
+
+def show_score(x, y):
+    score = font.render("Score :" + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x, y))
+
+# 持续运行窗口，并接收事件
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # 方向键触发
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                playerX -= 5
+            if event.key == pygame.K_RIGHT:
+                playerX += 5
+            if event.key == pygame.K_SPACE:
+                bullet_state = 'fire'
+                bullet_fire()
+
+
+    # 填充背景图
+    screen.blit(background, (0, 0))
+    # 飞机放置位置及移动边界
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >= 760:
+        playerX = 760
+    player(playerX, playerY)
+    # 敌人放置位置及移动边界
+    enemyX += enemyX_change
+    if enemyX >= 760:
+        enemyX_change = -0.3
+    if enemyX <= 0:
+        enemyX_change = 0.3
+    enemy(enemyX, enemyY)
+    # 子弹刷新位置及边界
+    if bullet_state == 'fire':
+        bulletY += bulletY_change
+        bullet_move()
+    if bulletY <= 0:
+        bullet_state = 'ready'
+    # 子弹碰撞检测
+    collision = isCollision(enemyX, enemyY, bulletX, bulletY)
+    if collision:
+        bulletY = 0
+        collision_sound = mixer.Sound('explosion.wav')
+        collision_sound.play()
+        bullet_state == 'ready'
+        score_value += 1
+    # 得分
+    show_score(textX, textY)
+    # 刷新显示
+    pygame.display.update()
+
+引用:
+[1]offical web: https://www.pygame.org

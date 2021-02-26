@@ -1,3 +1,4 @@
+名词解释:
 面向对象：利用封装、继承和多态特性，对物件进行描述和对象间的相互关联，对象为基本单位。
 
 类：定义了数据的形式和对数据的操作，是对事物的抽象描述
@@ -10,7 +11,8 @@
 
 继承：子类通过对父类的继承，只需要实现子类区别于父类的功能
 
-多态：同一个类的不同子类，具有不同的实现功能
+多态：同一个类的不同子类，同名方法具有不同的实现功能
+
 
 类成员
 1.data attributes
@@ -19,20 +21,41 @@
 		private - _VarName的格式，含'_'前缀。建议限类内部访问
 
 	共享范围 - 类变量被所有类实例对象共享；对象变量只被当前对象共享
-	示例：
+	示例:
 	class Dog:
         kind = 'canine'         # class variable shared by all instances
         def __init__(self, name):
             self.name = name    # instance variable unique to each instance
 
+	动态增加变量 - 给实例增加变量, 使同一个类的不同实例还有不同的变量
+	示例:
+	class Student:
+		def __init__(self, name, score):
+			self.name = name
+			self.score = score
+
+		def print_score(self):
+			print('%s: %s'%(self.name, self.score))
+
+	bart = Student('Bart Simpson',62)
+	bart.age = 8
+
 2.methods
 	共享范围 - method被所有类实例对象共享
 
 	同名方法 - 只保留参数最多的同名方法
-	
+
+	与function的差异 - 每个method的第一个参数都是self, 代表实例本身, 但调用时无需传入该参数
 	
 
-常规内部属性/方法：
+python中使用单下划线(_)和双下划线(__)作为private属性概念. 规则差别如下:
+内部属性使用规则：如果使用_变量, 可如public变量正常调用; 如果使用__变量, 使用_classname__variable格式调用
+内部方法使用规则：如果使用_方法, 可如public方法正常调用; 如果使用__方法, 使用_classname__method格式调用
+
+**__<var>__是特殊变量, 可以直接通过变量名进行访问
+
+
+常见特殊变量/方法：
 __class__: <namespace>.ClassName名称
 
 __doc__: 返回类的docstring(类起始的几行字符串描述)
@@ -83,6 +106,7 @@ __slots__: 属性的字符串列表，限定类可使用的属性
 **当local范围内，需要对非local属性操作时，使用nonlocal关键字
 示例：
 def scope_test():
+    spam = "test spam"
     def do_local():
         spam = "local spam"
 
@@ -94,7 +118,6 @@ def scope_test():
         global spam
         spam = "global spam"
 
-    spam = "test spam"
     do_local()
     print("After local assignment:", spam)
     do_nonlocal()
@@ -190,11 +213,6 @@ def get_salary(self):
 2.从父类查找
 
 3.向更上层父类递归查找
-
-
-python中没有private属性概念，通常使用下划线(__)做前缀的属性为类内部使用属性。
-内部方法使用规则：__spam在python语言中，被包装为_classname__spam，并且使用该包装才能引用该属性
-内部属性使用规则：如果使用__开头，子类将不可用该属性，所以以_为开头表明应注意为内部使用属性，但可正常使用
 
 
 built-in方法：

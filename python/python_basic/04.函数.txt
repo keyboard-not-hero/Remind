@@ -94,7 +94,8 @@ def add(x, y, f):
 	return f(x)+f(y)
 
 
-六、lambda表达式
+六、匿名函数
+即lambda表达式
 格式：
 lambda a, b : a+b
 ==>
@@ -116,6 +117,7 @@ def my_function():
 
 
 八、嵌套函数：
+将函数作为结果返回
 def outer_func():
     print(“this is out func”)
     def inner_func():
@@ -124,42 +126,27 @@ def outer_func():
     return inner_func
 
 
-九、装饰器(decorator) - 在不修改/了解函数(类/方法)原有功能(黑盒)的情况下，动态增加其他功能
+九、装饰器(decorator) - 在不修改函数(类/方法)原有功能(黑盒)的情况下，动态增加其他功能
 # 定义初级decorator
 def invincible(func):
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kw):
         print('call %s()' % func.__name__)
-        return func(*args, **kwargs)
+        return func(*args, **kw)
     return wrapper
+# func代表自定义的函数
+# wrapper代表invincible为decorator, args和kw为func传递进来的参数
 
 # 使用初级decorator:
 @invincible
 def out_myname():
     print("my name is lintom")
 
-等同于
-
-out_myname = invincible(out_myname)
-
-示例代码：
-# 为使__name__保持为func.__name__，定义decorator时调用使用decorator @functools.wraps(func)
-import functools
-def dec(func):
-    @functools.wraps(func)
-    def nest(*args, **kwargs):
-        print("call %s(), step %d, step %d." % (func.__name__, args[0], args[1]))
-        return func(*args, **kwargs)
-    return nest
-
-@dec
-def show_time(num1, num2):
-    print('2020-5-29')
-
-show_time(1,2)
-print(show_time.__name__)
+# 初级decorator结果:
+call out_myname()
+my name is lintom
 
 
-**定义高级(三层嵌套)decorator
+# 定义高级(三层嵌套)decorator
 def log(arg):
     def outer(func):
         def nest(*args, **kwargs):
@@ -168,14 +155,36 @@ def log(arg):
         return nest
     return outer
 
-**使用高级decorator
+# 使用高级decorator
 @log("excute")
 def matter():
     print("date 2020-5-29")
 
-等于
+# 高级decorator结果
+excute matter()
+date 2020-5-29
 
-matter = log("excute")(matter)
+# decorator为使__name__保持为func.__name__，在wrapper()前使用@functools.wraps(func)
+
+示例代码(打印函数的执行时间)：
+import functools,time
+def invincible(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print('call %s()' % func.__name__)
+        start = time.time()
+        a = func(*args, **kw)
+        end = time.time()
+        period = end - start
+        print('%s excuted %s s'%(func.__name__,period))
+        return a
+    return wrapper
+
+@invincible
+def out_myname():
+    time.sleep(10)
+
+out_myname()
 
 
 须知：

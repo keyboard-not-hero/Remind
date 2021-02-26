@@ -1,0 +1,8 @@
+创建项目
+选择菜单File -- New Project, 输入project名称, 选择python解释器
+
+安装模块
+选择菜单File -- Settings -- Project:pythonProject -- Python Interpreter
+
+调整字体
+选择菜单File -- Settings -- Editor -- Font

@@ -32,4 +32,7 @@ steven@~$ sudo mount -t vfat -o utf8 /dev/sda6 /mnt
 1.检查~/.Xauthority是否存在, xinit会读取该文件
 2.出现/usr/bin/X not found, 重新安装xorg - sudo apt-get install --reinstall xorg
 
+五、重启gnome-shell
+按组合件ctrl+alt+F3进入terminal，登录后使用killall -3 gnome-shell重新启动gnome-shell
+
 参考链接：http://linux-wiki.cn/wiki/zh-hans/%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98

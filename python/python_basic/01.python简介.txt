@@ -22,9 +22,7 @@ Windows版本python安装
 Linux下安装python
 参考文件linux/ubuntu/sourcecode_install_python.txt
 
-Linux下指定源文件为python可执行文件
-#!/usr/bin/python3
-Mac下指定源文件为python可执行文件
+Linux/Mac下指定源文件为python可执行文件
 #!/usr/bin/env python3
 
 python默认源代码编码格式

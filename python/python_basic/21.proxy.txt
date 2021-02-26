@@ -1,5 +1,5 @@
 pysocks - 配置socks和http代理模块
-安装 - pip3 install PySocks
+安装 - pip install PySocks
 导入 - import socks
 
 function:

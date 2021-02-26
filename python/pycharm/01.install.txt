@@ -1,0 +1,11 @@
+1.下载
+下载地址: https://www.jetbrains.com/pycharm/download/#section=linux
+
+2.解压文件
+tar -zxf pycharm-community-<release>.tar.gz
+
+3.进入目录
+cd pycharm-community-<release>/bin
+
+4.打开软件
+./pycharm.sh &>/dev/null &
