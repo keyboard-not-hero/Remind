@@ -21,25 +21,56 @@ input(prompt)：读取输入字符串，并去掉末尾的newline标记
 
 
 保存到文本
-open(filename,mode)：打开文本，返回file项目
-
-filename：文本文件名
-
-mode：文本操作模式。
-  r -- 只读(默认)
-  w -- 只写，截断已存在文本
-  a -- 只写，添加到文末
-  b -- 二进制模式
-  t -- 文本模式(默认)
-  + -- 添加可读或可写
+open(filename, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+	打开文本，返回file项目. 参数列表如下:
+		filename - 文本文件名
+		mode - 文本操作模式, 清单如下:
+			r -- 只读(默认)
+			w -- 可写，截断已存在文本
+			x -- 可写, 当文件已存在时, 抛出FileExistsError异常
+			a -- 可写，添加到文末
+			b -- 二进制模式
+			t -- 文本模式(默认)
+			+ -- 添加可读或可写
+		buffering - buffer类型. 列表如下:
+			0 - 关闭buffer. 只适用于binary模式
+			1 - line buffering. 只适用于text模式
+			>1 - buffer块的尺寸大小, 单位为bytes
+		encoding - 文本编码/解码格式, 适用于text模式
+		errors - 解码错误执行严格度. 只适用于text模式. 列表如下:
+			strict - 抛出ValueError异常
+			ignore - 忽略该错误, 可能会导致信息丢失
+			replace - 使用指定符号替换解码错误的位置
+		newline - 允许的换行符. 只适用于text模式. 列表如下:
+			r模式
+			None - '\n'、'\r'、'\r\n'都可以作为换行符, 并且统一转化为'\n'
+			'' - '\n'、'\r'、'\r\n'都可以作为换行符, 并且都保留原来的格式
+			'\n' - 将'\n'符号作为行结束符
+			'\r' - 将'\r'符号作为行结束符
+			'\r\n' - 将'\r\n'符号作为行结束符
+			w模式
+			None - '\n'都转化为系统默认的行分隔符. 见os.linesep
+			'' - 保留原样写入到文件
+			'\n' - 保留原样写入到文件
+			'\r' - 将'\n'转化为'\r'
+			'\r\n' - 将'\n'转化为'\r\n'
+		closefd - 是否将文件描述符(整数)与文件关联, 当关联时, file-like object关闭时, 文件描述符也失去作用
 
 在文本模式中，文本文件使用依赖于系统环境的换行符(Unix的\n，Windows的\r\n)，编译器统一使用\n
 
 
 使用with语句结合open()，可以使文件在使用完成后自动close
-例：
+例:
 with open(“vi.txt”) as f：
 	read_data = f.read()
+
+类似于:
+try:
+	f = open('vi.txt')
+	read_data = f.read
+finally:
+	if f:
+		f.close()
 
 
 file object方法：
@@ -54,3 +85,81 @@ write(string)：用于写入string，返回写入字节数。
 seek(offset[,from_what])：配置position，offset为相对于from_what(0-beginning|1-position|2-ending)的偏移，from_what默认为0，并且1/2仅支持binary模式
 
 tell()：获取当前的position
+
+
+io.StringIO类
+method:
+__init__(initial_value='', newline='\n')
+	创建一个存储str内容在内存中的StringIO对象. 参数列表如下:
+		initial_value - buffer中的初始str内容
+		newline - 换行符规则. 列表如下:
+			r模式(getvalue)
+			None - '\n'、'\r'、'\r\n'都可以作为换行符, 并且统一转化为'\n'
+			'' - '\n'、'\r'、'\r\n'都可以作为换行符, 并且都保留原来的格式
+			'\n' - 将'\n'符号作为行结束符
+			'\r' - 将'\r'符号作为行结束符
+			'\r\n' - 将'\r\n'符号作为行结束符
+			w模式(write)
+			None - 所有平台都保存为'\n'符号
+			'' - 保留原样写入到文件
+			'\n' - 保留原样写入到文件
+			'\r' - 将'\n'转化为'\r'
+			'\r\n' - 将'\n'转化为'\r\n'
+
+getvalue() -> str
+	读取buffer中的全部内容
+
+write(str)
+	将字符串写入buffer
+
+close()
+	关闭分配的buffer空间
+
+
+io.BytesIO类
+method:
+__init__(initial_bytes=b'')
+	创建一个存储bytes内容在内存中的StringIO对象
+
+getvalue() -> bytes
+	获取buffer中的bytes值
+
+write(bytes)
+	向buffer中写入bytes内容
+
+pickle module
+function:
+dump(obj, file, protocol=None, *, fix_imports=True, buffer_callback=None)
+	将obj内容转化为bytes格式, 并保存到file-like object文件file中
+
+dumps(obj, protocol=None, *, fix_imports=True, buffer_callback=None) - bytes
+	返回obj内容的bytes格式
+
+load(file, *, fix_imports=True, encoding="ASCII", errors="strict", buffers=None)
+	从file-like object文件file中加载bytes内容, 并返回其内容
+
+loads(data, /, *, fix_imports=True, encoding="ASCII", errors="strict", buffers=None)
+	返回bytes内容的未编码内容
+
+
+json module
+将dict/list/str/int/float/bool/None转化为对应的JSON内容(python中表现为str), 称为序列化
+function:
+dump(obj, fp, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
+	将obj对象转化为JSON格式保存到file-like对象fp中. 参数列表如下:
+		obj - dict/list/str/int等对象
+		fp - file-like对象
+		skipkeys - 为True时, 当dict的键值为非基础类型(str/int/float/bool/None)时, 跳过该键值
+		ensure_ascii - 当为True时, 所有非ASCII字符都进行跳脱处理
+		indent - 指定每元素level缩进空格数
+		separator - 指定(item_sep, key_value_sep)的tuple格式
+		sort_keys - dict内容是否根据key内容进行排序
+
+dumps(obj, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw) - str
+	将obj对象转化为JSON格式
+
+load(fp, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
+	从file-like对象fp中加载JSON内容, 并将其反序列化
+
+loads(s, *, cls=None, object_hook=None, parse_float=None, parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
+	将JSON内容s反序列化

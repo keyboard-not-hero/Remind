@@ -21,13 +21,14 @@
 		private - _VarName的格式，含'_'前缀。建议限类内部访问
 
 	共享范围 - 类变量被所有类实例对象共享；对象变量只被当前对象共享
+	同名优先级: 实例变量 > 类变量
 	示例:
 	class Dog:
         kind = 'canine'         # class variable shared by all instances
         def __init__(self, name):
             self.name = name    # instance variable unique to each instance
 
-	动态增加变量 - 给实例增加变量, 使同一个类的不同实例还有不同的变量
+	动态增加变量 - 给实例增加变量, 使同一个类的不同实例拥有不同的变量
 	示例:
 	class Student:
 		def __init__(self, name, score):
@@ -60,14 +61,23 @@ __class__: <namespace>.ClassName名称
 
 __doc__: 返回类的docstring(类起始的几行字符串描述)
 
+__slots__: 限制可添加到实例的变量名, 使用tuple格式. 只对当前类实例起作用, 对子类无效
+
+__call__(): 将实例当做方法调用
+
+__getitem__(): 使实例可通过下标[]格式取出item
+
 __init__(): 创建对象时，进行的初始化构造对象操作
 
 __iter__(): 返回对象的iterator
 
+__len__(): built-in方法len()实际调用的类方法
+
 __next__(): 返回下一个元素。实现该方法的类，其实例即为iterator
 
-__slots__: 属性的字符串列表，限定类可使用的属性
+__str__(): 打印的实例对象字符串
 
+__repr__(): 实例对象字符串. 通常在IPython中直接显示实例对象
 **self关键字: 在类中，通过self调用类对象的属性和方法。类方法的第一个参数携带该关键字，调用关系object.method()等于ClassName.method(object)
 
 

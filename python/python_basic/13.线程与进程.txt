@@ -1,9 +1,68 @@
 进程：cpu最小分配单元，每个运行中的程序至少包含一个进程，不同进程使用不同内存空间
 
+
+多进程方式一(fork函数, 适用于Unix/GNU Linux/Mac):
+fork()函数返回两次. 在父进程中返回子进程的ID, 在子进程中返回0
+例.
+import os
+
+print('Process %s start.'%os.getpid())
+pid = os.fork()
+if pid == 0:
+	print('I am child process %s, i inherit from process %s.'%(os.getpid(), os.getppid()))
+
+结果
+Process 6535 start.
+I am parent process 6535, i have a child process 6536.
+I am child process 6536, i inherit from process 6535.
+
+
+多进程方式二(multiprocessing.Process类和multiprocessing.pool.Pool类, 适用于Unix/GNU Linux/Mac/Windows系统):
+例1.
+from multiprocessing import Process
+import os
+
+def run_proc(name):
+    print('Run child process %s (%s)...' % (name, os.getpid()))
+
+if __name__=='__main__':
+    print('Parent process %s.' % os.getpid())
+    p = Process(target=run_proc, args=('test',))
+    print('Child process will start.')
+    p.start()
+    p.join()
+    print('Child process end.')
+
+例2.
+子进程跟随父进程结束(子进程为daemonic进程)
+import multiprocessing, time, os
+
+def f(proc_name):
+	print("%s的进程ID: %s." % (proc_name, os.getpid()))
+	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
+	time.sleep(20)
+	print("进程%s is done." % os.getpid())
+
+if __name__ == "__main__":
+	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
+	process = multiprocessing.Process(target=f, args=("sub_proc",), daemon=True)
+	process.start()
+	time.sleep(5)
+	print("进程%s is done." % os.getpid())
+
+
+三种启动子进程的方式:
+1.spawn - 只从父进程继承必要的资源. 速度比fork/forkserver慢得多. 支持Unix/Mac/Windows, 在Mac和Windows为默认选项
+
+2.fork - 完整继承父进程资源. 无法使用该方法启动多线程的进程. 支持Unix/Mac, 在Unix中为默认选项
+
+3.forkserver - 启动一个server process, 每当需要启动新的process时, 父进程连接到server procee, server process会fork一个新进程. server process为单线程进程. 只在可用pipe传递文件描述符的Unix系统中支持
+
+
 multiprocessing模块
 function:
 cpu_count()
-	当前当前cpu数量
+	当前系统cpu数量
 
 current_process()
 	返回当前进程对象
@@ -15,7 +74,8 @@ Pipe(duplex=True)
 	创建一个管道，返回(conn1, conn2)， 即一对Connection对象
 	duplex - 当为True，管道为双工管道；当为False时，单工管道，conn1只能接收信息，conn2只能发送信息
 
-class - Process
+class
+Process
 variabl:
 daemon
 	设置或获取进程是否为daemon进程
@@ -34,14 +94,14 @@ pid
 	进程id
 
 method:
-__init__(self, group=None, target=None, name=None, args=(),kwargs={}, *, daemon=None)
-	创建一个新进城
-	group - 保留
-	target - function，进程中执行的方法. 实际被run()调用
-	name - str类型，进程的名称，默认为'ForkPoolWorker-<N>'
+__init__(group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)
+	创建一个子进程
+	group - 保留, 主要与threading.Thread格式兼容
+	target - 可调用的function, 被子进程的run()方法调用的函数
+	name - str类型，进程的名称，默认为'Process-<N>'
 	args - tuple类型，传入target方法的位置参数
 	kwargs - dict类型，传入target方法的关键字参数
-	daemon - bool类型，设置进程是否为守护线程。默认继承自主进程，主进程非守护进程
+	daemon - bool类型，设置进程是否为守护线程。默认继承自父进程
 
 close()
 	关闭进程
@@ -62,22 +122,54 @@ start()
 terminate()
 	SIGTERM signal中断
 
+
+例3.
+所有进程在进程池中处于同一个队列, sync进程会阻塞不让下一个进程执行, async不会如此
+
+
+
+例4.
+Pool类的map不会在进程在进行阻塞
+import time, os, random
+from multiprocessing.pool import Pool
+
+def pow_num(x):
+    pro = x*x
+    print(pro)
+    r = random.randint(10, 20)
+    time.sleep(r)
+    print('process id: %s, execute %d s.'%(os.getpid(), r))
+
+p = Pool(4)
+start = time.time()
+l = range(1, 11)
+p.map(pow_num, l, chunksize=2)
+p.close()
+p.join()
+end = time.time()
+print("cost time %.2f"%(end-start))
+print("maip process is done.")
+
+
 multiprocessing.pool模块
-class - Pool
-
+class
+Pool
 method:
-__init__(self, processes=None, initializer=None, initargs=(), maxtasksperchild=None, context=None)
-	创建进程池
-	processes - 进程数量，默认为os.cpu_count()返回的值
+__init__(processes=None, initializer=None, initargs=(), maxtasksperchild=None, context=None)
+	创建进程池. 参数列表如下:
+		processes - 进程池中的进程数量. 默认为os.cpu_count()返回的值
+		initializer - 当不为None时, 进程池中的每个进程都调用该可调用函数
+		initargs - 可调用函数的位置参数列表
+		maxtasksperchild - 进程执行指定任务数量后关闭. 默认为存活直到线程池关闭
 
-apply(self, func, args=(), kwds={})
-	启动sync进程
+apply(func, args=(), kwds={})
+	启动sync进程, 需要进程池中的上一个运行进程完毕, 再执行下一个进程. 参数列表如下:
 	func - 调用的函数
 	args - tuple格式，传递给调用函数的位置参数
 	kwds - dict格式，传递给调用函数的关键字参数
 
-apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None)
-	启动async进程
+apply_async(func, args=(), kwds={}, callback=None, error_callback=None)
+	启动async进程, 进程池中的进程可随时切换执行
 	func - 调用的函数
 	args - tuple格式，传递给调用函数的位置参数
 	kwds - dict格式，传递给调用函数的关键字参数
@@ -85,12 +177,26 @@ apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None)
 close()
 	阻止新进程加入进程池
 
+imap(func, iterable, chunksize=1)
+	慵懒版本的map, 可用于处理大型iterables
+
 join()
 	进程池进程阻塞主进程
+
+map(func, iterable, chunksize=1)
+	将iterable中的元素逐个执行func的操作. 类似于built-in指令map. 块内保持同步阻塞(非进程间, 而是进程内的块单元操作). 参数列表如下:
+		func - 可迭代对象中元素执行的操作
+		iterable - 可迭代对象
+		chunksize - 将可迭代对象切分的大小, 该切分后的块分配给不同process
+
+map_async(func, iterable, chunksize=1, callback=None, error_callback=None)
+	类似于map
 
 terminate()
 	马上中断进程池中所有进程
 
+
+进程间通信方式一(multiprocessing.Queue类和multiprocessing.Pipe函数):
 multiprocessing.connection模块
 class - Connection
 
@@ -105,54 +211,7 @@ recv()
 send(obj)
 	向另一端发送信息
 
-示例1 - 子进程与父进程分离
-import multiprocessing, time, os
-
-def f(proc_name):
-	print("%s的进程ID: %s." % (proc_name, os.getpid()))
-	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
-	time.sleep(20)
-	print("进程%s is done." % os.getpid())
-
-if __name__ == "__main__":
-	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
-	process = multiprocessing.Process(target=f, args=("sub_proc"))
-	process.start()
-	print("进程%s is done." % os.getpid())
 	
-
-示例2 - 父进程等待子进程完结
-import multiprocessing, time, os
-
-def f(proc_name):
-	print("%s的进程ID: %s." % (proc_name, os.getpid()))
-	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
-	time.sleep(20)
-	print("进程%s is done." % os.getpid())
-
-if __name__ == "__main__":
-	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
-	process = multiprocessing.Process(target=f, args=("sub_proc"))
-	process.start()
-	process.join()
-	print("进程%s is done." % os.getpid())
-	
-3.子进程跟随父进程结束(子进程为daemonic进程)
-import multiprocessing, time, os
-
-def f(proc_name):
-	print("%s的进程ID: %s." % (proc_name, os.getpid()))
-	print("%s的父进程ID: %s." % (proc_name, os.getppid()))
-	time.sleep(20)
-	print("进程%s is done." % os.getpid())
-
-if __name__ == "__main__":
-	print("%s的进程ID: %s." % (multiprocessing.current_process().name, os.getpid()))
-	process = multiprocessing.Process(target=f, args=("sub_proc",), daemon=True)
-	process.start()
-	time.sleep(5)
-	print("进程%s is done." % os.getpid())
-
 4.进程池
 import multiprocessing, time, os
 

@@ -1,14 +1,14 @@
-错误：指语法输入不正确导致的语法错误
-异常：可通过built-in或自定义异常类捕获(try…except语法)的错误
+错误: 指语法输入不正确导致的语法错误
+异常: 可通过built-in或自定义异常类捕获(try…except语法)的错误
 
-异常语法：
-try：
+异常语法:
+try: 
   statement1
-except ErrorClass：
+except ErrorClass:
   statement2
-else：
+else:
   statement3
-finally：
+finally:
   statement4
 其中：
 1.else为未捕获到异常时，必须执行的指令
@@ -28,5 +28,31 @@ Python的错误称为反向追踪器，最先显示外部调用错误，末尾�
 
 断言
 语法：
-assert condition,
-statement
+assert condition, statement
+
+
+logging
+loggong level:
+DEBUG
+INFO
+WARNING(默认)
+ERROR
+CRITICAL
+
+例1. 使用默认阈值
+import logging
+
+logging.info('normal info')
+logging.warning('warning')
+
+例2. 设置监管阈值
+import logging
+# 设置logging等级
+logging.basicConfig(level=logging.DEBUG)
+logging.info('normal info')
+logging.warning('warning')
+
+例3. 将输出logging保存到文件
+import logging
+logging.basicConfig(filename='logging.log', level=logging.INFO)
+logging.warning('warning')

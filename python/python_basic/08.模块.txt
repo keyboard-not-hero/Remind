@@ -151,6 +151,9 @@ null			None
 
 os - 具有可移植性的依赖于操作系统的方法
 variable:
+environ
+	以dict格式返回环境变量
+
 linesep
     行分隔符
 
@@ -169,6 +172,7 @@ supports_fd
 method:
 chdir(path)
     切换到指定路径path下，path为字符串格式的路径
+	可能会抛出OSError/FileNotFoundError/PermissionError/NotADirectoryError异常
 
 exists(path)
     指定文件/目录是否存在。当目标为sysbolic link，并且所指向的文件不存在时，返回False
@@ -179,15 +183,29 @@ fchchir(fd)
 getcwd()
     返回当前工作目录的字符串形式
 
+getenv(key, default=None)
+	返回指定key的环境变量值
+
+getlogin()
+	当前登入者的name
+
+getpid()
+	返回当前进程id
+
+getppid()
+	返回当前进程的父进程id
+
 getsize()
     返回文件/目录的大小，单位为byte
 
 listdir(path='.')
-    列出指定路径path下的文件/目录名称，path默认为当前目录.
+    列出指定路径path下的文件/目录名称
 
 makedirs(path, mode=0o777, exist_ok=False)
-    创建目标目录，并创建所需的父目录，新创建的目录使用mode-umask
-    当exist_ok为False时，如目标目录存在，抛出FileExistsError异常
+    按需递归创建所需目录. 参数列表如下:
+		path - 所需创建的目录路径字符串
+		mode - 目录的权限, 结果为mode-umask
+    	exist_ok - 目录已存在时的反应. 为False是, 如目标目录存在，抛出FileExistsError异常
 
 remove(path, *, dir_fd=None)
     删除指定文件，当path为目录时，抛出IsADirectoryError异常
@@ -237,7 +255,7 @@ join(path, *paths)
     使用目录分隔符os.sep连接path和*paths，除了最后一个参数和''参数不带目录分隔符
 
 split(path)
-    将路径拆分为最后一个'\'之前和之后的字符串，并返回该两个字符串的元组
+    将路径拆分为最后一个'/'之前和之后的字符串，并返回该两个字符串的元组
 
 
 queue - 生产者/消费者队列，其中，Queue类完整实现锁机制
