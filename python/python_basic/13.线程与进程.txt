@@ -125,7 +125,28 @@ terminate()
 
 例3.
 所有进程在进程池中处于同一个队列, sync进程会阻塞不让下一个进程执行, async不会如此
+import time, os
+from multiprocessing.pool import Pool
 
+def do_sync(num):
+    print("sync process %d start, process id: %s."%(num, os.getpid()))
+    time.sleep(10)
+
+def do_async(num):
+    print("async process %d start, process id: %s."%(num, os.getpid()))
+    time.sleep(15)
+
+p = Pool(4)
+start = time.time()
+p.apply_async(do_async, args=(1,))
+p.apply(do_sync, args=(2,))
+p.apply_async(do_async, args=(3,))
+p.apply(do_sync, args=(4,))
+p.close()
+p.join()
+end = time.time()
+print("cost time %.2f"%(end-start))
+print("maip process is done.")
 
 
 例4.
@@ -197,41 +218,87 @@ terminate()
 
 
 进程间通信方式一(multiprocessing.Queue类和multiprocessing.Pipe函数):
-multiprocessing.connection模块
-class - Connection
+例1.
+只能使用Process向Queue中添加元素, 无法使用Pool
+queue是进程/线程安全的
+from multiprocessing import Queue, Process
 
+def put_in(q, *args):
+    q.put(args)
+
+if __name__ == '__main__':
+    queue = Queue()
+    p1 = Process(target=put_in, args=(queue, [1,2,3]))
+    p2 = Process(target=put_in, args=(queue, 'i love you'))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+    print(queue.get())
+    print(queue.get())
+    print("main process is done.")
+
+
+multiprocessing.Queue类
+method:
+__init__(maxsize=0)
+	初始化一个队列. 参数如下:
+		maxsize - 指定队列容量. 当<=0时, 不限制容量
+
+close()
+	停止向queue中放置元素
+
+get(block=True, timeout=None)
+	从队列中移除并返回一个元素. 参数列表如下:
+		block - 为True时, 没有元素可获得时阻塞
+		timeout - 阻塞的最长时限, 之后仍然无法获取元素时, 抛出queue.Empty异常
+
+put(obj, block=True, timeout=None)
+	将obj放入队列. 参数列表如下:
+		obj - 放入队列中的对象
+		block - 为True时, 队列没有位置时阻塞
+		timeout - 阻塞的最长时限, 之后仍然没有位置时, 抛出queue.Full异常
+
+
+例2.
+from multiprocessing import Pipe, Process
+import time
+
+def send_to(con):
+    con.send([1,2,"monkey"])
+    time.sleep(10)
+    print(con.recv())
+
+def recv_from(con):
+    print(con.recv())
+    time.sleep(5)
+    con.send("knock knock")
+
+if __name__ == '__main__':
+    con1, con2 = Pipe()
+    p1 = Process(target=send_to, args=(con1,))
+    p2 = Process(target=recv_from, args=(con2,))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+    print('main process is done.')
+
+multiprocessing.Pipe方法
+Pipe(duplex=True)
+	返回两个通信接口Connection对象(con1, con2). 参数如下:
+		duplex - 当为True时, 信道为双工, con1/con2皆可收发信息; 当为False时, 信道为单工, con1只能收信息, con2只能发信息
+
+multiprocessing.connection.Connection类
 method:
 close()
-	关闭连接
+	关闭管道连接
 
 recv()
-	接收另一端发送的信息，阻塞直到另一端发送信息
-	当阻塞阶段，另一端主动关闭，抛出EOFError异常
+	从另一端接收obj
 
 send(obj)
-	向另一端发送信息
-
-	
-4.进程池
-import multiprocessing, time, os
-
-def f(i):
-    start = time.time()
-    print("Process %s is running." % multiprocessing.current_process().name)
-    result = 100**10000000
-    end = time.time()
-    print("Process %s done, cost time %d." % (multiprocessing.current_process().name, end-start))
-
-if __name__ == "__main__":
-    print("Process %s is running." % multiprocessing.current_process().name)
-    start_totle = time.time()
-    pool = multiprocessing.Pool(4)
-    for i in range(10):
-        pool.apply_async(f, args=(i,))
-    pool.close()
-    pool.join()
-    end_totle = time.time()
-    print("总共用时%d s." % (end_totle-start_totle))
+	发送obj到另一端
 
 
 
@@ -239,6 +306,34 @@ if __name__ == "__main__":
 线程：CPU中的最小调度单元，同一进程的不同线程，共享同一内存空间
 
 锁：由于同一进程下的线程共享同一内存空间，同时读取内容会造成混乱，所以需要使用互斥锁防止同时读取
+
+例1.
+由于GIL的存在, 多线程只能同时存在一个正在运行的线程
+from threading import Thread, Lock
+
+balance = 0
+def machine(n):
+    global balance
+    balance = balance + n
+    balance = balance - n
+
+def iteration(n, lock):
+    for i in range(1000000):
+        lock.acquire()
+        try:
+            machine(n)
+        finally:
+            lock.release()
+
+if __name__ == '__main__':
+    lock = Lock()
+    t1 = Thread(target=iteration, args=(5, lock))
+    t2 = Thread(target=iteration, args=(8, lock))
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print(balance)
 
 threading模块
 function:
@@ -253,7 +348,6 @@ enumerate()
 
 class 
 Thread
-
 variable:
 name
 	获取或配置线程名称
@@ -262,7 +356,7 @@ daemon
 	判断或设置守护线程
 
 method：
-__init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)
+__init__(group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)
 	创建一个线程实例
 	group - 保留，用于将来ThreadGroup类的实现
 	target - function，线程中执行的方法. 实际被run()调用
@@ -276,7 +370,7 @@ is_alive()
 
 join(timeout=None)
 	将创建的线程阻塞主线程，阻塞指定时间或阻塞直到线程terminate
-	timeout - float格式，阻塞指定时间
+		timeout - float格式，阻塞指定时间
 
 run()
 	线程实际执行的方法
@@ -286,17 +380,17 @@ start()
 	启动线程，使run()被调用
 	当多次调用同一个线程的该方法时，抛出Runtimeerror异常
 
+
 class
 Lock
-
 method:
 __init__()
 	初始化锁
 
 acquire(blocking=True, timeout=-1)
-	请求锁，获取后置于locked状态
-	blocking - 当为True时，如果请求的锁状态为locked，进行排队等候释放锁；当为False，如果请求的锁状态为locked，直接放弃请求
-	timeout - 排队等候时间，超过该时间放弃。默认为-1，代表不限制等候时间
+	请求锁，获取后置于locked状态. 参数列表如下:
+		blocking - 当为True时，如果请求的锁状态为locked，进行排队等候释放锁；当为False，如果请求的锁状态为locked，直接放弃请求
+		timeout - 排队等候时间，超过该时间放弃。默认为-1，代表不限制等候时间
 
 release()
 	释放锁，释放后置于unlock状态
@@ -310,160 +404,14 @@ locked()
 **问题解决2：使用锁，使同一时间变量只能被一个线程访问
 
 采用多进程(多线程)的条件：计算密集型任务 or I/O密集型任务
-多进程：线程切换需要消耗CPU，并且由于GIL特性无法并行执行多个线程，所以计算密集型任务适合多进程
+多进程：线程切换需要消耗CPU，并且由于GIL特性无法并行执行多个线程，所以计算密集型任务适合多进程, 并且进程数量需等于核心数
 
 多线程：I/O密集型任务由于大部分时间处于等待I/O传输(由于CPU运算速度远高于I/O速度)，所以此时切换线程会大幅增加计算机性能，且由于线程的共享空间特性，所以I/O密集型任务使用多线程
 
+进程/线程的优缺点:
+子进程奔溃不会影响父进程, 但同一进程内的线程共享同一内存空间, 所以子线程的奔溃会影响到进程内的所有线程
+
 并发和并行的差异：
-并发(concurrency)：将时间段切分为多个时间片，在时间片执行不同内容，但同一时间片只执行一个呢绒。多线程和多进程都属于并发
+并发(concurrency)：将时间段切分为多个时间片，在时间片执行不同内容，但同一时间片只执行一个内容. 多线程和多进程都属于并发
 
 并行(parallel)：不同任务在不同CPU上同一时间点同时执行。python只有多进程属于并行
-
-
-示例1 - 主线程与子线程分开
-from threading import Thread
-import time, os
-
-def sub_thread():
-	print("sub-thread begin")
-	print("sub-thread pid: %s" % os.getpid())
-	time.sleep(10)
-	print("sub-thread end")
-
-print("main-thread begin")
-print("main-thread pid: %s" % os.getpid())
-thread = Thread(target=sub_thread)
-thread.start()
-print("main-thread end")
-
-
-示例2 - 主线程等待子线程中断
-from threading import Thread
-import time, os
-
-def sub_thread():
-    print("sub-thread begin")
-    print("sub-thread pid: %s" % os.getpid())
-    time.sleep(10)
-    print("sub-thread end")
-
-print("main-thread begin")
-print("main-thread pid: %s" % os.getpid())
-thread = Thread(target=sub_thread)
-thread.start()
-thread.join()
-print("main-thread end")
-
-
-示例3 - 子线程随着主线程终结
-from threading import Thread
-import time, os
-
-def sub_thread():
-    print("sub-thread begin")
-    print("sub-thread pid: %s" % os.getpid())
-    time.sleep(10)
-    print("sub-thread end")
-
-print("main-thread begin")
-print("main-thread pid: %s" % os.getpid())
-thread = Thread(target=sub_thread, daemon=True)
-thread.start()
-print("main-thread end")
-
-
-示例4 - Thread子类实现线程功能
-import threading
-
-class SubThread(threading.Thread):
-    def __init__(self, args=0):
-        super().__init__()
-        self._args = args
-
-    def run(self):
-        print("current thread name: %s." % threading.current_thread().name)
-        result = self._args**100
-        print("%d^100结果: %d." % (self._args, result))
-
-thread = SubThread(args=2)
-thread.start()
-thread.join()
-print("thread over")
-
-
-示例5 - 线程锁
-from threading import Thread
-import threading
-import time, os
-
-class Account:
-	def __init__(self):
-		self.balance = 0
-
-	def add(self, lock):
-		lock.acquire()
-		for i in range(1000):
-			self.balance += 1
-			print("the %d th add, result is: %d" % (i, self.balance))
-		lock.release()
-
-	def delete(self, lock):
-		lock.acquire()
-		for i in range(1000):
-			self.balance -= 1
-			print("the %d th delete,result is: %d" % (i, self.balance))
-		lock.release()
-
-if __name__ == "__main__":
-	account = Account()
-	lock = threading.Lock()
-	thread1 = Thread(target=account.add, args=(lock,))
-	thread2 = Thread(target=account.delete, args=(lock,))
-	
-	# 启动线程
-	thread1.start()
-	thread2.start()
-
-	# 阻塞主线程
-	thread1.join()
-	thread2.join()
-
-	print("The final balance is: %d" % account.balance)
-
-
-6.Queue队列(Queue为线程安全, 内部实现锁机制)
-import threading, queue, time, random
-
-class Producer(threading.Thread):
-	def __init__(self, name=None, queue=None):
-		super().__init__(name=name)
-		self._queue = queue
-
-	def run(self):
-		for i in range(5):
-			self._queue.put(i)
-			print("%s is producing %d to queue." % (self.name, i))
-			time.sleep(random.randrange(2))
-		print("producer done")
-
-class Consumer(threading.Thread):
-	def __init__(self, name=None, queue=None):
-		super().__init__(name=name)
-		self._queue = queue
-
-	def run(self):
-		for i in range(5):
-			n = self._queue.get()
-			print("%s is producing %d to queue." % (self.name, n))
-			time.sleep(random.randrange(2))
-		print("consumer done")
-		
-queue = queue.Queue()
-producer = Producer("producer", queue)
-consumer = Consumer("consumer", queue)
-producer.start()
-consumer.start()
-producer.join()
-consumer.join()
-print("everything is done")
-		

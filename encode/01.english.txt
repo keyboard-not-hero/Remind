@@ -1,4 +1,0 @@
-ASCII(American Standard Code for Information Interchange) - 美国标准信息交换编码
-使用一个字节编码，标准ASCII的最高位固定为0，其他7bit可以标识128个字符.
-拓展ASCII可以标识256个字符
-ASCII被所有编码兼容

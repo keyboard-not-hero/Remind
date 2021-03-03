@@ -1,49 +1,54 @@
-Pillow - python标准库PIL的更易用版本
+Pillow - 适用于python3版本的PIL, image处理工具
 安装 - pip3 install Pillow
 导入 - from PIL import Image
 
 基础理论:
-1.像素点 - 每个像素点由(255,255,255,255)的RGBA组成，每个原色占据1 byte空间，即一个像素占据4 bytes
-2.坐标 - 从屏幕左上角开始，向右延伸为x轴方向，向下延伸为y轴方向
+1.像素点 - 每个像素点由(255,255,255,255)的RGBA组成, 每个原色占据1 byte空间, 即一个像素占据4 bytes
+2.坐标 - 从屏幕左上角开始, 向右延伸为x轴方向, 向下延伸为y轴方向
 
 PIL.Image模块
+constant:
+MAX_IMAGE_PIXELS
+	单个图片允许的像素上限
+	超过该上限出现DecompressionBombWarning提示
+	超过两个该数值, 则抛出DecompressionBombError异常
 
 function:
 fromarray(obj, mode=None)
 	从数组创建Image对象
-	obj - 数组序列
-	mode - 颜色模式。默认从数组元素type获取
+		obj - 数组序列
+		mode - 颜色模式. 默认从数组元素type获取
 
-merge(mode, bands)
-	组合指定模式的L模式Image，返回组合后的Image对象
-	mode - str格式，颜色模式
-	bands - tuple格式，多个L模式Image组成
+merge(mode, bands) -> Image
+	将多个单色模式图片组合称多色彩模式图片
+		mode - str格式, 色彩组合模式
+		bands - tuple格式, 多个L模式Image组成
 
 new(mode, size, color=0)
 	使用指定色彩模式和大小创建新Image对象
-	mode - str格式，指定色彩模式，列表如下:
-		1 - 1bit，代表黑白模式
-		L - 8bit，代表黑白模式
-		RGB - 3byte，代表真彩色
-		RGBA - 4byte，代表真彩色(带透明度)
-		CMYK - 4byte，色彩分割模式
-	size - tuple格式，图片大小
-	color - 颜色值，根据mode来指定。默认为black。mode模式与参数格式参照如下:
-		1 - int, 0-1
-		L - int, 0-255
-		RGB - 3元素tuple
-		RGBA - 4元素tuple
-		CMYK - 4元素tuple
+		mode - str格式, 指定色彩模式, 列表如下:
+			1 - 1bit, 代表黑白模式
+			L - 8bit, 代表黑白模式
+			RGB - 3byte, 代表真彩色
+			RGBA - 4byte, 代表真彩色(带透明度)
+			CMYK - 4byte, 色彩分割模式
+		size - tuple格式, 图片大小
+		color - 颜色值, 根据mode来指定. 默认为black. mode模式与参数格式参照如下:
+			1 - int, 0-1
+			L - int, 0-255
+			RGB - 3元素tuple
+			RGBA - 4元素tuple
+			CMYK - 4元素tuple
 
-open(fp, mode='r')
-	打开文件并返回Image对象。此方法为懒惰方法，打开后并不读取内容，直到手动获取图片数据或使用load()
-	fp - str或file-object格式，指定打开的文件
-	mode - str格式，必须为'r'
+open(fp, mode='r', formats=None) -> Image
+	打开文件并返回Image对象. 此方法为懒惰方法, 打开后并不读取内容, 直到手动获取图片数据或使用load()
+		fp - str或file-object格式, 指定打开的文件. file-object为二进制打开模式
+		mode - str格式, 必须为'r'
+		formats - list/tuple格式, 限定加载图片格式范围. None表示尝试所有支持的格式. python指令: python -m PIL可查看所有支持的格式及对应支持的操作
 
 class
 Image
-
-variabl:
+variable:
 filename
 	文件名
 
@@ -57,71 +62,71 @@ size
 	图片大小
 
 method:
-crop(box=None)
+crop(box=None) -> Image
 	获取图片的裁剪内容
-	box - 4元素tuple，指定裁剪区域的左上右下
+		box - 4元素tuple, 指定裁剪区域, 格式(left, upper, right, lower)
 
 paste(im, box=None, mask=None)
 	将图像im复制到当前图像的box区域
-	im - Image对象或代表颜色的int/tuple
-	box - 2元素tuple或4元素tuple，当tuple为2个元素时，指定左上角，长宽根据im或mask来推测；当tuple指定4个元素时，指定左上右下，并且im大小与box大小必须一致。默认为(0,0)
-	mask - Image对象，该对象必须包含alpha值，取出该对象的alpha值，获取遮罩效果
+		im - Image对象或代表颜色的int/tuple
+		box - 2元素tuple或4元素tuple, 当tuple为2个元素时, 指定左上角, 长宽根据im或mask来推测；当tuple指定4个元素时, 指定左上右下, 并且im大小与box大小必须一致. 默认为(0,0)
+		mask - Image对象, 该对象必须包含alpha值, 取出该对象的alpha值, 获取遮罩效果
 
 resize(size, resample=3, box=None, reducing_gap=None)
 	返回重制大小后的Image对象
-	resize - tuple格式，重制后的大小
+		resize - tuple格式, 重制后的大小
 
 rotate(angle, resample=0, expand=0, center=None, translate=None, fillcolor=None)
-	以中心为轴，逆时针旋转指定角度，并返回旋转后的Image对象
-	angle - str格式，旋转角度
-	center - tuple格式，旋转中心位置
+	以中心为轴, 逆时针旋转指定角度, 并返回旋转后的Image对象
+		angle - str格式, 旋转角度
+		center - tuple格式, 旋转中心位置
 
 save(fp, format=None, **params)
 	将修改后的图片内容保存到指定文件
-	fp - str或file-object格式，指定保存的文件
-	format - str格式，fp为str时可根据文件名推测；当fp使用file-object必须显式指定
+		fp - str或file-object格式, 指定保存的文件
+		format - str格式, fp为str时可根据文件名推测；当fp使用file-object必须显式指定
 
 show(title=None, command=None)
-	显示图片。不建议使用，建议使用matplotlib.pyplot.imshow(img)
-	title - 窗口标题
+	使用系统自带图片浏览器查看图片. 会生成临时图片, 建议使用matplotlib.pyplot.imshow方法
+		title - 窗口标题
 
 split()
-	分割Image对象的颜色，返回格式为tuple，其item为L模式Image
+	分割Image对象的颜色, 返回格式为tuple, 其item为L模式Image
 
 transpose(method)
 	返回翻转或旋转Image对象
-	method - Image variable，列表如下:
+	method - 对图形的操作, 列表如下:
 		PIL.Image.FLIP_LEFT_RIGHT - 左右翻转
 		PIL.Image.FLIP_TOP_BOTTOM - 上下翻转
 		PIL.Image.ROTATE_90 - 逆时钟旋转90度
 		PIL.Image.ROTATE_180 - 逆时钟旋转180度
 		PIL.Image.ROTATE_270 - 逆时钟旋转270度
 		PIL.Image.TRANSPOSE - 矩阵转置
+		PIL.Image.TRANSVERSE - 以左下角作为原点, 置换x/y轴
 
 thumbnail(size, resample=3, reducing_gap=2.0)
-	按比例缩略图，in-place模式
-	size - tuple格式，指定缩略图的(width, height)
+	按比例缩略图, in-place模式
+	size - tuple格式, 指定缩略图的(width, height)
 
 
 PIL.ImageColor模块
-
 function:
 getrgb(color)
-	返回颜色名称字符串的rgb内容，格式为tuple
+	返回颜色名称字符串的rgb内容, 格式为tuple
 	color - 颜色名称字符串
 
 getcolor(color, mode)
 	返回(gray_val, alpha)或(rgb_tuple, alpha)
-	color - str类型，颜色字符串，当包含alpha值时，结果使用该alpha值，否则默认为255
-	mode - str类型，指定结果的颜色模式字符串，根据模式的基本类型为L或RGB，返回不同内容
+	color - str类型, 颜色字符串, 当包含alpha值时, 结果使用该alpha值, 否则默认为255
+	mode - str类型, 指定结果的颜色模式字符串, 根据模式的基本类型为L或RGB, 返回不同内容
 
 PIL.ImageDraw模块
 
 function:
 Draw(im, mode=None)
 	返回ImageDraw对象
-	im - Image对象，用于作底色的图像
-	mode - str格式，图像的色彩模式，默认为图像原来的色彩模式
+	im - Image对象, 用于作底色的图像
+	mode - str格式, 图像的色彩模式, 默认为图像原来的色彩模式
 
 class
 ImageDraw
@@ -129,15 +134,15 @@ ImageDraw
 method:
 text(xy, text, fill=None, font=None, anchor=None, spacing=4, align="left", direction=None, features=None, language=None, stroke_width=0, stroke_fill=None)
 	在指定位置作字符串
-	xy - tuple格式，文字的左上角位置
-	text - str格式，字符串文本。当其内包含newline，参数全部转移到multiline_text()方法
-	fill - str或tuple，文字填充颜色
+	xy - tuple格式, 文字的左上角位置
+	text - str格式, 字符串文本. 当其内包含newline, 参数全部转移到multiline_text()方法
+	fill - str或tuple, 文字填充颜色
 	font - ImageFont对象
-	spacing - int格式，当转移到multiline_text()时，行与行之间的像素间隔
-	align - str格式，当转移到multiline_text()时，行的对齐方式，可选: "left"/"center"/"right"
-	direction - str格式，文字的方向，可选: "ltr"(left to right)/"rtl"(right to left)/"ttb"(top to bottom)。依赖libraqm
-	features - str格式，文字特征选项。参考: https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
-	language - str格式，语言code，如: zh/en/fr。参考: https://www.w3.org/International/articles/language-tags/
+	spacing - int格式, 当转移到multiline_text()时, 行与行之间的像素间隔
+	align - str格式, 当转移到multiline_text()时, 行的对齐方式, 可选: "left"/"center"/"right"
+	direction - str格式, 文字的方向, 可选: "ltr"(left to right)/"rtl"(right to left)/"ttb"(top to bottom). 依赖libraqm
+	features - str格式, 文字特征选项. 参考: https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
+	language - str格式, 语言code, 如: zh/en/fr. 参考: https://www.w3.org/International/articles/language-tags/
 	stroke_width - 
 	stroke_fill - 默认为fill内容
 
@@ -146,14 +151,14 @@ PIL.ImageFont模块
 function:
 truetype(font=None, size=10, index=0, encoding='', layout_engine=None)
 	使用TrueType/OpenType指定字体创建FreeTypeFont对象
-	font - str或file-object，指定文字文件。默认查找文件路径:
-		Linux - 根据文件后缀，查找/usr/share/fonts/truetype或/usr/share/fonts/opentype
-	size - int类型，字体大小
-	index - int类型，多个同名文件加载哪个字体。默认0为第一个查找到的
-	encoding - 使用的字体编码方式。默认为unicode
-	layout_engine - 布局引擎。可选列表: ImageFont.LAYOUT_BASIC/ImageFont.LAYOUT_RAQM
+	font - str或file-object, 指定文字文件. 默认查找文件路径:
+		Linux - 根据文件后缀, 查找/usr/share/fonts/truetype或/usr/share/fonts/opentype
+	size - int类型, 字体大小
+	index - int类型, 多个同名文件加载哪个字体. 默认0为第一个查找到的
+	encoding - 使用的字体编码方式. 默认为unicode
+	layout_engine - 布局引擎. 可选列表: ImageFont.LAYOUT_BASIC/ImageFont.LAYOUT_RAQM
 
 **warning: Pillow与PIL不能同时存在
 
 引用
-1.pilow tutorial: https://pillow.readthedocs.io/en/stable/
+1.pillow readthedocs: https://pillow.readthedocs.io/en/stable/

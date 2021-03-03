@@ -1,6 +1,4 @@
-官网地址：http://matplotlib.org/
-
-matplotlib的后端有MacOSX/qt5/qt4/gtk3/tkinter/wxpython等。其中，tkinter的软件是tk/tcl。具体backend查找matplotlibrc文件
+官网地址：https://matplotlib.org/
 
 pip安装：
 pip install -U pip
@@ -13,86 +11,228 @@ pip install -U matplotlib
 import matplotlib.pyplot as plt
 
 结构：
-pyplot--Figure--Axes，Axes为主要构图区域
-matplotlib通常使用np.array格式数据集作图，pandas格式和np.matrix格式数据尽量转化为np.array数据
+pyplot--Figure--Axes
+Figure为整体窗口
+Axes为主要构图区域
+
+matplotlib通常使用np.array格式数据集作图, pandas格式和np.matrix格式数据尽量转化为np.array数据
+
+matplotlib的后端有macosx/qt4/tkinter/wxpython/pygtk等
+
+指定backend的方式(同时指定时, 后者覆盖前者):
+1.matplotlibrc文件中配置, 如:
+	backend : qt5agg
+
+2.设置MPLBACKEND环境变量, 如:
+	export MPLBACKEND=qt5agg
+
+3.项目文件中指定, 如:
+	matplotlib.use('qt5agg')
 
 
-matplotlibrc文件定位顺序(查找到第一个结束查找)：
-1.当前工作目录，只用于当前工作项目
+matplotlibrc文件定位顺序(查找到第一个结束查找):
+1.当前工作目录, 只用于当前工作项目
 
-2.当环境变量$MATPLOTLIBRC存在时，为该变量指定文件；或该变量为目录时，为$MATPLOTLIBRC/matplotlibrc
+2.当环境变量$MATPLOTLIBRC存在时, 为该变量指定文件; 或该变量为目录时, 为$MATPLOTLIBRC/matplotlibrc
 
-3.根据系统差异有两种：
-  Linux/FreeBSD - 路径~/.config/matplotlib/matplotlibrc，或$XDG_CONFIG_HOME/matplotlib/matplotlibrc
+3.根据系统差异有两种:
+  Linux/FreeBSD - 路径~/.config/matplotlib/matplotlibrc, 或$XDG_CONFIG_HOME/matplotlib/matplotlibrc
   others - .matplotlib/matplotlibrc
 
-4.假设INSTALL为matplotlib库安装路径，则为INSTALL/matplotlib/mpl-data/matplotlibrc。假设python安装路径为/usr/local/python3.8，则INSTALL路径为/usr/local/python3.8/lib/python3.8/site-packages
+4.假设INSTALL为matplotlib库安装路径, 则为INSTALL/matplotlib/mpl-data/matplotlibrc。假设python安装路径为/usr/local/python3.8, 则INSTALL路径为/usr/local/python3.8/lib/python3.8/site-packages
 
 
-打印matplotlibrc查找位置：
->>import matplotlib
->>matplotlib.matplotlib_fname()
-/usr/local/python3.8/lib/python3.8/site-packages/matplotlib/mpl-data/matplotlibrc
+axes有两种使用方法:
+1.pyplot使用默认的figure和axes
+2.手动创建figure和axes
 
 
-主要模块：
-matplotlib.pyplot
+例1.
+使用默认的figure和axes
+import matplotlib.pyplot as plt
 
-方法：
-figure()：在plot上生成一个Figure对象
-
-subplot(*args, **kwargs)：返回AxesSubplot对象。args可以为(rows,cols,index)或3-digit数字，两种方式效果一致
-
-subplots(nrows=1, ncols=1)：返回Figure和Axes数组的元组
-
-plot([x], y, [fmt], scalex=True, scaley=True, data=None, **kwargs)：在x轴和y轴上作图。([x], y, [fmt])序列可重复多次出现。隐式创建subplot(111)。
-kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
-
-subplots_adjust(wspace=None, hspace=None)：调整Axes之间的距离
-
-gca()：获取当前Axes
-
-gcf()：获取当前Figure
-
-show()：展示图形
-
-savefig(fname, dpi, bbox_inches)：保存Figure到文件。fname代表文件名，通常为svg后缀；dpi(dots per inch)代表单位像素；bbox_inches代表要保存的部分，'tight'为剪切掉边缘空白部分
+plt.plot([1, 2, 3, 4], [1, 4, 2, 3])
+plt.show()
 
 
-类：
-matplotlib.figure.Figure
+例2
+手动创建figure和axes
+import matplotlib.pyplot as plt
 
-方法：
-add_subplot(nrows, ncols, index)：创建Axes对象。nrows代表Figure行内容纳多少Axes；ncols代表Figure列内容纳多少Axes；index代表当前创建Axes的索引(起始为1)
+figure, axes = plt.subplots(1, 2)
+axes[0].plot([1, 2, 3, 4], [1, 4, 2, 3])
+axes[1].plot([1, 2, 3, 4], [3, 2, 4, 1])
+plt.show()
 
-类：
-matplotlib.axes.Axes
-方法：
-plot(x, y, format, drawstyle， label)：折线图或step图。x代表横坐标集合；y代表纵坐标集合；format代表marker、颜色和线条style拼接字符串，默认为'b-'；drawstyle为step图或折线图，参数为{'default', 'steps', 'steps-pre', 'steps-mid', 'steps-post'}，默认为'default'；label为线条标签，搭配legend方法使用
-**format参考链接：https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot
 
-pie(sizes, explode=None, labels=None, autopct=None, shadow=False, startangle=None, radius=None)：饼图。sizes代表份额列表；explode代表各部分切割列表，格式为float；labels代表标签列表；autopct代表是否显示分布百分比，可以为字符串格式或方法调用，字符串格式为fmt%pct(如'%1.1f%%')；shadow代表是否有图像阴影；startangle代表起始角度，默认为0；radius为饼图圆半径，默认为1
+matplotlib.pyplot模块
+method:
+figure(num=None, figsize=None, dpi=None, facecolor=None, edgecolor=None, frameon=True, FigureClass=<class 'matplotlib.figure.Figure'>, clear=False, **kwargs) -> Figure
+	在plot上生成一个figure, 或激活已存在的figure. 参数列表如下:
+		num - int或str类型, figure的唯一标识符
+		figsize - (float, float)格式, figure的宽和高, 单位为英寸. 默认为(6.4, 4.8)
+		dpi - float格式, 分辨率每英寸的像素点. 默认为100.0
+		facecolor - str格式, 背景颜色. 默认为'white'
+		edgecolor - str格式, 边界颜色. 默认为'white'
+		frameon - bool格式, 是否描绘边框. 默认为True
+		FigureClass - Figure子类对象, 可选Figure实例
+		clear - bool格式, 当figure已存在时, 是否清除. 默认为False
 
-bar(x, height, width=0.8, bottom=None, *, align='center, label=None)：条形图。x代表在X轴的坐标列表；height对应X轴的高度列表；width代表占刻度宽度的百分比；bottom代表在Y轴的底部起始坐标，需重新计算height；align代表条形图的哪个部分与X坐标对齐，参数有'center'/'edge'；label配合axes.legend为注解
+plot(*args, scalex=True, scaley=True, data=None, **kwargs)
+	在坐标轴上作图. 参数列表如下:
+		*args - 可选参数, 有x轴坐标, y轴坐标, 格式化字符串. 前述内容可多次重复, 表示在一个axes上作多个线条
+			当只提供一个坐标集合时, 默认为y轴左边, 此时x轴含有相同坐标数, 并且从0起始, 步进为1
+			格式化字符串代表点的颜色和style. 如: 'ro'代表红色的圆. 默认为'b-'. style列表:
+				-- 虚线
+				-. 点断式虚线
+				:  点式线
+				-  实线
+				o  圆
+				s  方块
+				+  加号
+				^  三角形
+			style参考列表: https://matplotlib.org/stable/api/markers_api.html
+		data - indexable数据, 此时x/y轴坐标使用轴索引获取
+		kwargs - 关键字参数, 有label/antialias等
+	kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
 
-barh(y, width, height=0.8, left=None, *, align='center')：水平条形图。其他选项参考bar
+savefig(*args, **kwargs)
+	保存figure到文件.
+		args列表如下:
+			fname - str或path-like或file-like, 所保存到的文件
+			dpi - float格式, 每英寸的像素
+			quality - int格式, 仅适用于jpg/jpeg图片, 代表图片保存质量, 范围[1,95]. 默认为95
+			optimize - bool格式, 仅适用于jpg/jpeg图片, 是否选择优化编码方式
+			progressive - bool格式, 仅适用于jpg/jpeg图片, 是否选择逐行扫描方式
 
-hist(x, bins=None, range=None, density=None, cumulative=False)：直方图。x代表数据集；bins代表均分份数(int)或各边界值(array);range代表x内的取值上下限，只有bins为int类型时生效，类型为tuple；当density为True时，直方图高度为所占百分比；cumulative代表是否为累积值
+show(*, block=None)
+	展示所有figure内容. 参数列表如下:
+		block - bool格式. 在interactive模式中, block为False, 所有后续内容执行返回; 在non-interactive模式中, block为True, 需要关闭窗口才能执行后续内容并返回
 
-scatter(x, y, s=None, c=None, alpha=None, marker=None)：散点图。x/y分别代表点在X、Y轴上的列表；s代表不同点大小的列表；c代表不同点颜色列表；alpha代表点的透明度；marker代表点的展现形式
+subplot(*args, **kwargs) -> Axes子类
+	在当前figure中创建axes
+		args列表如下:
+			nrows - int格式, 创建多少行axes
+			ncols - int格式, 创建多少列axes
+			index - int格式, 选取的axes索引. 从左上角开始计数, 数字由1起始
+			** 前面三个可以合并为一个三位数的int数字, 如: 235代表(2,3,5)
+			label - str格式, axes的标签
 
-**marker参考：https://matplotlib.org/api/markers_api.html#module-matplotlib.markers
+subplots(nrows=1, ncols=1, *, sharex=False, sharey=False, squeeze=True, subplot_kw=None, gridspec_kw=None, **fig_kw) -> (Figure, Axes)/(Figure, ndarray)
+	创建figure和axes集合. 参数列表如下:
+		nrows - int类型, figure中包含axes的行数. 默认为1
+		ncols - int类型, figure中包含axes的列数. 默认为1
+		sharex - bool类型或{'none', 'all', 'row', 'col'}, 是否分享x轴的属性到其它axes
+		sharey - bool类型或{'none', 'all', 'row', 'col'}, 是否分享y轴的属性到其它axes
+		squeeze - bool类型, 情况如下:
+			为True时, 如果nrows与ncols都为1, 则返回1个Axes对象;
+			如果nrows/ncols其中一个为1时, 返回Axes对象的一维数组; 
+			如果nrows/ncols都大于1, 返回Axes对象的二维数组
+			为False时, 无论如何都返回Axes的二维数组
 
-boxplot(x, notch=None, sym=None, vert=None, whis=None)：箱线图。x代表数据集列表；notch为True时，在箱线图的中位数位置展示凹痕；sym代表是否显示异常值，默认值None代表'b+'，使用''可不显示；vert代表是否为垂直箱线图，默认None代表True；whis代表温和异常值起始系数，默认为1.5(即Q1-1.5IQR)
-**箱线图概念：Q1-3IQR、Q1-1.5IQR、Q1、Q3、Q3+1.5IQR、Q3+3IQR。其中，IQR=Q3-Q1
+subplots_adjust(wspace=None, hspace=None)
+	调整Axes之间的距离
 
-set_title(str, loc)：配置图表标题。str代表标题；loc代表定位，参数有{'center', 'left', 'right'}，默认为'center'
 
-legend(loc)：线条注解。loc代表注解放置在图表的位置，{‘best', 'upper left', 'upper right', 'lower left', 'lower right', 'upper center', 'lower center', 'center left', 'center right', 'center', 'right'}，一般使用'best'
+matplotlib.figure.Figure类
+method:
+add_subplot(nrows, ncols, index)
+	创建Axes对象. 参数列表如下:
+		nrows代表Figure行内容纳多少Axes
+		ncols代表Figure列内容纳多少Axes
+		index代表当前创建Axes的索引(起始为1)
 
-set_xticks(ticks, minor=False)：设置X轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度，为True时设置minor刻度
 
-set_yticks(ticks, minor=False)：设置Y轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度，为True时设置minor刻度
+matplotlib.axes.Axes类
+method:
+axis(*args, emit=True, **kwargs) -> (xmin, xmax, ymin, ymax)
+	配置坐标轴属性. 参数列表如下:
+		args - [xmin, xmax, ymin, ymax]集合, 配置x/y轴取值范围 
+
+imshow(X, cmap=None, norm=None, aspect=None, interpolation=None, alpha=None, vmin=None, vmax=None, origin=None, extent=None, *, filternorm=True, filterrad=4.0, resample=None, url=None, data=None, **kwargs) -> AxesImage
+	将X内容转化为图片. 参数列表如下:
+		X - array-like或PIL Image, array-like shapes可以为以下内容:
+			(M,N) - 使用colormap将[0,1]区间内的数字转化为RGB颜色的数值
+			(M,N,3) - RGB模式, 0-1的float或0-255的int
+			(M,N,4) - RGBA模式, 0-1的float或0-255的int
+		cmap - str或Colormap类型, 指定转化的颜色. 不适用于RGB模式
+		norm - Normalize对象, 将二维数组内的值按[min, max]转化为[0,1]的值. 不适用于RGB模式
+		aspect - str格式, 屏幕宽高比. 可选列表: 'equal'/'auto'. 'equal'表示根据图片进行调整, 'auto'表示强制使用axes大小. 默认为'equal'
+		interpolation - str格式, 颜色渐变类型. 可选列表: 'none'/'antialiased'/'nearest'/'bilinear'/'bicubic'等
+		alpha - float或array-like, 图像透明度, 当其为array-like时, 必须与X拥有一致的shapes
+		vmin - float格式, 指定转化的最小数字(小于该数字按相等处理), 将其转化为[0,1]的代表颜色深度的数字. 指定norm参数时无效
+		vmax - float格式, 指定转化的最大数字(大于该数字按相等处理), 将其转化为[0,1]的代表颜色深度的数字. 指定norm参数时无效
+		origin - str格式, 将array的[0,0]坐标视为左上角或左下角. 可选列表: 'upper'/'lower'. 默认为'upper', 矩阵/image常规作法
+
+plot(*args, scalex=True, scaley=True, data=None, **kwargs)
+	在坐标轴上作图. 参数列表如下:
+		*args - 可选参数, 有x轴坐标, y轴坐标, 格式化字符串. 前述内容可多次重复, 表示在一个axes上作多个线条
+			当只提供一个坐标集合时, 默认为y轴左边, 此时x轴含有相同坐标数, 并且从0起始, 步进为1
+			格式化字符串代表点的颜色和style. 如: 'ro'代表红色的圆. 默认为'b-'. style列表:
+				-- 虚线
+				-. 点断式虚线
+				:  点式线
+				-  实线
+				o  圆
+				s  方块
+				+  加号
+				^  三角形
+			style参考列表: https://matplotlib.org/stable/api/markers_api.html
+		data - indexable数据, 此时x/y轴坐标使用轴索引获取
+		kwargs - 关键字参数, 有label/antialias等
+		kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
+
+pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1, startangle=0, radius=1, counterclock=True, wedgeprops=None, textprops=None, center=(0, 0), frame=False, rotatelabels=False, *, normalize=None, data=None)
+	作饼图. 参数列表如下:
+		x - 1D array-like, item/sum为其所占份额
+		explode - array-like, 元素为占比=偏离圆心距离/radius
+		labels - list类型, 元素为标签字符串
+		colors - array-like, 每一个分块的颜色
+		autopct - str或callable, 可用于标记分块所占百分比
+		pctdistance - float格式, pct位于从圆心向边缘扩散的百分比位置. 默认为0.6
+		shadow - bool格式, 分块是否有阴影部分
+		labeldistance - float格式, label位于从圆心向边缘扩散的百分比位置. 默认为1.1
+		startangle - float格式, 饼图起始旋转角度, 从x轴逆时针旋转
+		radius - float格式, 饼图的半径
+		counterclock - bool格式, 指定饼图是否沿逆时针作图
+		wedgeprops - dict格式, 通过键值对设置一些参数. 如: {'linewidth' : 3}
+		textprops - dict格式, 设置文字参数
+		center - (float, float)格式, 设置饼图的中心位置坐标
+		frame - bool格式, 是否作axes边框
+		rotatelabels - bool格式, 每个label是否跟随分块角度旋转
+
+scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None, alpha=None, linewidths=None, verts=<deprecated parameter>, edgecolors=None, *, plotnonfinite=False, data=None, **kwargs)
+	作散点图. 参数列表如下:
+		x - float或者array-like, x轴坐标
+		y - float或者array-like, y轴坐标
+		s - float或者array-like, 散点的大小, s=r^2
+		c - array-like或str sequence或str, 当为array-like时, 使用cmap和norm来映射到颜色; 当为str sequence时, 分别指定每个散点的颜色, str为color name; str指定所有散点的颜色
+		marker - str格式, 散点的形状. 默认为'o'
+		cmap - str格式或Colormap对象, 指定颜色. 默认为'viridis'
+		norm - Normalize对象, 将数字转化为[0,1]区间的数字
+		vmin/vmax - float格式, 转化允许的最小/最大数字. 被norm覆盖
+		alpha - float格式, 散点透明度
+		linewidths - float或array-like, 指定散点的边缘宽度
+		edgecolors - str或color或color sequence, 指定边缘颜色, str可选'face'和'none', 分别代表与中心颜色相同与无边缘颜色; color指定所有散点边缘颜色; color sequence分别指定散点边缘颜色
+
+set_xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
+	设置x轴的标签. 参数列表如下:
+		xlabel - str格式, 标签的内容
+		loc - str格式, label相对于坐标轴的位置. 列表: 'left'/'center'/'right'. 默认为'center'
+
+set_ylabel(ylabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
+	设置y轴的标签
+
+boxplot(x, notch=None, sym=None, vert=None, whis=None)：箱线图。x代表数据集列表；notch为True时, 在箱线图的中位数位置展示凹痕；sym代表是否显示异常值, 默认值None代表'b+', 使用''可不显示；vert代表是否为垂直箱线图, 默认None代表True；whis代表温和异常值起始系数, 默认为1.5(即Q1-1.5IQR)
+**箱线图概念：Q1-3IQR、Q1-1.5IQR、Q1、Q3、Q3+1.5IQR、Q3+3IQR。其中, IQR=Q3-Q1
+
+set_title(str, loc)：配置图表标题。str代表标题；loc代表定位, 参数有{'center', 'left', 'right'}, 默认为'center'
+
+legend(loc)：线条注解。loc代表注解放置在图表的位置, {‘best', 'upper left', 'upper right', 'lower left', 'lower right', 'upper center', 'lower center', 'center left', 'center right', 'center', 'right'}, 一般使用'best'
+
+set_xticks(ticks, minor=False)：设置X轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度, 为True时设置minor刻度
+
+set_yticks(ticks, minor=False)：设置Y轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度, 为True时设置minor刻度
 
 set_xlabel(xlabel)：设置X轴标签
 
@@ -109,7 +249,7 @@ axisartist
 导入库
 import mpl_toolkits.axisartist as AA
 
-原理：matplotlib的两个axis不可用，AA使用ax.axis['left']格式来使用指定坐标轴，坐标轴格式有left/right/top/bottom
+原理：matplotlib的两个axis不可用, AA使用ax.axis['left']格式来使用指定坐标轴, 坐标轴格式有left/right/top/bottom
 
 示例
 import matplotlib.pyplot as plt
@@ -123,11 +263,11 @@ fig.add_subplot(ax)
 # 使轴边界不可见
 ax.axis[:].set_visible(False)
 
-# 添加x轴，第一个0代表水平直线，第二个0代表y=0
+# 添加x轴, 第一个0代表水平直线, 第二个0代表y=0
 ax.axis["x"]=ax.new_floating_axis(0,0)
 # 配置x轴箭头
 ax.axis["x"].set_axisline_style("->", size=1.5)
-# 添加y轴，第一个1代表垂直直线，第二个0代表x=0
+# 添加y轴, 第一个1代表垂直直线, 第二个0代表x=0
 ax.axis["y"]=ax.new_floating_axis(1,0)
 ax.axis["y"].set_axisline_style("->", size=1.5)
 # 显示刻度位置
