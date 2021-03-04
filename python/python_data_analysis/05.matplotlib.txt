@@ -66,7 +66,7 @@ plt.show()
 
 
 matplotlib.pyplot模块
-method:
+function:
 figure(num=None, figsize=None, dpi=None, facecolor=None, edgecolor=None, frameon=True, FigureClass=<class 'matplotlib.figure.Figure'>, clear=False, **kwargs) -> Figure
 	在plot上生成一个figure, 或激活已存在的figure. 参数列表如下:
 		num - int或str类型, figure的唯一标识符
@@ -93,17 +93,8 @@ plot(*args, scalex=True, scaley=True, data=None, **kwargs)
 				^  三角形
 			style参考列表: https://matplotlib.org/stable/api/markers_api.html
 		data - indexable数据, 此时x/y轴坐标使用轴索引获取
-		kwargs - 关键字参数, 有label/antialias等
+		kwargs - 关键字参数, 有label/antialiased/linewidth等
 	kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
-
-savefig(*args, **kwargs)
-	保存figure到文件.
-		args列表如下:
-			fname - str或path-like或file-like, 所保存到的文件
-			dpi - float格式, 每英寸的像素
-			quality - int格式, 仅适用于jpg/jpeg图片, 代表图片保存质量, 范围[1,95]. 默认为95
-			optimize - bool格式, 仅适用于jpg/jpeg图片, 是否选择优化编码方式
-			progressive - bool格式, 仅适用于jpg/jpeg图片, 是否选择逐行扫描方式
 
 show(*, block=None)
 	展示所有figure内容. 参数列表如下:
@@ -129,25 +120,113 @@ subplots(nrows=1, ncols=1, *, sharex=False, sharey=False, squeeze=True, subplot_
 			如果nrows/ncols其中一个为1时, 返回Axes对象的一维数组; 
 			如果nrows/ncols都大于1, 返回Axes对象的二维数组
 			为False时, 无论如何都返回Axes的二维数组
+		kwargs参考figure函数
 
-subplots_adjust(wspace=None, hspace=None)
-	调整Axes之间的距离
+subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
+	调整axes的布局. 参数列表如下:
+		left - float格式, 左边位置位于figure的百分比处
+		bottom - float格式, 底部位置位于figure的百分比处. 方向从下到上
+		right - float格式, 右边位置位于figure的百分比处
+		top - float格式, 顶部位置位于figure的百分比处. 方向从下到上
+		wsapce - float格式, axes之间的水平距离/axes宽度
+		hspace - float格式, axes之间的垂直距离/axes高度
 
 
 matplotlib.figure.Figure类
 method:
-add_subplot(nrows, ncols, index)
-	创建Axes对象. 参数列表如下:
-		nrows代表Figure行内容纳多少Axes
-		ncols代表Figure列内容纳多少Axes
-		index代表当前创建Axes的索引(起始为1)
+add_subplot(*args, **kwargs)
+	添加axes到figure. 参数列表如下
+		args列表如下:
+			nrows - int格式, 创建多少行axes
+			ncols - int格式, 创建多少列axes
+			index - int格式, 选取的axes索引. 从左上角开始计数, 数字由1起始
+			** 前面三个可以合并为一个三位数的int数字, 如: 235代表(2,3,5)	
+			polar - bool格式, 是否使用极坐标
+			sharex - bool类型或{'none', 'all', 'row', 'col'}, 是否分享x轴的属性到其它axes
+			sharey - bool类型或{'none', 'all', 'row', 'col'}, 是否分享y轴的属性到其它axes
+			label - str格式, axes的标签
 
+savefig(*args, **kwargs)
+	保存figure到文件.
+		args列表如下:
+			fname - str或path-like或file-like, 所保存到的文件
+			dpi - float格式, 每英寸的像素. 默认为'figure'
+			facecolor - color或'auto', 内容的颜色. 默认为'auto', 即采用当前figure的颜色
+			edgecolor - color或'auto', 边缘的颜色. 默认为'auto'
+			orientation - str格式, 只被postscript backend支持. 可选列表: 'landscape'/'portrait'. 默认为'portrait'
+			papertype - str格式, 只被postscript backend支持. 可选列表: 'letter'/'legal'/'executive'/'ledger'/'a0'-'a10'/'b0'-'b10'
+			format - str格式, 指定文件保存的格式. 只有当fname没有指定后缀时生效. 如: 'png'/'pdf'
+			transparent - bool格式, axes背景是否透明; figure未指定facecolor和edgecolor时才能被影响. 默认为False
+			backend - str格式, 使用指定类型backend来渲染文件
+
+suptitle(t, **kwargs)
+	在figure中间位置添加标题. 参数列表如下:
+		t - str格式, 标题内容
+		kwargs列表如下:
+			x - float格式, 标题位于figure的x轴百分比位置. 默认为0.5
+			y - float格式, 标题位于figure的y轴百分比位置, 方向从下到上. 默认为0.98
+			fontsize - float格式或str格式, 文字大小. str可选列表: 'xx-small'/'x-small'/'small'/'medium'/'large'/'x-large'/'xx-large'. 默认为'large'
+			fontweight - int格式或str格式, 文字的weight. int范围[0, 1000]. str可选列表: 'ultralight'/'light'/'normal'/'regular'/'book'/'medium'/'roman'/'semibold'/'demibold'/'demi'/'bold'/'heavy'/'extra bold'/'black'
+			
 
 matplotlib.axes.Axes类
 method:
+annotate(text, xy, *args, **kwargs)
+	在指定坐标处添加注解内容. 参数列表如下:
+		text - str格式, 注解内容
+		xy - (float, float)格式, 注解的位置
+		args列表如下:
+			xytext - (float, float)格式, 放置注解文本的位置. 注解箭头由xytext到xy
+			xycoords - str格式或Artist对象或Transform对象或callable或(float, float). 代表xy使用的坐标系统类型. 默认为'data'. str可选列表如下:
+				'figure points' - 从figure的左下角为起始点
+				'figure pixels' - 从figure的左下角为起始像素
+				'figure fraction' - 从figure的左下角为百分比起始位置
+				'axes points' - 从axes的左下角为起始点
+				'axes pixels' - 从axes的左下角为起始像素
+				'axes fraction' - 从axes的左下角为百分比起始位置
+				'data' - 使用当前被注解对象的坐标系统
+				'polar' - 使用极坐标作为坐标系统
+			textcoords - str格式或Artist对象或Transform对象或callable或(float, float). 代表xytext使用的坐标系统类型. 默认与xycoords一致. str可选列表如下:
+				'figure points' - 从figure的左下角为起始点
+				'figure pixels' - 从figure的左下角为起始像素
+				'figure fraction' - 从figure的左下角为百分比起始位置
+				'axes points' - 从axes的左下角为起始点
+				'axes pixels' - 从axes的左下角为起始像素
+				'axes fraction' - 从axes的左下角为百分比起始位置
+				'data' - 使用当前被注解对象的坐标系统
+				'polar' - 使用极坐标作为坐标系统
+			arrowprops - dict格式, 注解箭头属性. key列表如下:
+				width - float格式, 注解线条宽度
+				headwidth - float格式, 箭头宽度
+				headlength - float格式, 箭头长度
+				shrink - float格式, 线条两端收缩长度占线条总长度百分比
+				arrowstyle - str格式, 当指定箭头类型时, 指定上述key会抛出AttributeError异常. 列表:
+					'-'   - 无箭头的线条
+					'->'  - 结束位置包含箭头的线条
+					'<-'  - 起始位置包含箭头的线条
+					'<->' - 起始和结束位置都包含箭头的线条
+					'-['  - 特殊格式线条
+					'|-|' - 起始和结束位置包含横截线的线条
+					'-|>' - 实心箭头
+				facecolor - str格式, 指定线条颜色. 使用颜色的完整单词
+			annotation_clip - bool类型, 当xy坐标在axes区域外的操作. 默认为True
+				True - 只有xy在axes区域内, 才添加注解
+				Flase - 无论如何, 都会添加注解
+
 axis(*args, emit=True, **kwargs) -> (xmin, xmax, ymin, ymax)
 	配置坐标轴属性. 参数列表如下:
 		args - [xmin, xmax, ymin, ymax]集合, 配置x/y轴取值范围 
+
+grid(b=None, which='major', axis='both', **kwargs)
+	设置栅栏线. 参数列表如下:
+		b - bool格式, 是否显示栅栏
+		which - str格式, 将栅栏应用于刻度线的种类. 列表如下: 'major'/'minor'/'both'
+		axis - str格式, 应用的坐标轴. 列表如下: 'x'/'y'/'both'
+		kwargs列表:
+			color - str格式, 栅栏颜色
+			linestyle - str格式, 栅栏风格
+			linewidth - int格式, 线条宽度
+			具体参考: https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.grid.html#matplotlib.axes.Axes.grid
 
 imshow(X, cmap=None, norm=None, aspect=None, interpolation=None, alpha=None, vmin=None, vmax=None, origin=None, extent=None, *, filternorm=True, filterrad=4.0, resample=None, url=None, data=None, **kwargs) -> AxesImage
 	将X内容转化为图片. 参数列表如下:
@@ -163,24 +242,6 @@ imshow(X, cmap=None, norm=None, aspect=None, interpolation=None, alpha=None, vmi
 		vmin - float格式, 指定转化的最小数字(小于该数字按相等处理), 将其转化为[0,1]的代表颜色深度的数字. 指定norm参数时无效
 		vmax - float格式, 指定转化的最大数字(大于该数字按相等处理), 将其转化为[0,1]的代表颜色深度的数字. 指定norm参数时无效
 		origin - str格式, 将array的[0,0]坐标视为左上角或左下角. 可选列表: 'upper'/'lower'. 默认为'upper', 矩阵/image常规作法
-
-plot(*args, scalex=True, scaley=True, data=None, **kwargs)
-	在坐标轴上作图. 参数列表如下:
-		*args - 可选参数, 有x轴坐标, y轴坐标, 格式化字符串. 前述内容可多次重复, 表示在一个axes上作多个线条
-			当只提供一个坐标集合时, 默认为y轴左边, 此时x轴含有相同坐标数, 并且从0起始, 步进为1
-			格式化字符串代表点的颜色和style. 如: 'ro'代表红色的圆. 默认为'b-'. style列表:
-				-- 虚线
-				-. 点断式虚线
-				:  点式线
-				-  实线
-				o  圆
-				s  方块
-				+  加号
-				^  三角形
-			style参考列表: https://matplotlib.org/stable/api/markers_api.html
-		data - indexable数据, 此时x/y轴坐标使用轴索引获取
-		kwargs - 关键字参数, 有label/antialias等
-		kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
 
 pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1, startangle=0, radius=1, counterclock=True, wedgeprops=None, textprops=None, center=(0, 0), frame=False, rotatelabels=False, *, normalize=None, data=None)
 	作饼图. 参数列表如下:
@@ -201,6 +262,24 @@ pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, sh
 		frame - bool格式, 是否作axes边框
 		rotatelabels - bool格式, 每个label是否跟随分块角度旋转
 
+plot(*args, scalex=True, scaley=True, data=None, **kwargs)
+	在坐标轴上作图. 参数列表如下:
+		*args - 可选参数, 有x轴坐标, y轴坐标, 格式化字符串. 前述内容可多次重复, 表示在一个axes上作多个线条
+			当只提供一个坐标集合时, 默认为y轴左边, 此时x轴含有相同坐标数, 并且从0起始, 步进为1
+			格式化字符串代表点的颜色和style. 如: 'ro'代表红色的圆. 默认为'b-'. style列表:
+				-- 虚线
+				-. 点断式虚线
+				:  点式线
+				-  实线
+				o  圆
+				s  方块
+				+  加号
+				^  三角形
+			style参考列表: https://matplotlib.org/stable/api/markers_api.html
+		data - indexable数据, 此时x/y轴坐标使用轴索引获取
+		kwargs - 关键字参数, 有label/antialiased/linewidth等
+		kwargs参考列表：https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D
+
 scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None, alpha=None, linewidths=None, verts=<deprecated parameter>, edgecolors=None, *, plotnonfinite=False, data=None, **kwargs)
 	作散点图. 参数列表如下:
 		x - float或者array-like, x轴坐标
@@ -215,6 +294,14 @@ scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax
 		linewidths - float或array-like, 指定散点的边缘宽度
 		edgecolors - str或color或color sequence, 指定边缘颜色, str可选'face'和'none', 分别代表与中心颜色相同与无边缘颜色; color指定所有散点边缘颜色; color sequence分别指定散点边缘颜色
 
+set_title(label, fontdict=None, loc=None, pad=None, *, y=None, **kwargs)
+	给axes设置title. 参数列表如下:
+		label - str格式, 标题内容
+		fontdict - dict格式, 设置标题属性. key列表: 'fontsize'/'fontweight'/'color'/'verticalalignment'/'horizontalalignment'
+		loc - str格式, 标题位于axes的位置. 可选列表: 'left'/'center'/'right'. 默认为'center'
+		pad - float格式, 标题偏离axes顶部的距离. 默认为6.0
+		y - float格式, 标题居于axes的百分比位置, 从下往上方向
+
 set_xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
 	设置x轴的标签. 参数列表如下:
 		xlabel - str格式, 标签的内容
@@ -223,24 +310,14 @@ set_xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
 set_ylabel(ylabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
 	设置y轴的标签
 
-boxplot(x, notch=None, sym=None, vert=None, whis=None)：箱线图。x代表数据集列表；notch为True时, 在箱线图的中位数位置展示凹痕；sym代表是否显示异常值, 默认值None代表'b+', 使用''可不显示；vert代表是否为垂直箱线图, 默认None代表True；whis代表温和异常值起始系数, 默认为1.5(即Q1-1.5IQR)
-**箱线图概念：Q1-3IQR、Q1-1.5IQR、Q1、Q3、Q3+1.5IQR、Q3+3IQR。其中, IQR=Q3-Q1
-
-set_title(str, loc)：配置图表标题。str代表标题；loc代表定位, 参数有{'center', 'left', 'right'}, 默认为'center'
-
-legend(loc)：线条注解。loc代表注解放置在图表的位置, {‘best', 'upper left', 'upper right', 'lower left', 'lower right', 'upper center', 'lower center', 'center left', 'center right', 'center', 'right'}, 一般使用'best'
-
-set_xticks(ticks, minor=False)：设置X轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度, 为True时设置minor刻度
-
-set_yticks(ticks, minor=False)：设置Y轴刻度。ticks为一系列刻度列表；minor为False时设置major刻度, 为True时设置minor刻度
-
-set_xlabel(xlabel)：设置X轴标签
-
-set_ylabel(xlabel)：设置Y轴标签
-
-set_xlim(xmin=None, xmax=None)：设置x轴限制
-
-text(x, y, str)：配置线条某点的说明文本。x,y为文本坐标；str为说明文本
+text(x, y, s, fontdict=None, **kwargs)
+	在axes中添加文本内容. 参数列表如下:
+		x - float格式, 文本位于axes的x坐标
+		y - float格式, 文本位于axes的y坐标
+		s - str格式, 文本内容
+		fontdict - dict格式, 设置文本属性. key列表: 'fontsize'/'fontweight'/'color'/'verticalalignment'/'horizontalalignment'
+		
+** matplotlib的字符串接受TeX语法
 
 
 额外工具

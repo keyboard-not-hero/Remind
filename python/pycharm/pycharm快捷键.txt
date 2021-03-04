@@ -1,4 +1,4 @@
-ctrl+/    				注释标记行，默认标记当前行
+ctrl+/    				注释标记行
 ctrl+B    				移动到当前变量的定义位置
 ctrl+D    				复制选中内容，没有选中则复制当前行
 ctrl+N    				快速查找类(来源于所有库)
@@ -8,14 +8,13 @@ ctrl+W    				逐渐向外层拓展选中
 ctrl+X    				删除当前行
 ctrl+F12    			列举方法、变量和类
 ctrl+Space    			方法或属性提示
-ctrl+Enter    			插入到下一行
 shift+Esc    			编辑窗口最大化
 shift+alt+Left/Right	代码跳转后退/前进
 ctrl+alt+L      		自动将代码格式对齐
 ctrl+shift+V    		从粘贴板中选择内容粘贴(多条历史复制内容)
 ctrl+shift+J    		将两行合并为一行，并删除不必要的空格
 ctrl+shift+Up/Down    	将当前行上/下移一行
-ctrl+shift+Enter    	插入到上一行
+ctrl+shift+Enter    	插入内容到下一行
 ctrl+shift+alt+J		重构变量
 alt+J(两次)     		重构变量
 alt+Enter    			快速创建方法/类，快速导入方法/类

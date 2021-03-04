@@ -1,6 +1,9 @@
 Beautiful Soup - 从HTML和XML文本中拉取数据
-安装 - pip3 install beautifulsoup4
-模块导入 - import bs4
+安装
+pip3 install beautifulsoup4
+
+模块导入 
+import bs4
 
 class
 bs4.BeautifulSoup

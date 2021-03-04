@@ -62,29 +62,47 @@ size
 	图片大小
 
 method:
+convert(mode=None, matrix=None, dither=None, palette=0, colors=256) -> Image
+	将图片转化为指定mode的图片, 支持在L/RGB/CMYK之间互相转换. 参数列表如下:
+		mode - str格式, 指定要转化的类型
+		matrix - tuple格式, 转化矩阵
+	** RGB转化为L模式的公式: L = R * 299/1000 + G * 587/1000 + B * 114/1000
+
 crop(box=None) -> Image
 	获取图片的裁剪内容
-		box - 4元素tuple, 指定裁剪区域, 格式(left, upper, right, lower)
+		box - (left, upper, right, lower)格式, 指定裁剪区域
+
+getchannel(channel) -> Image
+	获取其中单个色带
+		channel - int或str格式, 0指定'RGB'中的R, 也可直接使用'R'指定
 
 paste(im, box=None, mask=None)
 	将图像im复制到当前图像的box区域
-		im - Image对象或代表颜色的int/tuple
-		box - 2元素tuple或4元素tuple, 当tuple为2个元素时, 指定左上角, 长宽根据im或mask来推测；当tuple指定4个元素时, 指定左上右下, 并且im大小与box大小必须一致. 默认为(0,0)
+		im - image对象, 需要复制的图像
+		box - 2-tuple或4-tuple, 当tuple为2个元素时, 指定左上角, 长宽根据im或mask来推测；当tuple指定4个元素时, 指定左上右下, 并且im大小与box大小必须一致. 默认为(0,0)
 		mask - Image对象, 该对象必须包含alpha值, 取出该对象的alpha值, 获取遮罩效果
 
-resize(size, resample=3, box=None, reducing_gap=None)
-	返回重制大小后的Image对象
-		resize - tuple格式, 重制后的大小
+point(lut, mode=None) -> Image
+	将L/P mode的图像转化为1 mode的图像, 或是I mode转化为L mode
+		lut - callable, 该函数只能读取一个参数
+		mode - str格式, 需要转化的目标类型
 
-rotate(angle, resample=0, expand=0, center=None, translate=None, fillcolor=None)
+resize(size, resample=3, box=None, reducing_gap=None) -> Image
+	复制一个重置大小的图片
+		resize - (width, height)格式, 重制后的大小
+		box - (x, y, width, height)格式, 从原图像中选取指定区域
+
+rotate(angle, resample=0, expand=0, center=None, translate=None, fillcolor=None) -> Image
 	以中心为轴, 逆时针旋转指定角度, 并返回旋转后的Image对象
-		angle - str格式, 旋转角度
-		center - tuple格式, 旋转中心位置
+		angle - str格式, 逆时针旋转角度
+		expand - bool格式, 是否拓展长宽, 使其能容纳旋转后的图像
+		center - tuple格式, 旋转中心位置. 默认为图片中心
+		fillcolor - str格式, 使用颜色填充旋转后的空白区域
 
 save(fp, format=None, **params)
 	将修改后的图片内容保存到指定文件
 		fp - str或file-object格式, 指定保存的文件
-		format - str格式, fp为str时可根据文件名推测；当fp使用file-object必须显式指定
+		format - str格式, fp为str时可根据文件名推测; 当fp使用file-object必须显式指定
 
 show(title=None, command=None)
 	使用系统自带图片浏览器查看图片. 会生成临时图片, 建议使用matplotlib.pyplot.imshow方法
@@ -106,7 +124,7 @@ transpose(method)
 
 thumbnail(size, resample=3, reducing_gap=2.0)
 	按比例缩略图, in-place模式
-	size - tuple格式, 指定缩略图的(width, height)
+		size - tuple格式, 指定缩略图的(width, height)
 
 
 PIL.ImageColor模块
@@ -120,8 +138,8 @@ getcolor(color, mode)
 	color - str类型, 颜色字符串, 当包含alpha值时, 结果使用该alpha值, 否则默认为255
 	mode - str类型, 指定结果的颜色模式字符串, 根据模式的基本类型为L或RGB, 返回不同内容
 
-PIL.ImageDraw模块
 
+PIL.ImageDraw模块
 function:
 Draw(im, mode=None)
 	返回ImageDraw对象
@@ -130,7 +148,6 @@ Draw(im, mode=None)
 
 class
 ImageDraw
-
 method:
 text(xy, text, fill=None, font=None, anchor=None, spacing=4, align="left", direction=None, features=None, language=None, stroke_width=0, stroke_fill=None)
 	在指定位置作字符串
@@ -146,8 +163,8 @@ text(xy, text, fill=None, font=None, anchor=None, spacing=4, align="left", direc
 	stroke_width - 
 	stroke_fill - 默认为fill内容
 
-PIL.ImageFont模块
 
+PIL.ImageFont模块
 function:
 truetype(font=None, size=10, index=0, encoding='', layout_engine=None)
 	使用TrueType/OpenType指定字体创建FreeTypeFont对象

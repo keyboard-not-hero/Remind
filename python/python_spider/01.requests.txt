@@ -1,0 +1,100 @@
+requests - python第三方网络请求库，用于下载网页源代码
+安装库
+pip3 install requests
+
+模块导入
+import requests
+
+requests模块
+function:
+delete(url, **kwargs) -> Response
+	发起DELETE请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		kwargs参考request function
+
+get(url, params=None, **kwargs) -> Response
+	发起GET请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		params - dict格式或tuple的列表, 添加到请求中的额外参数
+		kwargs参考request function
+
+head(url, **kwargs) -> Response
+	发起HEAD请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		kwargs参考request function
+
+patch(url, data=None, json=None, **kwargs) -> Response
+	发起PATCH请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		data - dict格式或tuple的列表或file-like对象, 发送请求的主体内容
+		json - json格式, 发送请求的主体内容
+		**kwargs参考request function
+
+post(url, data=None, json=None, **kwargs) -> Response
+	发起POST请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		data - dict格式或tuple的列表或file-like对象, 发送请求的主体内容
+		json - json格式, 发送请求的主体内容
+		**kwargs参考request function
+
+put(url, data=None, **kwargs) -> Response	
+	发起PUT请求. 参数列表如下:
+		url - str格式, 访问的网络地址
+		data - dict格式或tuple的列表或file-like对象, 发送请求的主体内容
+		json - json格式, 发送请求的主体内容
+		**kwargs参考request function
+
+request(method, url, **kwargs) -> Response
+    使用HTTP的指定请求方法. 参数列表如下:
+    	method - str格式，发起请求的类型，如：'GET'/'POST'/'PUT'/'HEAD'/'DELETE'/'PATH'/'OPTIONS'
+    	url - str格式, 访问的网络地址
+		kwargs列表:
+			data - dict格式或tuple列表或file-like, 发送到服务器的主体内容. 一般为POST/PUT请求
+			json - json格式, 发送到服务器的主体内容
+			headers - dict格式, 发送到服务器的header内容
+			cookies - dict格式或CookieJar对象, 发送到服务器的cookies
+			files - dict格式, {'name': file-like}指定传送文件内容
+			auth - tuple格式, 用于验证身份
+			timeout - float或tuple格式, 等待服务器回应时间. (connect-timeout, read-timeout)用于连接和读取等待分别设置
+			allow_redirects - bool格式, 是否允许请求重定向. 默认为True
+			proxies - dict格式, 用于设置代理. key值为协议类型, value为url
+			verify - bool或str格式, bool代表是否验证服务器的TLS证书, str代表指明本地CA bundle路径. 默认为True
+			stream - bool格式, 是否支持流格式, True为取多少下载多少, False则一次性全部下载
+			cert - str或tuple格式, str代表客户端证书文件地址(.pem). tuple为('cert','key')
+			 
+
+class:
+Response
+variable:
+content
+	服务器返回的未解码内容
+
+cookies
+	服务器返回的cookies内容
+
+encoding
+	猜测内容使用的编码, 或设置编码
+
+headers
+	服务器返回的header内容
+
+reason
+	服务器返回的状态文字
+
+status_code
+	服务器返回的状态码
+
+text
+	服务器返回的解码内容
+	该内容根据encoding猜测得出
+
+url
+	完整的url请求内容
+
+method:
+json(**kwargs)
+	将服务器返回的JSON内容反序列化
+
+
+引用：
+[1]requests readthedocs：https://requests.readthedocs.io/en/master/
