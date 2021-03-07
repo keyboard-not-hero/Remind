@@ -1,27 +1,27 @@
 virtualenv - 隔离的Python运行环境
 
+安装
+pip install virtualenv
+
+
 语法
 virtualenv [options] destination
 
 参数释义
---seeder {app-data|pip}
-	是否创建cache目录，复制pip/setuptools/wheel到该cache。默认为app-data
-	app-date即为创建cache目录
+--version
+    版本信息
 
---app-data
-    cache目录。默认为$HOME/.local/share/virtualenv
+--read-only-app-date
+	cache目录是否为只读. 默认为False
+
+--app-data <PATH>
+    cache目录. 默认为$HOME/.local/share/virtualenv
 
 --reset-app-data
-    激活virtualenv时，清空cache。默认False
+    激活virtualenv时, 清空cache. 默认False
 
-verbosity=<level>
-    设定消息警告等级，默认为3。映射如下：
-        0 - CRITICAL
-		1 - ERROR
-		2 - WARNING
-		3 - INFO
-		4 - DEBUG
-		5 - NOTSET
+-h, --help
+    帮助信息
 
 -v, --verbose
     消息警告等级设置为2
@@ -29,79 +29,85 @@ verbosity=<level>
 -q, --quiet
     消息警告等级设置为0
 
--p <path>, --python <path>
-    创建的virtualenv使用的python解释器路径。默认为/usr/bin/python3
+-p <PATH>, --python <PATH>
+    创建的virtualenv使用的python解释器路径. 默认为安装virtualenv使用的Python版本
 
 --clear
-    当目标目录存在时，移除该目录。默认为False
+    当目标目录存在时, 移除该目录. 默认为False
 
 --system-site-packages
-    允许virtualenv访问系统的site-package目录。默认为False
+    允许virtualenv访问系统的site-package目录(只读), 当使用的库系统site-packages已有时, 直接使用. 默认为False
 
 --symlinks
-	使用链接库文件，代替复制。默认为True
+	使用链接库文件, 代替复制. 默认为True
 
 --copies, --always-copy
-    使用复制库文件，代替链接。默认为False
+    使用复制库文件, 代替链接. 默认为False
 
---without-pip, --no-seed
-	不安装pip。默认为False
+--seeder <TYPE>
+	seeder来源(seeder代表使用额外的库管理), 列表如下: app-data/pip. 默认为app-data
+
+--no-seed, --without-pip
+	不使用seeder, 即默认不安装pip/setuptools/wheel, 直接使用系统级site-packages(读写). 默认为False
 
 --no-download, --never-download
-	不从PyPI下载最新版本pip/wheel/setuptools。默认为True
+	不从PyPI更新到pip/wheel/setuptools最新版本. 默认为True
 
 --download
-	从PyPI下载最新版本pip/wheel/setuptools。默认为False
+	从PyPI更新到pip/wheel/setuptools最新版本. 默认为False
 
 --extra-search-dir <dir>...
-    额外查找wheel包的目录。默认为[]
+    额外查找pip/wheel/setuptools的目录. 默认为[]
 
---pip <version>
-    由extra-search-dir确定。默认为已安装最新版本
+--pip <TYPE>
+	安装的pip版本. 列表如下: 
+		embed - 由app-date的embed目录下的pip.json文件指定
+		bundle - 系统级site-packages指定
+		<detail_version> - 手动指定具体安装的版本
 
---wheel <version>
-    由extra-search-dir确定。默认为已安装最新版本
+--wheel <TYPE>
+	安装的wheel版本. 列表如下: 
+		embed - 由app-date的embed目录下的wheel.json文件指定
+		bundle - 系统级site-packages指定
+		<detail_version> - 手动指定具体安装的版本
 
---setuptools <version>
-    由extra-search-dir确定。默认为已安装最新版本
+--setuptools <TYPE>
+	安装的setuptools版本. 列表如下: 
+		embed - 由app-date的embed目录下的setuptools.json文件指定
+		bundle - 系统级site-packages指定
+		<detail_version> - 手动指定具体安装的版本
 
 --no-pip
-    virtualenv中不安装pip。默认为False
+    virtualenv中不安装pip. 默认为False
 
 --no-setuptools
-    virtualenv中不安装setuptools。默认为False
+    virtualenv中不安装setuptools. 默认为False
     
 --no-wheel
-    virtualenv中不安装wheel。默认为False
+    virtualenv中不安装wheel. 默认为False
 
---prompt <prompt>
-    virtualenv的提示符。默认为(<env_name>)
+--activators <TERMINAL1, TERMINAL2, ...>
+	指定可在指定终端下使用启动器(activate). 列表如下: bash/batch/cshell/fish/poweshell/python/xonsh. 默认支持所有
 
---version
-    版本信息
+--prompt <PROMPT>
+    virtualenv的提示符. 默认为(<env_name>)
 
--h, --help
-    帮助信息
-
-目标位置
 destination
-    创建环境的目录
+    创建环境的名称(同名文件夹)
 
 
-安装virtualenv：
-pip install virtualenv
 
-
-创建虚拟环境：
-> virtualenv ENV_NAME
+virtualenv操作步骤:
+1.创建虚拟环境:
+virtualenv ENV_NAME
 
 
 激活虚拟环境：
 GNU/Linux
-> source /PATH/bin/activate
+source /PATH/bin/activate
 
 Windows
-> /PATH/Scripts/activate
+/PATH/Scripts/activate
 
 
 退出虚拟环境：
@@ -114,3 +120,7 @@ GNU/Linux
 
 Windows
 > rmdir /S ENV_NAME
+
+
+引用:
+[1]virtualenv pypa: https://virtualenv.pypa.io/en/latest/index.html

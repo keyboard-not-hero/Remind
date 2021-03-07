@@ -1,6 +1,10 @@
 jieba - 中文分词Python库
-安装 - pip3 install jieba
-导入 - import jieba
+
+安装
+pip3 install jieba
+
+导入
+import jieba
 
 额外库paddle
 前提：jieba 0.40.0及以上、python_x64 3.5.1+/3.6/3.7(3.8.3测试安装不成功)、pip_x64 9.0.1+。并且系统架构必须为64bit。
