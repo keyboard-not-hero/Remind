@@ -4,15 +4,167 @@ python默认使用tkinter包创建图形
 import tkinter
 
 
+继承体系: tkinter.Misc/tkinter.Wm --> tkinter.Tk
+		 tkinter.Misc --> tkinter.BaseWidget --> tkinter.Widget --> tkinter.Frame
+		 														
+
+
+例1
+import tkinter as tk
+
+class Application(tk.Frame):
+
+	def __init__(self, master=None):
+		# master为root window
+		super().__init__(master)
+		self.master = master
+		# 展示Frame
+		self.pack()
+		self.create_widgets()
+		
+	def create_widgets(self):
+		self.hi = tk.Button(self, text='Close the window', command=self.say_hi)
+		self.quit = tk.Button(self, text='QUIT', command=self.master.destroy)
+		self.hi.pack()
+		self.quit.pack()
+		
+	def say_hi(self):
+		print("hi there, everyone!")
+	
+root = tk.Tk()
+root.title("first demo")
+app = Application(root)
+app.mainloop()
+
+
+例2
+import tkinter as tk
+from tkinter import simpledialog
+
+class Application(tk.Frame):
+
+	def __init__(self, master=None):
+		# master为root window
+		super().__init__(master)
+		self.master = master
+		# 展示Frame
+		self.pack()
+		self.create_dialog()
+		
+	def create_dialog(self):
+		self.hi = tk.Button(self, text='open the dialog', command=self.open_dialog)
+		self.hi.pack()
+		
+	def open_dialog(self):
+		dialog = simpledialog.Dialog(self, title="dialog")
+
+	
+root = tk.Tk()
+app = Application(root)
+app.mainloop()
+		
+
 tkinter模块
 class:
 Tk
 method:
-__init__(screenName=None, baseName=None, className='Tk', useTk=1)
+__init__(screenName=None, baseName=None, className='Tk', useTk=1, sync=0, use=None)
+	顶层widget
 	
+destroy()
+	销毁当前和其子孙级widget
+	
+geometry(newGeometry=None)
+	主窗口大小. 参数列表如下:
+		newGeometry - str格式, 指定主窗口大小. 如: "200x300"
+	
+mainloop(n=0)
+	进入Tk主循环
 
+title(string=None)
+	设置主窗口标题
+
+
+class:
+Frame
+method:
+__init__(master=None, cnf={}, **kw)
+	在父级窗口中创建Frame实例. 参数列表如下:
+		master - 父级窗口
+	
+destroy()
+	销毁当前和其子孙级widget
+	
+grid(cnf={}, **kw)
+	将当前widget放置到父级widget的指定栅栏中. 参数列表如下:
+		kw列表:
+			column - int格式, 放置到父级widget的栅栏列. 从0起始
+			columnspan - int格式, 当前widget占据多少列
+			in - widget对象, 放置在指定widget内
+			row - int格式, 放置到父级widget的栅栏行. 从0起始
+			rowspan - int格式, 当前widget占据多少行
+	
+pack(cnf={}, **kw)
+	将当前widget放置到父级widget中. 参数列表如下:
+		kw列表:
+			after - widget对象, 放置在指定widget之后
+			before - widget对象, 放置在指定widget之前
+			expand - bool格式, 当前父级widget大小改变时是否拓展大小
+			in - widget对象, 放置在指定widget内部
+			side - str格式, 放置在父级widget的方向. 可选列表: "TOP"/"BOTTOM"/"LEFT"/"RIGHT"
+
+quit()
+	退出tcl解释器. 所有widget都会被销毁
+	
+	
+class:
+Button
+method:
+__init__(master=None, cnf={}, **kw)
+	放置Button到父级widget中. 参数列表如下:
+		kw参数列表:
+			command - callable格式, 响应指令
+			background - str格式, 背景颜色
+			font - (family, size, options)格式, family列表: "Arial"/"Copperplate"/"Coureier"/"Times"; options列表: "bold"/"normal"/"italic"/"roman"
+			foreground - str格式, 内容颜色
+			text - str格式, 文本内容
+			textvariable - StringVar/IntVar/DoubleVar对象, 可变的文本内容
+		
+class:
+Label
+method:
+__init__(master=None, cnf={}, **kw)
+	放置Button到父级widget中. 参数列表如下:
+		kw参数列表:
+			command - callable格式, 响应指令
+			background - str格式, 背景颜色
+			font - (family, size, options)格式, family列表: "Arial"/"Copperplate"/"Coureier"/"Times"; options列表: "bold"/"normal"/"italic"/"roman"
+			foreground - str格式, 内容颜色
+			text - str格式, 文本内容
+			textvariable - StringVar/IntVar/DoubleVar对象, 可变的文本内容
+
+bind(sequence=None, func=None, add=None)
+	将button与sequence绑定, 并以callback响应. 参数列表如下:
+		sequence - str格式, 事件触发. 事件匹配模式为: <MODIFIER-MODIFIER-TYPE-DETAIL>
+			MODIFIER如下:
+				Control/Shift/Lock/Meta/Alt
+			TYPE如下:
+				Activate/Enter/Map/ButtonPress/Button/Expose/Motion/ButtonRelease FocusIn/MouseWheel/Circulate/FocusOut/Property/Colormap/Gravity Reparent/Configure/KeyPress/Key/Unmap/Deactivate/KeyRelease Visibility/Destroy/Leave
+			DETAIL如下:
+				1.Button的号码
+				2.Key的键盘映射
+			例: "<Key-Return>"
+		func - callable, 事件触发时响应方法
+		add - bool格式, 是否为在上一个同类型触发增加方法调用. False代表替换上一次触发响应决策
+
+tkinter.simpledialog模块
+class:
+Dialog
+method:
+__init__(parent, title=None)
+	创建一个Dialog. 参数列表如下:
+		parent - Fram对象, 从指定frame衍生
+		title - str格式, dialog标题
 
 引用:
-[1]
-
-
+[1]python offical: https://docs.python.org/3/library/tk.html

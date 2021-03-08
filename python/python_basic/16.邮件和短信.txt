@@ -1,3 +1,16 @@
+邮件收发步骤:
+
+        SMTP                                                           POP3/IMAP  
+sender ------> MUA ------> MTA ------> MTA [------> MTA...] ------> MDA ------> receiver
+
+名词解释:
+MUA - Mail User Agent, 邮件用户代理
+MTA - Mail Transfer Agent, 邮件传输代理
+MDA - Main Delivery Agent, 邮件投递代理
+SMTP - Simple Mail Transfer Protocol, 简单邮件传输协议, 用户发送邮件的协议
+POP3 - Post Office Protocol version_3, 邮局协议, 用户从服务器获取邮件的协议
+IMAP - Internet Message Access Protocol, 因特网信息访问协议, 用户从服务器获取邮件的协议
+
 smtplib - 可发送邮件的客户端会话
 
 class 
