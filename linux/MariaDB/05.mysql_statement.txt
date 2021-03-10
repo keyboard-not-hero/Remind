@@ -1,0 +1,86 @@
+提示符类型:
+mysql> - 首行提示符
+->     - 多行查询的非首行提示符
+'>     - 多行查询的非首行提示符, 并需要字符串起始'对应的结束符'
+''>    - 多行查询的非首行提示符, 并需要字符串起始"对应的结束符"
+`>     - 多行查询的非首行提示符, 并需要标志结束`对应的结束符`
+/*     - 多行查询的非首行提示符, 并需要注释起始/*对应的结束符*/
+
+
+数据库
+show databases;
+	查看已有数据库
+
+create database <DB_NAME>;
+	创建数据库
+
+use <DB_NAME>;
+	访问指定数据库
+
+
+
+表格
+show tables;
+	查看当前数据库中的表格
+
+create table <TAB_NAME> (
+	name  varchar(20),
+	owner varchar(20),
+	species varchar(20),
+	sex   char(1),
+	birth date,
+	death date
+);
+	创建表格
+
+describe <TAB_NAME>
+	显示表格metadata信息	
+
+load date local infile '/<PATH>/<FILE_NAME>' into table <TAB_NAME>;
+	从文件内加载数据到表格
+	文件内数据列使用\t分隔, NULL使用\N表示
+
+insert into <TAB_NAME> values ('Puffball', 'Diane', 'hamster', 'f', '1990-03-30', NULL);
+	插入值到表格中
+
+select <COLUMNS_NAME> from <TAB_NAME> where <CONDITION>;
+	从表格中提取符合条件的列内容
+	多列使用','分隔, '*'代表所有列
+	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
+	COLUMNS_NAME前面添加distinct可以使重复的行内容只显示一次
+	结果可使用order by <COL_NAME>排序(大小写不敏感), order by binary <COL_NAME>可大小写敏感. 默认以升序排列, 后续紧跟desc指定降序排列, desc只作用于它紧邻的前一个列名
+	
+
+delete from <TAB_NAME>;
+	从表格中删除全部内容
+
+update <TAB_NAME> set <COL_NAME>=<VALUE> where <CONDITION>;
+	更新表格中符合条件的行内容
+	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
+
+
+
+
+function:
+curdate()
+	当前日期
+
+timestampdiff(diff_basic, date1, date2)
+	时间根据diff_basic差异进行计算
+
+user()
+	当前登录用户
+
+version()
+	版本信息
+
+
+数据类型:
+
+
+
+MySQL特性:
+1.MySQL语法不在乎大小写
+2.数据库名称在乎大小写
+3.语句以';'/'\g'/'\G'结尾
+4.'\c'代表退出执行当前输入语句

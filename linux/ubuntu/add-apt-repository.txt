@@ -20,7 +20,7 @@ add-apt-repository [option] ppa:<user>/<ppa-name>
     打印debug信息
 
 -r, --remove
-    从/etc/apt/sources.list.d目录下删除指定源。建议手动到该目录下删除文件
+    从/etc/apt/sources.list删除指定源。建议手动到该目录下删除文件
 
 -s, --enable-source
     允许下载源代码包

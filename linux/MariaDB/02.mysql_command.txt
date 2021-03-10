@@ -1,0 +1,42 @@
+mysql - MariaDB指令行工具
+
+语法
+mysql [options] <DB_name>
+
+参数释义
+--database=<db_name>, -D <db_name>
+	指定要直接进入的数据库
+
+--force, -f
+	当一条SQL语句出现错误后, 继续强制执行下一条SQL语句
+
+--host=<host_name>, -h <host_name>
+	指定要连接数据库所在主机地址
+
+--html, -H
+	以HTML格式输出
+
+--password[=password], -p[password]
+	登录账户密码
+	当未在指令行提供时, 在下一行提示输入
+
+--port=<port_num>, -P <port_num>
+	连接到服务器指定端口. 默认为3306
+
+--quick, -q
+	一行一行查询并返回结果, 并不将结果保存到内存中. 但速度会较慢
+
+--user=<user_name>, -u <user_name>
+	登录账号名称
+
+--silent, -s
+	静默模式, 尽可能少地输出信息. 可叠加使用, 增强效果
+
+--table, -t
+	使用表格格式打印输出, interactive默认输出格式
+
+--verbose, -v
+	详细内容模式, 尽可能多地输出信息. 可叠加使用, 增强效果
+
+--version, -V
+	显示版本信息

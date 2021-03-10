@@ -1,0 +1,97 @@
+邮件收发步骤:
+
+        SMTP                                                           POP3/IMAP  
+sender ------> MUA ------> MTA ------> MTA [------> MTA...] ------> MDA ------> receiver
+
+名词解释:
+MUA - Mail User Agent, 邮件用户代理
+MTA - Mail Transfer Agent, 邮件传输代理
+MDA - Main Delivery Agent, 邮件投递代理
+SMTP - Simple Mail Transfer Protocol, 简单邮件传输协议, 用户发送邮件的协议
+POP3 - Post Office Protocol version_3, 邮局协议, 用户从服务器获取邮件的协议
+IMAP - Internet Message Access Protocol, 因特网信息访问协议, 用户从服务器获取邮件的协议
+
+
+例1.
+from email.message import EmailMessage
+import smtplib
+
+msg = EmailMessage()
+msg['Subject'] = 'how to win'
+login_name = input('enter your email: ')
+login_pass = input('enter your password: ')
+msg['From'] = login_name
+msg['To'] = input('enter target email: ')
+msg.set_content('I want to the best shooter, can you help me?')
+
+with smtplib.SMTP_SSL('smtp.qq.com','465') as smtp:
+    smtp.login(login_name, login_pass)
+    smtp.send_message(msg)
+
+
+email.message模块
+class:
+EmailMessage
+method:
+__init__(policy=None)
+	初始化EmailMessage对象
+
+add_attachment(*args, **kw)
+	添加附件. 参数列表如下:
+		content - bytes格式, 传输的附件stream
+		maintype - str格式, MIME主类型, 代表文件类型. 如: 'image'
+		subtype - str格式, MIME子类型, 代表文件具体格式. 如: 'jpeg'
+		filename - str格式, 传送时使用的文件名称
+
+set_content(str)
+	邮件正文内容. 参数如下:
+		str - str格式, 邮件正文文本内容
+
+
+smtplib模块
+class: 
+SMTP
+method:
+__init__(self, host='', port=0, local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, source_address=None)
+	封装的STMP连接. 参数列表如下:
+		host - str格式, STMP服务器地址
+		port - int格式, STMP服务器开放的端口. SMTP常规端口25
+		local_hostname - str格式, 本地主机的FQDN(Fully Qualified Domain Name)
+		source_address - tuple格式, 本地主机的(host, port)内容
+
+helo(name='')
+	向SMTP服务器标识当前账户. 参数如下:
+		name - str格式, 本机的的FQDN
+
+login(user, password, *, initial_response_ok=True)
+	登录到SMTP服务器. 参数列表如下:
+		user - str格式, 发送者的邮件地址
+		password - str格式, 发送者的邮件密码
+		initial_response_ok - bool格式, 是否允许发送RFC 4954中的initial_response内容
+
+quit()
+	中断SMTP会话和关闭连接
+
+sendmail(from_addr, to_addrs, msg, mail_options=(), rcpt_options=())
+	发送邮件
+		from_addr - str格式, 发送邮件的地址。规范查看RFC 822
+		to_addrs - str或list格式, 接收邮件的str地址或多个地址列表
+		msg - str或bytes, 发送的消息内容
+	
+send_message(msg, from_addr=None, to_addrs=None, mail_options=(), rcpt_options=())
+    发送邮件. 参数列表如下:
+		msg - email.message.Message对象
+    	from_addr - str格式, 发送邮件的地址。规范查看RFC 822
+    	to_addrs - str或list格式, 接收邮件的单个或多个地址
+
+class: 
+SMTP_SSL
+method:
+__init__(self, host='', port=0, local_hostname=None, keyfile=None, certfile=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, context=None, source_address=None)
+	封装的STMP连接. 参数列表如下:
+		host - str格式, STMP服务器地址
+		port - int格式, STMP服务器开放的端口. SMTP over SSL常规端口465/587
+		local_hostname - str格式, 本地主机的FQDN(Fully Qualified Domain Name)
+		context - ssl.SSLContext对象, 标识使用的SSL版本
+		source_address - tuple格式, 本地主机的(host, port)内容
+		
