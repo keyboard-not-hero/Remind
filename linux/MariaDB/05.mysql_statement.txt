@@ -7,6 +7,8 @@ mysql> - 首行提示符
 /*     - 多行查询的非首行提示符, 并需要注释起始/*对应的结束符*/
 
 
+
+MySQL指令
 数据库
 show databases;
 	查看已有数据库
@@ -33,10 +35,13 @@ create table <TAB_NAME> (
 );
 	创建表格
 
+show create table <TAB_NAME>;
+	显示创建表格的语句
+
 describe <TAB_NAME>
 	显示表格metadata信息	
 
-load date local infile '/<PATH>/<FILE_NAME>' into table <TAB_NAME>;
+load data local infile '/<PATH>/<FILE_NAME>' into table <TAB_NAME>;
 	从文件内加载数据到表格
 	文件内数据列使用\t分隔, NULL使用\N表示
 
@@ -45,12 +50,24 @@ insert into <TAB_NAME> values ('Puffball', 'Diane', 'hamster', 'f', '1990-03-30'
 
 select <COLUMNS_NAME> from <TAB_NAME> where <CONDITION>;
 	从表格中提取符合条件的列内容
-	多列使用','分隔, '*'代表所有列
-	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
+	COLUMNS_NAME多列使用','分隔, '*'代表所有列
 	COLUMNS_NAME前面添加distinct可以使重复的行内容只显示一次
+	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
+	CONDITION可以使用is NULL或is not NULL判断内容是否为空
+	CONDITION支持模式匹配, '_'代表任意单个字符, '%'代表任意多个字符, 使用like或note like关键字进行匹配
+	CONDITION支持正则表达式, 使用regexp关键字(或regexp_like方法)进行匹配, 匹配大小写不敏感, 可使用binary指定大小写敏感(regexp binary '<Regular Expression>')
+	<TAB_NAME>部分可使用联结(tab1 join_type tab2 on condition), 列表如下:
+		inner join - 两个表都符合on条件的内容
+		left join -
+		right join - 
+	可使用group by <COL_NAME>来根据列进行分类
 	结果可使用order by <COL_NAME>排序(大小写不敏感), order by binary <COL_NAME>可大小写敏感. 默认以升序排列, 后续紧跟desc指定降序排列, desc只作用于它紧邻的前一个列名
-	
+	使用limit限制目标行数
+	使用union合并两个select的结果
 
+source <DB_file>;
+	使用脚本内的查询语句
+	
 delete from <TAB_NAME>;
 	从表格中删除全部内容
 
@@ -58,12 +75,29 @@ update <TAB_NAME> set <COL_NAME>=<VALUE> where <CONDITION>;
 	更新表格中符合条件的行内容
 	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
 
+set [global] <variable>=<value>
+	设置SQL内部变量
+
+help
+	帮助信息
 
 
 
-function:
+function(用于select语句):
+count(column)
+	计算指定列的行数
+
 curdate()
 	当前日期
+
+database()
+	当前使用的数据库
+
+last_insert_id()
+	最近一次插入的auto_increment值, 该方法与连接相关, 只返回当前连接的最后一次插入值
+
+max(column)
+	指定列的最大值
 
 timestampdiff(diff_basic, date1, date2)
 	时间根据diff_basic差异进行计算
@@ -75,7 +109,32 @@ version()
 	版本信息
 
 
+
 数据类型:
+char
+	定长字符
+date
+	日期
+enum(val1, val2, ...)
+	枚举类型
+tinyint [unsigned]
+	1字节整数
+smallint [unsigned]
+	2字节整数
+mediumint [unsigned]
+	3字节整数
+int [unsigned]
+	4字节整数
+bigint [unsigned]
+	8字节整数
+varchar
+	变长字符
+
+
+
+数据库引擎类型:
+InnoDB
+MyISAM
 
 
 
@@ -84,3 +143,4 @@ MySQL特性:
 2.数据库名称在乎大小写
 3.语句以';'/'\g'/'\G'结尾
 4.'\c'代表退出执行当前输入语句
+5.interactive下的指令保存到~/.mysql_history

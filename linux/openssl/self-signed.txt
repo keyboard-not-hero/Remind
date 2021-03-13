@@ -1,0 +1,89 @@
+Client/Server模式使用自签名CA证书
+服务器端:
+cd /etc/mysql
+sudo mkdir ssl
+cd ssl
+
+生成CA私钥
+sudo openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out ca-key.pem
+
+生成CA证书
+sudo openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.pem
+<prompt>common name: maria admin
+
+创建服务器证书请求
+sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout server-key.pem -out server-req.pem
+<prompt>common name: maria server
+
+生成服务器秘钥
+sudo openssl rsa -in server-key.pem -out server-key.pem
+
+利用服务器证书请求/CA私钥/CA证书生成服务器自签名证书
+sudo openssl x509 -req -in server-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+
+创建客户端证书请求
+sudo openssl req -newkey rsa:2048 -days 365000 -nodes -keyout client-key.pem -out client-req.pem
+<prompt>common name: maria client
+
+生成客户端秘钥
+sudo openssl rsa -in client-key.pem -out client-key.pem
+
+利用客户端证书请求/CA私钥/CA证书生成客户端自签名证书
+sudo openssl x509 -req -in client-req.pem -days 365000 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
+
+
+验证证书:
+openssl verify -CAfile ca-cert.pem server-cert.pem client-cert.pem
+server-cert.pem: OK
+client-cert.pem: OK
+
+
+配置MySQL服务器使用SSL:
+sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf
+[mysqld]
+#ssl
+ssl-ca=/etc/mysql/ssl/ca-cert.pem
+ssl-cert=/etc/mysql/ssl/server-cert.pem
+ssl-key=/etc/mysql/ssl/server-key.pem
+## Set up TLS version here. For example TLS version 1.2 and 1.3 ##
+tls_version = TLSv1.2,TLSv1.3
+
+sudo chown -Rv mysql:root /etc/mysql/ssl/
+
+
+重启mysqld
+systemctl restart mysql
+sudo grep ssl /var/log/syslog
+
+
+确定服务器ssl配置正确
+Maria [mysql]> SHOW VARIABLES LIKE '%ssl%';
++---------------------+--------------------------------+
+| Variable_name       | Value                          |
++---------------------+--------------------------------+
+| have_openssl        | YES                            |
+| have_ssl            | YES                            |
+| ssl_ca              | /etc/mysql/ssl/ca-cert.pem     |
+| ssl_capath          |                                |
+| ssl_cert            | /etc/mysql/ssl/server-cert.pem |
+| ssl_cipher          |                                |
+| ssl_crl             |                                |
+| ssl_crlpath         |                                |
+| ssl_key             | /etc/mysql/ssl/server-key.pem  |
+| version_ssl_library | OpenSSL 1.1.1f  31 Mar 2020    |
++---------------------+--------------------------------+
+
+
+客户端:
+确保客户端/etc/mysql/ssl目录下包含ca-cert.pem/client-cert.pem/client-key.pem文件
+配置客户端使用SSL:
+sudo vi /etc/mysql/mariadb.conf.d/50-mysql-clients.cnf
+[mysql]
+ssl-ca=/etc/mysql/ssl/ca-cert.pem
+ssl-cert=/etc/mysql/ssl/client-cert.pem
+ssl-key=/etc/mysql/ssl/client-key.pem
+
+
+客户端验证ssl连接:
+Maria [mysql]> status
+SSL:			Not in use

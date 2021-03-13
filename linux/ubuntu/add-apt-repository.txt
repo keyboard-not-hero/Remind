@@ -32,3 +32,8 @@ add-apt-repository [option] ppa:<user>/<ppa-name>
     确认所有询问
 
 
+1.添加源到/etc/apt/sources.list
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirror.ehv.weppel.nl/mariadb/repo/10.4/ubuntu focal main'
+
+2.从/etc/apt/sources.list删除源
+sudo add-apt-repository --remove 'deb [arch=amd64,arm64,ppc64el] https://mirror.ehv.weppel.nl/mariadb/repo/10.4/ubuntu focal main'

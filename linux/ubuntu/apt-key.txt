@@ -4,14 +4,15 @@
 apt-key - apt秘钥管理工具
 
 语法
-apt-key 
+apt-key <args>
 
 参数释义
-add <filename>|-
-    从filename文件读取内容(支持标准输入-)，添加到信任秘钥列表
+add <filename>
+    从filename文件读取内容(支持标准输入-), 添加到信任秘钥列表
 
 del <key_id>
     从信任秘钥列表删除
+	key_id代表finger的最后八位, 中间不带空格
 
 export <key_id>
     显示对应秘钥内容
@@ -22,13 +23,21 @@ exportall
 list, finger, fingerprint
     显示信任秘钥的指纹
 
-adv
-    传递更高级选项给pgp
+adv [option]
+    传递更高级选项给pgp. option列表如下:
+		--fetch-keys
+			从完整URL路径获取文件
+
+		--keyserver
+			文件所在的地址. 如: hkp://keyserver.ubuntu.com:80
+
+		--recv-key <finger>
+			从指定keyserver下载指纹为finger的文件. 搭配--kerserver使用
 
 net-update
     更新gpg内容。
     需要安装wget
-    只能在Ubuntu下工作
+    不能用于Debian系列, 但能在Ubuntu下工作
 
 
 保存位置
@@ -36,4 +45,4 @@ net-update
 /etc/apt/trusted.pgp.d/
 
 注意
-使用前提：apt>=1,4
+使用前提: apt>=1.4

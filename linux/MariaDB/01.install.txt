@@ -1,26 +1,24 @@
-1.添加源(以Ubuntu20.04 LTS安装mariadb 10.5为例)
+1.添加源
 sudo apt-get install software-properties-common
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.5/ubuntu focal main'
-
-
-2.导入GPG public key
-1)Ubuntu 16.04之前版本
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-2)Ubuntu 16.04及以后版本
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-
+sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirror.ehv.weppel.nl/mariadb/repo/10.5/ubuntu focal main'
 sudo apt update
 
-3.安装mariadb
+** 以Ubuntu20.04 LTS安装mariadb 10.5为例, 其他参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=weppel
+
+
+2.安装mariadb
 sudo apt-get install mariadb-server
 
-4.初次安装配置(mariadb需要切换至root账户才能无需密码使用mariadb)
+
+3.初次安装配置(mariadb需要切换至root账户才能无需密码使用mariadb)
 su -
 mysql_secure_installation
+** MariaDB 10.5.2后的版本, mysql_secure_installation引用mariadb-secure-installation指令
 ** 手动修改密码: 
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root-password';
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root_password';
 
-5.启动mariadb
+4.启动mariadb
 systemctl start mariadb
 
 引用:
