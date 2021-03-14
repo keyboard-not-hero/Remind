@@ -13,6 +13,9 @@ mysql [options] <DB_name>
 --database=<db_name>, -D <db_name>
 	指定要直接进入的数据库
 
+--default-auth=<plugin_name>
+	客户端连接默认使用的认证插件
+
 --defaults-file=<option_file>
 	读取option的文件. 默认可通过--help查看
 

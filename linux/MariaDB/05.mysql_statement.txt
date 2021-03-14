@@ -75,8 +75,246 @@ update <TAB_NAME> set <COL_NAME>=<VALUE> where <CONDITION>;
 	更新表格中符合条件的行内容
 	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
 
+
+账户
+create [or replace] user [if not exists] 
+	<user_specification> [,<user_specification> ...]
+	[require {none | <tls_option> [[AND] <tls_option> ...]}]
+	[with <resource_option> [<resource_option> ...]]
+	[<lock_option>]
+	[<password_option>];
+	创建账户, 插入无权限用户到mysql.user table
+	or replace内容如下: drop user if exists <name>; create user <name> ...;
+	if not exists提供时: 当用户已存在, 使用warning代替默认的error
+
+	<user_specification>
+		<account_info> [<authentication_option>]
+
+		<account_info>
+			<user_name>[@<host_name>]
+			user_name提供''时, 代表anonymous用户, 即匹配任意用户名
+			host_name未提供时, 默认为%, 即任意多个字符, 代表所有主机可连接
+
+		<authentication_option>
+			identified by '<passwd>' 
+			| identified by password '<encrypt_passwd>'
+			| identified {via|with} <authentication_rule> [or <authentication_rule> ...]
+			passwd代表明文密码; encrypt_passwd代表经过password()函数转化的密码
+
+			<authentication_rule>
+				<authentication_plugin>
+				| <authentication_plugin> {using|as} '<authentication_string>' 
+				| <authentication_plugin> {using|as} password('<passwd>')
+				<authentication_plugin>为插件名称. 
+				当old_passwords变量为0时, 新建用户默认使用mysql_native_password,否则使用mysql_old_password
+				初始化root用户默认使用unix_socket, 本地登录利用Unix sock, 实现system root用户免密码登陆, 失败后使用mysql_native_password
+				mysql_native_password也用于password()函数
+				** 查看plugin是否已安装: show plugins
+
+	<tls_option>
+		ssl
+		| x509
+		| cipher '<cipher>'
+		| issuer '<issuer>'
+		| subject '<subject>'
+		ssl代表必须使用tls, 但x509证书非必要. 不能与其他选项联合
+		x509必须使用x509证书(隐式包含tls). 不能与其他选项联合
+		cipher必须使用tls, 但x509非必须, 并且证书必须使用指定证书等级(TLSv1/TLSv1.1/TLSv1.2/TLSv1.3)加密. 可以与subject/issuer联合
+		issuer必须使用x509证书, 证书必须指定issuer字段. 可以与cipher/subject联合
+		subject必须使用x509证书, 证书必须指定subject字段. 可以与cipher/issuer联合
+
+	<resource_option>
+		max_queries_per_hour <count>
+		| max_updates_per_hour <count>
+		| max_connections_per_hour <count>
+		| max_user_connections <count>
+		| max_statement_time <count>
+		max_queries_per_hour代表该账号每小时最大查询次数(包括update)
+		max_updates_per_hour代表该账号每小时最大更新次数(不包括select)
+		max_connections_per_hour代表该账号每小时能发起的连接次数
+		max_user_connections代表该账号能同时发起的连接数. 如果为0, 则使用max_connections
+		max_statement_time代表账号语句执行的超时时间
+		** 所有参数, 0代表无限制
+
+	<password_option>
+		password expire
+		| password expire default
+		| password expire never
+		| password expire interval <N> day
+		default代表使用变量default_password_lifetime来指定密码过期时间
+
+	<lock_option>
+		account lock
+		| account unlock
+		lock代表锁定账户, 已存在连接不影响, 不能发起连接. 向服务器的lock账号发起连接, 会出现ER_ACCOUNT_HAS_LOCKED错误
+
+
+show create user <user_specification>;
+	查看创建用户时的详细指令
+
+
+alter user [if exists] 
+	<user_specification> [,<user_specification> ...]
+	[require {none | <tls_option> [[and] <tls_option> ...]}]
+	[with <resource_option> [<resource_option> ...]]
+	[<lock_option>]
+	[<password_option>];
+	修改账户内容, 参考create user
+
+
+drop user [if exists] <user_specification> [,<user_specification> ...];
+	删除账户, 参考create user
+	当删除时, 当前账号包含已存在连接, 会等待所有连接关闭后再删除, 不会直接断开连接
+
+
+grant
+	<priv_type> [(<column_list>)] [,<priv_type> [(<column_list>)] ...]
+	on [<object_type>] <priv_level>
+	to <user_specification> [<user_options> ...];
+	给指定账户赋予权限. 账户不存在时隐式创建账号
+
+	<priv_type>
+		授予的权限类型, 列表如下:
+			usage - 无实际权限, 占位. 创建账户时默认
+			all privileges - 授予所有权限. 可缩写为all
+			proxy - 当前用户信息显示为代理用户, 需要authentication plugin的支持, 默认的mysql_native_password不支持, 当前仅pam支持. 如: current_user()方法
+			数据库权限:
+			create - 创建数据库和表格
+			create routine - 创建function/procedure
+			create temporary tables - 创建临时表格
+			drop - 删除数据库和表格
+			event - 创建/删除/修改event
+			lock tables - 锁住表格, 必须同时拥有select权限
+			表格权限:
+			alter - 修改表格
+			create - 创建表格
+			create view - 创建view
+			delete - 从表格中删除数据
+			delete history - 删除历史行
+			drop - 删除表格/view
+			index - 创建索引
+			insert - 插入行到表格
+			select - 从表格中检索数据
+			show view - 查看创建view的语句
+			trigger - 创建/删除trigger
+			update - 更新表格. 必须同时有select权限, 用于where子句
+			
+	<column_list>
+		某表格指定列(或多个列). 用于对表格的限定列操作
+
+	<object_type>
+		table
+		| function
+		| procedure
+	
+	<priv_level>
+		*
+		| *.*
+		| db_name.*
+		| db_name.tbl_name
+		| tbl_name
+		| db_name.routine_name
+		*.*代表可以操作所有数据库的所有表格
+		db_name.*代表可以操作指定数据库的所有表格
+			*代表操作默认数据库的所有表格
+		db_name.tbl_name代表可以操作指定数据库的指定表格
+			tbl_name代表可以操作默认数据库的指定表格
+		db_name.routine_name配合function或procedure可以对指定数据库执行名为routine的function/procedure
+
+	<user_specification>
+		<account_info> [<authentication_option>]
+
+		<account_info>
+			<user_name>[@<host_name>]
+			user_name提供''时, 代表anonymous用户, 即匹配任意用户名
+			host_name未提供时, 默认为%, 即任意多个字符, 代表所有主机可连接
+
+		<authentication_option>
+			identified by '<passwd>' 
+			| identified by password '<encrypt_passwd>'
+			| identified {via|with} <authentication_rule> [or <authentication_rule> ...]
+			passwd代表明文密码; encrypt_passwd代表经过password()函数转化的密码
+
+			<authentication_rule>
+				<authentication_plugin>
+				| <authentication_plugin> {using|as} '<authentication_string>' 
+				| <authentication_plugin> {using|as} password('<passwd>')
+				<authentication_plugin>为插件名称. 
+				当old_passwords变量为0时, 新建用户默认使用mysql_native_password,否则使用mysql_old_password
+				初始化root用户默认使用unix_socket, 本地登录利用Unix sock, 实现system root用户免密码登陆, 失败后使用mysql_native_password
+				mysql_native_password也用于password()函数
+				** 查看plugin是否已安装: show plugins
+	
+	<user_options>
+		[require {none | <tls_option> [[AND] <tls_option> ...]}]
+		[with <with_option> [<with_option> ...]]
+		
+		<tls_option>
+			ssl
+			| x509
+			| cipher '<cipher>'
+			| issuer '<issuer>'
+			| subject '<subject>'
+			ssl代表必须使用tls, 但x509证书非必要. 不能与其他选项联合
+			x509必须使用x509证书(隐式包含tls). 不能与其他选项联合
+			cipher必须使用tls, 但x509非必须, 并且证书必须使用指定证书等级(TLSv1/TLSv1.1/TLSv1.2/TLSv1.3)加密. 可以与subject/issuer联合
+			issuer必须使用x509证书, 证书必须指定issuer字段. 可以与cipher/subject联合
+			subject必须使用x509证书, 证书必须指定subject字段. 可以与cipher/issuer联合
+		
+		<with_option>
+			grant option
+			| <resource_option>
+			grant option代表可以拥有给其他账户授权的权利. 但必须基于自身拥有的privileges
+
+			<resource_option>
+				max_queries_per_hour <count>
+				| max_updates_per_hour <count>
+				| max_connections_per_hour <count>
+				| max_user_connections <count>
+				| max_statement_time <count>
+				max_queries_per_hour代表该账号每小时最大查询次数(包括update)
+				max_updates_per_hour代表该账号每小时最大更新次数(不包括select)
+				max_connections_per_hour代表该账号每小时能发起的连接次数
+				max_user_connections代表该账号能同时发起的连接数. 如果为0, 则使用max_connections
+				max_statement_time代表账号语句执行的超时时间
+				** 所有参数, 0代表无限制
+
+
+show grants [for <user_specification>];
+	查看账户授权情况
+
+
+rename user <old_user_specification> to <new_user_specification> [,<old_user_specification> to <new_user_specification> ...]
+	重命名账户
+
+
+revoke
+    <priv_type> [(<column_list>)] [,<priv_type> [(<column_list>)] ...]
+    on [<object_type>] <priv_level>
+    from <user_specification> [, <user_specification> ...]
+	撤销用户权限. 参数参考grant
+
+
+set password [for <user_specification>] =
+		password('<passwd_str>')
+		| old_password('<passwd_str>')
+		| '<encrypted passwd>';
+	为已创建的用户设置密码
+	for子句未提供时, 为当前用户设置密码
+	password()适用于MariaDB 4.0.0及以上版本
+	old_password()适用于MariaDB 4.0.0以下版本
+	encrypted_passwd代表已使用password()加密的字符串
+	
+
+
+变量
 set [global] <variable>=<value>
 	设置SQL内部变量
+
+
+show variables like '%<str>%';
+	查询匹配变量值
+
 
 help
 	帮助信息
