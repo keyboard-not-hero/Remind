@@ -1,0 +1,64 @@
+语法
+mysqldump [options] <database_name> [<table_name>]
+mysqldump [options] --databases DB1 [DB2 ...]
+mysqldump [options] --all-databases
+mysqldump [options] --system=[<systemoptions>]
+
+参数释义
+-A, --all-databases
+	备份所有数据库
+
+--add-drop-database
+	创建数据库之前先进行删除. 配合--databases或--all-databases使用
+
+--add-drop-table
+	创建表格之前先进行删除
+
+--add-drop-trigger
+	创建trigger之前先进行删除
+
+--add-locks
+	在insert时添加lock, 可以提高备份文件加载速度
+
+-B, --databases <DB1> ...
+	备份多个数据库
+
+--character-sets-dir=<path>
+	字符集目录
+
+--default-character-set=<char_set>
+	指定使用的默认字符集. 
+	MariaDB 10.3.11之前, 默认使用utf8. 
+	MariaDB 10.3.11及之后, 默认使用utf8mb4
+
+--dump-date
+	配合--comments使用, 在备份文件最后添加备份的日期
+	
+-i, --comments
+	在备份文件中增加注释
+
+-p[passwd], --password[=passwd]
+	登录账户的密码
+
+-u <name>, --user=<name>
+	登录的用户
+
+-Y, --all-tablespaces
+	备份所有tablespaces
+
+-y, --no-tablespaces
+	不备份任何tablespaces信息
+
+
+
+例1.备份内容到文件
+mysqldump <db_name> > back_file.sql
+
+例2.加载备份文件到数据库
+mysql <db_name> < back_file.sql
+
+例3.备份多个数据库
+mysqldump --databases <DB1> <DB2> > db_backup.sql
+
+例4.备份所有数据库
+mysqldump --all-databases > all_db_backup.sql

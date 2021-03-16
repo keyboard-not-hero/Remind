@@ -10,70 +10,327 @@ mysql> - 首行提示符
 
 MySQL指令
 数据库
-show databases;
+create [or replace] {database | schema} [if not exist] <DB_NAME> <create_specification>;
+	创建数据库, schema与database意思相同. 参考: https://mariadb.com/kb/en/create-database/
+	
+	create_specification:
+		[default] character set [=] <charset_name>
+		| [default] collation [=] <collation_name>
+		| comment [=] '<comment>'
+
+
+alter {database | schema} <DB_NAME> <alter_specification>
+	修改数据库. 参考: https://mariadb.com/kb/en/alter-database/
+	
+	alter_specification:
+		[default] character set [=] <charset_name>
+		| [default] collation [=] <collation_name>
+		| comment [=] '<comment>'
+
+
+show {databases | scheams} [like '<pattern>' | where <expr>];
 	查看已有数据库
 
-create database <DB_NAME>;
-	创建数据库
-
-use <DB_NAME>;
+use <DB_NAME>
 	访问指定数据库
 
 
 
 表格
-show tables;
-	查看当前数据库中的表格
+show [full] tables [from <db_name>] [like '<pattern>' | where <expr>];
+	查看数据库中的非temporary表格/sequences/views
 
-create table <TAB_NAME> (
-	name  varchar(20),
-	owner varchar(20),
-	species varchar(20),
-	sex   char(1),
-	birth date,
-	death date
-);
-	创建表格
+	full
+		在名称列之外, 新增加一列指明table类型
+
+
+create [or replace] [temporary] table [if not exists] <TAB_NAME> (
+	<col_name> <column_definition>,
+	...
+)
+	[<table_options>]
+	[<partition_options>];
+	创建表格. 参考: https://mariadb.com/kb/en/create-table/
+
+	or replace
+		等于如下:
+		drop table if exists <table_name>;
+		create table <table_name>(<item_definition>);
+
+	temporary
+		临时表格, 只用于当前session, session结束后进行drop
+
+	<column_definition>:
+		<data_type> 
+		[not null | null] 
+		[default <default_value> | (<expression>)]
+		[on update [now | current_timestamp] [(<precision>)]]
+		[auto_increment]
+		[zerofill]
+		[unique [key] | [primary] key]
+		[invisible]
+		[{with | without} system versioning]
+		[comment '<comment>']
+		[ref_system_id = <value>]
+		
+		not null | null
+			确定列内容是否可以为null. 默认为null
+
+		default <default_value> | (<expression>)
+			指定列的默认值
+
+		auto_increment
+			用于数字类型列, 没有提供值时自动提供并增长
+			该列必须为key, 一个表格只能有一个auto_increment列
+			该值由last_insert_id()返回
+
+		zerofill
+			作用于数字类型列时, 列设置为unsigned, 并且使用0填充有效位
+
+		unique [key] | [primary] key
+			unique key代表该列的每一个值都不同, 但可以有多个null
+			primary key是特殊的unique key, 每个表最多只能有一个primary key, 并且隐式设置为not null
+
+		invisible
+			指定列不可见. MariaDB 10.3.3引入
+
+	<table_options>:
+		格式为: <option_name>=<option_value>,[<option_name>=<option_value> ...], 参数列表如下:
+		[storage] engine [=] <engine_name>
+		| auto_increment [=] <value>
+		| [default] character set [=] <character_set>
+		| checksum [=] {0 | 1}
+		| [default] collation [=] <collation>
+		| comment [=] '<comment>'
+
+
+alter
+	[online]
+	[ignore]
+	table [if exists] <table_name>
+	[wait <n> | nowait]
+	<alter_specification> [,<alter_specification>] ...
+	修改表格metadata内容
+
+	<alter_specification>:
+		add [column] [if not exists] <col_name> <column_definition> [first | after <column>]
+		| add [column] [if not exists] (<col_name> <column_definition>, ...)
+		| change [column] [if exists] <old_col_name> <new_col_name> <column_definition> [first | after <col_name>]
+		| modify [column] [if exists] <col_name> <col_definition> [first | after <col_name>]
+		| drop [column] [if exists] <col_name> [restrict | cascade]
+		| rename [to] <new_table_name>
+		| rename column <old_col_name> to <new_col_name>
+
+		<column_definition>:
+			参考create table
+
 
 show create table <TAB_NAME>;
 	显示创建表格的语句
 
+
 describe <TAB_NAME>
 	显示表格metadata信息	
 
-load data local infile '/<PATH>/<FILE_NAME>' into table <TAB_NAME>;
-	从文件内加载数据到表格
-	文件内数据列使用\t分隔, NULL使用\N表示
 
-insert into <TAB_NAME> values ('Puffball', 'Diane', 'hamster', 'f', '1990-03-30', NULL);
+load data [low_priority | concurrent] [local] infile '<FILE_NAME>' 
+	[replace | ignore]
+	into table <TAB_NAME>
+	[character set <charset>]
+	[{fields | columns} 
+		[terminated by <str>]
+		[[optionally] enclosed by <str>]
+		[escaped by <str>]
+	]
+	[lines
+		[starting by <str>]
+		[terminated by <str>]
+	]
+	[ignore <num> lines]
+	[(col_name_or_user_var, ...)]
+	[set <col_name>=<expr>, ...]
+	从文件内加载数据到表格. 变量local_infile控制是否能使用该语句
+
+	low_priority | concurrent
+		当执行表格级locking时(适用于MyISAM/MEMORY/MERGE引擎), 同时有其他客户端发起读取请求, 有如下两种解决方案:
+		low_priority - 插入请求优先级低, 等待其他客户端读取完成再插入 
+		concurrent - 插入与读取同时进行. 只适用于MyISAM引擎
+	
+	local
+		未指定时, 从服务器查找文件
+		指定时, 从客户端查找文件
+
+	replace | ignore
+		当表格中包含primary key时, 插入内容与表格内容的primary key冲突, 会出现两种解决方法:
+		replace - 删除原来内容, 使用新内容替换
+		ignore - 保留原来内容, 忽略插入请求
+
+
+insert
+	[low_priority | delayed | high_priority]
+	[ignore] 
+	[into] <TAB_NAME> 
+	[partition (<partition_list>)] 
+	[(<col_name>, ...)]
+	{values | value} (value, ...), ...
+	[on duplicate key update <col> = <value> [,<col> = <value>] ...]
+	[returning <select_expr> [,<select_expr>] ...]
 	插入值到表格中
 
-select <COLUMNS_NAME> from <TAB_NAME> where <CONDITION>;
-	从表格中提取符合条件的列内容
-	COLUMNS_NAME多列使用','分隔, '*'代表所有列
-	COLUMNS_NAME前面添加distinct可以使重复的行内容只显示一次
-	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
-	CONDITION可以使用is NULL或is not NULL判断内容是否为空
-	CONDITION支持模式匹配, '_'代表任意单个字符, '%'代表任意多个字符, 使用like或note like关键字进行匹配
-	CONDITION支持正则表达式, 使用regexp关键字(或regexp_like方法)进行匹配, 匹配大小写不敏感, 可使用binary指定大小写敏感(regexp binary '<Regular Expression>')
-	<TAB_NAME>部分可使用联结(tab1 join_type tab2 on condition), 列表如下:
-		inner join - 两个表都符合on条件的内容
-		left join -
-		right join - 
-	可使用group by <COL_NAME>来根据列进行分类
-	结果可使用order by <COL_NAME>排序(大小写不敏感), order by binary <COL_NAME>可大小写敏感. 默认以升序排列, 后续紧跟desc指定降序排列, desc只作用于它紧邻的前一个列名
-	使用limit限制目标行数
-	使用union合并两个select的结果
+	low_priority | high_priority
+		当执行表格级locking时(适用于MyISAM/MEMORY/MERGE引擎), 同时有其他客户端发起读取请求, 有如下解决方案:
+		low_priority - 插入请求优先级低, 等待其他客户端读取完成再插入 
+		high_priority - 插入请求优先级高, 队伍中的读取任务等待插入任务完成
+
+	delayed
+		将所有客户端的插入请求进行合并, 最后汇总插入. 合并过程发生在内存中, 插入过程出现error, 则表内无新增内容
+
+	ignore
+		默认出现error时, 事务进行回滚, 所有插入无效. ignore代表将error转化为warning, 其他插入行正常插入
+
+	on duplicate key update <col> = <value> [,<col> = <value>] ...
+		当插入的unique key与表内重复, 更新指定列的值
+
+
+select ... into outfile '<file_name>'
+	[character set <character_name>]
+	[<export_option>]
+	从表格中提取内容到文件
+
+	file_name
+		file_name必须不存在, 不能进行覆盖
+
+	export_option:
+		[{fields | columns}
+			[terminated by '<str>']
+			[[optionally] enclosed by '<str>']
+			[escaped by '<str>']
+		]
+		[lines
+			[starting by '<str>']
+			[terminated by '<str>']
+		]
+		fields terminated by指定字段分隔符, 默认为'\t'
+		lines terminated by指定行分隔符, 默认为'\n'
+
+
+select 
+	[all | distinct | distinctrow] 
+	[high_priority] 
+	[straight_join] 
+	[sql_small_result]
+	[sql_big_result]
+	[sql_buffer_result]
+	[sql_cache | sql_no_cache]
+	[sql_calc_found_rows]
+	<select_expr> [,<select_expr> ...]
+	[from <table_reference>
+		[where <where_condition>]
+		[group by {<col_name> | <expr> | <position>} [asc | desc], ... [with rollup]]
+		[having <where_condition>]
+		[order by {<col_name> | <expr> | <position>} [asc | desc], ...]
+		[limit {[<offset>,] <row_count> | <row_count> offset <offset>}]
+		<procedure> | [procedure <procedure_name>(<argument_list>)]
+		[into outfile '<file_name>' [character set <charset_name>] [<export_options>]
+			into dumpfile '<file_name>' into <var_name> [,<var_name>]
+		]
+		[[for update | lock in share mode] [wait <num> | nowait]]
+	]
+	从表格中查找内容. 参考: https://mariadb.com/kb/en/select/
+	
+	all | distinct | distinctrow
+		all代表允许重复内容, 默认选项
+		distinct代表不允许重复内容. distinctrow相同
+
+	<select_exp>
+		[<table_name>.]<col_name>
+		| <function> and <operators>
+		| *
+		| <table_name>.*
+		*代表from子句后所有表格的所有列
+		<table_name>.*代表指定表格的所有列
+
+	<table_reference>:
+		<table_factor>
+		| <join_table>
+
+		<table_factor>:
+			<table_name>
+
+		<join_table>:
+			<table_name> [inner | cross] join <table_name> [<join_condition>]
+			| <table_name> straight_join <table_name> [on <conditional_expr>]
+			| <table_name> {left | right} [outer] join <table_name> <join_condition>
+			| <table_name> natural [{left | right} [outer]] join <table_name>
+
+			<join_condition>
+				on <condiftion_expr>
+				| using (<column_list>)
+
+	group by {<col_name> | <expr> | <position>} [asc | desc], ... [with rollup]
+		根据单个或多个列进行分类并排序
+		
+		position
+			代表指定第n列
+	
+		asc | desc
+			排序方式. 默认为asc升序
+
+		with rollup
+			增加一个汇总行. 不能与order by一起使用
+		
+	having <where_condition>
+		对group by之后的内容进行筛选
+		where子句对group by之前的内容进行筛选
+
+	order by {<col_name> | <expr> | <position>} [asc | desc], ...
+		对结果进行排序
+
+	limit {[<offset>,] <row_count> | <row_count> offset <offset>}
+		只提取结果的前row_count行
+		当提供offset时, 提取偏移offset行之后的row_count行
+
+
+delete
+	[low_priority]
+	[quick]
+	[ignore] 
+	from <TAB_NAME>
+	[partition (<partition_list>)]
+	[where <where_condition>]
+	[order by ...]
+	[limit <row_count>]
+	[returning <select_expr> [,<select_expr>] ...]
+	从表格中删除内容
+
+	low_priority
+		在所有select完成后, 才执行delete
+
+	quick
+		停止合并操作, 以提升执行效率
+
+	ignore
+		不停止一般性error, 继续后续操作
+
+	order by
+		将结果排序, 按排序顺序进行删除. 只能用于单个表格
+
+
+update
+	[low_priority]
+	[ignore]
+	<table_reference>
+	[partition (partition_list)]
+	set <col1>={<expr1> | default} [,<col2>={<expr2> | default}] ...
+	[where <where_condition>]
+	[order by ...]
+	[limit <row_count>]
+	更新表格中符合条件的行内容
+
 
 source <DB_file>;
 	使用脚本内的查询语句
-	
-delete from <TAB_NAME>;
-	从表格中删除全部内容
 
-update <TAB_NAME> set <COL_NAME>=<VALUE> where <CONDITION>;
-	更新表格中符合条件的行内容
-	CONDITION可以使用AND/OR合并, 并且AND优先级高于OR, 建议使用()进行显式注明
 
 
 账户
@@ -308,16 +565,26 @@ set password [for <user_specification>] =
 
 
 变量
-set [global] <variable>=<value>
-	设置SQL内部变量
+1.global server变量 - 影响后续创建session, 已存在session不影响
+set global <variable>=<value>;
+	设置全局变量
 
+show global variables like '%<str>%';
+	查询匹配全局变量
 
-show variables like '%<str>%';
-	查询匹配变量值
+2.session server变量 - 只影响当前连接session
+set session <variable>=<value>;
+	设置当前session变量
 
+show session variables like '%<str>%';
+	查询匹配当前session变量
 
-help
-	帮助信息
+3.user-defined变量 - 自定义变量, 只存在于当前连接session
+set @<variable>=<value>;
+	配置用户自定义变量
+
+select (@<variable>:=<value>);
+	配置自定义变量
 
 
 
@@ -349,30 +616,62 @@ version()
 
 
 数据类型:
-char
+boolean
+	1 bit整数. 同tinyint(1)
+
+tinyint[(M)] [unsigned]
+	1字节整数. M代表bit数, 不超过8 bit. unsigned为非符号整数
+
+smallint[(M)] [unsigned]
+	2字节整数
+
+mediumint[(M)] [unsigned]
+	3字节整数
+
+int[(M)] [unsigned]
+	4字节整数
+	同integer
+
+bigint[(M)] [unsigned]
+	8字节整数
+
+decimal[(M[,D])] [unsigned]
+	小数
+	M为有效位数, 默认为10. 最高65位
+	D为小数后的位数, 默认为0. MariaDB 10.2.1之前最高30位, MariaDB 10.2.1及之后最高38位
+	同dec/numeric/fixed
+
+float[(M,D)] [unsigned]
+	单精度浮点数
+	
+double[(M,D)] [unsigned]
+	双精度浮点数
+	同real
+	单精度浮点数
+	
+char[(M)]
 	定长字符
-date
-	日期
+	M范围为0-255
+
+varchar(M)
+	变长字符
+	M代表最大字符长度
+
+text[(M)]
+	变长字符
+	M范围为0-65535
+
 enum(val1, val2, ...)
 	枚举类型
-tinyint [unsigned]
-	1字节整数
-smallint [unsigned]
-	2字节整数
-mediumint [unsigned]
-	3字节整数
-int [unsigned]
-	4字节整数
-bigint [unsigned]
-	8字节整数
-varchar
-	变长字符
 
+date
+	日期
 
+time
+	时间
 
-数据库引擎类型:
-InnoDB
-MyISAM
+datetime
+	日期和时间
 
 
 

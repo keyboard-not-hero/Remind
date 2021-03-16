@@ -1,0 +1,97 @@
+字符集(character set): 字符比较和排序的规则
+校对(collation): 字符集的子集. 一个character set下有多个collation
+
+
+查看字符集
+show character set [like 'pattern' | where expr];
+
+例.
+show character set like 'latin%';
+
+
+查看collation
+show collation [like 'pattern' | where expr];
+
+例.
+show collation like 'latin1%';
+
+
+
+修改字符集/校对
+系统默认
+set character_set_connection = '<character_set>';
+
+set collation_connection= '<collation>';
+
+
+server级
+set character_set_server = '<character_set>';
+
+set collation_server = '<collation>';
+
+
+数据库级
+create databases <db_name> 
+	[character set = '<character_set>'] 
+	[collation = '<collation>'];
+
+alter databases <db_name> 
+	[character set = '<character_set>'] 
+	[collation = '<collation>'];
+
+
+表格级
+create table <tab_name> (...)
+	[character set '<character_set>']
+	[collation '<collation>'];
+
+alter table <tab_name> convert to
+	character set '<character_set>'
+	[collation '<collation>'];
+
+
+column级(适用于char/varchar/text)
+create table <tab_name> (
+	<col_name> varchar(20) [character set '<character_set>'] [collation '<collation>']
+);
+
+
+locales
+安装locales插件
+install soname 'locales';
+
+查看当前支持的locales
+show locales;
+
+卸载locales插件
+uninstall soname 'locales';
+
+相关变量:
+lc_messages
+	显示error信息的本地语言
+
+
+时区
+查看支持的时区(mysql databases)
+select * from time_zone_name;
+** Unix/Linux下, 需要使用mysql_tzinfo_to_sql将时区信息导入数据库:
+	mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
+
+1.全局时区设置
+1)通过服务器配置文件
+vi 50-server.cnf
+[mariadb]
+default_time_zone='<time_zone>'
+
+2)设置变量
+set global time_zone = '<time_zone>';
+
+2.当前session时区设置
+set time_zone = '<time_zone>';
+
+相关变量
+time_zone
+	全局时区
+
+system_time_zone
+	系统使用的系统(基于操作系统语言)

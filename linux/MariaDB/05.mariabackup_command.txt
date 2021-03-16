@@ -1,0 +1,94 @@
+mariabackup - 用于物理备份使用InnoDB/Aria/MyISAM引擎的表格
+
+安装(添加库参考mariadb库)
+sudo apt-get install mariadb-backup
+
+语法
+mariabackup option
+
+参数释义
+--backup
+	备份数据库. 配合--target-dir使用
+
+--copy-back
+	恢复备份到数据目录datadir. 
+	datadir变量必须为空, 如果需要覆盖非空目录, 使用--force-non-empty-directories
+	保留备份文件
+
+--databases="<database>[.<table>] [<database>[.<table>] ...]"
+	指定要备份的数据库/表格
+	可使用shell wlidcard指定数据库和表格
+
+--databases-exclude="<database>[.<table>] [<database>[.<table>] ...]"
+	从指定要备份的数据库中排除表格, 不进行备份
+	可使用shell wlidcard指定数据库和表格
+
+--databases-file=<file>
+	从指定文件中读取要备份的数据库/表格名称
+	文件中一行一条记录. 如: <database>[.<table>]
+
+--export
+	在prepare阶段生成.cfg文件, 用于恢复partial备份文件
+
+--force-non-empty-directories
+	允许--copy-back和--move-back使用非空datadir目录
+
+-H, --host
+	需要备份的主机
+
+-h, --datadir
+	指定数据库文件的目录. 参考datadir变量. 默认为/var/lib/mysql/
+
+--incremental-basedir=<path>
+	指定增量备份的根基, 即上一次备份的路径. 配合--backup使用
+
+--incremental-dir=<path>
+	准备提取增量备份的目录. 配合--prepare使用
+
+--move-back
+	恢复备份到数据目录datadir. 
+	datadir变量必须为空, 如果需要覆盖非空目录, 使用--force-non-empty-directories
+	保留备份文件
+
+-p, --password
+	连接到服务器的密码
+
+-P, --port
+	连接到服务器的端口
+
+--prepare
+	恢复备份之前的准备工作
+
+--tables=<shell wildcard>
+	要备份的表格
+
+--tables-exclude=<shell wildcard>
+	从要备份的表格中剔除的表格
+
+--tables-file=<file>
+	从指定文件中读取要备份的表格
+	文件中一行一条记录. 如: <database>.<table>
+
+--target-dir=<path>
+	备份文件的保存路径. 目录必须为空或不存在
+
+--user
+	登录到服务器的账户
+
+
+例1.全量备份数据库
+mariabackup --backup --target-dir=/var/mariadb/backup --user=steven --password=<PASSWD>
+
+例2.从全量备份文件恢复
+mariabackup --prepare --target-dir=/var/mariadb/backup
+mariabackup --copy-back --target-dir=/var/mariadb/backup
+chown -R mysql:mysql /var/lib/mysql
+
+例3.增量备份数据库(--incremental-basedir指定本地增量备份基于上次全量/增量备份的目录)
+mariabackup --backup --target-dir=/var/mariadb/inc --incremental-basedir=/var/mariadb/backup --user=steven --password=<PASSWD>
+
+例4.从增强备份文件恢复
+mariabackup --prepare --target-dir=/var/mariadb/backup
+mariabackup --prepare --target-dir=/var/mariadb/backup --incremental-dir=/var/mariadb/inc
+mariabackup --copy-back --target-dir=/var/mariadb/backup
+chown -R mysql:mysql /var/lib/mysql

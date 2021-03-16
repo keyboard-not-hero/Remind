@@ -1,0 +1,11 @@
+相关变量
+datadir
+	数据库文件存放目录. 默认为/var/lib/mysql
+
+log_error
+	error log存放的位置
+	默认为$(datadir)/$(hostname).err
+	Unix默认为stderr
+
+log_warnings
+	log记录等级. 默认为2. 可选列表: 0/1/2/3/4/9, 数字越高, 内容越详细

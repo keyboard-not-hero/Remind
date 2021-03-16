@@ -20,3 +20,5 @@
 
 备份工具:
 逻辑备份 - mysqldump
+
+物理备份 - mariabackup
