@@ -1,1 +1,9 @@
-链接地址：https://scipy-lectures.org/
+建议使用interactive工具
+1.IPython
+2.Jupyter notebook
+
+
+
+
+引用:
+[1]https://scipy-lectures.org/

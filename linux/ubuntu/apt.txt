@@ -6,11 +6,11 @@ apt [option] [package]
 参数释义
 update    更新容器的可安装包信息(从/etc/apt/sources.list)
 
-upgrade    更新已安装软件，当需要卸载其他软件进行更新时，不会执行该软件更新
+upgrade    更新所有已安装软件，当需要卸载其他软件进行更新时，不会执行该软件更新
 
 full-upgrade    类似于upgrade，但需要卸载其他软件进行更新时，执行该操作
 
-install    安装软件
+install    安装/或更新指定软件
 
 remove    移除软件，但保留配置文件
 
@@ -35,11 +35,11 @@ apt-get [option] [package]
 参数释义：
 update    更新容器的可安装包信息(从/etc/apt/sources.list)
 
-upgrade    更新已安装软件，不会卸载软件，当需要卸载其他以更新时，不会执行该软件更新
+upgrade    更新所有已安装软件，不会卸载软件，当需要卸载其他以更新时，不会执行该软件更新
 
 dist-upgrade    更新可更新软件，当需要卸载其他以更新时，进行卸载后更新
 
-install    安装可获得最新软件或指定版本软件
+install    安装/更新指定软件
 
 remove    卸载软件但保存配置文件
 

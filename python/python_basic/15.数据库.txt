@@ -1,21 +1,80 @@
-SQL-MySQL数据库
+MariaDB Connector/Python
 
-第三方模块对比: 
-mysqlclient - MySQLdb的python3版本, 使用C编写, 执行效率高
+必须条件:
+1.python3 (>=3.6)
+2.MariaDB server 10.x/MySQL Server
+3.MariaDB Connector/C (libmariadb3 >=3.1.5, MariaDB 10.5.0以上版本自带适配版本)
+4.mariadb_config指令(libmariadb-dev)
 
-pymysql - 纯Python实现的驱动. 执行效率较低, 但与python代码衔接度高
+pip安装:
+pip install mariadb
 
-mysql-connector-python - MySQL官方推出的驱动, 纯python实现
-
-
-mysqlclient使用
-pip安装：
-pip install mysqlclient
-
-导入模块：
+导入模块:
+import mariadb
 
 
+例1.
+import mariadb
+import mariadb
 
+connection = mariadb.connect(user='root', passwd='<passwd>', database='menagerie', host='localhost')
+cursor = connection.cursor()
+cursor.executemany('insert into pet values (?,?,?)', [(3,'cat','f'),(4,'lion','m')])
+cursor.execute("select * from pet")
+row = cursor.fetchall()
+print(row)
+
+cursor.close()
+connection.close()
+
+
+
+mariadb模块
+function:
+	connect(**kwargs) --> connection
+		与SQL服务器建立连接. kwargs参数列表如下:
+			user - str格式, 登录SQL的账户
+			passwd - str格式, 登录账户的密码
+			host - str格式, 登录SQL所在主机
+			database - str格式, 登录的数据库
+			port - int格式, 登录到SQL的端口
+
+class:
+connection
+method:
+	cursor(**kwargs) --> cursor
+		获得一个cursor对象, 从MariaDB服务器的拷贝, 所有操作基于该对象. 参数列表如下:
+			named_tuple - bool格式, fetch结果是否为指定名称的tuple. 默认为False
+			buffered - bool格式, 是否将select/show结果保存到client端内存
+
+	close()
+		关闭连接
+	
+class:
+cursor
+method:
+	execute(statement, data=None, buffered=False)
+		执行SQL语句, 并将结果保存在cursor中. 参数列表如下:
+			statement - str格式, SQL语句
+			data - tuple, statement中的一个'?'代表SQL的一个entry数据. tuple代表一行内容
+			buffered - 是否缓存
+
+	executemany(statement, data)
+		执行SQL语句, 不同于execute, 当期方法将statement对data中的每个tuple应用一次. 参数列表如下:
+			statement - str格式, SQL语句
+			data - sequence of tuple, statement中的一个'?'代表SQL的一个entry数据. sequence of tuple代表多行内容
+
+	fetchone() --> tuple
+		返回cursor第一条信息
+
+	fetchmany(size)
+		返回cursor的指定条信息
+
+	fetchall() --> list
+		分返cursor的所有信息
+
+	
 
 引用:
-[1]mysqlclient readthedocs: https://mysqlclient.readthedocs.io/
+[1]github.io: 
+	https://mariadb-corporation.github.io/mariadb-connector-python/

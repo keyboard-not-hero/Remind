@@ -131,8 +131,8 @@ package:
 	安装的库, 可使用'==<detail_release>'指定版本
 
 
-补充
-一、pip配置文件完整路径
+
+pip配置文件完整路径
 1.用户级
 GNU/Linux - $HOME/.config/pip/pip.conf
 Windows - %AppData%\pip\pip.ini, 即c:\user\<user_name>\AppData\pip\pip.ini
@@ -152,63 +152,26 @@ Windows - C:\ProgramData\pip\pip.ini, 支持Windows 7与之后的版本, Vista�
 优先级：virtualenv > per-user > site-wide
 
 
-二、pip更换源
-永久更换
-1.Linux
-[thompson@.pip] vi ~/.config/pip/pip.conf
-[global]
-trusted-host=mirrors.aliyun.com
-index-url=http://mirrors.aliyun.com/pypi/simple/
 
-2.Windows
-C:\Users\LT198\pip> vi pip.ini
-[global]
-trusted-host=mirrors.aliyun.com
-index-url=http://mirrors.aliyun.com/pypi/simple/
+例1. pip更换源
+永久更换
+[thompson@.pip] pip config set global.index-url https://pypi.python.org/simple
 
 临时更换
-pip3 install <package> -i http://mirrors.aliyun.com/pypi/simple/
+pip3 install -i http://pypi.python.org/simple <package_name>
 
 
-三、手动安装pip3
-1.下载
-下载地址：https://bootstrap.pypa.io/get-pip.py
-
-2.安装
-GNU/Linux - python3 get-pip.py
-Windows - python get-pip.py
-
-
-四、升级pip3
-GNU/Linux - pip3 install -U pip
+例2. 升级pip
+GNU/Linux - pip install -U pip
 Windows - python -m pip -U pip
 ** warning：Windows不能使用pip3 install -U pip升级pip, Windows会先卸载pip3,导致后续无法进行
 
 
-五、socks5 proxy配置(需要pysocks支持)
+例3. socks5 proxy配置(需要pysocks支持)
 1.永久配置(per-user)
-GNU/Linux
-vi ~/.config/pip/pip.conf
-[global]
-proxy=socks5://<ADDR>:<PORT>
+pip config set global.proxy socks5://<host>:<port>
 
-Windows
-vi %APPDATA%\pip\pip.ini
-[global]
-proxy=socks5://<ADDR>:<PORT>
-
-2.永久配置(global)
-GNU/Linux
-vi /etc/pip.conf
-[global]
-proxy=socks5://<ADDR>:<PORT>
-
-Windows(Windows 7及以上版本)
-vi C:\ProgramData\pip\pip.ini
-[global]
-proxy=socks5://<ADDR>:<PORT>
-
-3.临时配置
+2.临时配置
 pip3 install --proxy socks5://<ADDR>:<PORT> <package>
 
 

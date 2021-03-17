@@ -1,112 +1,67 @@
-官网地址：http://ipython.org/
+IPython安装：
+pip install ipython
 
-安装：
-pip3 install ipython
+原理
+IPython采取client/server机制, 运算在server线程, client为面向用户线程
 
-启动ipython:
-ipython
-参数：
---pylab    集成matplotlib
---automagic    自动加工为魔法指令(只针对行魔法)
---profile    使用指定配置文件初始化
---autocall 1    自动补全函数/方法参数小括号
-locate    查看ipython相关文件根目录
 
-魔法指令类型：
-1.行魔法：使用%为前缀，以[Enter]键结束
-2.单元魔法：使用%%为前缀，以空行结束
-魔法指令：
-?    ipython向导
-object?    object的详细信息
-object??    object更详细的信息
-%quickref    ipython快速介绍
-%magic    所有魔法指令的文档
-%%matplotlib    启动matplotlib底层
-%automagic [0|1]    自动magic开关，可以在使用magic命令时，省略%符号(仅行魔法有效，优先级低于变量)
-%autoawait [off|on|asyncio|sync]    异步等待机制
-%bookmark {-r|-l|-d <name>|<name>|<name> <dir>}    目录标签
-%colors {NoColor|Linux|LightBG}    修改提示颜色主题
-%dhist    目录访问记录
-%cd    切换ipython使用目录(!cd无效)
-%run Option Script Sys.args   执行脚本
-参数：
-  -n    __name__为模块名而非__main__
-  -i    在ipython的命名空间运行，而非单独命名空间，便于使用空间已有变量
-  -t    计算执行时间
-  -N<N>    指定执行次数，配合-t使用
-  -d    利用pdb调试，并默认在第一行加入breakpoint(可使用-b<N>修改)
-  -p    利用%prun来执行脚本，详见%prun
-  -m    执行模块
-  -G    禁用shell-like拓展参数
-%debug -b <file:line>    进入debug模式，可以在执行脚本前进入，可以带参数；也可以在执行脚本后进行traceback，而且必须快速进行，否则会被后续问题覆盖，不能带参数
-%pdb [on|1|off|0]    启动pdb，在traceback进行时自动进入pdb
-  {?|h} command    帮助文档
-  bt    打印stack trace
-  u    在trace栈中向外部回溯
-  d    在trace栈中向内部追溯
-  b    配置断点
-  s    step into，进入内一层
-  n    next step，当前层级下一步或return
-  r    执行到函数return
-  c    continue，到下一个断点
-  j    跳转到指定行，该行必须已调试过
-  l    打印行号
-  until    进行到当前层级的下一步或者在当前层级return
-  disable    将breakpoint失效，与clear不同，还可以enable
-  enable    将breakpoint重新使用
-  cl    清除指定断点
-%time    计算代码执行时间
-%timeit    多次执行，计算代码平均执行时间
-%prun -l line_num -s sort_rule   宏观分析工具
-%lprun -f func_nameS   强大的函数内部微观分析，需要line_profiler库
-  安装指南：https://github.com/rkern/line_profiler#installation
-  [thompson@~ ]$ vi ipython_config.py
-  c.TerminalIPythonApp.extensions=['line_profiler']
-%paste    粘贴多段文本，自动粘贴剪切板上的内容
-%cpaste    粘贴多段文本，手工粘贴，以'--'独立行结束
-%reset    清除namespace所有变量
-%xdel    清除指定变量的所有引用
-%matplotlib [gtk|inline]   对matplotlib显示的优化,inline仅限于jupytor notebook
-%hist    历史记录
-%autocall {0|1|2}    自动补全函数小括号
-%alias    为系统指令定义alias
-!    调用系统指令
+IPython特性:
+1.特有的magic方法. 具体参考下列
 
-快捷键：
-ctrl+O    新建一行
-ctrl+P    后向查找历史指令
-ctrl+N    前向查找历史指令
-ctrl+R    按输入字符匹配历史指令
-ctrl+C    终止执行
-ctrl+A    移动到行首
-ctrl+E    移动到行尾
-ctrl+K    删除光标到行尾字符
-ctrl+U    删除光标到行首字符
-ctrl+F    将光标前移一个字符
-ctrl+B    将光标后移一个字符
-ctrl+L    清屏
-ctrl+shift+V    粘贴文本
+2.可以使用操作系统指令, 语法: !<sys_cmd>. 如: !chmod
 
-特殊符号：
-_iX    代号为X的输入
-_X    代号为X的输出
-_i    前一个代号的输入
-_ii    前两个代号的输入
-_iii    前三个代号的输入
-_    前一个代号的输出
-__    前两个代号的输出
-___    前三个代号的输出
-[tab][tab]    补全命令
-/    位于行首，用于临时补全函数参数特性(当函数参数由tuple构成，必须使用)
-,    位于行首，用于自动给函数每个参数各自添加引号
-;    位于行首，用于给函数所有字符(作为单一参数)添加引号
 
-ipython特性：
-1.自定义配置文件
-#生成配置文件
-[thompson@~ ]$ ipython profile create [filename]
-[ProfileCreate] Generating default config file: /home/thompson/.ipython/profile_default/ipython_config.py
-2.富文本输出
-from IPython.display import display
-display(<object>)
 
+magic方法:
+语法:
+<magic_func> <python_statement>
+
+magic_fun类型:
+1.% - 行magic, 作用于当前行剩下内容
+2.%% - 块magic, 作用于多行内容
+
+magic_func列表:
+%automagic
+	使用magic时可以忽略'%'符号
+
+%history
+	历史输入指令
+
+%pdef
+	对象的定义头(包含方法名和形参)
+
+%pdoc
+	对象的注释文档(docstring)
+
+%pfile
+	该对象所在文件的全部内容
+
+%psource
+	对象的源内容
+
+%run file <args>
+	运行脚本, 并读取数据到当前namespace. 类似于python file <args>
+
+** 具体magic列表参考%magic
+** 单个magic详情参考%<magic_name>?
+
+
+
+快捷键:
+ctrl+o
+	在当前行下面新增一行
+
+
+
+配置文件目录:
+~/.ipython/profile_default
+
+
+
+startup file - 启动ipython后马上执行的脚本, 文件后缀为.py或.ipy
+目录: ~/.ipython/profile_default/startup/
+
+
+引用:
+[1]readthedocs:
+	https://ipython.readthedocs.io/en/stable/
