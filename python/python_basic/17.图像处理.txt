@@ -1,6 +1,10 @@
 Pillow - 适用于python3版本的PIL, image处理工具
-安装 - pip3 install Pillow
-导入 - from PIL import Image
+安装
+pip3 install Pillow
+
+导入
+from PIL import Image
+
 
 基础理论:
 1.像素点 - 每个像素点由(255,255,255,255)的RGBA组成, 每个原色占据1 byte空间, 即一个像素占据4 bytes

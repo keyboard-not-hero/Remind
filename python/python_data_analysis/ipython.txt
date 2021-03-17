@@ -22,7 +22,7 @@ magic_fun类型:
 
 magic_func列表:
 %automagic
-	使用magic时可以忽略'%'符号
+	使用magic时可以忽略'%'符号. 使用与行magic, 块magic仍然需要前置'%%'符号
 
 %history
 	历史输入指令
@@ -48,6 +48,12 @@ magic_func列表:
 
 
 快捷键:
+_/__/___
+	上/上上/上上上一条输出
+
+_i/_ii/_iii
+	上/上上/上上上一条输入
+
 ctrl+o
 	在当前行下面新增一行
 
@@ -57,9 +63,9 @@ ctrl+o
 ~/.ipython/profile_default
 
 
-
 startup file - 启动ipython后马上执行的脚本, 文件后缀为.py或.ipy
 目录: ~/.ipython/profile_default/startup/
+
 
 
 引用:
