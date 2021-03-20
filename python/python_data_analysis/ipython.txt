@@ -27,6 +27,9 @@ magic_func列表:
 %history
 	历史输入指令
 
+%matplotlib
+	允许打印matplotlib图像. 添加inline可以在当前窗口打印图像
+
 %pdef
 	对象的定义头(包含方法名和形参)
 
@@ -41,6 +44,9 @@ magic_func列表:
 
 %run file <args>
 	运行脚本, 并读取数据到当前namespace. 类似于python file <args>
+
+%timeit
+	计算后续程序运行时长
 
 ** 具体magic列表参考%magic
 ** 单个magic详情参考%<magic_name>?

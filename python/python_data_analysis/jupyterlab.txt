@@ -1,0 +1,139 @@
+jupyterlab - jupyter的新版本
+
+安装
+pip install jupyterlab
+
+启动
+jupyter lab
+
+
+
+可创建的文件类型:
+1.notebook
+
+2.code console
+
+3.terminal
+
+4.text file
+
+5.Markdown file
+
+6.contextual help
+
+
+** file类型可选择key map, 菜单Settings - Text Editor Key Map
+** contextual help选中指定对象, 显示对象源代码(需使用import导入)
+
+
+
+notebook包含cell模式:
+1.code cell
+
+2.markdown cell
+
+3.raw cell
+
+
+
+notebook快捷键
+命令行快捷键(Esc):
+A
+	在当前cell的上方插入cell
+
+B
+	在当前cell的下方插入cell
+
+C
+	复制cell内的内容
+
+K/<UP_ARROW>
+	选择上一个cell
+
+J/<DOWN_ARROW>
+	选择下一个cell
+
+M
+	将cell变为markdown cell
+
+R
+	将cell变为raw cell
+
+V
+	将notebook剪切板的内容粘贴到下一个cell内
+
+X
+	剪切cell内的内容
+
+Y
+	将cell变为code cell
+
+Z
+	撤销cell操作
+
+1~6
+	将cell变为1-6号标题
+
+D, D
+	删除选中cell
+
+Enter
+	进入编辑模式
+
+Ctrl+A
+	选择所有cell
+
+Ctrl+Enter
+	执行当前cell
+
+Shift+J
+	向下拓展选中cell
+
+Shift+K
+	向上拓展选中cell
+
+Shift+M
+	合并选中的cell
+
+Shift+Enter
+	执行当前cell, 并focus到下一个cell
+
+** 修改: Settings - Advanced Settings Editor -- Keyboard Shortcuts
+
+
+编辑模式快捷键(Enter):
+Tab
+	代码不全或缩进
+
+Esc
+	进行命令行模式
+
+Ctrl+D
+	删除整行
+
+Ctrl+Z
+	撤销操作
+
+Ctrl+[
+	减少一个层级缩进
+
+Ctrl+]
+	增加一个层级缩进
+
+Ctrl+/
+	添加/取消注释
+
+Ctrl+Enter
+	执行当前cell
+
+Shift+Enter
+	执行当前cell, 并focus到下一个cell
+	
+Ctrl+Shift+_
+	从游标处将cell分割为两个cell
+
+
+
+引用:
+[1]readthedocs:
+	https://jupyterlab.readthedocs.io/en/latest/
