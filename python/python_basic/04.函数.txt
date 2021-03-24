@@ -316,6 +316,9 @@ class str(object=b'', encoding='utf-8', errors='strict')
 class tuple([iterable])
     根据可迭代对象iterable生成一个tuple对象。当未提供参数时，生成空tuple
 
+zip(*iterables)
+	将iterables进行解包, 然后将每个item的第一个子item组合成iterables, 第二个组合成iterables ...
+
 引用：
 official function tutorial：https://docs.python.org/3/library/functions.html
 the difference between function and method：https://stackoverflow.com/questions/155609/whats-the-difference-between-a-method-and-a-function
