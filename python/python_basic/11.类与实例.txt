@@ -23,10 +23,21 @@
 	共享范围 - 类变量被所有类实例对象共享；对象变量只被当前对象共享
 	同名优先级: 实例变量 > 类变量
 	示例:
-	class Dog:
-        kind = 'canine'         # class variable shared by all instances
-        def __init__(self, name):
-            self.name = name    # instance variable unique to each instance
+	class stu:
+	    index = 0
+	    def __init__(self):
+	        stu.index += 1
+	        self.carry = 0
+	        self.carry += 1
+	
+	    def echo_var(self):
+	        print("static variable: %d."%stu.index)
+	        print("instance variable: %d."%self.carry)
+	
+	s1 = stu()
+	s1.echo_var()
+	s2 = stu()
+	s2.echo_var()
 
 	动态增加变量 - 给实例增加变量, 使同一个类的不同实例拥有不同的变量
 	示例:

@@ -6,9 +6,9 @@
 def fun_name(formal_args):
     statement
     return None
-**定义函数时可指定返回值，默认为return None，可省略None为return
-**函数可同时返回多个值，但其本质为一个tuple
-**可使用pass，不做事情，作为占位符
+**定义函数时可指定返回值, 默认为return None, 可省略None为return
+**函数可同时返回多个值, 但其本质为一个tuple
+**可使用pass, 不做事情, 作为占位符
 
 2.调用函数
 fun_name(actual_args)
@@ -17,16 +17,16 @@ fun_name(actual_args)
 
 函数相关
 一、参数类型
-1.必选参数 - 调用时，必须对每个形参赋值
+1.必选参数 - 调用时, 必须对每个形参赋值
     格式：
     def NAME(key1):
         STATEMENT
 
-2.默认参数 - 形参附带默认值，定义时，默认参数必须在位置参数之后；调用时，需按顺序将实参赋予形参，可省略后续默认参数的值
+2.默认参数 - 形参附带默认值, 定义时, 默认参数必须在位置参数之后；调用时, 需按顺序将实参赋予形参, 可省略后续默认参数的值
     格式：
-    def NAME(key，key1=value):
+    def NAME(key, key1=value):
         STATEMENT
-	**默认参数必须为不可变对象，否则多次调用时，上次改变的值被记录
+	**默认参数必须为不可变对象, 否则多次调用时, 上次改变的值被记录
 
 
 3.可选参数 - 传入可变数量的位置参数
@@ -34,7 +34,7 @@ fun_name(actual_args)
 def NAME(key1, *args):
 	STATEMENT
 
-*args - 调用时，代表可变数量位置实参，args为tuple。位于其后的形参，必须使用关键字参数
+*args - 调用时, 代表可变数量位置实参, args为tuple。位于其后的形参, 必须使用关键字参数
 
 
 4.关键字参数 - 可传入可变数量的含名称的参数
@@ -42,17 +42,17 @@ def NAME(key1, *args):
 def NAME(key1, **kwargs):
     STATEMENT
 
-**kwargs - 调用时，代表可变数量关键字参数，kwargs为带名称的参数tuple
-warning：定义函数时，形参*args必须在**kwargs之前
+**kwargs - 调用时, 代表可变数量关键字参数, kwargs为带名称的参数tuple
+warning：定义函数时, 形参*args必须在**kwargs之前
 
 
 5.命名关键字参数 - 指定名称的关键字参数. 
-(1)当之前没有可变参数时，定义函数时使用'*'分隔位置参数和命名关键字参数
+(1)当之前没有可变参数时, 定义函数时使用'*'分隔位置参数和命名关键字参数
 格式：
 def NAME(key1, *, key2):
     STATEMENT
 
-(2)当之前包含可变参数时，命名关键字之前不需要'*'符号
+(2)当之前包含可变参数时, 命名关键字之前不需要'*'符号
 格式:
 def NAME(key1, *args, key_arg1):
 	STATEMENT
@@ -111,9 +111,9 @@ def my_function():
     """
     pass
 
-第一行 - 代表方法简短汇总介绍，以大写字母开始，'.'结束
-第二行 - 空白行，用于分隔汇总和描述字符串
-剩余行 - 方法的详细介绍，参数及返回值等
+第一行 - 代表方法简短汇总介绍, 以大写字母开始, '.'结束
+第二行 - 空白行, 用于分隔汇总和描述字符串
+剩余行 - 方法的详细介绍, 参数及返回值等
 
 
 八、嵌套函数：
@@ -126,7 +126,9 @@ def outer_func():
     return inner_func
 
 
-九、装饰器(decorator) - 在不修改函数(类/方法)原有功能(黑盒)的情况下，动态增加其他功能
+
+九、装饰器(decorator) - 在不修改函数(类/方法)原有功能(黑盒)的情况下, 动态增加其他功能
+要点1.
 # 定义初级decorator
 def invincible(func):
     def wrapper(*args, **kw):
@@ -139,13 +141,15 @@ def invincible(func):
 # 使用初级decorator:
 @invincible
 def out_myname():
-    print("my name is lintom")
+    print("my name is steven")
 
 # 初级decorator结果:
+In [1]: out_myname()
 call out_myname()
-my name is lintom
+my name is steven
 
 
+要点2.
 # 定义高级(三层嵌套)decorator
 def log(arg):
     def outer(func):
@@ -161,10 +165,13 @@ def matter():
     print("date 2020-5-29")
 
 # 高级decorator结果
+In [2]: matter()
 excute matter()
 date 2020-5-29
 
-# decorator为使__name__保持为func.__name__，在wrapper()前使用@functools.wraps(func)
+
+要点3.
+# decorator为使__name__保持为func.__name__, 在wrapper()前使用@functools.wraps(func)
 
 示例代码(打印函数的执行时间)：
 import functools,time
@@ -188,14 +195,14 @@ out_myname()
 
 
 须知：
-1.当需要在函数内部修改全局变量值时，需要使用global关键字
-2.在嵌套函数中，内部函数需要修改外部函数变量值时，需要使用nonlocal关键字
-3.函数形参是对实参的二次赋值，而非直接修改原来的值
-4.函数名称可通过赋值的方式(不带参数限定)，来通过其他名称调用函数
-5.函数接收另一个函数作为参数，则称之为高阶函数
-6.在嵌套函数中，外部函数可以返回内部函数
+1.当需要在函数内部修改全局变量值时, 需要使用global关键字
+2.在嵌套函数中, 内部函数需要修改外部函数变量值时, 需要使用nonlocal关键字
+3.函数形参是对实参的二次赋值, 而非直接修改原来的值
+4.函数名称可通过赋值的方式(不带参数限定), 来通过其他名称调用函数
+5.函数接收另一个函数作为参数, 则称之为高阶函数
+6.在嵌套函数中, 外部函数可以返回内部函数
 7.函数默认返回None
-8.函数形参默认值只评估一次(当默认值为列表时，多次改变列表，效果会持续叠加)，因为形参指向值(默认值)在函数定义时初始。修正方法为形参默认值为immutable
+8.函数形参默认值只评估一次(当默认值为列表时, 多次改变列表, 效果会持续叠加), 因为形参指向值(默认值)在函数定义时初始。修正方法为形参默认值为immutable
 
 
 变量引用顺序：局部变量--嵌套变量--全局变量--外部built-in变量
@@ -211,110 +218,110 @@ def gene(n)：
     for i in range(n):
         a, b = b, a + b
         yield a
-** 与一般函数不同，generator函数由yield处返回，调用next(iterator)或for循环时，由上次yield返回处继续。next(iterator)遍历完毕则生成StopIteration异常
-** 可使用next(iterator)这个built-in函数返回下一个值的(惰性序列)，称为iterator，只有generator为迭代器，但可使用iter()这个built-in函数获取迭代器
-** 可使用for循环的，称为iterable。list、tuple、dict、set、str和generator都是可迭代对象
+** 与一般函数不同, generator函数由yield处返回, 调用next(iterator)或for循环时, 由上次yield返回处继续。next(iterator)遍历完毕则生成StopIteration异常
+** 可使用next(iterator)这个built-in函数返回下一个值的(惰性序列), 称为iterator, 只有generator为迭代器, 但可使用iter()这个built-in函数获取迭代器
+** 可使用for循环的, 称为iterable。list、tuple、dict、set、str和generator都是可迭代对象
 ** iterator和iterable都在collections.abc模块中
 ** 继承关系：iterable --> iterator --> generator
 
 
 built-in函数一览
 abs(x)
-    返回一个整数或小数的绝对值，或者复数的模
-    复数的模：实数与虚数系数的平方和，再开平方
+    返回一个整数或小数的绝对值, 或者复数的模
+    复数的模：实数与虚数系数的平方和, 再开平方
 
 class float([x])
-    接受一个数字或字符串参数x，返回浮点数。当参数未提供时，返回浮点数0.0
+    接受一个数字或字符串参数x, 返回浮点数。当参数未提供时, 返回浮点数0.0
 
 dir([object])
-    当不包含参数时，返回当前namespace的变量/方法名称列表；当object为模块名称时，返回指定模块的变量/方法名称列表；当oeject为对象时，返回对象的变量/方法名称列表
+    当不包含参数时, 返回当前namespace的变量/方法名称列表；当object为模块名称时, 返回指定模块的变量/方法名称列表；当oeject为对象时, 返回对象的变量/方法名称列表
     调用模块的__dir__()方法。没有则调用__dict__变量
 
 help([object])
-    当不提供object时，进入交互式帮助模式
-    当提供object时，object可以为module/function/class/method/keyword名称，打印相关帮助信息。可使用"module"返回当前可获得模块列表
+    当不提供object时, 进入交互式帮助模式
+    当提供object时, object可以为module/function/class/method/keyword名称, 打印相关帮助信息。可使用"module"返回当前可获得模块列表
 
 input([prompt])
-    接受一个可选的提示参数prompt，读取标准输入，返回一个该输入的字符串
+    接受一个可选的提示参数prompt, 读取标准输入, 返回一个该输入的字符串
 
 class int([x])
 class int(x, base=10)
-    接受一个数字或字符串参数x，返回指定进制整数。当参数未提供时，返回整数0
+    接受一个数字或字符串参数x, 返回指定进制整数。当参数未提供时, 返回整数0
 
 enumerate(iterable, start=0)
 	返回enumerate对象(generator), item为(index, item_of_iterable)的tuple格式
 
 isinstance(object, classinfo)
-    检查object是否为classinfo类(子类)的实例，返回boolean类型
-    classinfo - 类或者tuple，当classinfo为tuple时，object为其中任一类(子类)的实例，返回True
+    检查object是否为classinfo类(子类)的实例, 返回boolean类型
+    classinfo - 类或者tuple, 当classinfo为tuple时, object为其中任一类(子类)的实例, 返回True
 
 len(s)
-    接受一个sequence或collection，返回其长度
+    接受一个sequence或collection, 返回其长度
 
 class list([iterable])
-    根据可迭代对象iterable生成一个list对象。当未提供参数时，生成空list
+    根据可迭代对象iterable生成一个list对象。当未提供参数时, 生成空list
 
 map(function, *iterables)
-    对后续多个iterable，对每个iterable相同索引元素执行function方法操作，直到最短的iterable遍历完毕。返回Iterator对象
+    对后续多个iterable, 对每个iterable相同索引元素执行function方法操作, 直到最短的iterable遍历完毕。返回Iterator对象
 
 open(file, mode='r', buffering=-1,encoding=None, errors=None, newline=None, closefd=True, opener=None)
 
     file - 打开一个path字符串或file description格式指定的文件;
 
     mode - 代表打开文件的方式。列表如下:
-        'r' - 以只读方式打开文件(默认方式)。当文件不存在时，抛出FileNotFoundError异常
-        'w' - 以只写方式打开文件(重新写入)。当文件不存在时，创建文件
-        'a' - 以只写方式打开文件(尾部添加)。当文件不存在时，创建文件
-        'x' - 用于创建文件，并可写入。当文件存在时，抛出FileExistsError异常
+        'r' - 以只读方式打开文件(默认方式)。当文件不存在时, 抛出FileNotFoundError异常
+        'w' - 以只写方式打开文件(重新写入)。当文件不存在时, 创建文件
+        'a' - 以只写方式打开文件(尾部添加)。当文件不存在时, 创建文件
+        'x' - 用于创建文件, 并可写入。当文件存在时, 抛出FileExistsError异常
         'b' - 以二进制模式打开文件
         't' - 以文本模式打开文件(默认方式)
-        '+' - 添加在r/w/a/x之后，以读写模式打开文件
+        '+' - 添加在r/w/a/x之后, 以读写模式打开文件
 
     buffering - 可选buffer大小。列表如下:
-        0 - 关闭buffer，只能用于binary模式
-        1 - 选择行buffer，只作用于文本模式
+        0 - 关闭buffer, 只能用于binary模式
+        1 - 选择行buffer, 只作用于文本模式
         [2,999999) - 指定buffer大小
         binary和文本模式默认buffer:
-            binary - 使用固定buffer，可通过io.DEFAULT_BUFFER_SIZE查看
-            text - 为interactive文本文件时，即file object的isatty()返回True时，使用行buffer；其他的文本文件，同binary默认buffer一致
+            binary - 使用固定buffer, 可通过io.DEFAULT_BUFFER_SIZE查看
+            text - 为interactive文本文件时, 即file object的isatty()返回True时, 使用行buffer；其他的文本文件, 同binary默认buffer一致
 
-    encoding - 当mode为文本模式时，将存储/读取文本操作使用指定编码方式进行编码/解码。默认使用locale.getpreferredencoding()返回的系统默认编码
+    encoding - 当mode为文本模式时, 将存储/读取文本操作使用指定编码方式进行编码/解码。默认使用locale.getpreferredencoding()返回的系统默认编码
 
-    errors - 当encode或decode出现错误时，反馈的方式。只能用于文本模式。列表如下:
+    errors - 当encode或decode出现错误时, 反馈的方式。只能用于文本模式。列表如下:
         'strict' - 抛出ValueError(子类)异常。默认的None与此项效果一致
         'ignore' - 忽略无法编码/解码的字符
         'replace' - 使用?替换无法编码/解码的字符
-        'surrogateescape' - 将任何编码异常的字符，使用Unicode编码范围为DC80~DCFF区间的字符代替
-        'xmlcharrefreplace' - 当编码不支持指定字符时，使用xml格式&#nnn代替。只能用于写入文件，即编码
+        'surrogateescape' - 将任何编码异常的字符, 使用Unicode编码范围为DC80~DCFF区间的字符代替
+        'xmlcharrefreplace' - 当编码不支持指定字符时, 使用xml格式&#nnn代替。只能用于写入文件, 即编码
         'backslashreplace' - 使用\xnn替换编码异常的字符
         'namereplace' - 使用\N{...}替换编码不支持的字符。只能用于写入文件。version 3.5加入
     
     newline - 换行符转化方式。只用于文本模式。列表如下:
         当从文本中读取内容时:
-            None - 以'\n','\r','\r\n'结尾的换行符，都转化为'\n'
-            '' - '\n','\r','\r\n'都识别为换行符，但是不进行转化
-            other - 只有指定格式是被为换行符，并且不进行转化
+            None - 以'\n','\r','\r\n'结尾的换行符, 都转化为'\n'
+            '' - '\n','\r','\r\n'都识别为换行符, 但是不进行转化
+            other - 只有指定格式是被为换行符, 并且不进行转化
         当写入内容到文本时:
-            None - 将'\n'转化为系统默认的行分隔符，可通过os.linesep查看
+            None - 将'\n'转化为系统默认的行分隔符, 可通过os.linesep查看
             '', '\n' - 没有转化过程
             other - '\n'都转化为指定的换行符('\r', '\r\n') 
 
-    closefd - 当file为file description格式时，如果closefd为False，则file object使用close()时，不关闭file description；如果file为path字符串，closefd必须为True，否则抛出异常
+    closefd - 当file为file description格式时, 如果closefd为False, 则file object使用close()时, 不关闭file description；如果file为path字符串, closefd必须为True, 否则抛出异常
 
 print(*object, sep=' ', end='\n', file=sys.stdout, flush=False)
-    打印object对象到指定流文件file(write(str)方法返回的类型)，使用sep分隔参数对象，并以end符号结束
+    打印object对象到指定流文件file(write(str)方法返回的类型), 使用sep分隔参数对象, 并以end符号结束
 
 round(number[, ndigits])
     返回number最接近精度为10^(-ndigits)的数。ndigits默认为0
-    当舍去位为5时，取最后一个精度位为偶数的数
+    当舍去位为5时, 取最后一个精度位为偶数的数
 
 class str(object='')
 class str(object=b'', encoding='utf-8', errors='strict')
-    接受一个任意类型对象，并返回一个对应字符串。当提供encoding或errors参数时，对象类型必须为bytes
-    小数无法精确取值，会有细微差异
+    接受一个任意类型对象, 并返回一个对应字符串。当提供encoding或errors参数时, 对象类型必须为bytes
+    小数无法精确取值, 会有细微差异
 
 class tuple([iterable])
-    根据可迭代对象iterable生成一个tuple对象。当未提供参数时，生成空tuple
+    根据可迭代对象iterable生成一个tuple对象。当未提供参数时, 生成空tuple
 
 zip(*iterables)
 	将iterables进行解包, 然后将每个item的第一个子item组合成iterables, 第二个组合成iterables ...
