@@ -97,6 +97,12 @@ S/DOTALL：使.匹配所有字符，包括newline
 X/VERBOSE：使pattern以更为易读方式书写(忽略空白符和#后的字符)
 
 
+
+例1. 匹配单个whitespace, 但不包含tab和newline
+[^\S\t\n\r]
+
+
+
 re模块方法：
 compile(pattern,flags=0)：编译一个正则匹配模式，返回Pattern对象。flags可以使用'|'分隔多个常量
 
@@ -167,3 +173,8 @@ start([group])：返回对应组的起始位置索引
 end([group])：返回对应组的结束位置索引(开区间)
 
 span([span])：返回对应组的元组(start,end)
+
+
+引用:
+[1]re single space match:
+    https://stackoverflow.com/questions/47460645/regex-matches-white-space-but-not-tab-php/47460786
