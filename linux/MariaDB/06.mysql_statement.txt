@@ -259,13 +259,17 @@ select
 
 		<join_table>:
 			<table_name> [inner | cross] join <table_name> [<join_condition>]
-			| <table_name> straight_join <table_name> [on <conditional_expr>]
 			| <table_name> {left | right} [outer] join <table_name> <join_condition>
+			| <table_name> straight_join <table_name> [on <conditional_expr>]
 			| <table_name> natural [{left | right} [outer]] join <table_name>
 
 			<join_condition>
 				on <condiftion_expr>
 				| using (<column_list>)
+			inner join配合on, 代表符合on条件的交集
+			cross join一般不搭配on使用, 代表每个tab1行都衍生到tab2的行数, 结果为tab1_row * tab2_row
+			left join配合on, 代表tab1的全部行和tab2部分行(与tab1交集部分)
+			right join配合on, 代表tab1的部分行(与tab2交集部分)和tab2全部行
 
 	group by {<col_name> | <expr> | <position>} [asc | desc], ... [with rollup]
 		根据单个或多个列进行分类并排序
