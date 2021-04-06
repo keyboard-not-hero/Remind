@@ -1,0 +1,61 @@
+boxes -- 给文本添加ASCII艺术外框
+
+安装:
+	sudo apt-get install boxes
+
+语法:
+boxes [options] [infile [outfile]]
+
+参数列表:
+-a <str>
+	对齐/定位方式. 默认为hlvt. 可选参数如下:
+		hx - h代表在盒子中的水平position, x代表具体参数(l/c/r)
+		vx - v代表在盒子中的垂直position, x代表具体参数(t/c/b)
+		jx - 文字的对齐方式, x代表具体参数(l/c/r)
+
+-d <design_name>
+	指定外框形状. 列表如下: cat/diamonds/dog/parchment/unicornthink
+	具体查看-l参数
+	具体参考链接: https://boxes.thomasjensen.com/box-designs.txt
+
+-f <config>
+	指定配置文件
+
+-h
+	帮助文档
+
+-i <mode>
+	缩进模式. 列表如下:
+		text - 只保持文本的缩进
+		box - 使盒子跟着保持缩进
+		none - 丢弃原文本缩进
+
+-l
+	罗列可获得的外框形状
+
+-p <str>
+	指定边框与文字的距离. 列表如下:
+		ax - a代表所有方向文字与边框的距离, x代表具体的空格数量
+		hx - h代表所有水平方向文字与边框的距离
+		vx - v代表所有垂直方向文字与边框的距离
+		bx - b代表底部方向文字与边框的距离
+		lx - l代表左边方向文字与边框的距离
+		tx - t代表顶部方向文字与边框的距离
+		rx - r代表右边方向文字与边框的距离
+
+-r
+	从内容中移除添加的边框
+	建议配合-d指定已存在的边框
+
+-s <width>x<height>
+	指定边框的宽度和长度
+	当指定的宽度和长度小于边框的原始大小时, 保持原始大小
+
+-v
+	版本信息
+
+
+引用:
+[1]official website:
+	https://boxes.thomasjensen.com/docs/
+

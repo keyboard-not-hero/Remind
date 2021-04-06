@@ -1,0 +1,36 @@
+lolcat -- 给文字添加彩虹色
+
+语法:
+lolcat [options] [files]
+
+参数列表:
+-a, --animate
+	打印下一行前进行颜色渐变
+
+-d <num>, --duration=<num>
+	打印下一行前进行颜色渐变的步数. 默认为12
+
+-f, --force
+	强制上色, 即使输出不是tty
+
+-F <freq>, --freq=<freq>
+	彩虹色每个颜色出现的频率
+	数字越大代表颜色渐变越快
+	默认为0.1
+
+-h, --help
+	帮助信息
+
+-p <f>, --spread=<f>
+	颜色条纹的倾斜度
+	0.1接近垂直条纹
+	1000接近水平条纹
+
+-s <step>, --speed=<step>
+	每秒钟跳转的颜色渐变步数. 默认为20
+
+-S <init>, --seed=<init>
+	设置随机数生成器的初始值
+
+-v, --version
+	版本信息
