@@ -1,0 +1,5 @@
+1.https页面显示异常
+在wp_options表格中, 设置siteurl和home为https://<domain_name>
+> update wp_options set option_value='https://<domain_name>' where option_name='siteurl'
+> update wp_options set option_value='https://<domain_name>' where option_name='home'
+

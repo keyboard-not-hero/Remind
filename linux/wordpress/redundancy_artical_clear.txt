@@ -1,5 +1,4 @@
-每次修改文章内容后，原始文章内容也会保存一份在数据库中，由此，不同时间段修改保存的文章，便会形成历史节点，并于恢复。但是，这却也造成了数据库的臃肿，所以我们需要使用sql语言来删除指定的遗留文章内容
-
+文章的每次修改都会保留原始备份, 每次备份为一个节点
 文章内容默认保存在数据库wordpress的wp_posts表格中
 
 进入数据wordpress库:
@@ -12,7 +11,7 @@ MariaDB [(none)]> use wordpress
 
 查看限定内容，通过查看可以发现有许多重复标题，并且其中大部分为inherit状态
 
-MariaDB [wordpress]> select post_title,post_status from wp_posts;
+MariaDB [wordpress]> select post_title, post_status from wp_posts;
 
 下列为删除语法(!!!危险)：
 MariaDB [wordpress]> delete from wp_posts where post_status not like “publish”;
@@ -23,8 +22,10 @@ MariaDB [wordpress]> delete from wp_posts where post_status like “auto-draft�
 MariaDB [wordpress]> delete from wp_posts where post_status like “inherit”;
 
 2.结合时间节点删除文章步骤：
-当我们修改文章后，会生成一份最新文档(inherit，post_date和post_modified相同，为当前发布时间)，并且将最新内容覆盖到原有的public文档(并且post_modified属性更新为最新，但post_date保持不变)，如下所示：
-MariaDB [wordpress]> select post_date,post_modified,post_status from wp_posts;
+inherit -  post_date和post_modified相同, 时间为recent
+public - post_modified时间更新为recent，但post_date依然为首次编辑时间
+如下所示：
+MariaDB [wordpress]> select post_date, post_modified, post_status from wp_posts;
 | 2018-08-12 19:22:40 | 2018-08-12 20:18:30 | publish |
 | 2018-08-12 19:36:11 | 2018-08-12 19:36:11 | inherit |
 | 2018-08-12 19:37:48 | 2018-08-12 19:37:48 | inherit |

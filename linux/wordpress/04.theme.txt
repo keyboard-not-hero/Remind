@@ -1,0 +1,16 @@
+主题安装方式:
+1.直接在线搜索
+控制面板 -- 外观 -- 主题 -- 安装主题
+
+2.下载zip进行本地上传(文件较小)
+控制面板 -- 外观 -- 主题 -- 安装主题 -- 上传主题 -- 选择本地zip文件
+
+3.手动上传并解压缩主题
+scp <theme>.zip <user>@<server_address>:<wp_path>/wp-content/theme
+unzip <theme>.zip
+
+
+
+主题推荐:
+1.Kratos
+下载地址: https://github.com/vtrois/kratos
