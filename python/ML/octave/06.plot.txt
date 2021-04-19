@@ -1,0 +1,14 @@
+Octave使用数据进行作图. 提供数据和坐标轴属性相关函数
+
+1.plot - 利用数据属性进行作图. 提供多种参数形式
+plot(Y)
+	提供Y轴坐标, X坐标默认为[1, length(Y)]
+
+plot(X, Y)
+	提供X轴和Y轴坐标
+	
+plot(X, Y, FMT)
+	
+
+plot(X, Y, property, value)
+	

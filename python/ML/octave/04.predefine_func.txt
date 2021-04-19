@@ -1,0 +1,68 @@
+NA(n)
+NA(n, m)
+NA(n, m, ...)
+	创建数组, 数组元素为NA
+
+cast(num, "type")
+	将数据转化为指定数据类型, 返回该类型和数值的数据
+
+class(num)
+	数据变量类型	
+	
+exp(num)
+	e的幂
+	
+inv(matrix)
+	矩阵的逆
+	
+isa(num, classname)
+	数据是否为指定类型. classname列表:
+		float - 浮点数, 包含single和double
+		integer - 整数, 包含(u)int8, (u)int16, (u)int32, (u)int64
+		numeric - 数字, 包含浮点数和整数
+		char - 字符
+		logical - 逻辑数
+
+isna(num)
+	是否为NA值
+
+load(filename, options, var1, var2 ...)
+	加载文件中的指定变量
+	当未提供变量名时, 默认加载文件中所有变量
+	options列表:
+		-ascii: 文件只包含数据内容
+		-binary: 文件为Octave二进制格式
+		-hdf5: 文件为HDFS格式
+		-mat: 文件为MATLAB version 6/7二进制格式
+		-mat4-binary: 文件为MATLAB version 4二进制格式
+		-text: 文件为Octave文本格式
+
+log(num)
+	e为底的对数
+	
+ndims(arr)
+	arr的维度
+
+output_precision(effective)
+	指定有效位数. 最大支持16位
+	不带参数时, 查看当前有效位数
+
+pinv(matrix)
+	矩阵的伪逆
+	
+plot(X, Y)
+	利用坐标作图
+	当只有一个参数时, 指定为Y坐标, X坐标默认为1:length(Y)
+	
+rand(row, col)
+	生成矩阵, 矩阵元素为[0,1]区间内的数.
+	参数为一个时, 指定为方阵
+	
+save(filename, var1, var2 ...)
+	将指定的变量保存到文件中
+
+sin(rad)
+	三角函数
+
+size(arr)
+	arr的各维度的长度

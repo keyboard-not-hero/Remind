@@ -6,3 +6,6 @@ mv <chinese_wp_path>/wp-content/languages <original_wp_path>/wp-content
 
 修改站点语言(''代表默认的english语言)
 > update wp_options set option_value='zh_CN' where option_name='WPLANG';
+
+语言包下载列表汇总:
+https://make.wordpress.org/polyglots/teams/

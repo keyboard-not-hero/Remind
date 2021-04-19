@@ -1,0 +1,20 @@
+数据类型
+logical
+	布尔类型
+	
+single
+	单精度浮点数
+	
+double
+	双精度浮点数. 包含以下子类型:
+		NA - missing data
+		complex - 复数
+
+char
+	字符
+	
+int8/16/32/64
+	指定长度整数
+	
+uint8/16/32/64
+	指定长度非负整数
