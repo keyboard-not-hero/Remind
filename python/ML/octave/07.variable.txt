@@ -1,0 +1,34 @@
+变量类型:
+1.global variable
+2.persistent variable
+
+
+1.global variable
+global x = 12
+function f()
+	global x;
+	x = 1
+endfunction
+
+
+2.persistent variable
+类似于C语言的static variable
+在function被移除时, 才进行变量移除
+persistent p = 11
+
+
+who
+who PATTERN
+	当前变量列表
+
+whos
+whos PATTERN
+	当前变量列表及详细信息
+
+clear
+clear PATTERN
+	按PATTERN匹配模式清除变量. 默认清除所有变量
+	PATTERN特殊符号如下:
+		? - 匹配单个任意字符
+		* - 匹配0或多个任意字符
+		[] - 匹配列表内的字符

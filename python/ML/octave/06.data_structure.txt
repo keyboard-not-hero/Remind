@@ -1,0 +1,49 @@
+Octave包含三种结构:
+1.Structures
+2.Map
+3.Cell Arrays
+
+
+1.Structures
+Structures使用'.'符号分隔结构名称和field名称
+如: monkey包含name/sex/age属性
+monkey.name = "bart"
+sex = "male"
+age = 11
+
+相关function:
+fieldnames(s)
+	字段名称列表
+
+numfields(s)
+	结构的field数量
+
+setfield(s, field, val)
+	修改field的值
+
+
+2.Map
+containers.Map(keys, vals)
+	创建Map, 元素为key=val的pair
+
+
+3.Cell Arrays
+Cell Arrays创建:
+c = {"a string", rand(2, 2); 1, 2};
+
+Cell Arrays引用:
+c{1}{1}
+  => ans = a string
+
+相关functions:
+celldisp(s)
+	显示Cell Arrays内容
+
+cellstr(arr)
+	将string数组转化为cell arrays
+
+iscell(s)
+	判定是否为Cell Arrays数据结构
+
+num2cell(A)
+	将numeric矩阵转化为Cell Arrays

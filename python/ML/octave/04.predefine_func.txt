@@ -3,15 +3,50 @@ NA(n, m)
 NA(n, m, ...)
 	创建数组, 数组元素为NA
 
+bitcmp(A, K)
+	对A请求所有K bit的补
+
+bitset(A, n)
+bitset(A, n, val)
+	将数A的指定第n bit设定为val
+	n可以为数组, 此时返回为每次依序改变1 bit的值列表
+	val为1或0, 未提供时为1
+
+bitshift(a, k)
+bitshift(a, k, n)
+	指定a往左移动k bit, n代表截取bit数
+
 cast(num, "type")
 	将数据转化为指定数据类型, 返回该类型和数值的数据
+
+char(s1, s2, ...)
+	将多个字符串连接为字符串数组, 即char矩阵
 
 class(num)
 	数据变量类型	
 	
+dec2bin(num)
+	将num转化为二进制表示
+
+double(num)
+	将num转化为双精度浮点数
+
 exp(num)
 	e的幂
+
+idivide(x, y, op)
+	x除以y, 并且指定结果方式. 列表如下:
+		fix - 取离0最近的整数
+		round - 取离最近的整数. 四舍五入
+		floor - 取较小的整数. 截尾
+		ceil - 取较大的整数. 进1
+
+int32(num)
+	将num转化为32 bit的整数
 	
+int2str(num)
+	将num转化为char类型
+
 inv(matrix)
 	矩阵的逆
 	
@@ -22,6 +57,15 @@ isa(num, classname)
 		numeric - 数字, 包含浮点数和整数
 		char - 字符
 		logical - 逻辑数
+
+ischar(char)
+	判断char是否为字符数组
+
+iscomplex(num)
+	判断num是否为复数
+
+isinteger(num)
+	num是否为整数类型
 
 isna(num)
 	是否为NA值
@@ -40,8 +84,14 @@ load(filename, options, var1, var2 ...)
 log(num)
 	e为底的对数
 	
+logical(num)
+	将num转化为logical类型
+
 ndims(arr)
 	arr的维度
+
+num2str(f, precision)
+	将f转化为char类型, 并指定有效位数
 
 output_precision(effective)
 	指定有效位数. 最大支持16位
@@ -64,5 +114,23 @@ save(filename, var1, var2 ...)
 sin(rad)
 	三角函数
 
+single(num)
+	将num转化为单精度浮点数
+
 size(arr)
 	arr的各维度的长度
+
+strcat(s1, s2, ...)
+	将多个字符串串联成一个字符串, 即char数组
+
+strcmp(s1, s2)
+	两个字符串是否完全相等
+
+strcmpi(s1, s2)
+	两个字符串是否完全相等. 大小写不敏感
+
+strncmp(s1, s2, n)
+	比较两个字符串的前n个字符是否完全相等
+
+strtrim(s)
+	截取s的首尾空格
