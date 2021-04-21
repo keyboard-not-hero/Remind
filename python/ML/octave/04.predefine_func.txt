@@ -87,6 +87,9 @@ log(num)
 logical(num)
 	将num转化为logical类型
 
+max_recursion_depth(depth)
+	允许函数递归深度
+
 ndims(arr)
 	arr的维度
 
@@ -134,3 +137,9 @@ strncmp(s1, s2, n)
 
 strtrim(s)
 	截取s的首尾空格
+
+sub2ind(dim, i, j)
+sub2ind(dim, s1, s2, ...)
+	将subscript转化为线性索引
+	线性索引实行列优先. 类似于Fortran
+	s1, s2代表指定维度的列表
