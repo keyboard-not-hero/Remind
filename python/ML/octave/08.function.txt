@@ -1,3 +1,121 @@
-变量引用函数名称
+function特性:
+1.function name与variable name类似, 由letters、digits、underscores组成, 并且开头不能为digits
+2.functions与variables共享names pool
+
+
+
+function语法列表:
+1.不带参数function语法:
+function <name>
+	<statement>
+endfunction
+
+
+2.带参数function语法:
+function <name>(<args>)
+	<statement>
+endfunction
+
+nargin()
+nargin(<func_name>)
+	参数数量
+
+
+3.带返回值的function语法:
+function <return_var> = <name>(<args>)
+	<statement>
+endfunction
+
+
+4.带多个返回值的function语法:
+function [<ret_var1>, <ret_var2>, ...] = <name>(<args>)
+	<statement>
+endfunction
+
+
+5.可变数量返回值的function语法:
+function varargout = <name>(<args>)
+	for i = i:nargout
+		varargout{i} = i
+	endfor
+endfunction
+
+** nargout代表返回参数数量
+
+
+6.可变数量参数的function语法:
+function val = <name>(varargin)
+	<statement>
+endfunction
+
+** nargin代表输入参数数量
+
+
+7.参数包含默认值的function语法:
+function <name>(arg1=val1, ...)
+	<statement>
+endfunction
+
+
+8.锁定function
+相关函数: mlock() mislocked("func_name") munlock("func_name")
+mlock可用于锁定function, 在调用clear <func_name>依旧在内存中. 语法如下:
+	function <name>()
+		mlock();
+		<statement>
+	endfunction
+
+mislocked()检测function是否被锁定
+
+munlock()用于解除function的锁定
+
+
+9.变量引用函数名称
+var = @<func_name>
+
+
+10.匿名函数
+@(args) expression
+
 例:
-f = @sqrt
+f = @(x, y) x+y
+等于
+function z = (x, y)
+	z = x + y;
+endfunction
+
+
+
+function file:
+1.保存单个function的文件, 该文件以.m为后缀
+2.文件内可定义多个function, 第一个function为main function; 其他function为subfunction, 只能被main function调用
+3.当一个function只能被一个目录下的文件内functions调用时, 在内目录下创建private目录, 并创建function, 该function称为private function. 如: <dir>/fun_main.m与<dir>/private/fun_pri.m
+4.function可进行嵌套, 内层function只能访问直系外层function内容
+
+
+script file:
+1.主要用于包含任意octave command. 通过source(file)执行文件内command
+2.可定义多个function, 文件以.m为后缀
+3.与function file不同, script file不能以function关键字开头(注释不计入. 可使用无效语句来区分, 如: 1;)
+
+
+function file与script共有特征:
+1.读取function file后保留时间戳, 当文件被改动后, 通过比较记录的时间戳与文件的实际时间戳进行比较, 从而更新function内容
+2.在interactive模式中, 每次显示prompt都会进行时间戳比对
+3.ignore_function_time_stamp(val)可用于改变时间戳比较规则, val列表如下:
+	"system" - 不自动比对octave/share/<version>/m目录下的内容. 一般为/usr/share/octave/<version>/m
+	"all" - 不自动比对所有内容
+	"none" - 自动比对所有search path下的内容
+4.path()可获取search path
+5.rmpath(dir1, ...)可用于从已有search path中删除指定路径
+6.addpath(dir1, ...)将指定路径添加到function search path
+
+
+
+
+
+
+关键字:
+return
+	单纯退出function
+	无法返回值, 返回值在函数体中给return_var进行赋值实现

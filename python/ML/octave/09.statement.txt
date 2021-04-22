@@ -1,0 +1,66 @@
+1.if ... else
+语法:
+if (condition)
+	statement
+endif
+
+if (condition)
+	statement1
+else
+	statement2
+endif
+
+if (condition1)
+	statement1
+elseif (condition2)
+	statement2
+else
+	statement3
+endif
+
+
+2.switch
+语法:
+switch (expression)
+	case label1
+		statement1
+	case label2
+		statement2
+	otherwise
+		statement3
+endswitch
+
+** 多种case执行相同语句(使用Cell Arrays)
+switch (expression)
+	case {label1, label2}
+		statement1
+
+
+3.while
+语法:
+while (condition)
+	<statement>
+endwhile
+
+
+4.do-util
+语法:
+do
+	<statement>
+util (condition)
+
+
+5.for
+语法:
+for var = <expression>
+	<statement>
+endfor
+
+
+
+关键字:
+break
+	跳脱最内层循环(while, do-util, for)
+
+continue
+	略过余下内容, 进入下一次循环(while, do-util, for)

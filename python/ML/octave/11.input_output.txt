@@ -1,0 +1,29 @@
+output:
+1.<var_name>
+	打印变量名称和值
+
+2.disp(s)
+	打印内容, 并以'\n'结束. 
+	s为变量名称时, 不打印变量名称
+	
+3.save(filename, var1, var2 ...)
+    将指定的变量保存到文件中
+
+
+input:
+1.input(prompt)
+	打印提示内容prompt, 等待输入
+
+2.menu(title, opt1, ...)
+	弹出菜单选项, 标题为title, 选项为opt1 ...
+
+3.load(filename, options, var1, var2 ...)
+    加载文件中的指定变量
+    当未提供变量名时, 默认加载文件中所有变量
+    options列表:
+        -ascii: 文件只包含数据内容
+        -binary: 文件为Octave二进制格式
+        -hdf5: 文件为HDFS格式
+        -mat: 文件为MATLAB version 6/7二进制格式
+        -mat4-binary: 文件为MATLAB version 4二进制格式
+        -text: 文件为Octave文本格式

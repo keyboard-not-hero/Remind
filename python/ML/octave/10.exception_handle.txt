@@ -1,0 +1,51 @@
+exception类型:
+1.error
+	影响程序后续运行
+
+2.warning
+	不影响程序后续运行, 但可改善代码
+
+
+
+相关function:
+error(str)
+	打印error信息, 并阻止程序继续运行
+
+lasterror()
+	返回上一个error信息的structure结构. 结构包含field如下:
+		message - error信息
+		identifier - error信息标识符
+		stack - 包含error发现位置的structure. field列表如下:
+			file - error所在文件
+			name - error所在function
+			line - error所在行号
+			column - error所在列
+
+warning(str)
+	打印warning信息
+
+
+
+解决error exception方案:
+1.unwind_protect
+语法:
+unwind_protext
+	statement1
+unwind_protect_cleanup
+	statement2
+end_unwind_protect
+
+类似于python的以下语法:
+try:
+	statement1
+finally:
+	statement2
+
+
+2.try
+语法:
+try
+	statement
+catch
+	statement
+end_try_catch

@@ -1,0 +1,90 @@
+Octave使用数据进行作图. 提供数据和坐标轴属性相关函数
+
+1.plot - 利用数据属性进行作图. 提供多种参数形式
+plot(Y)
+	提供Y轴坐标, X坐标默认为1:length(Y)
+
+plot(X, Y)
+	提供X轴和Y轴坐标
+	当X为vector, Y为matrix, Y的每一列与X绘制线条
+	当X为matrix, Y为vector, X的每一列与Y绘制线条
+	当X与Y皆为matrix, X的列与Y的对应列绘制线条
+	
+plot(X, Y, FMT)
+	提供X轴和Y轴坐标, 并提供相应属性. FMT格式如下:
+		<linestyle><marker><color><;displayname;>提供对应的属性, 属性值参考下一个函数 
+		如: '--oc'
+
+plot(X, Y, property1, value1, property2, value2, ...)
+	提供X轴和Y轴坐标, 并提供多个property/value对. 
+	property列表及对应可选value如下:
+		"linestyle" - 线条类型, 列表如下:
+			'-' - 实线. 默认选项
+			'--' - 虚线
+			':' - 点断线
+			'-.' - 虚线和点断线交替
+		"marker" - 端点类型, 列表如下:
+			‘+’	crosshair
+			‘o’	circle
+			‘*’	star
+			‘.’	point
+			‘x’	cross
+			‘s’	square
+			‘d’	diamond
+			‘^’	upward-facing triangle
+			‘v’	downward-facing triangle
+			‘>’	right-facing triangle
+			‘<’	left-facing triangle
+			‘p’	pentagram
+			‘h’	hexagram
+		"color" - 线条颜色, 列表如下:
+			‘k’	blacK
+			‘r’	Red
+			‘g’	Green
+			‘b’	Blue
+			‘y’	Yellow
+			‘m’	Magenta
+			‘c’	Cyan
+			‘w’	White
+		";displayname;' - 用于legend的线条名称
+		"linewidth" - 线条宽度
+		"markersize" - 端点大小
+		"markeredgecolor" - 端点边缘颜色
+		"markerfacecolor" - 端点中心颜色
+
+参考连接: https://octave.org/doc/v6.2.0/Two_002dDimensional-Plots.html#Two_002dDimensional-Plots
+
+
+2.xlim/ylim - 设置指定轴的值范围
+xlim([x_lower x_upper])
+	设置x轴上的范围上下限
+
+
+3.xticks/yticks - 设置指定轴的tick
+xticks([tick1, tick2, tick3, ...])	
+	配置多个ticks
+
+
+4.xticklabels/yticklabels - 配置指定轴tick对应的label
+xticklabels([tick_name1, tick_name2, ...])
+	配置多个tick的label
+
+
+5.xlabel/ylabel - 轴标签
+xlabel(str)
+	使用字符串作为轴标签
+
+
+6.title - 图形标题
+title(str)
+	使用字符串作为标题
+	
+
+
+示例1 - 正弦图
+x = -pi:0.1:pi;
+y = sin(x);
+plot(x, y)
+xlabel("x");
+ylabel("sin(x)");
+title("Simple 2-D plot");
