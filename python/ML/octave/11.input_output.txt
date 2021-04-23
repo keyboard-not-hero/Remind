@@ -1,12 +1,15 @@
 output:
-1.<var_name>
-	打印变量名称和值
+1.<content>
+	打印内容
 
 2.disp(s)
 	打印内容, 并以'\n'结束. 
 	s为变量名称时, 不打印变量名称
 	
-3.save(filename, var1, var2 ...)
+3.status = put(s)
+	打印内容, 并返回状态码
+
+4.save(filename, var1, var2 ...)
     将指定的变量保存到文件中
 
 
@@ -27,3 +30,57 @@ input:
         -mat: 文件为MATLAB version 6/7二进制格式
         -mat4-binary: 文件为MATLAB version 4二进制格式
         -text: 文件为Octave文本格式
+
+
+底层I/O:
+fd = fopen(name)
+fd = fopen(name, mode)
+fd = fopen(name, mode, arch)
+fd = fopen(name, mode, arch, encoding)
+	打开文件. 打开错误时返回-1
+	name代表文件绝对路径和相对路径
+	mode代表打开文件的权限, 列表如下:
+		r - 只读. 默认选项
+		w - 可写, 之前的内容被丢弃
+		a - 可写(append)
+		r+ - 可读和可写
+		w+ - 可读和可写, 之前的内容被丢弃
+		a+ - 可读和可写(append)
+		t - 文本模式
+		b - 二进制模式
+		z - 读取gzip压缩文件, 必须配合b使用
+	arch代表big-endian或little-endian模式, 列表如下:
+		native/n - 跟随当前machine的endian模式
+		ieee-be/b - IEEE big endian模式
+		ieee-le/l - IEEE little endian模式
+	encoding代表编码类型, 用于text模式
+		
+status = fputs(fd, str)
+	将字符串内容写入文件描述符fd指定指定的文件中
+	status为非负数代表成功操作
+
+str = fgetl(fd)
+str = fgetl(fd, len)
+	获取指定长度的字符
+	遇到下一个newline或EOF也会停止
+
+str = fgets(fd)
+str = fgets(fd, len)
+	获取指定长度的字符
+	遇到下一个newline或EOF也会停止
+	与fgetl不同, 该函数会新增加一个newline
+
+str = fgets(fd)
+str = fgets(fd, len)
+	
+
+fclose(fd)
+fclose("all")
+	关闭指定fd
+	all代表关闭所有通过fopen打开的文件fd
+	
+
+fclose(fd)
+fclose("all")
+	关闭指定fd
+	all代表关闭所有通过fopen打开的文件fd

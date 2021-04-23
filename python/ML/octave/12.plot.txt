@@ -1,0 +1,233 @@
+Octave使用数据进行作图. 提供数据和坐标轴属性相关函数
+
+
+结构
+root - 顶级对象, figure的父层
+figure - 窗口
+axes - 作图区域
+
+
+2D作图function
+plot(Y)
+	提供Y轴坐标, X坐标默认为1:length(Y)
+
+plot(X, Y)
+	提供X轴和Y轴坐标
+	当X为vector, Y为matrix, Y的每一列与X绘制线条
+	当X为matrix, Y为vector, X的每一列与Y绘制线条
+	当X与Y皆为matrix, X的列与Y的对应列绘制线条
+	
+plot(X, Y, FMT)
+	提供X轴和Y轴坐标, 并提供相应属性. FMT格式如下:
+		<linestyle><marker><color><;displayname;>提供对应的属性, 属性值参考下一个函数 
+		如: '--oc'
+
+plot(X, Y, property1, value1, property2, value2, ...)
+	提供X轴和Y轴坐标, 并提供多个property/value对. 
+	property列表及对应可选value如下:
+		"linestyle" - 线条类型, 列表如下:
+			'-' - 实线. 默认选项
+			'--' - 虚线
+			':' - 点断线
+			'-.' - 虚线和点断线交替
+		"marker" - 端点类型, 列表如下:
+			‘+’	crosshair
+			‘o’	circle
+			‘*’	star
+			‘.’	point
+			‘x’	cross
+			‘s’	square
+			‘d’	diamond
+			‘^’	upward-facing triangle
+			‘v’	downward-facing triangle
+			‘>’	right-facing triangle
+			‘<’	left-facing triangle
+			‘p’	pentagram
+			‘h’	hexagram
+		"markersize" - 端点大小. 默认为1
+		"markeredgecolor" - 端点边缘颜色
+		"markerfacecolor" - 端点中心颜色
+		"color" - 线条颜色, 列表如下:
+			‘k’	blacK
+			‘r’	Red
+			‘g’	Green
+			‘b’	Blue
+			‘y’	Yellow
+			‘m’	Magenta
+			‘c’	Cyan
+			‘w’	White
+		";displayname;' - 用于legend的线条名称
+		"linewidth" - 线条宽度. 默认为1
+
+参考连接: https://octave.org/doc/v6.2.0/Two_002dDimensional-Plots.html#Two_002dDimensional-Plots
+
+
+3D绘图function:
+mesh(x, y, z)
+	绘制3D图形(线)
+
+plot3(x, y, z)
+	绘制3D图形(线), 不包含栅栏线
+
+meshc(x, y, z)
+	绘制3D图形(线), 并且在底部包含等势线
+
+meshz(x, y, z)
+	绘制3D图形(线), 并且包含z轴高度线
+
+surf(x, y, z)
+	绘制3D图形(面)
+
+
+3D相关function:
+1.meshgrid - 生成矩阵
+[xx, yy] = meshgrid(x, y)
+	生成两个矩阵xx/yy.
+	xx的行由x内容组成, 在列上广播
+	yy的列由y内容组成, 在行上广播
+
+
+2.cylinder - 生成圆柱形坐标
+[x, y, z] = cylinder(r)
+[x, y, z] = cylinder(r, n)
+	生成圆柱形坐标.
+	r为z=[0, 1]上的半径变化
+	n为圆周的锚数. 默认为20
+
+
+3.sphere - 生成球体坐标
+[x, y, z] = sphere(n)
+	生成球体坐标
+	n为锚数. 默认为20
+
+
+4.ellipsoid - 生成椭圆球体坐标
+[x, y, z] = ellipsoid(xc, yc, zc, xr, yr, zr, n)
+	生成椭圆球体坐标
+	xc/yc/zc分别代表x/y/z轴上的中心点
+	xr/yr/zr分别代表x/y/z轴上的半径
+	n为锚数, 默认为203
+
+
+2D/3D相关function:
+1.axis - 设置轴的limit和其他特征
+axis([x_lower x_upper])
+axis([x_lower x_upper y_lower y_upper])
+axis(option1, option2, ...)
+	*_lower/*_upper用于设置轴的limit
+	option用于设置aspect ratio/limit/tick mark/direction of increasing/visibility of axes, 列表如下:
+		aspect ratio:
+		"square" - 正方形
+		"equal" - x/y(/z)轴的单元距离一致
+		"normal" - 恢复默认的长宽比
+		limit:
+		auto [xyz] - 指定轴自动配置limit
+		manual - 手动配置limit
+		tight - 根据数据配置limit
+		image - 等于tight与equal的结合
+		tick mark:
+		tic [xyz] - 只显示指定轴的tick
+		label [xyz] - 只显示指定轴的tick label
+		nolabel - 关闭显示tick label
+		direction of increasing:
+		xy - y轴内容向上递增
+		ij - y轴内容向下递增
+		visibility of axes:
+		on - 显示坐标轴
+		off - 不显示坐标轴
+
+
+2.xlim/ylim - 设置指定轴的值范围
+xlim([x_lower x_upper])
+	设置x轴上的范围上下限
+
+
+3.xticks/yticks - 设置指定轴的tick
+xticks([tick1, tick2, tick3, ...])	
+	配置多个ticks
+
+
+4.xticklabels/yticklabels - 配置指定轴tick对应的label
+xticklabels([tick_name1, tick_name2, ...])
+	配置多个tick的label
+
+
+5.xlabel/ylabel - 轴标签
+xlabel(str)
+	使用字符串作为轴标签
+
+
+6.legend - legend图解
+legend()
+	生成legend
+
+
+7.title - 图形标题
+title(str)
+	使用字符串作为标题
+	
+** title和label类支持TeX语法
+
+8.subplot - 在同一个figure中配置多个axes(axes为作图)
+subplot(rows, cols, index)
+	在当前figure配置axes数, 并使用index对其进行索引
+
+
+9.figure - 打开多个窗口
+figure(n)
+	打开一个窗口
+	n为窗口的唯一标识整数
+
+
+
+
+示例1 - 正弦图
+x = -pi:0.1:pi;
+y = sin(x);
+plot(x, y)
+xlabel("x");
+ylabel("sin(x)");
+title("Simple 2-D plot");
+
+
+示例2 - 简单3D图
+tx = ty = linspace (-8, 8, 41)';
+[xx, yy] = meshgrid (tx, ty);
+r = sqrt (xx .^ 2 + yy .^ 2) + eps;
+tz = sin (r) ./ r;
+mesh (tx, ty, tz);
+
+
+示例3 - 同一个窗口作多图
+subplot(2, 1, 1)
+x = -pi:0.1:pi;
+y = sin(x);
+plot(x, y)
+xlabel("x");
+ylabel("sin(x)");
+title("Simple 2-D plot");
+
+subplot(2, 1, 2)
+tx = ty = linspace (-8, 8, 41)';
+[xx, yy] = meshgrid (tx, ty);
+r = sqrt (xx .^ 2 + yy .^ 2) + eps;
+tz = sin (r) ./ r;
+mesh (tx, ty, tz);
+
+
+示例4 - 同时打开多个窗口
+figure(1)
+x = -pi:0.1:pi;
+y = sin(x);
+plot(x, y)
+xlabel("x");
+ylabel("sin(x)");
+title("Simple 2-D plot");
+
+figure(2)
+tx = ty = linspace (-8, 8, 41)';
+[xx, yy] = meshgrid (tx, ty);
+r = sqrt (xx .^ 2 + yy .^ 2) + eps;
+tz = sin (r) ./ r;
+mesh (tx, ty, tz);
+
