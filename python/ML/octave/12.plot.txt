@@ -198,7 +198,22 @@ tz = sin (r) ./ r;
 mesh (tx, ty, tz);
 
 
-示例3 - 同一个窗口作多图
+示例3 - 同一个axes作多个图
+x = -1:0.01:1;
+y1 = sin(pi*x);
+plot(x, y1);
+hold on;
+y2 = cos(pi*x);
+plot(x, y2);
+
+或者
+x = -1:0.01:1;
+y1 = sin(pi*x);
+y2 = cos(pi*x);
+plot(x, [y1; y2]);
+
+
+示例4 - 同一个figure多个axes
 subplot(2, 1, 1)
 x = -pi:0.1:pi;
 y = sin(x);
@@ -215,7 +230,7 @@ tz = sin (r) ./ r;
 mesh (tx, ty, tz);
 
 
-示例4 - 同时打开多个窗口
+示例5 - 同时打开多个figure
 figure(1)
 x = -pi:0.1:pi;
 y = sin(x);

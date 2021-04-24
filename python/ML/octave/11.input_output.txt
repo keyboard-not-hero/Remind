@@ -9,7 +9,30 @@ output:
 3.status = put(s)
 	打印内容, 并返回状态码
 
-4.save(filename, var1, var2 ...)
+4.printf(str, var1, var2, ...)
+	类似于C语言的格式化字符串打印
+	str可包含指定格式内容, 格式与变量var1, var2等对应
+	格式列表:
+		%d - 十进制整数
+		%i - 十进制整数
+		%% - '%'字符
+		%o - 无符号八进制整数
+		%u - 无符号十进制整数
+		%x - 无符号十六进制整数(小写)
+		%X - 无符号十六进制整数(大写)
+		%c - 单个字符, 变量为字符串则进行多次迭代
+		%s - 完整字符串
+		%f - 小数
+		%e - 科学计数法(小写)
+		%E - 科学计数法(大写)
+		%g - %e或%f, 根据情况选择最合适的格式
+		%G - %E或%f, 根据情况选择最合适的格式
+		
+5.str = sprintf(str, var1, var2, ...)
+	格式化字符串, 将该字符串返回
+	参数格式参考printf
+
+6.save(filename, var1, var2 ...)
     将指定的变量保存到文件中
 
 
@@ -69,10 +92,6 @@ str = fgets(fd, len)
 	获取指定长度的字符
 	遇到下一个newline或EOF也会停止
 	与fgetl不同, 该函数会新增加一个newline
-
-str = fgets(fd)
-str = fgets(fd, len)
-	
 
 fclose(fd)
 fclose("all")
