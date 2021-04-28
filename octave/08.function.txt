@@ -88,26 +88,36 @@ endfunction
 
 function file:
 1.保存单个function的文件, 该文件以.m为后缀
+
 2.文件内可定义多个function, 第一个function为main function; 其他function为subfunction, 只能被main function调用
+
 3.当一个function只能被一个目录下的文件内functions调用时, 在内目录下创建private目录, 并创建function, 该function称为private function. 如: <dir>/fun_main.m与<dir>/private/fun_pri.m
+
 4.function可进行嵌套, 内层function只能访问直系外层function内容
 
 
 script file:
 1.主要用于包含任意octave command. 通过source(file)执行文件内command
+
 2.可定义多个function, 文件以.m为后缀
+
 3.与function file不同, script file不能以function关键字开头(注释不计入. 可使用无效语句来区分, 如: 1;)
 
 
 function file与script共有特征:
 1.读取function file后保留时间戳, 当文件被改动后, 通过比较记录的时间戳与文件的实际时间戳进行比较, 从而更新function内容
+
 2.在interactive模式中, 每次显示prompt都会进行时间戳比对
+
 3.ignore_function_time_stamp(val)可用于改变时间戳比较规则, val列表如下:
 	"system" - 不自动比对octave/share/<version>/m目录下的内容. 一般为/usr/share/octave/<version>/m
 	"all" - 不自动比对所有内容
 	"none" - 自动比对所有search path下的内容
+
 4.path()可获取search path
+
 5.rmpath(dir1, ...)可用于从已有search path中删除指定路径
+
 6.addpath(dir1, ...)将指定路径添加到function search path
 
 

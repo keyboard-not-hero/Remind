@@ -32,8 +32,59 @@ output:
 	格式化字符串, 将该字符串返回
 	参数格式参考printf
 
-6.save(filename, var1, var2 ...)
+6.save - 将变量保存到文件中
+save(filename, option, var1, var2, ...)
+save(filename, var1, var2, ...)
     将指定的变量保存到文件中
+	option列表:
+		-append
+			内容添加到文件(默认为覆盖)
+
+        -ascii
+			文件只包含数据内容
+
+        -binary
+			Octave二进制格式
+
+		-float-binary
+			Octave二进制格式, 并且内容为单精度浮点数
+
+        -hdf5
+			HDFS格式
+
+        -float-hdf5
+			HDFS格式, 并且内容为单精度浮点数
+
+		-V7
+		-v7
+		-7
+		-mat7-binary
+			MATLAB v7二进制格式
+	
+		-V6
+		-v6
+		-6
+		-mat
+		-mat-binary
+			MATLAB v6二进制格式
+
+		-V4
+		-v4
+		-4
+		-mat4-binary
+			MATLAB v4二进制格式
+
+		-text
+			Octave文本格式. 默认格式
+
+		-zip
+		-z
+			使用gzip算法进行压缩. 前提需要连接到zlib库
+			
+					
+			
+		
+		
 
 
 input:
@@ -43,16 +94,37 @@ input:
 2.menu(title, opt1, ...)
 	弹出菜单选项, 标题为title, 选项为opt1 ...
 
-3.load(filename, options, var1, var2 ...)
-    加载文件中的指定变量
+3.load - 加载文件内容
+load(filename)
+load(filename, options, var1, var2 ...)
+    加载文件中的指定变量, 并在octave中提供同名变量和值
     当未提供变量名时, 默认加载文件中所有变量
     options列表:
-        -ascii: 文件只包含数据内容
-        -binary: 文件为Octave二进制格式
-        -hdf5: 文件为HDFS格式
-        -mat: 文件为MATLAB version 6/7二进制格式
-        -mat4-binary: 文件为MATLAB version 4二进制格式
-        -text: 文件为Octave文本格式
+        -ascii
+			只包含数据内容
+
+        -binary
+			Octave二进制格式
+
+        -hdf5
+			HDFS格式
+
+        -mat
+		-mat-binary
+		-6
+		-v6
+		-7
+		-v7
+			MATLAB version 6/7二进制格式
+
+        -mat4-binary
+		-4
+		-v4
+		-V4
+			MATLAB version 4二进制格式
+
+        -text
+			Octave文本格式
 
 
 底层I/O:
@@ -63,7 +135,7 @@ fd = fopen(name, mode, arch, encoding)
 	打开文件. 打开错误时返回-1
 	name代表文件绝对路径和相对路径
 	mode代表打开文件的权限, 列表如下:
-		r - 只读. 默认选项
+		r - 只读. 默认选项 
 		w - 可写, 之前的内容被丢弃
 		a - 可写(append)
 		r+ - 可读和可写

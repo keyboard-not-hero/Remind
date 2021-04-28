@@ -87,6 +87,10 @@ log(num)
 logical(num)
 	将num转化为logical类型
 
+magic(n)
+	生成NxN矩阵
+	数组的每行/每列/对角线和都相等
+
 max_recursion_depth(depth)
 	允许函数递归深度
 
@@ -123,8 +127,10 @@ sin(rad)
 single(num)
 	将num转化为单精度浮点数
 
-size(arr)
-	arr的各维度的长度
+SZ = size(A)
+SZ_DIM = size(A, dimension)
+	A的各维度的长度
+	当给定第二个参数时, 返回指定维度的长度
 
 strcat(s1, s2, ...)
 	将多个字符串串联成一个字符串, 即char数组

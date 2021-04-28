@@ -159,6 +159,7 @@ xlabel(str)
 
 6.legend - legend图解
 legend()
+legend(label1, label2, ...)
 	生成legend
 
 
@@ -178,6 +179,17 @@ figure(n)
 	打开一个窗口
 	n为窗口的唯一标识整数
 
+
+10.print - 保存图片
+print(filename, option)
+	将图片保存为指定名称
+	option列表:
+		-d<format> - 将图片保存为指定格式, 并给图片名添加格式后缀. format列表:
+			jpeg - JPEG格式图片
+			pdf - pdf格式图片
+			png - png格式图片
+			pslatex - 生成LaTeX的picture环境下的作图代码, 并包含编译后的图片
+			tikz - 生成LaTeX的tikz作图代码
 
 
 

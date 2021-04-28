@@ -1,0 +1,79 @@
+a = [1 2; 3 4]
+	定义矩阵. 使用','或' '分隔列, 使用';'或'\n'分隔行
+
+a(1,:)
+	引用矩阵元素
+
+
+
+相关function:
+det(A)
+	求矩阵行列式
+
+exp(x)
+	求矩阵每个元素的e^x值
+
+eye(n)
+eye(m, n)
+	生成单位矩阵(对角线元素为1, 其他为0)
+
+fliplr(x)
+	矩阵左右翻转
+
+flipud(x)
+	矩阵上下翻转
+
+inv(x)
+	求矩阵的逆
+
+log(x)
+	求矩阵每个元素的自然对数, ln(x)
+
+log2(x)
+	求矩阵每个元素的以2为底的对数
+
+log10(x)
+	求矩阵每个元素的以10为底的对数
+
+[L, U] = lu(A)
+[L, U, P] = lu(A)
+	矩阵的LU分解
+
+magic(n)
+	生成NxN矩阵
+	数组的每行/每列/对角线和都相等
+
+ones(n)
+ones(m, n)
+ones(m, n, ...)
+	生成元素值全部为1的矩阵
+
+pinv(x）
+	求矩阵的伪逆
+
+[Q, R] = qr(A)
+[Q, R, P] = qr(A)
+	矩阵的QR分解
+
+rand(n)
+rand(m, n)
+	生成指定vector/matrix, 元素为均匀分布(区间[0,1])内容
+
+randn(n)
+randn(m, n)
+	生成指定vector/matrix, 元素为正态分布(均值为0, 方差为1)的内容
+
+repmat(A, m, n)
+	将matrix/vector/scalar A在指定轴方向重复指定次数
+
+reshape(A, m, n, ...)
+	将矩阵A重置为指定维度数组, m/n...代表指定维度的长度
+	元素为column-major序列
+
+sqrt(x)
+	求矩阵每个元素的平方根
+
+zeros(n)
+zeros(m, n)
+zeros(m, n, ...)
+	生成元素全部为0的矩阵
