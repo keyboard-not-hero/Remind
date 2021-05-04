@@ -1,6 +1,7 @@
 1.下载v2rayNG
-google商店下载：v2rayNG
 github下载：https://github.com/2dust/v2rayNG/releases
+** google play store下载地址: apkpure.com
+
 2.配置：
 地址：服务器IP
 端口：服务器开放端口
