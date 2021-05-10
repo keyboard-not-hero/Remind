@@ -10,7 +10,7 @@ Windows - 控制面板 -- 网络和Internet -- Internet选项 -- 连接 -- 局�
 
 4.进入chrome拓展商店，搜索switchyomega，添加拓展
 
-5.下载配置文件，下载地址：https://raw.githubusercontent.com/wiki/FelisCatus/SwitchyOmega/GFWList.bak
+5.下载配置文件，下载地址: https://raw.githubusercontent.com/wiki/FelisCatus/SwitchyOmega/GFWList.bak
 
 6.进入switchyomega配置界面，点击导入/导出--从备份文件恢复，将下载的配置文件导入
 
