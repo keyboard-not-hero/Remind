@@ -1,6 +1,0 @@
-自动登录
-1.使用puttygen生成秘钥
-2.保存秘钥到指定路径，并利用putty登录服务器，将公钥记录到~/.ssh/authorized_keys文件
-3.重新开启putty，选取菜单connection-data，在auto-login username中填入自动登录用户名
-4.然后选取菜单connection-ssh-auth，在private key file for authentication栏选取私钥位置
-5.保存配置，下次读取该配置即可免密直接使用指定用户登录

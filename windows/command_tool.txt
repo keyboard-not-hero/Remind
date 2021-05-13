@@ -1,2 +1,0 @@
-1.checksum工具 - certutil
-certutil -hashfile <file_name> MD5|SHA1|SHA256
