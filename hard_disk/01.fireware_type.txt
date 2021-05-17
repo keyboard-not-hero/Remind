@@ -1,0 +1,79 @@
+BIOS(Basic Input/Output System, 基本输入输出系统) -- 计算机韧体, 用于启动时的硬件初始化, 加载存储工具内的boot loader. 只能识别MBR格式硬盘
+
+
+BIOS特性:
+1.只能读写磁盘最开始的1M空间内容
+
+2.最开始BIOS存储在ROM存储空间中, 可覆盖写入, 但不能修改; 当前常写入EEPROM(electrically erasable programmable read-only memory)或Flash Memory中, 可修改内容
+
+2.BIOS支持最大2.1T容量的硬盘
+
+
+系统引导步骤:
+1.BIOS
+
+2.MBR -- 存储设备第一个sector(最后两字节为: 0x55 0xAA, 才为可引导设备), 当前boot loader较大, 一般都是安装boot loader的部分内容, 称为boot loader stage 1
+
+3.Boot Loader
+
+4.Kernel
+
+5.Operation System
+
+
+
+UEFI(Unified Extensible Firmware Interface, 同一可拓展固件接口) -- 计算机韧体, 作为BIOS的当前替代方案. 可识别GPT和MBR(兼容模式)格式硬盘
+
+
+UEFI特性:
+1.可直接读取GPT分区中的内容, 可执行ESP分区(Linux下通常挂载为/boot/efi)中的.efi可执行文件
+
+2.Secure Boot
+在UEFI韧体中, Secure Boot功能限制只能加载有适当数字签名的boot loader(在预装Windows 8或更高版本的PC中, 默认只预载微软加载程序的签名)
+
+** 微软认证要求, x86/ARM机器中, 默认Secure Boot功能开启, 但包含以下区别:
+x86允许手动关闭Secure loader, 并允许修改数字签名列表; 
+ARM不允许手动关闭Secure loader, 并且不允许修改数字签名列表
+
+3.支持2.2T以上容量的硬盘
+
+4.可使用BIOS兼容模式(读取MBR格式的硬盘), 即'disabling UEFI'
+
+5.支持从远程加载boot loader
+
+6.Linux下可使用efibootmgr从操作系统界面编辑启动项. efibootmgr使用查看该指令相关文件
+
+
+系统引导步骤:
+1.UEFI
+
+2.ESP(EFI System Partition) -- 保存boot loader文件, 通常为.efi后缀. 多个操作系统可以公用同一个ESP分区, 或分别创建ESP分区
+
+3.Kernel
+
+4.Operation System
+
+
+安装介质启用UEFI原生启动模式的条件:
+1.ESP分区
+
+2.GPT分区表
+
+
+实例1.
+确定启动模式为BIOS兼容模式或UEFI模式:
+efibootmgr -v
+
+UEFI模式输出结果
+BootCurrent: 0002
+Timeout: 0 seconds
+BootOrder: 0002,0000,0001,0003,0004
+Boot0000* Windows Boot Manager
+Boot0001* UEFI:CD/DVD Drive
+Boot0002* ubuntu
+Boot0003* UEFI:Removable Device
+Boot0004* UEFI:Network Device
+
+BIOS兼容模式输出结果
+Fatal: Couldn't open either sysfs or procfs directories for accessing EFI variables.
+Try 'modprobe efivars' as root.

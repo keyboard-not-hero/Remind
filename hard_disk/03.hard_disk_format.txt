@@ -1,0 +1,25 @@
+MBR(Master Boot Record 主要开机记录) -- 09年以前硬盘支持的格式, 指硬盘的第一个扇区(512 bytes)
+
+MBR详细信息:
+1.MBR(Master Boot Record) - 446 bytes, boot loader安装区域, 后期通常只能安装boot loader stage1部分
+
+2.DPT(Disk Partition table) - 64 bytes, 主分区记录, 每笔主分区(primary/extend)占用16 bytes, 最多分配4个主分区(更多分区需要extend下的logical分区)
+	每笔主分区内容如下:
+		
+
+3.BEF(bootable end flag) - 2 bytes, 固定为0x55AA(只有为该值, 磁盘才能判定为可引导存储装备)
+
+
+
+
+GPT(Partition Table, 分区表)
+
+
+实例1 - 检查磁盘格式
+sudo fdisk /dev/nvme0n1
+
+GPT类型输出结果:
+Disklabel type: gpt
+
+MBR类型输出结果:
+Disklabel type: msdos

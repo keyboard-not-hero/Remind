@@ -193,3 +193,12 @@ ABS: 工艺成熟, 性价比高, 最柔软, 容易磨光滑
 PBT: 坚硬度高, 不容易磨光滑
 
 POM: 坚硬度较高, 不容易磨光滑. 原厂出品常用
+
+
+Linux分区建议:
+/boot/eft	500M
+/boot  		1G
+swap   		= memory
+/			30G
+/home		100G
+/usr/local	150G
