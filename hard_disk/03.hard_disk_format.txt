@@ -5,14 +5,39 @@ MBR详细信息:
 
 2.DPT(Disk Partition table) - 64 bytes, 主分区记录, 每笔主分区(primary/extend)占用16 bytes, 最多分配4个主分区(更多分区需要extend下的logical分区)
 	每笔主分区内容如下:
-		
+		1 byte - 指定分区是否active, 0x80/0x00代表active, 0x01-0x7F代表invalid
+		3 bytes - CHS(cylinder/header/sector)格式寻址, 代表分区的第一个扇区地址. 详细如下:
+			1 byte - 指定header
+			2 bytes - 6 bit为sector偏移, 10 bit为cylinder偏移
+		1 byte - 分区类型
+		3 bytes - CHS(cylinder/header/sector)格式寻址, 代表分区的最后一个扇区地址. 详细如下:
+			1 byte - 指定header
+			2 bytes - 6 bit为sector偏移, 10 bit为cylinder偏移
+		4 bytes - LBA(logical block addressing)格式寻址, 代表分区的第一个扇区位置
+		4 bytes - 配合LBA格式寻址, 指定该分区拥有的sector数量
+		** CHS最大寻址能力: 2^24 * 512 bytes = 8G, CHS起始数字: 0/0/1
+		** LBA最大寻址能力: 2^32 * 512 bytes = 2T
 
 3.BEF(bootable end flag) - 2 bytes, 固定为0x55AA(只有为该值, 磁盘才能判定为可引导存储装备)
 
 
 
 
-GPT(Partition Table, 分区表)
+GPT(GUID[Global Unique IDdentifiers] Partition Table, 分区表) -- 当前使用的硬盘格式
+
+GPT详细信息:
+1.Protective MBR - 512 bytes, 用于后向兼容MBR格式
+
+2.GPT header - 512 bytes, GPT头部, 包含GPT分区表的指针/实际分区位置的指针
+
+3.partition table - 512 * 32 bytes, 分区表, 每个分区项占用128 bytes. 分区项详情:
+	16 bytes - 分区类型
+	16 bytes - 分区的唯一标识符
+	8 bytes - LBA格式寻址, 代表分区的起始位置
+	8 bytes - LBA格式寻址, 代表分区的结束位置
+	8 bytes - 分区的属性flag
+	72 bytes - 分区名称, 36个UTF-16编码字符
+	** LBA最大寻址能力: 2^64 * 512 bytes = 8Z, 单位: k/M/G/T/P/E/Z/Y
 
 
 实例1 - 检查磁盘格式

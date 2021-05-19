@@ -18,8 +18,6 @@ BIOS特性:
 
 4.Kernel
 
-5.Operation System
-
 
 
 UEFI(Unified Extensible Firmware Interface, 同一可拓展固件接口) -- 计算机韧体, 作为BIOS的当前替代方案. 可识别GPT和MBR(兼容模式)格式硬盘
@@ -47,11 +45,11 @@ ARM不允许手动关闭Secure loader, 并且不允许修改数字签名列表
 系统引导步骤:
 1.UEFI
 
-2.ESP(EFI System Partition) -- 保存boot loader文件, 通常为.efi后缀. 多个操作系统可以公用同一个ESP分区, 或分别创建ESP分区
+2.LBA2 - GPT header
 
-3.Kernel
+3.ESP(EFI System Partition) -- 保存boot loader文件, 通常为.efi后缀. 多个操作系统可以公用同一个ESP分区, 或分别创建ESP分区
 
-4.Operation System
+4.Kernel
 
 
 安装介质启用UEFI原生启动模式的条件:

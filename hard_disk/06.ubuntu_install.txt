@@ -1,0 +1,9 @@
+Linux分区建议:
+/boot/efi   500M
+/boot       1G
+swap        = memory
+/           30G
+/home       100G
+/usr/local  150G
+
+
