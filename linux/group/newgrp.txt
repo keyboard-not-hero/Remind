@@ -1,8 +1,0 @@
-newgrp - 切换当前用户有效组
-
-语法
-newgrp [-] [group]
-
-当使用'-'时，当前用户的环境进行初始化
-
-group指定group name或group id

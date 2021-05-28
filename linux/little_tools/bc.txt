@@ -1,4 +1,4 @@
-bc - 一个任意精度计算器
+bc - 一个任意精度计算器语言
 
 语法
 bc [options] [file]...
@@ -14,30 +14,36 @@ bc [options] [file]...
 	使用标准数学库. scale为20
 
 -q, --quiet
-	静默模式，不输出欢迎文字	
+	静默模式, 不输出欢迎文字
 
 -s, --standard
-	执行POSIX模式的bc程序
+	执行POSIX版本bc
 
 -v, --version
 	版本信息
 
 -w, --warn
-	输出POSIX模式bc的warning信息
+	使用POSIX bc的拓展特性时, 打印warning信息
+
 
 
 数字
 数字作为bc的基本元素，可以使用任意精度，并且包含长度(length)和精度(scale)属性
+	长度 - 总共包含的数字长度, 即小数点前和小数点后的数字数量
+	精度 - 小数点后的数字数量
+
 
 变量
-变量 - 一个字母后面跟随任意个字母/数字/下划线
+变量 - 一个字母后面跟随任意个字母/数字/下划线, 所有字母都必须为小写
+** POSIX bc变量名称为单个小写字母
 简单变量 - 变量包含单个值
 数组变量 - 变量包含多个值
+
 四种特殊变量:
-scale - 浮点数的精度
+scale - 浮点数的精度. 默认为0
 ibase - 指定input的进制. 默认为十进制
 obase - 指定output的进制. 默认为十进制
-last - 之前最后一个表达式的值
+last - 上一次输出的值
 
 注释符
 单行注释符为#后的部分
@@ -59,6 +65,7 @@ exp ^ exp - 求幂. 幂数必须为整数，否则出现warning并截取整数�
 ( exp ) - 强制优先计算括号内的运算
 var = exp - 给变量赋值
 var <op>= exp - 相当于var=var<op>exp
+
 关系运算符
 exp1 < exp2 - 当exp1小于exp2时，结果为1(true)
 exp1 <= exp2 - 当exp1小于等于exp2时，结果为1(true)
@@ -66,10 +73,12 @@ exp1 > exp2 - 当exp1大于exp2时，结果为1(true)
 exp1 >= exp2 - 当exp1大于等于exp2时，结果为1(true)
 exp1 == exp2 - 当exp1等于exp2时，结果为1(true)
 exp1 != exp2 - 当exp1不等于exp2时，结果为1(true)
+
 布尔运算符
 !exp - 当exp结果为0(false)时，结果为1(true)
 exp && exp - 当所有exp为1(true)时，结果为1(true)
 exp || exp - 当任意一个exp为1(true)时，结果为1(true)
+
 运算符优先级
 ++ --
 -(负号)

@@ -1,0 +1,115 @@
+locale - 获取指定语系信息
+
+语法：
+locale [option] [-a|-m] argument
+
+参数释义：
+    
+	列出当前locale配置
+
+-c, --category-name
+	locale类别
+
+-k, --keyword-name
+	locale关键字
+
+-v, --verbose
+	entry的详细信息
+
+-?, --help
+	指令帮助信息
+ 
+--usage
+	指令简单帮助信息
+
+-V, --version
+	版本信息
+
+额外参数：
+-a, --all-locales    列出所有可配置语系选项(参考/etc/locale.gen)
+
+-m, --charmaps    列出所有可配置字符集选项
+
+配置文件：/etc/locale.conf
+
+
+thompson@dataforthompson~$ locale
+LANG=zh_CN.UTF-8
+LANGUAGE=zh_CN:en
+LC_CTYPE="zh_CN.UTF-8"
+LC_NUMERIC=zh_CN.UTF-8
+LC_TIME=zh_CN.UTF-8
+LC_COLLATE="zh_CN.UTF-8"
+LC_MONETARY=zh_CN.UTF-8
+LC_MESSAGES="zh_CN.UTF-8"
+LC_PAPER=zh_CN.UTF-8
+LC_NAME=zh_CN.UTF-8
+LC_ADDRESS=zh_CN.UTF-8
+LC_TELEPHONE=zh_CN.UTF-8
+LC_MEASUREMENT=zh_CN.UTF-8
+LC_IDENTIFICATION=zh_CN.UTF-8
+LC_ALL=
+释义：
+LANG: 默认locale，覆盖所有未配置的LC_*
+
+LANGUAGE: 后备locale, locale列表, 使用':'分割, 当不支持当前locale时, 使用后续locale
+
+LC_CTYPE: 字符分类. 区分字母和数字
+
+LC_NUMERIC: 非货币数字格式
+
+LC_TIME: 日期和时间格式
+
+LC_COLLATE: 结果排序. 如ls在使用C locale时，按大写、小写依次排序
+
+LC_MONETARY: 货币数字格式
+
+LC_MESSAGES: 显示信息格式
+
+LC_ALL: 覆盖LANG和所有LC_*的配置
+
+
+示例1
+[steven@DESKTOP-BLOMH0Q ~]$ locale
+LANG=en_US.UTF-8
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=
+
+[steven@DESKTOP-BLOMH0Q ~]$ date
+Sat May 22 23:51:36 CST 2021
+
+[steven@DESKTOP-BLOMH0Q ~]$ LANG=zh_CN.UTF-8
+
+[steven@DESKTOP-BLOMH0Q ~]$ localeLANG=zh_CN.UTF-8
+LC_CTYPE="zh_CN.UTF-8"
+LC_NUMERIC="zh_CN.UTF-8"
+LC_TIME="zh_CN.UTF-8"
+LC_COLLATE="zh_CN.UTF-8"
+LC_MONETARY="zh_CN.UTF-8"
+LC_MESSAGES="zh_CN.UTF-8"
+LC_PAPER="zh_CN.UTF-8"
+LC_NAME="zh_CN.UTF-8"
+LC_ADDRESS="zh_CN.UTF-8"
+LC_TELEPHONE="zh_CN.UTF-8"
+LC_MEASUREMENT="zh_CN.UTF-8"
+LC_IDENTIFICATION="zh_CN.UTF-8"
+LC_ALL=
+
+[steven@DESKTOP-BLOMH0Q ~]$ date
+2021年 05月 22日 星期六 23:53:40 CST
+
+
+引用：
+[1]https://wiki.archlinux.org/index.php/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+[2]https://help.ubuntu.com/community/EnvironmentVariables#Locale_setting_variables

@@ -1,0 +1,35 @@
+chown - 修改文件所属个人/群组
+
+语法
+chown [option] [owner][:[group]] file
+
+参数释义
+-c, --changes
+	类似于verbose模式, 但只有group修改时进行提示
+
+-f, --silent, --quiet
+	quiet模式
+
+-v, --verbose
+	verbose模式
+
+--dereference
+	解引用, 修改软链接指向的文件内容, 而非软链接文件
+
+-h, --no-dereference
+	修改软链接文件本身
+
+--from=<cur_owner>:<cur_group>
+	只有当文件当前所属个人和/或所属群组为指定时, 才改变属性
+
+--reference=<refer_file>
+	引用其他文件的所属个人
+
+-R, --recursive
+	对目录递归修改所属
+
+--help
+	帮助文档
+
+--version
+	版本信息	

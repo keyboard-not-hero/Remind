@@ -1,0 +1,32 @@
+cal - 显示日历
+
+语法
+cal [options] [[[day] month] year]
+
+参数释义
+-1, --one
+	显示单一月份. 默认选项
+
+-3, --three
+	显示prev/current/next月
+
+-h, --help
+	帮助信息
+
+-j, --julian
+	使用从1月1日计数的天数显示日历
+	
+-m, --monday
+	使用monday作为周起始
+
+-s, --sunday
+	使用sunday作为周起始
+
+-V, --version
+	版本信息
+
+-y, --year
+	显示当前年份的日历
+
+示例1 - 显示1989年11月日历
+[steven@DESKTOP-BLOMH0Q ~]$ cal 11 1989

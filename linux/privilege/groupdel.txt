@@ -1,4 +1,4 @@
-groupdel - 删除组
+groupdel - 删除群组
 
 语法
 groupdel [option] group
@@ -7,12 +7,12 @@ groupdel [option] group
 -h, --help
 	帮助文档
 
--R, --root CHROOT_DIR
+-R, --root <chroot_dir>
 	应用chroot目录下的配置文档，并执行chroot操作
 
--P, --prefix PREFIX_DIR
+-P, --prefix <prefix_dir>
 	应用prefix目录下的配置文档, 但不会执行chroot
 
 注意事项:
 1.删除群组之前，将属于该组的用户从组中剔除
-2.删除群组之前，检查文件系统中没有属于改组的文件
+2.删除群组之前，确保文件系统中没有属于改组的文件

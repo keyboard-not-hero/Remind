@@ -2,10 +2,11 @@ date -- 显示和配置系统日期和时间
 
 语法：
 date [option] [+format]
+date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
 
 参数释义：
 -d, --date=<str>
-	输出指定字符串对应的时间(日期和时间使用T分隔). 而不是当前时间
+	输出指定字符串对应的时间(日期和时间使用T分隔). 默认为当前时间
 
 --debug
 	输出debug信息
@@ -14,16 +15,19 @@ date [option] [+format]
 	输出指定文件内每行字符串对应的日期和时间
 
 -I[FMT], --iso-8601[=FMT]
-	输出指定精度的iso-8601时间，FMT选项：date/hours/minutes/seconds/ns
+	输出指定精度的iso-8601格式时间，FMT选项：date/hours/minutes/seconds/ns
+	具体格式: 2021-05-23T14:34:30,377129135+0800
 
--R, --rfc-email
-	以RFC 5322格式打印日期和时间
-
---rfc-3339=<FMT>
-	以RFC 3339格式指定精度打印日期和时间，FMT选项：date/seconds/ns
+-R, --rfc-2822
+	以RFC 2822格式打印日期和时间
+	具体格式: Sun, 23 May 2021 14:36:33 +0800
 
 -r, --reference=<file>
 	打印文件最后一次内容修改时间
+
+--rfc-3339=<FMT>
+	以RFC 3339格式指定精度打印日期和时间，FMT选项：date/seconds/ns
+	具体格式: 2021-05-23 14:37:52.059083915+08:00
 
 -s, --set=<str>
 	设置时间为指定字符串对应的日期和时间
@@ -129,3 +133,16 @@ format选项(指定结果格式)：
 %:::z    数字化时区，精度随需要而变更，如+05, -04:30
 
 %Z    字母化时区缩写，如CST
+
+
+示例1 - 指定输出格式
+[steven@DESKTOP-BLOMH0Q ~]$ date +%Y/%m/%d
+2021/05/23
+
+示例2 - 指定输出精度
+[steven@DESKTOP-BLOMH0Q ~]$ date -Iseconds
+2021-05-23T14:18:23+0800
+
+示例3 - 设置UTC时间
+[steven@DESKTOP-BLOMH0Q etc]$ date -u 100110001969
+Wed Oct  1 10:00:00 UTC 1969

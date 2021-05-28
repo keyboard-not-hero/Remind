@@ -1,0 +1,183 @@
+man - 在线参考手册接口
+
+语法:
+man [option] <command>
+
+参数释义:
+-C <file>, --config-file=<file>
+	使用指定配置文件替, 默认~/.manpath
+
+-d, --debug
+	打印debug信息
+
+-D, --default
+	将man的特征重置到默认选项
+
+-f, --whatis
+	匹配指令手册页的不同section说明, 等于whatis  
+
+-k, --apropos
+	NAME字段包含指定关键字匹配, 等于apropos
+
+-K, --global-apropos
+	在所有字段(name/synopsis/description等)搜索匹配关键字
+
+-l, --local-file <gz_file>
+	显示指定本地manual文件内容 
+
+-R <code>, --recode=<code>
+	将手册页转化为指定编码
+
+-w, --where, --path, --location
+	不显示手册页内容, 显示nroff类型手册页文件的位置
+
+-W, --where-cat, --location-cat
+	不显示手册页内容, 显示cat类型手册页文件的位置
+
+-L <locale>, --locale=<locale>
+	将手册页转化为locale的指定字段的编码, 默认由LC_MESSAGES指定
+	语法: man -L $LC_CTYPE wc
+
+-M <path>, --manpath=<path>    
+	查找手册的目录
+
+-S <list>, -s <list>, --sections=<list>    
+	指定手册页章节搜索优先级顺序(以':'或','分隔章节)
+
+-e <sub-extension>, --extension=<sub-extension>    
+	指定拓展手册页类型. 如: tcl拓展类型, exit(3tcl)
+
+-i, --ignore-case    
+	搜索手册页忽略大小写, 默认选项
+
+-I, --match-case    
+	搜索手册页精确匹配大小写
+
+--regex <re>   
+	name或description部分匹配指定正则表达式. 隐式包含-a
+
+--wildcard    
+	name或description部分匹配指定通配符. 隐式包含-a选项
+
+--names-only    
+	配合--regex或--wildcard使用, 只匹配name部分
+
+-a, --all    
+	列出所有section结果. 默认只显示优先级最高的section匹配结果
+
+-u, --update    
+	对man数据库与文件系统进行"inode级别"的一致性检查(man程序必须进行setuid配置)
+
+--no-subpages    
+	man默认将选项后的多个单词以下划线(_)或连字符(-)连接, 作为单个指令进行手册页搜索(如git diff解释为git-diff). 此选项禁用此功能
+
+-P <pager>, --pager=<pager>    
+	手册页的分页程序. 默认为less
+
+-r <pro>, --prompt=<pro>    
+	当使用less作为分页程序时, 配置的提示信息
+	默认为 manual page <name>(<sec>) line <line>
+
+-7, --ascii    
+	让latin1设备以ASCII编码显示字符
+
+-E <encode>, --encoding=<encode>    
+	将手册页以指定编码输出
+
+--no-hyphenation, --nh    
+	不在断行处添加断字符(-)
+
+--no-justification, --nj    
+	取消文本左右两端对齐, 只使用左端对齐
+
+-H[browser], --html[=browser]    
+	使用指定浏览器程序打开手册页
+
+-?, --help    
+	帮助信息
+
+--usage    
+	简略帮助信息
+
+-V, --version
+	版本信息
+
+
+mandb - 创建或更新手册页索引缓存
+
+语法：
+mandb [option] file
+
+参数：
+-d, --debug
+	debug信息
+
+-q, --quiet
+	不显示警告
+
+-s, --no-straycats
+	不向数据库添加cat页面信息
+
+-p, --no-purge
+	不检查删除的手册页, 并从数据库中删除
+
+-c, --create
+	删除旧数据库, 创建新数据库
+
+-u, --user-db
+	只创建用户数据库, 即便拥有系统数据库写权限
+
+-t, --test
+	对搜索路径的手册页执行正确性检查
+
+-f, --filename
+	更新指定文件名记录. 隐含-p, 关闭-c和-s
+
+-C, --config-file=<file>
+	指定用户配置文件(替换~/.manpath)
+
+-?, --help
+	帮助信息
+
+--usage
+	帮助信息
+
+-V, --version
+	显示版本信息
+
+
+配置信息目录
+/etc/man_db.conf (有的版本為man.conf或manpath.conf或man.config等)
+
+全局手册页层次结构
+/usr/share/man
+
+传统的全局索引数据库缓存
+/usr/share/man/index.(bt|db|dir|pag)
+
+与FHS兼容的全局索引数据库缓存
+/var/cache/man/index.(bt|db|dir|pag)
+
+mandb支持数据库类型：
+       名称          类型                   异步   文件名
+       ────────────────────────────────────────────────────────────
+       Berkeley db   二叉树                 是     index.bt
+       GNU gdbm      已散列                 是     index.db
+       UNIX ndbm     已散列                 否     index.(dir|pag)
+
+手册section
+1   可执行程序或shell指令
+2   系统kernel调用的函数
+3   程序库调用的方法
+4   特殊文件(如/dev)
+5   配置文件
+6   游戏
+7   惯例与协定
+8   系统管理员指令
+9   与kernel有关的文件
+
+section指定方式：
+man <number> <command>
+或
+man <command>.<number>
+

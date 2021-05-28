@@ -1,0 +1,7 @@
+rmdir - 移除空目录
+
+语法
+rmdir [option] <dir>
+
+参数释义
+

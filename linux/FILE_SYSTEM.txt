@@ -115,7 +115,7 @@ thompson@dataforthompson:~/demo$ df -i
                                                       | 
                                                       |
 dir block:demo03.txt---->file inode:demo03.txt attr----
-*warning:该图解与<鸟哥的私房菜>与引用[4]中的结果各有出入，但根据数据的严谨分析，本人认为图解内容更为精确
+*warning:该图解与<鸟哥的私房菜>与引用[4]中的结果各有出入，但根据数据的分析，认为图解内容更为精确
 
 引用：
 [1]MBR wiki:https://en.wikipedia.org/wiki/Master_boot_record

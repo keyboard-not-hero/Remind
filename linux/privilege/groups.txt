@@ -1,0 +1,15 @@
+groups - 打印用户所属的群组
+
+语法
+groups [option] [user_name]
+
+参数释义
+--help
+	帮助文档
+
+--version
+	版本信息
+
+
+示例1 - 查看用户david的所有组
+groups david
