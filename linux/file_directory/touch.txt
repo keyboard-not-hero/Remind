@@ -1,0 +1,40 @@
+touch - 修改文件时间戳. 将access/modification/status时间修改到当前时间
+
+语法
+touch [option] <file>
+
+参数释义
+-a
+	修改access时间
+
+-c, --no-create
+	当目标文件不存在时, 不创建文件
+
+-d, --date=<str>
+	将文件的时间戳修改为指定日期
+
+-h, --no-dereference
+	当目标为软链接文件时, 作用于软链接文件本身
+
+-m
+	修改modification时间
+
+-r, --reference=<file>
+	使用指定文件的时间戳属性
+
+-t <stamp>
+	将文件的时间戳修改为指定内容. 格式为: [[CC]YY]MMDDhhmm[.ss]
+
+--time=<word>
+	指定修改的时间戳类型. 列表如下:
+		access/atime - access时间戳
+		modify/mtime - modification时间戳
+
+--help
+	帮助文档
+
+--version
+	版本信息
+
+** ctime会在每次操作时进行修改
+** 当目标不存在时, 默认会进行创建

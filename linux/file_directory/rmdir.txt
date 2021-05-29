@@ -4,4 +4,17 @@ rmdir - 移除空目录
 rmdir [option] <dir>
 
 参数释义
+--ignore-fail-on-non-empty
+	当删除的目录不为空, 不提示错误信息
 
+-p, --parents
+	删除目录时, 递归删除其空的父目录
+
+-v, --verbose
+	verbose模式
+
+--help
+	帮助文档
+
+--version
+	版本信息

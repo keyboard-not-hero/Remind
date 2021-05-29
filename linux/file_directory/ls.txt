@@ -1,0 +1,228 @@
+ls - 目录/文件信息列表
+
+语法：
+ls [options] [file]...
+
+参数释义：
+-a, --all    
+	列出所有的文档, 包含隐藏文档(以.开头的文件)
+
+-A, --almost-all    
+	列出所有的文档, 包含隐藏文档(以.开头的文件), 但不包含.和..
+
+--author
+	列出文件的创建者, 需配合-l使用
+
+-b, --escape
+	借用C语言格式跳脱符, 来表示非打印字符(如空格为'\ ')
+
+--block-size=<size>
+	文件大小单位(如: K/M/G), 配合-l使用
+
+-B, --ignore-backups
+	忽略备份文件(以~结尾)
+
+-c    
+	配合-lt使用, 显示ctime并根据ctime排序
+	配合-l使用, 显示ctime并根据name排序
+	单独使用, 根据ctime进行排序
+
+-C    
+	以简单项显示列表. 默认选项
+
+--color[=args]
+	输出进行颜色区分, args可选列表: always(默认)/auto/never
+
+-d, --directory    
+	显示目录本身信息, 而非目录包含的内容信息
+
+-D, --dired    
+	生成的信息用于Emacs dired模式
+
+-f    
+	结果不排序
+	隐式包含-aU选项
+	忽略-ls --color选项
+
+-F, --classify    
+	根据文件类型添加后缀(*/=>@|)
+	例: 目录后缀/, 可执行文件后缀*
+
+--file-type    
+	根据文件类型添加后缀(/=>@|)
+
+--format=<word>    
+	以单词<word>来定义输出格式, 映射关系如下:
+  		across  -x
+		commas -m
+		horizontal -x
+		long -l
+		single-column  -1
+		verbose -l
+		vertical -C
+
+--full-time
+	打印详细日期和时间, 类似于-l --time-style=full-iso
+
+-g
+	类似于-l, 但不打印文件所有者字段
+
+--group-directories-first
+	先打印子目录列表, 然后再打印文件列表
+
+-G, --no-group
+	当结合-l时, 不打印文件所属组
+
+-h, --human-readable    
+	当结合-l时, 目录(或文件)大小单位根据文件大小调整(进制为1024)
+
+--si    
+	类似于-h, 但进制为1000
+
+-H, --dereference-command-line    
+	当明确指定的file为symbolic链接时, 显示被链接文件的信息, 需配合-l使用
+	目录需配合-d使用
+
+--dereference-command-line-symlink-to-dir
+	类似于-H, 但只作用于目录
+
+--hide=<pattern>
+	不显示被pattern匹配的项(pattern为shell通配符模式)
+	该选项被-a和-A覆盖
+
+--indicator-style=<word>      
+	根据类型文件添加后缀, word列表:
+		none  无后缀. 默认选项
+		slash  -p
+		file-type  --file-type
+		classify  -F
+
+-i, --inode
+	显示inode号码
+
+-I, --ignore=<pattern>
+	不显示被pattern匹配的项(pattern为shell通配符)
+	与--hide的差别在于, 当前参数不被-a与-A覆盖
+
+-k, --kibibytes    
+	使用1k byte作为单位
+
+-l    
+	显示entry详细信息
+
+-L, --dereference
+	当目标为软链接时, 显示软链接实际指向的内容
+
+-m
+	单行显示多个entry, entry之间使用','分隔
+
+-n, --numeric-uid-gid
+	类似于-l, 但user和group使用ID形式显示
+
+-N, --literal    
+	内容按元格式显示
+
+-o
+	类似于-l, 但不打印群组信息
+
+-p, --indicator-style=slash
+	使用'/'后缀标记目录
+
+-q, --hide-control-chars
+	使用'?'代替非打印字符
+
+--show-control-chars
+	显示非打印字符
+
+-Q, --quote-name
+	使用""限定entry
+
+--quoting-style=<word>
+	使用名称<word>指定限定字符, word列表如下:
+		literal  -N
+		locale  -Q
+		shell  none
+		shell-always  '' 
+		c  -Q
+		escape  -b
+
+-r, --reverse
+	以倒序显示结果
+
+-R
+	递归罗列子目录
+
+-s, --size    
+	根据block为大小单位显示文件大小
+	不能配合-g/-l/-n/-o使用
+
+-S    
+	根据文件大小排序, 最大优先
+
+--sort=<word>    
+	指定排序规则, word列表如下:
+		none  -U
+		size  -S
+		time  -t
+		version  -v
+		extension  -X
+
+--time=[atime|ctime]    
+	显示modification/access/status time
+	默认为modification time(mtime)
+
+--time-style=<style>    
+	指定显示时间格式, 可选列表:
+		full-iso/long-iso/iso/locale/+<format>(该选项类似于date指定时间格式)
+
+-t    
+	根据mtime排序, 最新优先
+
+-T, --tabsize=<cols>    
+	指定制表符<Tab>所占的列
+	默认为8
+
+-u    
+	配合-lt使用, 显示atime并根据atime排序；
+	配合-l使用, 显示atime并根据name排序；
+	单独使用, 按atime进行排序, 最新优先
+
+-U
+	entry不进行排序
+
+-v    
+	按版本进行排序, 通常用于同名不同版本
+	[~.0-9A-Za-z]参与比较, 优先级：~ > . > 连续数字 > 字母)
+
+-w, --width=<cols>    
+	每一行的字符数
+
+-x    
+	以行排序代替默认的列排序
+
+-X    
+	根据文件拓展名进行排序
+
+-1    
+	每个entry占据一行
+
+--help    帮助信息
+
+--version    版本信息
+
+SELinux选项:
+--lcontext
+	显示安全上下文
+	隐式包含-l参数
+
+-Z, --context    
+	显示安全上下文
+
+--scontext
+	只显示安全上下文和文件名称
+
+
+**三种时间比较：
+status time(ctime): 文件权限/所有者/群组/内容改变
+modification time(mtime): 文件内容被改变
+access time(atime): 文件被访问
