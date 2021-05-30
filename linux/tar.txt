@@ -1,24 +1,39 @@
 tar - an archiving utility
-参数释义：
+
+语法
+tar [option] [file]
+
+参数释义
 -A    将后续tar文件内容叠加到第一个tar文件内(不可用于压缩tar文件)
--f    指定tar文件，可指定远程主机和用户(必须参数)
+
+-f    指定tar文件, 可指定远程主机和用户(必须参数)
+
 -t    查看tar文件的文件列表
+
 -c    利用文件来创建tar文件
+
 -C    在进行操作前进入指定目录
+
 --delete    从tar文件中删除内容(不可用于压缩tar文件)
+
 -r    添加内容到tar文件(不可用于压缩tar文件)
--u    当指定文件新于tar文件内容时，更新内容到tar文件(不可用于压缩tar文件)
--x    从tar文件中提取文件，可指定要提取的内容
+
+-u    当指定文件新于tar文件内容时, 更新内容到tar文件(不可用于压缩tar文件)
+
+-x    从tar文件中提取文件, 可指定要提取的内容
+
 -j    bzip2压缩格式
+
 -J    xz压缩格式
+
 -z    gzip压缩格式
+
 -Z    compress压缩格式
+
 --keep-old-files    不覆盖已存在文件
+
 --keep-newer-files    不覆盖已存在的并且新于提取的文件
+
 --overwrite    覆盖已存在文件
---remove-files    生成tar文件后，删除内容文件
 
-
-
-
-
+--remove-files    生成tar文件后, 删除内容文件

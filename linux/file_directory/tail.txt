@@ -1,0 +1,35 @@
+tail - 打印文件的尾部内容
+
+语法
+tail [option] [file]
+
+参数释义
+-c, --bytes=[+]<k>
+	打印最后k字节内容
+	当包含+时, 打印从k字节开始的所有内容
+
+-f, --follow[={name|descriptor}]
+	在结果尾部添加内容
+
+-F
+	类似于--follow=name --retry
+
+-n, --lines=[+]<k>
+	打印最后k行内容
+	当包含+时, 打印从k行开始的所有内容
+
+-q, --quiet, --silent
+	不在起始位置打印文件名称. 默认选项
+
+--retry
+	当目标不可访问时, 保持试图打开文件的状态
+	必须配合--follow使用
+
+-v, --verbose
+	在起始位置打印文件名称
+
+--help
+	帮助文档
+
+--version
+	版本信息
