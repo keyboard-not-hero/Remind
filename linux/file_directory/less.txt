@@ -1,0 +1,366 @@
+less - 分页文件内容查看器. 比more功能更强
+
+语法
+less [option] [file]
+
+参数释义
+-?, --help
+	帮助文档
+
+-a, --search-skip-screen
+	前向查找默认以当前页顶部开始, 后向查找默认以当前页底部开始
+	当前选项指定前向查找以当前页面底部开始, 后向查找以当前页面顶部开始
+
+-A, --SEARCH-SKIP-SCREEN
+	前向查找从target line之后开始, 后向查找从target line之前开始
+	target line由-j参数指定
+	less version 441之前默认为该选项
+
+-b<n>, --buffers=<n>
+	用于每个文件的buffer
+	默认为64K
+	当n=-1时, 不限制buffer容量
+
+-B, --auto-buffers
+	指定pipe所占用的buffer, 该选项使用-b指定的值
+
+-c, --clear-screen
+	重绘内容窗口
+
+-C, --CLEAR-SCREEN
+	类似于-c, 为兼容于旧版本的选项
+
+-d, --dumb
+	不产生error信息
+
+-e, --quit-at-eof
+	连续第二次到达文件结尾后, 自动退出less环境
+	默认需要使用'q'退出less环境
+
+-E, --QUIT-AT-EOF
+	第一次到达文件结尾后, 自动退出less环境
+
+-f, --force
+	强制打开非标准文件(如设备相关文件和目录)
+
+-F, --quit-if-one-screen
+	如果当前文件的内容只有一页, 自动退出
+
+-g, --hilite-search
+	只高亮最后一个匹配的项, 改选项可提高查找速度
+	默认高亮所有匹配的项
+
+-G, --HILITE-SEARCH
+	不高亮显示匹配的项
+
+--old-bot
+	转化未旧版本bottom模式, 支持逻辑行查找
+
+-i, --ignore-case
+	当pattern中全部为小写时, 查找正文内容忽略大小写
+
+-I, --IGNORE-CASE
+	pattern和正文内容都忽略大小写
+
+-j<n>, --jump-target=<n>
+	指定target line. n包含以下类型:
+		整数 - 代表文件的行数
+
+-J, --status-column
+	最左边新增一个状态列, 该列使用'*'查找匹配状态
+
+-K, --quit-on-intr
+	中断字符(^c)导致退出less环境
+
+-m, --long-prompt
+	显示less的状态信息
+
+-M, --LONG-PROMPT
+	显示less更多的状态信息
+
+-n, --line-numbers
+	不侦测行相关信息
+	可提升大文件打开速度
+
+-N, --LINE-NUMBERS
+	在行的起始位置显示行号
+
+-p<pattern>, --pattern=<pattern>
+	正向查找第一个匹配pattern的内容
+	类似于less下的/pattern
+
+-P<prompt>, --prompt=<prompt>
+	修改提示内容. 分类如下:
+		-Ps<str> - 短提示内容. 默认类型
+		-Pm<str> - 中提示内容
+		-PM<str> - 长提示内容
+		-Ph<str> - 帮助界面提示内容
+		-P=<str> - less =指令提示内容
+		
+-q, --quiet, --silent
+	在第一行往后或最后一行往前移动时, 不发出bell
+
+-Q, --QUIET, --SILENT
+	quiet模式
+
+-r, --raw-control-chars
+	显示不可打印字符
+
+-R, --RAW-CONTROL-CHARS
+	显示部分特殊不可打印字符, ASCII区间[91, 109]
+
+-s, --squeeze-blank-lines
+	多个空白行合并为同一个空白行
+
+-S, --chop-long-lines
+	
+
+
+
+
+env command
+h | H
+	帮助文档
+
+<num>{<space> | ^V | f | ^F}
+	往前翻指定行
+	默认为一页的行数	
+
+<num>z
+	类似于<space>, 但num指定后会成为默认值
+
+<esc><space>
+	强制翻页
+
+<num>{<enter> | <return> | ^N | e | ^E | j | ^J}
+	往前翻指定行
+	num默认为1		
+
+<num>{d | ^D}
+	往前翻指定行
+	默认为半页的行数
+	num指定后, 会成为后续默认值
+
+<num>{b | ^B | <esc>v}
+	往后翻指定行
+	默认为一页的行数
+
+<num>w
+	类似于<esc>v, 但num指定后会成为默认值
+
+<num>{y | ^Y | ^P | k | ^K}
+	往后翻指定行
+	num默认为1
+
+<num>{u | ^U}
+	往后翻指定行
+	默认为半页的行数
+	num指定后, 会成为后续默认值
+	
+<num>{<esc>) | <RightArrow>}
+	往右翻指定列
+	默认为列宽的一半
+	num指定后, 会成为后续默认值
+	
+<num>{<esc>( | <LeftArrow>}
+	往左翻指定列
+	默认为列宽的一半
+	num指定后, 会成为后续默认值
+
+<num>{g | < | <esc><}
+	跳转到指定行
+	num默认为1
+
+<num>{G | > | <esc>>}
+	跳转到指定行
+	num默认为文件最后一行
+
+<num>{p | %}
+	跳转到文件的百分比位置
+	num的区间为[0, 100]
+
+<num>P
+	偏移到文件的指定字节处
+
+<num>{
+	匹配当前屏幕最顶行的'{', 跳转到对应的'}'位置
+	当最顶行有多个'{'时, num指定具体
+
+<num>}
+	匹配当前屏幕最底行的'}', 跳转到对应的'{'位置
+	当最底行有多个'}'时, num指定具体
+	
+<num>(
+	匹配当前屏幕最顶行的'(', 跳转到对应的')'位置
+	当最顶行有多个'('时, num指定具体
+
+<num>)
+	匹配当前屏幕最底行的')', 跳转到对应的'('位置
+	当最底行有多个')'时, num指定具体
+
+<num>[
+	匹配当前屏幕最顶行的'[', 跳转到对应的']'位置
+	当最顶行有多个'['时, num指定具体
+
+<num>]
+	匹配当前屏幕最底行的']', 跳转到对应的'['位置
+	当最底行有多个']'时, num指定具体
+
+<num><esc>^F
+	后续跟随两个字符, 类似于{, 根据在最顶行第一个字符跳转到第二个字符
+	例: <esc>^F <>, 根据最顶行的'<', 跳转到'>'的位置
+
+<num><esc>^B
+	后续跟随两个字符, 类似于}, 根据在最底行第二个字符跳转到第一个字符
+	例: <esc>^B <>, 根据最底行的'>', 跳转到'<'的位置
+
+m
+	后续紧跟一个小写字母, 作为当前行的mark
+
+'
+	后续紧跟一个小写字母, 跳转到该字母mark的行
+	'^跳转到文件第一行
+	'$跳转到文件最后一行
+
+^X^X
+	与'相同
+
+/pattern
+	从当前显示页的第一行开始正向查找pattern
+	pattern使用系统级regular expression
+	作为pattern起始字符, 具有特殊意义的符号, 列表如下:
+		^N | ! - 查找不匹配pattern的项
+		^E | * - 支持在多个文件中查找
+		^F | @ - 从文件的第一行开始查找
+		^K - 只高亮显示结果, 不进行跳转
+		^R - 将pattern视为普通字符, 而不是RE
+
+?pattern
+	从当前显示页的最后一行的前一行开始反向查找pattern
+	pattern使用系统级regular expression
+	作为pattern起始字符, 具有特殊意义的符号, 列表如下:
+		^N | ! - 查找不匹配pattern的项
+		^E | * - 支持在多个文件中查找
+		^F | @ - 从文件的最后一行开始查找
+		^K - 只高亮显示结果, 不进行跳转
+		^R - 将pattern视为普通字符, 而不是RE
+
+<esc>/pattern
+	类似于/*
+
+<esc>?pattern
+	类似于?*
+
+n
+	重复上一次查找
+
+N
+	重复上一次查找, 但查找方向相反
+
+<esc>n
+	重复上一次查找, 并且支持多文件
+
+<esc>N
+	重复上一次查找, 但查找方向相反, 并且支持多文件
+
+<esc>u
+	临时打开/关闭高亮显示匹配结果
+	任何查找指令会重新打开高亮显示
+	-G可永久关闭高亮显示结果
+
+&pattern
+	只显示匹配的行
+	pattern特殊符号如下:
+		^N | ! - 只显示不匹配的行
+		^R - pattern不使用RE解释, 当作普通字符
+
+:e [filename]
+	查看一个新文件内容
+	如果没有指定filename, 则为当前文件
+	'%'使用当前文件名称替换
+	'#'为上一个查看的文件名称
+	'%%'替换为字符'%'
+	'##'替换为字符'#'
+
+^X^V | E
+	类似于:e
+
+<num>:n
+	查看文件列表中的下一个文件
+	num指定列表中的后续第num个文件
+
+<num>:p
+	查看文件列表中的上一个文件
+	num指定列表中的前面第num个文件
+
+<num>:x
+	查看文件列表中的第一个文件
+	num指定列表中的第num个文件
+
+:d
+	将当前文件从文件列表中移除
+
+t
+	
+
+T
+
+
+= | ^G | :f
+	打印当前文件的详细信息
+
+-
+	
+
+--
+
+
+-+
+
+
+--+
+
+
+-!
+
+
+--!
+
+
+_
+	(下划线)
+
+__
+	(double下划线)
+	
+
++<cmd>
+	查看新文件时执行指定操作
+	如: +G, 查看新文件时, 显示文件最后的内容
+
+V
+	显示less的版本信息
+
+q | Q | :q | :Q | ZZ
+	退出less
+
+v
+	使用编辑器编辑当前文件
+	默认使用$VISUAL变量指定的编辑器; $VISUAL未指定时, 使用$EDITOR指定的编辑器; $EDITOR未指定时, 使用vi编辑器	
+
+!<shell_command>
+	调用shell执行shell指令
+	command中, '%'替换为当前文件名称
+	command中, '#'替换为上一个查看的文件名称
+	'!!'为重复上一个shell指令
+	'!'单纯调用一个shell
+
+|<m><shell_command>
+	从当前文件的当前显示页面第一行到mark位置的内容, 作为shell_command的参数
+	<m>为mark名称
+	当<m>为^或$时, 代表文件的第一行或最后一行
+	当<m>为.或<newline>时, 为当前显示页面的最后一行
+
+s <filename>
+	将当前内容保存到指定文件
+	该内容必须来自pipe, 而非文件内容

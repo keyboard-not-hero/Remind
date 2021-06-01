@@ -1,0 +1,65 @@
+locate - 从名称查找文件
+
+语法
+locate [option] pattern...
+
+参数释义
+-A, --all
+	满足所有pattern的结果
+	默认满足多个pattern任意一个即可
+
+-b, --basename
+	文件名匹配pattern
+
+-c, --count
+	只显示符合匹配结果的计数
+
+-d, --database <dbpath>
+	指定读取的数据库路径
+	多个数据库使用:分隔
+	多个-d参数, 结果会进行堆叠
+
+-e, --existing
+	只显示当前依然存在的文件
+	该选项不止搜索数据库, 还查看实际文件
+
+-h, --help
+	帮助信息
+
+-i, --ignore-case
+	匹配pattern时, 忽略大小写
+
+-l, --limit, -n <limit>
+	限制结果条数
+	也作用于--count结果
+
+-m, --mmap
+	忽略参数, 兼容与BSD与GNU版本
+
+-0, --null
+	使用NUL分隔内容
+	默认为换行符分隔
+
+-S, --statistics
+	显示统计信息
+
+-q, --quiet
+	quiet模式
+
+-r, --regexp <regexp>
+	使用basic RE进行匹配
+	此时无法使用pattern
+
+--regex
+	将pattern进行extend RE匹配
+	pattern默认为通配符模式
+
+-s, --stdio
+	忽略参数, 与BSD版本进行兼容
+
+-V, --version
+	版本信息
+
+-w, --wholename
+	pattern对全路径文件名进行匹配
+	默认选项

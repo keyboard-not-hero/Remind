@@ -17,14 +17,14 @@ $#    脚本名称后的参数个数(3个)
 
 ${0}    脚本名称(demo.sh)
 
-$<number>    对应的参数($1为arg1...$3为arg3，当数字为两位或以上时，使用{}限定)。参数以IFS变量(默认为space)作为分割符
+$<number>    对应的参数($1为arg1...$3为arg3, 当数字为两位或以上时, 使用{}限定)。参数以IFS变量(默认为space)作为分割符
 
-$*    被""限定时，所有参数(IFS区分)组合的单一字符串"$1 $2 $3"；未被限定，以单词为区分
+$*    被""限定时, 所有参数(IFS区分)组合的单一字符串"$1 $2 $3"；未被限定, 以单词为区分
 
-$@    被""限定时，每个参数(IFS区分)字符串的完整组合"$1" "$2" "$3"；未被限定，以单词为区分
+$@    被""限定时, 每个参数(IFS区分)字符串的完整组合"$1" "$2" "$3"；未被限定, 以单词为区分
 
 参数引用偏移：
-shift [number]    将参数引用向右偏移number位(如：使用shift后，$1为arg2，$2为arg3)，左边的参数省略，number默认为1
+shift [number]    将参数引用向右偏移number位(如：使用shift后, $1为arg2, $2为arg3), 左边的参数省略, number默认为1
 
 
 其他变量：
@@ -41,7 +41,7 @@ then
 else
   STATEMENT3
 fi
-**如果没有case成功匹配，status code为0；否则为最后一个STATEMENT返回status code
+**如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
 
 取值案例：
 case VAR in
@@ -55,31 +55,31 @@ VALUE2)
   STATEMENT3
 ;;
 esac
-**';;'相当于C语言switch中的break，代表当前匹配成功前提下，不继续向下匹配
-**使用';&'代替';;'，在当前匹配成功前提下，不执行下一个匹配，而直接执行下一个STATEMENT
-**使用';;&'代替';;'，在当前匹配成功前提下，继续执行下一个匹配
-**如果没有case成功匹配，status code为0；否则为最后一个STATEMENT返回status code
+**';;'相当于C语言switch中的break, 代表当前匹配成功前提下, 不继续向下匹配
+**使用';&'代替';;', 在当前匹配成功前提下, 不执行下一个匹配, 而直接执行下一个STATEMENT
+**使用';;&'代替';;', 在当前匹配成功前提下, 继续执行下一个匹配
+**如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
 
 while循环：
 while [CONDITION]
 do
   STATEMENT
 done
-**如果没有case成功匹配，status code为0；否则为最后一个STATEMENT返回status code
+**如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
 
 util循环：
 util [CONDITION]
 do
   STATEMENT
 done
-**如果没有case成功匹配，status code为0；否则为最后一个STATEMENT返回status code
+**如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
 
 for循环：
 for VAR [in VALUE_LIST]
 do
   STATEMENT
 done
-**如果in VALUE_LIST被省略，则默认为$1$2...
+**如果in VALUE_LIST被省略, 则默认为$1$2...
 
 for((INIT_VAL;END_VAL;STEP))
 do
@@ -91,11 +91,11 @@ select VAR [in VAR_LIST]
 do
   STATEMENT
 done
-**select提供一个'n) VAR'选单，并使用PS3作为input读取提示，读取数字，给当前VAR变量提供数字对应值
+**select提供一个'n) VAR'选单, 并使用PS3作为input读取提示, 读取数字, 给当前VAR变量提供数字对应值
 **break可退出select选单循环
 
-**break用于彻底中断内部循环。可接受层级参数，代表中断向外N层循环
-**continue用于中断当前次循环。可接受层级参数，代表中断向外N层循环
+**break用于彻底中断内部循环。可接受层级参数, 代表中断向外N层循环
+**continue用于中断当前次循环。可接受层级参数, 代表中断向外N层循环
 
 方法/函数定义：
 function FUN_NAME(){
@@ -106,9 +106,9 @@ function FUN_NAME(){
 FUN_NAME arg1 arg2...
 
 **方法/函数补充：
-方法内部有自己的变量体系，如下：
+方法内部有自己的变量体系, 如下：
 $0    脚本名称
-$<number>    调用方法时，后续参数值
+$<number>    调用方法时, 后续参数值
 $#    方法参数个数
 $FUNCNAME    方法名称
 $FUNCNEST    方法嵌套层级
