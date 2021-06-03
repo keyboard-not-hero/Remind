@@ -176,7 +176,7 @@ ls [options] [file]...
 		full-iso/long-iso/iso/locale/+<format>(该选项类似于date指定时间格式)
 
 -t    
-	根据mtime排序, 最新优先
+	根据时间进行排序, 最新优先
 
 -T, --tabsize=<cols>    
 	指定制表符<Tab>所占的列
@@ -226,3 +226,11 @@ SELinux选项:
 status time(ctime): 文件权限/所有者/群组/内容改变
 modification time(mtime): 文件内容被改变
 access time(atime): 文件被访问
+
+
+
+示例1 - 根据时间进行排序
+ls -lt --time=atime
+
+示例2 - user/group使用ID显示
+ls -n

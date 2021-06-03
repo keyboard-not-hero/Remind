@@ -1,0 +1,33 @@
+cp - 复制文件和目录
+
+语法
+cp [option] src dest
+
+参数释义
+-a, --archive
+	类似于-dR --preserve=all
+
+--attributes-only
+	不复制文件数据, 只复制文件属性
+
+--backup=[=control]
+	当目标文件已存在时, 是否进行备份. control列表如下:
+		none/off - 不进行备份. 默认值
+		simple/never - 备份, 尾部添加~
+		existing/nil - 备份, 当存在numbered格式备份时, 进行numbered备份; 否则进行simple备份
+		numbered/t - 备份, 尾部添加~<num>~
+
+-b
+	类似于--backup, 但不接受额外参数
+
+-d
+	类似于--no-dereference --preserve=links
+
+-f, --force
+	当目标文件已存在且不能打开时, 删除已存在的目标文件后继续操作
+
+-i, --interactive
+	当目标文件存在时, 进行提示
+
+-H
+	当复制文件为symbolic link时, 复制链接实际指向的文件

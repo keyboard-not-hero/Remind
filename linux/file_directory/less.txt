@@ -104,17 +104,45 @@ less [option] [file]
 	quiet模式
 
 -r, --raw-control-chars
-	显示不可打印字符
+	显示控制类字符
 
 -R, --RAW-CONTROL-CHARS
-	显示部分特殊不可打印字符, ASCII区间[91, 109]
+	显示部分特殊控制类字符, ASCII区间[91, 109]
 
 -s, --squeeze-blank-lines
 	多个空白行合并为同一个空白行
 
 -S, --chop-long-lines
-	
+	超出行宽的内容不进行自动换行
 
+-u, --underline-special
+	<backspaces>和<carriage>视为可打印字符, 当出现在文件中时, 将其发送给terminal
+
+-U, --UNDERLINE-SPECIAL
+	<backspaces>/<tab>/<carriage>视为控制类字符
+
+-V, --version
+	版本信息
+
+-w, --hilite-unread
+	当前向翻页到新的一页时, 第一行高亮(如使用f指令)
+	g指令也会生效 
+
+-W, --HILITE-UNREAD
+	类似于-w, 但前向前进大于一行的操作都会导致目标行高亮
+
+-x<n>,..., --tabs=<n>,...
+	当指定一个n时, 代表每个tab的长度
+	当指定多个n时, 后续tab长度为最后两个n的差值
+	如: -x9,13,21的隐含序列为9,13,21,29,37...
+
+-X, --no-init
+	关闭发送初始化字符串到terminal
+
+-[z]<n>, --window=<n>
+	修改一页所代表的行数, 用于页面跳转
+	n为正数时, 代表一页的行数
+	n为负数时, 为原来一页的行数+(n), 即原行数/页-n的绝对值
 
 
 
@@ -127,10 +155,12 @@ h | H
 	默认为一页的行数	
 
 <num>z
-	类似于<space>, 但num指定后会成为默认值
+	类似于<space>
+	num指定后会成为默认值
 
-<esc><space>
+<num><esc><space>
 	强制翻页
+	共享z的num值
 
 <num>{<enter> | <return> | ^N | e | ^E | j | ^J}
 	往前翻指定行
@@ -300,40 +330,35 @@ N
 :d
 	将当前文件从文件列表中移除
 
-t
-	
-
-T
-
-
 = | ^G | :f
 	打印当前文件的详细信息
 
 -
-	
+	后跟短指令行参数letter, 用于重设less运行参数
 
 --
-
+	后跟长指令行参数letter
 
 -+
-
+	后跟短指令参数letter, 用于恢复设置到默认值
 
 --+
-
+	后跟长指令参数letter, 用于恢复设置到默认值
 
 -!
-
+	后跟短指令参数letter, 用于设置到默认值的相反值
 
 --!
-
+	后跟长指令参数letter, 用于设置到默认值的相反值
 
 _
 	(下划线)
+	后跟短指令参数letter, 用于查看当前设置
 
 __
 	(double下划线)
+	后跟长指令参数letter, 用于查看当前设置
 	
-
 +<cmd>
 	查看新文件时执行指定操作
 	如: +G, 查看新文件时, 显示文件最后的内容

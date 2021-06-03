@@ -63,3 +63,11 @@ locate [option] pattern...
 -w, --wholename
 	pattern对全路径文件名进行匹配
 	默认选项
+
+
+
+读取数据库
+/var/lib/mlocate/mlocate.db
+
+更新数据库指令
+updatedb
