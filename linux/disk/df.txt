@@ -1,0 +1,75 @@
+df - 文件系统的使用情况
+
+语法
+df [option]... [file]...
+
+参数释义
+-a, --all
+	所有文件系统, 包含伪/重复/不可访问的文件系统
+
+-B, --block-size=<size>
+	使用指定单位显示空间大小. 可选列表: 
+		1024进制 - K/M/G/T/P/E/Z/Y
+		1000进制 - KB/MB/GB/TB/PB/EB/ZB/YB
+
+--direct
+	将mounted on字段名称换为file
+
+--total
+	提供汇总栏
+
+-h, --human-readable
+	空间大小使用方便阅读的单位
+
+-H, --si
+	类似于-h, 但进制为1000
+
+-i, --inodes
+	显示inode使用情况, 而非默认的block使用情况
+
+-k
+	类似于--block-size=1K
+
+-l, --local
+	只显示本地文件系统
+
+--no-sync
+	获取文件系统使用情况前, 不进行同步
+
+--output[=<field_list>]
+	指定显示的使用情况字段, 指定多个字段使用','分隔
+	field_list未提供时, 显示所有字段
+	可选字段列表:
+		source - 该设备对应的文件, 通常位于/device
+		fstype - 文件系统类型
+		itotal - inode总量
+		iused - 已使用inode量
+		iavail - 未使用inode量
+		ipcent - inode使用率
+		size - block总量
+		used - 已使用block量
+		avail - 未使用block量
+		pcent - block使用率
+		file - 指令行指定的文件系统
+		target - 挂载点
+
+-P, --portability
+	使用POSIX输出格式
+
+--sync
+	显示文件系统使用情况前, 进行同步
+
+-t, --type=<type>
+	只显示指定类型的文件系统使用情况
+
+-T, --print-type
+	显示文件系统类型
+
+-x, --exclude-type=<type>
+	指定不显示的文件系统类型使用情况
+
+--help
+	帮助文档
+
+--version
+	版本信息

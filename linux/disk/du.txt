@@ -1,0 +1,60 @@
+du - 评估文件的空间使用情况
+
+语法
+du [option]... [file]...
+
+参数释义
+-0, --null
+	每一条结果使用''分隔
+
+-a, --all
+	递归显示当前目录和子目录内, 文件的空间使用情况
+	默认只显示子目录内文件的空间使用情况
+
+--apparent-size
+	文件实际占用的空间大小
+
+-B, --block-size=<size>
+	使用指定单位显示空间大小. 可选列表: 
+		1024进制 - K/M/G/T/P/E/Z/Y
+		1000进制 - KB/MB/GB/TB/PB/EB/ZB/YB
+
+-b, --bytes
+	类似于--apparent-size --block-size=1
+
+-c, --total
+	显示汇总栏
+
+-D, --dereference-args
+	当指令行指定的目录为symbolic link时, 查看link实际指向目录的空间使用情况
+
+-d, --max-depth=<n>
+	指定查询子目录的递归深度
+
+-H
+	类似于--dereference-args
+
+-h, --human-readable
+	显示空间使用情况时, 使用方便读取的单位
+
+--inodes
+	显示inode的使用情况, 替代默认的block的使用情况
+
+-k
+	类似于--block-size=1K
+
+-L, --dereference
+	当查看的目录为symbolic link时, 查看link实际指向目录的空间使用情况
+
+-l, --count-links
+	如果存在hard link, 进行多次计算
+
+-m
+	类似于--block-size=1M
+
+-P, --no-dereference
+	当目标为symbolic link时, 计算该link的空间使用情况
+	默认选项
+
+-S, --separate-dirs
+	

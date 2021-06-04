@@ -1,8 +1,0 @@
-1.查看磁盘分区情况
-sudo fdisk -l
-
-2.检查指定分区坏轨情况
-sudo badblocks -v /dev/sd<a-d><N> > badsectors.txt
-
-3.将坏轨信息添加进磁盘分区info中
-sudo fsck -l badsectors.txt /dev/sd<a-d><N>

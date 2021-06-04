@@ -1,9 +1,0 @@
-弹性访问控制(Discretionary Access Control)
-基于用户/群组/其他人的Read/Write/eXecute权限
-
-强制访问控制(Mandatory Access Control)
-通过软件而非人为控制的权限控制系统. 主要有两种工具
-1.SELinux(Security Enhanced Linux)
-	默认不允许访问. 所有的访问必须被显式授权，该授权的集合称为SELinux Policy.
-	SELinux应用于每一个file/process的访问控制属性，称为Security Context. Context字段有user/role/type，表现形式为user:role:type
-2.SMACK(Simply Mandatory Access Control Kernel): 

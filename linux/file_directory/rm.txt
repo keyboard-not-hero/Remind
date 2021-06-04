@@ -1,0 +1,43 @@
+rm - 移除文件或目录
+
+语法
+rm [option] <file>
+
+参数释义
+-f, --force
+	强制删除文件, 当文件不存在时, 不进行提示
+
+-i
+	提示是否进行删除
+
+-I
+	当删除四个以上文件或递归删除目录时, 进行提示
+
+--interactive[=<when>]
+	多种提示模式, when列表:
+		never - 不进行提示
+		once - 类似于-I, 在特定情况下提示
+		always - 类似于-i, 总是进行提示. 默认值
+
+--no-preserve-root
+	不将'/'视为特殊目录, 该参数可能导致rm -rf /删除firmware挂载目录
+	危险选项
+
+--preserve-root
+	将'/'视为特殊目录
+	默认选项
+
+-r, -R, --recursive
+	递归删除目录及目录下的文件
+
+-d, --dir
+	删除empty目录
+
+-v, --verbose
+	verbose模式
+
+--help
+	帮助文档
+
+--version
+	版本信息
