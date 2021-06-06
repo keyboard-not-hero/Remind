@@ -1,0 +1,59 @@
+ln - 创建hard/symbolic link
+
+语法
+ln [option] <target> <link_name>
+
+参数释义
+--backup[=<control>]
+	当link_name存在时, 对目标文件进行备份. control列表如下:
+		none/off - 不进行备份. 默认值
+		simple/never - 备份, 尾部添加~
+		existing/nil - 备份, 当存在numbered格式备份时, 进行numbered备份; 否则进行simple备份
+		numbered/t - 备份, 尾部添加~<num>~
+
+-b
+	类似于--backup, 但不接受额外参数
+
+-d, -F, --directory
+	允许root创建目录的hard link
+
+-f, --force
+	当link_name文件存在时, 强制覆盖
+
+-i, --interactive
+	当link_name文件存在时, 提示是否进行覆盖
+
+-L, --logical
+	当target为symbolic link时, 对target实际指向的文件进行hard链接
+
+-n, --no-dereference
+	当target为目录的symbolic link时, 将target视为普通文件
+
+-P, --physical
+	当target为symbolic link时, 对target本身进行hard链接
+
+-r, --relative
+	当target为symbolic link时, 对target实际指向的文件进行symbolic链接
+	必须配合-s使用
+
+-s, --symbolic
+	创建符号链接
+	默认创建hard链接
+
+-S, --suffix=<suffix>
+	当link_name已存在时, 对link_name进行备份, 并使用指定的文件后缀
+
+-t, --target-directory=<directory>
+	指定创建链接文件的位置
+
+-T, --no-target-directory
+	将link_name视为普通文件
+
+-v, --verbose
+	verbose模式
+
+--help
+	帮助文档
+
+--version
+	版本信息

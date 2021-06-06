@@ -57,4 +57,48 @@ du [option]... [file]...
 	默认选项
 
 -S, --separate-dirs
-	
+	只显示文件和子目录下文件的空间使用情况
+	默认选项
+
+--si
+	类似于-h, 但进制为1000
+
+-s, --summarize
+	只显示目录的空间使用情况, 不显示子目录的空间使用情况
+
+-t, --threshold=<size>
+	小于指定单位的内容, 不显示空间使用情况
+
+--time
+	显示目标最后modification时间
+
+--time=<word>
+	显示目标的指定类型时间. 列表: atime/ctime
+
+--time-style=<style>
+	指定显示的时间格式. 格式列表: full-iso/long-iso/iso/+<format>
+	format格式参考date指令
+
+-X, --exclude-from=<file>
+	根据文件file内的pattern内容, 不统计匹配pattern的文件
+	pattern为shell通配符模式
+
+--exclude=<pattern>
+	不统计匹配pattern的文件
+	pattern为shell通配符模式
+
+-x, --one-file-system
+	不统计其他文件系统的空间使用情况
+
+--help
+	帮助文档
+
+--version
+	版本信息
+
+
+示例1 - 统计指定目录(含子目录)下的文件(不统计目录消耗的block)空间使用情况
+du ~/demo
+
+示例2 - 统计指定目录(含子目录)下的文件空间使用情况, 但不显示子目录条目
+du -s ~/demo

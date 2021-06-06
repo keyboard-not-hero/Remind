@@ -1,0 +1,70 @@
+lsblk - 显示块设备信息, 如硬盘/U盘
+
+语法
+lsblk [options] [device...]
+
+参数释义
+-a, --all
+	显示所有设备信息
+
+-b, --bytes
+	size字段使用bytes单位
+
+-d, --nodeps
+	只显示磁盘信息, 不显示分区信息
+
+-e, --exclude <list>
+	将指定major代号的设备不显示信息, 只作用于磁盘(而非分区), 代号之间使用','分隔. 代表列表如下:
+		1 - RAM, 默认包含
+		8 - 机械硬盘/U盘
+		259 - 固态硬盘
+
+-f, --fs
+	包含指定字段的输出
+	类似于-o NAME/FSTYPE/LABEL/UUID/MOUNTPOINT
+
+-h, --help
+	帮助文档
+
+-I, --include <list>
+	将指定major代号的设备显示信息, 只作用于磁盘(而非分区), 代号之间使用','分隔. 代表列表如下:
+		1 - RAM
+		8 - 机械硬盘/U盘
+		259 - 固态硬盘
+
+-i, --ascii
+	使用ASCII字符作为结构树的骨架
+
+-l, --list
+	将结构树以列表形式显示
+
+-m, --perms
+	显示对应设备文件的owner/group/mode
+	类似于-o NAME/SIZE/OWNER/GROUP/MODE
+
+-n, --noheadings
+	不显示header行
+
+-o, --output <list>
+	指定显示的字段
+
+-P, --pairs
+	每一列的内容显示为key=value格式
+
+-p, --paths
+	显示完整设备文件路径
+
+-r, --raw
+	内容以raw格式显示, 不进行格式调整
+
+-S, --scsi
+	只显示scsi接口设备
+
+-s, --inverse
+	从分区--part--disk的顺序, 从里到外按以来层级反向显示
+
+-t, --topology
+	按块设备拓扑字段显示内容
+
+-V, --version
+	版本信息
