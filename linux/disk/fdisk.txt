@@ -1,0 +1,55 @@
+fdisk - 操作MBR磁盘分区表
+
+语法
+fdisk [option] [device]
+
+参数释义
+-b <sector_size>
+	指定磁盘sector的大小. 可用大小列表: 512/1024/2048/4096
+
+-c[=<mode>]
+	指定兼容模式. 列表: dos/nondos
+	默认为non-DOS模式
+	DEPRECATED
+
+-C <cyls>
+	指定磁盘的cylinders数量
+	DEPRECATED
+
+-H <heads>
+	指定磁盘的head数量
+	非物理数量, 可使用列表: 255/16
+	DEPRECATED
+
+-S <sects>
+	每一个track上的sector数量
+	非物理数量, 可使用列表: 63
+	DEPRECATED
+
+-h
+	帮助文档
+
+-l
+	显示指定设备的分区表
+	当device未指定时, 参考/proc/partitions内容
+
+-s <partition>
+	显示指定分区的大小, 单位为block大小
+
+-u[=<unit>]
+	显示分区表时, 大小使用sectors或cylinders
+	必须配合-l使用
+	默认未sectors
+
+-v
+	显示版本信息
+
+
+示例1 - 对指定磁盘进行分区并保存
+sudo fdisk /dev/nvme0n1
+Command (m for help): n
+Partition number (4-128, default 4): 4
+First sector (34-1000215182, default 999286784):
+Last sector, +sectors or +size{K,M,G,T,P} (999286784-1000215182, default 1000215182): +2K
+Created partition 4
+Command (m for help): w

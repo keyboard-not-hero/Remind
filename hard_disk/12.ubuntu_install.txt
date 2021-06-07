@@ -34,12 +34,12 @@ dd if=/PATH/ubuntu.iso of=/dev/sdb
 
 安装类型选择"something else"
 
-分区如下(如果已安装Windows, 已包含ESP分区):
-ESP        500M
+分区如下(如果已安装Windows, 已包含efi分区):
+/boot/efi        100~300M
 /boot	   1G
 swap	   =memory
 /	   30G
 /home	   100G
 /usr/local    150G
 
-grub安装到ESP
+grub安装到efi

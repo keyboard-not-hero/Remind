@@ -1,0 +1,7 @@
+mke2fs - 创建一个ext2/ext3/ext4文件系统
+
+语法
+mke2fs [option] device
+
+参数释义
+

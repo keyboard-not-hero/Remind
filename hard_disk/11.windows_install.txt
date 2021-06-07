@@ -32,3 +32,10 @@ MediaCreationTool工具下载地址: https://go.microsoft.com/fwlink/?LinkId=691
 4)将创建的3个分区进行格式化, 并选中需要放置安装系统的分区
 
 4.进行安装(期间会多次重启)
+
+
+分区建议:
+efi 				100~300M
+microsoft reserved  128M
+C盘					100G
+D盘					100G
