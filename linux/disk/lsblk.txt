@@ -5,7 +5,7 @@ lsblk [options] [device...]
 
 参数释义
 -a, --all
-	显示所有设备信息
+	显示所有设备的信息
 
 -b, --bytes
 	size字段使用bytes单位
@@ -21,7 +21,7 @@ lsblk [options] [device...]
 
 -f, --fs
 	包含指定字段的输出
-	类似于-o NAME/FSTYPE/LABEL/UUID/MOUNTPOINT
+	类似于-o NAME,FSTYPE,LABEL,UUID,MOUNTPOINT
 
 -h, --help
 	帮助文档
@@ -40,7 +40,7 @@ lsblk [options] [device...]
 
 -m, --perms
 	显示对应设备文件的owner/group/mode
-	类似于-o NAME/SIZE/OWNER/GROUP/MODE
+	类似于-o NAME,SIZE,OWNER,GROUP,MODE
 
 -n, --noheadings
 	不显示header行
