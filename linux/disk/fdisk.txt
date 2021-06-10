@@ -6,6 +6,7 @@ fdisk [option] [device]
 参数释义
 -b <sector_size>
 	指定磁盘sector的大小. 可用大小列表: 512/1024/2048/4096
+	该参数同时指定逻辑sector和物理sector大小
 
 -c[=<mode>]
 	指定兼容模式. 列表: dos/nondos
@@ -39,17 +40,17 @@ fdisk [option] [device]
 -u[=<unit>]
 	显示分区表时, 大小使用sectors或cylinders
 	必须配合-l使用
-	默认未sectors
+	默认为sectors
 
 -v
 	显示版本信息
 
 
 示例1 - 对指定磁盘进行分区并保存
-sudo fdisk /dev/nvme0n1
+sudo fdisk /dev/sda
 Command (m for help): n
 Partition number (4-128, default 4): 4
-First sector (34-1000215182, default 999286784):
-Last sector, +sectors or +size{K,M,G,T,P} (999286784-1000215182, default 1000215182): +2K
+First sector (34-1000215182, default 86784):
+Last sector, +sectors or +size{K,M,G,T,P} (86784-1000215182, default 1000215182): +200M
 Created partition 4
 Command (m for help): w

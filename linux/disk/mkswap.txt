@@ -1,0 +1,31 @@
+mkswap - 建立swap分区
+
+语法
+mkswap [options] device
+
+参数释义
+-c, --check
+	建立swap分区之前, 检查badblock
+
+-f, --force
+	强制格式化swap分区
+
+-L, --label <label>
+	指定该swap分区的label
+
+-p, --pagesize <size>
+	指定page大小
+	该参数通常没有必要指定, 而是直接从kernel读取
+
+-U, --uuid <uuid>
+	指定分区的UUID
+
+-v, --swapversion 1
+	指定swap版本
+	自kernel 2.5.22之后只支持version 1
+
+-h, --help
+	帮助文档
+
+-V, --version
+	版本信息

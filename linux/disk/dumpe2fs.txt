@@ -1,0 +1,37 @@
+dumpe2fs - 详细显示ext2/ext3/ext4文件系统信息
+
+语法
+dumpe2fs [option] device
+
+参数释义
+-b
+	显示badblock
+
+-o superblock=<superblock>
+	指定固定编号block为superblock
+	常规情况下不需要指定
+
+-o blocksize=<blocksize>
+	指定block的大小
+	常规情况下不需要指定
+
+-f
+	强制dumpe2fs显示无法理解的文件系统信息
+
+-h
+	只显示superblock信息
+
+-i
+	从image文件读取文件系统信息
+	image由e2image创建
+	device为image文件的路径
+
+-x
+	显示文件系统的详细block group信息, block号码使用十六进制
+
+-V
+	版本信息
+
+
+示例1 - 只显示superblock信息
+dumpe2fs -h

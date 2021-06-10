@@ -14,7 +14,7 @@ lsblk [options] [device...]
 	只显示磁盘信息, 不显示分区信息
 
 -e, --exclude <list>
-	将指定major代号的设备不显示信息, 只作用于磁盘(而非分区), 代号之间使用','分隔. 代表列表如下:
+	不显示指定major代号的设备的信息, 只作用于磁盘(而非分区), 代号之间使用','分隔. 代表列表如下:
 		1 - RAM, 默认包含
 		8 - 机械硬盘/U盘
 		259 - 固态硬盘
@@ -46,8 +46,42 @@ lsblk [options] [device...]
 	不显示header行
 
 -o, --output <list>
-	指定显示的字段
-
+	指定显示的字段, 字段之间使用','分隔. 字段列表:
+		NAME - 设备名称
+		KNAME - kernel内部设备名称
+		MAJ:MIN - major:minor设备代号
+		FSTYPE - 文件系统类型
+		MOUNTPOINT - 挂载点
+		LABEL - 文件系统label
+		UUID - 文件系统UUID
+		PARTLABEL - 分区label
+		PARTUUID - 分区UUID
+		RA - 设备的预读位置
+		RO - 是否为只读设备
+		RM - 是否为可移除设备
+		MODEL - 设备标识符
+		SERIAL - 设备的序列号
+		SIZE - 设备大小
+		STATE - 设备状态
+		OWNER - 设备的所属人
+		GROUP - 设备所属群组
+		MODE - 设备文件的权限
+		ALIGNMENT - 对齐偏移
+		MIN-IO - 最小I/O
+		OPT-IO - 优化后I/O
+		PHY-SEC - 物理sector大小
+		LOG-SEC - 逻辑sector大小
+		ROTA - 是否为外接设备
+		SCHED - I/0调度名称
+		RQ-SIZE - 请求队列大小
+		TYPE - 设备类型
+		WWN - 唯一存储标识符
+		PKNAME - 父级核心设备名称
+		HCTL - SCSI接口的Host:Channel:Target:Lun
+		TRAN - 设备传输接口类型
+		REV - 设备版本
+		VENDOR - 设备厂商
+		
 -P, --pairs
 	每一列的内容显示为key=value格式
 

@@ -1,0 +1,101 @@
+mount - 挂载文件系统
+
+语法
+mount [option] [device] [dir]
+
+参数释义
+-V, --version
+	版本信息
+
+-h, --help
+	帮助文档
+
+-v, --verbose
+	verbose模式
+
+-a, --all    
+	根据/etc/fstab内容进行重新挂载, 包含"noauto"的项除外
+
+-F, --fork
+	配合-a参数, 多个挂载项同时进行挂载操作
+
+-n, --no-mtab
+	挂载不写入/etc/mtab
+
+--source <src>
+	指定参数为设备
+	默认当只有一个参数时, 该参数可能为设备或挂载点
+
+-r, --read-only
+	将设备挂载为只读
+
+-w, --rw, --read-write
+	将设备挂载为可读写
+	默认选项
+
+-L, --label <label>
+	指定分区的label
+
+-U, --uuid <uuid>
+	指定分区的uuid
+
+-T, --fstab <path>
+	指定fstab文件的完整路径
+
+-t, --type <vfstype>
+	指定挂载的文件系统类型
+	需与格式化文件系统类型一致
+
+--target <dir>
+	指定参数为挂载点
+	当只有一个参数时, 该参数可能为设备或挂载点
+
+-O, --test-opts <opts>
+	配合-a使用, 匹配opts的entry才进行操作
+
+-o, --options <opts>
+	指定挂载项使用指定特性
+
+-B, --bind
+	将一个挂载点绑定到另一个目录, 因此可以从两个入口访问相同内容
+
+-R, --rbind
+	将一个挂载点和子目录下的挂载递归绑定到另一个目录
+
+-M, --move
+	转移挂载点为其他目录入口
+	
+--make-shared
+	将指定挂载点修改为shared
+
+--make-slave
+	将指定挂载点修改为slave
+
+--make-private
+	将指定挂载点修改为private
+
+--make-unbindable
+	将指定挂载点修改为不可bind
+
+-l
+	显示Label
+
+** 当mount只包含device或dir其中一个参数时, 从/etc/fstab中查找匹配项
+
+** 查看shared/private/unbindable标志指令如下:
+** sudo findmnt -o TARGET,PROPAGATION <mountpoint>
+
+
+
+示例1 - 显示已挂载列表(含Label)
+mount -l
+
+示例2 - 转移已有挂载点
+** 挂载点默认为shared, 而shared挂载点是不能转移的, 需要将父目录转为private
+sudo mount --bind /mnt /mnt
+sudo mount --make-private /mnt
+sudo mount /dev/sda1 /mnt/tmp1
+sudo mount --move /mnt/tmp1 /mnt/tmp2
+
+引用
+[1]move operation: https://bugzilla.redhat.com/show_bug.cgi?id=917008

@@ -9,33 +9,28 @@ mke2fs [option] device
 	可指定列表: 1024/2048/4096
 
 -c
-	在建立文件系统之间, 对分区进行只读操作, 检测坏轨
-	指定两次该参数, 对分区进行读写操作
+	在建立文件系统之前, 对分区进行检测坏轨, 测试执行只读操作
+	指定两次该参数, 对分区进行检测坏轨时, 测试执行读写操作
 
 -C <cluster_size>
-	当使用ext4的bigalloc特征时, 指定cluster包含的block数量, cluster有效大小范围: 2K~256M
+	指定cluster包含的block数量, cluster有效大小范围: 2K~256M
+	需要启用ext4特征: bigalloc
 	默认值为16*block大小
 
 -D
-	将结果直接写入磁盘, 该操作会减缓操作速度
-
--E <extended_options>
-	设置特性相关的值. 可选列表:
-		mmp_update_interval=<interval> - MMP(multiply mount protection)的间隔时间
-
--f <fragment-size>
-	指定fragment大小, 单位为bytes
+	将结果直接写入磁盘(sync), 该操作会减缓操作速度
 
 -F
 	强制创建一个文件系统
-	当已有文件系统在使用中或被挂载, 需连续指定两次
+	当已有文件系统在使用中或已被挂载, 需指定两次
 
 -g <blocks_per_group>
 	指定block group中的block数量
 	该参数常用于开发者的测试用例
 
 -G <number_of_groups>
-	将指定个block groups合并为一个大的group
+	将指定个block groups合并为一个大的virtual block group
+	需要启用ext4特征: flex_bg
 	该参数必须为2的幂
 
 -i <bytes_per_inode>
@@ -62,6 +57,7 @@ mke2fs [option] device
 
 -L <new_volume_label>
 	指定文件系统的label
+	最大长度支持16 bytes
 
 -m <reserved_blocks_percentage>
 	在文件系统中保留指定百分比blocks给予super-user
@@ -78,20 +74,21 @@ mke2fs [option] device
 	覆盖-i与block数量得出的值
 
 -O <feature>[,...]
-	给文件系统配置指定特性, 不同特性使用','分隔
+	给文件系统设置指定特性, 不同特性使用','分隔
+	包含在/etc/mke2fs.conf文件base_features变量中的特征默认启动
+	-T指定用例包含的特性默认启动
 	关闭特性使用'^'或'-'前缀
 	none关闭所有特性
-	默认为/etc/mke2fs.conf中的base_feature
 
 -q
 	quiet模式
 
 -r <revision>
-	设置文件系统版本
+	设置文件系统版本, 可选: 0/1
 	默认revesion为1
 
 -S
-	写入superblock和相关描述内容
+	只写入superblock和group descriptor内容
 
 -t <fs_type>
 	指定文件系统类型. 如: ext2/ext3/ext4/xfs等
@@ -103,6 +100,8 @@ mke2fs [option] device
 		big - fs大于等于4T并小于16T的默认方案
 		huge - fs大于等于16T的默认方案
 		default - 其他情况下的默认方案
+		ext3 - ext3和其某些特性
+		ext4 - ext4和其某些特性
 
 -u <uuid>
 	文件系统的UUID
@@ -114,6 +113,10 @@ mke2fs [option] device
 	版本信息
 
 
-
 相关配置文件:
 /etc/mke2fs.conf
+
+
+
+示例1 - 创建ext4文件系统, 并指定inode和block大小
+sudo mke2fs -t ext4 -b 2048 -I 256 /dev/sda1
