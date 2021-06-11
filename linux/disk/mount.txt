@@ -1,48 +1,85 @@
 mount - 挂载文件系统
 
+
 语法
-mount [option] [device] [dir]
+mount [-lhV]
+
+mount -a [-fFnrsvw] [-t vfstype] [-O optlist]
+
+mount [-fnrsvw] [-o option[,option]...]  device|dir
+
+mount [-fnrsvw] [-t vfstype] [-o options] device dir
+
 
 参数释义
--V, --version
-	版本信息
-
--h, --help
-	帮助文档
-
--v, --verbose
-	verbose模式
-
 -a, --all    
 	根据/etc/fstab内容进行重新挂载, 包含"noauto"的项除外
+
+-B, --bind
+	将一个挂载点绑定到另一个目录, 因此可以从两个入口访问相同内容
+
+-c, --no-canonicalize
+	不进行路径转化为绝对路径的操作, 用于路径已经为绝对路径时
+	默认从指令行或/etc/fstab读取的操作, 将路径执行转化后, 再写入/etc/mtab
 
 -F, --fork
 	配合-a参数, 多个挂载项同时进行挂载操作
 
+-f, --fake
+	显示执行指令结果, 并不实际执行
+
+-h, --help
+	帮助文档
+
+-i, --internal-only
+	不调用/sbin/mount.<filesystem>帮助
+
+-L, --label <label>
+	通过label指定设备
+
+-l, --show-labels
+	显示label
+
+-M, --move
+	转移挂载点为其他目录入口
+	
+--make-private
+	将指定挂载点修改为private
+
+--make-shared
+	将指定挂载点修改为shared
+
+--make-slave
+	将指定挂载点修改为slave
+
+--make-unbindable
+	将指定挂载点修改为不可bind
+
 -n, --no-mtab
 	挂载不写入/etc/mtab
+	用于/etc为只读文件系统
+
+-O, --test-opts <opts>
+	配合-a使用, 匹配opts的entry才进行操作
+
+-o, --options <opts>
+	指定挂载项使用指定特性, 特性之间使用','分隔
+
+-R, --rbind
+	将一个挂载点和子目录下的挂载递归绑定到另一个目录
+
+-r, --read-only
+	将设备挂载为只读
+	类似于-o ro
 
 --source <src>
 	指定参数为设备
 	默认当只有一个参数时, 该参数可能为设备或挂载点
 
--r, --read-only
-	将设备挂载为只读
-
--w, --rw, --read-write
-	将设备挂载为可读写
-	默认选项
-
--L, --label <label>
-	指定分区的label
-
--U, --uuid <uuid>
-	指定分区的uuid
-
 -T, --fstab <path>
-	指定fstab文件的完整路径
+	指定备用的fstab文件
 
--t, --type <vfstype>
+-t, --types <vfstype>
 	指定挂载的文件系统类型
 	需与格式化文件系统类型一致
 
@@ -50,40 +87,145 @@ mount [option] [device] [dir]
 	指定参数为挂载点
 	当只有一个参数时, 该参数可能为设备或挂载点
 
--O, --test-opts <opts>
-	配合-a使用, 匹配opts的entry才进行操作
+-U, --uuid <uuid>
+	通过uuid指定设备
 
--o, --options <opts>
-	指定挂载项使用指定特性
+-V, --version
+	版本信息
 
--B, --bind
-	将一个挂载点绑定到另一个目录, 因此可以从两个入口访问相同内容
+-v, --verbose
+	verbose模式
 
--R, --rbind
-	将一个挂载点和子目录下的挂载递归绑定到另一个目录
+-w, --rw, --read-write
+	将设备挂载为可读写. 默认选项
+	类似于-o rw
 
--M, --move
-	转移挂载点为其他目录入口
-	
---make-shared
-	将指定挂载点修改为shared
-
---make-slave
-	将指定挂载点修改为slave
-
---make-private
-	将指定挂载点修改为private
-
---make-unbindable
-	将指定挂载点修改为不可bind
-
--l
-	显示Label
 
 ** 当mount只包含device或dir其中一个参数时, 从/etc/fstab中查找匹配项
 
 ** 查看shared/private/unbindable标志指令如下:
-** sudo findmnt -o TARGET,PROPAGATION <mountpoint>
+**     sudo findmnt -o TARGET,PROPAGATION <mountpoint>
+
+
+mount feature:
+async
+	当前文件系统的所有I/O实行异步(更新的信息暂时不存入磁盘)
+
+atime
+	访问文件修改access time
+	该特征无法直接指定, 需要通过strictatime特征指定
+
+noatime
+	访问文件不修改access time
+
+auto
+	包含该特性时, -a选项会挂载该项. 用于/etc/fstab
+
+noauto
+	包含该特性时, -a选项不会挂载该项. 用于/etc/fstab
+
+default
+	一系列特征的集合, 为默认选项. 包含特征: rw, suid, dev, exec, auto, nouser, async
+
+dev
+	允许使用其中的字符设备和块设备
+
+nodev
+	不允许使用其中的字符设备和块设备
+
+diratime
+	更新目录的access time
+	此选项为默认选项
+
+nodiratime
+	不更新目录的access time
+
+dirsync
+	目录的操作进行同步
+
+exec
+	允许执行二进制程序
+
+noexec
+	不允许执行二进制程序
+
+group
+	允许非root用户挂载, 如果该用户所属群组与该文件系统所属群组一致
+	该选项隐式包含nosuid和nodev特征. 用于/etc/fstab
+
+iversion
+	每一次inode的变动, 对应inode的i_version字段值会增加
+
+noiversion
+	inode的变动, 不会造成该inode的i_version字段值的增加
+
+mand
+	允许在该文件系统上对文件执行强制锁
+
+nomand
+	不允许在该文件系统上对文件执行强制锁
+
+_netdev
+	设备必须获得网络访问后才能挂载文件系统
+
+nofail
+	当该设备不存在时, 不报错
+
+relatime
+	访问文件内容不更新atime
+	自动更新access time必须同时满足的两个条件:
+		1.当文件内容被修改或状态被改变时
+		2.距离上次更新atime满24小时(Linux 2.6.30之后)
+	自Linux 2.6.30后, 该选项为默认选项(noatime没有指定时)
+
+norelatime
+	不使用relatime特性
+
+strictatime
+	具有完整的atime更新机制, 访问文件也会导致atime更新
+
+nostrictatime
+	不使用strictatime特征
+
+suid
+	允许设置的SUID/SGID生效
+
+nosuid
+	设置的SUID/SGID无法生效
+
+silent
+	打开silent标记
+
+loud
+	关闭silent标记
+
+owner
+	允许非root用户挂载, 如果该用户与该文件系统owner一致
+	该选项隐式包含nosuid和nodev特征. 用于/etc/fstab
+
+remount
+	重新挂载已挂载的文件系统
+
+ro
+	挂载文件系统为只读
+
+rw
+	挂载文件系统为可读写
+
+sync
+	文件系统的所有I/O进行同步
+
+user
+	允许普通用户挂载文件系统, 挂载的用户写入/etc/mtab文件, 该用户后续可umount该文件系统
+	隐式包含noexec/nosuid/nodev特征
+
+nouser
+	不允许普通用户挂载文件系统
+	此选项为默认选项
+
+users
+	允许所有用户mount/umount文件系统
+	该选项隐式包含noexec/nosuid/nodev特征
 
 
 
@@ -92,6 +234,7 @@ mount -l
 
 示例2 - 转移已有挂载点
 ** 挂载点默认为shared, 而shared挂载点是不能转移的, 需要将父目录转为private
+** mount --bind <dir> <dir>从目录生成一个挂载点
 sudo mount --bind /mnt /mnt
 sudo mount --make-private /mnt
 sudo mount /dev/sda1 /mnt/tmp1

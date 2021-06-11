@@ -14,7 +14,7 @@ option选项
     单次检测的块数量. 默认为64
 
 -d <read_delay_factor>
-    当遇到坏轨时, 等待时间为单次检测时间的倍数, 公式: factor=倍数*100
+    当遇到坏轨时, 等待时间为单次检测时间的百分比. delay=read_time*factor/100
 
 -e <max_bad_block_count>
     当坏轨数量达到count数量时, 退出检测. 默认为0, 即无限制

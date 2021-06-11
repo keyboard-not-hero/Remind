@@ -1,0 +1,60 @@
+umount - 卸载文件系统
+
+
+语法
+umount [-hV]
+
+umount -a [-dflnrv] [-t vfstype] [-O options]
+
+umount [-dflnrv] {dir|device}...
+
+
+参数释义
+-a, --all
+	所有/etc/mtab中的挂载项进行卸载
+	自umount 2.7后, proc文件系统不会进行卸载
+
+-A, --all-targets
+	卸载当前命名空间所有指定文件系统内的挂载点
+	配合--recursive, 递归卸载指定文件系统及其子目录下的文件系统
+
+-c, --no-canonicalize
+	不将路径转化为标准路径
+
+-d, --detach-loop
+	当指定挂载点为loop设备时, 释放loop设备
+
+--fake
+	测试操作结果, 但不实际执行
+
+-i, --internal-only
+	不调用/sbin/umount.<filesystem>帮助, 即便其存在
+
+-n, --no-mtab
+	卸载不写入/etc/mtab
+
+-l, --lazy
+	
+
+-O, --test-opts <list>
+	当list匹配/etc/fstab中的内容时, 才执行umount操作
+
+-R, --recursive
+	递归卸载文件系统子目录下的其他文件系统
+	只能指定挂载点, 而不能指定设备文件
+	配合-A可指定设备文件
+
+-r, --read-only
+	当卸载失败, 将文件系统重新挂载为只读
+
+-t, --types <vfstype>
+	只有文件系统类型符合指定时, 才进行卸载
+
+-v, --verbose
+	verbose模式
+
+-h, --help
+	帮助文档
+
+-V, --version
+	版本信息
