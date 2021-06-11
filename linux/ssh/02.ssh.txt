@@ -1,0 +1,7 @@
+ssh - OpenSSH SSH客户端程序
+
+语法
+ssh [options] {[-l user] hostname | [user@]hostname} [command]
+
+参数释义
+

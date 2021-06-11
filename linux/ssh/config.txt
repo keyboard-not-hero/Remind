@@ -1,7 +1,0 @@
-配置文档:/etc/ssh/sshd_config
-
-参数
-ClientAliveInterval - 间隔超时时间
-
-ClientAliveCountMax - 允许超时次数
-**超时断线时间为interval * countMax
