@@ -4,4 +4,153 @@ ssh - OpenSSH SSH客户端程序
 ssh [options] {[-l user] hostname | [user@]hostname} [command]
 
 参数释义
+-4
+	强制ssh只能使用IPv4地址
 
+-6
+	强制ssh只能使用IPv6地址
+
+-A
+	允许转发认证代理的连接
+
+-a
+	禁止转发认证代理的连接
+
+-B <bind_interface>
+	在拥有多个网络接口的主机上, 指定收发信息接口
+
+-b <bind_address>
+	在拥有多个IP地址的主机上, 指定收发信息IP地址
+
+-C
+	压缩传输数据
+	压缩算法与gzip采用的算法一致
+
+-c <cipher_spec>
+	指定传输数据加密算法优先级列表, 算法之间使用','分隔
+	spec以'+'开头, 代表添加算法到默认列表尾部; 以'-'开头, 代表从默认列表中删除; 以'^'开头, 代表添加算法到默认列表头部
+	默认算法列表: 
+		chacha20-poly1305@openssh.com,
+		aes128-ctr,
+		aes192-ctr,
+		aes256-ctr,
+		aes128-gcm@openssh.com,
+		aes256-gcm@openssh.com
+	支持的算法列表: 参考ssh -Q cipher
+
+-D [<bind_address>:]<port>
+	监听本地指定端口信息, 并将信息转发给指定目标
+	用于动态转发
+	bind_address为指定多地址主机中, 限定需要监听的地址
+
+-E <log_file>
+	将debug信息输出到指定文件
+	默认输出到stderr
+
+-e <escape_char>
+	登录服务器期间的特殊符号, 默认为'~'
+	列表如下:
+		<escape>. - 关闭连接
+		<escape><ctrl>Z - 后台执行ssh
+		<escape><escape> - 显示escape符号本身
+	当escape_char为none时, 关闭特殊符号
+
+-F <config_file>
+	指定用户级配置文件
+	默认为~/.ssh/config
+	当设置为none时, 不读取配置文件
+
+-f
+	指定command在本地后台执行
+	隐式包含-n选项
+
+-G
+	打印连接相关的配置参数, 并退出连接
+
+-g
+	允许远程主机连接到本地转发端口
+
+-i <identity_file>
+	指定用于公钥登录的本地私钥
+	默认为如下列表:
+		~/.ssh/id_dsa, 
+		~/.ssh/id_ecdsa, 
+		~/.ssh/id_ecdsa_sk, 
+		~/.ssh/id_ed25519, 
+		~/.ssh/id_ed25519_sk,
+		~/.ssh/id_rsa
+
+-L [bind_address:]port:host:host_port
+	本地所有发向port的信息, 经由SSH服务器建立安全隧道, 最终发向host的host_port
+	用于本地转发
+
+-l <login_name>
+	指定登录用户名称
+	未指定时, 采用本地当前用户名登录
+
+-m <mac_spec>
+	指定偏好的验证数据完整性的算法列表, 算法之间使用','分隔
+	支持的算法列表: 参考ssh -Q mac
+
+-N
+	不登录ssh服务器, 不在ssh服务器执行指令
+	用于端口转发
+
+-o <option>
+	通常指令行指定配置文件中指定的选项
+	参考: man 5 ssh_config
+
+-p
+	连接到服务器的端口
+	默认为端口22
+
+-Q <query_option>
+	查询指定算法的可选列表. 支持查询列表:
+		cipher - 传输数据加密相关, 选项-c
+		mac - 数据完整性算法, 选项-m
+		kex - 密钥交换算法
+		key - 密钥加密类型
+		protocol-version - 支持的ssh版本
+		...
+
+-q
+	quiet模式
+
+-R [bind_address:]port
+-R [bind_address:]port:host:host_port
+	将连接到远程SSH服务器的指定端口port的连接, 转化到本地主机host的host_port端口
+	用于远程转发
+
+-t
+	在服务器端执行command时, 分配一个终端
+
+-V
+	显示版本信息
+
+-v
+	verbose模式
+	当多个-v重复使用时, 会增加显示内容的详细程度, 最大上限为3次
+
+	
+配置文件:
+全局 - /etc/ssh/ssh_config
+用户 - ~/.ssh/config
+
+参数读取顺序:
+1.ssh指令
+2.用户级配置文件
+3.全局配置文件
+
+
+
+示例1 - 远程登录到指定主机
+ssh -l steven -p 22 <host_name>
+
+示例2 - 使用本地转发, 加密web访问连接
+ssh -L 2121:httpbin.org/:80 -N <ssh_server>
+curl http://localhost:2121
+
+示例3 - 远程转发(内网穿透)
+ssh -R 8080:localhost:80 -N <ssh_server>
+curl <ssh_server>:8080
+** 默认远程转发只开启本地监听, 开启全网监听, 需要配置ssh服务器的sshd配置文件的GatewayPorts为yes
