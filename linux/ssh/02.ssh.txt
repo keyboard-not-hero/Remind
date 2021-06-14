@@ -71,7 +71,7 @@ ssh [options] {[-l user] hostname | [user@]hostname} [command]
 	允许远程主机连接到本地转发端口
 
 -i <identity_file>
-	指定用于公钥登录的本地私钥
+	指定用于密钥登录的本地私钥
 	默认为如下列表:
 		~/.ssh/id_dsa, 
 		~/.ssh/id_ecdsa, 

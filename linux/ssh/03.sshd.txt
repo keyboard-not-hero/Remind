@@ -1,0 +1,123 @@
+sshd - OpenSSH SSH守护进程
+
+语法
+sshd [option]
+
+参数释义
+-4
+	强制sshd只使用IPv4
+
+-6
+	强制sshd只使用IPv6
+
+-D
+	sshd不作为后台守护程序允许(前台运行)
+
+-d
+	debug模式
+	可叠加使用, 增加输出详细程序, 最多可叠加3次
+
+-E <log_file>
+	指定log存放文件
+
+-e
+	将log输入到stderr
+
+-f <config_file>
+	指定配置文件
+	默认为/etc/ssh/sshd_config
+
+-g <login_grace_time>
+	在登录时, 允许等待密码输入的时间
+
+-h <host_key_file>
+	连接使用的密钥
+	当启用sshd的为非root用户时, 必须进行指定, 因为/etc/ssh目录下的私钥一般用户无法读取
+	root用户默认私钥为: /etc/ssh/ssh_host_ecdsa_key,/etc/ssh/ssh_host_ed25519_key,/etc/ssh/ssh_host_rsa_key
+
+-i
+	指定sshd由inetd启动, 而非独立deamon
+
+-o <option>
+	指定sshd_config配置文件中的选项
+
+-p <port>
+	指定sshd服务器监听端口
+
+-q
+	quiet模式
+
+-t
+	测试模式, 检查配置文件的语法正确
+
+
+
+
+配置文件:
+/etc/ssh/sshd_config
+
+
+配置文件重要选项摘要:
+AllowGroups
+	指定允许登录的用户组. 未指定默认全部允许
+
+AllowUsers
+	指定允许登录的用户. 未指定默认全部允许
+
+AllowTcpForwarding
+	是否允许端口转发. 值列表如下:
+		yes - 允许所有端口转发
+		no - 不允许端口转发
+		local - 只允许本地端口转发
+		remote - 只允许远程端口转发
+
+AuthorizedKeysFile
+	指定使用密钥登录的放置公钥的文件. 默认为~/.ssh/authorized_keys
+
+Banner
+	登陆后展示的内容
+
+Compression
+	传输数据是否进行压缩
+
+DenyGroups
+	不允许登录的用户组
+
+DenyUsers
+	不允许登录的用户
+
+HostKey
+	指定sshd服务器使用的密钥
+
+ListenAddress
+	sshd服务器的监听地址
+
+LoginGraceTime
+	在用户登录时, 允许的等待密码输入时间
+
+LogLevel
+	日志的记录等级. 列表如下: QUIET/FATAL/ERROR/INFO/VERBOSE/DEBUG/DEBUG1/DEBUG2/DEBUG3
+
+MACs
+	sshd服务器接收的数据校验算法
+
+MaxAuthTries
+	允许ssh最大的尝试登录次数
+
+MaxStartups
+	允许同时连接的数量
+
+PasswordAuthentication
+	是否允许密码登录
+
+PermitEmptyPasswords
+	是否允许空密码登录
+
+PermitRootLogin
+	是否允许root远程登录
+
+Port
+	sshd的监听端口
+
+PubKeyAuthentication
+	是否允许使用公钥登录

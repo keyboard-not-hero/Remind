@@ -1,15 +1,51 @@
-scp--本地与远程文件拷贝
-语法：
-scp [可选参数] [[user@]src_host:]file1 [[user@]targ_host:]file2
-参数释义：
--4  强制使用IPv4
--6  强制使用IPv6
--C  启用压缩传输模式
--c cipher  使用密码cipher进行传输认证
--F config  指定本次传输使用的配置文件
--l limit  限制传输带宽，单位为Kbit/s
--P port  指定连接到对端的端口
--p  保留原始文件的mtime/ctime/atime
--q  安静模式
--r  递归复制所有目录
+scp - OpenSSH复制文件工具
+
+语法
+scp [option] <source>... <target>
+
+参数释义
+-4
+	只允许使用IPv4地址
+
+-6
+	只允许使用IPv6地址
+
+-C
+	压缩传输内容
+
+-c <cipher>
+	指定验证数据完整性的算法
+
+-F <ssh_config>
+	指定一个用户级配置文件
+
+-i <identity_file>
+	指定用于密钥登录的公钥
+
+-J <destination>
+	指定中转jump host, 并且可以同时指定多个, 使用','分隔
+
+-l <limit>
+	限制传输使用的带宽, 单位为Kbit/s
+
+-o <ssh_option>
+	指定ssh_config配置文件内的配置选项
+
+-P <port>
+	指定连接到remote主机的端口
+	默认为端口22
+
+-p
+	保留源文件的modification/access等metadata属性
+
+-r
+	递归复制整个目录
+
+-v
+	verbose模式
+
+
+示例1 - 传输文件到远程主机
+scp demo.txt <user>@<host>:~
+
 
