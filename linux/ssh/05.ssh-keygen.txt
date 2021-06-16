@@ -1,8 +1,141 @@
-ssh-keygen--秘钥生成、管理、转化工具
-语法：
-ssh-keygen [options]
-参数释义：
--b    指定秘钥生成位数(RSA最小1024bit，默认2048bit；DSA指定1024bit)
--o    passphrase使用新格式保存，较之老式兼容PEM格式，更难破解
--t    秘钥加密类型(dsa/rsa/ecdsa)
+ssh-keygen - OpenSSH密钥管理工具
 
+
+语法
+ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | rsa1]
+           [-N new_passphrase] [-C comment] [-f output_keyfile]
+
+ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [-f keyfile]
+       
+ssh-keygen -i [-m key_format] [-f input_keyfile]
+       
+ssh-keygen -e [-m key_format] [-f input_keyfile]
+       
+ssh-keygen -y [-f input_keyfile]
+       
+ssh-keygen -c [-P passphrase] [-C comment] [-f keyfile]
+       
+ssh-keygen -l [-v] [-E fingerprint_hash] [-f input_keyfile]
+       
+ssh-keygen -B [-f input_keyfile]
+       
+ssh-keygen -D pkcs11
+       
+ssh-keygen -F hostname [-f known_hosts_file] [-l]
+       
+ssh-keygen -H [-f known_hosts_file]
+       
+ssh-keygen -R hostname [-f known_hosts_file]
+       
+ssh-keygen -r hostname [-f input_keyfile] [-g]
+       
+ssh-keygen -G output_file [-v] [-b bits] [-M memory] [-S start_point]
+       
+ssh-keygen -T output_file -f input_file [-v] [-a rounds] [-J num_lines]
+           [-j start_line] [-K checkpt] [-W generator]
+       
+ssh-keygen -s ca_key -I certificate_identity [-h] [-n principals]
+           [-O option] [-V validity_interval] [-z serial_number] file ...
+       
+ssh-keygen -L [-f input_keyfile]
+       
+ssh-keygen -A
+       
+ssh-keygen -k -f krl_file [-u] [-s ca_public] [-z version_number]
+           file ...
+      
+ssh-keygen -Q -f krl_file file ...
+
+
+参数释义
+-B
+	显示公/私钥的bubble babble摘要
+	同一对的公/私钥摘要完全相同
+
+-b <bits>
+	指定密钥的二进制位数
+	RSA算法: 最小值为1024, 默认值为3072
+	DSA算法: 必须为1024
+	ECDSA算法: 256, 384 or 521
+	其他算法指定bits被忽略
+
+-C
+	密钥文件注释内容, 常用格式为<user>@<host>
+
+-E <fingerprint_hash>
+	指定指纹所用的hash算法
+	必须配合-l使用
+	默认为sha256
+
+-e
+	读取指定的公/私钥, 显示其公钥内容的指定格式, 格式由-m指定
+
+-F
+	检查指定主机名是否在known_hosts文件中
+	通常使用IP指定
+
+-f
+	指定密钥文件名称
+
+-H
+	将known_hosts的内容全部进行hash
+	旧内容备份到known_hosts.old
+
+-h
+	指定为服务器签发host证书
+	默认为客户端签发用户证书
+
+-I <certificate_identity>
+	指定证书的身份标志符
+
+-i
+	读取-m选项指定的公/私钥格式, 输出OpenSSH兼容格式公/私钥
+
+-L
+	打印证书内容
+
+-l
+	显示公钥的指纹
+
+-m <key_format>
+	指定公钥格式. 可选列表: RFC4716/PKCS8/PEM
+	默认为RFC4716
+	配合-e或-i使用
+
+-N <passphrase>
+	指定私钥文件的加密密码
+
+-n <principa>,...
+	指定包含在证书中的主体内容
+
+-O <option>
+	key=value格式的选项
+	
+-P <passphrase>
+	提供(旧)密码
+
+-p
+	修改私钥文件的加密密码
+
+-q
+	quiet模式
+
+-R <host>|[<host>]:<port>
+	将指定主机名的公钥从known_hosts文件中移除
+	通常使用IP指定
+-s <ca_key>
+	发布证书时使用的CA密钥
+
+-t rsa|dsa|ecdsa|ecdsa-sk|ed25519|ed25519-sk
+	指定生成密钥的加密算法
+	默认为RSA
+
+-V <validity_interval>
+	指定证书的有效期
+
+-v
+	verbose模式
+
+-z <serial_number>
+	指定证书的序列号
+	默认为0 

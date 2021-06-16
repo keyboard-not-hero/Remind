@@ -77,6 +77,13 @@ AuthorizedKeysFile
 Banner
 	登陆后展示的内容
 
+ClientAliveInterval
+	每隔指定秒发送一次心跳, 保持与客户端的连接
+
+ClientAliveCountMax
+	最大发送心跳的次数
+	keep_live_time = ClientAliveInterval * ClientAliveCountMax
+
 Compression
 	传输数据是否进行压缩
 

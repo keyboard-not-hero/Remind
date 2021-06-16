@@ -4,6 +4,9 @@ scp - OpenSSH复制文件工具
 scp [option] <source>... <target>
 
 参数释义
+-3
+	当前主机作为中转
+
 -4
 	只允许使用IPv4地址
 
@@ -22,7 +25,7 @@ scp [option] <source>... <target>
 -i <identity_file>
 	指定用于密钥登录的公钥
 
--J <destination>
+-J <host>[:<port>],...
 	指定中转jump host, 并且可以同时指定多个, 使用','分隔
 
 -l <limit>
@@ -48,4 +51,8 @@ scp [option] <source>... <target>
 示例1 - 传输文件到远程主机
 scp demo.txt <user>@<host>:~
 
+示例2 - 以当前主机作为中转, 在两个远程主机之间复制文件
+scp -3 scp://<user_src>@<host_src>:<port_src>/<path_to_file> scp://<user_tar>@<host_tar>:<port_tar>/<path_to_file>
 
+示例3 - 指定中转主机列表, 从当前主机与最终服务器之间传送文件
+scp -J <jump_host>[:<port>] <path_to_file> <user>@<host>:<path_to_file>

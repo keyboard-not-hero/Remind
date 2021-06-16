@@ -1,0 +1,25 @@
+gzip - 压缩/解压缩文件
+
+语法
+gzip [option] file
+
+参数释义
+-a, --ascii
+	ASCII文本模式
+	用于非Unix系统, 如MSDOS系统, 在压缩时将CRLF转化为LF, 解压缩时将LF转化为CRLF
+
+-c, --stdout, --to-stdout
+	将结果输出到stdout, 源文件保持不变
+
+-d, --decompress, --uncompress
+	解压缩
+
+-f, --force
+	强制进行压缩和解压缩操作
+	当文件的inode引用大于1, 目标已存在
+
+-h, --help
+	帮助文档
+
+-l, --list
+	
