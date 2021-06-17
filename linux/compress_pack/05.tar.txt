@@ -1,0 +1,92 @@
+tar - 文件打包工具
+
+语法
+tar [option] [file]...
+
+参数释义
+-A, --catenate, --concatenate
+	将打包文件内容合并到指定打包文件
+
+-a, --auto-compress
+	通过打包文件的后缀判断压缩程序
+
+-C, --directory=<dir>
+	将解压缩的内容放置到指定目录
+
+-c, --create
+	创建一个打包文件
+
+--delete
+	从打包文件中删除指定文件
+
+--exclude=<pattern>
+	不对匹配pattern的内容进行操作
+	pattern使用shell通配符模式
+
+-f, --file=<archive>
+	操作的打包文件
+
+-g, --listed-incremental=<snapshot>
+	增量更新, 并制定快照文件
+
+-J, --xz
+	通过xz处理文件
+
+-j, --bzip2
+	通过bzip2处理文件
+
+-O, --to-stdout
+	从打包文件提取内容到stdout
+
+-P, --absolute-names
+	不裁减掉文件名开头的'/'路径符号
+
+-p, --preserve-permissions, --same-permissions
+	打包文件时, 保留源文件的权限和属性
+
+-r, --append
+	将文件添加到打包文件尾部
+
+--recursion
+	递归打包目录下的文件
+	默认参数
+
+-t, --list
+	罗列打包文件的文件列表
+
+-u, --update
+	将文件更新到打包文件中
+
+-v, --verbose
+	verbose模式
+
+--version
+	版本信息
+
+-x, --extract, --get
+	从打包文件中提取文件
+
+-z, --gzip
+	通过gzip处理文件
+
+
+
+示例1 - 打包并压缩文件(压缩使用gzip)
+tar -zcvf pack.tar.gz demo01.txt demo02.txt
+
+示例2 - 显示打包文件的文件列表
+tar -tvf pack.tar.gz
+
+示例3 - 解包并解压缩文件
+tar -zxvf pack.tar.gz
+
+示例4 - 对目录使用增量备份
+** 第一步, 第一次进行全量备份(compress目录包含test01.txt/test02.txt)
+tar -g snapshot -zcf compress.tar.gz compress
+** 第二步, 第二次根据snapshot进行增量备份(compress目录新增test03.txt)
+tar -g snapshot -zcf compress_level_1.tar.gz compress
+** 完成后可删除snapshot文件
+** 完成备份的恢复, 先恢复全量备份内容, 再恢复增量备份
+rm -rf compress
+tar -zxf compress.tar.gz
+tar -zxf compress_level_1.tar.gz

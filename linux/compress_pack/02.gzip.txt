@@ -22,4 +22,60 @@ gzip [option] file
 	帮助文档
 
 -l, --list
-	
+	显示压缩文件的信息. 显示信息列表如下:
+		compressed - 压缩后的大小
+		uncompressed - 压缩前的大小
+		ratio - 压缩率
+		uncompressed_name - 压缩前的名称
+	以下为和--verbose一起使用时, 增加的显示项:
+		method - 压缩方式. 列表: deflate/compress/lzh
+		crc - 未压缩数据的32位CRC校验码
+		data&time - 压缩前文件的时间信息
+
+-L, --license
+	显示gzip的许可证信息
+
+-n, --no-name
+	压缩时, 不保存原始文件名和时间信息
+	解压缩时, 不恢复到原始文件名和时间信息
+
+-N, --name
+	压缩时, 保存原始文件名和时间信息
+	解压缩时, 如果有, 则恢复原始文件名和时间信息
+
+-q, --quiet
+	quiet模式
+
+-r, --recursive
+	递归压缩/解压缩目录内的文件
+
+-S .<suffix>, --suffix .<suffix>
+	压缩为指定后缀压缩文件, 或解压缩指定后缀文件
+	通常用于.z(旧版本gzip后缀)和.gz
+
+-t, --test
+	测试压缩文件的完整性
+
+-v, --verbose
+	verbose模式
+
+-V, --version
+	版本信息
+
+-<n>, --fast, --best
+	指定压缩等级为n, 范围为1~9
+	1的速度最快, 压缩率最低; 9的压缩速度最慢, 压缩率最高
+	默认为6
+
+
+
+示例1 - 压缩指定文件, 并删除源文件
+gzip test.txt
+
+
+示例2 - 压缩指定文件, 并保留源文件
+gzip -c test.txt > test.gz
+
+
+示例3 - 解压缩文件, 并保留压缩文件
+gzip -c -d test.gz > test.txt
