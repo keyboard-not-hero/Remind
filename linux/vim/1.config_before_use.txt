@@ -1,71 +1,102 @@
 1.配置文件
 全局配置文件：/etc/vim/vimrc
 用户级配置文件：~/.vimrc
-** 在配置文件中，"之后的内容为注释
+** 在配置文件中, "之后的内容为注释
 ** 配置文件中的语法与vim常规模式语法一致
 
 
 2.常规设置
-:set compatible/nocompatible    是否与vi兼容
+:set arabic | noarabic    
+	配置arabic模式(文字从右向左)
 
-:set ignorecase/noignorecase    是否忽略大小写进行查找
+:set autoindent | noautoindent
+	是否自动对齐
 
-:set smartcase    是否进行智能化切换ignorecase(当单词含大写时，sensitive case)
+:set autowrite | noautowrite    
+	是否自动保存
 
-:set hlsearch/nohlsearch    是否高亮匹配内容
+:set backup | nobackup    
+	是否保存原文件备份(原文件名+~后缀)
 
-:set incsearch/noincsearch    是否在匹配内容输入时进行实时匹配
+:set backupext=<ext>
+	配置备份文件后缀为<ext>
 
-:set showmode/noshowmode    是否显示当前所处模式
+:set compatible | nocompatible    
+	是否为vi兼容模式
 
-:set number/nonumber    是否配置行号
+:set directory=<dir>,...
+	保存swap文件的目录
 
-:set ruler/noruler    是否配置在右下角显示游标定位信息
+:set fileformats=unix,dos
+	文本换行符识别顺序
 
-:set wrapscan/nowrapscan    是否在匹配到文本开始/结束时循环匹配
+:set hlsearch | nohlsearch    
+	是否高亮匹配内容
 
-:set tildeop/notildeop    波浪线符号适配
+:set ignorecase | noignorecase    
+	是否忽略大小写进行查找
 
-:syntax on/off    是否语法高亮
+:set incsearch | noincsearch    
+	是否在匹配内容输入时进行实时匹配
 
-:set autowrite/noautowrite    是否自动保存
+:set linebreak | nolinebreak
+	是否将行尾的部分单词截断到下一行
 
-:set backup/nobackup    是否保存原文件备份(原文件名+~后缀)
+:set matchpairs=(:),{:}.[:]
+	设置%符号配对生效的括号类型
 
-:set backupext=<ext>    配置备份文件后缀为<ext>
+:set number | nonumber    
+	是否配置行号
 
-:set scrollbind    是否将窗口加入窗口滚动绑定列表(配置针对本窗口有效)
+:set ruler | noruler    
+	是否配置在右下角显示游标定位信息
 
-:set updatetime    更新swap文件的停留时长，单位ms
+:set runtimepath=<path>    
+	配置插件查找路径
 
-:set updatecount    更新swap文件的输入字符数
+:set scrollbind | noscrollbind    
+	是否将窗口加入窗口滚动绑定列表(配置针对本窗口有效)
 
-:set directory    保存swap文件的目录
+:set scrolloff=<num>
+	在滚动时, 在光标所在行上下总保留指定行, 作为上下文
 
-:set fileformats=unix,dos,mac    文本换行符识别顺序
+:set shiftwidth=<num>
+	使用autoindent时, 下一行相对于上一行的内层缩进
 
-:set key=STR    配置/取消密码(取消密码使用空字符串'')
+:set showmode | noshowmode    
+	是否显示当前所处模式
 
-:set runtimepath    配置插件查找路径
+:set smartcase | nosmartcase
+	是否进行智能化切换ignorecase(当单词含大写时, sensitive case)
 
-:set autoindent    自动对齐(<enter>后根据上一行对齐)
+:set softtabstop=<num>
+	配置tab所占的空格数(只适用于配置后插入的tab)
 
-:set shiftwidth    使用autoindent时，下一行相对于上一行的内层缩进
+:set syntax=on|off    
+	是否语法高亮
 
-:set tabstop=NUM    配置tab所占的空格数(修改已存在的tab，每次打开文件都需要设置)
+:set tabstop=<num>
+	配置tab所占的空格数
 
-:set softtabstop=NUM    配置tab所占的空格数(只适用于配置后的tab)
+:set tildeop | notildeop    
+	波浪线符号适配
 
-:set linebreak    将行尾的部分单词截断到下一行
+:set updatecount=<num>    
+	更新swap文件的输入字符数
 
-:set virtualedit=all    表格化编辑(j/k直接移动到光标下/上方，为空字符串''则关闭)
+:set updatetime=<num>    
+	更新swap文件的停留时长, 单位ms
 
-:set arabic    配置arabic模式(文字从右向左)
+:set virtualedit=all
+	表格化编辑(j/k直接移动到光标下/上方, 为空字符串''则关闭)
 
+:set wrapscan | nowrapscan    
+	是否在匹配到文本开始/结束时循环匹配
+
+" 以下语句为上次离开文件时的光标停留位置
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-保留上次离开文件时的光标停留位置
 
 
 3.查看配置格式(backup为例)
@@ -77,7 +108,11 @@ $VIMRUNTIME/vimrc_example.vim
 
 
 5.tutor内容
-thompson@dataforthompson:~$ vimtutor
+vimtutor [<language_code>]
+
+language_code如下:
+	fr - 法文
+	zh - 中文
 
 
 6.支持clipboard/clientserver
@@ -88,6 +123,6 @@ vim --version|grep -E 'clipboard|clientserver'
 apt-get install vim-gnome
 
 
-7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80，80代表vim当前安装版本)
+7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
 :!echo $VIMRUNTIME
 
