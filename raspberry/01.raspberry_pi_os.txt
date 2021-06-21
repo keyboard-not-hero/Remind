@@ -1,12 +1,26 @@
+一、安装Raspberry Pi OS系统
+1.下载系统镜像
+官网连接: https://www.raspberrypi.org/
+进入官网, 选择"Software" -- 选择"Raspberry Pi OS" -- 选择"Raspberry Pi OS with desktop and recommended software" -- 点击"Download"
+
+2.解压缩文件
+unzip 2021-05-07-raspios-buster-armhf-full.zip
+
+3.刻录镜像到sd卡
+将sd卡插入读卡器(确保sd卡所在盘符)
+sudo mkfs -t fat /dev/sdb
+sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb status=progress bs=4M
+
+
+二、环境准备
 1.安装vim
 sudo apt install vim
 
 2.切换软件源
+raspberry Pi OS源:
 sudo vi /etc/apt/sources.list
 deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
 deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
-sudo vi /etc/apt/sources.list.d/raspi.list
-deb http://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ buster main ui
 sudo apt-get update
 
 3.开启ssh
@@ -25,3 +39,7 @@ sudo apt-get install fcitx fcitx-ui-classic fcitx-config-gtk
 安装谷歌拼音
 sudo apt-get install fcitx-googlepinyin
 重启
+
+6.修改swap
+sudo vi /etc/dphys-swapfile
+CONF_SWAPSIZE=2048

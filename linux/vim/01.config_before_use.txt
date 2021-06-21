@@ -119,8 +119,10 @@ language_code如下:
 查看支持：
 vim --version|grep -E 'clipboard|clientserver'
 
-获取支持：
+获取支持(三选其一)：
+apt-get install vim-athena
 apt-get install vim-gnome
+apt-get install vim-gtx
 
 
 7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
