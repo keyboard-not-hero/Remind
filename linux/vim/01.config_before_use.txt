@@ -6,6 +6,9 @@
 
 
 2.常规设置
+:colorscheme <case_name>
+	配置语法高亮的配色方案. 具体方案可参考$VIMRUNTIME/colors
+
 :set arabic | noarabic    
 	配置arabic模式(文字从右向左)
 
@@ -15,11 +18,18 @@
 :set autowrite | noautowrite    
 	是否自动保存
 
+:set background=dark | light
+	指定背景为深色或浅色(不改变背景色), 语法高亮使用不同颜色搭配
+	必须配合syntax生效
+
 :set backup | nobackup    
-	是否保存原文件备份(原文件名+~后缀)
+	是否保存原文件备份(添加~后缀)
 
 :set backupext=<ext>
 	配置备份文件后缀为<ext>
+
+:set cmdheight=<num>
+	内容下方的指令行占用的行数
 
 :set compatible | nocompatible    
 	是否为vi兼容模式
@@ -30,6 +40,12 @@
 :set fileformats=unix,dos
 	文本换行符识别顺序
 
+:set filetype=<lan_type>
+	文件内容的语言类型
+
+:set history=<num>
+	指令的历史数量和查找历史数量
+
 :set hlsearch | nohlsearch    
 	是否高亮匹配内容
 
@@ -39,14 +55,25 @@
 :set incsearch | noincsearch    
 	是否在匹配内容输入时进行实时匹配
 
+:set iskeyword=<ascii_list>
+	指定字符视为单词组成部分
+
 :set linebreak | nolinebreak
 	是否将行尾的部分单词截断到下一行
+
+:set list | nolist
+	是否显示tab和行结束($)符号
 
 :set matchpairs=(:),{:}.[:]
 	设置%符号配对生效的括号类型
 
 :set number | nonumber    
 	是否配置行号
+
+:set patchmode=<ext>
+	原始备份的后缀字符串
+	原始备份指第一次修改文件的备份, 后续修改文件发现该文件存在,
+即不会再次进行原始备份
 
 :set ruler | noruler    
 	是否配置在右下角显示游标定位信息
@@ -63,8 +90,14 @@
 :set shiftwidth=<num>
 	使用autoindent时, 下一行相对于上一行的内层缩进
 
+:set showcmd | noshowcmd
+	是否显示未完成的指令
+
 :set showmode | noshowmode    
 	是否显示当前所处模式
+
+:set sidescroll=<num>
+	配合wrap使用, 向右偏移指定列数
 
 :set smartcase | nosmartcase
 	是否进行智能化切换ignorecase(当单词含大写时, sensitive case)
@@ -72,8 +105,9 @@
 :set softtabstop=<num>
 	配置tab所占的空格数(只适用于配置后插入的tab)
 
-:set syntax=on|off    
+:set syntax=on|off|<program language>
 	是否语法高亮
+	需要终端支持. 使用如下语句查看: echo $TERM
 
 :set tabstop=<num>
 	配置tab所占的空格数
@@ -90,6 +124,9 @@
 :set virtualedit=all
 	表格化编辑(j/k直接移动到光标下/上方, 为空字符串''则关闭)
 
+:set wrap | nowrap
+	逻辑行超出一行能显示的字符数量后, 是否进行换行
+
 :set wrapscan | nowrapscan    
 	是否在匹配到文本开始/结束时循环匹配
 
@@ -99,15 +136,23 @@ if has("autocmd")
 endif
 
 
-3.查看配置格式(backup为例)
+3.查看配置(backup为例)
 :set backup?
 
 
-4.示例文件地址：
+4.恢复到默认配置(backup为例)
+:set backup&
+
+
+5.示例文件地址：
 $VIMRUNTIME/vimrc_example.vim
 
 
-5.tutor内容
+6.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
+:!echo $VIMRUNTIME
+
+
+7.tutor内容
 vimtutor [<language_code>]
 
 language_code如下:
@@ -115,7 +160,7 @@ language_code如下:
 	zh - 中文
 
 
-6.支持clipboard/clientserver
+8.支持clipboard/clientserver
 查看支持：
 vim --version|grep -E 'clipboard|clientserver'
 
@@ -125,6 +170,9 @@ apt-get install vim-gnome
 apt-get install vim-gtx
 
 
-7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
-:!echo $VIMRUNTIME
+9.宏映射
+:map <key> <cmd_list>
 
+示例(给单词添加{}):
+:map <F5> bi{<Esc>ea}<Esc>
+** warning: <F5>为四个字符, <Esc>为五个字符, 而非单个按键

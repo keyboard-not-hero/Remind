@@ -2,29 +2,39 @@
 1.全局插件
 2.文件类型插件
 
+
 插件获取：
 1.vim包自带--$VIMRUNTIME/macros(全局)、$VIMRUNTIME/ftplugin(文件类型)
+
 2.网络下载(如www.vim.org)
+
 3.maillist
-4.自己编写
+
 
 插件激活步骤：
 1.获取插件
+
 2.将插件放进特定目录(全局：~/.vim/plugin/、文件类型：~/.vim/ftplugin/)
+
 
 添加插件及帮助文档步骤(matchit插件为例)：
 1.创建全局插件目录
 :!mkdir ~/.vim/plugin
+
 2.复制插件
 :!cp $VIMRUNTIME/macros/matchit.vim ~/.vim/plugin
+
 3.创建帮助目录
 :!mkdir ~/.vim/doc
+
 4.复制帮助文档
 :!cp $VIMRUNTIME/macros/matchit.txt ~/.vim/doc
+
 5.添加帮助文档的查找路径
 :helptags $PLUGIN_PATH/doc
+
 6.使用帮助文档
-:help <name>.txt
+:help matchit
 
 
 
@@ -34,8 +44,10 @@
 1.依赖工具：
   git
   curl(用于搜索)
+
 2.下载
   thompson@~$ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
 3.编辑配置文件
   thompson@~$ vi ~/.vimrc
   set nocompatible              " be iMproved, required
@@ -81,20 +93,27 @@
   "
   " see :h vundle for more details or wiki for FAQ
   " Put your non-Plugin stuff after this line
+
 4.安装插件(将~/.vimrc的Plugin指定插件进行安装，并自动添加helptags路径)
   :PluginInstall
   或者
   thompson@~$ vim +PluginInstall +qall
+
 5*.单个(或多个)插件安装
   :PluginInstall <name1> [name2]
+
 6*.更新全部或指定插件
   :PluginUpdate [name1] [name2]
+
 7*.根据关键字进行插件搜索(不区分大小写的模糊匹配，可对罗列entry进行interactive安装[i]，该类安装不更新.vimrc文件)
   :PluginSearch <key>
+
 8*.罗列已安装插件
   :PluginList
+
 9*.清除缓存(~/.vimrc无Plugin配置，但安装目录依然存在。默认目录~/.vim/bundle)
   :PluginClean
+
 10*.帮助文档
   thompson@~$ cp ~/.vim/bundle/Vundle.vim/doc/vundle.txt ~/.vim/doc
   :helptags ~/.vim/doc

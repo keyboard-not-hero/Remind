@@ -43,3 +43,4 @@ sudo apt-get install fcitx-googlepinyin
 6.修改swap
 sudo vi /etc/dphys-swapfile
 CONF_SWAPSIZE=2048
+sudo /etc/init.d/dphys-swapfile restart
