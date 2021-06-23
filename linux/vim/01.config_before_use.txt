@@ -115,6 +115,9 @@
 :set tildeop | notildeop    
 	波浪线符号适配
 
+:set undofile | noundofile
+	是否保存undo文件
+
 :set updatecount=<num>    
 	更新swap文件的输入字符数
 

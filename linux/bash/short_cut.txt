@@ -1,4 +1,4 @@
-快捷键：
+快捷键: 
 ctrl+A    移动到行首
 
 ctrl+E    移动到行尾
@@ -33,7 +33,7 @@ ctrl+L    清屏
 
 ctrl+C    中断指令
 
-ctrl+D    删除当前字符。当cursor位于行首并且该行无字符时，相当于EOF(end of file)
+ctrl+D    删除当前字符. 当cursor位于行首并且该行无字符时, 相当于EOF(end of file)
 
 ctrl+Z    当前process丢到background执行    
 
@@ -44,3 +44,9 @@ ctrl+shift+V    粘贴文本
 ctrl+s    锁定bash
 
 ctrl+q    解锁bash
+
+ctrl -		缩小字体
+
+ctrl +		增大字体
+
+ctrl 0		字体恢复正常

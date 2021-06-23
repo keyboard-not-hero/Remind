@@ -1,0 +1,8 @@
+1.添加代码
+sudo vi /boot/config.txt
+dtoverlay=gpio-shutdown
+
+2.连接按键与GPIO引脚
+连接SCL(5脚)和GND(6脚)到按键
+
+3.重启测试

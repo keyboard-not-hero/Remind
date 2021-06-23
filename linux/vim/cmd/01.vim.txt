@@ -1,0 +1,117 @@
+vim - vi的加强版, 程序文本编辑器
+
+语法
+vim [option] [file]...
+
+参数释义
++[num]
+	指定光标位于第一个文件的num行
+	默认位于最后一行
+
++/pattern
+	指定光标位于第一个文件中, 第一个匹配pattern的行
+	pattern为正则表达式
+
+-A
+	第一个文件文字方向为从右至左
+	需要vim支持arabic特性
+
+-b
+	以二进制模式读取
+
+-C
+	以vi兼容模式打开文件
+	类似于:set compatible指令
+
+-c <command>
+	进入第一个文件后, 马上执行的指令
+	如: -c "set nu"
+
+--cmd <command>
+	类似于-c参数, 但该参数在读取vimrc文件之前执行
+
+-d
+	使用diff模式, 比较多个文件的差异
+	指定文件个数必须为2个或以上
+
+-E
+	以improved Ex模式打开文件
+
+-e
+	以Ex模式打开
+
+-f, --nofork
+	当vim以GUI运行时, 使用foreground模式, shell等待GUI退出
+
+-g
+	以GUI模式打开文件
+
+-H
+	所有文件的文字方向为从右到左
+	需要rightleft特性支持
+
+-h, --help
+	帮助信息	
+
+-i <viminfo_file>
+	指定viminfo文件
+	默认为~/.viminfo
+
+-L
+	类似于-r
+
+-M
+	不能修改文件
+	modifiable和write选项被设置为no
+
+-m
+	修改文件内容操作不能保存
+	write选项被设置为no
+
+-n
+	不能使用swap文件
+
+-O<n>
+	打开指定个垂直分割窗口
+	默认为每个文件打开一个窗口
+
+-o<n>
+	打开指定个水平分割窗口
+	默认为每个文件打开一个窗口
+
+-p<n>
+	打开指定个page页
+	默认为每个文件打开一个page页
+
+-R
+	以只读模式打开文件
+	选项readonly支持
+	可以使用:w!保存修改
+
+-r
+	显示swap文件
+
+-r <swap_file>
+	利用swap文件恢复未保存修改
+
+-S <file>
+	进入第一个文件后, 马上从指定文件中读取配置文件中的指令
+	类似于-c "source <file>"
+	该参数只有作为最后一个参数时, 才能生效
+
+-s
+	slient模式
+
+-s <script_file>
+	执行指定文本内的指令
+
+-U <gvimrc>
+	指定GUI版本vim的初始化文件
+
+-u <vimrc>
+	指定初始化文件
+	默认为~/.vimrc
+
+-V<n>
+	verbose模式
+	n指定verbose程度, 默认为10
