@@ -89,10 +89,8 @@ vim [option] [file]...
 	可以使用:w!保存修改
 
 -r
-	显示swap文件
-
--r <swap_file>
 	利用swap文件恢复未保存修改
+	当未提供file时, 显示能找到的swap文件列表
 
 -S <file>
 	进入第一个文件后, 马上从指定文件中读取配置文件中的指令
@@ -115,3 +113,6 @@ vim [option] [file]...
 -V<n>
 	verbose模式
 	n指定verbose程度, 默认为10
+
+-x
+	给文件加上密码

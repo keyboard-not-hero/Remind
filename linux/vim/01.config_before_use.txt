@@ -13,7 +13,7 @@
 	配置arabic模式(文字从右向左)
 
 :set autoindent | noautoindent
-	是否自动对齐
+	是否自动插入缩进
 
 :set autowrite | noautowrite    
 	是否自动保存
@@ -38,7 +38,7 @@
 	保存swap文件的目录
 
 :set fileformats=unix,dos
-	文本换行符识别顺序
+	由换行符识别文件格式
 
 :set filetype=<lan_type>
 	文件内容的语言类型
@@ -58,6 +58,9 @@
 :set iskeyword=<ascii_list>
 	指定字符视为单词组成部分
 
+:set key=<passwd>
+	设置文件密码
+
 :set linebreak | nolinebreak
 	是否将行尾的部分单词截断到下一行
 
@@ -65,7 +68,12 @@
 	是否显示tab和行结束($)符号
 
 :set matchpairs=(:),{:}.[:]
-	设置%符号配对生效的括号类型
+	设置配对生效的括号类型
+	可用于%匹配, 或showmatch跳转
+
+:set matchtime=<one_tenth_second>
+	配合showmatch时间, 在匹配括号处停留的时间, 时间单位为1/10秒
+	默认为5, 即0.5秒
 
 :set number | nonumber    
 	是否配置行号
@@ -93,6 +101,10 @@
 :set showcmd | noshowcmd
 	是否显示未完成的指令
 
+:set showmatch | noshowmatch
+	是否在输入括号时, 跳转到匹配对括号处(停留matchtime时间), 最后返回输入位置
+	括号类型由matchpairs决定
+
 :set showmode | noshowmode    
 	是否显示当前所处模式
 
@@ -110,7 +122,10 @@
 	需要终端支持. 使用如下语句查看: echo $TERM
 
 :set tabstop=<num>
-	配置tab所占的空格数
+	配置tab所占的空格数. 建议更改softtabstop
+
+:set textwidth=<num>
+	设置行宽
 
 :set tildeop | notildeop    
 	波浪线符号适配
@@ -138,24 +153,36 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+" 选项列表参考: option-list
 
-3.查看配置(backup为例)
+
+3.选项赋值类型(以matchpairs为例)
+当选项赋值为列表类型值时, 有以下三种赋值方式:
+1)直接赋值:
+	:set matchpairs={:},<:>
+2)从当前已有值中添加:
+	:set matchpairs+=[:]
+3)从当前已有值中删减:
+	:set matchpairs-={:}
+
+
+4.查看选项配置(backup为例)
 :set backup?
 
 
-4.恢复到默认配置(backup为例)
+5.选项恢复到默认配置(backup为例)
 :set backup&
 
 
-5.示例文件地址：
+6.示例文件地址：
 $VIMRUNTIME/vimrc_example.vim
 
 
-6.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
+7.获取$VIMRUNTIME路径(通常为/usr/share/vim/vim80, 80代表vim当前安装版本)
 :!echo $VIMRUNTIME
 
 
-7.tutor内容
+8.tutor内容
 vimtutor [<language_code>]
 
 language_code如下:
@@ -163,7 +190,7 @@ language_code如下:
 	zh - 中文
 
 
-8.支持clipboard/clientserver
+9.支持clipboard/clientserver
 查看支持：
 vim --version|grep -E 'clipboard|clientserver'
 
@@ -173,7 +200,7 @@ apt-get install vim-gnome
 apt-get install vim-gtx
 
 
-9.宏映射
+10.宏映射
 :map <key> <cmd_list>
 
 示例(给单词添加{}):
