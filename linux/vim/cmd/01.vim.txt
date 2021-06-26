@@ -98,7 +98,7 @@ vim [option] [file]...
 	该参数只有作为最后一个参数时, 才能生效
 
 -s
-	slient模式
+	quiet模式
 
 -s <script_file>
 	执行指定文本内的指令
@@ -114,5 +114,25 @@ vim [option] [file]...
 	verbose模式
 	n指定verbose程度, 默认为10
 
+-W <script>
+	对文件的全部操作都记录到script
+	当script文件已存在时, 覆盖该文件
+
+-w <script>
+	对文件的全部操作都append到script脚本尾部
+
 -x
 	给文件加上密码
+
+
+
+示例1 - 使用指令脚本对文本进行操作(Ex模式)
+vim -e demo.txt < operation.vim
+
+cat operation.vim
+%s/man/woman/g
+write
+quit
+
+相同效果:
+vim -s operation.vim demo.txt
