@@ -1,0 +1,43 @@
+iconv - 转化文本内容的编码
+
+语法
+iconv [option...] <file>...
+
+参数释义
+-?, --help
+	帮助文档
+
+-c
+	遇到不能转化的字符时, 忽略该字符
+
+-f <encode>, --from-code=<encode>
+	指定源文件编码格式
+
+-l, --list
+	罗列支持的编码集合
+
+-o <out_file>, --output=<out_file>
+	将结果输出到指定文件
+	默认输出到stdout
+
+-s, --slient
+	quiet模式. 仅为旧版本兼容
+
+-t <encode>, --to-code=<encode>
+	指定目标文件编码格式
+
+--usage
+	简短语法用例
+
+-V, --version
+	版本信息
+
+--verbose
+	verbose模式, 在stderr显示进度
+
+示例：
+iconv -f gbk -t utf-8 src.txt -o target.txt
+
+** 可使用file指令查看文件编码
+** Windows的ISO-8859等于gbk
+

@@ -2,10 +2,10 @@
 
 算法种类:
 MD5(Message Digest Algorithm)
-生成128 bit的hash值
+	生成128 bit的hash值
 
 SHA1(Secure Hash Algorithm)
-生成160 bit的hash值
+	生成160 bit的hash值
 
 SHA2
 列表如下

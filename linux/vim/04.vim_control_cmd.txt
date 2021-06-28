@@ -415,27 +415,54 @@ m<mark>					作用于多文件的标记(mark为大写字母)
 
 
 
-zf{motion}			创造一个折叠. 如: zfap代表折叠当前段落
-:{range}fo[ld]		创建指定范围行的折叠
-zd					清除当前折叠
-zD					清除当前及内嵌折叠
-zE					清除所有折叠
-zo					打开当前折叠
-zO					打开当前及内嵌折叠
-zR					打开所有折叠
-:{range}foldo[pen]	打开指定范围行的折叠
-zc					闭合当前折叠
-zC					闭合当前折叠及嵌套折叠
-zM					闭合所有折叠
-:{range}foldc[lose]	闭合指定范围行的折叠
-za					打开/闭合当前折叠
-zA					打开/闭合当前及嵌套折叠
-zv					打开折叠, 以能看到未折叠前, 该行内容为准
-:mkview	[<n>]		储存折叠, n代表储存的视图号码, 总共可以储存十个视图
-:loadview [<n>]		加载折叠
+zf{motion}				创造一个折叠. 如: zfap代表折叠当前段落
+:{range}fo[ld]			创建指定范围行的折叠
+:set foldmethod=indent	指定根据缩进创建折叠层级
+:set foldnestmax=<num>	指定内嵌折叠层级上限
+:set foldlevel=<num>	设置折叠层级数
+zd						清除当前折叠
+zD						清除当前及内嵌折叠
+zE						清除所有折叠
+zo						打开当前折叠
+zO						打开当前及内嵌折叠
+zR						打开所有折叠
+:{range}foldo[pen]		打开指定范围行的折叠
+zc						闭合当前折叠
+zC						闭合当前折叠及嵌套折叠
+zM						闭合所有折叠
+:{range}foldc[lose]		闭合指定范围行的折叠
+za						打开/闭合当前折叠
+zA						打开/闭合当前及嵌套折叠
+zv						打开折叠, 以能看到未折叠前, 该行内容为准
+zm						按折叠层级闭合一层折叠
+zr						按折叠层级打开一层折叠
+:mkview	[<n>]			储存折叠, n代表储存的视图号码, 总共可以储存十个视图
+:loadview [<n>]			加载折叠
 --------------------------------------------
 ** 普通/指令模式 - 折叠内容
 ** 参考:help fold-manual
+** 参考:help fold-indent
+
+
+
+:tag <func_name>						跳转到定义函数的标签位置(可以在同目录的文件间跳转)
+ctrl-]									跳转到当前光标所在函数的定义标签位置
+ctrl-T									往回反向标签跳转
+:tags									经过的跳转标签列表
+:tag									跳转到标签列表栈顶
+:set tags=./tags,./../tags,./*/tags		可以在当前目录/父目录/所有子目录的文件间跳转
+:tfirst									跳转到相同定义函数的第一个标签
+:tprevious								跳转到相同定义函数的上一个标签
+:tnext									跳转到相同定义函数的下一个标签
+:tlast									跳转到相同定义函数的最后一个标签
+:tselect <tag_name>						相同定义函数的标签列表
+--------------------------------------------
+** 普通/指令模式 - 标签堆栈
+** 准备工作: 
+** 1.安装ctags
+**     sudo apt-get install exuberant-ctags
+** 2.生成tag文件
+**     ctags *.py
 
 
 

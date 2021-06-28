@@ -1,0 +1,4 @@
+OS Name			Line terminator				Abbreviate		Escape sequence
+Unix/Linux		Line Feed					LF				\n
+Windows/DOS		Carriage Return+Line Feed	CR LF			\r\n
+Mac OS			Carriage Return				CR				\r

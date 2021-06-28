@@ -1,0 +1,120 @@
+dos2unix有两个指令：
+1.dos2unix: 由dos/mac到unix文件格式的转化
+2.unix2dos: 由unix到dos/mac文件格式的转化
+
+语法
+dos2unix [options] file
+
+参数释义:
+--
+	选项结束标志
+
+-1252
+	使用windows编码页1252
+
+-437
+	使用DOS编码页437. DOS编码默认选项
+
+-7
+	将8 bit字符转化为7 bit表示
+
+-850
+	使用DOS编码页850
+
+-860
+	使用DOS编码页860
+
+-863
+	使用DOS编码页863
+
+-865
+	使用DOS编码页865
+
+--allow-chow
+	当原始文件的所有人/所属组不存在时, 允许修改所有者/所属组
+
+-ascii
+	只转换换行符. 默认选项
+
+-b, --keep-bom
+	当源文件包含BOM时, 目标文件保留BOM
+
+-c, --convmode <mode>
+	设置转化模式. 模式可选列表如下:
+		ascii/7bit/iso/mac
+
+-F, --follow-symlink
+	当源文件为symbolic link时, 转化实际指向的文件
+
+-f, --force
+	强制转化二进制文件
+
+-gb, --gb18030
+	将UTF-16转化为GB18030编码, 只适用于Windows下
+	默认UTF-16转化为UTF-8
+
+-h, --help
+	帮助文档
+
+-i[flags], --info[=flags] <file>...
+	显示文件相关信息, 不进行转化. flags可选列表如下:
+		0 - 使用\0代替换行符显示结果
+		b - 是否包含BOM
+		c - 只显示目标文件. 如: dos2unix只显示含有DOS换行符的文件
+		d - DOS换行符数量
+		h - 显示header
+		m - Mac OS换行符数量
+		p - 显示不含路径的文件名
+		t - 文件为二进制/文本文件
+		u - Unix/Linux换行符数量
+
+-iso
+	在DOS和ISO-8859-1(latin1)字符集之间转化
+
+-k, --keepdate
+	输出文件的时间戳不改变
+
+-L, --license
+	版权许可证信息
+
+-l, --newline
+	添加额外的新行
+	源文件的一个换行符转化为目标文件的两个换行符
+
+-m, --add-bom
+	将BOM写入到输出文件
+
+-n, --newline <src> <targ>
+	转化目标文件时, 保留源文件
+	目标文件的权限 = 源文件权限 - umask
+
+--no-allow-chown
+	不允许修改文件的所有者. 默认选项
+
+-o, --oldfile <file>
+	转化目标文件时, 不保留源文件. 默认选项
+
+-q, --quiet
+	quiet模式
+
+-R, --replace-symlink
+	当源文件为symbolic link时, 转化link文件
+	原symbolic link实际指向的文件保持不变
+
+-r, --remove-bom
+	移除BOM
+
+-S, --skip-symlink
+	当源文件为symbolic link, 跳过该文件. 默认选项
+
+-s, --safe
+	不对二进制文件执行操作. 默认选项
+
+-u, --keep-utf16
+	输出文件保留源文件的UTF-16编码
+
+-V, --version
+	版本信息
+
+-v, --verbose
+	verbose模式	
