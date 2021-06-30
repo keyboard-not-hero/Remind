@@ -26,9 +26,11 @@ locale [option] [-a|-m] argument
 	版本信息
 
 额外参数：
--a, --all-locales    列出所有可配置语系选项(参考/etc/locale.gen)
+-a, --all-locales    
+	列出所有可配置语系选项(参考/etc/locale.gen)
 
--m, --charmaps    列出所有可配置字符集选项
+-m, --charmaps    
+	列出所有可配置字符集选项
 
 配置文件：/etc/locale.conf
 

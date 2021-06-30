@@ -1,0 +1,222 @@
+grep -- 显示匹配模式的内容
+
+
+语法:
+grep [options] <pattern> [files]
+
+
+参数释义:
+-A <num>, --after-context=<num>
+	显示匹配行后num行非匹配上下文
+
+-a, --text
+	将匹配的binary文件作为ASCII文件处理
+
+-B <num>, --before-context=<num>
+	显示匹配行前的num行非匹配上下文
+
+-b, --byte-offset
+	匹配行起始位置相对于文件起始的字节偏移, 该偏移基于0
+	配合-o使用时, 匹配部分起始位置相对于文件起始的字节偏移
+
+--binary-files=<type>
+	将二进制文件视为指定格式文件进行匹配
+
+-C <num>, --context=<num>
+	显示匹配行前后的num行非匹配上下文
+
+-c, --count
+	只打印匹配的累计行数, 不打印匹配内容
+
+--color[=<when>], --colour[=<when>]
+	是否突出显示匹配字元, when可选列表: never/always/auto
+
+-D <action>, --devices=<action>
+	将device/FIFO/socket文件进行action操作. action可选列表:
+		read - 将文件视为普通文件进行读取. 默认选项
+		skip - 跳过该文件
+
+-d <action>, --directories=<action>
+	将目录进行action操作. action可选列表:
+		read - 将目录视为普通文件进行读取. 默认选项
+		skip - 跳过目录
+		recurse - 递归读取目录下的文件(只有symbolic link出现在cmd上才读取其指向的文件)
+
+-E, --extended-regexp
+	将pattern解释为extended regular expression(ERE)
+
+-e <pattern>, --regexp=<pattern>
+	匹配的pattern
+	可同时指定多次
+
+--exclude=<glob>
+	跳过匹配glob的文件
+	glob为wildward match
+
+--exclude-dir=<dir>
+	跳过从指定目录下的文件递归匹配
+
+--exclude-from=<file>
+	跳过从指定文件中读取, 匹配glob的文件名称
+
+-F, --fixed-strings
+	将pattern解释为固定长度字符串
+
+-f <file>, --file=<file>
+	从文件中读取pattern, 每行为一个pattern
+
+-G, --basic-regexp
+	将pattern解释为basic regular expression(BRE)
+	默认选项
+
+--group-separator=<sep>
+	使用指定分隔符作为组分隔
+	配合-A/-B/-C使用
+
+-H, --with-filename
+	打印匹配行对应的文件名
+	多文件匹配时, 默认选项
+
+-h, --no-filename
+	不打印匹配行对应的文件名
+	单文件匹配时, 默认选项
+
+--help
+	帮助信息
+
+-I
+	将二进制文件视为没有匹配内容
+	类似于--binary-files=without-match
+
+-i, --ignore-case
+	忽略大小写匹配
+
+--include=<glob>
+	只查找匹配glob模式的文件
+	glob为wildcard match
+
+-L, --files-without-match
+	只打印未出现pattern内容的文件名(用于多文件)
+
+-l, --files-with-matches
+	只打印出现pattern内容的文件名(用于多文件)
+
+--label=<label>
+	配合-H使用, 当grep从stdin中读取数据时, 使用label作为文件名
+
+-m <num>, --max-count=<num>
+	匹配pattern内容num次后, 停止查找
+
+-n, --line-number
+	输出匹配行在文件中的行号, 基于1起始
+
+--no-group-separator
+	使用空字符串作为组分隔
+	配合-A/-B/-C使用
+
+-o, --only-matching
+	只显示行内匹配部分内容
+
+-P, --perl-regexp
+	将pattern解释为perl兼容模式regular expression
+
+-q, --quiet, --silent
+	quiet模式
+
+-R, --dereference-recursive
+	递归读取目录下的文件
+	读取所有symbolic link指向的实际文件
+
+-r, --recursive
+	递归读取目录下的文件
+	只有当symbolic link在command line中, 才读取其指向的文件
+	类似于-d recurse
+
+-s, --no-messages
+	不输出任何错误信息
+
+-T, --initial-tab
+	输出字段在tab对齐位置
+	适用于配合-H/-n/-b选项使用
+
+-u, --unix-byte-offsets
+	将文件视为Unix文件格式
+	该选项只作用于Windows下, 删除CR符号
+
+-V, --version
+	版本信息
+
+-v, --invert-match
+	反向匹配, 匹配pattern不包括的行
+
+-w, --word-regexp
+	完整单词匹配
+
+-x, --line-regexp
+	完整行匹配
+
+-Z, --null
+	使用NUL替代文件名后的分隔符
+
+
+
+正则表达式
+BRE和ERE
+\    关闭后续字符的特殊意义, 或打开后续字符的特殊意义
+
+.    匹配任意单个字符(NUL除外)
+
+*    匹配前面字符0至多次
+
+^    代表行起始。BRE中, 只有处于第一个字符处才为meta字符；ERE中, 处于任何位置都为meta字符
+
+$    代表行结束。BRE中, 只有处于最后一个字符才为meta字符；ERE中, 处于任何位置都为meta字符
+
+[...]    匹配[]内的任一字符。
+  1.-置于非第一个位置时, 代表区间；
+  2.^置于第一个位置有取反作用；
+  3.-或]置于第一个位置时, 作为列表一部分；
+  4.-和]同时作为列表一部分, 需要将]作为第一个字符, 将-作为最后一个字符；
+  5.其他meta字符也作为列表一部分；
+  6.字符集 - 系列字符集合名称。格式[:alpha:]；
+  7.排序字符集 - 将多个字符序列视为一个字符。格式[.ch.]；
+  8.等价字符集 - 应视为等值的一系列字符。格式[=e=]
+
+BRE
+\{n,m\}    匹配前面字符n~m次
+
+\( \)    匹配子模式, 可同时存在9个, 使用1~9标记
+
+\n    引用\( \)限定的第n个子模式, n可为1~9
+**支持BRE的工具：grep/sed/ed/ex/vi/more
+
+ERE
+{n,m}    匹配前面字符n~m次
+
++    前面的字符匹配1或多次
+
+?    前面的字符匹配0或1次
+
+|    匹配符号前或符号后的字符集
+
+( )    匹配分组群          
+**支持ERE的工具：egrep/awk/lex
+
+BRE syntax extend:
+\<    单词起始位置
+\>    单词结束位置
+\b    单词开始或结束位置
+\B    非单词开始或结束位置(字符)
+\w    单词字符([a-zA-Z0-9_])
+\W    非单词字符
+
+优先级列表：
+1.[..][==][::]
+2.\metacharacter
+3.[]
+4.()
+5.*+?{}
+6.no symbol
+7.^$
+8.|
+

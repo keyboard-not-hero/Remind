@@ -4,93 +4,91 @@ bash设定档：
 
 
 bash设定档加载规则：
-1.login shell - 指通过文字接口(level 3)登录方式，或者ssh远程登录，su -切换用户。通过echo $0指令，返回以-为起始内容
+1.login shell - 指通过文字接口(level 3)登录方式, 或者ssh远程登录, su -切换用户. 通过echo $0指令, 返回以-为起始内容
     开启bash
-    /etc/profile --> ~/.bash_profile | ~/.bash_login | ~/.profile
-    **|代表仅读取按顺序最先出现的文件
+    1) /etc/profile --> /etc/profile.d/*.sh
+	2) ~/.bash_profile | ~/.bash_login | ~/.profile --> ~/.bashrc
+    **	|代表仅读取按顺序最先出现的文件
 
     关闭bash(发送HUP信号给所有子进程)
     ~/.bash_logout
 
-2.non-login shell - 指通过图形接口(level 5)启动terminal，su切换用户，bash开启子进程。通过echo $0指令，返回bash内容
+2.non-login shell - 指通过图形接口(level 5)启动terminal, su切换用户, bash开启子进程. 通过echo $0指令, 返回bash内容
     开启bash
-    /etc/bash.bashrc & ~/.bashrc
+    ~/.bashrc
 
 
 管道：
-<command1> | <command2>    将command1的stdout作为command2的stdin，command1的stderr不改变
+<command1> | <command2>    
+	将command1的stdout作为command2的stdin, command1的stderr不改变
 
-<command1> |& <command2>    将command1的stdout/stderr作为command2的stdin。等价于<command1> 2>&1 | <command2>
+<command1> |& <command2>    
+	将command1的stdout/stderr作为command2的stdin. 等价于<command1> 2>&1 | <command2>
 
 
 指令列表：
-<command1> ; <command2>    执行command1完毕后，再执行command2。最终status code为最后一个command返回结果
+<command1> ; <command2>    
+	执行command1完毕后, 再执行command2. 最终status code为最后一个command返回结果
 
-<command> &    将command放到background执行，并且所处shell为当前bash子进程
+<command> &    
+	将command放到background执行, 并且所处shell为当前bash子进程
 
-<command1> && <command2>    短路与，只有当command1返回status code为0时，执行command2。最后返回status code为最后一个执行的command结果
+<command1> && <command2>    
+	短路与, 只有当command1返回status code为0时, 执行command2. 最后返回status code为最后一个执行的command结果
 
-<command1> || <command2>    短路或，只有当command1返回status code为非0时，执行command2。最后返回status code为最后一个执行command结果
+<command1> || <command2>    
+	短路或, 只有当command1返回status code为非0时, 执行command2. 最后返回status code为最后一个执行command结果
 
 
 限定符号：
-\ - 跳脱字符，使后续单个字符在特殊字符和普通字符之间转换   
+\ - 跳脱字符, 使后续单个字符在特殊字符和普通字符之间转换   
 
-'' - 保护所有字符，使之为普通打印字符。内部不可包含'，即使被前置\限定也不可以
+'' - 保护所有字符, 使之为普通打印字符. 内部不可包含', 即使被前置\限定也不可以
 
-"" - 保护大部分字符。
+"" - 保护大部分字符. 
     不保护字符：
     1.$和`除外；
-    2.当history拓展开启时，!除外(posix兼容模式被保护);
-    3.当后续跟随字符为$/`/"/\/<newline>时，\除外;
+    2.当history拓展开启时, !除外(posix兼容模式被保护);
+    3.当后续跟随字符为$/`/"/\/<newline>时, \除外;
     4.*和@除外
 
 
-配置变量(未配置变量，初始使用默认为"")
+配置变量(未配置变量, 初始使用默认为"")
 VAR=value
 read VAR
 VAR=`command args` | VAR=$(command args)
 
-引用变量
+查看变量值
 echo $PATH 或 echo ${PATH}
 
 引用数组变量(索引由0起始)
 echo ${arr[index]}
 
-变量值嵌套
+变量值拓展
 PATH=${PATH}:/usr/local/bin
 
 转化为全局变量(可用于子shell)
 export VAR
 
-当前指令不使用继承全局变量，只使用指定变量
-env -i <VAR>=<VALUE>... [command]
-
-当前指令从继承变量中移除指定变量
-env -u <VAR>... [command]
-
-只适用于当前指令的变量值
-<VAR>=[VALUE] command
-
-罗列全局变量
-export -p
-
 转化为只读变量
 readonly VAR
-
-罗列只读变量
-readonly -p
 
 取消变量
 unset VAR
 
+查看只读变量
+readonly
+
+查看全局变量
+export
+
+查看环境变量
+env
+
 查看变量
 set
 
-PATH内容添加
-PATH=$PATH:/usr/local/bin
-
-**变量名称有空格时，可使用""或''来限定，但""保留特殊字符含义，''内一切皆普通字符
+** 变量名称有空格时, 可使用""或''来限定, 但""保留特殊字符含义, ''内一切皆普通字符
 
 
 常用内置变量:
@@ -102,52 +100,52 @@ $    当前bash PID
 
 BASH    bash二进制程序的路径
 
-BASH_COMMAND    当前执行的指令。可用于trap映射
+BASH_COMMAND    当前执行的指令. 可用于trap映射
 
-BASH_REMATCH    数组，用于保存test built-in指令的=~匹配结果
+BASH_REMATCH    数组, 用于保存test built-in指令的=~匹配结果
 
-GLOBIGNORE    用于bash通配符格式匹配忽略项。自身格式为使用':'分隔的item，item由通配符格式构成
+GLOBIGNORE    用于bash通配符格式匹配忽略项. 自身格式为使用':'分隔的item, item由通配符格式构成
 
-HISTCONTROL    使用':'分割一系列选项，每个选项代表如何将使用过的指令保存到history列表
+HISTCONTROL    使用':'分割一系列选项, 每个选项代表如何将使用过的指令保存到history列表
     选项列表：
     ignorespace - 忽略指令前的空格
-    ignoredups - 当再次出现重复指令时，不保存新出现的重复指令
+    ignoredups - 当再次出现重复指令时, 不保存新出现的重复指令
     ignoreboth - ignorespace与ignoredups合集
-    erasedups - 当再次出现重复指令时，删除旧重复指令，保存当前指令
+    erasedups - 当再次出现重复指令时, 删除旧重复指令, 保存当前指令
 
-HISTFILE    历史指令保存位置。默认为~/.bash_history
+HISTFILE    历史指令保存位置. 默认为~/.bash_history
 
-HISTFILESIZE    历史指令保存文件容纳指令条数。当指令超出时，按队列形式进行先入先出。该选项为0时，不保存历史指令。默认值参考HISTSIZE
+HISTFILESIZE    历史指令保存文件容纳指令条数. 当指令超出时, 按队列形式进行先入先出. 该选项为0时, 不保存历史指令. 默认值参考HISTSIZE
 
-HISTIGNORE    使用':'分割一系列pattern模式，当输入指令时，指令匹配每个pattern，如果匹配则不保存记录
+HISTIGNORE    使用':'分割一系列pattern模式, 当输入指令时, 指令匹配每个pattern, 如果匹配则不保存记录
 
-HISTSIZE    历史指令保存条数。为0时不保存；小于0时保存所有指令。默认为500
+HISTSIZE    历史指令保存条数. 为0时不保存；小于0时保存所有指令. 默认为500
 
-HISTTIMEFORMAT    历史命令保存时间戳。如:"%T %F "；详细格式参考strftime(3)
+HISTTIMEFORMAT    历史命令保存时间戳. 如:"%T %F "；详细格式参考strftime(3)
 
-HOME    用户的家目录，~就是参考该变量
+HOME    用户的家目录, ~就是参考该变量
 
-HOSTFILE    类似于/etc/hosts内容格式，读取主机名和IP映射。当HOSTFILE为""或者指定文件不可读时，使用/etc/hosts
+HOSTFILE    类似于/etc/hosts内容格式, 读取主机名和IP映射. 当HOSTFILE为""或者指定文件不可读时, 使用/etc/hosts
 
-IFS    shell内部字段分割器。如：可用于read参数划分。默认为[ \t\n]
+IFS    shell内部字段分割器. 如：可用于read参数划分. 默认为[ \t\n]
 
 LANG    语言编码
 
-LC_ALL    配置bash所有相关语言(参考local指令)
+LC_ALL    配置bash所有相关语言(参考locale指令)
 
 LINENO    当前行号
 
 MAIL    用户邮件存放位置(/var/spool/mail/<user>)
 
-OLDPWD    上一个工作目录
+OLDPWD    上一个工作目录, -参考该变量值
 
-PATH    指令查找路径(使用':'分隔路径，'.'或者''都代表当前目录)
+PATH    指令查找路径(使用':'分隔路径, '.'或者''都代表当前目录)
 
-POSIXLY_CORRECT    shell是否处于posix兼容模式。当该值为'y'时，代表处于posix模式(set -o posix)
+POSIXLY_CORRECT    shell是否处于posix兼容模式. 当该值为'y'时, 代表处于posix模式(set -o posix)
 
 PPID    当前进程的父进程ID
 
-PROMPT_COMMAND    在PS提示前执行的指令。如：PROMPT_COMMAND="ls"，每次PS1提示前，显示ls指令结果
+PROMPT_COMMAND    在PS提示前执行的指令. 如：PROMPT_COMMAND="ls", 每次PS1提示前, 显示ls指令结果
 
 PS1    指令行首行提示
 
@@ -161,9 +159,9 @@ PWD    当前工作目录
 
 RANDOM    产生0~32767之间的随机数
 
-REPLY    当指令read没有指定变量时，默认赋值给该变量
+REPLY    当指令read没有指定变量时, 默认赋值给该变量
 
-SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh)。赋值为0后，从0开始从新计时
+SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh). 赋值为0后, 从0开始从新计时
 
 SHELL    用户使用的shell
 
@@ -171,7 +169,7 @@ UID    当前登录用户ID
 
 
 运算符(优先级降序)：
-1.++,--    自增，自减
+1.++,--    自增, 自减
 
 2.-,+    一元正负号
 
@@ -179,15 +177,15 @@ UID    当前登录用户ID
 
 4.**    求幂
 
-5.*,/,%    乘，除，求余
+5.*,/,%    乘, 除, 求余
 
 6.+.-    二元加减
 
-7.<<,>>    向左位移，向右位移
+7.<<,>>    向左位移, 向右位移
 
 8.<=,>=,<,>    比较运算符
 
-9.==,!=    相等，不等
+9.==,!=    相等, 不等
 
 10.&    位与
 
@@ -215,56 +213,67 @@ UID    当前登录用户ID
 元素赋值：
 1.指定索引赋值：arr[num]=value
 2.多个索引赋值：arr=(val1 val2 ... valn)
-  **为arr[0]~arr[n-1]赋值。不适用于关联数组(declare -A声明)
+  **为arr[0]~arr[n-1]赋值. 不适用于关联数组(declare -A声明)
 3.不指定索引赋值：arr=value
   **为arr[0]赋值
 
 元素引用格式：
 ${name[index]} - 返回引用元素的值
-    1.当index为'*'或'@'时，代表数组全部元素
-    2.${#name[index]}代表元素length；当index为'*'或'@'时，为数组length
-    3.索引为非负数，从0开始的正向遍历数组；索引为负数：从-1开始的反向遍历数组
-    4.当不指定index时，默认index为0
+    1.当index为'*'或'@'时, 代表数组全部元素
+    2.${#name[index]}代表元素length；当index为'*'或'@'时, 为数组length
+    3.索引为非负数, 从0开始的正向遍历数组；索引为负数：从-1开始的反向遍历数组
+    4.当不指定index时, 默认index为0
     5.${!name[*]}或${!name[@]}为获取索引列表
     6.删除数组元素 - unset name[index]；
     7.删除整个数组 - unset name[*]/unset name[@]
 
 元素切片
-${name[@]:offset[:length]} - 从offset作为起始索引，获取长度为length的子数组
-  1.length可省略，代表持续到原数组末尾
-  2.offset可以为负数，但:与-n要有空格，与${var:-init}做区分，作为反向索引计数
+${name[@]:offset[:length]} - 从offset作为起始索引, 获取长度为length的子数组
+  1.length可省略, 代表持续到原数组末尾
+  2.offset可以为负数, 但:与-n要有空格, 与${var:-init}做区分, 作为反向索引计数
+
 
 
 重导向符号：
->    将指令stdout内容覆盖到指定文件
+>
+	将指令stdout内容覆盖到指定文件
 
-2>    将指令stderr内容覆盖到指定文件(可使用2>&1，将stderr导向stdout所去往方向)
+2>
+	将指令stderr内容覆盖到指定文件
 
->>    将指令stdout内容添加到文件内容尾部
+>>
+	将指令stdout内容添加到文件内容尾部
 
-2>>    将指定stderr内容添加到文件内容尾部
+2>>
+	将指定stderr内容添加到文件内容尾部
 
-<    从指定文件读取内容，作为指令input内容
+<
+	从指定文件读取内容, 作为指令input内容
 
-<< delimiter    从shell读取键盘输入，作为指令input内容，并在末行单独使用delimiter标记结束输入
+<< delimiter
+	从shell读取键盘输入, 作为指令input内容, 并在末行单独使用delimiter标记结束输入
 
-<<< string    将string字符串作为stdin读入
+<<< string
+	将string字符串作为stdin读入
 
-<&N    将文件fd(N)的内容重导向到stdin。可结合exec builtin指令使用
+<&N
+	将文件fd(N)的内容重导向到stdin. 可结合exec builtin指令使用
 
->&N    将stdout的内容重导向文件fd(N)
+>&N
+	将stdout的内容重导向文件fd(N)
 
-<&N-    将文件fd(N)的内容移动到stdin
+<&N-
+	将文件fd(N)的内容移动到stdin
 
 **set -C <file>可阻止文件内容被覆盖
-**注意：文件描述符0/1/2分别对应stdin/stdout/stderr，所以>为1>的简写，<为0<的简写
+**注意：文件描述符0/1/2分别对应stdin/stdout/stderr, 所以>为1>的简写, <为0<的简写
   文件描述符列表：
-  /dev/fd/<integer>    当重导向符号使用数字时，与该integer重合
-  /dev/stdin    当使用0<时，与该文件重合
-  /dev/stdout    当使用1>时，与该文件重合
-  /dev/stderr    当使用2>时，与该文件重合
-  /dev/udp/<host>/<port>    当host为主机名或IP，并且port为端口号或service名称时，bash试图开启该tcp socket
-  /dev/tcp/<host>/<port>    当host为主机名或IP，并且port为端口号或service名称时，bash试图开启该udp socket
+  /dev/fd/<integer>    当重导向符号使用数字时, 与该integer重合
+  /dev/stdin    当使用0<时, 与该文件重合
+  /dev/stdout    当使用1>时, 与该文件重合
+  /dev/stderr    当使用2>时, 与该文件重合
+  /dev/udp/<host>/<port>    当host为主机名或IP, 并且port为端口号或service名称时, bash试图开启该tcp socket
+  /dev/tcp/<host>/<port>    当host为主机名或IP, 并且port为端口号或service名称时, bash试图开启该udp socket
 
 **将stdout与stderr输出重导向同一个文件(覆盖)
   方式：
@@ -275,17 +284,18 @@ ${name[@]:offset[:length]} - 从offset作为起始索引，获取长度为length
   方式：
   1.&>>方式：&>> file
   2.>&方式：>> file 2>&1
-**ls > file 2>&1代表将stdout重导向到文件file，并且在之后将stderr也重导向到stdout所导向位置(file)
-**ls 2>&1 > file与之前不同，先将stderr重导向到stdout位置，然后stdout重导向到文件file。最后，stderr输出是在stdout上
+
+** ls > file 2>&1代表将stdout重导向到文件file, 并且在之后将stderr也重导向到stdout所导向位置(file)
+
 
 
 PS1:主要指令行提示
 语法：
-\a    ASCII 007，响铃
+\a    ASCII 007, 响铃
 
-\d    日期，格式"weekday month day"
+\d    日期, 格式"weekday month day"
 
-\D{format}    日期，将format传给strftime(3)进行转化。当format未指定时，打印'\D'
+\D{format}    日期, 将format传给strftime(3)进行转化. 当format未指定时, 打印'\D'
     format格式：
     %a    weekday缩写
     %A    weekday全称
@@ -294,45 +304,45 @@ PS1:主要指令行提示
     %c    默认日期和时间格式
     %C    世纪格式(year/100)
     %d    day of month
-    %D    日期，%m/%d/%y格式
-    %e    day of month，前置0替换为空格
-    %F    日期，%Y-%m-%d格式
-    %g    年，除去世纪部分(2019的19)
+    %D    日期, %m/%d/%y格式
+    %e    day of month, 前置0替换为空格
+    %F    日期, %Y-%m-%d格式
+    %g    年, 除去世纪部分(2019的19)
     %G    年
     %h    month缩写
     %H    24小时制的hour
     %I    12小时制的hour
     %j    day of year
-    %k    24小时制的hour，单字符前置一个空格
-    %l    12小时制的hour，单字符前置一个空格
+    %k    24小时制的hour, 单字符前置一个空格
+    %l    12小时制的hour, 单字符前置一个空格
     %m    月份数
     %M    分钟数
     %n    换行符
     %p    AM/PM
     %P    am/pm
-    %r    12小时制时间，%I:%M:%S %p
-    %R    24小时制时间，%H:%M
+    %r    12小时制时间, %I:%M:%S %p
+    %R    24小时制时间, %H:%M
     %s    Unix时间戳秒数
     %S    秒数
     %t    制表符
-    %T    24小时制时间，%H:%M:%S
-    %u    day of week，范围1~7，周一为1
-    %U    week of year，以周日为周起始
-    %V    week of year，至少当周有四天的为第一周
-    %w    day of week，范围0~6，周日为0
-    %W    week of year，以周一为周起始
-    %x    日期，格式%m/%d/%Y
-    %X    时间，格式%H:%M:%S %p
-    %y    年，除去世纪部分(2019的19)
+    %T    24小时制时间, %H:%M:%S
+    %u    day of week, 范围1~7, 周一为1
+    %U    week of year, 以周日为周起始
+    %V    week of year, 至少当周有四天的为第一周
+    %w    day of week, 范围0~6, 周日为0
+    %W    week of year, 以周一为周起始
+    %x    日期, 格式%m/%d/%Y
+    %X    时间, 格式%H:%M:%S %p
+    %y    年, 除去世纪部分(2019的19)
     %Y    年
     %z    +hhmm或-hhmm时区
     %Z    时区名称缩写
     %+    date格式日期和时间(glic2不支持)
     %%    %字符
 
-\e    ASCII 033，跳脱字符
+\e    ASCII 033, 跳脱字符
 
-\h    主机名，遇到.截止
+\h    主机名, 遇到.截止
 
 \H    主机名
 
@@ -346,13 +356,13 @@ PS1:主要指令行提示
 
 \s    shell名称
 
-\t    当前时间，24小时时间制，HH:MM:SS格式
+\t    当前时间, 24小时时间制, HH:MM:SS格式
 
-\T    当前时间，12小时时间制，HH:MM:SS格式
+\T    当前时间, 12小时时间制, HH:MM:SS格式
 
-\@    当前时间，12小时时间制，HH:MM am/pm格式
+\@    当前时间, 12小时时间制, HH:MM am/pm格式
 
-\A    当前时间，24小时时间制，HH:MM格式
+\A    当前时间, 24小时时间制, HH:MM格式
 
 \u    用户名
 
@@ -368,7 +378,7 @@ PS1:主要指令行提示
 
 \#    下一条指令为当前终端的第N条指令
 
-\$    当UID为0时，提示符为"#"；其他UID为"$"
+\$    当UID为0时, 提示符为"#"；其他UID为"$"
 
 \nnn    对应的ASCII字符(八进制)
 
@@ -378,7 +388,7 @@ PS1:主要指令行提示
 
 \]    结束非打印字符序列
 
-\033[x;ym    后续字符的外观与颜色，x/y混合使用，一个代表外观(0~9)，另一个代表颜色(30~38)
+\033[x;ym    后续字符的外观与颜色, x/y混合使用, 一个代表外观(0~9), 另一个代表颜色(30~38)
   外观可选项
   00 - 黑暗
   01 - 明亮
@@ -423,19 +433,19 @@ pathname expansion
 wildcard匹配
 ?    代表任意一个字符
 
-*    代表任意0个或1个字符，多个字符组成的字符串
+*    代表任意0个或1个字符, 多个字符组成的字符串
 
 []    集合内的任意一个字符
-    1.当-作为第一个或最后一个字符时，作为纯字符
-    2.当!或^作为第一个字符时，表示取集合外的任意一个字符
-    3.当]作为第一个字符时，表示纯字符
-    4.当-作为中间字符时，作为范围区间符号。该范围编码由LC_COLLATE决定
+    1.当-作为第一个或最后一个字符时, 作为纯字符
+    2.当!或^作为第一个字符时, 表示取集合外的任意一个字符
+    3.当]作为第一个字符时, 表示纯字符
+    4.当-作为中间字符时, 作为范围区间符号. 该范围编码由LC_COLLATE决定
     5.[::]表示类字符集
     6.[==]表示不同编码同等字符集
-    7.[..]表示序列字符集。如：[.ch.]将ch作为一个整体字符匹配
+    7.[..]表示序列字符集. 如：[.ch.]将ch作为一个整体字符匹配
 
 **NUL不适用于以上匹配
-**\用于跳脱特殊字符，但是在匹配时忽略\字符
+**\用于跳脱特殊字符, 但是在匹配时忽略\字符
 
 拓展pathname expansion(依赖于shopt的extglob选项)
 ?(pattern-list) - pattern-list出现0次或1次
@@ -451,18 +461,18 @@ wildcard匹配
 
 
 表示式展开：
-{file1,file1...}    展开为多个文件描述符，用于同时对多个文件执行相同操作  
+{file1,file1...}    展开为多个文件描述符, 用于同时对多个文件执行相同操作  
 
-~[user]    展开为指定用户的家目录，默认为当前登录用户($HOME)
+~[user]    展开为指定用户的家目录, 默认为当前登录用户($HOME)
     ~+    当前目录($PWD)
     ~-    上一个工作目录($OLDPWD)
-    ~N    N为数字，默认为~+N，对目录栈进行操作
-    ~+N    N为数字，对目录栈进行操作
-    ~-N    N为数字，对目录栈进行操作
+    ~N    N为数字, 默认为~+N, 对目录栈进行操作
+    ~+N    N为数字, 对目录栈进行操作
+    ~-N    N为数字, 对目录栈进行操作
 
-${parameter}    参数拓展，当parameter为两位或多位位置引用参数，或将变量与其后紧跟字符进行区分
+${parameter}    参数拓展, 当parameter为两位或多位位置引用参数, 或将变量与其后紧跟字符进行区分
 
-  ${OLD_VAR-CONTENT}:当OLD_VAR为已赋值(空字符串或非空字符串)，则返回OLD_VAR的值；当OLD_VAR未赋值，则返回CONTENT的值
+  ${OLD_VAR-CONTENT}:当OLD_VAR为已赋值(空字符串或非空字符串), 则返回OLD_VAR的值；当OLD_VAR未赋值, 则返回CONTENT的值
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str-new_str};echo ${null_str-new_str};echo ${none_str-new_str}
   str
@@ -473,7 +483,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${OLD_VAR:-CONTENT}:当OLD_VAR为非空字符串时，则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则返回CONTENT的值
+  ${OLD_VAR:-CONTENT}:当OLD_VAR为非空字符串时, 则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值, 则返回CONTENT的值
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str:-new_str};echo ${null_str:-new_str};echo ${none_str:-new_str}
   str
@@ -484,7 +494,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${OLD_VAR+CONTENT}:当OLD_VAR为已赋值，则返回CONTENT的值；当OLD_VAR未赋值，则返回空字符串
+  ${OLD_VAR+CONTENT}:当OLD_VAR为已赋值, 则返回CONTENT的值；当OLD_VAR未赋值, 则返回空字符串
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str+new_str};echo ${null_str+new_str};echo ${none_str+new_str}
   new_str
@@ -495,7 +505,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${OLD_VAR:+CONTENT}:当OLD_VAR为非空字符串，则返回CONTENT的值；当OLD_VAR空字符串或未赋值，则返回空字符串
+  ${OLD_VAR:+CONTENT}:当OLD_VAR为非空字符串, 则返回CONTENT的值；当OLD_VAR空字符串或未赋值, 则返回空字符串
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str:+new_str};echo ${null_str:+new_str};echo ${none_str:+new_str}
   new_str
@@ -506,7 +516,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${OLD_VAR=CONTENT}:当OLD_VAR为已赋值，则OLD_VAR值不变，并返回OLD_VAR的值；当OLD_VAR未赋值，则OLD_VAR值等于CONTENT，并返回CONTENT的值
+  ${OLD_VAR=CONTENT}:当OLD_VAR为已赋值, 则OLD_VAR值不变, 并返回OLD_VAR的值；当OLD_VAR未赋值, 则OLD_VAR值等于CONTENT, 并返回CONTENT的值
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str=new_str};echo ${null_str=new_str};echo ${none_str=new_str}
   str
@@ -517,7 +527,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   new_str
 
-  ${OLD_VAR:=CONTENT}:当OLD_VAR为非空字符串，则OLD_VAR值不变，并返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则OLD_VAR值等于CONTENT，并返回CONTENT的值
+  ${OLD_VAR:=CONTENT}:当OLD_VAR为非空字符串, 则OLD_VAR值不变, 并返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值, 则OLD_VAR值等于CONTENT, 并返回CONTENT的值
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str:=new_str};echo ${null_str:=new_str};echo ${none_str:=new_str}
   str
@@ -528,7 +538,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   new_str
   new_str
 
-  ${OLD_VAR?CONTENT}:当OLD_VAR为已赋值，则返回OLD_VAR的值；当OLD_VAR未赋值，则CONTENT的值输出到stderr
+  ${OLD_VAR?CONTENT}:当OLD_VAR为已赋值, 则返回OLD_VAR的值；当OLD_VAR未赋值, 则CONTENT的值输出到stderr
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str?new_str};echo ${null_str?new_str};echo ${none_str?new_str}
   str
@@ -539,7 +549,7 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${OLD_VAR:?CONTENT}:当OLD_VAR为非空字符串，则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值，则CONTENT的值输出到stderr
+  ${OLD_VAR:?CONTENT}:当OLD_VAR为非空字符串, 则返回OLD_VAR的值；当OLD_VAR为空字符串或未赋值, 则CONTENT的值输出到stderr
   例:thompson@www~$ str="str";null_str=""
   thompson@www~$ echo ${str:?new_str};echo ${null_str:?new_str}
   str
@@ -551,86 +561,86 @@ ${parameter}    参数拓展，当parameter为两位或多位位置引用参数�
   <empty_str>
   <empty_str>
 
-  ${parameter:offset[:length]}:截取子字符串或数组切片(${arr[@]})，从offset开始(由0起始)，长度为length
-    1.当length不提供时，子字符串截取到原字符串末尾；或到数组末尾
-    2.当offset为负数时，为字符串反向计数，并将-与:之间留空格，以与:-区分；或数组索引反向计数
-    3.当length为负数时，该参数与offset意义相同，子字符串取原字符串[offset,length)位置字符；不支持数组
+  ${parameter:offset[:length]}:截取子字符串或数组切片(${arr[@]}), 从offset开始(由0起始), 长度为length
+    1.当length不提供时, 子字符串截取到原字符串末尾；或到数组末尾
+    2.当offset为负数时, 为字符串反向计数, 并将-与:之间留空格, 以与:-区分；或数组索引反向计数
+    3.当length为负数时, 该参数与offset意义相同, 子字符串取原字符串[offset,length)位置字符；不支持数组
 
   ${!var}
-  以var变量的值value作为间接变量，得到$value的值
+  以var变量的值value作为间接变量, 得到$value的值
 
   ${!prefix*}
   ${!prefix@}
-  查找以prefix开头的变量列表。该列表以IFS变量值作为item分割符
+  查找以prefix开头的变量列表. 该列表以IFS变量值作为item分割符
 
   ${!name[*]}
   ${!name[@]}
-  获取数组的key列表，当name不是数组名称时，输出0
+  获取数组的key列表, 当name不是数组名称时, 输出0
 
   ${#parameter}
-  默认获取字符串长度；当parameter为数组名时，代表数组长度；当parameter为*或@时，代表位置参数个数
+  默认获取字符串长度；当parameter为数组名时, 代表数组长度；当parameter为*或@时, 代表位置参数个数
 
-  ${VAR#WILDCARD}：将变量VAR从起始位置匹配通配符模式WILDCARD，返回删除符合该匹配的最短部分(懒惰模式)
+  ${VAR#WILDCARD}：将变量VAR从起始位置匹配通配符模式WILDCARD, 返回删除符合该匹配的最短部分(懒惰模式)
   例:thompson@www~$ echo $PATH
   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
   thompson@www~$ echo ${PATH#/*:}
   /usr/bin:/sbin:/usr/sbin:/usr/local/bin
 
-  ${VAR##WC}：将变量VAR从起始位置匹配通配符模式WILDCARD，返回删除符合该匹配的最长部分(贪婪模式)
+  ${VAR##WC}：将变量VAR从起始位置匹配通配符模式WILDCARD, 返回删除符合该匹配的最长部分(贪婪模式)
   例:thompson@www~$ echo $PATH
   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
   thompson@www~$ echo ${PATH##/*:}
   /usr/local/bin
 
-  ${VAR%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，返回删除符合该匹配的最短部分(懒惰模式)
+  ${VAR%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD, 返回删除符合该匹配的最短部分(懒惰模式)
   例:thompson@www~$ echo $PATH
   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
   thompson@www~$ echo ${PATH%:*bin}
   /bin:/usr/bin:/sbin:/usr/sbin
 
-  ${VAR%%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD，返回删除符合该匹配的最长部分(贪婪模式)
+  ${VAR%%WILDCARD}：将变量VAR从结束位置匹配通配符模式WILDCARD, 返回删除符合该匹配的最长部分(贪婪模式)
   例:thompson@www~$ echo $PATH
   /bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
   thompson@www~$ echo ${PATH%:*bin}
   /bin
 
-  ${VAR/OLD_STR/NEW_STR}:将变量值从开始位置匹配到第一个OLD_STR(以通配符方式匹配)，并返回替换为NEW_STR的结果
+  ${VAR/OLD_STR/NEW_STR}:将变量值从开始位置匹配到第一个OLD_STR(以通配符方式匹配), 并返回替换为NEW_STR的结果
   例:thompson@www~$ echo $path
   /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
   thompson@www~$ echo ${path/bin/show}
   /show:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-  **当OLD_STR内容本身以/开头时，将所有OLD_STR替换为NEW_STR
-  **当OLD_STR内容以#开头时，首字符必须与VAR值的首字符匹配
-  **当OLD_STR内容以%开头时，末字符必须与VAR值的末字符匹配，匹配规则为从结束位置到第一个OLD_STR
-  **当VAR为*或@时，依次对所有位置参数执行替换操作
-  **当VAR为数组引用模式${name[*]}或${name[@]}时，对数组每个元素执行替换
+  **当OLD_STR内容本身以/开头时, 将所有OLD_STR替换为NEW_STR
+  **当OLD_STR内容以#开头时, 首字符必须与VAR值的首字符匹配
+  **当OLD_STR内容以%开头时, 末字符必须与VAR值的末字符匹配, 匹配规则为从结束位置到第一个OLD_STR
+  **当VAR为*或@时, 依次对所有位置参数执行替换操作
+  **当VAR为数组引用模式${name[*]}或${name[@]}时, 对数组每个元素执行替换
 
-  ${parameter^pattern}    如果parameter中首字符匹配pattern单字符，使其小写转化为大写
-  ${parameter^^pattern}    将parameter中的所有单字符合集pattern(通配符[])，使其小写转化为大写
-  ${parameter,pattern}    如果parameter中首字符匹配pattern单字符，使其大写转化为小写
-  ${parameter,,pattern}    将parameter中的所有单字符合集pattern(通配符[])，使其大写转化为小写
-  **当pattern省略时，默认为?，代表所有字符合集
-  **当parameter为*或@时，轮流对所有指令行参数进行操作
-  **当parameter为${name[*]}或${name[@]}时，轮流对数组所有元素执行操作
+  ${parameter^pattern}    如果parameter中首字符匹配pattern单字符, 使其小写转化为大写
+  ${parameter^^pattern}    将parameter中的所有单字符合集pattern(通配符[]), 使其小写转化为大写
+  ${parameter,pattern}    如果parameter中首字符匹配pattern单字符, 使其大写转化为小写
+  ${parameter,,pattern}    将parameter中的所有单字符合集pattern(通配符[]), 使其大写转化为小写
+  **当pattern省略时, 默认为?, 代表所有字符合集
+  **当parameter为*或@时, 轮流对所有指令行参数进行操作
+  **当parameter为${name[*]}或${name[@]}时, 轮流对数组所有元素执行操作
 
   ${parameter@operator}    将parameter根据operator进行相应格式转化
     operator可选项：
-    Q - 返回限定在单引号中的parameter，所有特殊符号失去特殊含义
-    E - 将整体变量置于""中，解释parameter中的特殊符号
+    Q - 返回限定在单引号中的parameter, 所有特殊符号失去特殊含义
+    E - 将整体变量置于""中, 解释parameter中的特殊符号
     P - 将parameter的特殊符号内容解释为prompt字符(如PS1格式)
     A - 变量当前值获取时的赋值或declare语句
     a - 变量的属性标记(可参考declare的option)
-  **当parameter为*或@，针对每个参数进行操作
-  **当parameter为${name[*]}或${name[@]}，针对数组每个元素进行操作
+  **当parameter为*或@, 针对每个参数进行操作
+  **当parameter为${name[*]}或${name[@]}, 针对数组每个元素进行操作
 
 -    展开为上一个工作目录($OLDPWD)
 
 `command` 
-$(command)    在命令中，首先将该部分替换为执行该命令后的结果
+$(command)    在命令中, 首先将该部分替换为执行该命令后的结果
 
-$((expression))    算数展开，将表达式expression进行数学运算，然后替换为运算结果
+$((expression))    算数展开, 将表达式expression进行数学运算, 然后替换为运算结果
 
-word splitting    shell对指令行参数进行扫描，将没有使用""进行限定的内容，以IFS变量值作为分隔符，将其分割为positional parameter
+word splitting    shell对指令行参数进行扫描, 将没有使用""进行限定的内容, 以IFS变量值作为分隔符, 将其分割为positional parameter
 
 pathname expansion    将文件名(或含路径全名)按通配符规则进行匹配
 
@@ -639,11 +649,11 @@ pathname expansion    将文件名(或含路径全名)按通配符规则进行�
 1.查找是否有function对应该名称
 2.查找是否有builtin指令
 3.根据PATH变量搜索可执行路径下的可执行文件(结合hash table)
-4.查找command_not_found_handle方法，如无该方法，返回status code=127
+4.查找command_not_found_handle方法, 如无该方法, 返回status code=127
 
 指令执行环境：
-1.非builtin指令执行时，环境为subshell
-2.builtin指令执行时，环境为当前shell；当builtin指令位于管道(|)后，则环境为subshell
+1.非builtin指令执行时, 环境为subshell
+2.builtin指令执行时, 环境为当前shell；当builtin指令位于管道(|)后, 则环境为subshell
 
 status code：
 1.成功执行则返回0

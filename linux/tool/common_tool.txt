@@ -1,5 +1,0 @@
-IM: electronic-wechat
-
-music: 网易云音乐
-
-dict: goldendict
