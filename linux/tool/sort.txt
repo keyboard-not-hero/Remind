@@ -1,0 +1,61 @@
+sort - 对文件的文本行进行排序
+
+语法
+sort [option] [file]...
+
+参数释义
+-b, --ignore-leading-blanks
+	忽略行首的空格
+
+-d, --dictionary-order
+	只比较空格和字母数字
+
+-f, --ignore-case
+	忽略大小写(将小写字母转化为大写字母进行比较)
+
+-g, --general-numeric-sort
+	将数字优先级排的更高. 列表: digit > upper character > lower character
+	默认优先级别: upper character > lower character > digit
+
+-h, --human-numeric-sort
+	对数字进行单位比较. 如: 1K, 2G
+
+-i, --ignore-nonprinting
+	只比较可打印字符
+
+-k, --key=<key>
+	根据指定列或类型进行排序
+
+-M, --month-sort
+	将月份的缩写进行排序. 大小: unknown < JAN < ... < DEC
+	必须确保LC_TIME为英文系
+
+-m, --merge
+	将多个已排序文本进行合并, 并不对最终结果排序
+
+-n, --numeric-sort
+	将数字按大小进行排序
+
+-o, --output=<file>
+	将结果输出到指定文件
+
+-R, --random-sort
+	根据随机生成的hash值进行排序, 即打乱顺序
+
+-r, --reverse
+	反向排序结果
+
+--sort=<word>
+	根据类型进行排序. 列表如下:
+		general-numeric - 与-g选项类似
+		human-numeric - 与-h选项类似
+		month - 与-M选项类似
+		numeric - 与-n选项类似
+		random - 与-R选项类似
+		version - 与-V选项类似
+
+-t, --field-separator=<sep>
+	指定字段分隔符
+
+-V, --version-sort
+	按版本类型字符串进行排序

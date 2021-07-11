@@ -1,0 +1,51 @@
+uniq - 报告或忽略连续重复行
+
+语法
+uniq [option] [input [output]]
+
+参数释义
+-c, --count
+	显示行内容出现的次数
+
+-D, --all-repeated[=<method>]
+	显示所有重复行, 并使用指定分隔符进行分隔不同内容组. 分隔方法列表:
+		none - 不使用分隔符进行分隔. 默认方法
+		prepend - 每个分组之前添加空行
+		separate - 分组之间添加空行
+
+-d, --repeated
+	只显示重复出现的行
+
+-f, --skip-fields=<n>
+	忽略前n个字段的比较
+
+--group[=<method>]
+	显示所有行, 并使用指定分隔符进行分隔不同内容组
+	忽略-c/-d/-D/-u选项
+	分隔方法列表:
+		separate - 每个分组之间添加空行. 默认方法
+		prepend - 分组之前添加空行
+		append - 分组之后添加空行
+		both - 分组之前和之后都添加空行
+
+--help
+	帮助文档
+
+-i, --ignore-case
+	比较时忽略大小写
+
+-s, --skip-chars=<n>
+	忽略前n个字符的比较
+
+-u, --unique
+	只显示唯一的重复行
+
+--version
+	版本信息
+
+-w, --check-chars=<n>
+	只比较前n个字符
+
+-z, --zero-terminated
+	使用\0代替新行作为行结束符
+

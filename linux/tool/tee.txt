@@ -1,0 +1,18 @@
+tee - 通过stdin读取内容, 并将内容输出到stdout和文件
+
+语法：
+tee [option]... [file]...
+
+参数：
+-a, --append
+	内容添加到file尾部, 而非直接覆盖
+
+--help
+	帮助文档
+
+-i, --ignore-interrupts
+	忽视中断信号
+
+--version
+	版本信息
+
