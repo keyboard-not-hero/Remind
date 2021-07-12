@@ -1,0 +1,75 @@
+join - 合并两个文件具有相同字段的行
+
+语法
+join [option] <file1> <file2>
+
+参数释义
+-1 <field_num>
+	file1合并的字段
+
+-2 <field_num>
+	file2合并的字段
+
+-a <field_num>
+	指定显示指定文件的不包含合并字段的行(包含合并的行)
+
+--check-order
+	检查文件是否已排序
+
+-e <str>
+	如果file1和file2中都没有指定的字段, 则prepend指定字符串
+	配合-j或-1/-2使用
+
+--header
+	将每个文件的第一行视为header, 不进行join操作
+
+--help
+	帮助文档
+
+-i, --ignore-case
+	忽略比较字段的大小写差异
+
+-j <field>
+	指定用于合并的字段. 等价于-1 field -2 field
+
+--nocheck-order
+	不检查文件是否已排序
+
+-o <format>
+	指定输出指定文件的指定字段. 格式: <file_num>.<field_num>
+
+-t <sep>
+	使用sep作为输入和输出的字段分隔符
+
+-v <field>
+	指定显示指定文件的不包含合并字段的行(不包含合并的行)
+
+--version
+	版本信息
+
+
+
+示例文本内容:
+cat demo01.txt
+january	music
+february game
+march moive
+august learn
+
+cat demo02.txt
+january apple
+february banana
+may watermelon
+
+sort demo01.txt -o demo01_sort.txt
+sort demo02.txt -o demo02_sort.txt
+
+示例1 - 合并文件内容
+join demo01_sort.txt demo02_sort.txt
+february game banana
+january music apple
+
+示例2 - 只显示指定字段
+join -o 1.1 2.2 sort01.txt sort02.txt
+february banana
+january apple
