@@ -1,0 +1,63 @@
+split - 将文件分割为块
+
+语法
+split [option] [input [prefix]]
+
+参数释义
+-a, --suffix-length=<n>
+	分割后文件名添加的后缀长度
+
+--additional-suffix=<suffix>
+	额外给分割后文件名添加的后缀内容
+
+-b, --bytes=<size>
+	分割后的文件字节大小
+
+-C, --line-bytes=<size>
+	分割后的文件最大允许的字节大小
+	遇到换行符, 切换到下一个分割文件
+
+-d, --numeric-suffixes[=<from>]
+	使用数字后缀, 代替默认的字母后缀
+	from代表数字起始号码
+
+-e, --elide-empty-files
+	配合-n使用, 阻止生成长度为0的分割文件
+
+--filter=<command>
+	将分割结果交给指定shell cmd进行操作
+
+--help
+	帮助信息
+
+-l, --lines=<number>
+	分割后的文件允许容纳行数
+	默认为1000
+
+-n, --number=<chunks>
+	将文件平均分割为指定分数. 具体分割类型列表如下:
+		N - 将文件平均分割为N份, 保存到子文件
+		K/N - 将文件平均分割为N份, 并显示第K份到stdout
+		l/N - 将文件平均分割为N份, 保存到子文件. 不从行内进行分割
+		l/K/N - 将文件平均分割为N份, 并显示第K份到stdout. 不从行内进行分割
+		r/N - 使用round robin distribution将文件分割为N份, 并保存到子文件
+		r/K/N - 使用round robin distribution将文件分割为N份, 并显示第K份到stdout
+
+-u, --unbuffered
+	直接对文件进行分割并产生结果文件, 不适用buffer
+	分割使用'--number r/...'模式
+
+--verbose
+	verbose模式
+
+--version
+	版本信息
+
+
+
+示例1 - 将文件分割为100行的子文件
+split -l 100 demo.txt
+
+示例2 - 将文件分割为100行的子文件, 并将结果文件进行压缩
+split -l 100 --filter='xz > $FILE.xz' demo.txt
+** $FILE代表分割文件名称, $FILE.xz代表压缩后在分割文件添加.xz后缀

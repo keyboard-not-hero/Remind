@@ -72,7 +72,7 @@
 	可用于%匹配, 或showmatch跳转
 
 :set matchtime=<one_tenth_second>
-	配合showmatch时间, 在匹配括号处停留的时间, 时间单位为1/10秒
+	配合showmatch时间, 在匹配括号处停留的时间, 时间单位为0.1秒
 	默认为5, 即0.5秒
 
 :set number | nonumber    
