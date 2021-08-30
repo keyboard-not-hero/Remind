@@ -1,0 +1,199 @@
+ed - 行导向的文本编辑器
+
+
+描述
+ed用于将文本文件在buffer中进行内容行添加/修改/删除/显示等操作
+
+
+语法
+ed [option] [file]
+
+
+概述
+ed的两种模式
+1.command mode - 使用指令对文本进行操作
+指令的通用模式
+[<address1>[,<address2>]]<command><parameters>
+address1 - 指定起始行
+address2 - 指定结束行(包含)
+# address1代表指定address1行作为当前行
+# <command>代表对当前所在行进行操作
+# .<command>代表对当前所在行进行操作
+# .-N,.<command>代表对当前行到之前的N行进行操作
+# .,.+N<command>代表对当前行到之后的N行进行操作
+# $<command>代表对最后一行进行操作
+# ,<command>代表对所有行进行操作, 等价于'1,$<command>'
+# /re/代表向后寻找匹配正则re的内容(从当前行的下一行匹配到尾行, 再从首行匹配到当前行)
+# ?re?代表向前寻找匹配正则re的内容(从当前行的上一行匹配的首行, 再从尾行匹配到当前行)
+# '<lower_case>代表已使用指定小写字母mark的行
+	
+command列表
+a
+	进入input mode, 将编辑的内容添加到指定行之后
+		
+c
+	进入input mode, 并且删除指定行的内容, 之后将编辑内容取代删除的内容
+	
+d
+	删除指定行的内容
+
+e <file>
+	读取其他文件的内容. 读取之前需要保存当前buffer的内容
+
+E <file>
+	读取其他文件的内容. 读取之前直接略过未保存的buffer内容
+
+f <file>
+	将buffer内容保存到指定文件
+	当file未提供时, 显示当前buffer内容来源文件名
+	
+g/<RE>/<command_list>
+	从指定行中匹配所有符合RE的行, 并执行command_list指令
+	command_list可以为除g/G/v/V之外的任意指令
+	command_list默认为p指令
+
+G/<RE>/
+	类似于g指令, 但进入交互模式下输入command_list
+
+h
+	显示上一条warning信息
+	
+H
+	打开/关闭显示warning详细信息
+
+i
+	进入input mode, 将编辑的内容添加到指定行之前
+	
+j
+	将指定的行合并为一行
+
+k<lower_case>
+	将指定某一行mark为指定小写字母
+	后续可使用'<lower_case>引用该mark
+
+l
+	显示行内容, 并使用'$'表示行结束
+
+m<line_num>
+	将内容移动到指定行之后
+
+n
+	显示行内容, 并前置行号+<tab>
+
+p
+	显示行内容
+		
+P
+	打开/关闭提示符
+	
+q
+	退出ed. buffer含有未保存内容时出现warning
+	
+Q
+	强制退出ed, buffer含有未保存内容时不出现warning
+	
+r <file>
+	读取文件内容, 将该读取内容置于buffer内容指定行之后
+	
+s/<RE>/<relpacement>/[flag]
+	使用指定replacement内容替换指定行每行第一个匹配RE的内容
+	RE为regular expression
+	replacement中, 特殊符号列表如下:
+		& - 代表RE匹配的内容
+		\<number> - 代表对RE中子表达式的引用, number范围为[1,9]
+	flag列表如下:
+		g - 替换指定行每一个匹配RE的内容
+		<number> - 替换指定行的每行第number个匹配RE的内容
+		l - 显示最后替换的一行内容, 并以'$'表示行结束
+		n - 显示最后替换的一行内容, 并前置行号
+		p - 显示最后替换的一行内容
+		
+s[flag]
+	重复上一次的替换指令
+	flag列表如下:
+		g - 将上一次的替换指令应用到指定行的每一个匹配项
+		<number> - 将上一次的替换指令应用到指定行的每第number个匹配项
+		p - 将上一次替换指令应用到当前, 并打印最后一次替换行
+		r - 导致指定行每行最后一次搜索的RE被使用. 如: ,s/try/catch/2代表每一行的第二项try被替换为catch, 搜索到每一行第三项try截止, ',sr'代表每一行的第三项try被替换为catch, 接着',sr'代表每一行的第四项try被替换为catch
+
+t<line_number>
+	将内容复制到指定行之后
+
+u
+	撤销上一步修改操作
+
+v/<RE>/<command_list>
+	类似于g, 但command_list应用于不匹配RE的行
+
+V/<RE>/
+	类似于G, 但在交互模式下, command_list应用于不匹配RE的行
+	
+w <file>
+	将范围行的内容保存到指定文件(覆盖式)
+	
+wq <file>
+	将范围行内容保存到指定文件, 并退出
+	
+W <file>
+	将范围行的内容保存到指定文件(append到原内容之后)
+	
+x
+	从剪切板中粘贴内容到指定行之后
+	
+y
+	将指定行内容复制到剪切板
+	
+z<number>
+	从指定行开始打印, 并打印number行内容
+	
+
+!<shell_cmd>
+	执行shell指令
+
+#<content>
+	注释行
+	
+=
+	显示行号
+
+
+2.input mode(使用a/i/c等指令进入) - 输出改动的文本内容
+.
+	只包含.的行, 退出input mode
+
+
+
+参数释义
+-G, -traditional
+	运行在兼容模式下
+
+-h, --help
+	帮助信息
+
+-l, --loose-exit-status
+	即使指令失败, 也返回0状态码
+
+-p, --prompt=<string>
+	指定交互界面提示字符串
+
+-r, --restricted
+	运行在严格限定模式下
+
+-s, --quiet, --silent
+	抑制多余信息输出
+
+-V, --version
+	版本信息
+
+-v, --verbose
+	verbose详细模式
+
+
+file
+如果file以'!'为起始, 则代表为shell指令, 该指令结果为文件名称
+
+
+
+示例
+1.找到全部包含go\+gle模式的行并打印
+g/go\+gle/p

@@ -1,0 +1,335 @@
+sed - 流编辑器, 即对输入进行文本转化
+
+
+描述
+sed主要用于针对多个文件进行相同的修改操作
+逐行读取内容到pattern space, 对当前行执行每个操作指令, 再切换到下一行
+
+
+运行流程:
+1.读取一行内容, 移除尾部换行符, 放入pattern space
+2.执行操作指令
+3.除非使用-n选项, 否则打印pattern space内容, 将移除的换行符添加回去
+4.循环1/2/3步骤
+
+
+语法
+sed [option] [<script>] [<input_file> ...]
+
+
+参数释义
+-b, --binary
+	以二进制格式读取文本内容
+	用于Windows/DOS/Cygwin类以\r\n为行结束的系统, 因为sed不能识别carriage return符号
+
+--debug
+	显示详细的转化信息
+
+-E, -r, --regexp-extended
+	使用Extend Regular Expression(ERE)
+	默认使用Basic Regular Expression(BRE)
+
+-e <script>, --expression=<script>
+	指定操作指令
+
+-f <script_file>, --file=<script_file>
+	从指定文件中读取操作指令
+
+--follow-symlinks
+	必须配合-i使用, 当目标文件为symlink时, 指向实际内容文件
+
+--help
+	帮助信息
+
+-i[suffix], --in-place[=suffix]
+	文本操作直接作用在文件内(in-place)
+	可添加指定后缀suffix作为原文件内容备份, suffix的每个'*'符号代表原文件名
+
+-l <n>, --line-length=<n>
+	指定l指令的内容行长度
+	默认为70
+	指定为0时表示不限定长行
+
+-n, --quiet, --silent
+	只打印通过p指令指定的内容
+	默认打印每次循环的pattern space内容
+
+--posix
+	限定使用posix sed特性, 不使用GNU sed的额外拓展特性
+
+-s, --separate
+	将多个文件视为多个文本stream
+	默认将多个文件视为一个长的文本steam
+
+--sandbox
+	沙盒模式, 不能使用e/w/r指令
+
+-u, --unbuffered
+	尽可能使用小的buffer
+
+--version
+	版本信息
+
+-z, --null-data, --zero-terminated
+	将输入视为行集合, 并且行之间使用null符号分隔
+
+
+
+script
+对内容执行的一系列操作
+
+script语法:
+<mode>[!]<process>
+
+mode - 指定操作的行. 当结尾为!, 代表取相反的行. 具体格式: [address1[,address2]], 默认为所有行1,$
+address列表如下:
+	number - 直接指定行号
+	$ - 最后一行
+	<first>~<step> - 在first+n*step行执行操作, n为非负数
+	/<re>/ - 使用正则表达式匹配行. 默认使用Basic Regular Expression(BRE). //代表上次使用的正则匹配表达式
+	\%<re>% - 与/<re>/相同, 并且%可替换为其他符号
+	addr1,+N - addr1到addr1+N行
+	addr1,~N - addr1到最小的N的倍数
+	** /<re>/I和\%<re>%I代表忽略大小写的匹配
+
+
+process - 对指定行的具体操作. 列表如下:
+a <text>
+	将文本添加到指定行的下一行
+	示例:
+	seq 3 | sed '2a hello'
+	1
+	2
+	hello
+	3
+
+b <label>
+	无条件跳转到label位置(类似于goto). 需先使用:进行label标记
+	当没有指定label时, 立即开始下一次循环
+	示例:
+	printf '%s\n' a1 a2 a3 | sed -E '/1/bx ; s/a/z/ ; :x ; y/123/456/'
+	a4
+	z5
+	z6
+
+c <text>
+	将指定行的内容替换为指定文本
+	示例:
+	seq 3|sed 'c this is demo'
+	1
+	this is demo
+	3
+
+d
+	删除pattern space内容, 并马上进入下一次循环(不继续执行后续指令)
+	示例:
+	seq 3|sed 'd'
+
+D
+	当pattern space没有包含换行符时, 类似于指令d
+	当pattern space中包含换行符时, 删除内容直到遇到第一个换行符,
+并在该结果的基础上继续循环(从一个循环的第2步到下一个循环的第2步)
+	示例:
+	参考N指令
+
+e
+	将pattern space中内容作为指令执行, 并将结果覆盖pattern space内容, 不将换行符添加到尾部(不执行第3步)
+	示例:
+	cat demo01.txt
+	ls -a
+	sed 'e' demo01.txt
+	总用量 20
+	-rw-rw-r-- 1 steven steven  15 8月  30 16:23 demo01.txt
+	-rw-rw-r-- 1 steven steven  17 8月  23 22:36 demo02.txt
+
+e <command>
+	在pattern space之前添加行, 行内容为command指令结果
+	示例:
+	seq 2|sed 'e ls -a'
+	.
+	..
+	demo01.txt
+	demo02.txt
+	1
+	.
+	..
+	demo01.txt
+	demo02.txt
+	2
+
+F
+	在pattern space之前添加一行, 行内容为文件名称
+	示例:
+	seq 2|sed 'F'
+	-
+	1
+	-
+	2
+
+g
+	将pattern space内容替换为hold space内容
+
+G
+	在pattern space中添加换行符, 并将hold space内容粘贴到pattern space
+	
+h
+	将hold space内容替换为pattern space内容
+
+H
+	在hold space中添加换行符, 并将pattern space内容提append到hold space
+
+i <text>
+	插入内容到pattern space的上一行
+	示例:
+	seq 3 | sed '2i hello'
+	1
+	hello
+	2
+	3
+
+l
+	打印pattern space内容, 并添加'$'表示行结束
+	示例:
+	seq 3|sed 'l'
+	1$
+	1
+	2$
+	2
+	3$
+	3
+
+n
+	如果没有设置-n参数, 打印pattern space内容, 并马上读取下一行内容
+	如果设置-n参数, 不打印pattern space内容, 并马上读取下一行内容
+	示例:
+	seq 6 | sed 'n;n;s/./x/'
+	1
+	2
+	x
+	4
+	5
+	x
+
+N
+	添加换行符到pattern space, 并读取下一行内容添加到pattern space
+	示例:
+	seq 6|sed -n 'N;l;D'
+	1\n2$
+	2\n3$
+	3\n4$
+	4\n5$
+	5\n6$
+	详解:
+	1)启动循环, 读取数字1
+	2)在1后添加\n, 并马上读入下一行内容2, 组成1\n2; 打印结果1\n2$; 删除1\n,
+剩余2, 并马上开启下一次循环的第2步
+	3)在2后添加\n, 并马上读入下一行内容3, 组成2\n3; 打印结果2\n3$; 删除2\n,
+剩余3, 循环...
+
+p
+	打印pattern space内容	
+	示例:
+	seq 3|sed 'p'
+	1
+	1
+	2
+	2
+	3
+	3
+
+P
+
+
+q[exit_code]
+	执行当前pattern space后, 退出读取循环, 可指定退出码
+
+Q[exit_code]
+	与q类似, 但不执行当前pattern space(不包含第3步)
+
+r <file>
+	读取指定文件的完整内容, 添加到pattern space之后的行
+
+R <file>
+	依次读取指定文件的一行内容, 添加到pattern space之后的行
+
+s/<regexp>/<replacement>/[flags]
+	使用指定内容replacement内容替换符合正则regexp的内容
+	'/'可被其他符号进行替换, 但必须三个'/'同时被替换为同一个符号
+	replacement特殊符号:
+		\<n> - 对regexp中子表达式的引用. 范围[1-9]
+		& - regexp完整内容引用
+		\L - 将后续字母全部转化为小写, 直到遇到\U或\E. GNU拓展
+		\l - 将下一个字母转化为小写. GNU拓展
+		\U - 将后续字母全部转化为大写, 直到遇到\L或\E. GNU拓展
+		\u - 将下一个字母转化为大写. GNU拓展
+		\E - 停止大小写转化. GNU拓展
+	flags列表:
+		g - 将替换作用于所有匹配regexp
+		<n> - 只替换匹配的第n个regexp
+		p - 如果该行进行替换, 则打印该行内容
+		w <file> - 如果该行进行替换, 则将结果输出到指定文件
+		e - 如果该行进行替换, 将结果作为shell指令执行. GNU拓展
+		I/i - regexp不在乎大小写. GNU拓展
+		M/m - regexp多行匹配模式. GNU拓展
+
+t <label>
+	
+
+T <label>
+
+
+v [version]
+	未指定version时, sed不使用GNU extension则报错
+	指定version时, 该版本不可获得时进行报错 
+
+w <file>
+	将pattern space内容保存到指定文件
+
+W <file>
+
+
+x
+	交换pattern space和hold space内容
+
+y/<src>/<dst>/
+	将src中的字符替换为dst中对应顺序的字符
+	src与dst必须包含相同数量的字符
+
+z
+	清空pattern space内容	
+
+#
+	注释内容
+	#n代表-n参数
+
+{cmd;cmd ...}
+	将多个指令作用于相同范围行
+
+=
+	在pattern space之前插入一行, 行内容为行号
+
+: <label>
+	指定标记label
+	示例:
+	参考指令b
+
+
+input_file:
+输入内容文件, 当省略该文件时, 代表从standard input读取
+
+
+
+sed结果默认输出到standard output
+
+
+
+示例1 - 删除30到35行内容
+sed '30,35d' demo01.txt 
+
+示例2 - 删除以foo起始的行, 并替换hello为world
+sed '/^foo/d; s/hello/world/' demo01.txt
+或
+sed -e '/^foo/d' -e 's/hello/world/' demo01.txt
+
+示例3 - 每3n行进行内容替换
+seq 21|sed 'n;n;s/.\+/x/' 
