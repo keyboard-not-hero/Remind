@@ -238,7 +238,12 @@ p
 	3
 
 P
-
+	打印pattern space中第一个newline之前的内容
+	示例:
+	seq 6|sed -n 'N;P'
+	1
+	3
+	5
 
 q[exit_code]
 	执行当前pattern space后, 退出读取循环, 可指定退出码
@@ -273,10 +278,18 @@ s/<regexp>/<replacement>/[flags]
 		M/m - regexp多行匹配模式. GNU拓展
 
 t <label>
-	
+	当上一次的替换操作执行失败时, 进行跳转
+	没有指定label时, 立即开始下一次循环
+	示例:
+	cat demo.txt
+	i love you, but you don't love me, i think i don't believe love
+
+	sed ':x ; $!N ; s/\n// ; tx ; P ; D' demo.txt
+	i like you, but you don't like me, i think i don't believe like
 
 T <label>
-
+	当上一次的替换操作执行成功时, 进行跳转
+	没有指定label时, 立即开始下一次循环
 
 v [version]
 	未指定version时, sed不使用GNU extension则报错
@@ -286,7 +299,11 @@ w <file>
 	将pattern space内容保存到指定文件
 
 W <file>
-
+	将pattern space内的第一个newline之前的内容保存到指定文件
+	示例:
+	seq 3|sed 'N;W demo01.txt'
+	cat demo01.txt
+	1
 
 x
 	交换pattern space和hold space内容
@@ -320,16 +337,3 @@ input_file:
 
 
 sed结果默认输出到standard output
-
-
-
-示例1 - 删除30到35行内容
-sed '30,35d' demo01.txt 
-
-示例2 - 删除以foo起始的行, 并替换hello为world
-sed '/^foo/d; s/hello/world/' demo01.txt
-或
-sed -e '/^foo/d' -e 's/hello/world/' demo01.txt
-
-示例3 - 每3n行进行内容替换
-seq 21|sed 'n;n;s/.\+/x/' 
