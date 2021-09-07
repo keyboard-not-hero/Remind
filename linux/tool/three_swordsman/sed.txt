@@ -83,7 +83,7 @@ script语法:
 
 mode - 指定操作的行. 当结尾为!, 代表取相反的行. 具体格式: [address1[,address2]], 默认为所有行1,$
 address列表如下:
-	number - 直接指定行号
+	<number> - 直接指定行号
 	$ - 最后一行
 	<first>~<step> - 在first+n*step行执行操作, n为非负数
 	/<re>/ - 使用正则表达式匹配行. 默认使用Basic Regular Expression(BRE). //代表上次使用的正则匹配表达式
@@ -337,3 +337,7 @@ input_file:
 
 
 sed结果默认输出到standard output
+
+
+引用:
+[1]GNU Sed Manual: https://www.gnu.org/software/sed/manual/sed.html

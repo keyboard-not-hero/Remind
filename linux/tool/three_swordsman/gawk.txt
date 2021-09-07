@@ -1,0 +1,373 @@
+gawk - 根据模式扫描和执行文本的语言
+
+
+语法
+awk [option] [script] [<file> ...]
+
+
+描述
+逐行读取内容, 对当前行执行每个操作指令, 再切换到下一行
+
+
+运行流程:
+1.读入文件内容
+2.利用行分隔符(RS), 将内容分解为record
+3.利用字段分隔符(FS), 将record分解为field
+
+
+参数释义
+-b, --characters-as-bytes
+	将输入视为单字节字符, 并且将print/printf输出的内容也作为单字节字符输出
+		
+-c, --traditional
+	使用POSIX版本awk, 关闭GNU awk拓展特性
+	
+-C, --copyright
+	显示GPL信息
+	
+-d[<file>], --dump-variables[=<file>]
+	保存已排序变量值到指定文件
+	文件默认名称为awkvars.out
+	
+-D[<file>], --debug[=<file>]
+	进入debug模式, 需配合-f参数使用
+
+-e <program_text>, --source <program_text>
+	操作指令
+	
+-E <script>, --exec file
+	类似于-f, 但有以下两点不同:
+		1.中断该参数之后的参数选项
+		2.不允许-v参数使用
+	常用于可执行脚本(#!指定)
+	
+-f <script>, --file <script>
+	使用文件中的操作指令
+	'-'代表从standard input读取指令
+	
+-F <field_separator>, --field-separator <field_separator>
+	指定字段分隔符
+	默认为空格
+
+-h, --help
+	帮助信息
+	
+-i <source_file>, --include <source_file>
+	导入库文件
+	awk文件的导入格式为@include "<file>"
+	与-f的差异:
+		1.-f为program, 可以不需要额外指定-e; -i为导入库, 需要额外指定-f或-e
+		2.-f可重复多次指定某文件; -i重复指定文件时, 自动取消重复内容
+
+-P, --posix
+	使用POSIX模式, disable GNU awk拓展特征
+	
+-v <variable>=<value>, --assign <variable>=<value>
+	设置变量variable的值为value
+	该参数只能设置一个变量, 但可多次指定该参数以设置多个变量
+	该赋值操作在BEGIN pattern之前
+
+-V, --version
+	版本信息
+
+--
+	参数选项结束符号, 代表后续内容为非参数(即使以-开头)
+
+
+
+script
+script包含格式如下:
+<pattern><action>
+
+
+pattern - 匹配符合要求的行. 具体格式: [address1[,address2]], 默认为所有行1,$
+	[<exp>~]/<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE). 默认为$0~/<re>/
+	<expression> - express非0数字或非空字符串则执行后续action
+	<begin>,<end> - 指定起始行和结束行(包含)
+	BEGIN - 读取内容之前执行的操作. 必须配置action
+	END - 读取所有内容之后执行的操作. 必须配置action
+	<empty> - 不指定, 代表所有行
+	** 可使用"$<shell_var>"引用shell变量
+
+action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类型如下:
+	1.表达式
+		调用函数和变量赋值
+	2.控制语句
+		类似于C语言的控制语句, 如if/for/while等. 具体如下:
+			1)if语句
+				if(condition)
+					statement1
+				else
+					statement2
+				或
+				if(condition) statement1;else statement2
+			2)while语句
+				while(condition)
+					statement
+				或
+				while(condition) statement
+			3)do语句
+				do
+					statement
+				while(condition)
+				或
+				do statement; while(condition)
+			4)for语句
+				for(init; condition; increment)
+					statement
+				
+				for(i in arr)
+					statement
+			5)switch语句
+				switch(exp){
+				case val1:
+					statement1
+					break
+				case2 val2:
+					statement2
+					break
+				default:
+					statement3
+					break
+				}
+				或
+				switch(exp){case val1: {statement1; break};case val2: {statement2; break};default: {statement3; break}}
+			6)break语句
+				退出最内层循环或switch
+			7)continue语句
+				跳过剩下语句, 直接进入下一次循环
+			8)next语句
+				马上进入下一条record
+			9)exit语句
+				exit [exit_code]
+					马上执行END pattern的action, 并退出awk
+	3.符合语句
+		混合多个语句
+	4.输入语句
+		getline指令或next语句
+	5.输出指令
+		print语句
+			1)print - 代表print $0
+			2)print $1,$2,... - 以','分隔打印项, 代表使用OFS指定符号分隔内容项(默认为" ")
+			3)print $1 $2 ... - 以' '分隔打印项, 代表内容项紧邻
+		printf语句
+			printf fmt,item1,item2,... - 完整指定打印格式, item<N>用于替换fmt中的占位符内容. 占位符列表如下:
+			%c - 字符
+			%d, %i - 十进制数字. 如: %4d, 4代表占4个字符位置
+			%e, %E - 科学计数法. 如: %4.2e
+			%f, %F - 浮点数. 如: %4.3f
+			%g, %G - 科学计数法或浮点数
+			%o - 无符号八进制数字
+			%s - 字符串
+			%u - 无符号十进制数字
+			%x, %X - 无符号十六进制数字
+			占位符更细节的格式控制符号(添加在%与字符之间):
+				N$ - 代表指定引用item<N>的值. 如: %2$s代表引用item2的值, 作为字符串输出
+				- - 左对齐内容. 如: %-4s代表将字符串内容占用四个字符位置, 并且靠左对齐. 默认右对齐
+				+ - 给数字添加正负符号. 如: %+4d在正数前添加'+', 负数前添加'-'
+				# - 用于八进制/十六进制数字时, 添加0/0x/0X前缀. 如: %#x
+				0 - 用于数字格式, 在数字前的多余空间添加'0'
+				' - 使用千分位符号进行每三位使用','分隔数字(只适用于指定locale)
+				<width> - 最小占据的字符宽度. 如: %4d
+				.<prec> - 对于不同类型数据, 表示不同意义. 如下:
+					1)用于%d,%i,%o,%u,%x,%X时, 表示输出的最小数字数量
+					2)用于%e,%E,%f,%F时, 表示小数位数
+					3)用于%g,%G时, 表示最长的有效位数
+					4)用于%s时, 表示最多字符数量
+				** 可使用%*.*s, width, prec, item1格式额外指定width和precise
+	6.删除语句
+		delete arr[index]
+			从数组中删除元素
+	特殊字符:
+		\47 - '符号
+		\42 - "符号
+	算术运算符:
+		x^y
+		x**y
+			求幂运算符
+		-x
+			对数取反
+		x*y
+			乘法
+		x/y
+			除法. 结果为浮点数
+		x%y
+			求余数
+		x+y
+			加法
+		x-y
+			减法
+		++x
+			自增运算符(pre-increment)
+		x++
+			自增运算符(post-increment)
+		--x
+			自减运算符(pre-decrement)
+		x--
+			自减运算符(post-decrement)
+	布尔运算符:
+		true(布尔变量)
+			非0数字或非空字符串
+		false(布尔变量)
+			数字0或空字符串
+		||
+			短路或
+		&&
+			短路与
+		!
+			非
+	条件表达式
+		<condition>?<true_exp>:<false_exp>
+			当condition为真时, 取结果true_exp; 当condition为假时, 取结果false_exp
+	built-in函数
+		gensub(regexp, replacement, how[, target])
+			从target中查找匹配regexp正则模式的内容, 并使用replacement替换
+			target默认为$0
+			how代表替换方式. 列表如下:
+				g/G - global, 替换所有匹配的项
+				<number> - 替换指定的第n个匹配项
+		gsub(regexp, replacement[, target])
+			gensub(regexp, replacement, "g"[, target])版本
+		index(str, sub)
+			子字符串sub在字符串str中出现的起始位置
+		length([string])
+			字符串的长度. string默认为$0
+		match(string, regexp[, array])
+			搜查到的regexp模式子字符串在string中的起始位置
+			RSTART与返回内容一致
+			RLENGTH为子字符串长度
+		split(string, array[, fieldsep[, seps]])
+			将字符串string使用field分隔符fieldsep进行分割, 分割后的item放入array, 分隔符放入seps
+			array与seps索引起始为1
+			fieldsep为regexp正则模式. 默认为FS的值
+		sprintf(format, exp1, exp2, ...)
+			类似于printf, 但不打印结果, 返回结果
+		sqrt(number)
+			求number的平方根
+		sub(regexp, replacement[, target])
+			gensub(regexp, replacement, 1[, target])版本
+		substr(string, start[, length])
+			从字符串string中截取长度为length的子字符串, 该字符串由start位置开始截取
+		typeof(variable)
+			变量类型
+			awk拥有动态变量类型, 即变量类型不固定. 类别如下:
+				array
+					数组
+				regexp
+					正则常量
+				number
+					数字
+				string
+					字符串
+				strnum
+					纯数字字符串
+	运算符优先级(由高到低)
+		()
+			分组
+		$
+			field引用
+		++ --
+			自增/自减
+		^ **
+			求幂
+		+ - !
+			正/负/逻辑非
+		* / %
+			乘法/除法/求余
+		+ -
+			加法/减法
+		<null>
+			字符串连接符号, 无具体符号, 字符串紧密相连
+		< <= == != > >= >> | |&
+			比较符号和重定向符号
+		~ !~
+			匹配/不匹配
+		in
+			数组成员
+		&&
+			逻辑与
+		||
+			逻辑或
+		?:
+			条件表达式
+** pattern和action可省略其一, 但不可同时省略
+
+pattern/action可用变量列表:
+	$0 - 代表当前record内容
+	$1/$2... - 代表第N个字段内容, N不局限于1位数
+	** 当对$1/$2...赋值时, $0会移除首尾空格
+	ARGC - 指令行的参数个数
+	ARGIND - 当前文件所在的ARGV索引号
+	ARGV - 数组, 包含指令行的指令和文件名称(不包含参数和指令), 数组索引由0起始
+	CONVFMT - 指定数字转化为字符串的格式
+	FIELDWIDTHS - 指定各个列的固定宽度. 格式: FIELDWIDTHS="<col1_wid> <col2_wid> ...". 
+		自version 4.2起, 新增以下两个特性:
+			1)格式: FIELDWIDTHS= "<col1_wid> [<skip_col>:]<col2_wid> ..."
+			2)最后一个列宽可指定为'*', 代表不固定长度
+	FILENAME - 当前所在文件名称
+	FNR - 当前文件的所在记录(record number of current file)
+	FPAT - 使用regular expression模式指定field
+	FS - 字段分隔符(field separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
+		" " - 单个或多个spaces/tables/newlines(移除record首尾空格), 默认选项
+		"[ \t\n]" - 单个或多个spaces/tables/newlines(不移除record首尾空格)
+		"[ ]" - 使用单个空格符作为字段分隔符
+		"" - 将record的每一个字符都划分为一个field
+	IGNORECASE - 用于字段或字段分隔符的regular expression模式匹配. 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
+	NF - 当前行的field数量(field numbers of record)
+	NR - 文件内容的记录数(record number of files), 用于所有文件
+	OFMT - CONVFMT早期变量形式
+	OFS - 输出显示的字段分隔符. 默认为" "
+	ORS - 输出显示的record分隔符. 默认为"\n"
+	PREC - 浮点数的精度. 默认为53
+	RLENGTH - math()返回的匹配子字符串长度, 无匹配时返回-1
+	RSTART - math()返回的子字符串在字符串中的起始定位, 无匹配时返回0
+	RS - 记录分隔符(record separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
+		"\n" - 换行符, 默认值
+		"" - 一个或多个空行(即段落, 移除段落前和段落后的空行)
+		"\n\n+" - 一个或多个空行(即段落, 不移除段落前和段落后的空行)
+	RT - 记录中断符, 当RS包含一个字符时, 该值与RS一致; 当RS多余一个字符时(即RE), 该值为与RE匹配的内容
+	** 当输入内容不以RS匹配的内容结尾时, RT为null字符串
+	SUBSEP - 角标分隔符, 用于分隔多维数组的不同维度subscript. 默认为'\034'
+
+
+将record分割为field的方式:
+1)使用FPAT指定field区域
+2)使用FIELDWIDTHS指定每个field的长度
+3)使用FS指定分割field的符号
+
+
+awk数组:
+1)数组为dict映射, 索引可以为不连续数字
+2)数组的索引始终为字符串(如果为数字, 自动转化为字符串)
+3)检测数组元素是否存在方式: if(index in arr)
+4)遍历数组元素: for(index_var in arr)
+5)删除数组元素: delete arr[index]
+6)删除整个数组: delete arr
+7)多维数组的两种形式: arr[in1,in2], arr["in1\034in2"]
+
+
+当没有提供输入文件时, 从stdandard input读取输入
+** 可在指定文件之前对变量临时进行赋值, 该赋值只影响赋值操作之后指定的文件
+
+
+
+相关环境变量:
+1.AWKPATH - 用于-f和-i参数查找文件路径
+2.AWKLIBPATH - 用于-l参数查找文件路径
+
+
+mail-list与inventory-shipped文件目录:
+/usr/share/doc/gawk/examples/data
+
+
+示例1 - 在正文内容前后添加内容
+seq 3|awk 'BEGIN{print "it\47s begin"};{print};END{print "it\47s ending"}'
+it's begin
+1
+2
+3
+it's ending
+
+
+引用:
+[1]GNU Awk User Guide: https://www.gnu.org/software/gawk/manual/gawk.html
