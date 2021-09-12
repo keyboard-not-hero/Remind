@@ -1,0 +1,80 @@
+useradd - 创建新用户或者更新用户信息
+
+语法：
+useradd [options] <user_name>
+
+参数释义：
+-b, --base-dir
+	指定用户家目录的父目录，如-d未配置，该选项必须配置。默认使用/etc/default/useradd中的$HOME值
+
+-c, --comment
+	/etc/passwd第五栏说明
+
+-d, --home-dir
+	指定用户家目录路径
+
+-D, --defaults
+	当选项后未跟随其他option参数，则显示option默认值列表；当跟随其他option，则将其写入到/etc/default/useradd作为默认值
+
+-e, --expiredate
+	用户账号失效日期，格式YYYY-MM-DD。默认值为/etc/default/useradd的EXPIRE
+
+-f, --inactive
+	密码失效后，用户无法登录所需经过的天数
+
+-g, --gid
+	用户所属初始群组
+
+-G, --groups
+	用户所属附加群组
+
+-h, --help
+	帮助文档信息
+
+-k, --skel
+	框架目录，用户创建家目录时参考目录
+
+-K, --key <key>=<value>
+	覆盖/etc/login.defs文件内的选项
+
+-l, --no-log-init
+	不将用户添加到'最近登录'和'登录失败'数据库
+
+-m, --create-home
+	创建用户家目录
+
+-M, --no-create-home
+	不创建用户家目录
+
+-N, --no-user-group
+	不创建与账号同名的组
+
+-o, --non-unique
+	允许使用重复UID创建账号，需与-u一起使用生效
+
+-p, --password
+	使用该加密密码
+
+-r, --system
+	创建系统账号
+
+-R, --root
+	chroot选项    
+
+-s, --shell   
+	使用的用户shell
+
+-u, --uid
+	指定用户ID，默认使用已使用的ID最大值+1
+
+-U, --user-group
+	创建与账号同名的组
+
+-Z, --selinux-user
+	用户使用的SELinux用户
+
+
+相关配置文件：
+/etc/default/useradd
+/etc/skel
+/etc/login.defs

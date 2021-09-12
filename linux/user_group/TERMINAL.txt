@@ -1,0 +1,8 @@
+tty<N>
+从terminal登录的终端
+
+pts/<N>
+从图形界面进入的终端, 通常为xterm终端或ssh远程连接
+
+
+tty - 显示当前终端类型

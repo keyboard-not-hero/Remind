@@ -1,0 +1,206 @@
+ps - 报告当前进程的快照
+
+
+语法
+ps [option]
+
+
+ps的三种参数格式:
+1.UNIX格式 - 使用'-'后紧跟字符
+
+2.BSD格式 - 不包含'-'字符
+
+3.GNU格式 - 使用'--'后紧跟字符
+
+
+参数释义(BSD style)
+a
+	解除'仅限当前用户进程'限制
+
+e
+	在COMMAND列的指令后添加环境变量
+
+H
+	将线程作为进程一样显示
+
+h
+	不显示header(第一行)
+
+j
+	以BSD job控制格式显示. 显示项如下:
+		PPID/PID/PGID/SID/TTY/TPGID/STAT/UID/TIME/COMMAND
+
+k <spec>
+	按指定列的正/反序排列
+	格式: k [+-]<col_name>, +代表正序排列(默认), -代表逆序排列
+
+L
+	显示所有可指定的列格式
+
+l
+	以BSD长格式显示. 显示项如下:
+		F/UID/PID/PPID/PRI/NI/VSZ/RSS/WCHAN/STAT/TTY/TIME/COMMAND
+
+n
+	数字化显示WCHAN和USER
+
+o <format>
+	自定义显示指定列
+	format为指定列名称列表, 名称之间使用','分隔, 并使用小写
+
+p <pid_list>
+	只显示指定PID的进程
+
+q <pid_list>
+	只显示指定PID的进程(quick模式)
+
+r
+	当前启动的进程(只有一条ps指令)
+
+s
+	以signal格式显示. 显示项如下:
+		UID/PID/PENDING/BLOCKED/IGNORED/CAUGHT/STAT/TTY/TIME/COMMAND
+
+T
+	当前终端下运行的所有指令
+
+t <ttylist>
+	显示指定tty关联的进程
+
+U [<userlist>]
+	显示指定用户名(或ID)关联的进程
+
+u
+	以便于阅读的格式显示. 显示项如下:
+		USER/PID/%CPU/%MEM/VSZ/RSS/TTY/STAT/START/TIME/COMMAND
+
+v
+	以virtual memory格式显示. 显示项如下:
+		PID/TTY/STAT/TIME/MAJFL/TRS/DRS/RSS/%MEM/COMMAND
+
+w
+	将内容自动换行显示
+
+X
+	以register格式显示. 显示项如下:
+		PID/STACKP/ESP/EIP/TMOUT/ALARM/STAT/TTY/TIME/COMMAND
+
+x
+	解除'tty列非空'限制
+
+Z
+	添加一列SELinux相关内容
+
+
+
+标准格式列:
+%cpu - cpu分配时间额(cputime/realtime), 格式为##.#%
+
+%mem - 进程内存占用比例(参考rss值), 格式为##.#%
+
+alarm - 
+
+blocked - mask of blocked signals
+
+bsdstart - 指令执行时间. 距离现在24小时内为HH:MM格式, 24小时之外为"<month_abbr> day"
+
+bsdtime - 累计cpu使用时间, 格式为MMM:SS
+
+caught - mask of caught signals
+
+command - 包含参数的完整指令
+
+cputimes - 累计cpu使用时间, 单位为s
+
+drs - 进程内存占用(接近vsz)
+
+eip - instruction指针. 当内存读取一个内容结构时, 指向下一个内容结构的指针
+
+esp - stack指针
+
+f - 进程的flags
+
+ignored - mask of ignored signals
+
+ni - 进程的优先级(可手动调整), -20~-1只有超级用户有权调整, 0~19所有用户皆可调整
+	 更大数字代表更低优先级
+	 result = pri + ni
+
+pending - mask of pending signals
+
+pgid - 进程组ID. 同一个program打开的多个进程, 属于同一进程组
+
+pid - 当前执行进程ID
+
+ppid - 当前执行进程的父进程ID
+
+pri - 进程的优先级, 更大数字代表更低优先级
+
+rss - 当前物理内存使用大小, 单位为KiB
+
+sid - session ID. 同一个终端启动的进程, 属于同一个session
+
+stackp - 进程栈的底部内存地址
+
+stat - 多字符进程状态. 参考进程状态码
+
+tpgid - foreground程序组ID. 同一个终端启动的进程, 属于同一个ID; 但该进程没有与之关联的终端时, 返回-1
+
+trs - 加载到物理内存的可执行代码大小
+
+tty - 控制进程的终端
+
+uid - 执行指令的用户ID
+
+user - 执行指令的用户名
+
+vsz - 进程使用虚拟内存(正在内存中与swapped out)的大小, 单位为KiB
+
+wchan - sleeping进程内的kernel function
+
+
+rss/vsz/trs的差异
+假设可执行代码大小为200KiB, 当前加载到内存100KiB; 共享库2500KiB, 当前加载到内存1000KiB; 堆栈300KiB, 当前加载到内存150KiB
+rss = 100 + 1000 + 150
+vsz = 200 + 2500 + 300
+trs = 100
+** 参考[1]
+
+
+
+进程状态码
+D - 不可中断的sleep(通常为IO)
+
+I - idle核心线程
+
+R - running或可运行(队列中)
+
+S - 可中断的sleep
+
+T - 被job control信号停止
+
+t - 被debugger追踪停止
+
+W - 分页(自2.6.xx kernel后不可用)
+
+X - dead(should never be seen)
+
+Z - zombie进程. 父进程没有对退出的子进程进行最后资源回收
+
+BSD格式附加状态码
+< - 高优先级
+
+N - 低优先级
+
+L - pages locked
+
+s - session leader
+
+l - 多线程
+
++ - foreground进程组
+
+
+
+引用
+[1]stack overflow: https://stackoverflow.com/questions/7880784/what-is-rss-and-vsz-in-linux-memory-management

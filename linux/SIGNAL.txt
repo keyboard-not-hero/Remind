@@ -1,0 +1,35 @@
+signal类型
+1.Term - 中断进程
+
+2.Ign - 忽略信号
+
+3.Core - 中断进程并转储核心(即将中断时该进程的内存状态保存到文件)
+
+4.Stop - 暂停进程
+
+5.Cont - 当进程为停止状态时, 继续运行进程
+
+
+signal特征
+1.signal以进程为单位
+
+2.pending - 阻塞时间, 即生成signal到转发signal的时间差
+
+3.signal mask - 当前signal是否被阻塞的状态, 使用fork创建的子进程继承父进程的signal mask
+
+
+常用signal列表:
+SIGABRT		core类型		number 6	abort函数发送的信号
+SIGALARM	term类型		number 14	alarm函数发送的信号. 
+SIGBUS		core类型		number 7	总线错误(物理内存访问错误)
+SIGCHLD		ign类型			number 17	子进程停止或中断
+SIGCONT		cont类型		number 18	继续运行暂停的进程
+SIGHUP		term类型		number 1	进程关联的终端被关闭
+SIGILL		core类型		numebr 4	不合法结构
+SIGINT		term类型		number 2	从键盘中断
+SIGKILL		term类型		number 9	杀死进程, 立刻强制关闭进程
+SIGQUIT		core类型		number 3	从键盘退出
+SIGSTOP		stop类型		number 19	暂停进程 
+SIGSYS		core类型		number 31	错误系统呼叫
+SIGTERM		term类型		number 15	中断进程, 可释放资源和保存状态
+SIGTRAP		core类型		number 5	跟踪异常

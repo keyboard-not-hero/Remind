@@ -75,6 +75,7 @@ awk [option] [script] [<file> ...]
 
 
 
+
 script
 script包含格式如下:
 <pattern><action>
@@ -89,9 +90,11 @@ pattern - 匹配符合要求的行. 具体格式: [address1[,address2]], 默认�
 	<empty> - 不指定, 代表所有行
 	** 可使用"$<shell_var>"引用shell变量
 
+
 action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类型如下:
 	1.表达式
 		调用函数和变量赋值
+
 	2.控制语句
 		类似于C语言的控制语句, 如if/for/while等. 具体如下:
 			1)if语句
@@ -141,10 +144,13 @@ action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类
 			9)exit语句
 				exit [exit_code]
 					马上执行END pattern的action, 并退出awk
+
 	3.符合语句
 		混合多个语句
+
 	4.输入语句
 		getline指令或next语句
+
 	5.输出指令
 		print语句
 			1)print - 代表print $0
@@ -175,12 +181,15 @@ action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类
 					3)用于%g,%G时, 表示最长的有效位数
 					4)用于%s时, 表示最多字符数量
 				** 可使用%*.*s, width, prec, item1格式额外指定width和precise
+
 	6.删除语句
 		delete arr[index]
 			从数组中删除元素
+
 	特殊字符:
 		\47 - '符号
 		\42 - "符号
+
 	算术运算符:
 		x^y
 		x**y
@@ -205,6 +214,7 @@ action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类
 			自减运算符(pre-decrement)
 		x--
 			自减运算符(post-decrement)
+
 	布尔运算符:
 		true(布尔变量)
 			非0数字或非空字符串
@@ -367,6 +377,10 @@ it's begin
 2
 3
 it's ending
+
+示例2 - ps结果最后一列以[开头的行
+ps aux|awk 'BEGIN{a=0};$11~/^\[/{a++};END{print a}'
+239
 
 
 引用:

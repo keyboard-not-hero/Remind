@@ -1,98 +1,145 @@
-test - 检查文件类型和比较值。结果为true返回stat code 0，结果为false返回stat code 1
+test - 检查文件类型和字符串/数字比较
+
 
 语法：
 test <expression>
 
+[ <expression> ]
+
+
 expression语法：
 文件类型
--a file    文件是否存在
+-b file
+	文件是否存在并且为块设备(硬盘)
 
--b file    文件是否存在并且为块设备
+-c file
+	文件是否存在并且为字符设备(键盘)
 
--c file    文件是否存在并且为字符设备
+-d file
+	文件是否存在并且为目录
 
--d file    文件是否存在并且为目录
+-f file
+	文件是否存在并且为标准文件
 
--e file    文件是否存在
+-h file	
+-L file
+	文件是否存在并且为符号链接(symbolic link)
 
--f file    文件是否存在并且为标准文件
+-p file
+	文件是否存在并且为pipe(FIFO)文件
 
--g file    文件是否存在并且为SGID文件
+-S file
+	文件是否存在并且为socket文件
 
--h file    文件是否存在并且为符号链接(symbolic link)
+-t FD
+	FD是否为文件描述符(file descriptor)
 
--k file    文件是否存在并且为SBIT文件
 
--p file    文件是否存在并且为pipe(FIFO)文件
+访问权限
+-g file
+	文件是否存在并且为SGID文件
 
--r file    文件是否存在并且为可读
+-k file
+	文件是否存在并且为SBIT文件
 
--s file    文件是否存在并且大于0 byte
+-r file
+	文件是否存在并且为可读
 
--t FD    FD是否为文件描述符(file descriptor)
+-u file
+	文件是否存在并且为SUID文件
 
--u file    文件是否存在并且为SUID文件
+-w file
+	文件是否存在并且为可写
 
--w file    文件是否存在并且为可写
+-x file
+	文件是否存在并且为可执行(目录为可进入)
 
--x file    文件是否存在并且为可执行
+-O file
+	文件是否存在并且所属用户为当前登录用户
 
--G file    文件是否存在并且所属组为当前登录用户有效组
+-G file
+	文件是否存在并且所属组为当前登录用户有效组
 
--L file    文件是否存在并且为符号链接(symbolic link)
 
--N file    文件是否存在并且自上次read后经历modify
+文件特征
+-e file
+	文件是否存在
 
--O file    文件是否存在并且所属用户为当前登录用户
+-s file
+	文件是否存在并且文件大小大于0 byte
 
--S file    文件是否存在并且为套接字(socket)
+file1 -nt file2
+	file1新于file2(根据mtime), 或者file1存在而file2不存在
 
-file1 -ef file2    file1和file2位于相同文件系统和拥有相同inode number
+file1 -ot file2
+	file1旧于file2(根据mtime), 或者file2存在而file1不存在
 
-file1 -nt file2    file1新于file2(根据mtime)，或者file1存在而file2不存在
+file1 -ef file2
+	file1和file2位于相同文件系统并拥有相同inode number
 
-file1 -ot file2    file1旧于file2(根据mtime)，或者file2存在而file1不存在
 
--o optname    shell某菜单选项是否打开。可通过set -o查看选项列表
+字符串
+-z str
+	str的长度为0
 
--v varname    变量名varname是否被赋值
+-n str
+str
+	str的长度不为0
 
--R varname    变量名varname是否被赋值，并且为nameref
+str1 =[=] str2
+	str1与str2相等
 
--z str    str的长度为0
+str1 != str2
+	str1与str2不相等
 
--n str    str的长度不为0
 
-str1 =[=] str2    str1与str2是否相等
+数字
+int1 -eq int2
+	int1与int2相等
 
-str1 != str2    str1与str2是否不相等
+int1 -ne int2
+	int1与int2不相等
 
-[ str =~ RE ]    str是否匹配正则表达式RE。并将匹配完整内容赋值给BASH_REMATCH[0]，子串匹配分别赋值给BASH_REMATCH[1]...
+int1 -lt int2
+	int1小于int2
 
-[ str1 < str2 ]    str1的字符先于str2出现(注意<被\解除重定向特殊意义)
+int1 -le int2
+	int1小于或等于int2
 
-[ str1 > str2 ]    str1的字符后于str2出现(注意<被\解除重定向特殊意义)
+int1 -gt int2
+	int1大于int2
 
-int1 -eq int2    int1与int2相等
+int1 -ge int2
+	int1大于或等于int2
 
-int1 -ne int2    int1与int2不相等
 
-int1 -lt int2    int1小于int2
+连接符
+!exp
+	对exp取反
 
-int1 -le int2    int1小于或等于int2
+exp1 -a exp2
+	exp1和exp2的逻辑与操作
 
-int1 -gt int2    int1大于int2
+exp1 -o exp2
+	exp1和exp2的逻辑或操作
 
-int1 -ge int2    int1大于或等于int2
 
-!exp    对exp取反
 
-exp1 -a exp2    exp1和exp2的逻辑与操作
+exit status:
+0 - expression为true
 
-exp1 -o exp2    exp1和exp2的逻辑或操作
+1 - expression为false
+
+2 - 出现错误
+
+
 
 补充：
-1.可以使用[ expression ]代替test expression，但每个操作符或操作数前后都需要保留空格
-2.字符串参数尽量使用""来限定，如：arg字符串标准写法为"arg"
-3.数字测试仅用于整数，不支持浮点数比较
-4.-a和-o不常用，偏向于在外部使用&&和||
+1.可以使用[ expression ]代替test expression, 但方括号与内容必须保留空格. 如:
+[-e demo.txt]错误, [ -e demo.txt ]正确
+
+2.字符串参数尽量使用""来限定, 如：arg字符串标准写法为"arg"
+
+3.数字测试仅用于整数, 不支持浮点数比较
+
+4.-a和-o不常用, 偏向于在外部使用&&和||
