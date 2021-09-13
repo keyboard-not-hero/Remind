@@ -6,7 +6,7 @@ groupadd [options] <group>
 参数释义
 -f, --force
 	当创建组已存在时, 退出而不生成信息
-	配合-g使用时, 另外选择GID
+	配合-g使用时, 如果gid已存在, 自动使用其他gid
 
 -g, --gid <gid>
 	指定创建组的ID

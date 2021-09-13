@@ -5,40 +5,42 @@ usermod [option] <user>
 
 参数释义：
 -a, --append    
-    将用户添加到附加群组，必须和-G一起使用
+    将用户添加到附加群组, 必须和-G一起使用
 
 -c, --comment <comment>   
-    修改注释字段，/etc/passwd第五栏
+    修改注释字段, /etc/passwd第五栏
 
 -d, --home <dir>
-    用户家目录路径，配合-m一起使用
+    指定用户家目录, 必须配合-m参数
 
 -e, --expiredate <date>   
-    账号失效日期，/etc/passwd第八栏
+    账号失效日期, /etc/passwd第八栏
 
 -f, --inactive <days>   
-    密码失效一定天数后，无法登录所需天数，/etc/passwd第七栏
+    密码失效一定天数后, 无法登录所需天数, /etc/passwd第七栏
+
+-G, --groups <group1>[, <group2> ...]   
+    将用户添加到指定群组
+	当用户已属于某群组, 但该群组未在该参数值中时, 将该用户从已有群组中删除
+	配合-a使用, 将用户append到指定群组, 原定所属群组不变
 
 -g, --gid <group>   
     用户初始群组
 
--G, --groups <group1>[, group2...]   
-    用户附属群组
+-L, --lock 
+    锁定用户密码, 在密码之前放置一个'!'字符
 
 -l, --login <name>
-    更改用户登录名，家目录和邮件目录需要额外手动修改
-
--L, --lock 
-    锁定用户密码
+    更改用户登录名, 家目录和邮件目录需要额外手动修改
 
 -m, --move-home    
-    修改用户的家目录，配合-d一起使用
+    修改用户的家目录, 必须配合-d参数
 
 -o, --non-unique    
     将用户ID修改为非唯一
 
 -p, --password <passwd>   
-    配置用户密码，该密码为已加密密码格式，加密方式参考crypt(3)
+    配置用户密码, 该密码为已加密密码格式, 加密方式参考crypt(3)
 
 -R, --root <chroot_dir>   
     使用指定目录作为用户根目录
@@ -46,23 +48,23 @@ usermod [option] <user>
 -s, --shell <shell>   
     重新指定shell
 
+-U, --unlock    
+    解锁用户的密码, 移除密码前面的'!'字符
+
 -u, --uid <uid>
     修改用户的id
-
--U, --unlock    
-    解锁用户的密码
-
--v, --add-subuids <first>-<last>   
-    给用户添加附属uid范围
 
 -V, -del-subuids <first>-<last>
     移除用户附属uid范围
 
--w, --add-subgids <first>-<last>
-    给用户添加附属gid范围
+-v, --add-subuids <first>-<last>   
+    给用户添加附属uid范围
 
 -W, --del-subgids <first>-<last>
     移除用户附属gid范围
 
+-w, --add-subgids <first>-<last>
+    给用户添加附属gid范围
+
 -Z, --selinux-user <selinux_user>
-    用户默认的selinux规则
+    用户的SELinux user

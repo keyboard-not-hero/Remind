@@ -4,12 +4,18 @@ userdel - 删除用户和相关文件
 userdel [option] <user>
 
 参数释义：
--f, --force    强制删除用户
+-f, --force
+	强制删除用户, 即使用户当前已登录
+	当/etc/login.defs的USERGROUPS_ENAB设置为yes, 强制移除与用户名同名的群组
 
--h, --help     帮助文档
+-h, --help
+	帮助文档
 
--r, --remove    删除用户家目录下的文件，其他文件系统的文件需要手动删除
+-r, --remove
+	删除用户家目录和邮件目录(参考/etc/login.defs的MAIL_DIR), 其他需手动删除
 
--R, --root    chroot选项
+-R, --root
+	chroot选项
 
--Z, --selinux-user    移除用户的selinux映射
+-Z, --selinux-user
+	移除用户的selinux映射

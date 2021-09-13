@@ -1,0 +1,16 @@
+top - 实时变化显示的进程状态
+
+
+语法
+top [option]
+
+
+快捷键
+^Z			
+	暂停top
+
+fg			
+	恢复top
+
+<left>/<right>/<up>/<down>/<home>/<end>/<pgup>/<pgdn>
+	移动界面, 并强制刷新
