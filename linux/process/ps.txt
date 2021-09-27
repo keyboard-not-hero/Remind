@@ -98,8 +98,6 @@ Z
 
 %mem - 进程内存占用比例(参考rss值), 格式为##.#%
 
-alarm - 
-
 blocked - mask of blocked signals
 
 bsdstart - 指令执行时间. 距离现在24小时内为HH:MM格式, 24小时之外为"<month_abbr> day"

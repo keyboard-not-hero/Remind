@@ -1,14 +1,125 @@
-acl - 文件访问控制列表，针对个人或群组进行权限配置
+acl(Access Control List) - 文件访问控制列表，针对额外的个人或群组进行权限配置
 
 
-名词解释：
-ACL_USER_OBJ - 文件拥有者权限
-ACL_USER - 其他个人权限
-ACL_GROUP_OBJ - 文件所有组权限
-ACL_GROUP - 其他组权限
-mask权限 - 规定ACL_USER/ACL_GROUP_OBJ/ACL_GROUP所能拥有的最大权限，当acl存在时(+)，组权限位置代表的是mask权限
-基本acl - 文件owner、groups、other权限
-默认acl - 针对目录，该目录下的所有文件沿用该acl
+
+tag类型:
+ACL_USER_OBJ
+	文件所有者的访问权限
+
+ACL_USER
+	指定用户的访问权限
+
+ACL_GROUP_OBJ
+	文件所有者群组的访问权限
+
+ACL_GROUP
+	指定群组的访问权限
+
+ACL_MASK
+	ACL_USER/ACL_GROUP_OBJ/ACL_GROUP能设置的最大权限
+	ACL_USER_OBJ/ACL_OTHER不受影响
+
+ACL_OTHER
+	除指定用户/组权限, 剩余用户权限
+
+补充:
+1.ACL_USER_OBJ/ACL_GROUP_OBJ/ACL_OTHER不可移除, 称为base ACL, 与基础permission对应
+
+2.指定ACL_USER或ACL_GROUP时, 如果没有指定-n参数, 没有显示指定ACL_MASK, ACL_MASK与ACL_GROUP一致
+
+3.当指定ACL_MASK时, 文件所有者群组权限为该tag权限和ACL_GROUP_OBJ权限的交集; 当ACL_MASK没有指定时, 文件所有者群组权限为ACL_GROUP_OBJ指定权限
+
+4.当目录的default ACL不包含ACL_USER_OBJ/ACL_GROUP_OBJ/ACL_OTHER时, 将access ACL的对应tag拷贝到default ACL
+
+
+
+
+ACL类型:
+access ACL
+	文件/目录的ACL
+
+default ACL
+	适用于目录, 该目录下新建文件的默认ACL
+
+base ACL
+	ACL_USER_OBJ/ACL_GROUP_OBJ/ACL_OTHER, 对应于文件的owner/group/other权限
+
+extend ACL
+	ACL_USER/ACL_GROUP/ACL_MASK
+
+
+
+对象ACL规则:
+1.当新文件/目录创建时, access ACL为父目录的default ACL
+
+2.文件的access ACL与文件rwx权限对应
+
+
+
+
+ACL格式:
+1)文件内格式
+<acl_entry01>
+<acl_entry02>
+...
+
+2)cmd格式
+<acl_entry01>, <acl_entry02>, ...
+
+
+acl_entry:
+<acl_tag_type>:<acl_qualifier>:<acl_access_permission>
+
+
+acl_tag_type:
+user
+	指定用户访问权限, 分为owner(ACL_USER_OBJ)和other(ACL_USER)
+
+group
+	指定群组访问权限, 分为group(ACL_GROUP_OBJ)和other(ACL_GROUP)
+
+mask
+	指定除文件owner之外的用户, 能设置的最大权限, 即ACL_MASK
+
+other
+	除指定用户/群组外, 其他人的通用权限, 即ACL_OTHER
+
+
+acl_qualifier:
+<user_name_or_id>/<group_name_or_id>
+	用户名/用户ID适用于ACL_USER, 群组名/群组ID适用于ACL_GROUP
+
+<null>
+	适用于除ACL_USER/ACL_GROUP以外的tag
+
+
+acl_access_permission:
+1)r/w/x格式
+rw-
+	读写权限
+
+2)数字格式
+5
+	可读与可执行(可查找)权限. 5=4+1
+
+
+
+示例1 - ACL简单配置
+user::rw-
+user:lisa:rw-
+group::r-x
+group:project:rw-
+mask::r--
+other::r--
+
+owner的权限为rw
+lisa用户的权限为r(虽然设置为rw-, 但被r--限制了w权限)
+文件所属群组权限为r
+project群组权限为r
+其他用户权限为r
+
+
+
 
 
 查看文件系统是否默认支援acl
@@ -18,86 +129,151 @@ dmesg|grep -i acl
 mount -o remount, acl <mount_point>
 
 
+
+
+
 指令：
-setfacl - 设置文件访问控制列表
+setfacl - 设置文件的访问控制列表
 
 语法：
-setfacl [option] [-m|-x spec] [-M|-X spec_file] file
+setfacl [option] <file>
 
-参数释义：
--b, --remove-all    移除所有拓展acl，基本acl(owner/group/other)保留
+参数释义:
+--
+	代表参数列表的结束
 
--k, --remove-default    移除默认acl
+-b, --remove-all
+	移除所有拓展ACL. 拓展ACL列表: ACL_USER/ACL_GROUP/ACL_MASK
 
--n, --no-mask    不重新计算mask权限
+-d, --default
+	设定default ACL
+	只对目录有效
 
---mask    重新计算mask权限，即便显式给出mask权限
+-h, --help
+	帮助信息
 
--d, --default    配置为默认acl
+-k, --remove-default
+	移除default ACL
 
---restore=file    从getfacl -R的结果中恢复
+-L, --logical
+	必须搭配-R使用, 追溯到符号链接后的实际目录
+	默认只有指定目录会追溯到实际目录, 子目录只对符号链接起作用
 
---test    显示acl测试结果，不将其应用于实际文件
+-M [<file>]
+	从文件/stdin添加acl
 
--R, --recursive    递归应用于目录下的文件
+-m <acl_format>
+	从cmd添加acl
 
--L, --logical    应用于symbolic link实际指向的文件
+--mask
+	重新计算ACL_MASK, 即使已指定ACL_MASK entry
+	默认当没有指定ACL_MASK entry时, 重新计算ACL_MASK
 
--P, --physical    应用于symbolic link文件
+-n, --no-mask
+	不重新计算ACL_MASK
+	默认当没有指定ACL_MASK entry时, 重新计算ACL_MASK
 
--v, --version    版本信息
+-P, --physical
+	必须配合-R使用, 只对符号链接文件起作用
 
--h, --help    帮助信息文档
+-R, --recursive
+	对目录下的文件进行递归操作
+	不能与--restore一起使用
 
---    代表option的结束，后续全部解释为文件名，即使以-起始
+--restore={file|-}
+	从备份文件中恢复ACL设置, 该操作可递归操作目录树
+	备份文件由getfacl -R生成或类似语法
 
--    代表从stdin读取文件名
+--set <acl_format>
+	从cmd读取acl, 替换目标原有的acl
 
-entry格式(空格用于区分字段，实际不存在)：
-个人权限
-[d[efault]:] [u[ser]:][user|uid] [:perms]
+--set-file
+	从文件读取acl, 替换目标原有的acl
 
-群组权限
-[d[efault]:] g[roup]:[group|gid] [:perms]
+--test
+	test模式, 不实际修改文件的ACL, 显示操作结果
 
-mask
-[d[efault]:] m[ask][:] [:perms]
+-v, --version
+	版本信息
 
-others权限
-[d[efault]:] o[ther][:] [:perms]
+-X [<file>]
+	从文件/stdin移除acl
+	删除操作没有acl_access_permission field
+
+-x <acl_format>
+	从cmd移除acl
+	删除操作没有acl_access_permission field
 
 
-getfacl - 查看文件访问控制列表
+示例1 - 添加指定用户权限
+setfacl -m u:steven:rw- demo.txt
+
+示例2 - 移除指定群组权限
+setfacl -x g:steven demo.txt
+
+示例3 - 设置default ACL
+setfacl -d -m u:steven:r-- /home/demo
+
+
+
+
+getfacl - 查看文件的访问控制列表
 
 语法：
-getfacl [option] file
+getfacl [option] <file>
 
-参数释义：
--a, --access    显示acl
+参数释义:
+--
+	代表选项参数的结束
 
--d, --default    显示默认acl
+-a, --access
+	显示文件的access ACL
 
--c, --omit-header    忽略acl前三行信息(file_name/owner/group)
+-d, --default
+	显示目录的default ACL
 
--e, --all-effective    打印所有mask权限
+-c, --omit-header
+	不显示前三行注释内容(file_name/owner/group)
 
--E, --no-effective    不打印mask权限
+-E, --no-effective
+	不显示有效权限注释
 
--s, --skip-base    跳过只含有基本acl的文件
+-e, --all-effective
+	显示有效权限注释
 
--R, --recursive    递归打印目录下的文件
+-h, --help
+	帮助信息
 
--L, --logical    打印symbolic link实际指向的文件
+-L, --logical
+	必须搭配-R使用, 追溯到符号链接后的实际目录
+	默认只有指定目录会追溯到实际目录, 子目录只对符号链接起作用
 
--P, --physical    打印symbolic link文件
+-n, --numeric
+	显示用户和群组的ID
 
--t, --tabular    以表格形式打印acl
+-P, --physical
+	必须配合-R使用, 只对符号链接文件起作用
 
--p, --absolute-names    不移除起始的/，默认移除起始/
+-p, --absolute-names
+	不截断起始的'/'符号
 
--n, --numeric    列出uid和gid
+-R, --recursive
+	递归显示目录下所有子文件的ACL
 
--v, --version    版本信息
+-s, --skip-base
+	忽略只有base ACL的文件
 
--h, --help    帮助信息文档
+-t, --tabular
+	使用表格格式显示结果
+
+-v, --version
+	版本信息
+
+
+
+引用:
+[1]man 5 acl
+[2]man 1 setfacl
+[3]man 1 getfacl
+
 

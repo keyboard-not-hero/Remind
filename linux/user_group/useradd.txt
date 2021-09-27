@@ -11,6 +11,9 @@ useradd [options] <user_name>
 -c, --comment <comment>
 	注释内容, 位于/etc/passwd第五列
 
+-D, --defaults
+	显示默认变量值列表, 参考/etc/default/useradd内容
+
 -d, --home-dir <home_dir>
 	指定创建用户家目录时, 家目录具体路径
 
@@ -78,6 +81,13 @@ useradd [options] <user_name>
 
 
 
+补充:
+1.mail目录是否创建, 参考/etc/default/useradd的CREATE_MAIL_SPOOL
+
+2.mail目录位置, 参考/etc/login.defs的MAIL_DIR
+
+
+
 
 相关配置文件：
 1./etc/default/useradd
@@ -85,3 +95,8 @@ useradd [options] <user_name>
 2./etc/skel
 
 3./etc/login.defs
+
+
+
+示例1 - 创建家目录为/home/<user>, shell为/bin/bash, 初始用户组为<user>的用户
+useradd -m -b /home -s /bin/bash peter

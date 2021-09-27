@@ -23,7 +23,7 @@ MBR详细信息:
 
 
 
-GPT(GUID[Global Unique IDdentifiers] Partition Table, 分区表) -- 当前使用的硬盘格式
+GPT(GUID[Global Unique IDentifiers] Partition Table, 全局唯一标识符分区表) -- 当前使用的硬盘格式
 
 GPT详细信息:
 1.Protective MBR - 512 bytes, 用于保护GPT程序, 避免不认识GPT的分区程序将GPT磁盘视为未分区磁盘

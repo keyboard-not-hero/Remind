@@ -174,3 +174,6 @@ grep -E 'g.{2}gle' demo01.txt
 
 示例3 - 不包含注解行(以#开头)和空行的内容
 grep -v '^$' demo01.txt | grep -v '^#'
+
+示例4 - 显示指定目录下包含指定文本内容的文件列表
+grep -r -l 'g[op]\{2\}gle' /home

@@ -19,3 +19,16 @@ userdel [option] <user>
 
 -Z, --selinux-user
 	移除用户的selinux映射
+
+
+补充:
+1. 当/etc/login.defs的USERGROUPS_ENAB为yes时, 如果与用户同名群组内没有其他用户, 则移除该群组
+
+
+
+示例1 - 移除用户, 不删除家目录和邮件目录
+userdel peter
+
+
+示例2 - 移除用户, 并删除家目录和邮件目录
+userdel -r peter

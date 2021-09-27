@@ -1,0 +1,249 @@
+ext2
+ext2的文件系统分为多个block group
+
+文件系统详情(1 KiB block):
+1.boot record
+	大小: 512 bytes
+	起始位置: 文件系统起始位置
+
+2.addition boot record data
+	大小: 512 bytes
+	起始位置: 512 bytes
+
+3.第一个block group:
+superblock
+	大小: 1 block
+	起始位置: 1024 bytes. 当block大小为1 KiB时, superblock为1号block, 当block大小大于1 KiB时, superblock为0号block
+	内容: 文件系统的inode/block的总量/剩余量; 每个block group的inode/block总量; 文件系统的挂载情况等
+	详细结构:
+		s_inodes_count - 4 bytes, 文件系统的inodes总量
+		s_blocks_count - 4 bytes, 文件系统的blocks总量
+		s_r_blocks_count - 4 bytes, 文件系统中保留给超级用户的blocks量
+		s_free_blocks_count - 4 bytes, 文件系统中未使用的blocks量(包含保留给超级用户的blocks)
+		s_free_inodes_count - 4 bytes, 文件系统中未使用的inodes量
+		s_first_data_block - 4 bytes, superblock所在的block号, 当block大小为1 KiB时, 该值为1; 当block大小大于1 KiB时, 该值为0
+		s_log_block_size - 4 bytes, 将1024左移指定位数, 结果作为block大小. 公式: block_size = 1024 << s_log_block_size
+		s_log_frag_size - 4 bytes, 将1024左移指定位数, 结果作为fragment大小. 公式如下:
+			if(positive)
+				frag_size = 1024 << s_log_frag_size
+			else
+				frag_size = 1024 >> -s_log_frag_size
+		s_blocks_per_group - 4 bytes, 每个block group的blocks总量(最后一个block group的blocks总量或许会略少)
+		s_frags_per_group - 4 bytes, 每个block group的fragments总量
+		s_inodes_per_group - 4 bytes, 每个block group的inodes总量
+		s_mtime - 4 bytes, 文件系统的挂载时间. epoch时间
+		s_wtime - 4 bytes, 对文件系统的最后写入操作时间. epoch时间
+		s_mnt_count - 2 bytes, 上一次fsck后, 挂载的次数
+		s_max_mnt_count - 2 bytes, 在一次完整check之前, 最大可挂载的次数
+		s_magic - 2 bytes, 将文件系统标记为ext2, 代码为0xEF53
+		s_state - 2 bytes, 文件系统挂载状态. 列表如下:
+			EXT2_VALID_FS - 1, 代表未挂载 
+			EXT2_ERROR_FS - 2, 代表已挂载, 
+		s_errors - 2 bytes, 文件系统检测到错误时的操作. 列表如下:
+			EXT2_ERRORS_CONTINUE - 1, 仿佛没有事情发生, 继续执行
+			EXT2_ERRORS_RO - 2, 重新挂载为只读
+			EXT2_ERRORS_PANIC - 3, 引起kernel级应答
+		s_minor_rev_level - 2 bytes, 次级修订版本
+		s_lastcheck - 4 bytes, 最后一次文件系统检查时间
+		s_checkinterval - 4 bytes, 文件系统检查时间间隔
+		s_creator_os - 4 bytes, 文件系统下的系统类型. 列表如下:
+			EXT2_OS_LINUX - 0, Linux
+			EXT2_OS_HURD - 1, GNU HURD
+			EXT2_OS_MASIX - 2, MASIX
+			EXT2_OS_FREEBSD - 3, FreeBSD
+			EXT2_OS_LITES - 4, Lites
+		s_rev_level - 4 bytes, 修订版本. 列表如下:
+			EXT2_GOOD_OLD_REV - 0, revision 0
+			EXT2_DYNAMIC_REV - 1, revision 1, 附带拓展属性
+		s_def_resuid - 2 bytes, 使用保留block的用户id. Linux默认为0 
+		s_def_resgid - 2 bytes, 使用保留block的群组id. Linux默认为0
+		s_first_ino - 4 bytes, inode table中第一个可使用的inode的号码, 之前的空间保留
+		s_inode_size - 2 bytes, inode的大小
+		s_block_group_nr - 2 bytes, 当前superblock所在的block group
+		s_feature_compat - 4 bytes, 使用指定bit确定是否包含指定的特征, 文件系统支持与否都可以. 列表如下:
+			EXT2_FEATURE_COMPAT_DIR_PREALLOC - 0x0001, 预分配block给新目录
+			EXT2_FEATURE_COMPAT_IMAGIC_INODES - 0x0002
+			EXT3_FEATURE_COMPAT_HAS_JOURNAL - 0x0004, 是否包含ext3的journal
+			EXT2_FEATURE_COMPAT_EXT_ATTR - 0x0008, 是否包含inode的拓展属性
+			EXT2_FEATURE_COMPAT_RESIZE_INO - 0x0010, 是否使用非标准大小的inode
+			EXT2_FEATURE_COMPAT_DIR_INDEX - 0x0020, 目录索引
+		s_feature_incompat - 4 bytes, 使用指定bit确定是否包含指定的特征, 当文件系统不包含任意一个特性时, 不可挂载. 列表如下:
+			EXT2_FEATURE_INCOMPAT_COMPRESSION - 0x0001, 文件压缩
+			EXT2_FEATURE_INCOMPAT_FILETYPE - 0x0002
+			EXT3_FEATURE_INCOMPAT_RECOVER - 0x0004
+			EXT3_FEATURE_INCOMPAT_JOURNAL_DEV - 0x0008
+			EXT2_FEATURE_INCOMPAT_META_BG - 0x0010
+		s_feature_ro_compat - 4 bytes, 使用指定bit确定是否包含指定的特征, 当任一特征不支持时, 文件系统挂载为只读. 列表如下:
+			EXT2_FEATURE_RO_COMPAT_SPARSE_SUPER - 0x0001, sparse类型的superblock
+			EXT2_FEATURE_RO_COMPAT_LARGE_FILE - 0x0002, 支持大文件
+			EXT2_FEATURE_RO_COMPAT_BTREE_DIR - 0x0004, 二进树排序目录文件
+		s_uuid - 16 bytes, 文件系统的唯一标识符
+		s_volume_name - 16 bytes, 文件系统的名称
+		s_last_mounted - 64 bytes, 文件系统上次挂载的路径
+		s_algo_bitmap - 4 bytes, 使用的压缩方法. 列表如下:
+			EXT2_LZV1_ALG - 0x00000001
+			EXT2_LZRW3A_ALG - 0x00000002
+			EXT2_GZIP_ALG - 0x00000004
+			EXT2_BZIP2_ALG - 0x00000008
+			EXT2_LZO_ALG - 0x00000010
+		s_prealloc_blocks - 1 byte, 创建regular file时预分配的block数量
+		s_prealloc_dir_blocks - 1 byte, 创建目录时预分配的block数量
+		<reserved> - 2 bytes, 保留空间, 用于对齐
+		s_journal_uuid - 16 bytes, 包含journal的superblock id
+		s_journal_inum - 4 bytes, 日志文件的inode号码
+		s_journal_dev - 4 bytes, 当外部journal特性开启时, journal文件所在的设备号
+		s_last_orphan - 4 bytes, 需要删除的inode列表的起始位置
+		s_hash_seed - 4*4 bytes, 4个元素的数组, 元素为目录索引的哈希算法种子
+		s_def_hash_version - 1 byte, 用于目录索引的哈希算法版本
+		<reserved> - 3 bytes, 保留空间, 用于对齐
+		s_default_mount_options - 4 bytes, 当前文件系统的默认挂载选项
+		s_first_meta_bg - 4 bytes, 用于标记第一个block group的id
+		<reserved> - 760 bytes, 保留空间, 用于将来的版本拓展
+
+block group descriptor table
+	大小: n blocks
+	起始位置: 1024 bytes + 1 block
+	内容: block group descriptor的数组, 数组元素个数取决于block group数量. block group descriptor格式如下:
+		bg_block_bitmap - 4 bytes, block bitmap所在的block
+		bg_inode_bitmap - 4 bytes, inode bitmap所在的block
+		bg_inode_table - 4 bytes, inode table所在的第一个block
+		bg_free_blocks_count - 2 bytes, 未使用的blocks数量
+		bg_free_inodes_count - 2 bytes, 未使用的inodes数量
+		bg_used_dirs_count - 2 bytes, 分配给目录的inodes数量
+		bg_pad - 2 bytes, 未使用, 用于32 bit边界对齐
+		bg_reserved - 12 bytes, 保留空间
+
+block bitmap
+	大小: 1 block
+	内容: block详细使用情况, 每个bit代表对应编号block的使用状态, 0代表free/available, 1代表used
+
+inode bitmap
+	大小: 1 block
+	内容: inode详细使用情况, 每个bit代表对应编号inode的使用状态, 0代表free/available, 1代表used
+
+inode table
+	大小: n blocks
+	单个inode大小: 128 bytes/256 bytes
+	内容: inode表, inode包含文件权限和属性, 存放内容的block编号, 但不包含文件名(文件名包含在上级目录的block中)
+	inode结构
+		i_mode - 2 bytes, 指定文件类型和权限. 列表如下:
+			EXT2_S_IFSOCK	0xC000	socket
+			EXT2_S_IFLNK	0xA000	symbolic link
+			EXT2_S_IFREG	0x8000	regular file
+			EXT2_S_IFBLK	0x6000	block device
+			EXT2_S_IFDIR	0x4000	directory
+			EXT2_S_IFCHR	0x2000	character device
+			EXT2_S_IFIFO	0x1000	fifo
+			
+			EXT2_S_ISUID	0x0800	Set process User ID
+			EXT2_S_ISGID	0x0400	Set process Group ID
+			EXT2_S_ISVTX	0x0200	sticky bit
+			
+			EXT2_S_IRUSR	0x0100	user read
+			EXT2_S_IWUSR	0x0080	user write
+			EXT2_S_IXUSR	0x0040	user execute
+			EXT2_S_IRGRP	0x0020	group read
+			EXT2_S_IWGRP	0x0010	group write
+			EXT2_S_IXGRP	0x0008	group execute
+			EXT2_S_IROTH	0x0004	others read
+			EXT2_S_IWOTH	0x0002	others write
+			EXT2_S_IXOTH	0x0001	others execute
+		i_uid - 2 bytes, 文件拥有者的ID
+		i_size - 4 bytes, 文件大小
+		i_atime - 4 bytes, 上一次访问inode的时间, 时间格式为自1970-01-01的秒数
+		i_ctime - 4 bytes, 创建inode的时间
+		i_mtime - 4 bytes, 上一次修改inode的时间
+		i_dtime - 4 bytes, 删除inode的时间
+		i_gid - 2 bytes, 文件拥有群组的ID
+		i_links_count - 2 bytes, 链接到该inode的次数(硬链接会增加一次到inode的链接)
+		i_blocks - 4 bytes, inode指向的数据包含的512 bytes大小的block数量
+		i_flags - 4 bytes, 访问inode指向的文件block时的特征. 列表如下:
+			EXT2_SECRM_FL			0x00000001	secure deletion
+			EXT2_UNRM_FL			0x00000002	record for undelete
+			EXT2_COMPR_FL			0x00000004	compressed file
+			EXT2_SYNC_FL			0x00000008	synchronous updates
+			EXT2_IMMUTABLE_FL		0x00000010	immutable file
+			EXT2_APPEND_FL			0x00000020	append only
+			EXT2_NODUMP_FL			0x00000040	do not dump/delete file
+			EXT2_NOATIME_FL			0x00000080	do not update .i_atime
+
+			EXT2_DIRTY_FL			0x00000100	Dirty (modified)
+			EXT2_COMPRBLK_FL		0x00000200	compressed blocks
+			EXT2_NOCOMPR_FL			0x00000400	access raw compressed data
+			EXT2_ECOMPR_FL			0x00000800	compression error
+
+			EXT2_BTREE_FL			0x00001000	b-tree format directory
+			EXT2_INDEX_FL			0x00001000	hash indexed directory
+			EXT2_IMAGIC_FL			0x00002000	AFS directory
+			EXT3_JOURNAL_DATA_FL	0x00004000	journal file data
+			EXT2_RESERVED_FL		0x80000000	reserved for ext2 library
+		i_osd1 - 4 bytes, operation system相关
+		i_block - 15*4 bytes, 指向包含内容的blocks. 具体内容如下:
+			12个直接指针 - 指向存放内容的block. 容量: 12*1K=12K
+			1个间接指针 - 指向一个地址block, 地址block存放实际内容block编号. 容量: 1*(1K/4)*1K=256K
+			1个双间接指针 - 指向一个地址block, 地址block指向第二级地址block, 第二级地址block存放实际内容block编号. 容量: 1*(1K/4)*(1K/4)*1K=64M
+			1个三间接指针 - 指向一个地址block, 地址block指向第二级地址block, 第二级block指向第三级地址block, 第三级地址block存放实际内容block编号. 容量: 1*(1K/4)*(1K/4)*(1K/4)*1K=16G
+		i_generation - 4 bytes, 文件版本(用于NFS)
+		i_file_acl - 4 bytes, 包含文件拓展属性的block号码
+		i_dir_acl - 4 bytes, 包含目录拓展属性的block号码
+		i_faddr - 4 bytes, file fragment位置(只适用于ext2, ext3/ext4已不支持fragment)
+		i_osd2 - 12 bytes, operation system相关
+
+data blocks
+	大小: n blocks
+	单个block大小: 1K/2K/4K/8K
+	内容: 文件实际内容存放(或间接指针)
+	目录结构:
+		entry:
+		inode - 4 bytes, 目录下文件/子目录的inode, 为0时代表未使用
+		rec_len - 2 bytes, 无符号值, 当前结构记录的长度, 结果必须为4的整数倍(name字段不为4的整数倍时, 额外填充字节)
+		name_len - 1 byte, 无符号值, 代表目录名称的长度
+		file_type - 1 byte, 无符号值, 文件/子目录类型. 列表如下:
+			EXT2_FT_UNKNOWN		0	Unknown File Type
+			EXT2_FT_REG_FILE	1	Regular File
+			EXT2_FT_DIR			2	Directory File
+			EXT2_FT_CHRDEV		3	Character Device
+			EXT2_FT_BLKDEV		4	Block Device
+			EXT2_FT_FIFO		5	Buffer File
+			EXT2_FT_SOCK		6	Socket File
+			EXT2_FT_SYMLINK		7	Symbolic Link
+		name - 0~255 bytes, 文件/子目录名称
+
+4.其他block groups
+
+
+** superblock和group descriptor table为所有block group信息的汇总	
+** 第一个block group必定存在superblock/{group descriptor table}, 其他block group的superblock为第一个block group的superblock/{group descriptor table}的备份, 且不一定有
+
+
+
+链接类型:
+1.hard link
+dir1 block -------
+				 |
+				 |
+                 ------> file inode
+             	 |
+				 |
+dir2 block -------
+(hard link)
+
+hard link的限制:
+1)不能跨文件系统
+2)不能链接目录
+
+
+2.symbolic link
+file block      -------> dir1 block -------> file inode
+(symbolic link)
+
+** 有些出处说symbolic link的block指向目标文件所在目录的inode, 但该inode没有增加引用数量(ls -l的第二个字段)
+** 小于60 bytes的symbolic link使用inode保存date
+** symbolic link可指向其他文件系统的文件
+
+
+
+引用:
+[1]ext2 doc: https://www.nongnu.org/ext2-doc/ext2.html
+
+[2]professional linux kernel architecture: chapter 9

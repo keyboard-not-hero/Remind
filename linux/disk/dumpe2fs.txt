@@ -1,7 +1,7 @@
 dumpe2fs - 详细显示ext2/ext3/ext4文件系统信息
 
 语法
-dumpe2fs [option] device
+dumpe2fs [option] <device>
 
 参数释义
 -b

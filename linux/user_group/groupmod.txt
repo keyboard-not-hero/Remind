@@ -1,0 +1,25 @@
+groupmod - 修改群组信息
+
+
+语法
+groupmod [option] <group>
+
+
+参数释义
+-g, --gid <gid>
+	修改群组的ID
+
+-h, --help
+	帮助信息
+
+-n, --new-name <group_name>
+	修改群组名称
+
+-o, --non-unique
+	配合-g使用, 可以将群组ID设置为已使用的ID
+
+-p, --password <passwd>
+	设置使用crypt(3)加密的群组密码
+
+-R, --root <chroot>
+	chroot设置

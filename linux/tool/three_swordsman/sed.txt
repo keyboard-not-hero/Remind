@@ -65,7 +65,7 @@ sed [option] [<script>] [<input_file> ...]
 	沙盒模式, 不能使用e/w/r指令
 
 -u, --unbuffered
-	尽可能使用小的buffer
+	使用尽可能小的buffer
 
 --version
 	版本信息

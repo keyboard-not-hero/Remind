@@ -5,31 +5,27 @@ groupadd [options] <group>
 
 参数释义
 -f, --force
-	当创建组已存在时, 退出而不生成信息
+	当创建组已存在时, 不生成错误信息退出, 并返回状态码0
 	配合-g使用时, 如果gid已存在, 自动使用其他gid
 
 -g, --gid <gid>
 	指定创建组的ID
-	默认为当前GID_MIN/GID_MAX之间, 已使用最高gid, 在此基础上+1
+	默认取大于GID_MIN值, 在已使用的最大gid上+1
 
 -h, --help
 	帮助文档
 
 -K, --key <key>=<value>
-	设置GID_MIN/GID_MAX或其他/etc/login.defs文件内的变量值
+	覆盖/etc/login.defs内的键值
 
 -o, --non-unique
 	允许设置gid为非唯一的值
 
 -p, --password <password>
-	设置群组的密码
-
--r, --system
-	创建一个系统级群组. 编号位于SYS_GID_MIN/SYS_GID_MAX之间, 变量位于/etc/login.defs内
+	设置crypt(3)加密的群组密码
 
 -R, --root <chroot_dir>
-	将指定目录视为根目录, 配置文件按对应路径读取
+	chroot设置
 
--P, --prefix <prefix_dir>
-	将指定目录视为根目录, 配置文件按对应路径读取
-	不将目录进行chroot	
+-r, --system
+	创建一个系统级群组. 编号位于/etc/login.defs的SYS_GID_MIN/SYS_GID_MAX之间
