@@ -5,14 +5,15 @@ du [option]... [file]...
 
 参数释义
 -0, --null
-	每一条结果使用''分隔
+	每一条结果使用NUL('')分隔
+	默认使用'\n'分隔
 
 -a, --all
-	递归显示当前目录和子目录内, 文件的空间使用情况
-	默认只显示子目录内文件的空间使用情况
+	增加显示文件的空间使用情况
+	默认只显示目录及子目录的空间使用情况
 
 --apparent-size
-	文件实际占用的空间大小
+	更精确的空间使用情况, 包括0 block文件/间接block等
 
 -B, --block-size=<size>
 	使用指定单位显示空间大小. 可选列表: 
@@ -26,10 +27,15 @@ du [option]... [file]...
 	显示汇总栏
 
 -D, --dereference-args
-	当指令行指定的目录为symbolic link时, 查看link实际指向目录的空间使用情况
+	当指令行指定的目录为symbolic link时, 查看link实际指向文件的空间使用情况
 
 -d, --max-depth=<n>
 	指定查询子目录的递归深度
+	1代表显示指定的目录和下一层子目录
+
+--exclude=<pattern>
+	不统计匹配pattern的文件
+	pattern为shell通配符模式
 
 -H
 	类似于--dereference-args
@@ -37,14 +43,18 @@ du [option]... [file]...
 -h, --human-readable
 	显示空间使用情况时, 使用方便读取的单位
 
+--help
+	帮助文档
+
 --inodes
-	显示inode的使用情况, 替代默认的block的使用情况
+	显示inode的使用情况
+	默认为block的使用情况
 
 -k
 	类似于--block-size=1K
 
 -L, --dereference
-	当查看的目录为symbolic link时, 查看link实际指向目录的空间使用情况
+	查看所有symbolic link实际指向的文件
 
 -l, --count-links
 	如果存在hard link, 进行多次计算
@@ -57,48 +67,41 @@ du [option]... [file]...
 	默认选项
 
 -S, --separate-dirs
-	只显示文件和子目录下文件的空间使用情况
-	默认选项
+	目录空间使用情况不包含子目录空间使用情况
+	默认包含
+
+-s, --summarize
+	只显示指定目录总使用情况, 子目录不进行显示
 
 --si
 	类似于-h, 但进制为1000
 
--s, --summarize
-	只显示目录的空间使用情况, 不显示子目录的空间使用情况
-
--t, --threshold=<size>
-	小于指定单位的内容, 不显示空间使用情况
-
 --time
-	显示目标最后modification时间
+	增加显示modify时间列
 
 --time=<word>
-	显示目标的指定类型时间. 列表: atime/ctime
+	指定显示时间列类型. 列表: atime/ctime
 
 --time-style=<style>
 	指定显示的时间格式. 格式列表: full-iso/long-iso/iso/+<format>
 	format格式参考date指令
 
+--version
+	版本信息
+
 -X, --exclude-from=<file>
 	根据文件file内的pattern内容, 不统计匹配pattern的文件
-	pattern为shell通配符模式
-
---exclude=<pattern>
-	不统计匹配pattern的文件
 	pattern为shell通配符模式
 
 -x, --one-file-system
 	不统计其他文件系统的空间使用情况
 
---help
-	帮助文档
 
---version
-	版本信息
-
-
-示例1 - 统计指定目录(含子目录)下的文件(不统计目录消耗的block)空间使用情况
+示例1 - 统计指定目录(含子目录)下的空间使用情况
 du ~/demo
 
-示例2 - 统计指定目录(含子目录)下的文件空间使用情况, 但不显示子目录条目
+示例2 - 统计指定目录的空间使用情况
 du -s ~/demo
+
+示例3 - 精确的空间使用情况
+du --apparent-size ~/demo

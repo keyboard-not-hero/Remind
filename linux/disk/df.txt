@@ -1,4 +1,4 @@
-df - 文件系统的使用情况
+df - 文件系统的使用情况(磁盘空间用例)
 
 语法
 df [option]... [file]...
@@ -15,14 +15,14 @@ df [option]... [file]...
 --direct
 	将mounted on字段名称换为file
 
---total
-	提供汇总栏
+-H, --si
+	类似于-h, 但进制为1000
 
 -h, --human-readable
 	空间大小使用方便阅读的单位
 
--H, --si
-	类似于-h, 但进制为1000
+--help
+	帮助文档
 
 -i, --inodes
 	显示inode使用情况, 而非默认的block使用情况
@@ -59,17 +59,21 @@ df [option]... [file]...
 --sync
 	显示文件系统使用情况前, 进行同步
 
+-T, --print-type
+	显示文件系统类型
+
 -t, --type=<type>
 	只显示指定类型的文件系统使用情况
 
--T, --print-type
-	显示文件系统类型
+--total
+	提供汇总栏
+
+--version
+	版本信息
 
 -x, --exclude-type=<type>
 	指定不显示的文件系统类型使用情况
 
---help
-	帮助文档
 
---version
-	版本信息
+示例1 - 指定文件系统的使用情况
+df /dev/sdb1

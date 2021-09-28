@@ -11,16 +11,16 @@ lsblk [options] [device...]
 	size字段使用bytes单位
 
 -d, --nodeps
-	只显示磁盘信息, 不显示分区信息
+	只显示磁盘整体信息, 不显示分区信息
 
 -e, --exclude <list>
 	不显示指定major代号的设备的信息, 只作用于磁盘(而非分区), 代号之间使用','分隔. 代表列表如下:
-		1 - RAM, 默认包含
+		1 - RAM, 默认指定
 		8 - 机械硬盘/U盘
 		259 - 固态硬盘
 
 -f, --fs
-	包含指定字段的输出
+	输出文件系统相关字段
 	类似于-o NAME,FSTYPE,LABEL,UUID,MOUNTPOINT
 
 -h, --help
@@ -33,10 +33,17 @@ lsblk [options] [device...]
 		259 - 固态硬盘
 
 -i, --ascii
-	使用ASCII字符作为结构树的骨架
+	使用ASCII字符结构输出
+	默认为tree结构
+
+-J, --json
+	使用json结构输出
 
 -l, --list
-	将结构树以列表形式显示
+	使用列表结构输出
+
+-M, --merge
+	使用multi-level tree结构输出, 适用于RAID结构
 
 -m, --perms
 	显示对应设备文件的owner/group/mode
@@ -45,8 +52,13 @@ lsblk [options] [device...]
 -n, --noheadings
 	不显示header行
 
+-O, --output-all
+	显示所有可获得的列
+
 -o, --output <list>
-	指定显示的字段, 字段之间使用','分隔. 字段列表:
+	指定显示的字段, 字段之间使用','分隔. 
+	可使用+list格式增加显示指定的列
+	list字段列表:
 		NAME - 设备名称
 		KNAME - kernel内部设备名称
 		MAJ:MIN - major:minor设备代号
@@ -97,8 +109,24 @@ lsblk [options] [device...]
 -s, --inverse
 	从分区--part--disk的顺序, 从里到外按以来层级反向显示
 
+-T, --tree[=<column>]
+	使用tree结构输出, 以column列为tree格式
+	默认column为name列
+
 -t, --topology
 	按块设备拓扑字段显示内容
 
 -V, --version
 	版本信息
+
+-x, --sort <column>
+	将结果按指定列进行排序
+	默认使用list结构输出
+
+
+
+示例1 - 显示磁盘及分区信息
+lsblk
+
+示例2 - 增加UUID和FSTYPE的显示
+lsblk -o +uuid,fstype

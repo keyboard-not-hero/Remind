@@ -237,7 +237,9 @@ hard link的限制:
 file block      -------> dir1 block -------> file inode
 (symbolic link)
 
-** 有些出处说symbolic link的block指向目标文件所在目录的inode, 但该inode没有增加引用数量(ls -l的第二个字段)
+** 有些出处说symbolic link的block指向目标文件所在目录的inode,\
+但该inode没有增加引用数量(ls -l的第二个字段), 并且symbolic\
+ link文件大小由文件名字符数确定, 而文件名保存在父目录的block中, 最终推导出图示
 ** 小于60 bytes的symbolic link使用inode保存date
 ** symbolic link可指向其他文件系统的文件
 

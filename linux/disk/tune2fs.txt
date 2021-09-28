@@ -1,0 +1,77 @@
+tune2fs - 调整ext2/ext3/ext4文件系统参数
+
+语法
+tune2fs [option] device
+
+参数释义
+-C <mount_count>
+	设置当前已挂载次数
+	当该值大于等于-c指定的值时, 下次重启时执行e2fsck(8)
+
+-c <max_mount_counts>
+	e2fsck(8)之后允许挂载的次数限制
+	0和-1代表没有限制
+
+-e <error_behavior>
+	检测到错误时, 执行的操作. 列表如下:
+		continue - 继续执行
+		remount-ro - 重新挂载文件系统为只读
+		panic - 引起kernel级应答
+
+-f
+	强制执行指定操作, 即使发生错误
+
+-g <gid|group_name>
+	设置可使用保留block的群组
+
+-I
+	修改inode的大小
+
+-i <interval_between_checks>[d|m|w]
+	文件系统检查得到时间间隔. 单位如下:
+		d - 天, 默认参数
+		m - 月
+		w - 周
+
+-J <journal_options>
+	指定journal的属性. 列表如下:
+		size=<journal_size> - 指定journal的大小, 单位为megabytes. 至少需要指定1024个blocks
+		location=<journal_location> - journal放置位置, 可以为block号码, 也可以指定字节单位(如: M/G)
+
+-j
+	给文件系统添加ext3的journal特性
+
+-L <volume_label>
+	修改文件系统的label
+	最长支持16个字符
+
+-l
+	显示文件系统superblock的内容
+
+-M <last_mounted_directory>
+	设置文件系统上一次挂载的目录
+
+-m <reserved_blocks_percentage>
+	文件系统保留blocks的百分比
+	默认为5%
+
+-r <reserved_blocks_count>
+	文件系统保留blocks的数量
+
+-T <time_last_checked>
+	设置文件系统上一次检查的时间. 格式: YYYYMMDD[HH[MM[SS]]]
+
+-U <uuid>
+	设置文件系统的UUID. 格式列表如下:
+		clear - 清除已有的uuid
+		random - 生成随机的uuid
+		time - 生成基于当前时间的uuid
+		<uuid> - 手动指定uuid
+
+-u <uid|user_name>
+	设置使用保留blocks的用户
+
+
+
+示例1 - 修改label和uuid
+tune2fs -L "fine" -U random /dev/sdb1

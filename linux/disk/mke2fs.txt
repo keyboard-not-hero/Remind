@@ -18,31 +18,36 @@ mke2fs [option] device
 	默认值为16*block大小
 
 -D
-	将结果直接写入磁盘(sync), 该操作会减缓操作速度
+	将结果直接写入磁盘(sync), 该参数会减缓操作速度
+
+-d <directory>
+	将目录下文件复制到文件系统根目录下
+
+-e <error_behavior>
+	检测到错误的操作. 列表如下:
+		continue - 继续执行
+		remount-ro - 重新挂载为只读
+		panic - 导致kernel级应答
 
 -F
-	强制创建一个文件系统
+	强制创建一个文件系统, 即使指定device不是一个块设备的分区
 	当已有文件系统在使用中或已被挂载, 需指定两次
-
--g <blocks_per_group>
-	指定block group中的block数量
-	该参数常用于开发者的测试用例
 
 -G <number_of_groups>
 	将指定个block groups合并为一个大的virtual block group
 	需要启用ext4特征: flex_bg
 	该参数必须为2的幂
 
--i <bytes_per_inode>
-	文件系统中bytes/inodes的比例
-	强烈建议大于block大小值, 否则inode数量大于block数量, 会有许多inode过剩
+-g <blocks_per_group>
+	指定block group中的blocks数量
 
 -I <inode_size>
 	inode的大小, 单位为bytes
 	大小为2的幂, 并且大于等于128. 建议128/256 bytes
 
--j
-	创建文件系统时使用ext3的日志功能
+-i <bytes_per_inode>
+	文件系统中bytes/inodes的比例
+	强烈建议大于block大小值, 否则inode数量大于block数量, 会有许多inode过剩
 
 -J <journal_options>
 	ext3日志功能的额外参数. 参数列表如下:
@@ -51,27 +56,30 @@ mke2fs [option] device
 			(1)使用以下特性: mke2fs -O journal_dev <device>
 			(2)外部设备的block大小需与当前文件系统的block大小一致
 
--l <filename>
-	从文件重读取坏轨列表
-	坏轨列表由badblocks program生成, badblocks的block大小需与当前文件系统一致
+-j
+	创建文件系统时使用ext3的日志功能
 
 -L <new_volume_label>
 	指定文件系统的label
 	最大长度支持16 bytes
 
--m <reserved_blocks_percentage>
-	在文件系统中保留指定百分比blocks给予super-user
-	默认为5%
+-l <filename>
+	从文件重读取坏轨列表
+	坏轨列表由badblocks program生成, badblocks的block大小需与当前文件系统一致
 
 -M <last_mounted_directory>
 	指定当前文件系统上次挂载的目录
 
--n
-	测试格式化文件系统后的结果, 并不实际执行
+-m <reserved_blocks_percentage>
+	在文件系统中保留指定百分比blocks给予super-user
+	默认为5%
 
 -N <number_of_inodes>
 	指定文件系统分配的inodes数量
 	覆盖-i与block数量得出的值
+
+-n
+	测试格式化文件系统后的结果, 并不实际执行
 
 -O <feature>[,...]
 	给文件系统设置指定特性, 不同特性使用','分隔
@@ -90,9 +98,6 @@ mke2fs [option] device
 -S
 	只写入superblock和group descriptor内容
 
--t <fs_type>
-	指定文件系统类型. 如: ext2/ext3/ext4/xfs等
-
 -T <usage_type>[,...]
 	指定文件系统的方案用例, 详细参考配置文件. 列表如下:
 		floppy - fs小于等于3M时的默认方案
@@ -103,8 +108,15 @@ mke2fs [option] device
 		ext3 - ext3和其某些特性
 		ext4 - ext4和其某些特性
 
--u <uuid>
-	文件系统的UUID
+-t <fs_type>
+	指定文件系统类型. 如: ext2/ext3/ext4等
+
+-U <uuid>
+	文件系统的UUID. uuid可选格式如下:
+		clear - 清除已有的文件系统UUID
+		random - 生成随机的UUID
+		time - 生成基于当前时间的UUID
+		<uuid> -手动指定UUID
 
 -v
 	verbose模式

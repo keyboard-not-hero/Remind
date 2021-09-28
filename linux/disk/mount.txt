@@ -4,11 +4,11 @@ mount - 挂载文件系统
 语法
 mount [-lhV]
 
-mount -a [-fFnrsvw] [-t vfstype] [-O optlist]
+mount -a [-fFnrsvw] [-t fstype] [-O optlist]
 
-mount [-fnrsvw] [-o option[,option]...]  device|dir
+mount [-fnrsvw] [-o options]  device|dir
 
-mount [-fnrsvw] [-t vfstype] [-o options] device dir
+mount [-fnrsvw] [-t fstype] [-o options] device dir
 
 
 参数释义
@@ -38,7 +38,7 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 	通过label指定设备
 
 -l, --show-labels
-	显示label
+	默认显示已挂载项. 该选项增加显示label
 
 -M, --move
 	转移挂载点为其他目录入口
@@ -64,6 +64,7 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 
 -o, --options <opts>
 	指定挂载项使用指定特性, 特性之间使用','分隔
+	特性参考后续
 
 -R, --rbind
 	将一个挂载点和子目录下的挂载递归绑定到另一个目录
@@ -74,7 +75,7 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 
 --source <src>
 	指定参数为设备
-	默认当只有一个参数时, 该参数可能为设备或挂载点
+	默认当只有一个参数时, 该参数可能为文件系统或挂载点
 
 -T, --fstab <path>
 	指定备用的fstab文件
@@ -85,7 +86,7 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 
 --target <dir>
 	指定参数为挂载点
-	当只有一个参数时, 该参数可能为设备或挂载点
+	当只有一个参数时, 该参数可能为文件系统或挂载点
 
 -U, --uuid <uuid>
 	通过uuid指定设备
@@ -232,13 +233,17 @@ users
 示例1 - 显示已挂载列表(含Label)
 mount -l
 
-示例2 - 转移已有挂载点
+示例2 - 使用UUID挂载文件系统
+mount -t ext2 UUID="<uuid>" <mount_dir>
+
+示例3 - 转移已有挂载点
 ** 挂载点默认为shared, 而shared挂载点是不能转移的, 需要将父目录转为private
 ** mount --bind <dir> <dir>从目录生成一个挂载点
 sudo mount --bind /mnt /mnt
 sudo mount --make-private /mnt
 sudo mount /dev/sda1 /mnt/tmp1
 sudo mount --move /mnt/tmp1 /mnt/tmp2
+
 
 引用
 [1]move operation: https://bugzilla.redhat.com/show_bug.cgi?id=917008

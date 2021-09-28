@@ -1,48 +1,33 @@
-fdisk - 操作MBR磁盘分区表
+fdisk - 操作磁盘分区表
 
 语法
 fdisk [option] [device]
 
 参数释义
+-B --protect-boot
+	当创建disk label时, 不删除第一个扇区的内容
+	** disk label代表GPT/MBR
+
 -b <sector_size>
 	指定磁盘sector的大小. 可用大小列表: 512/1024/2048/4096
 	该参数同时指定逻辑sector和物理sector大小
 
--c[=<mode>]
-	指定兼容模式. 列表: dos/nondos
-	默认为non-DOS模式
-	DEPRECATED
-
--C <cyls>
-	指定磁盘的cylinders数量
-	DEPRECATED
-
--H <heads>
-	指定磁盘的head数量
-	非物理数量, 可使用列表: 255/16
-	DEPRECATED
-
--S <sects>
-	每一个track上的sector数量
-	非物理数量, 可使用列表: 63
-	DEPRECATED
-
 -h
-	帮助文档
+	帮助信息
+
+-L, --color[=<when>]
+	使用彩色模式输出内容. when可选列表: auto/never/always
+	当when省略时, 默认为auto
 
 -l
-	显示指定设备的分区表
+	显示指定设备的分区表, 之后退出
 	当device未指定时, 参考/proc/partitions内容
 
--s <partition>
-	显示指定分区的大小, 单位为block大小
+-o, --output <list>
+	配合-l使用, 指定显示的列内容
+	可使用+list格式添加显示的列
 
--u[=<unit>]
-	显示分区表时, 大小使用sectors或cylinders
-	必须配合-l使用
-	默认为sectors
-
--v
+-V, --version
 	显示版本信息
 
 
