@@ -112,6 +112,9 @@ mount feature:
 async
 	当前文件系统的所有I/O实行异步(更新的信息暂时不存入磁盘)
 
+sync
+	文件系统的所有I/O进行同步
+
 atime
 	访问文件修改access time
 	该特征无法直接指定, 需要通过strictatime特征指定
@@ -129,14 +132,15 @@ default
 	一系列特征的集合, 为默认选项. 包含特征: rw, suid, dev, exec, auto, nouser, async
 
 dev
-	允许使用其中的字符设备和块设备
+	允许访问文件系统的字符设备和块设备
 
 nodev
-	不允许使用其中的字符设备和块设备
+	不允许访问文件系统的字符设备和块设备
 
 diratime
 	更新目录的access time
 	此选项为默认选项
+	当noatime设定时, 忽略此选项
 
 nodiratime
 	不更新目录的access time
@@ -151,7 +155,7 @@ noexec
 	不允许执行二进制程序
 
 group
-	允许非root用户挂载, 如果该用户所属群组与该文件系统所属群组一致
+	允许非root用户挂载, 如果该用户所属群组与指定的一致
 	该选项隐式包含nosuid和nodev特征. 用于/etc/fstab
 
 iversion
@@ -159,6 +163,17 @@ iversion
 
 noiversion
 	inode的变动, 不会造成该inode的i_version字段值的增加
+
+lazytime
+	只更新内存中inode的atime/mtime/ctime, 减少对磁盘的读写
+	只有以下情况更新磁盘的时间戳:
+		1)并不仅仅修改时间戳相关内容
+		2)同步操作(sync/fsync/syncfs)
+		3)当inode未被删除, 但被退出内存
+		4)距离上一次inode写入磁盘, 过去24小时
+
+nolazytime
+	不适用lazytime特征
 
 mand
 	允许在该文件系统上对文件执行强制锁
@@ -173,8 +188,8 @@ nofail
 	当该设备不存在时, 不报错
 
 relatime
-	访问文件内容不更新atime
-	自动更新access time必须同时满足的两个条件:
+	访问文件内容时, 视情况更新atime
+	更新access time必须同时满足的两个条件:
 		1.当文件内容被修改或状态被改变时
 		2.距离上次更新atime满24小时(Linux 2.6.30之后)
 	自Linux 2.6.30后, 该选项为默认选项(noatime没有指定时)
@@ -201,7 +216,7 @@ loud
 	关闭silent标记
 
 owner
-	允许非root用户挂载, 如果该用户与该文件系统owner一致
+	允许非root用户挂载, 如果该用户与该指定一致
 	该选项隐式包含nosuid和nodev特征. 用于/etc/fstab
 
 remount
@@ -212,9 +227,6 @@ ro
 
 rw
 	挂载文件系统为可读写
-
-sync
-	文件系统的所有I/O进行同步
 
 user
 	允许普通用户挂载文件系统, 挂载的用户写入/etc/mtab文件, 该用户后续可umount该文件系统
@@ -228,6 +240,16 @@ users
 	允许所有用户mount/umount文件系统
 	该选项隐式包含noexec/nosuid/nodev特征
 
+usrquota
+	文件系统可分配用户配额
+
+grpquota
+	文件系统可分配群组配额
+
+prjquota
+	文件系统可配合目录配额
+	ext家族文件系统不适用, 适用于xfs文件系统
+
 
 
 示例1 - 显示已挂载列表(含Label)
@@ -236,7 +258,10 @@ mount -l
 示例2 - 使用UUID挂载文件系统
 mount -t ext2 UUID="<uuid>" <mount_dir>
 
-示例3 - 转移已有挂载点
+示例3 - 重新挂载指定文件系统为只读
+mount -o remount,ro /dev/sdb2
+
+示例4 - 转移已有挂载点
 ** 挂载点默认为shared, 而shared挂载点是不能转移的, 需要将父目录转为private
 ** mount --bind <dir> <dir>从目录生成一个挂载点
 sudo mount --bind /mnt /mnt

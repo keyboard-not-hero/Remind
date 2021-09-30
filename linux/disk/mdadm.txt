@@ -1,0 +1,11 @@
+mdadm - 管理磁盘阵容设备
+
+语法
+mdadm [mode] <raid_device> [options] <component_device>
+
+mode列表
+
+
+
+参数释义
+

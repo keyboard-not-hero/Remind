@@ -101,7 +101,7 @@ superblock
 		<reserved> - 760 bytes, 保留空间, 用于将来的版本拓展
 
 block group descriptor table
-	大小: n blocks
+	大小: 1 blocks
 	起始位置: 1024 bytes + 1 block
 	内容: block group descriptor的数组, 数组元素个数取决于block group数量. block group descriptor格式如下:
 		bg_block_bitmap - 4 bytes, block bitmap所在的block
