@@ -1,0 +1,51 @@
+cron - 执行周期例程的程序
+
+相关指令:
+crontab
+
+
+指令详情:
+crontab - 周期性例程管理指令
+
+语法
+crontab [-u user] <file>
+crontab [-u user] [-i] {-e | -l | -r}
+
+参数释义
+-e
+	编辑周期例程内容
+	编辑器参考VISUAL/EDITOR变量, 如果两个变量没有定义, 参考/usr/bin/editor
+
+-i
+	配合-r使用, 在移除周期例程时, 进行提示
+
+-l
+	显示周期例程内容列表
+
+-r
+	移除所有周期例程
+
+-u
+	指定为其他用户创建周期例程
+
+需知:
+1.当/etc/cron.allow存在时, 不在该文件中的用户不允许使用crontab
+2.当/etc/cron.deny存在时, 该文件中的用户不允许使用crontab
+3.当上述两个档案都不存在时, 只有root用户或所有用户可以使用cron
+
+
+cron语法
+minutes	hours	days	months	weeks	commands
+
+特殊字符
+*
+	取值范围内的任何值
+
+,
+	多个取值的分隔字符
+
+-
+	区间字符
+
+/<n>
+	配合*, 组合*/<n>, 代表范围取值内的每个n个单位

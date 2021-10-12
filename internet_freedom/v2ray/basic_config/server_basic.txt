@@ -1,13 +1,13 @@
 本教程在centos 7和ubuntu 18.04均配置成功
 1.下载V2Ray：
-wget https://install.direct/go.sh
+curl -L -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 
 2.安装/更新V2Ray(系统需自带systemd)：
-bash go.sh
+bash install-release.sh
 **v2ray每周更新。版本号vX.Y.Z，X为大更新版本(一年)，Y为小更新版本(一周)，Z为0则为稳定版本
 
 3.编辑配置文件：
-vi /etc/v2ray/config.json
+vi /usr/local/etc/v2ray/config.json
 {
   "inbounds": [
     {
@@ -48,9 +48,19 @@ firewall-cmd --add-port=1910/tcp
 firewall-cmd --add-port=1910/udp
 firewall-cmd --list-ports
 
-github地址：https://github.com/v2ray/v2ray-core
-官方手册地址：https://www.v2ray.com/
-配置参考地址：https://toutyrater.github.io/
+
+v2ray文件结构符合FHS标准, 如下:
+/usr/local/bin/v2ray
+/usr/local/bin/v2ctl
+/usr/local/share/v2ray/geoip.dat
+/usr/local/share/v2ray/geosite.dat
+/usr/local/etc/v2ray/config.json
+/var/log/v2ray/
+/var/log/v2ray/access.log
+/var/log/v2ray/error.log
+/etc/systemd/system/v2ray.service
+/etc/systemd/system/v2ray@.service
+
 
 v2ray须知：
 1.协议类型：使用自创VMess加密传输协议
@@ -70,3 +80,12 @@ v2ray须知：
 
 2.客户端提示 Socks: unknown Socks version
 解答：v2ray配置inbound为socks，而浏览器代理协议使用http
+
+
+最后编辑时间: 2021-10-12
+
+
+引用:
+[1] github地址：https://github.com/v2ray/v2ray-core
+[2] 官方手册地址：https://www.v2ray.com/
+[3] 配置参考地址：https://toutyrater.github.io/

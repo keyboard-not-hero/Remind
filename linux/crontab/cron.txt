@@ -1,0 +1,89 @@
+cron - 执行周期例程的程序
+
+
+例行性排程方式:
+1.用户级 - 使用crontab指令, 相关文件/var/spool/cron/crontabs/<user>
+
+2.系统级 - 编辑/etc/crontab文件
+
+3.anacron - 定期检查到时间未执行排程
+
+
+例行性排程详情
+1.crontab指令:
+crontab - 周期性例程管理指令
+
+语法
+crontab [-u user] <file>
+crontab [-u user] [-i] {-e | -l | -r}
+
+参数释义
+-e
+	编辑周期例程内容
+	编辑器参考VISUAL/EDITOR变量, 如果两个变量没有定义, 参考/usr/bin/editor
+
+-i
+	配合-r使用, 在移除周期例程时, 进行提示
+
+-l
+	显示周期例程内容列表
+
+-r
+	移除所有周期例程
+
+-u
+	指定为其他用户创建周期例程
+
+需知:
+1.当/etc/cron.allow存在时, 不在该文件中的用户不允许使用crontab
+2.当/etc/cron.deny存在时, 该文件中的用户不允许使用crontab
+3.当上述两个档案都不存在时, 只有root用户或所有用户可以使用cron
+
+
+相关语法
+minutes	hours	days	months	day_of_week	commands
+
+特殊字符
+*
+	取值范围内的任何值
+
+,
+	多个取值的分隔字符
+
+-
+	区间字符
+
+/<number>
+	代表范围取值内的每隔number个单位. 如: */2代表所有取值每隔2个单位
+
+
+2./etc/crontab文件
+相关语法
+minutes	hours	days	months	day_of_week	user	commands
+
+
+3.anacron
+内容参考/etc/anacrontab
+语法
+peri_time	delay_time	name	command
+
+peri_time - 间隔周期时间, 使用当前时间与上次执行时间相减
+
+delay_time - 符合间隔周期后, 延迟指定时间后执行排程(避免立即执行造成过高负载)
+
+name - 排程内容名称
+
+command - 排程具体执行的指令
+
+** 上次周期性执行时间戳保存在/var/spool/anacron/<period_file>内
+
+
+示例1 - 添加用户级例行排程
+crontab -e
+40 10 12 10 * echo "hello world" > /etc/pts/0
+
+示例2 - 查看用户级例行排程
+crontab -l
+
+示例3 - 清空用户级例行排程
+crontab -r

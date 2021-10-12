@@ -1,11 +1,94 @@
 mdadm - 管理磁盘阵容设备
 
+
 语法
 mdadm [mode] <raid_device> [options] <component_device>
 
-mode列表
-
-
 
 参数释义
+模式相关:
+-A, --assemble
+	组合一个预定义的磁盘数组
+	在系统启动时自动进行
 
+-B, --build
+	类似于--create, 但磁盘数组不不包含superblock
+
+-C, --create
+	创建一个新的磁盘组合
+
+-F, --follow, --monitor
+	监视磁盘数组的实时状态
+	只适用于raid 1/4/5/6/10
+
+
+create/build/grow模式:
+-c, --chunk=<size>
+	指定chunk大小, 单位为KiB
+
+-l, --level=<level>
+	指定的磁盘数组类型
+
+-n, --raid-devices=<dev_list>
+	指定磁盘组中active数量
+
+-x, --spare-devices=<dev_list>
+	指定磁盘数组中额外设备数量
+
+
+manage模式:
+语法
+mdadm <raid_dev> <options> <devices>
+-a, --add
+	将设备添加到磁盘数组
+	当添加的设备已经为数组的一员时(failed/removed), 重新添加进磁盘数组
+	当添加的设备不是数组的一员时, 添加为sparse设备
+	该选项仅适用于RAID 1/4/5/6/10
+
+-f, --fail
+	将磁盘数组中的某设备状态设置为faulty
+
+-r, --remove
+	将设备从磁盘数组中移除, 该设备不能为active, 必须为failed/spare设备
+
+
+misc相关:
+-D, --detail
+	查看磁盘数组的详细信息
+
+-E, --examine
+	查看磁盘数组中磁盘成员的详细信息
+
+-o, --readonly
+	使磁盘数组为只读
+
+-Q, --query
+	检查设备是否为磁盘数组或者为磁盘数组的成员
+
+-S, --stop
+	deactive磁盘数组
+
+-w, --readwroye
+	使磁盘数组可读可写
+
+
+
+
+示例1 - 创建raid 0磁盘数组
+sudo mdadm --create /dev/md0 --chunk=16 --level=0 --raid-device=2 /dev/sdb /dev/sdc
+
+
+示例2 - 查看raid磁盘数组信息
+sudo mdadm --detail /dev/md0
+
+
+示例3 - 将磁盘添加到磁盘数组
+sudo mdadm /dev/md0 --add /dev/sdd
+
+
+示例4 - 将磁盘从磁盘数组移除
+sudo mdadm /dev/md0 --remove /dev/sdd
+
+
+示例5 - 移除raid磁盘数组
+sudo mdadm --stop /dev/md0

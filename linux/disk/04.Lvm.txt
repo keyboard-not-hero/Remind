@@ -1,0 +1,22 @@
+LVM(Logical Volume Manager)
+将多个分区组合一个群组(VG), 然后对该群组进行灵活分区(LV)
+
+
+步骤:
+1.将分区添加PV属性
+相关指令: 
+	pvcreate/pvdisplay/pvscan/pvremove
+例:
+pvcreate /dev/sdb{1,2,3}
+
+2.将多个PV组合为VG
+相关指令:
+	vgcreate/vgextend/vgreduce/vgdisplay/vgchange/vgscan/vgremove
+例:
+gcreate -s 16M vggroup /dev/sdb{1,2,3}
+
+3.从VG分割空间, 建立LV
+相关指令:
+	lvcreate/lvextend/lvreduce/lvscan/lvdisplay/lvremove
+例:
+lvcreate -L 2G -n newvolume vggroup

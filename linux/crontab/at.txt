@@ -1,0 +1,84 @@
+at - 管理一次性工作例程的程序
+
+相关指令:
+at/atq/atrm
+
+
+
+指令详情:
+at - 添加定时任务到队列
+atq - 查询定时任务的号码和时间
+atrm - 从队列中删除定时任务
+
+语法
+at [option] <time_spec>
+at [option] [-t time]
+atq [-V] [-q queue]
+atrm [-V] <task_num>
+
+参数释义
+-b
+	类似于batch
+
+-c <task_num>
+	显示task相关变量值和任务内容
+
+-d <task_num>
+	类似于atrm
+
+-f <file>
+	从文件读取任务内容
+	默认从stdin读取任务内容
+
+-l
+	类似于atq
+
+-M
+	不发送邮件到用户邮箱
+
+-m
+	当任务完成时, 发送邮件到用户邮箱
+
+-q <queue>
+	将任务添加到指定队列
+	队列号使用a-z和A-Z指定
+	默认使用a队列
+
+-r <task_num>
+	类似于atrm
+
+-t <time>
+	使用指定时间格式指定任务指定的时间
+	时间格式为: [[CC]YY]MMDDhhmm[.ss]
+
+-V
+	版本信息
+
+time_spec格式
+HH:MM [<date>]
+	指定小时和分钟, 日期可选
+	日期格式如下:
+		<mon_abbr> <day> [<year>] - 指定月份的缩写和号数, 年份可选
+		{MMDD[CC]YY | MM/DD/[CC]YY | DD.MM.[CC]YY | [CC]YY-MM-DD} - 指定年月日
+
+now+<count><time_units>
+	当前时间加上指定单位的时间, time_units列表: minutes/hours/days/weeks
+
+需知:
+1.当/etc/at.allow存在时, 不在该文件中的用户不允许使用at
+2.当/etc/at.deny存在时, 该文件中的用户不允许使用at
+3.当上述两个档案都不存在时, 只有root用户可以使用at
+
+
+
+示例1 - 定时在pts上输出内容
+at 17:00
+at> echo "hello world" > /dev/pts/0
+at> <ctrl+D>
+
+示例2 - 查看定时任务(默认队列a)
+atq 
+13	Mon Oct 11 17:00:00 2021 a steven
+
+示例3 - 从队列中删除定时任务
+atrm 13

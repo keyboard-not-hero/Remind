@@ -1,12 +1,14 @@
-nohup - 在不接收中断信号的环境下执行指令，输出到非终端
+nohup - 运行的指令不受bash挂起的影响, 并且结果输出到非tty端
 
 语法
 nohup [option] command [arg]...
 
 参数释义
---help    帮助信息
+--help
+	帮助信息
 
---version    版本信息
+--version
+	版本信息
 
-**默认输出到文件~/nohup.out
-**默认情况下，当bash被关闭时，会给其所有子进程发送HUP信号
+** 默认输出到文件~/nohup.out
+** 默认情况下，当bash被关闭时，会给其所有子进程发送HUP信号

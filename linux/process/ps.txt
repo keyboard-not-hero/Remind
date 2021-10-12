@@ -116,11 +116,13 @@ eip - instruction指针. 当内存读取一个内容结构时, 指向下一个�
 
 esp - stack指针
 
-f - 进程的flags
+f - 进程的flags. 可选值列表:
+	1 - 程序只执行fork而没有执行exec
+	4 - 使用root权限
 
 ignored - mask of ignored signals
 
-ni - 进程的优先级(可手动调整), -20~-1只有超级用户有权调整, 0~19所有用户皆可调整
+ni - 进程的优先级(可手动调整), -20~10为超级用户调整范围, 0~19为所有用户可调整范围
 	 更大数字代表更低优先级
 	 result = pri + ni
 
@@ -198,6 +200,19 @@ l - 多线程
 
 + - foreground进程组
 
+
+
+示例1 - 显示与当前终端有关的进程
+ps T
+
+示例2 - 输出所有用户的所有进程
+ps aux
+
+示例3 - 输出所有进程的指定字段
+ps ax o pid,ppid,tty,cmd
+
+
+最后编辑于2021-10-12
 
 
 引用

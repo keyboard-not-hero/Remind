@@ -22,7 +22,7 @@ server {
 
 
 3.服务器端配置
-[root@~ ]$ vi /etc/v2ray/config.json
+[root@~ ]$ vi /usr/local/etc/v2ray/config.json
 {
   "inbounds": [
     {
