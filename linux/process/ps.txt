@@ -110,7 +110,7 @@ command - 包含参数的完整指令
 
 cputimes - 累计cpu使用时间, 单位为s
 
-drs - 进程内存占用(接近vsz)
+drs - 进程内存占用(接近vsz, 但除去可分享内存部分)
 
 eip - instruction指针. 当内存读取一个内容结构时, 指向下一个内容结构的指针
 
@@ -180,10 +180,6 @@ S - 可中断的sleep
 T - 被job control信号停止
 
 t - 被debugger追踪停止
-
-W - 分页(自2.6.xx kernel后不可用)
-
-X - dead(should never be seen)
 
 Z - zombie进程. 父进程没有对退出的子进程进行最后资源回收
 
