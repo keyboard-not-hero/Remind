@@ -1,0 +1,4 @@
+vmstat - 虚拟内存统计
+
+语法
+vmstat [option] 

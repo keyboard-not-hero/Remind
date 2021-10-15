@@ -1,11 +1,16 @@
-nice - 指定优先级，以运行程序
+nice - 运行程序时, 调整进程的优先级
 
 语法
 nice [option] [command [arg...]]
 
 参数释义
--n, --adjustment=<N>    指定优先级，范围-20 ~ 19。默认为10
+-n, --adjustment=<N>
+	指定优先级, 范围-20 ~ 19
+	数字越高, 优先级越低
+	未指定该参数时, 默认为10
 
---help    帮助信息
+--help
+	帮助信息
 
---version    版本信息
+--version
+	版本信息

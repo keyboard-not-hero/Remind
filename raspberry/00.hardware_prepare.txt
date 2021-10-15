@@ -3,4 +3,9 @@
 3.HDMI接口的显示器
 4.micro HDMI接口线(一端为micro HDMI接口线, 另一端为HDMI接口)
 5.USB键盘/鼠标
-6.SD卡(硬盘系统，用于放置系统和文件)
+6.SD卡(8G及以上, 硬盘系统，用于放置系统和文件)
+
+
+引用:
+[1] https://www.raspberrypi.com/documentation/computers/getting-started.html
+

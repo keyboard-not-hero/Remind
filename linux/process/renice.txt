@@ -1,0 +1,25 @@
+renice - 修改正在运行进程的优先级
+
+语法
+renice [option]
+
+参数释义
+-g, --pgrp <pgid>
+	指定进程组ID, 修改进程组内进程的优先级
+
+-h, --help
+	帮助信息
+
+-n, --priority <priority>
+	指定优先级值
+	超级用户指定范围为-20~19, 一般用户指定范围为0~19
+
+-p, --pid <pid>
+	指定pid, 修改进程的优先级
+	默认选项
+
+-u, --user <uid|user>
+	指定用户名或用户ID, 修改该用户所属进程的优先级
+
+-V, --version
+	版本信息

@@ -1,0 +1,27 @@
+增加电源键
+1.连接按键与GPIO引脚
+连接SCL(5脚)和GND(6脚)到按键
+
+2.添加代码
+连接电源开机
+sudo vi /boot/config.txt
+dtoverlay=gpio-shutdown
+
+3.重启
+
+
+
+将声音从3.5mm音频接口输出(连接HDMI时, 声音默认从HDMI接口输出)
+一、GUI设置
+1.右键点击右上角的声音图标
+
+2.选择连接方式
+
+二、使用raspi-config
+1.修改配置
+sudo raspi-config
+1 System Options
+S2 Audio
+1 Headphone
+
+3.重启

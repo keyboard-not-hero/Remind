@@ -1,4 +1,4 @@
-一、安装Raspberry Pi OS系统
+安装系统
 1.下载系统镜像
 官网连接: https://www.raspberrypi.org/
 进入官网, 选择"Software" -- 选择"Raspberry Pi OS" -- 选择"Raspberry Pi OS with desktop and recommended software" -- 点击"Download"
@@ -9,38 +9,16 @@ unzip 2021-05-07-raspios-buster-armhf-full.zip
 3.刻录镜像到sd卡
 将sd卡插入读卡器(确保sd卡所在盘符)
 sudo mkfs -t fat /dev/sdb
-sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb status=progress bs=4M
+sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb bs=4M conv=fsync
+
+4.同步刷新
+sync
 
 
-二、环境准备
-1.安装vim
-sudo apt install vim
+升级系统
+1.修改/etc/apt/sources.list和/etc/apt/sources.list.d/raspi.list
+修改两个文件的主版本名称, 如: stretch --> buster
 
-2.切换软件源
-raspberry Pi OS源:
-sudo vi /etc/apt/sources.list
-deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
-deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
-sudo apt-get update
-
-3.开启ssh
-sudo raspi-config
-选择Interface Options，选择SSH，选择Yes
-至此已开启SSH连接服务
-
-4.设置语言环境
-sudo raspi-config
-选择Localisation Options，选择Locale，使用<space>键选中需要使用的语系
-
-5.安装谷歌拼音
+2.更新
 sudo apt update
-安装框架
-sudo apt-get install fcitx fcitx-ui-classic fcitx-config-gtk
-安装谷歌拼音
-sudo apt-get install fcitx-googlepinyin
-重启
-
-6.修改swap
-sudo vi /etc/dphys-swapfile
-CONF_SWAPSIZE=2048
-sudo /etc/init.d/dphys-swapfile restart
+sudo apt -y dist-upgrade

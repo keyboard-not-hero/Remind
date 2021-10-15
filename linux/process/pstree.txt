@@ -1,0 +1,78 @@
+pstree - 显示进程的树形结构图
+
+
+语法
+pstree [option] [pid]
+
+pstree -V, --version
+
+
+参数释义
+-A, --ascii
+	使用ASCII字符作树形结构
+
+-a, --arguments
+	显示指令行参数
+
+-C, --color <attr>
+	根据指定属性对进程进行颜色显示
+	目前仅支持age属性. 60秒之内显示绿色, 1小时内显示黄色, 其他显示红色
+	
+-c, --compact-not
+	不对相同名称进行压缩显示
+	默认使用<num>*[<object>]格式对相同名称进行压缩显示
+
+-G, --vt100
+	使用VT100绘制结构
+
+-g, --show-pgids
+	显示所属进程组
+	隐式包含-c
+
+-H, --highlight-pid <pid>
+	高亮显示指定进程
+
+-h, --highlight-all
+	高亮显示当前进程及其祖先进程
+
+-l, --long
+	显示长行的完整内容
+	默认超出指定长度后被截断后续内容
+
+-N, --ns-sort <ns>
+	根据指定命名空间, 将进程按类型显示
+	ns可选列表: ipc/mnt/net/pid/user/uts
+
+-n, --numeric-sort
+	将同一父进程下的进程按pid进行排序
+	默认按名称排序
+
+-p, --show-pids
+	显示pid
+	隐式包含-c
+
+-s, --show-parents <pid>
+	显示指定进程的祖先进程
+
+-T, --hide-threds
+	只显示进程, 隐藏线程
+
+-t, --thred-names
+	显示线程的完整名称
+
+-U, --unicode
+	使用UTF-8作结构图
+
+-u, --uid-changes
+	当子进程与父进程的UID不一致时, 在子进程后添加'()', 内指定用户名
+
+-V, --version
+	版本信息
+
+-Z, --security-context
+	显示每个进程的安全上下文
+
+
+** 补充:
+<num>*[<process>] - 代表num个该进程
+{<process>} - 代表该进程所所属的线程

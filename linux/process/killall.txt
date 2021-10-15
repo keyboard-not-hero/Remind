@@ -1,0 +1,58 @@
+killall - 使用程序名称结束进程
+
+
+语法
+killall [option] <name> ...
+
+killall -l
+
+killall -V, --version
+
+
+参数释义
+-e, --exact
+	当名称超过15个字符时, 跳过进程查找
+	默认当名称超过15个时, 读取名称的前15个字符
+
+-g, --process-group
+	结束指定进程组所属的进程, 只结束该进程组的一个进程
+
+-I, --ignore-case
+	名称的匹配不在乎大小写
+
+-i, --interactive
+	在结束进程之前进行交互式确认
+
+-l, --list
+	显示所有已知信号名称
+
+-n, --ns <pid>
+	只在指定命名空间中搜寻
+	默认在所有命名空间中搜寻
+
+-q, --quiet
+	当没有进程被结束时, 不显示信息
+
+-r, --regexp
+	将name字段按POSIX Extend Regular Expression解释
+
+-s <signal>, --signal <signal>, -<signal>
+	发送指定信号
+	默认发送SIGTERM信号
+
+-u, --user <user>
+	只结束指定用户的进程, name字段可选
+
+-V, --version
+	版本信息
+
+-v, --verbose
+	信号发送成功时, 反馈信息
+
+-w, --wait
+	等待所有需结束进程, 直到完全关闭
+
+-Z, --context <pattern>
+	只有安全上下文匹配指定Extend Regular Expressopm的进程才被结束
+	该选项必须在其他选项之前
+	name参数可选
