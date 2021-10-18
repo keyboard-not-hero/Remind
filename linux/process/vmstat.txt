@@ -1,4 +1,136 @@
 vmstat - 虚拟内存统计
 
 语法
-vmstat [option] 
+vmstat [option] [delay [count]]
+
+参数释义
+-a, --active
+	显示内存active/inactive字段
+
+-D, --disk-sum
+	报告汇总的硬盘信息
+
+-d, --disk
+	报告硬盘统计信息
+
+-f, --forks
+	显示自启动后的fork次数
+
+-h, --help
+	帮助信息
+
+-m, --slabs
+	显示slabinfo信息
+
+-n, --one-header
+	只显示一次头部信息, 而非每次周期性信息时都显示
+
+-p, --partition <partition>
+	指定分区的详细统计
+
+-S, --unit <unit>
+store d	将以字节为单位的数据转化单位. unit可选列表: k/m为1000进制, K/M为1024进制
+
+-s, --stats
+	内存和多种数据汇总统计
+	不进行重复报告
+
+-t, --timestamp
+	在每一行后添加汇报时间戳
+
+-V, --version
+	版本信息
+
+-w, --wide
+	以长模式输出内容, 即数字较长的列使用更大的列宽
+
+
+
+delay
+	后续每次报告间隔的时间. 默认只显示一次
+
+
+
+count
+	在delay指定的前提下, 显示得到次数(第一次除外). 默认不限次数
+
+
+
+字段含义:
+VM模式(默认模式)
+process相关
+r - 可运行进程(正在运行或等待运行的进程)
+
+b - 不可终端sleep的进程
+
+
+memory相关(可被--unit影响)
+swpd - 虚拟内存使用量
+
+free - 空闲物理内存
+
+buff - 用于buffer的内存
+
+cache - 用于cache的内存
+
+inact - 非活跃内存
+
+active - 活跃内存
+
+
+swap相关(可被--unit影响)
+si - 从硬盘交换到内存的量
+
+so - 从内存交换到硬盘的量
+
+
+IO相关
+bi - 从块设备接收的blocks
+
+bo - 传输到块设备的blocks
+
+
+system相关
+in - 每秒中断的数量
+
+cs - 每秒的上下文切换量
+
+
+CPU相关
+us - 非核心运行代码消耗的cpu时间百分比
+
+sy - 系统核心运行代码消耗的cpu时间百分比
+
+id - cpu空闲时间消耗的cpu时间百分比
+
+wa - 等待IO消耗的cpu时间百分比
+
+st - 虚拟机消耗的cpu时间百分比
+
+
+
+磁盘模式
+reads相关
+total - 读取成功的总次数
+
+merged - 读取的I/0数
+
+sectors - 读取成功的总sectors
+
+ms - 读取使用的毫秒数 
+
+
+writes相关
+totle - 写入成功的次数
+
+merged - 写入的I/O数
+
+sectors - 写入成功的总sectors
+
+ms - 写入使用的毫秒数
+
+
+IO相关
+cur - I/O进度
+
+s - 用于I/O的秒数

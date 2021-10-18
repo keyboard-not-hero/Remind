@@ -1,18 +1,35 @@
+建议安装系统列表:
+1.Raspbian OS
+2.CentOS(ARM版)
+3.Ubuntu Core
+4.kali
+5.openrt
+
+
+一、Raspbian OS系统
 安装系统
+I、使用Raspberry Pi imager工具
+下载地址: https://www.raspberrypi.com/software/
+sudo dpkg -i imager_1.6.2_amd64.deb
+启动imager工具
+选择镜像, sd卡
+进行刻录
+
+II、使用指令行方式
 1.下载系统镜像
-官网连接: https://www.raspberrypi.org/
-进入官网, 选择"Software" -- 选择"Raspberry Pi OS" -- 选择"Raspberry Pi OS with desktop and recommended software" -- 点击"Download"
+官网链接: https://www.raspberrypi.org/
+进入官网, 选择"Computers" -- "Software" -- 选择"See all download options" --
+选择"Raspberry Pi OS" -- 选择对应类型系统 -- 点击"Download"
 
 2.解压缩文件
 unzip 2021-05-07-raspios-buster-armhf-full.zip
 
 3.刻录镜像到sd卡
-将sd卡插入读卡器(确保sd卡所在盘符)
 sudo mkfs -t fat /dev/sdb
-sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb bs=4M conv=fsync
-
-4.同步刷新
+sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb
+bs=4M status=progress
 sync
+
 
 
 升级系统
@@ -22,3 +39,54 @@ sync
 2.更新
 sudo apt update
 sudo apt -y dist-upgrade
+Raspberry Pi OS默认账号: pi 密码: raspberry
+
+
+二、Cent OS系统arm版
+1.下载系统镜像
+官网链接: http://isoredirect.centos.org/altarch/7/isos/armhfp/
+选择最近的镜像下载点 -- 选择对应版本下载(Raspberry Pi 4只支持Minimal-4版本)
+
+2.解压缩文件
+xz -d CentOS-Userland-7-armv7hl-RaspberryPI-Minimal-4-2009-sda.raw.xz
+
+3.刻录引导SD卡
+sudo mkfs -t fat /dev/sdb
+sudo dd if=CentOS-Userland-7-armv7hl-RaspberryPI-Minimal-4-2009-sda.raw.xz
+of=/dev/sdb bs=4M status=progress
+sync
+Cent OS ARM版本默认用户: root  密码: centos
+
+
+三、Ubuntu Core系统
+1.下载镜像
+镜像地址: https://cdimage.ubuntu.com/ubuntu-core/20/stable/current/ubuntu-core-20-armhf+raspi.img.xz?_ga=2.104029060.54130862.1634557589-1310015043.1634354527
+
+2.解压缩文件
+xz -d ubuntu-core-20-armhf+raspi.img.xz
+
+3.刻录引导SD卡
+sudo mkfs -t fat /dev/sdb
+sudo dd if=ubuntu-core-20-armhf+raspi.img of=/dev/sdb bs=32M status=progress
+sync
+
+4.上传远程登录主机公钥到Ubuntu SSO account(ubuntu core初始只支持远程登录)
+上传地址: https://login.ubuntu.com/ssh-keys?_ga=2.158595006.54130862.1634557589-1310015043.1634354527
+
+5.设置账号密码(用于本地登录)
+sudo passwd <account>
+
+
+四、kali系统(ARM版)
+1.下载镜像
+官网链接: https://www.kali.org/
+选择"GET KALI" -- 选择"ARM" -- 选择相应版本进行下载
+
+2.解压缩文件
+xz -d kali-linux-2021.3-rpi4-nexmon-arm64.img.xz
+
+3.刻录引导SD卡
+sudo mkfs -t fat /dev/sdb
+sudo dd if=kali-linux-2021.3-rpi4-nexmon-arm64.img.xz of=/dev/sdb bs=4M status=progress
+sync
+默认账号: kali 密码: kali

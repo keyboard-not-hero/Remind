@@ -1,0 +1,63 @@
+locale - 获取特定的本地化信息
+
+
+语法
+lcoale [option]
+
+locale [option] -a
+
+locale [option] -m
+
+locale [option] <name>...
+
+
+参数释义
+-a, --all-locales
+	所有可用于设定本地化变量的值列表
+	配合-v使用, 显示对应值的详细信息
+
+-c, --category-name
+	类别(环境变量)和其对应格式
+	类别列表:
+		LANG - 用于值包含""变量的默认值
+		LANGUAGE - 用于指令结果文本显示
+		LC_ADDRESS - 代表当前定位地址
+		LC_COLLATE - 用于排序和正则匹配
+		LC_CTYPE - 用于字符编码顺序
+		LC_MONETARY - 用于金钱货币数字值
+		LC_MESSAGES - 交互式文本显示
+		LC_NAME - 用于address中人类称呼
+		LC_NUMERIC - 用于非货币类数字
+		LC_PAPER - 用于纸张类型
+		LC_TELEPHONE - 用于电话号码
+		LC_TIME - 用于日期和时间
+
+-k, --keyword-name
+	环境变量和对应的关键字
+
+-m, --charmaps
+	所有可获得的编码集
+
+--usage
+	显示用例信息
+
+-V, --version
+	版本信息
+
+-v, --verbose
+	显示详细信息
+
+-?, --help
+	帮助信息
+
+
+
+
+规则:
+1.locale不带参数显示本地化变量的设定值
+
+2.设定值被隐式设定(随LANG)的带""
+
+
+示例1 - 修改指令结果显示的语言
+export LANGUAGE=en_US.UTF-8
