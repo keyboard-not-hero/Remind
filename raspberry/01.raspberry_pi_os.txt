@@ -90,3 +90,30 @@ sudo mkfs -t fat /dev/sdb
 sudo dd if=kali-linux-2021.3-rpi4-nexmon-arm64.img.xz of=/dev/sdb bs=4M status=progress
 sync
 默认账号: kali 密码: kali
+
+
+五、OpenWrt固件
+1.下载固件
+版本及下载地址对应列表: https://openwrt.org/toh/views/toh_fwdownload
+
+2.解压缩文件
+gzip -d openwrt-21.02.0-bcm27xx-bcm2711-rpi-4-squashfs-factory.img.gz
+
+3.刻录引导SD卡
+sudo mkfs -t fat /dev/sdb
+sudo dd if=openwrt-21.02.0-bcm27xx-bcm2711-rpi-4-squashfs-factory.img.gz of=/dev/sdb bs=4M status=p
+sync
+
+
+六、RetroPie系统
+1.下载系统
+下载链接: https://github.com/RetroPie/RetroPie-Setup/releases/download/4.7.1/retropie-buster-4.7.1-rpi4_400.img.gz
+
+2.解压缩文件
+gzip -d retropie-buster-4.7.1-rpi4_400.img.gz
+
+3.刻录引导SD卡
+sudo mkfs -t fat /dev/sdb
+sudo dd if=retropie-buster-4.7.1-rpi4_400.img.gz of=/dev/sdb bs=4M
+status=progress
+sync
