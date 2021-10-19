@@ -8,7 +8,11 @@ apt {-v | -h}
 
 
 参数释义
+-h, --help
+	帮助信息
 
+-v, --version
+	版本信息
 
 
 action列表
@@ -44,11 +48,14 @@ remove <package>
 	移除指定软件, 但保留配置文件
 
 satisfy
-	
+	指定依赖软件详细版本. 如: apt satisfy "foo, bar (>= 1.0)"
+	也可以指定冲突. 如: apt satisfy "Conflicts: baz, fuzz"
 
-search
+search <regexp>
+	查找与指定关键字相关的软件
 
-show
+show <package>
+	显示指定软件的详细信息(包括依赖软件)
 
 update
 	更新源信息
@@ -59,3 +66,21 @@ upgrade
 	该操作不会移除已安装的软件
 	当需要卸载其他软件进行更新时，不会执行该软件更新
 
+
+示例1 - 查找与opencv相关的软件
+sudo apt search opencv
+
+示例2 - 显示python3-opencv的详细信息
+sudo apt show python3-opencv
+
+示例3 - 更新源信息
+sudo apt update
+
+示例4 - 查看可更新的软件列表
+sudo apt list --upgradeable
+
+示例5 - 更新可更新的软件
+sudo apt upgrade
+
+示例6 - 解决依赖
+sudo apt install -f

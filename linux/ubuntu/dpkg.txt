@@ -1,11 +1,11 @@
-dpkg - package manager for Debian
+dpkg - Debian系的包管理器
 
-语法：
-dpkg [option...] action
 
-参数：
+语法
+dpkg [option...] <action>
 
-action：
+
+参数释义
 -i, --install <package>
 	安装deb包
 
@@ -19,3 +19,12 @@ action：
 	对软件进行md5sum校验，并和数据库内容进行对比
 
 
+package状态
+not-installed
+	没有安装
+
+config-files
+	只有配置文件存在
+
+half-installed
+		
