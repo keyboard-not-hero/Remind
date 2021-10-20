@@ -5,18 +5,50 @@ dpkg - Debian系的包管理器
 dpkg [option...] <action>
 
 
-参数释义
--i, --install <package>
+action列表
+-A, --record-avail <package_file>
+	将指定deb包的信息添加到/var/lib/dpkg/available文件
+	如果已存在该软件其他版本记录, 替换该条记录
+
+-C, --audit [<package>]
+	对软件的完整性进行检验, 并提供修复建议
+	当没有提供package时, 对所有软件进行检验
+
+--clear-avail
+	清除/var/lib/dpkg/available文件中的内容
+
+--configure {<package> | -a, --pending}
+	配置已解包但未配置的包
+	如果指定-a, 则配置所有已解包但未配置的包
+
+-i, --install <package_file>
 	安装deb包
 
--r, --remove <package>
-    卸载软件，但不删除配置文件
+-P, --purge {<package> | -a, --pending}
+	卸载软件, 并删除配置文件
+	如果指定-a, 则卸载所有unpacked或已removed,
+但被/var/lib/dpkg/status标记purged状态的包
 
--P, --purge <package>
-	卸载软件，并删除配置文件；如软件已卸载，则直接删除配置文件
+-r, --remove {<package> | -a, --pending}
+    卸载软件, 但不删除配置文件
+	如果指定-a, 则卸载所有unpacked, 但被/var/lib/dpkg/status标记removed状态的包
 
--V, --verify <package>
-	对软件进行md5sum校验，并和数据库内容进行对比
+--triggers-only {<package> | -a, --pending}
+	软件进入被触发状态并完成
+	如果指定-a, 则让所有等待触发或在触发状态的包完成触发
+
+--unpack <package_file>
+	解包指定deb包, 但不配置
+
+-V, --verify [<package>]
+	对软件进行md5sum校验, 并和数据库内容进行对比
+	没有提供package时, 对所有软件进行比对
+
+--version
+	版本信息
+
+-?, --help
+	帮助信息
 
 
 package状态
@@ -27,4 +59,23 @@ config-files
 	只有配置文件存在
 
 half-installed
-		
+	安装已经开始, 但由于一些原因没有完成
+
+unpacked
+	软件已经解包, 但还未配置
+
+half-configured
+	软件已经开始解包和配置, 但由于一些原因还没有完成
+
+triggers-awaited
+	软件等待其他包的触发
+
+triggers-pending
+	软件已经被触发
+
+installed
+	软件已经完全解包和配置
+
+
+配置文件位置
+/etc/dpkg/dpkg.cfg

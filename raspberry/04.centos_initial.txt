@@ -1,0 +1,6 @@
+1.连接wifi
+nmcli dev wifi connect <ssid_name> password <passwd>
+
+2.切换为清华源
+地址: https://mirrors.tuna.tsinghua.edu.cn/
+参考centos-altarch
