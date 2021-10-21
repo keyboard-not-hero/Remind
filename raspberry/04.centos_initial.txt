@@ -1,6 +1,26 @@
-1.连接wifi
+1.调整根分区大小[1]
+1)重新建立分区大小
+fdisk /dev/mmcblk0
+使用p查看根分区起始扇区, 记住该扇区编号
+使用d删除根分区
+使用n建立根分区, 起始扇区号 = 原删除扇区的起始扇区号, last扇区为默认
+使用w保存退出
+partprobe
+resize2fs /dev/mmcblk0p3
+
+** resize2fs支持ext3/ext4在线扩充文件系统大小
+
+2.连接wifi
 nmcli dev wifi connect <ssid_name> password <passwd>
 
-2.切换为清华源
+3.切换为清华源
 地址: https://mirrors.tuna.tsinghua.edu.cn/
 参考centos-altarch
+
+4.安装并启动GUI
+yum group install 'GNOME Desktop'
+startx
+
+
+引用:
+[1] https://raspberry-pi.narkive.tw/YLbKt8Uw

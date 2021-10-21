@@ -123,6 +123,7 @@ ssh-keygen -Q -f krl_file file ...
 -R <host>|[<host>]:<port>
 	将指定主机名的公钥从known_hosts文件中移除
 	通常使用IP指定
+
 -s <ca_key>
 	发布证书时使用的CA密钥
 
@@ -139,3 +140,7 @@ ssh-keygen -Q -f krl_file file ...
 -z <serial_number>
 	指定证书的序列号
 	默认为0 
+
+
+示例1 - 从known_hosts中移除指定目标主机的公钥
+ssh-keygen -f "/home/<user>/.ssh/known_hosts" -R "<dest_addr> | <dest_ip>"

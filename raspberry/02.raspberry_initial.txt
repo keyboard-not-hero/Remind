@@ -12,7 +12,7 @@ raspberry Pi OS源:
 sudo vi /etc/apt/sources.list
 deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
 deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
-sudo apt-get update
+sudo apt update
 
 5.开启ssh
 sudo raspi-config

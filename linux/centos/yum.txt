@@ -1,126 +1,207 @@
-配置文件目录：/etc/yum.conf
-安装最新包并安装依赖包：
-yum install PKG1 [PKG2…]
-**当PKG以@起始，则类似于yum group install PKG
-**当PKG为本地rpm安装包，执行本地安装
+yum - RHEL/CentOS系在线安装包管理器
 
-以指定版本重新安装包：
-yum reinstall PKG1
+语法
+yum [option] <action> [package ...]
 
-更新至最新版本并更新依赖包：
-yum update [PKG…]
-如包未安装，则不执行操作
-当未提供PKG，则更新所有已安装并可以更新的包
+参数释义
+--assumeno
+	后续出现交互式询问时, 回复no
 
-更新至指定版本：
-yum update-to PKG_VER
+-C, --cacheonly
+	将操作在cache中进行, 而不对metadata进行更新
 
-更新至最新版本并更新依赖包，并丢弃非依赖包：
-yum upgrade [PKG…]
-类似于update --obsoletes
+-c, --config=<config_file>
+	指定配置文件
+	支持http/ftp/本地文件格式
 
-upgrade指定版本：
-yum upgrade-to PKG_VER
+-d, --debuglevel=<number>
+	设置信息详细等级. 范围: 0~10
 
-降低版本至上一个版本：
-yum downgrade PKG
+--disablerepo=<repo>
+	disable指定容器
 
-最小化更新：
-yum update-minimal PKG
+--downloadonly
+	只下载软件包
+	此时yum lock被释放
 
-是否可更新：
-yum check-update [PKG…]
-未提供PKG，罗列出所有可更新包
+-e, --errorlevel=<number>
+	设置error过滤等级. 范围: 0~10
 
-移除包，并移除依赖该包的其他包：
-yum remove PKG1 [PKG2…]
-配置文件相关：
-remove_leaf_only：只在包不被其他包依赖时移除
-clean_requirements_on_remove：删除只被该包依赖的包
+--enablerepo=<repo>
+	enable指定容器
 
-移除包，移除依赖该包的其他包：
-yum autoremove PKG1 [PKG2…]
-remove的带clean_requirements_on_remove配置版本
+-h, --help
+	帮助信息
 
-罗列可通过yum可获得的包：
-yum list [PKG…]
+--installroot=<root_dir>
+	指定安装参考根目录
+	类似于chroot <root_dir> yum
 
-查询提供指令或文件的包：
-yum provides/whatprovides COMMAND|FILE
+--nogpgcheck
+	不进行gpg校验
 
-查找包：
-yum search PKG1 [PKG2…]
+--obsoletes
+	只作用于update action, 同时更新系统的发行版本
 
-包的信息：
-yum info PKG1 [PKG2…]
+-q, --quiet
+	不输出信息到stdout
 
-罗列包的依赖：
-yum deplist PKG
+-R, --randomwait=<wait_for_minutes>
+	允许的最大超时时间, 等待时间在该值范围内随机波动
 
-罗列容器列表：
-yum repolist [enabled|disabled|all]
-容器目录：/etc/yum.repos.d
+--security
+	软件包不含安全问题
 
-容器信息：
-yum repoinfo
-类似于repolist –v
+--showduplicates
+	显示所有结果, 不将info/list/search结果限制在最新版本
 
-列出指定容器内的包：
-yum repository-packages|repo-pkgs REPO list
+-v, --verbose
+	输出更详细的信息
 
-临时启用或关闭容器：
-yum --disablerepo=REPO|--enablerepo=REPO
-可使用通配符*指定关闭所有容器，然后启用单一容器
+--version
+	版本信息
 
-删除cache信息：
-yum clean [expire-cache|package|headers|metadata|dbcache|plugins|all]
-缓存目录：/var/lib/yum，可使用rpm ql `rpm –qa|grep yum`查询
-
-更新cache信息：
-yum makecache
-
-安装包组：
-yum group install PKG_GRP
-
-更新包组：
-yum group update PKG_GRP
-
-罗列所有包组：
-yum group list
-
-移除包组：
-yum group remove PKG_GRP
-
-包组的信息：
-yum group info PKG_GRP
-
-所有包组汇总数据：
-yum group summary
-
-仓库变量
-releasever - 当前CentOS版本，参考/etc/redhat-release。如7
-basearch - 系统基础架构。如x86_64
-uuid - 永久本地ID，存放于/var/lib/yum/uuid
+-y, --assumeyes
+	后续出现交互式询问时, 回复yes
 
 
-yum仓库管理工具：yum-utils
-持久化启用/关闭仓库
-yum-config-manager --enable|--disable <repos_name>
+
+action列表
+1)针对包个体
+autoremove
+	卸载非显式(手动)安装并且没有被其他软件依赖的包
+
+check-update
+	检查是否有更新
+	返回码:
+		0 - 没有更新
+		1 - 出现错误
+		100 - 有更新
+
+clean
+	清除cache目录下的内容
+
+deplist
+	软件包的依赖列表
+
+distro-sync
+	将软件版本与系统释出版本同步, 将软件upgrade/downgrade到释出版本的最终版本
+
+downgrade
+	将软件版本降到上一个版本(或指定版本)
+
+info
+	显示软件包的详细信息
+
+install
+	安装软件包
+
+list
+	可获得的软件列表
+	列表类型:
+		all - 所有可获得/已安装的软件. 默认类型
+		available - 可获得并且未安装的软件
+		extras - 已安装但无法从容器中获得的软件列表
+		installed - 已安装软件列表
+		update - 可更新软件列表
+		
+	
+localinstall
+	用于安装本地rpm文件
+	可解决本地安装的依赖问题
+
+localupdate
+	用于使用本地rpm文件更新软件
+	只有当已安装老版本软件时, 才会进行更新
+	可解决本地安装依赖问题
+
+makecache
+	更新源信息
+
+provides | whatprovides
+	显示提供指令/文件的软件包
+
+reinstall
+	重新安装软件包
+
+remove | erase
+	卸载软件包和依赖于它的包
+
+repoinfo [{enabled | disabled | all}]
+	显示容器的详细信息
+
+repolist [{enabled | disabled | all}]
+	容器列表
+
+repository-packages <repo_name>
+	针对容器进行包管理操作. 如: list/info/check-update/install等
+	
+search
+	根据关键字查找软件包
+	先根据包名和summaries字段查找, 如果没有结果, 再根据descriptions和url字段查找
+
+swap
+	同时卸载一些包和安装一些包
+	如:
+		yum swap foo far
+		yum swap remove foo -- install far
+
+update
+	更新软件包
+	当软件包未指定时, 更新所有已安装的软件包
+	
+update-to
+	类似于update, 但指定升级的目标版本
+	
+upgrade
+	类似于--obsoletes update, 将系统的发行版本一起更新
+	
+upgrade-to
+	类似于upgrade, 但指定升级的目标版本
+
+help
+	所有action的帮助文档, 或指定action的较详细文档
+
+
+2)针对包群组
+group info
+	显示群组的详细信息
+
+group install
+	安装群组内的所有包
+
+group list
+	所有可获得群组的列表
+
+group remove
+	卸载群组内的所有包
+
+group summary
+	所有群组信息的简单汇总
+
+group update
+	更新群组内的包
+
+
 
 常用第三方源目录：
 1.EPEL：Extra Package for Enterprise Linux
 官网：http://fedoraproject.org/wiki/EPEL
 安装方法：yum install -y epel-release
+
 2.ELRepo：The Community Enterprise Linux Repository
 官网：http://elrepo.org/
 安装方法：yum install https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
 3.SCL：Software Collections
 官网：https://www.softwarecollections.org
 安装方法：yum install centos-release-scl
+
 4.REMI：
 官网：https://rpms.remirepo.net/
 安装方法：yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 备注：REMI仓库依赖于EPEL仓库的包
+
 
 问题修复：
 1. another app is currently holding the yum lock

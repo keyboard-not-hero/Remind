@@ -1,32 +1,125 @@
-安装：
-rpm -i|--install package
+rpm - RHEL/CentOS系包管理器
 
-更新(类似于安装，如有旧包则卸载)：
-rpm -U|--upgrade package
+语法
+rpm [option]
 
-更新(必须已安装旧版本，安装完成后卸载旧版本)：
-rpm -F|--freshen package
+参数释义
+general选项
+-?, --help
+	帮助信息
+	
+-D, --define='<macro> <val>'
+	定义macro的值为val
 
-重新安装当前版本：
-rpm --reinstall package
+--dbpath <directory>
+	使用指定的数据库
+	默认为/var/lib/rpm
 
-卸载：
-rpm -e|--erase package
+--pipe <cmd>
+	将输出导向指定command作为输入
 
-查询：
-1.列出所有安装软件：
-rpm -qa 
-2.根据文件查找软件：
-rpm -qf FILE_NAME
-3.根据群组查找软件：
-rpm –qg GROUP
-3.查找软件的配置文件：
-rpm -qc SOFTWARE
-4.查询软件的文档文件：
-rpm -qd SOFTWARE
-5.查询软件的相关文件：
-rpm -ql SOFTWARE
-6.查询软件信息：
-rpm -qi SOFTWARE
-7.软件依赖的其他包：
-rpm -qR SOFTWARE
+--quiet
+	显示尽可能少的信息
+
+--rcfile <file_list>
+	配置文件列表, item之间使用':'分隔
+	默认为: /usr/lib/rpm/rpmrc: /usr/lib/rpm/redhat/rpmrc: /etc/rpmrc: ~/.rpmrc
+
+--root <directory>
+	指定目录作为目录树的根目录
+
+--undefine='<macro>'
+	取消macro的定义
+
+-v
+	显示尽可能多的信息
+
+--version
+	版本信息
+
+-vv
+	比-v显示更详细的信息
+
+
+install/upgrade选项
+** package可以为本地rpm文件或http/ftp格式文件	
+-F, --freshen <package>
+	当存在旧版本软件时, 更新该软件
+
+-i, --install <package>
+	安装软件包
+
+--nodeps
+	在安装和更新软件前不检查依赖
+
+--oldpackage
+	允许在更新时使用旧版本代替新版本
+
+--reinstall <package>
+	重新安装软件
+
+-U, --upgrade <package>
+	更新软件包, 没有安装时进行安装
+
+
+erase选项
+-e, --erase <package>
+	卸载软件
+
+配合erase的其他参数:
+--nodeps
+	在卸载软件之前不检查依赖
+
+
+query选项
+-q, --query
+	查询软件包
+
+配合query的其他参数:
+-a, --all
+	显示所有已安装软件
+
+-c, --configfiles <package_name>
+	根据软件查找配置文件
+
+-d, --docfiles <package_name>
+	根据软件查找相关文档
+
+-f, --file <file>
+	根据文件查找软件
+
+-g, --group <group>
+	根据所属群组查找软件
+
+-i, --info <package_name>
+	软件包的详细信息
+
+-l, --list <package_name>
+	软件包相关的所有文件
+
+--last
+	根据安装时间进行排序. 最后安装的在最前面
+
+-R, --requires <package_name>
+	软件依赖的其他软件
+
+
+verify选项
+-V, --verify 
+	将软件包的metadate与数据库中的作比对
+
+配合verify的其他参数:
+--noconfig
+	不验证配置文件
+
+--nodeps
+	不验证包的依赖
+
+--nodigest
+	不验证包的digest
+
+--nofiles
+	不验证包的属性
+
+--nosignature
+	不验证包的签名
