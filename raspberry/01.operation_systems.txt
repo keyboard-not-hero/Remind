@@ -117,3 +117,4 @@ sudo mkfs -t fat /dev/sdb
 sudo dd if=retropie-buster-4.7.1-rpi4_400.img.gz of=/dev/sdb bs=4M
 status=progress
 sync
+默认账号: pi 密码: raspberry

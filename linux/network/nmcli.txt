@@ -1,0 +1,14 @@
+nmcli - 控制网络的指令行工具
+
+语法
+nmcli [option] <action>
+
+参数释义
+-a, --ask
+	用于交互式目标, 提示需要使用的参数
+
+-c, --colors {yes | no | auto}
+	输出是否采用彩色模式
+	默认为auto
+
+

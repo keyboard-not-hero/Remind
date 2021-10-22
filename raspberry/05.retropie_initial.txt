@@ -1,0 +1,55 @@
+1.配置手柄
+参考连接: https://retropie.org.uk/docs/Controller-Configuration/
+须知:
+设置过程中, 左摇杆切换item(设置后), A键取消已定义键位
+
+
+2.配置键盘
+点击start键 -- 选择configure input
+使用手柄方向键直接切换到底部, 点击OK并保存
+
+
+3.设置wifi
+1)设置WLAN country
+左/右键切换到retropie logo, 确认(A键)进入设置菜单
+选择raspi-config -- Localisation options(B键进入) -- WLAN Country
+Set(B键进入) -- 选择CN
+
+2)设置wifi
+回到设置菜单, 选择WIFI -- connect to wifi network -- 在wifi列表选择你的wifi名称
+使用键盘输入wifi密码
+
+
+4.开启ssh
+进入设置菜单 -- raspi-config -- Interface Options(B键) -- SSH
+
+
+5.支持汉语游戏名称显示
+F4进入终端模式
+sudo apt update
+sudo apt install fonts-droid-fallback
+sudo reboot
+
+
+6.配置游戏ROM
+I、U盘方式
+1)将U盘格式化为FAT32/exFAT格式, 并且SD卡有足够空间放置ROM
+
+2)将U盘插入电脑, 建立retropie文件夹
+
+3)将U盘插到RetroPie系统机器上,
+等待几分钟(该操作在retropie文件夹内建立相关子目录BIOS/configs/roms)
+
+4)将U盘插到电脑, 将下载的游戏ROM放置到/retropie/roms/$CONSOLE下(CONSOLE代表不同厂商)
+	CONSOLE列表:
+		nes - 任天堂8 bit游戏, 文件为.nes后缀. 经典列表: 超级马里奥/雪人兄弟/魂斗罗
+			参考连接: https://github.com/dream1986/nesrom
+		snes - 任天堂16 bit游戏
+
+5)将U盘查到RetroPie上, 等待ROM传输到SD卡(较大游戏需要等待较长时间)
+
+6)拔出U盘, 刷新游戏列表(start按键 -- Quit菜单 -- Restart EmulationStation)
+
+II、ssh方式(需先连接wifi/开启ssh/启动汉语显示, 参考3/4/5)
+SD卡存放路径: ~/RetroPie/roms/$CONSOLE
+scp -r nes pi@<ip_addr>:~/RetroPie/roms/
