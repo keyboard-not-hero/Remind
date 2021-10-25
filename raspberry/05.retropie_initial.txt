@@ -42,9 +42,10 @@ I、U盘方式
 
 4)将U盘插到电脑, 将下载的游戏ROM放置到/retropie/roms/$CONSOLE下(CONSOLE代表不同厂商)
 	CONSOLE列表:
-		nes - 任天堂8 bit游戏, 文件为.nes后缀. 经典列表: 超级马里奥/雪人兄弟/魂斗罗
+		nes - 任天堂8 bit游戏, 文件为7z/nes/zip后缀. 经典列表: 超级马里奥/雪人兄弟/魂斗罗
 			参考连接: https://github.com/dream1986/nesrom
 		snes - 任天堂16 bit游戏
+		neogeo - SNK公司旗下游戏, 文件为7z/ngp/zip后缀. 经典列表: 合金弹头/拳皇
 
 5)将U盘查到RetroPie上, 等待ROM传输到SD卡(较大游戏需要等待较长时间)
 

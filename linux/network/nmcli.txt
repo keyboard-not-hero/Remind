@@ -11,4 +11,94 @@ nmcli [option] <action>
 	输出是否采用彩色模式
 	默认为auto
 
+--complete-args
+
+-e, --escape {yes | no}
+	
+
+-f, --fields {field1, field2... | all | common}
+	
+-g, --get-values{field1, field2... | all | common}
+
+-h, --help
+	帮助信息
+
+-m, --mode {tabular | multiline}
+	将输出在tabular和multiline之间切换. 两种模式介绍如下:
+		tabular - 一行为一条记录, 每列为一条属性. 大多数指令默认使用该格式
+		multiline - 每条记录为多行, 每行由属性名称和对应值构成.
+如下指令默认使用该格式:
+			nmcli connection show <id>
+			nmcli device show
+
+-p, --pretty
+	使用pretty输出格式(每一列的值对齐, 并显示header)
+
+-s, --show-secrets
+	
+
+-t, --terse
+	
+-v, --version
+	版本信息
+
+-w, --wait <seconds>
+	等待指令完成的时间
+
+
+action说明
+general action
+nmcli general {status | hostname | permissions | logging}
+
+status	
+	显示总体网络状态. 默认action
+
+hostname [<hostname>]
+	查看或设置主机名称
+
+permissions
+	
+
+logging [level <level>] [domains <domain>...]
+	查看或设置log等级和域
+
+networking control action
+nmcli networking {on | off | connectivity}
+
+on | off
+	启动/关闭所有NetworkManager管理的网络连接
+
+connectivity
+	查询网络连接状态. 结果列表如下:
+		none - 没有连接任何网络
+		portal - 无法建立完整网络
+		limited - 已连接网络, 但没有internet访问
+		full - 已连接网络并且访问internet
+		unknown - 无法获取网络连接状态
+
+radio transmission control action
+nmcli radio {all | wifi | wwan}
+
+wifi [on | off]
+	显示或设置wifi连接
+
+wwan [on | off]
+	显示或设置移动蜂窝网络(如2G/3G/4G)
+
+all [on | off]
+	显示或设置所有上述两种无线网络
+
+activity monitor action
+nmcli monitor
+	检测网络状态
+
+connection management action
+nmcli connection {show | up | down | modify | add | edit | clone | delete |
+monitor | reload | load | import | export}
+
+show [--active] [id | uuid | path | apath]
+	显示内存中或磁盘中的已配置的连接
+	active只显示当前活跃网络
+	id等用于显示连接的详细信息
+
 
