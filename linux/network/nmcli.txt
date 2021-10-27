@@ -1,4 +1,4 @@
-nmcli - 控制网络的指令行工具
+nmcli - 控制网络的指令行工具. NetworkManager的指令行客户端
 
 语法
 nmcli [option] <action>
@@ -12,13 +12,20 @@ nmcli [option] <action>
 	默认为auto
 
 --complete-args
+	提供可能补充的action列表
 
 -e, --escape {yes | no}
-	
+	是否在tabular模式中跳脱':'和'\'字符, 跳脱字符为'\'
+	默认为yes
 
 -f, --fields {field1, field2... | all | common}
+	显示指定字段. 列表如下:
+		field1, field2... - 显示指定字段
+		all - 显示所有字段
+		common - 显示常用字段. 未提供选项时, 默认该值
 	
 -g, --get-values{field1, field2... | all | common}
+	显示指定字段, 类似于-f, 但不显示字段名称
 
 -h, --help
 	帮助信息
@@ -35,15 +42,17 @@ nmcli [option] <action>
 	使用pretty输出格式(每一列的值对齐, 并显示header)
 
 -s, --show-secrets
-	
+	显示密码相关字段
 
 -t, --terse
+	简化输出
 	
 -v, --version
 	版本信息
 
 -w, --wait <seconds>
 	等待指令完成的时间
+
 
 
 action说明
@@ -57,10 +66,12 @@ hostname [<hostname>]
 	查看或设置主机名称
 
 permissions
-	
+	各种网络功能的权限位是否启动
+	参考链接[1]
 
 logging [level <level>] [domains <domain>...]
 	查看或设置log等级和域
+
 
 networking control action
 nmcli networking {on | off | connectivity}
@@ -76,6 +87,7 @@ connectivity
 		full - 已连接网络并且访问internet
 		unknown - 无法获取网络连接状态
 
+
 radio transmission control action
 nmcli radio {all | wifi | wwan}
 
@@ -88,17 +100,113 @@ wwan [on | off]
 all [on | off]
 	显示或设置所有上述两种无线网络
 
+
 activity monitor action
 nmcli monitor
-	检测网络状态
+	监测网络状态
+
 
 connection management action
 nmcli connection {show | up | down | modify | add | edit | clone | delete |
 monitor | reload | load | import | export}
 
-show [--active] [id | uuid | path | apath]
-	显示内存中或磁盘中的已配置的连接
+show [--active] [id | uuid | path | apath] <id>
+	显示内存中或磁盘中的已配置的连接. 默认action
 	active只显示当前活跃网络
-	id等用于显示连接的详细信息
+	id等用于显示指定连接的详细信息. 列表如下:
+		id - 连接的名称
+		uuid - 连接的UUID
+		path - D-Bus静态连接路径,
+格式为/org/freedesktop/NetworkManager/Settings/<num>或<num>
+		apath - D-Bus活跃连接路径,
+格式为/org/freedesktop/NetworkManager/ActiveConnection/<num>或<num>
+
+up [id | uuid | path] <id> [ifname <ifname>] [ap <ssid>] [passwd-file <file>]
+	激活指定的连接
+
+down [id | uuid | path | apath] <id>
+	停用指定的连接
+	但后续设备可执行自动激活
 
 
+device management action
+nmcli device {status | show | set | connect | reapply | modify | disconnect |
+delete | monitor | wifi | lldp}
+
+status
+	显示设备接口状态. 默认action
+
+show [<ifname>]
+	显示指定接口的详细信息
+
+set <ifname> [autoconnect {yes | no}] [managed {yes | no}]
+	设置接口的属性
+
+connect <ifname>
+	连接到指定接口, 自动选择合适的网络
+
+reapply <ifname>
+	更新接口连接的网络
+
+disconnect <ifname>
+	断开接口连接并阻止自动连接到网络
+
+delete <ifname>
+	删除接口
+	只能删除bonds/bridges/teams等接口
+
+monitor [<ifname>]
+	监视接口
+
+wifi [list [--rescan | auto | no | yes] [ifname <ifname>] [bssid <bssid>]]
+	显示可获得的wifi
+	可指定接口, 通过本地网络接口名称ifname或ap的物理mac地址bssid
+
+wifi connect {<ssid> | <bssid>} [password <passwd>] [wep-key-type {key | phrase}] [ifname
+<ifname>] [bssid <bssid>] [name <name>] [private {yes | no}] [hidden {yes |
+no}]
+	通过热点名称(ssid)或AP mac地址(bssid)连接到wifi, 支持WEP/WPA类型wifi, 通过DHCP获取IP
+	当该连接已连接过, 与以下指令同效果: nmcli connection up id <name>
+	可选参数列表:
+		password - wifi密码(WEP或WPA类型)
+		ifname - 本地用于连接wifi的接口
+		bssid - 限定连接ap的mac地址
+		private - 当设置为yes, 只有创建连接的用户可以查看. 默认为no
+		hidden - 是否连接到隐藏的wifi
+
+wifi hotsport [ifname <ifname>] [con-name <name>] [ssid <ssid>] [band {a |
+bg}] [channel <channel>] [password <passwd>]
+	创建一个热点
+
+wifi rescan [ifname <ifname>] [ssid <ssid>]
+	马上扫描可获得的wifi
+
+wifi show-password [ifname <ifname>]
+	显示当前活跃wifi的信息, 包括密码
+
+lldp [list [ifname <ifname>]]
+	显示邻居设备信息, 通过lldp协议
+
+
+
+示例1 - 设备的接口状态
+nmcli device status
+
+示例2 - 启动wifi
+nmcli radio wifi on
+
+示例3 - 可获得的wifi
+nmcli device wifi list
+
+示例4 - 连接到指定wifi
+nmcli device wifi connect <ssid> password <passwd>
+
+示例5 - 显示当前连接wifi的信息(包含密码)
+nmcli device wifi show-password
+
+
+最后编辑于: 2021-10-27
+
+
+引用:
+[1] http://www.freedesktop.org/wiki/Software/polkit

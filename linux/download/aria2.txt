@@ -1,0 +1,95 @@
+aria2 - 轻量级多协议和多源的指令行下载工具
+
+安装
+sudo apt install aria2
+
+支持协议列表:
+HTTP/HTTPS/FTP/SFTP/BitTorrent/Metalink
+
+
+语法
+aria2c [option] [<uri> | <magnet> | <torrent_file> | <metalink_file>] ...
+
+
+参数释义
+basic选项
+-c, --continue [true | false]
+	继续下载已下载部分的文件
+	适用于HTTP/HTTPS/FTP协议
+
+-d, --dir=<dir>
+	存储下载文件的目录
+	默认当前所在路径
+
+-h, --help[=<tag> | <keyword>]
+	指定标签(tag)的帮助文档, 标签以'#'开头
+	包含指定关键字(keyword)选项的帮助文档
+	可选标签列表: 
+		#basic, #advanced, #http, #https, #ftp, 
+		#metalink, #bittorrent, #cookie, #hook, #file, #rpc, 
+		#checksum, #experimental, #deprecated, #help, #all
+	默认为标签#basic
+		
+
+-i, --input-file=<file>
+	下载文件中URI指向的目标资源
+	文件中, 单个目标资源的多个源, 放置在单行内, 使用<tab>分隔
+	文件中, 指定参数的行必须以<space>/<tab>开头, 并且一行只能包含一个参数
+	文件可使用gzip压缩格式
+
+-l, --log=<log>
+	log文件的名称
+
+-j, --max-concurrent-downloads=<n>
+	指定并行下载的资源数量
+
+-V, --check-integrity [true | false]
+	检查下载文件的完整性
+	适用于BitTorrent/Metalink协议包含checksum部分
+	适用于HTTP/HTTPS/FTP协议配合--checksum选项
+	默认为false
+
+
+HTTP/FTP/SFTP选项
+--all-proxy=<proxy>
+	指定HTTP/FTP/SFTP协议的代理
+	proxy格式: [http://][<user>:<passowrd>@]<host>[:<port>]	
+	proxy为""时覆盖已定义的代理
+
+--all-proxy-passwd=<passwd>
+	指定代理的密码
+
+--all-proxy-user=<user>
+	指定代理的用户名
+** --all-proxy/--all-proxy-passwd/--all-proxy-user中, 后定义的覆盖先定义的内容
+
+--checksum=<type>=<digest>
+	指定hash种类和值
+	适用于HTTP/HTTPS/FTP协议
+	种类列表可参考aria2c -v
+
+--connect-timeout=<sec>
+	设置HTTP/FTP/proxy等待连接完成的最大时间
+	默认为60s
+
+--dry-run [true | false]
+	只测试HTTP/FTP目标是否可获得, 并不实际下载文件
+	默认为false
+
+--lowest-speed-limit=<speed>
+	设置下载的最小速度, 低于等于该速度时断开连接
+	speed单位为bytes/sec, 0代表没有最低速度限制
+	speed可后缀K/M指定为KiB/sec或MiB/sec
+	默认为0
+
+-x, --max-connection-per-server=<num>
+	对每个下载资源服务器的最大连接个数
+	默认为1
+
+--max-file-not-found=<num>
+	
+
+
+
+引用:
+[1] https://aria2.github.io/manual/en/html/index.html
