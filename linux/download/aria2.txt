@@ -49,6 +49,9 @@ basic选项
 	适用于HTTP/HTTPS/FTP协议配合--checksum选项
 	默认为false
 
+-v, --version
+	版本信息
+
 
 HTTP/FTP/SFTP选项
 --all-proxy=<proxy>
@@ -87,7 +90,207 @@ HTTP/FTP/SFTP选项
 	默认为1
 
 --max-file-not-found=<num>
+	当接收到指定次数"file not found"时, 判定下载失败
+	num为0表示不限制
+	适用于HTTP/FTP协议
+	默认为0
+
+-m, --max-tries=<n>
+	尝试连接次数
+	n为0表示不限制
+	默认为5
+
+-k, --min-split-size=<size>
+	当下载文件小于2*size大小时, 不进行多源分割
+	默认为20M
+
+--netrc-path=<file>
+	指定netrc文件
+	默认为$HOME/.netrc
+	.netrc文件权限必须为600, 否则忽略
+
+-n, --no-netrc [true | false]
+	不适用netrc文件
+	默认为false
+
+--no-proxy=<domains>
+	使用host name/domain/network指定不适用代理的目标
+
+-o, --out=<file>
+	文件下载到本地的文件名
+	使用--force-sequential时, 该选项被忽略
+	不适用于BitTorrent/Metalink协议
+
+--proxy-method=<method>
+	指定代理类型. method列表: get/tunnel
+	HTTPS使用tunnel, 忽略该参数
+	默认为get
+
+-R, --remote-time [true | false]
+	是否从HTTP/FTP服务器获取时间戳, 并应用到下载到本地的文件
+	默认为false
+
+--retry-wait=<sec>
+	设置重连时间
+	当sec>0时, HTTP服务器返回503响应时, 等待该时间后重连
+	默认为0
+
+-s, --split=<n>
+	下载单个文件时, 使用n个线程
+	当指定超过n个URIs时, 前n个URIs被使用, 余下URIs用于后补
+	当指定少于n个URIs时, 某些URIs被使用多次
+	连接到单个服务器的数量限制, 使用--max-connection-per-server
+	默认为5
+
+-t, --timeout=<sec>
+	下载过程中, 等待的超时时间
+	默认为60s
+
+
+HTTP特定选项
+--ca-certificate=<file>
+	指定CA证书文件, 用于验证服务器, 必须为pem格式(.crt/.pem后缀)
+	配合--check-certificate选项进行验证
+	debian/ubuntu CA证书目录/etc/ssl/certs
+	CentOS/RHEL 7 CA证书目录/etc/pki/ca-trust/extracted/pem
+
+--certificate=<file>
+	PKCS12格式(.p12/.pfx)证书或pem格式证书
+
+--check-certificate [true | false]
+	使用证书验证peer
+	配合--ca-certificate使用
+
+--http-accept-gzip [true | false]
+	是否发送Accept: deflate, gzip头部
+	默认为false
+
+--http-no-cache [true | false]
+	是否发送Cache-Control: no-cache头部
+	该头部代表不使用缓存
+
+--http-user=<user>
+	发送HTTP请求用户名
+
+--http-passwd=<passwd>
+	发送HTTP密码
+
+--http-proxy=<proxy>
+	设置HTTP代理
+	格式: [http://][<user>:<passwd>@]<host>[:<port>]	
+
+--http-proxy-passwd=<passwd>
+	HTTP代理密码
+
+--http-proxy-user=<user>
+	HTTP代理用户名
+
+--https-proxy=<proxy>
+	设置HTTPS代理
+
+--https-proxy-passwd=<passwd>
+	HTTPS代理密码
+
+--https-proxy-user=<user>
+	HTTPS代理用户名
+
+--private-key=<file>
+	指定private key
+
+--referer=<referer>
+	指定HTTP的Referer头部
+
+--enable-http-keep-alive [true | false]
+	开启HTTP/1.1的持久化连接
+	默认为true
+
+--enable-http-pipelining [true | false]
+	开启HTTP/1.1的pipelining
+	默认为false
+
+--header=<header>
+	添加HTTP指定请求头部内容
+
+--load-cookies=<file>
+	从文件中加载cookies
+
+--save-cookies=<file>
+	保存cookies到指定文件
+
+--use-head [true | false]
+	在第一次HTTP请求时, 是否使用HEAD method
+	默认为false
+
+-U, --user-agent=<user_agent>
+	设置指定的user-agent头部
+	默认为aria2/$VERSION
+
+
+FTP/SFTP特定选项
+--ftp-user=<user>
+	设置ftp用户
+	默认为anonymous
+
+--ftp-passwd=<passwd>
+	设置ftp用户的密码
+	默认为ARIS2USER@
+
+-p, --ftp-pasv [true | false]
+	是否使用ftp的passive模式
+	默认为true
+	SFTP忽略该参数
+
+--ftp-proxy=<proxy>
+	设置ftp代理
+
+--ftp-proxy-passwd=<passwd>
+	ftp代理的密码
+
+--ftp-proxy-user=<user>
+	ftp代理的用户名
+
+--ftp-type=<type>
+	设置ftp传输类型. 类型列表: binary/ascii
+	默认为binary
+	SFTP忽略该参数
+
+--ftp-reuse-connection [true | false]
+	重用ftp连接
+	默认为true
+
+--ssh-host-key-md=<type>=<digest>
+	校验服务器的公钥
+	校验方式: md5/sha-1
+
+
+BitTorrent/Metalink选项
+--select-file=<index>
+	下载种子中的指定文件
+	可通过-S查看文件列表
 	
+-S, --show-files [true | false]
+	显示.torrent/.meta4/.metalink中的文件列表
+
+
+BitTorrent特定选项
+--seed-time=<minutes>
+	指定完成任务后, 指定时间后做种子
+	minutes为0时代表不做种子
+
+
+
+
+示例1 - 同时下载2个文件
+aria2c -j2 file1 file2
+
+示例2 - 使用断点续传
+aria2c -c file1
+
+示例3 - 下个单个文件时, 使用多个线程同时下载
+aria2c -s5 http://xxx/path1/file1 http://xxx/path2/file1
+
+示例4 - 下载magnet文件, 并且不做种
+aria2c --seed-time=0 "magnet:xxx"
 
 
 
