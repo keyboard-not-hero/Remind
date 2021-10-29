@@ -1,37 +1,65 @@
-1.修改GUI文字类型和大小
+1.无外设配置wifi与ssh(boot分区下)
+配置wifi:
+vi wpa_supplicant.conf
+country=CN
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+ 
+# WPA/WPA2加密型
+network={
+ssid="<wifi_name>"
+psk="<wifi_passwd>"
+key_mgmt=WPA-PSK
+priority=1
+}
+
+# WEP加密型
+network={
+ssid="<wifi_name>"
+wep_key0="<wifi_passwd>"
+key_mgmt=NONE
+}
+
+配置ssh
+touch ssh
+** 需要通过路由器查看分配的IP
+
+
+2.修改GUI文字类型和大小
 右键单击桌面 -- 选择"Desktop Preferences" -- 选择"System" -- 单击"Font"下拉框
 
-2.调整terminal字体类型和大小
+
+3.调整terminal字体类型和大小
 右键单击terminal -- 选择"Preference" -- 单击"Terminal font"下拉框
 
-3.安装vim
+
+4.安装vim
 sudo apt install vim
 
-4.切换软件源
+
+5.切换软件源
 raspberry Pi OS源:
 sudo vi /etc/apt/sources.list
 deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
 deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
 sudo apt update
 
-5.开启ssh
+
+6.开启ssh
 sudo raspi-config
 选择Interface Options，选择SSH，选择Yes
 至此已开启SSH连接服务
 
-6.设置语言环境
+
+7.设置语言环境
 sudo raspi-config
 选择Localisation Options，选择Locale，使用<space>键选中需要使用的语系
 
-7.安装谷歌拼音
+
+8.安装谷歌拼音
 sudo apt update
 安装框架
 sudo apt-get install fcitx fcitx-ui-classic fcitx-config-gtk
 安装谷歌拼音
 sudo apt-get install fcitx-googlepinyin
 重启
-
-8.修改swap
-sudo vi /etc/dphys-swapfile
-CONF_SWAPSIZE=2048
-sudo /etc/init.d/dphys-swapfile restart
