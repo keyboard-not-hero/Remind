@@ -1,0 +1,108 @@
+前提
+硬件: raspberry pi 2B及之后版本(raspberry pi 4B最佳)
+系统: raspberry pi os lite
+
+
+1.安装raspberry pi os lite
+官网链接: https://www.raspberrypi.org/
+进入官网, 选择"Computers" -- "Software" -- 选择"See all download options" --
+选择"Raspberry Pi OS" -- 选择对应类型系统 -- 点击"Download"
+unzip 2021-05-07-raspios-buster-armhf-full.zip
+sudo mkfs -t fat /dev/sdb
+sudo dd if=~/Downloads/2021-05-07-raspios-buster-armhf-full.img of=/dev/sdb
+bs=4M status=progress
+sync
+
+
+2.开启ssh和wifi(boot分区下)
+touch ssh
+
+vi wpa_supplicant.conf
+country=CN
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+# WPA/WPA2加密型
+network={
+ssid="<wifi_name>"
+psk="<wifi_passwd>"
+key_mgmt=WPA-PSK
+priority=1
+}
+
+
+
+3.ssh连接
+通过路由器后台查看树莓派IP
+ssh pi@<IP>
+
+
+4.更新源 && 更新系统
+sudo apt install vim
+
+sudo vi /etc/apt/sources.list
+deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
+deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
+
+sudo apt update && sudo apt upgrade -y
+sudo rm -f /etc/systemd/network/99-default.link
+sudo shutdown -r now
+
+
+
+5.安装OMV
+wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash
+
+如果wget遇到"unable to establish SSL connection", 手动下载脚本并执行:
+curl -O https://raw.githubusercontent.com/OpenMediaVault-Plugin-Developers/installScript/master/install
+
+sudo bash install
+
+完成后, IP会改变
+
+** 直接连接github会导致连接不上, ping一下raw.githubusercontent.com, 得到对应的IP, 将ip映射写入/etc/hosts
+** 出现"unable to establish SSL connection"错误, 可能是/etc/ssl/certs/ca-certificates.crt没有raw.githubusercontent.com的相关证书, sudo apt reinstall ca-certificates
+
+
+6.Web GUI界面操作
+浏览器界面输入raspberry IP
+登录
+默认账号: admin
+默认密码: openmediavault
+
+
+7.添加数据盘(U盘或移动硬盘)
+数据盘格式不能为fat格式, 可选NTFS/ext等格式
+
+
+8.配置web后台
+1)常规设置
+将刷新时间更改为30分钟
+
+2)查看磁盘, 确认数据盘已连接树莓派
+
+3)查看文件系统, 手动将数据盘挂载
+
+4)创建连接的用户和密码
+
+5)添加共享文件夹
+
+6)启动SMB/CIFS服务, 并添加该子类共享
+
+
+9.客户端连接
+1)android
+使用ES文件浏览器 -- 我的网络 -- 局域网
+
+2)Ipad
+文件 -- 列表菜单的右上栏 -- 连接服务器 -- 服务器地址 -- 用户/密码
+
+
+
+最后编辑于: 2021-11-02
+
+
+引用:
+[1] https://wiki.omv-extras.org/doku.php?id=installing_omv5_raspberry_pi
+
+[2] https://openmediavault.readthedocs.io/en/5.x/

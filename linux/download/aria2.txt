@@ -292,7 +292,19 @@ aria2c -s5 http://xxx/path1/file1 http://xxx/path2/file1
 示例4 - 下载magnet文件, 并且不做种
 aria2c --seed-time=0 "magnet:xxx"
 
+示例5 - 配置tracker, 提升下载速度
+vi /etc/aria2/aria2c.conf
+bt-tracker=<tracker_1>,<tracker_2>...
+
+aria2c --conf-path=/etc/aria2/aria2c.conf <url>
+
+** tracker_list参考地址[2]
+
+
+最后编辑于: 2021-11-02
 
 
 引用:
 [1] https://aria2.github.io/manual/en/html/index.html
+
+[2] https://github.com/ngosang/trackerslist

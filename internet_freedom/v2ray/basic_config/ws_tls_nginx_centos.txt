@@ -1,4 +1,4 @@
-1.搭建https网站，参考Linux/wordpress/deploy_centos.txt
+1.搭建https网站，参考wordpress/deploy_centos.txt
 
 2.配置nginx
 # 更改配置文件

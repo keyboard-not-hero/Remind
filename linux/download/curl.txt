@@ -37,7 +37,7 @@ option列表
 --cert-status
 	查看服务器的证书有效状态
 
--cert-type <type>
+--cert-type <type>
 	客户端使用证书类型, 列表: PEM(默认)/DER/ENG/P12
 
 --compressed
@@ -477,6 +477,9 @@ curl -o robot.jpg https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/
 curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
 curl --preproxy socks5://127.0.0.1:<port> -O https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+
+3.使用verbose模式查看出错信息
+curl -v <url>
 
 
 最后编辑于: 2020-10-08

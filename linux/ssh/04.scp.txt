@@ -56,3 +56,6 @@ scp -3 scp://<user_src>@<host_src>:<port_src>/<path_to_file> scp://<user_tar>@<h
 
 示例3 - 指定中转主机列表, 从当前主机与最终服务器之间传送文件
 scp -J <jump_host>[:<port>] <path_to_file> <user>@<host>:<path_to_file>
+
+示例4 - 递归复制整个目录
+scp -r demo_dir <user>@<host>:~

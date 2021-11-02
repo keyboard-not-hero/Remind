@@ -1,4 +1,4 @@
-1.搭建https网站，参考Linux/wordpress/deploy_ubuntu.txt
+1.搭建https网站，参考wordpress/deploy_ubuntu.txt
 
 2.配置tls
 # 开启apache2模块

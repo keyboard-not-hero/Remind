@@ -1,7 +1,7 @@
 1.下载V2ray：
 下载地址：https://github.com/v2ray/v2ray-core/releases
 2.解压缩：
-unzip -d v2ray v2ray-linux-64.zip
+unzip -d v2ray v2ray-linux-arm32-v7a.zip
 3.编辑配置文件：
 vi config.json
 {

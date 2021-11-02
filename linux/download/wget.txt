@@ -109,6 +109,9 @@ wget [option]... [url]...
 	不从.netrc获取证书信息
 	默认从.netrc获取必要证书信息
 
+--no-proxy
+	不适用代理, 即使已设置*_proxy环境变量
+
 --no-use-server-timestamps
 	本地文件使用当前时间戳, 不适用服务器上的时间戳
 
@@ -123,7 +126,7 @@ wget [option]... [url]...
 	将所有信息输出到指定文件(overwrite式)
 	默认输出到stderr
 
--0 <file>, --output-document=<file>
+-O <file>, --output-document=<file>
 	指定下载文件的文件名
 	file为'-'时, 代表信息输出到stdout
 	不支持与-N一起使用
@@ -238,3 +241,8 @@ wget http://fly.srk.fer.hr/
 
 2.从文件读取url
 wget -i url_file.txt
+
+3.wget支持http_proxy/https_proxt/ftp_proxy设置的代理, 不支持socks5代理
+
+4.不使用任何代理
+wget --no-proxy <url>
