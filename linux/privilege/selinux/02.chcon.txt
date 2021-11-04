@@ -1,0 +1,46 @@
+chcon - 修改文件的context(relabel后失效)
+
+语法
+chcon [option] file
+
+参数释义
+--dereference
+	解引用, 指向符号链接文件实际代表的文件
+	默认参数
+
+-h, --no-dereference
+	作用于符号链接文件本身
+
+--help
+	帮助信息
+
+-l, --range=<range>
+	设置文件的level
+
+-R, --recursive
+	递归操作目录及目录下的文件
+
+-r, --role=<role>
+	设置文件的role
+
+--reference=<file>
+	参考指定文件的context
+
+-t, --type=<type>
+	设置文件的type
+
+-u, --user=<user>
+	设置文件的user
+
+-v, --verbose
+	输出详细信息
+
+--version
+	版本信息
+
+
+示例1 - 修改文件的type
+chcon -t bin_t /usr/share/nginx/html/testfile
+
+
+最后编辑于: 2021-11-04

@@ -97,7 +97,7 @@ ssh [options] {[-l user] hostname | [user@]hostname} [command]
 	用于端口转发
 
 -o <option>
-	通常指令行指定配置文件中指定的选项
+	指定配置文件中的参数
 	参考: man 5 ssh_config
 
 -p

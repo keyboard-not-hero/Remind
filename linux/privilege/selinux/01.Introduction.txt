@@ -1,0 +1,140 @@
+文件存取类型
+DAC(Discretionary Access Control, 自主式存取控制) -
+根据访问程序的owner/group对文件的权限进行访问管理. 如rwx权限
+
+MAC(Mandatory Access Control, 委任式存取控制) -
+根据程序属性和文件属性的匹配进行访问管理. 如SELinux
+
+SELinux(NSA Security Enhanced Linux):
+一种MAC管理制度, Subject通过两层验证后, 对Object开放SELinux层次的访问权限(最终需要对文件有基本的rwx权限). 如图
+
+                      |--------|      |------------------|
+Subject(program) ---> | policy | ---> | security context | ---> Object(file)
+                      |--------|      |------------------|
+
+Subject - 访问的程序
+
+Object - 被访问的文件
+
+policy - SELinux层面的访问限制程度
+  
+
+
+context(label) -
+文件(包括program和doc)的额外标签, 用于Subject与Object访问权限匹配. 格式:
+	user:role:type:level
+	字段解释如下:
+    user - 系统用户在SELinux下的映射
+    role - RBAC(Role-Base Access Control)安全模型. SELinux user授权给role,
+role授权给domain
+    type - 用于程序和文件, 以_t结尾的字段, context匹配的最重要字段
+		示例1 - nginx程序与文档的context
+		[root@dataforthompson ~]# ll -Z /usr/sbin/nginx
+		-rwxr-xr-x. root root system_u:object_r:httpd_exec_t:s0 /usr/sbin/nginx
+		[root@dataforthompson ~]# ll -Z /usr/share/nginx/html
+		-rw-r--r--. nginx nginx system_u:object_r:httpd_sys_content_t:s0 index.php
+		
+		示例2 - passwd程序与文档的context
+		[root@dataforthompson ~]# ll -Z /usr/bin/passwd
+		-rwsr-xr-x. root root system_u:object_r:passwd_exec_t:s0 /usr/bin/passwd
+		[root@dataforthompson ~]# passwd
+		[root@dataforthompson ~]# ps auxZ | grep passwd
+		unconfined_u:unconfined_r:passwd_t:s0-s0:c0.c1023 root 2339 0.2  0.0 10420 3876 pts/2 S+ 15:41   0:00 passwd
+		[root@dataforthompson ~]# ll -Z /etc/shadow
+		----------. root root system_u:object_r:shadow_t:s0    /etc/shadow
+		解析: passwd_exec_t type的passwd程序执行时, passwd进程进入passwd_t domain, 该domain允许访问shadow_t
+type的/etc/shadow
+    level - MLS(Multi-Level Security)和MCS(Multi-Category Security)的属性. 需要额外安装selinux-policy-mls包, 并且配置MLS policy. 不建议X window system使用
+        MLS：格式为<low_level>-<high_level>
+        MCS：格式为<low_category>.<high_category>, 支持范围为0~023
+
+示例:
+confine进程示例(http服务器使用nginx, SELinux必须为enforce)
+touch /usr/share/nginx/html/testfile
+
+启动nginx
+systemctl start nginx
+
+<domain_name>/testfile
+此时可以使用nginx进程访问testfile
+
+修改文件的SELinux type(relabel之后恢复为之前的type)
+chcon -t samba_share_t /usr/share/nginx/html/testfile
+
+<domain_name>/testfile
+此时不可以使用nginx进程访问testfile
+
+
+unconfine进程示例(http服务器使用nginx, SELinux必须为enforce)
+touch /usr/share/nginx/html/testfile
+
+修改testfile的type
+chcon -t samba_share_t /usr/share/nginx/html/testfile
+
+停止nginx进程
+systemctl stop nginx
+
+修改nginx程序的type
+chcon -t bin_t /usr/sbin/nginx
+
+启动nginx进程
+systemctl start nginx
+
+查看nginx进程的domain
+ps -eZ|grep nginx
+
+<domain_name>/testfile
+此时依然可以查看testfile
+
+恢复nginx的默认type
+restorecon -v /usr/sbin/nginx
+
+重启nginx进程
+systemctl restart nginx
+
+** context匹配问题可以查看/var/log/audit/audit.log. 
+**     指令: cat /var/log/audit/audit.log | grep AVC
+
+
+
+SELinux启动模式：
+1.enforcing - 将policy和security context严格执行与访问与被访问对象
+
+2.permissive - 记录访问与被访问对象的匹配情况, 但不限制访问
+
+3.disabled - 关闭SELinux
+
+模式切换
+1)relabel后失效(即重启)
+setenforce [enforcing|permissive|1|0]
+	只能在enforcing和permissive模式之间切换
+
+2)永久性切换
+修改/etc/selinux/config文件的SELINUX属性对应的值, 并重启系统(relabel)
+	可在enforcing/permissive/disabled模式切换
+
+** 从disable切换到enable时, 建议先切换到permissive, 查看日志,
+没有问题再切换到enforcing
+
+查看当前模式
+getenforce
+
+
+
+作用对象：
+1.文件 - 查看方法ls -Z
+
+2.用户 - 查看方法id -Z
+
+3.进程 - 查看方法ps -eZ
+
+
+
+补充
+1.Subject首先验证DAC通过, 再验证MAC
+
+2.新创建文件的type从父目录继承
+
+3.log使用audit daemon, 目录为/var/log/audit/audit.log
+
+4.主配置文件为/etc/selinux/config

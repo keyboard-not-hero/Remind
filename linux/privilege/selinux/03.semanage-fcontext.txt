@@ -1,0 +1,77 @@
+semanage-fcontext - 修改文件的context(relabel后依然保持)
+
+语法
+semanage fcontext [-h] [-n] [-N] [-S STORE] 
+	[ --add ( -t TYPE -f FTYPE -r RANGE -s SEUSER | -e EQUAL ) FILE_SPEC | 
+	--delete  (  -t  TYPE  -f FTYPE  | -e EQUAL ) FILE_SPEC | 
+	--deleteall | 
+	--extract | 
+	--list [-C] | 
+	--modify ( -t TYPE -f FTYPE -r RANGE -s SEUSER | -e EQUAL ) FILE_SPEC ]
+
+参数释义
+-h, --help
+	帮助信息
+
+-n, --noheading
+	输出不显示header
+
+-S, --store <store>
+	指定额外的SELinux policy管理容器
+
+-a, --add
+	添加指定文件手动配置的context
+
+-d, --delete
+	删除指定文件手动配置的context
+
+-D, --deleteall
+	删除所有文件手动配置的context
+
+-E, --extract
+	手动配置context的指令原型列表
+
+-l, --list
+	显示所有的context配置
+
+-C, --locallist
+	配合-l, 显示所有文件手动配置的context
+
+-m, --modify
+	修改指定文件手动配置的context
+
+-t, --type <type>
+	指定文件的type
+
+-f, ftype [{a,f,d,c,b,s,l,p}]
+	只作用于指定文件类型. 列表如下:
+		a - 所有文件类型(默认)
+		f - 标准文件
+		d - 目录
+		c - 字符设备
+		b - 块设备
+		s - socket文件
+		l - 符号链接文件
+		p - pipe设备
+
+-r, --range <range>
+	指定文件的level
+
+-s, --seuser <seuser>
+	指定文件的user
+
+-e, --equal <old_file>
+	引用其他文件作为新文件的context
+
+
+
+
+
+FILE_SPEC可使用regular expression匹配文件
+	
+
+
+示例1 - 修改指定文件的type
+semanage fcontext -a -t samba_share_t /etc/file1
+
+semanage fcontext -l -C

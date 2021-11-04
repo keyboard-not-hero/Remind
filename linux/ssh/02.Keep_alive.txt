@@ -1,0 +1,17 @@
+1.针对服务器
+vi /etc/ssh/sshd_config
+ClientAliveInterval 30
+ClientAliveCountMax 6
+
+systemctl restart sshd
+
+** 总计30 * 6=180秒不断线
+
+
+2.针对客户端
+vi ~/.ssh/config
+ServerAliveInterval 30
+
+
+3.针对指定连接
+ssh -o ServerAliveInterval=30 <user>@<host>
