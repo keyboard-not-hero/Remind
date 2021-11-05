@@ -81,10 +81,11 @@ script包含格式如下:
 <pattern><action>
 
 
-pattern - 匹配符合要求的行. 具体格式: [address1[,address2]], 默认为所有行1,$
-	[<exp>~]/<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE). 默认为$0~/<re>/
-	<expression> - express非0数字或非空字符串则执行后续action
-	<begin>,<end> - 指定起始行和结束行(包含)
+pattern - 匹配符合要求的行. 格式类型如下: 具体格式:
+	[<exp>~]/<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular
+Expression(ERE). exp默认为$0
+	<expression> - expression为非0数字或非空字符串则执行后续action
+	<begin>,<end> - 指定起始行和结束行(包含). 如: NR==1,NR==2
 	BEGIN - 读取内容之前执行的操作. 必须配置action
 	END - 读取所有内容之后执行的操作. 必须配置action
 	<empty> - 不指定, 代表所有行
@@ -381,6 +382,9 @@ it's ending
 示例2 - ps结果最后一列以[开头的行
 ps aux|awk 'BEGIN{a=0};$11~/^\[/{a++};END{print a}'
 239
+
+示例3 - 合并所有非空行
+awk '/^.+$/{if(NR==1) {printf $0} else {printf ","$0}}' <file>
 
 
 引用:

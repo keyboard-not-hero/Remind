@@ -5,19 +5,9 @@ DAC(Discretionary Access Control, 自主式存取控制) -
 MAC(Mandatory Access Control, 委任式存取控制) -
 根据程序属性和文件属性的匹配进行访问管理. 如SELinux
 
-SELinux(NSA Security Enhanced Linux):
-一种MAC管理制度, Subject通过两层验证后, 对Object开放SELinux层次的访问权限(最终需要对文件有基本的rwx权限). 如图
+SELinux(NSA Security Enhanced Linux): MAC式的访问控制程序,
+使程序的访问程度收到限制
 
-                      |--------|      |------------------|
-Subject(program) ---> | policy | ---> | security context | ---> Object(file)
-                      |--------|      |------------------|
-
-Subject - 访问的程序
-
-Object - 被访问的文件
-
-policy - SELinux层面的访问限制程度
-  
 
 
 context(label) -
@@ -135,6 +125,27 @@ getenforce
 
 2.新创建文件的type从父目录继承
 
-3.log使用audit daemon, 目录为/var/log/audit/audit.log
+3.log分类:
+	auditd on - 目录/var/log/audit/audit.log
+		消息格式字段:
+			comm - 程序名称
+			path - 访问的目标文件
+			scontext - 进程的domain context
+			tcontext - 目标文件的context
+		查询语法: grep "denied" /var/log/audit/audit.log
+	auditd off, rsyslogd on - 目录/var/log/messages. 查询语法:
+		grep "SELinux is preventing" /var/log/messages
 
 4.主配置文件为/etc/selinux/config
+
+5.复制(cp)文件时, 默认目标文件的context继承目标文件父目录.
+使用--preserve=context可保留源文件的context
+
+6.移动(mv)文件时, 默认目标文件的context采用源文件的context
+
+
+最后编辑于: 2021-11-04
+
+
+引用:
+[1] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/index

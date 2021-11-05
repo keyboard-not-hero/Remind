@@ -54,7 +54,7 @@ sudo shutdown -r now
 wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash
 
 如果wget遇到"unable to establish SSL connection", 手动下载脚本并执行:
-curl -O https://raw.githubusercontent.com/OpenMediaVault-Plugin-Developers/installScript/master/install
+curl -O --socks5 <ip>:<port> https://raw.githubusercontent.com/OpenMediaVault-Plugin-Developers/installScript/master/install
 
 sudo bash install
 

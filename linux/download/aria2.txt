@@ -299,6 +299,8 @@ bt-tracker=<tracker_1>,<tracker_2>...
 aria2c --conf-path=/etc/aria2/aria2c.conf <url>
 
 ** tracker_list参考地址[2]
+** 可使用以下指令整理tracker地址:
+**     awk 'BEGIN{printf "bt-tracker="};/^.+$/{if(NR==1) {printf $0} else {printf ","$0}};END{print ""}' trackers_best.txt
 
 
 最后编辑于: 2021-11-02

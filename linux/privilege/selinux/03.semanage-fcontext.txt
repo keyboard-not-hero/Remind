@@ -1,4 +1,4 @@
-semanage-fcontext - 修改文件的context(relabel后依然保持)
+semanage-fcontext - 修改文件的默认context(relabel后依然保持)
 
 语法
 semanage fcontext [-h] [-n] [-N] [-S STORE] 
@@ -71,7 +71,6 @@ FILE_SPEC可使用regular expression匹配文件
 	
 
 
-示例1 - 修改指定文件的type
-semanage fcontext -a -t samba_share_t /etc/file1
-
-semanage fcontext -l -C
+示例1 - 递归修改指定目录下文件的type
+semanage fcontext -a -t samba_share_t "/etc/dir(/.*)?"
+restorecon -R -v /etc/dir
