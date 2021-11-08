@@ -1,0 +1,17 @@
+安装
+CentOS:
+sudo yum install httpd
+sudo systemctl enable httpd
+sudo systemctl start httpd
+
+Ubuntu:
+sudo apt install apache2
+sudo systemctl enable apache2
+sudo systemctl start apache2
+
+
+最后编辑于: 2021-11-08
+
+
+引用:
+[1] https://httpd.apache.org/docs/2.4/

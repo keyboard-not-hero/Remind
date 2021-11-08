@@ -144,7 +144,25 @@ getenforce
 6.移动(mv)文件时, 默认目标文件的context采用源文件的context
 
 
-最后编辑于: 2021-11-04
+
+nginx进程的domain与目标文件type不符的问题
+ps -eZ|grep httpd
+system_u:system_r:httpd_t:s0    18170 ?        00:00:00 nginx
+1)将进程的domain修改为permission
+semanage permissive -a httpd_t
+
+** 将domain移出permission:
+**     semanage permissive -d <domain>
+
+2)修改目标文件type
+sudo chcon -a -t <type> <file>
+
+sudo semanage fcontext -a -t <type> <file>
+sudo restorecon -R -v <file>
+
+
+
+最后编辑于: 2021-11-08
 
 
 引用:

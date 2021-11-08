@@ -1,0 +1,2 @@
+log路径:
+/var/log/httpd
