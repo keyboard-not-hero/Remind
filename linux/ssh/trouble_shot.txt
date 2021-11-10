@@ -1,0 +1,9 @@
+1.连接过慢
+情况1:
+vi /etc/ssh/sshd_config
+UseDNS no
+
+
+情况2:
+vi /etc/ssh/ssh_config
+GSSAPIAuthentication no

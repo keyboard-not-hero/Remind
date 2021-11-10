@@ -1,2 +1,7 @@
-DocumentRoot路径
+默认DocumentRoot路径(由DocumentRoot directive指定)
 /var/www/html
+
+
+static content: 文件系统内的静态内容文件. 如html/image/CSS等文件
+
+dynamic content: 根据请求动态生成的内容. 如CGI文件

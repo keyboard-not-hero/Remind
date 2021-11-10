@@ -1,82 +1,102 @@
-CentOS配置文件路径：/etc/httpd/conf/httpd.conf
-Ubuntu配置文件路径：/etc/apache2/apache2.conf
+CentOS配置文件路径: /etc/httpd/conf/httpd.conf
+Ubuntu配置文件路径: /etc/apache2/apache2.conf
 
 
-指令作用范围：
-1.全局指令：作用于整个主机的所有站点
 
-2.IfDefine：用于apache启动时，对标签值进行条件判断，符合条件执行当中语句
+configure格式:
+1.每行一个directive, 其值需要空格分隔
 
-3.IfModule：判断标签值中的模块是否可获取
+2.directive大小写不敏感, 值大小写敏感
 
-4.IfVersion：判断标签值是否符合版本范围，使用比较符判定
+3.以"#"开始的行, 为注释行
 
-5.Directory：作用于该目录和其子目录，作用于filesystem
-**.htaccess文件与Directory标签作用类似，并且.htaccess会覆盖Directory配置，但是Directory的性能高于.htaccess
-
-6.File：作用于指定文件名称的文件，作用于filesystem
-
-7.Location：将标签值映射到内容部分的SetHandlers模块，标签值文件不一定存在于设备中，作用于ServerRoot
-**5/6/7可使用通配符，其中，’*’匹配任意多个字符，’?’匹配任意单个字符，’[]’匹配范围内单个字符
-
-8.DirectoryMath/FileMatch/LocationMatch：Directory、File、Location的regular expression匹配模式，该正则模式为perl兼容模式
-
-9.VirtualHost：虚拟主机，ServerName与DocumentRoot一一对应，不同域名映射不同目录。以实现单IP映射多域名，需要配置DNS域名映射
-
-10.Proxy：用于配置代理，允许指定客户端(内容)访问服务器(标签值)
+4.使用${<var>}格式可使用环境变量或Define directive定义的变量
 
 
-指令一览(指令大小写不敏感，参数大小写敏感)：
-AccessFileName：配置.htaccess文件的名称，默认使用.htaccess
 
-ServerRoot：服务器配置相关根目录
+环境变量类型:
+1.shell环境变量
+使用PassEnv导入到apache
+PassEnv <shell_var>
 
-DocumentRoot：站点内容根目录，虚拟主机需单独配置
+2.apache内部环境变量
+使用SetEnv设置变量
+SetEnv <var> <val>
 
-ErrorLog：错误日志文件位置，虚拟主机需单独配置
 
-Listen：http监听的接口(可选，IPv6使用[]限定)和端口，可使用Listen IP:PORT https指定https监听的端口。在虚拟主机中，必须在全局指定所有接口和端口，然后在虚拟主机中选择其中item进行选择
-**监听IPv6接口时，会使用IPv4-mapped(configure参数--enable-v4-mapped)技术同时监听IPv4连接
 
-Include：包含其他配置文件
+directive作用范围:
+1.global scope
 
-Define：定义变量，使用变量方式为${VAR}
+2.local scope
+1)<Directory> - 作用于指定目录及子目录下(文件系统), 可使用wildcard
 
-LoadModule：动态加载指定模块，前提是编译时使用允许动态加载选项，否则增加模块需重新编译
+2)<DirectoryMatch> - 类似于<Directory>, 但匹配内容使用RE
 
-ProxyPass：语法ProxyPass [path] !|url，将对该路径的请求转发至指定主机，!代表该路径不转发
+3)<Files> - 作用于所有目录下的指定文件, 可使用wildcard
 
-虚拟主机不同实现方式：
-1.基于域名：使用多个域名、单个IP进行映射，来实现虚拟多站点，步骤如下：
-在DNS服务器上，将多个域名映射到同一个IP
+4)<FilesMatch> - 类似于<Files>, 但匹配内容使用RE
 
-httpd.conf配置：
-<VirtualHost *:80>
+5)<Location> - 作用于指定目录及子目录下(web路径), 可使用wildcard
+
+6)<LocationMatch> - 类似于<Location>, 但匹配内容使用RE
+
+7)<VirtualHost> - 适用于多站点服务器的虚拟主机
+
+
+
+directive列表: 
+AccessFileName: 指定多站点的分布式配置文件名称. 名称默认为.htaccess
+
+AllowOverride: 允许放置在分布式配置文件的directive类型,
+该directive只能放置在<directory>范围中. 格式: AllowOverride
+All|None|<directive_type>
+
+Define: 定义新的变量并赋值. 格式: Define <var> <val>
+
+DocumentRoot: 站点内容根目录. 虚拟主机需单独配置
+
+ErrorLog: 日志文件位置. 虚拟主机需单独配置
+
+Include: 包含的其他配置文件
+
+Listen: http监听的接口(可选, IPv6使用[]限定)和端口
+
+ServerRoot: 其他目录为非绝对目录时, 相对目录参考根目录
+
+
+
+virtual host不同实现方式: 
+1.基于域名: 使用多个域名、单个IP进行映射, 来实现虚拟多站点, 步骤如下: 
+在DNS服务器上, 将多个域名映射到同一个IP
+
+httpd.conf配置: 
+<VirtualHost *: 80>
   ServerName www.dataforthompson.top
   ServerAlias dataforthompson.top
   DocumentRoot "/var/www/html/test"
 </VirtualHost>
 
-<VirtualHost *:80>
+<VirtualHost *: 80>
   ServerName www.dataforthompson.cn
   ServerAlias dataforthompson.cn
   DocumentRoot "/var/www/html/product"
 </VirtualHost>
 
 
-2.基于IP：使用多个IP：端口组合来实现虚拟主机，不常用
+2.基于IP: 使用多个IP: 端口组合来实现虚拟主机, 不常用
 
 
-目录URL返回类型：
+目录URL返回类型: 
 1.默认文件(mod_dir)
-DirectoryIndex  FILE_NAME1，FILE_NAME2…
+DirectoryIndex  FILE_NAME1, FILE_NAME2…
 
 2.文件列表(mod_autoindex)
 Options Indexes
 
 
-内容协商的服务器驱动配置：
-1.配置/etc/httpd/conf/httpd.conf：
+内容协商的服务器驱动配置: 
+1.配置/etc/httpd/conf/httpd.conf: 
   [root@li1680-196 ~]# vi /etc/httpd/conf/httpd.conf
   #type-map文件后缀名
   AddHandler type-map .var
@@ -85,16 +105,16 @@ Options Indexes
   #配置MultiviewsMatch
   MultiviewsMatch handlers
 
-2.type-map文件配置(type-map文件名与请求资源同名)：
+2.type-map文件配置(type-map文件名与请求资源同名): 
 [root@li1680-196 ~]# vi index.html.var
-  URI:index.html
+  URI: index.html
 
-  URI:index.en.html
-  Content-Type:text/html
-  Content-language:en,qs=1.0
-  URI:index.fr.html
-  Content-Type:text/html
-  Content-language:fr,qs=0.8
+  URI: index.en.html
+  Content-Type: text/html
+  Content-language: en,qs=1.0
+  URI: index.fr.html
+  Content-Type: text/html
+  Content-language: fr,qs=0.8
 
-mod_negotiation链接：http://httpd.apache.org/docs/current/mod/mod_negotiation.html#typemaps
+mod_negotiation链接: http: //httpd.apache.org/docs/current/mod/mod_negotiation.html#typemaps
 

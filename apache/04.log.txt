@@ -1,2 +1,4 @@
-log路径:
+默认log路径(由ErrorLog directive指定):
 /var/log/httpd
+
+
