@@ -52,15 +52,26 @@ AllowOverride: 允许放置在分布式配置文件的directive类型,
 该directive只能放置在<directory>范围中. 格式: AllowOverride
 All|None|<directive_type>
 
+CustomLog: access日志文件位置
+
 Define: 定义新的变量并赋值. 格式: Define <var> <val>
+
+DirectoryIndex: 指定的URL为目录时, 默认指向目录下的文件名称
 
 DocumentRoot: 站点内容根目录. 虚拟主机需单独配置
 
-ErrorLog: 日志文件位置. 虚拟主机需单独配置
+ErrorLog: error日志文件位置. 虚拟主机需单独配置
 
 Include: 包含的其他配置文件
 
 Listen: http监听的接口(可选, IPv6使用[]限定)和端口
+
+Redirect: 将客户端的请求地址重定向到指定位置. 格式: Redirect [<status>] "/old/"
+"/new/". status列表:
+	permanent - 永久重定向, 301
+	temp - 临时重定向, 302. 默认选项
+	seeother - 原内容已被替换, 303
+	gone - 资源被永久移除, 410
 
 ServerRoot: 其他目录为非绝对目录时, 相对目录参考根目录
 
