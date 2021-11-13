@@ -1,0 +1,44 @@
+retorecon - 恢复文件的context到默认值
+
+语法
+restorecon [option] <path_name>
+
+参数释义
+-e <dir>
+	将指定目录排除在外, 用于目录目标
+
+-F
+	强制修改自定义context为默认context
+	修改context的所有字段内容, 默认只修改type字段
+
+-f <file>
+	读取指定文件内的文件名, 对其进行操作
+
+-h, -?
+	帮助信息
+
+-i
+	当文件不存在时, 直接忽略
+
+-n
+	配合-v使用, 查看type的变动情况, 不实际进行修改
+
+-p
+	显示进度, '*'代表1024个文件
+
+-R, -r
+	递归修改目录下的文件
+
+-v
+	verbose模式
+	多个-v增加输出详细程度
+	与-p互斥
+
+-0
+	使用NULL作为item的分割符
+	默认分隔符为' '
+
+
+
+示例1 - 恢复默认type
+sudo restorecon /var/www/html/index.html

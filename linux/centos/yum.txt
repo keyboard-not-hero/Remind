@@ -184,6 +184,23 @@ group update
 
 
 
+fastestmirror特性:
+将多个镜像按速度由高到低排列
+
+开启fastestmirror
+1)启动plugins功能
+sudo vi /etc/yum.conf
+plugins=1
+
+2)安装fastestmirror
+sudo yum install yum-plugin-fastestmirror
+
+3)开启fastestmirror
+vi /etc/yum/pluginconf.d/fastestmirror.conf
+enabled=1
+
+
+
 常用第三方源目录：
 1.EPEL：Extra Package for Enterprise Linux
 官网：http://fedoraproject.org/wiki/EPEL

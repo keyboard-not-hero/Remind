@@ -1,0 +1,58 @@
+semanage-port - SELinux管理端口映射的工具
+
+语法
+semanage  port [-h] [-n] [-N] [-S STORE] 
+    [ --add -t TYPE -p PROTOCOL -r RANGE port_name | port_range  |
+    --delete  -p  PROTOCOL  port_name | port_range  |  
+    --deleteall  | 
+    --extract  | 
+    --list [-C]  | 
+    --modify -t TYPE -p PROTOCOL -r RANGE port_name | port_range ]
+
+参数释义
+-h, --help
+	帮助信息
+
+-n, --noheading
+	不显示指定列类型的header
+
+-S, --store <store>
+	选择一个额外的SELinux Policy进行管理
+
+-a, --add
+	针对指定type添加规则
+
+-d, --delete
+	针对指定type删除规则
+
+-D, --deleteall
+	删除所有手动指定的规则
+
+-E, --extract
+	手动配置context的指令原型列表
+	
+-l, --list
+	显示指定type的规则
+
+-C, --locallist
+	配合-l使用, 显示指定type的手动指定的规定
+
+-m, --modify
+	修改指定type的规则
+
+-t, --type
+	指定SELinux type
+
+-p, --proto <proto>
+	端口的协议(TCP|UDP)或IP版本(IPv4 | IPv6)
+
+-r, --range <range>
+	用于MLS/MCS类型SELinux
+
+
+
+示例1 - 查看httpd的允许端口
+semanage port -l|grep -w http_port_t
+
+示例2 - 添加额外端口为httpd允许端口
+semanage port -a -t http_port_t -p tcp 12345

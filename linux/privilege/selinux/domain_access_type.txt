@@ -2,7 +2,7 @@ type			domain				type					boolean
 ---------------------------------------------------------------------------
 httpd_exec_t	httpd_t				httpd_sys_content_t
 				httpd_sys_script_t	httpd_sys_script_exec_t httpd_enable_cgi
-
+bin_t			unconfined_t		<any>
 
 
 ** 开启/关闭boolean项: setsebool <boolean> on/off

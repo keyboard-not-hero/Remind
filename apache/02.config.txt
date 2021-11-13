@@ -12,6 +12,9 @@ configure格式:
 
 4.使用${<var>}格式可使用环境变量或Define directive定义的变量
 
+5.不同目录下的多站点可以使用.htaccess来进行不同配置,
+但使用<Directory>可以实现相同效果, 并提升性能
+
 
 
 环境变量类型:
@@ -48,9 +51,14 @@ directive作用范围:
 directive列表: 
 AccessFileName: 指定多站点的分布式配置文件名称. 名称默认为.htaccess
 
-AllowOverride: 允许放置在分布式配置文件的directive类型,
-该directive只能放置在<directory>范围中. 格式: AllowOverride
-All|None|<directive_type>
+AddHandler: 将指定后缀的文件使用指定handler. 如: AddHandler cgi-script .cgi
+
+AllowOverride: 允许放置在.htaccess配置文件的directive类型. 格式: AllowOverride
+All|None|<directive_type>. directive_type列表如下:
+	AuthConfig - 用于认证的Directive, 如: AuthName, AuthType, Require等
+	FileInfo - 控制文档类型的Directive, 如: SetHandler, Redirect等
+	Indexes - 控制目录索引的Directive, 如: DirectoryIndex, HeaderName等
+	Limit(deprecated) - 控制访问主机的Directive, 如: Allow, Deny, Order
 
 CustomLog: access日志文件位置
 
@@ -66,12 +74,33 @@ Include: 包含的其他配置文件
 
 Listen: http监听的接口(可选, IPv6使用[]限定)和端口
 
+LoadModule: 将指定动态库添加到指定模块中. 格式: LoadModule <module>
+<dynamic_lib_file>
+
 Redirect: 将客户端的请求地址重定向到指定位置. 格式: Redirect [<status>] "/old/"
 "/new/". status列表:
 	permanent - 永久重定向, 301
 	temp - 临时重定向, 302. 默认选项
 	seeother - 原内容已被替换, 303
 	gone - 资源被永久移除, 410
+
+Require - 访问授权. 格式: Require [not] <entity_name>...  
+	例:
+	Require all granted - 所有人皆可访问
+	Require all denied - 所有人拒绝访问
+	Require ip 172.20 192.168.1 - 指定网段可访问
+	Require not ip 192.168.1.28 - 指定主机不可访问
+	Require user/group <user_name>/<group_name> - 指定用户/群组可访问
+	** 多个Require必须包含在<RequireAll>等环境中
+
+ScriptAlias - 将CGI文件基于web的路径, 转化为指定系统路径. 如: ScriptAlias
+'/cgi-bin/' '/var/www/cgi-bin/'
+
+ServerAdmin - 服务器发送给客户端的可联系邮箱
+
+ServerAlias - 服务器用于标识自己的额外的别称
+
+ServerName - 服务器用于标识自己的域名和端口
 
 ServerRoot: 其他目录为非绝对目录时, 相对目录参考根目录
 
@@ -94,38 +123,58 @@ httpd.conf配置:
   DocumentRoot "/var/www/html/product"
 </VirtualHost>
 
+** '*'代表从所有IP中匹配最好的, 并且具体为哪个IP无关紧要
 
-2.基于IP: 使用多个IP: 端口组合来实现虚拟主机, 不常用
+2.基于IP: 使用多个IP/端口组合来实现虚拟主机
+
+httpd.conf配置:
+<VirtualHost 172.20.30.40:80>
+    ServerAdmin webmaster@www1.example.com
+    DocumentRoot "/www/vhosts/www1"
+    ServerName www1.example.com
+</VirtualHost>
+
+<VirtualHost 172.20.30.50:80>
+    ServerAdmin webmaster@www2.example.org
+    DocumentRoot "/www/vhosts/www2"
+    ServerName www2.example.org
+</VirtualHost>
 
 
-目录URL返回类型: 
-1.默认文件(mod_dir)
-DirectoryIndex  FILE_NAME1, FILE_NAME2…
 
-2.文件列表(mod_autoindex)
-Options Indexes
+配置CGI
+httpd.conf配置:
+LoadModule cgid_module modules/mod_cgid.so
+ScriptAlias '/cgi-bin/' '/var/www/cgi-bin/'
+
+vi /var/www/cgi-bin/first.pl
+#!/usr/bin/perl
+print "Content-type: text/html\n\n";
+print "Hello, World.";
+
+出现错误的解决方案:
+1)first.pl是否可执行
+
+2)perl路径是否配置正确
+
+3)first.pl内容语法是否正确
 
 
-内容协商的服务器驱动配置: 
-1.配置/etc/httpd/conf/httpd.conf: 
-  [root@li1680-196 ~]# vi /etc/httpd/conf/httpd.conf
-  #type-map文件后缀名
-  AddHandler type-map .var
-  #打开multiviews
-  Options MultiViews
-  #配置MultiviewsMatch
-  MultiviewsMatch handlers
 
-2.type-map文件配置(type-map文件名与请求资源同名): 
-[root@li1680-196 ~]# vi index.html.var
-  URI: index.html
+配置/var/www/html访问权限
+httpd.conf配置如下:
+<Directory>
+    <RequireAll>
+        Require all granted
+        Require not ip 192.168.1.237
+    </RequireAll>
+</Directory>
 
-  URI: index.en.html
-  Content-Type: text/html
-  Content-language: en,qs=1.0
-  URI: index.fr.html
-  Content-Type: text/html
-  Content-language: fr,qs=0.8
 
-mod_negotiation链接: http: //httpd.apache.org/docs/current/mod/mod_negotiation.html#typemaps
 
+最后编辑于: 2021-11-12
+
+
+
+引用:
+[1] CGI RFC: https://www.ietf.org/rfc/rfc3875

@@ -160,6 +160,9 @@ sudo chcon -a -t <type> <file>
 sudo semanage fcontext -a -t <type> <file>
 sudo restorecon -R -v <file>
 
+3)修改执行指令文件type(bin_t的进程domain为unconfined_t)
+sudo chcon -a -t bin_t <bin_file>
+
 
 
 最后编辑于: 2021-11-08
