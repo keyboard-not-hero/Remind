@@ -1,0 +1,8 @@
+getsebool - 获取SELinux boolean值
+
+语法
+getsebool [a] <bool_name>
+
+参数释义
+-a
+	显示所有SELinux boolean值

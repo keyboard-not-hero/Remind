@@ -1,0 +1,14 @@
+setsebool - 设置SELinux boolean值
+
+语法
+setsebool [option] <bool_name> <val>
+
+参数释义
+-N
+	硬盘的配置不加载到kernel
+
+-P
+	永久性修改boolean
+
+-V
+	输出更详细的信息

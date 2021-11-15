@@ -1,0 +1,122 @@
+sesearch - SELinux policy查询工具
+
+
+语法
+sesearch [option] <rule_type> ... [expression] [policy ...]
+
+
+option参数
+-C, --show_cond
+
+-d, --direct
+	精确匹配指定type
+	默认匹配type或type的属性
+
+-h, --help
+	帮助信息
+
+-n, --linenum
+	当可以使用行号时, 显示行号
+
+-R, --regex
+	使用正则表达式匹配name
+	默认使用字符串匹配
+
+-V, --version
+	版本信息
+
+
+
+rule_type参数
+--A, --allow
+	查找allow rules
+
+--all
+	查找所有rule类型
+
+--auditallow
+	查找auditallow rules
+
+-D, --dontaudit
+	查找dontaudit rules
+
+--neverallow
+	查找neverallow rules
+
+--range_trans
+	查找range转化rules
+
+--role_allow
+	查找role allow rules
+
+--role_trans
+	查找role转化rules
+
+-T, --type
+	显示类型转化
+
+
+
+expression参数
+-b, --bool=<name>
+	显示指定boolean涉及的rules
+
+-c, --class=<name>
+	指定类型名称. 如: file/dir/tcp_socket等
+
+-D, --default=<name>
+	
+
+-p, --perm=<p1>[,<p2> ...]
+	包含指定权限的rules
+
+--role_source=<name>
+	使用role名称作为源
+
+--role_target=<name>
+	使用role名称作为目标
+
+-s, --source=<name>
+	使用type/attribute名称作为源
+	type匹配中用于domain
+
+-t, --target=<name>
+	使用type/attribute名称作为目标
+	type匹配中用于binary type或file type
+
+
+
+示例1 - 根据httpd程序推测domain
+pstree
+systemd─┬─NetworkManager─┬─dhclient
+        │                └─2*[{NetworkManager}]
+        ├─auditd───{auditd}
+        ├─crond
+        ├─dbus-daemon───{dbus-daemon}
+        ├─firewalld───{firewalld}
+        └─httpd───6*[httpd]
+
+ps -eZ|grep systemd
+system_u:system_r:init_t:s0         1 ?        00:00:02 systemd
+
+ls -Z /usr/sbin/httpd
+-rwxr-xr-x. root root system_u:object_r:httpd_exec_t:s0 /usr/sbin/httpd
+
+sesearch -T -s init_t -t httpd_exec_t
+Found 1 semantic te rules:
+   type_transition init_t httpd_exec_t : process httpd_t;
+
+
+示例2 - httpd是否可以读取httpd.conf配置文件
+ps -eZ|grep httpd
+system_u:system_r:httpd_t:s0     1184 ?        00:00:00 httpd
+
+ls -Z /etc/httpd/conf/httpd.conf
+-rw-r--r--. root root system_u:object_r:httpd_config_t:s0 /etc/httpd/conf/httpd.conf
+
+sesearch -A -s httpd_t -t httpd_config_t -c file -d
+Found 1 semantic av rules:
+   allow httpd_t httpd_config_t : file { ioctl read getattr lock map open } ; 
+
+
+

@@ -1,7 +1,0 @@
-seinfo - SELinux查询工具
-
-语法
-seinfo [option] [expression]
-
-参数释义
-

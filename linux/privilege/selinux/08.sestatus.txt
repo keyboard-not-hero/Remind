@@ -1,0 +1,21 @@
+sestatus - SELinux状态查询工具
+
+语法
+sestatus [-v] [-b]
+
+参数释义
+-b
+	除了显示SELinux基本信息, 还显示当前的boolean状态列表
+
+-v
+	除了显示SELinux基本信息, 还显示以下信息:
+		1.当前进程context
+		2.初始进程context
+		3.控制当前terminal的context
+
+
+相关配置文件:
+/etc/sestatus.conf
+
+
+最后编辑于: 2021-11-15
