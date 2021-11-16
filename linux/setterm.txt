@@ -60,7 +60,7 @@ setterm [options]
 参数备注:
 1.使用'*'标记的参数, 只适用于tty, 不适用于pts
 
-2.8-color代表blank/red/green/yellow/blue/magenta/cyan/white
+2.8-color代表black/red/green/yellow/blue/magenta/cyan/white
 
 3.参数值为布尔值, 并且省略参数值时, 都默认为on
 

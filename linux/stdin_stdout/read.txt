@@ -1,0 +1,49 @@
+read - 从输入行读取内容, 并将内容分割赋予多个变量
+
+语法：
+read [OPTION] [VAR...]
+
+参数释义：
+-a <arr_name>
+    以单词分隔符(空格)分割单词, 并将每个单词赋予指定数组
+    数组索引由0起始
+
+-d <delim>
+    使用delim的第一个字符中断输入行
+    默认为换行符
+
+-n <n_chars>
+    指定读取多少个字符后停止
+    当-d指定截止字符时, 截取的字符数量小于该值, 则遵守-d规则
+
+-N <n_chars>
+    指定读取多少个字符后停止
+    -d选项的字符不视为特殊符号
+
+-p <prompt>
+    显示提示字符串prompt, 并且尾部不含换行符
+
+-r
+    将'\'视为普通打印字符, 而不是跳脱字符
+
+-s
+    silent模式, 输入内容不显示
+
+-t <timeout>
+    等待输入超时时间
+
+-u <fd>
+    使用fd文件描述符来注明输入方式. 如: 0对应stdin, 也可使用exec 3< <file>来重定
+
+** 当未特殊说明, 输入被IFS变量内容分割为单词
+** 当单词少于变量, 多余变量赋值""; 当单词多余变量, 剩余单词全部赋予最后一个变量
+** 当未提供VAR时, 将值赋予变量REPLY
+
+
+示例1 - 给指定变量手动赋值
+read var1
+this is a demo line
+
+示例2 - 给变量赋值, 并给予提示字符
+read -p "please enter your choose: " var2
+please enter your choose: the answer is D

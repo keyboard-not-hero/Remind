@@ -5,9 +5,11 @@ script通则:
 
 3.可使用\<Enter>将内容延伸至下一行
 
-4.#后的内容为注解
+4.#为单行注释限定
 
-5.#!/bin/bash为bash script声明
+5.<<COMMENT ... COMMENT为多行注释限定
+
+6.#!/bin/bash为bash script声明
 
 
 
@@ -22,7 +24,7 @@ script执行方式:
 
 3.使用source执行脚本
 
-**1/2在子bash中执行指令, 3在当前bash中执行指令
+** 1/2在子bash中执行指令, 3在当前bash中执行指令
 
 
 

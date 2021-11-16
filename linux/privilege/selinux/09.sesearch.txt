@@ -7,6 +7,7 @@ sesearch [option] <rule_type> ... [expression] [policy ...]
 
 option参数
 -C, --show_cond
+	显示条件表达式和状态
 
 -d, --direct
 	精确匹配指定type
@@ -64,9 +65,6 @@ expression参数
 -c, --class=<name>
 	指定类型名称. 如: file/dir/tcp_socket等
 
--D, --default=<name>
-	
-
 -p, --perm=<p1>[,<p2> ...]
 	包含指定权限的rules
 
@@ -119,4 +117,8 @@ Found 1 semantic av rules:
    allow httpd_t httpd_config_t : file { ioctl read getattr lock map open } ; 
 
 
+示例3 - 显示domain httpd_t访问user_home_t需要的条件
+sesearch -C -A -s httpd_t -t user_home_t -c file -p read
+Found 1 semantic av rules:
+DT allow httpd_t user_home_type : file { ioctl read getattr lock open } ; [ httpd_read_user_content ]
 

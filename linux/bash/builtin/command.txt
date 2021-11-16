@@ -19,14 +19,18 @@ alias - 指令别称
 alias [option] [name[=value]]
 
 参数释义
-    打印已指定别称列表
 
--p    打印已指定别称列表
+	打印已指定别称列表
+
+-p
+	打印已指定别称列表
 
 键值对
-name    打印该别称对应的指令
+name
+	打印该别称对应的指令
 
-name=value    给别称配置对应指令
+name=value
+	给别称配置对应指令
 
 
 
@@ -36,7 +40,8 @@ bg - 将background suspend工作开始执行
 bg [jobspec]
 
 参数释义
-jobspec    以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
+jobspec
+	以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
 
 
 
@@ -46,7 +51,8 @@ break - 从循环(for/while/until/select)中彻底退出
 break [n]
 
 参数释义
-n    代表从内而外的n层循环中退出. n>=1
+n
+	代表从内而外的n层循环中退出. n>=1
 
 
 
@@ -56,7 +62,8 @@ continue - 从循环(for/while/until/select)中退出当前循环, 继续下一�
 break [n]
 
 参数释义
-n    代表从内而外的n层循环中退出当前循环, 继续下一次循环. n>=1
+n
+	代表从内而外的n层循环中退出当前循环, 继续下一次循环. n>=1
 
 
 
@@ -120,42 +127,60 @@ echo - 显示指定字符串, word之间使用' '分割, 尾部添加<newline>
 echo [option] [word1 word2 ...]
 
 参数释义
--e    解释带'\'的特殊字符含义(需支持shopt的xpg_echo option)
+-e
+	解释带'\'的特殊字符含义(需支持shopt的xpg_echo option)
 
--E    不解释带'\'的特殊字符含义, 直接去掉'\'字符
+-E
+	不解释带'\'的特殊字符含义, 直接去掉'\'字符
 
--n    去除尾部<newline>
+-n
+	去除尾部<newline>
 
 echo特殊字符列表：
-\a    警告声
+\a
+	警告声
 
-\b    回格键
+\b
+	回格键
 
-\c    后续字符不输出
+\c
+	后续字符不输出
 
-\e    
+\e
+	
 
-\E    
+\E
+	
 
-\f    下一行的当前列
+\f
+	下一行的当前列
 
-\n    换行符
+\n
+	换行符
 
-\r    回车(当前行行首, 并覆盖原字符)
+\r
+	回车(当前行行首, 并覆盖原字符)
 
-\t    水平制表符
+\t
+	水平制表符
 
-\v    下一行的当前列
+\v
+	下一行的当前列
 
-\\    反斜线
+\\
+	反斜线
 
-\0nnn    8bit的八进制数
+\0nnn
+	8bit的八进制数
 
-\xHH    8bit的16进制数
+\xHH
+	8bit的16进制数
 
-\uHHHH    2byte的unicode编码(ISO/IEC 10646)16进制数
+\uHHHH
+	2byte的unicode编码(ISO/IEC 10646)16进制数
 
-\UHHHHHH    4byte的unicode编码(ISO/IEC 10646)16进制数
+\UHHHHHH
+	4byte的unicode编码(ISO/IEC 10646)16进制数
 
 **在实际测试中, 将word限定在""中即可实现特殊字符解释, 与-e参数与shopt的xpg_echo参数都无关
 
@@ -167,19 +192,26 @@ enable - 控制built-in指令开关
 enable [option] [built-in]
 
 参数释义
-    使built-in可用
 
--a    打印所有built-in列表(enable/disable)
+	使built-in可用
 
--d    删除built-in的上一个-f配置
+-a
+	打印所有built-in列表(enable/disable)
 
--f filename    指定built-in从filename路径读取
+-d
+	删除built-in的上一个-f配置
 
--n    使built-in不可用
+-f filename
+	指定built-in从filename路径读取
 
--p    打印built-in enable列表, 配合-n打印disable列表
+-n
+	使built-in不可用
 
--s    限制使用POISX built-in
+-p
+	打印built-in enable列表, 配合-n打印disable列表
+
+-s
+	限制使用POISX built-in
 
 
 
@@ -221,7 +253,8 @@ exit - 退出当前进程
 exit [n]
 
 参数释义
-n    代表退出的status code, 未指定则为上一次执行command结果status code, 可通过$?查看
+n
+	代表退出的status code, 未指定则为上一次执行command结果status code, 可通过$?查看
 
 
 
@@ -231,13 +264,17 @@ export - 配置/取消变量为全局变量
 export [option] [name[=value]]
 
 参数释义
-    配置变量为全局变量
 
--f    用于指代function
+	配置变量为全局变量
 
--p    打印所有全局变量
+-f
+	用于指代function
 
--n    取消变量的全局性, 使其只在当前bash有效
+-p
+	打印所有全局变量
+
+-n
+	取消变量的全局性, 使其只在当前bash有效
 
 
 
@@ -247,7 +284,8 @@ fg - 将job在foreground恢复运行
 fg [jobspec]
 
 参数释义
-jobspec    以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
+jobspec
+	以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
 
 
 
@@ -257,17 +295,23 @@ hash - 控制指令路径缓存信息表
 hash [option] [name]
 
 参数释义
-    显示所有已缓存信息
 
--d    删除指定name的缓存
+	显示所有已缓存信息
 
--l    以可重用格式打印所有缓存信息, 即与-p配置格式一致
+-d
+	删除指定name的缓存
 
--p filename    配置指令查找位置
+-l
+	以可重用格式打印所有缓存信息, 即与-p配置格式一致
 
--r    清空所有指令路径缓存
+-p filename
+	配置指令查找位置
 
--t    显示指定name的缓存
+-r
+	清空所有指令路径缓存
+
+-t
+	显示指定name的缓存
 
 
 
@@ -277,63 +321,103 @@ history - 历史命令
 history [option] [filename]
 
 参数释义：
-    罗列已记录的历史命令, 使用号码进行标记. 当HISTTIMEFORMAT变量存在, 则历史命令保存时间予以记录. 条数限制于HISTSIZE
 
-n    罗列最后n条历史命令
+	罗列已记录的历史命令, 使用号码进行标记. 当HISTTIMEFORMAT变量存在, 则历史命令保存时间予以记录. 条数限制于HISTSIZE
 
--a    将当前历史命令列表append到历史命令文件中. 默认为退出bash时保存
+n
+	罗列最后n条历史命令
 
--c    清除历史命令记录
+-a
+	将当前历史命令列表append到历史命令文件中. 默认为退出bash时保存
 
--d <offset>    删除具体号码对应的历史命令记录
+-c
+	清除历史命令记录
 
--r    读取历史命令文件内容, 将其写入到当前历史命令列表
+-d <offset>
+	删除具体号码对应的历史命令记录
 
--w    将当前历史命令列表覆盖写入到历史命令文件中
+-r
+	读取历史命令文件内容, 将其写入到当前历史命令列表
 
--s arg...    将arg作为保存到历史命令列表    
+-w
+	将当前历史命令列表覆盖写入到历史命令文件中
+
+-s arg...
+	将arg作为保存到历史命令列表    
 
 **filename为历史命令文件名, 默认为~/.bash_history
 
 history-快捷键
-ctrl+p    上一条history指令
-ctrl+n    下一条history指令
-esc+<    第一条history指令(已保存最旧)
-esc+>    最新history指令. 通常为最新输入未记录指令
-ctrl+r    进入指令提示, 输入指令, 从新到旧匹配与输入相关指令. 下一次补全指令必定旧于上一次补全(number更小), 使用history指令可重置
-ctrl+s    进入指令提示, 输入指令, 从旧到新匹配与输入指令相关(需要使用trap关闭ctrl+s的锁定bash功能)
+ctrl+p
+	上一条history指令
+ctrl+n
+	下一条history指令
+esc+<
+	第一条history指令(已保存最旧)
+esc+>
+	最新history指令. 通常为最新输入未记录指令
+ctrl+r
+	进入指令提示, 输入指令, 从新到旧匹配与输入相关指令. 下一次补全指令必定旧于上一次补全(number更小), 使用history指令可重置
+ctrl+s
+	进入指令提示, 输入指令, 从旧到新匹配与输入指令相关(需要使用trap关闭ctrl+s的锁定bash功能)
 
 history-相关事件
-!<number>    利用历史命令对应number来执行指令 
-!-<number>    当前指令(未保存)-number, 引用该结果号码对应的历史指令
-!!    执行上一个历史指令, 类似于'!-1'
-!<str>    最新以str开头的历史指令并引用
-!?<str>[?]    最新含str的历史指令并引用
-^str1^str2^    取出上一条历史指令, 并将该指令str1内容替换成str2内容, 然后执行替换后指令内容. 类似于'!!:s/str1/str2/'
+!<number>
+	利用历史命令对应number来执行指令 
+!-<number>
+	当前指令(未保存)-number, 引用该结果号码对应的历史指令
+!!
+	执行上一个历史指令, 类似于'!-1'
+!<str>
+	最新以str开头的历史指令并引用
+!?<str>[?]
+	最新含str的历史指令并引用
+^str1^str2^
+	取出上一条历史指令, 并将该指令str1内容替换成str2内容, 然后执行替换后指令内容. 类似于'!!:s/str1/str2/'
 
 history-事件_单词指示
-:0    第0个单词, 即shell上的command
-:<n>    第n个单词, 为非0时即command的参数
-:^    第2个单词, 即第一个参数
-:$    最后一个单词, 也是最后一个参数. 当shell只有一个单词时, 即command
-:%    最近使用!<str>匹配到的str部分, 并将其作为command. 该操作忽略事件
-:x-y    单词范围. -y为0-y的缩略
-:*    类似于1-$. 当指令不含参数时, 返回""
-:x*    类似于x-$
-:x-    类似于x-$, 但忽略最后一个单词, 即x-($-1). 
+:0
+	第0个单词, 即shell上的command
+:<n>
+	第n个单词, 为非0时即command的参数
+:^
+	第2个单词, 即第一个参数
+:$
+	最后一个单词, 也是最后一个参数. 当shell只有一个单词时, 即command
+:%
+	最近使用!<str>匹配到的str部分, 并将其作为command. 该操作忽略事件
+:x-y
+	单词范围. -y为0-y的缩略
+:*
+	类似于1-$. 当指令不含参数时, 返回""
+:x*
+	类似于x-$
+:x-
+	类似于x-$, 但忽略最后一个单词, 即x-($-1). 
 
 history-事件_调节器
-:h    删除最后一个/及后面的内容, 保留目录路径(类似于dirname结果)
-:t    删除最后一个/及前面的内容, 保留文件名称(类似于basename结果)
-:r    删除行内后缀(.及其后内容)
-:e    删除指令内容, 除行内后缀(.及其后内容)
-:p    只打印指令, 不执行该指令
-:q    将结果限定在''中
-:x    将结果使用blank进行单词分割, 然后将单词使用''限定
-:s/old/new/    匹配第一个old字符串, 并使用new字符串替换. 当new中包含'&'字符时, 指代old字符串内容
-:&    重复上一个s/old/new/操作, 当上一个s操作与g/G搭配使用时, 只提取s操作
-:g    配合s/old/new/(gs/old/new)使用, 将替换作用于所有匹配old字符串
-:G    配合s/old/new/(Gs/old/new)使用, 将替换作用于事件中的每一个单词, 一个单词最多替换一次. 并且, old不能位于单词开头
+:h
+	删除最后一个/及后面的内容, 保留目录路径(类似于dirname结果)
+:t
+	删除最后一个/及前面的内容, 保留文件名称(类似于basename结果)
+:r
+	删除行内后缀(.及其后内容)
+:e
+	删除指令内容, 除行内后缀(.及其后内容)
+:p
+	只打印指令, 不执行该指令
+:q
+	将结果限定在''中
+:x
+	将结果使用blank进行单词分割, 然后将单词使用''限定
+:s/old/new/
+	匹配第一个old字符串, 并使用new字符串替换. 当new中包含'&'字符时, 指代old字符串内容
+:&
+	重复上一个s/old/new/操作, 当上一个s操作与g/G搭配使用时, 只提取s操作
+:g
+	配合s/old/new/(gs/old/new)使用, 将替换作用于所有匹配old字符串
+:G
+	配合s/old/new/(Gs/old/new)使用, 将替换作用于事件中的每一个单词, 一个单词最多替换一次. 并且, old不能位于单词开头
 **可叠加使用, 每个叠加需前置:符号
 
 
@@ -344,15 +428,20 @@ jobs - 对bg/fg的程序进行查看
 jobs [option] [jobspec]
 
 参数释义
--l    罗列job信息, 其中包括PID
+-l
+	罗列job信息, 其中包括PID
 
--n    在上次查看后, 经过状态变化的job
+-n
+	在上次查看后, 经过状态变化的job
 
--p    只罗列job的PID
+-p
+	只罗列job的PID
 
--r    只罗列running状态的job
+-r
+	只罗列running状态的job
 
--s    只罗列stopped状态的job
+-s
+	只罗列stopped状态的job
 
 -x command [arg...]   将command或arg中的jobspec替换成PID, 并执行command
 
@@ -364,7 +453,8 @@ let - 数学运算指令
 let arg [arg...]
 
 参数释义
-arg    数学运算表达式. 当最后一个运算为0时, 返回1；否则返回0
+arg
+	数学运算表达式. 当最后一个运算为0时, 返回1；否则返回0
 
 
 
@@ -374,9 +464,11 @@ printf - 指定格式打印内容
 printf [-v var] format [arg...]
 
 参数释义
-    将格式化字符串打印到stdout
 
--v    将格式化字符串赋予变量var, 替代打印到stdout
+	将格式化字符串打印到stdout
+
+-v
+	将格式化字符串赋予变量var, 替代打印到stdout
 
 
 
@@ -386,9 +478,11 @@ pwd - 打印当前工作目录的绝对路径
 pwd [option]
 
 参数释义
--L    打印当前工作目录, 可包含symbolic link(默认)
+-L
+	打印当前工作目录, 可包含symbolic link(默认)
 
--P    打印当前工作目录, 不包含symbolic link
+-P
+	打印当前工作目录, 不包含symbolic link
 
 
 
@@ -398,31 +492,40 @@ read - 从输入行读取内容, 并将内容分割赋予多个变量
 read [OPTION] [VAR...]
 
 参数释义：
-    以单词分隔符(默认IFS)分割单词, 并将每个单词赋予每个变量
+-a <arr_name>
+	以单词分隔符(空格)分割单词, 并将每个单词赋予指定数组
+	数组索引由0起始
 
--a <arr_name>    以单词分隔符(默认IFS)分割单词, 并将每个单词赋予数组
+-d <delim>
+	使用delim的第一个字符中断输入行
+	默认为换行符
 
--d <delim>    使用delim的第一个字符中断输入行, 替代默认的换行符
+-n <n_chars>
+	指定读取多少个字符后停止
+	当-d指定截止字符时, 截取的字符数量小于该值, 则遵守-d规则
 
--e    使用readline获取内容
+-N <n_chars>
+	指定读取多少个字符后停止
+	-d选项的字符不视为特殊符号
 
--n <nchars>    指定读取多少个字符后停止. 当-d指定截止字符时, 截取的字符数量小于该值, 则遵守-d规则
+-p <prompt>
+	显示提示字符串prompt, 并且尾部不含换行符
 
--N <nchars>    指定读取多少个字符后停止. 忽略-d选项；不以IFS分割输入, 所有输入赋予第一个变量
+-r
+	将'\'视为普通打印字符, 而不是跳脱字符
 
--p <prompt>    通过stderr输出prompt, 并且尾部不含<newline>
+-s
+	silent模式, 输入内容不显示
 
--r    在输入读取中将'\'视为普通打印字符, 而不是跳脱字符
+-t <timeout>
+	等待输入超时时间
 
--s    silent模式, 输入内容不显示
+-u <fd>
+	使用fd文件描述符来注明输入方式. 如: 0对应stdin, 也可使用exec 3< <file>来重定向
 
--t <timeout>    从执行command后计时, 超过timeout秒退出输入, 并且由于timeout退出的输入无法被读取
-
--u <fd>    使用fd文件描述符来注明输入方式. 如：0对应stdin, 也可使用exec 3< <file>来重定向        
-
-**当未特殊说明, 输入被IFS变量内容分割为单词
-**当单词少于变量, 多余变量赋值""；当单词多余变量, 剩余单词全部赋予最后一个变量
-**当未提供VAR时, 将值赋予变量REPLY
+** 当未特殊说明, 输入被IFS变量内容分割为单词
+** 当单词少于变量, 多余变量赋值""; 当单词多余变量, 剩余单词全部赋予最后一个变量
+** 当未提供VAR时, 将值赋予变量REPLY
 
 
 
@@ -432,13 +535,17 @@ readonly - 修改变量权限为只读
 readonly [option] [name[=value]...]
 
 参数释义
--a    作用于索引数组
+-a
+	作用于索引数组
 
--A    作用于关联数组. 类似于python的dict
+-A
+	作用于关联数组. 类似于python的dict
 
--f    作用于function
+-f
+	作用于function
 
--p    打印只读变量列表
+-p
+	打印只读变量列表
 
 
 
@@ -448,7 +555,8 @@ return - function返回给调用者的status code
 return [n]
 
 参数释义
-n    指定function返回给调用者的stat code. 默认为$?, 即方法内最后执行的结果stat code
+n
+	指定function返回给调用者的stat code. 默认为$?, 即方法内最后执行的结果stat code
 
 
 
@@ -458,25 +566,32 @@ set - 配置bash各选项
 set [option] [arg...]
 
 参数释义
-    打印所有变量(或方法)与值(或方法主体)pair列表
+-a
+	当前的所有变量和方法修改为全局变量
 
--a    当前的所有变量和方法修改为全局变量
+-b
+	background job被结束后马上打印状态
 
--b    background job被结束后马上打印状态
+-e
+	当返回status code不为0时, 退出当前bash
 
--e    当返回status code不为0时, 退出当前bash
+-f
+	关闭pathname expansion(文件名无法使用通配符进行匹配)
 
--f    关闭pathname expansion(文件名无法使用通配符进行匹配)
+-h
+	使用hash表进行指令路径缓存
 
--h    使用hash表进行指令路径缓存
+-k
+	所有出现在参数位置的赋值语句都作用于bash环境, 而不只是默认的command前赋值语句
 
--k    所有出现在参数位置的赋值语句都作用于bash环境, 而不只是默认的command前赋值语句
+-m
+	监视模式. 当后台running job完成, 立即打印该job信息
 
--m    监视模式. 当后台running job完成, 立即打印该job信息
+-n
+	读取command但不执行. 用于script语法检查, 在交互式shell中无效
 
--n    读取command但不执行. 用于script语法检查, 在交互式shell中无效
-
--o [opt_name]    指定详细的名称来指定option. 当没有指定opt_name时, 打印opt_name列表和相应启动状态
+-o [opt_name]
+	指定详细的名称来指定option. 当没有指定opt_name时, 打印opt_name列表和相应启动状态
   opt_name列表：
   allexport - 同-a
   
@@ -528,29 +643,40 @@ set [option] [arg...]
 
   xtrace - 同-x
 
--p    打开privileged模式. 不读取$ENV和$BASH_ENV内容, 不从环境读取function；当启动bash的有效user(group)与真实user(group)不相同时, 不作处理
+-p
+	打开privileged模式. 不读取$ENV和$BASH_ENV内容, 不从环境读取function；当启动bash的有效user(group)与真实user(group)不相同时, 不作处理
 
--t    执行command后退出bash
+-t
+	执行command后退出bash
 
--u    当使用$N引用指令行参数时, 如果该参数未指定, 则打印错误信息
+-u
+	当使用$N引用指令行参数时, 如果该参数未指定, 则打印错误信息
 
--v    打印bash读取的内容
+-v
+	打印bash读取的内容
 
--x    打印出每一条指令的完整展开内容, 格式为$PS4 <expand_exp>. 用于for/case/$(())等内容展开详情；适用于调试脚本
+-x
+	打印出每一条指令的完整展开内容, 格式为$PS4 <expand_exp>. 用于for/case/$(())等内容展开详情；适用于调试脚本
 
--B    bash执行{}拓展. 如:{alice,peter,david}包含三个名称
+-B
+	bash执行{}拓展. 如:{alice,peter,david}包含三个名称
 
--C    不允许文件内容被覆盖
+-C
+	不允许文件内容被覆盖
 
--H    打开历史命令的!格式替换
+-H
+	打开历史命令的!格式替换
 
--P    当cd切换到symbolic link目录时, 使用physical目录
+-P
+	当cd切换到symbolic link目录时, 使用physical目录
 
---    代表option字段的结束, 开始position parameter字段(使用$N引用)
+--
+	代表option字段的结束, 开始position parameter字段(使用$N引用)
 
--    代表option字段的结束, 开始position parameter
+-
+	代表option字段的结束, 开始position parameter
 
-**使用'+'代替'-'可关闭set各选项
+** 使用'+'代替'-'可关闭set各选项
 
 
 
@@ -560,7 +686,8 @@ shift - 平行移动命令行参数内容
 shift [n]
 
 参数释义
-n    将$1 $2 ...向做平移n位, 最左边n位被移除, 剩余后续$#-n位. 当n<0或n>$#时, shift操作无效
+n
+	将$1 $2 ...向做平移n位, 最左边n位被移除, 剩余后续$#-n位. 当n<0或n>$#时, shift操作无效
 
 
 
@@ -570,17 +697,22 @@ shopt - 修改bash选项
 shopt [option] [optname...]
 
 参数释义(option)
--o    限制optname为可通过set -o获取的值
+-o
+	限制optname为可通过set -o获取的值
 
--p    打印bash选项已配置列表
+-p
+	打印bash选项已配置列表
 
--q    quiet模式, 不打印一般信息
+-q
+	quiet模式, 不打印一般信息
 
--s    enable(set)相关选项
+-s
+	enable(set)相关选项
 
--u    disable(unset)相关选项
+-u
+	disable(unset)相关选项
 
-**当提供多个optname时, 所有操作生效才返回status code=0
+** 当提供多个optname时, 所有操作生效才返回status code=0
 
 选项名称列表(optname)
 autocd - 当command为一个目录时, 自动将其作为cd指令的参数目录
@@ -651,7 +783,7 @@ shift_verbose - 使用shift时, 当n>$#, 显示警告信息
 
 sourpath - 使用source(.)时, 使用PATH变量内容查找文件所在
 
-**glob代表使用通配符进行匹配
+** glob代表使用通配符进行匹配
 
 
 
@@ -661,13 +793,15 @@ trap - 配置signal及对应指令操作
 trap [option] [[arg] sigspec...]
 
 参数释义
--p    打印sigspec及对应的command列表
+-p
+	打印sigspec及对应的command列表
 
--l    打印signum和对应sigspec列表
+-l
+	打印signum和对应sigspec列表
 
-**arg代表对应sigspec的comand执行操作
-**当arg未提供或者为'-', 则恢复该sigspec默认操作
-**当arg为"", 则忽略sigspec对应的操作
+** arg代表对应sigspec的comand执行操作
+** 当arg未提供或者为'-', 则恢复该sigspec默认操作
+** 当arg为"", 则忽略sigspec对应的操作
 
 
 
@@ -677,7 +811,8 @@ type - 判断文件类型
 type [option] <name>...
 
 参数释义
--a    
+-a
+	
 	打印所有包含可执行的name位置
 
 -f
@@ -689,13 +824,18 @@ type [option] <name>...
 -P
 	类似于-p, 但不论类型强制搜索PATH路径
 
--t    
+-t	
 	打印name的类型, 只显示第一个匹配项. 类型列表如下:
-    	alias - alias简称
-    	keyword - shell保留字
-    	function - 方法function
-    	builtin - built-in指令
-    	file - 普通文件(根据PATH搜索指令)
+
+		alias - alias简称
+
+		keyword - shell保留字
+
+		function - 方法function
+
+		builtin - built-in指令
+
+		file - 普通文件(根据PATH搜索指令)
 
 
 
@@ -754,9 +894,11 @@ umask - 文件创建的初始mask
 umask [option] [mode]
 
 参数释义
--p    显示mask, 可重用的数字格式mask
+-p
+	显示mask, 可重用的数字格式mask
 
--S    显示初始权限, u/g/o结合权限位rwx标注的mask
+-S
+	显示初始权限, u/g/o结合权限位rwx标注的mask
 
 **mode可使用数字mask格式和字母初始权限格式
 
@@ -768,9 +910,8 @@ unalias - 移除alias配置
 unalias [-a] [name...]
 
 参数释义
-    移除指定名称的alias设定
-
--a    移除所有alias设定
+-a
+	移除所有alias设定
 
 
 
@@ -780,13 +921,17 @@ unset - 在当前环境中移除变量/方法
 unset [option] [name...]
 
 参数释义
-    移除变量或function
 
--f    移除function
+	移除变量或function
 
--n    移除nameref变量, 被引用的变量无变化
+-f
+	移除function
 
--v    移除变量. 用于nameref时, 当前变量和被引用的变量同时被移除
+-n
+	移除nameref变量, 被引用的变量无变化
+
+-v
+	移除变量. 用于nameref时, 当前变量和被引用的变量同时被移除
 
 **readonly类型变量无法移除
 
@@ -798,6 +943,5 @@ wait - 等待其他进程执行
 wait [-n] [PID|jobspec]
 
 参数释义
-    等待指定进程执行完毕. 可通过PID或jobspec指定；当未提供进程时, 等待当前进程所有子进程执行完毕
-
--n    等待所有正在执行的进程完毕
+-n
+	等待所有正在执行的进程完毕

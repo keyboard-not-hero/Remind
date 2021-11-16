@@ -291,11 +291,14 @@ ${name[@]:offset[:length]} - 从offset作为起始索引, 获取长度为length�
 
 PS1:主要指令行提示
 语法：
-\a    ASCII 007, 响铃
+\a    
+	ASCII 007, 响铃
 
-\d    日期, 格式"weekday month day"
+\d    
+	日期, 格式"weekday month day"
 
-\D{format}    日期, 将format传给strftime(3)进行转化. 当format未指定时, 打印'\D'
+\D{format}    
+	日期, 将format传给strftime(3)进行转化. 当format未指定时, 打印'\D'
     format格式：
     %a    weekday缩写
     %A    weekday全称
@@ -340,76 +343,103 @@ PS1:主要指令行提示
     %+    date格式日期和时间(glic2不支持)
     %%    %字符
 
-\e    ASCII 033, 跳脱字符
+\e    
+	ASCII 033, 跳脱字符
 
-\h    主机名, 遇到.截止
+\h    
+	主机名, 遇到.截止
 
-\H    主机名
+\H    
+	主机名
 
-\j    当前shell管理的jobs数量
+\j    
+	当前shell管理的jobs数量
 
-\l    终端号码(由0起始)
+\l    
+	终端号码(由0起始)
 
-\n    换行
+\n    
+	换行
 
-\r    回车
+\r    
+	回车
 
-\s    shell名称
+\s    
+	shell名称
 
-\t    当前时间, 24小时时间制, HH:MM:SS格式
+\t    
+	当前时间, 24小时时间制, HH:MM:SS格式
 
-\T    当前时间, 12小时时间制, HH:MM:SS格式
+\T    
+	当前时间, 12小时时间制, HH:MM:SS格式
 
-\@    当前时间, 12小时时间制, HH:MM am/pm格式
+\@    
+	当前时间, 12小时时间制, HH:MM am/pm格式
 
-\A    当前时间, 24小时时间制, HH:MM格式
+\A    
+	当前时间, 24小时时间制, HH:MM格式
 
-\u    用户名
+\u    
+	用户名
 
-\v    bash版本
+\v    
+	bash版本
 
-\V    bash详细版本(version+release)
+\V   
+	bash详细版本(version+release)
 
-\w    当前工作目录
+\w    
+	当前工作目录
 
-\W    当前工作目录的basename
+\W    
+	当前工作目录的basename
 
-\!    历史记录保存数量
+\!    
+	历史记录保存数量
 
-\#    下一条指令为当前终端的第N条指令
+\#    
+	下一条指令为当前终端的第N条指令
 
-\$    当UID为0时, 提示符为"#"；其他UID为"$"
+\$    
+	当UID为0时, 提示符为"#"；其他UID为"$"
 
-\nnn    对应的ASCII字符(八进制)
+\nnn    
+	对应的ASCII字符(八进制)
 
-\\    反斜杠(\)
+\\    
+	反斜杠(\)
 
-\[    开始非打印字符序列
+\[    
+	开始非打印字符序列
 
-\]    结束非打印字符序列
+\]    
+	结束非打印字符序列
 
-\033[x;ym    后续字符的外观与颜色, x/y混合使用, 一个代表外观(0~9), 另一个代表颜色(30~38)
-  外观可选项
-  00 - 黑暗
-  01 - 明亮
-  02 - 加深字体颜色
-  03 - 斜体
-  04 - 下划线
-  05 - 闪烁
-  07 - 反白
-  08 - 隐藏
-  09 - 删除线
-
-  颜色可选项
-  30 - 黑色
-  31 - 红色
-  32 - 绿色
-  33 - 黄色
-  34 - 蓝色
-  35 - 紫红色
-  36 - 蓝绿色
-  37 - 灰色
-  38 - 默认
+\e
+\033
+    设置终端字体属性. 格式: \033[<num>m或\e[<num>m
+    可同时指定多个num, 多个num使用';'分隔. 如: num1;num2;num3...
+    num列表如下[1]:
+        0 - 普通模式
+        1 - 加粗
+        2 - 字体颜色变淡
+        3 - 斜体
+        4 - 下划线
+        5 - 慢闪烁
+        6 - 快闪烁, 少有支持
+        7 - 交换字体和背景颜色
+        8 - 隐藏字体
+        9 - 删除线
+        10 - 默认字体
+        20 - 花体字(罕见支持)
+        21 - 双下划线
+        30~37 - 依次为black/red/green/yellow/blue/magenta/cyan/white颜色字体
+        40~47 - 依次为black/red/green/yellow/blue/magenta/cyan/white颜色背景
+        53 - 上划线
+        90~97 -
+依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色字体
+        100~107 -
+依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色背景
 
 例：\[\033[01;34m\]代表后续字符为亮蓝色
 例：
@@ -663,3 +693,8 @@ status code：
   comman fount but not executable - 126
   command not found - 127
   fatal signal N - 128+N
+
+
+
+引用:
+[1] https://en.wikipedia.org/wiki/ANSI_escape_code
