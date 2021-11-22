@@ -13,7 +13,20 @@ script通则:
 
 
 
-$((statement)): 表示得出算术运算结果
+算数运算:
+1.整数运算
+1) $((statement))
+	echo $((2+3))
+
+2) $[statement]
+	echo $[2*3]
+
+3)let statement
+	let x=20/2
+
+2.小数运算
+bc的非交互模式. 例:
+	echo 'scale=2;1/2' | bc
 
 
 
@@ -45,80 +58,6 @@ $<number>    对应的参数($1为arg1...$3为arg3, 当数字为两位或以上�
 参数引用偏移: 
 shift [number]    将参数引用向右偏移number位(如: 使用shift后, $1为arg2, $2为arg3), 左边的参数省略, number默认为1
 
-
-
-条件判断: 
-if [ CONDITION1 ]; then
-    STATEMENT1
-elif [ CONDITION2 ]; then
-    STATEMENT2
-else
-    STATEMENT3
-fi
-
-
-取值案例: 
-case $VAR_NAME in
-	VALUE1)
-		STATEMENT1
-		;;
-	VALUE2)
-		STATEMENT2
-		;;
-	*)
-  		STATEMENT3
-		;;
-esac
-** 1.';;'相当于C语言switch中的break, 代表当前匹配成功前提下, 不继续向下匹配
-
-** 2.使用';&'代替';;', 在当前匹配成功前提下, 不执行下一个匹配, 而直接执行下一个STATEMENT
-
-** 3.使用';;&'代替';;', 在当前匹配成功前提下, 继续执行下一个匹配
-
-** 4.如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
-
-
-while循环: 
-while [ CONDITION ]
-do
-    STATEMENT
-done
-** 当condition满足时, 执行循环
-
-
-util循环: 
-util [CONDITION]
-do
-    STATEMENT
-done
-** 当condition不满足时, 执行循环
-
-
-for循环: 
-for VAR [in VALUE_LIST]
-do
-    STATEMENT
-done
-**如果in VALUE_LIST被省略, 则默认为$1 $2 ...
-
-for((INIT_VAL;CONDITION;STEP))
-do
-    STATEMENT
-done
-
-示例1 - 集合格式(使用空格分隔)
-for i in "dog" "cat" "pig"
-do
-    echo "this is my pet $i"
-done
-
-示例2 - 计算1-10的总和
-sum=0
-for((i=1;i<=10;i++))
-do
-    sum=$(($sum+$i))
-done
-echo "the sum of 1-10: $sum"
 
 
 方法/函数定义: 

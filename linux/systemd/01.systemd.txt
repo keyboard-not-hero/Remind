@@ -1,0 +1,166 @@
+配置文件:
+/usr/lib/systemd/system/*
+	所有已安装的units集合
+
+/run/systemd/system/*
+	units的runtime文件
+
+/etc/systemd/system/*
+	当前使用中的units集合
+
+
+
+unit类型列表:
+1.service
+	系统服务
+
+2.socket
+	进程间通信套接口
+
+3.device
+	核心识别的设备文件
+
+4.mount
+	文件系统挂载点
+
+5.automount
+	文件系统自动挂载点
+
+6.swap
+	swap设备/文件
+
+7.target
+	一系列units的集合
+	比较熟悉的: multi-user.target/graphical.target
+
+8.path
+	文件系统的文件或目录
+
+9.timer
+	定时器
+
+10.snapshot
+	系统状态临时保存
+
+11.slice
+	系统进程的层级结构unit
+
+12.scope
+	外部创建的进程
+
+补充:
+1.unit配置文件读取:
+    1)unit不包含'@'时, 读取与unit名称匹配的配置文件
+	2)unit包含'@'时, 读取%i配置文件(如getty@tty3.service, %i代表tty3)
+
+2.unit请求名称包含'@'时(如getty@tty3.service), 查找匹配unit(如getty@.service)
+, 并搜寻@与unit名称后缀之间的配置文件名称(tty3.conf). 例:
+    systemctl start getty@tty3.service, 使用getty@.service, 并读取tty3.conf配置文件
+
+
+
+unit文件通用options(适用于所有unit type):
+[Unit] section
+AllowIsolate
+	当值为true, 允许使用systemctl isolate控制该unit
+	默认为false	
+
+After
+	当前unit在units列表启动之前, 进行启动
+
+Before
+	当前unit在units列表全部启动之后, 再进行启动
+
+BindsTo
+	类似于Requires, 但当列表内的units有突然终止时, 当前unit也会被终止
+
+Conflicts
+	与当前unit冲突的units列表
+
+Description
+	描述unit的字符串
+
+Documentation
+	URI描述的引用文档, 多个文档使用空格分隔
+	URI支持的协议列表: http/https/file/info/man
+
+IgnoreOnIsolate
+	当值为true, 切换到其他unit时, 不停止当前unit
+	默认为false
+
+IgnoreOnSnapshot
+	当值为true, 不将当前unit状态保存snapshot
+	默认device/snapshot units为true, 其他units为false
+
+RefuseManualStart
+	当值为true, 不允许直接启动该unit
+	默认为false
+
+RefuseManualStop
+	当值为true, 不允许直接终止该unit
+	默认为false
+
+Requires
+	依赖的units列表
+	当列表内的units有未激活时, 会影响当前unit的激活
+
+StopWhenUnneeded
+	当值为true, 当前unit不被使用时, 终止该unit
+	默认为false
+
+Wants
+	依赖的units列表
+	当列表内的units有未激活时, 不会影响当前unit的激活
+
+
+[Install] section
+Alias
+	当前unit的额外名称列表, 名称必须为相同unit type
+	该参数用于systemctl enbale, 在/etc/systemd/system下生成的symbolic链接名称,
+该名称指向/usr/lib/systemd/system下的unit文件
+
+Also
+	当前unit使用systemctl enable/disable时, units列表也进行enable/disable
+
+RequiredBy
+	在使用systemctl enable时, 在/etc/systemd/system下生成units列表
+的.requires目录, 目录下包含当前unit
+
+WantedBy
+	在使用systemctl enable时, 在/etc/systemd/system下生成units列表
+的.wants目录, 目录下包含当前unit
+
+
+option补充
+1.当遇到不能识别的option, 会出现warning log message, 但会继续加载后续units
+
+2.当section或option以X-为前缀时, 忽略
+
+3.boolean类型option可使用的值: 1/yes/true/on或0/no/false/off
+
+4.支持的时间单位: us/ms/s/min/h/d/w, 可多个单位拼接
+
+5.以'#'或';'起始部分为注释内容
+
+6.与unit同名的.wants/.requires目录, 与wants/requires option含义一致
+
+
+option特殊符号
+%H - 主机名
+
+%i - @与unit类型后缀之间的名称. 如: getty@tty3.service的tty3
+
+%n - 完整unit名称
+
+%p - 去除unit类型后缀的名称. 如: httpd.service的httpd,
+getty@tty3.service的getty@tty3
+
+%t - /run(system manager)目录或者$XDG_RUNTIME_DIR变量指向的目录(user manager)
+
+%u - unit文件的所属用户名称或运行systemd示例的用户名称
+
+
+
+引用:
+[1] man: systemd.unit(5)
+

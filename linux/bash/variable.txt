@@ -668,7 +668,8 @@ ${parameter}    参数拓展, 当parameter为两位或多位位置引用参数, 
 `command` 
 $(command)    在命令中, 首先将该部分替换为执行该命令后的结果
 
-$((expression))    算数展开, 将表达式expression进行数学运算, 然后替换为运算结果
+$((expression))    
+$[expression]    算数展开, 将表达式expression进行数学运算, 然后替换为运算结果
 
 word splitting    shell对指令行参数进行扫描, 将没有使用""进行限定的内容, 以IFS变量值作为分隔符, 将其分割为positional parameter
 

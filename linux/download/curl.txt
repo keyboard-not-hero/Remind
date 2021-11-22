@@ -158,7 +158,7 @@ option列表
 	当多次使用该参数时, 最后一个生效
 
 -I, --head
-	使用HEAD请求方法
+	仅显示服务器的响应header
 	适用于HTTP协议
 
 -k, --insecure
@@ -481,5 +481,8 @@ curl --preproxy socks5://127.0.0.1:<port> -O https://ichef.bbci.co.uk/news/800/c
 3.使用verbose模式查看出错信息
 curl -v <url>
 
+4.显示服务器的响应header
+curl -I <url>
 
-最后编辑于: 2020-10-08
+
+最后编辑于: 2021-11-19

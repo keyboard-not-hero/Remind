@@ -11,7 +11,7 @@ tr [option] SET1 [SET2]
 	删除input中的SET1字符
 
 -s, --squeeze-repeats    
-	当替换结果中出现SET2中的连续字符, 压缩成一个对应字符
+	将连续多个相同字符压缩为一个字符
 
 -t, --truncate-set1
 	当SET1长度大于SET2长度，将SET1截取成跟SET2一样长度
@@ -24,10 +24,17 @@ tr [option] SET1 [SET2]
 
 
 示例1 - 将指定文件内的小写字符转化为大写字符
-cat demo.txt|tr [a-z] [A-Z]
+echo 'abc' | tr 'a-z' 'A-Z'
+ABC
 
 示例2 - 删除指定字符
-cat demo.txt|tr -d [wc]
+echo 'abcd' | tr -d 'ac'
+bd
 
 示例3 - 删除除数字外的字符
-cat demo.txt|tr -cd [:digit:]
+echo 'abc123' | tr -cd [:digit:]
+abc
+
+示例4 - 将多个字符a压缩为一个字符a
+echo "aaabc" | tr -s 'a'
+abc
