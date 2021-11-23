@@ -6,10 +6,101 @@ systemctl [option] <command> [name]
 
 
 option参数
---state
+--after
+	配合list-dependencies, 显示在当前unit之前启动的units
+	通过After directive指定
+
+-a, --all
+	无视-p/-t/--state参数, 显示所有units
+
+--before
+	配合list-dependencies, 显示在当前unit之后启动的units
+	通过Before directive指定
+
+-l, --full
+	显示完整的信息
+	可联合command: status/list-units/list-jobs/list-timers/is-enabled
+
+-h, --help
+	帮助信息
+
+-H, --host=<host>
+	用于控制远程主机
+	格式为<hostname>或<user>@<hostname>
+
+-i, --ignore-inhibitors
+	忽略inhibitor锁
+	inhibitor锁可在重要操作(如: CD刻录)时, 阻止系统关机或睡眠
+
+--job-mode=<mode>
+	当新job入列时, 如果job已经在队列中, 执行指定的操作
+	操作列表:
+		fail - 入列失败
+		replace - 如有必要, 进行替换原在列job. 默认操作
+		replace-irreversibly - 类似于replace, 但添加不可逆特性
+		isolate - 启动指定unit, 终止所有当前运行units. isolate command默认操作
+		flush - 当新job入队时, 所有在队列的job退出
+		ignore-dependencies - 忽略新job的所有依赖, 并马上执行新job
+		ignore-requirements - 忽略require依赖, 顺序依赖(before/after)依然保留
+
+-M, --machine=<container_name>
+	在本地container上执行操作
+
+--no-block
+	不阻塞等待请求操作完成, 直接进行验证和入列	
+
+--no-wall
+	在halt/power-off/reboot之前不发送wall信息
+
+--now
+	配合enable command, units同时会启动
+	配合disable/mask command, units同时会关闭
+	启动/关闭操作会在enable/disable成功后
+
+-o, --output=<format>
+	配合status command, 控制journal输出格式
+	格式列表参考journalctl(1)
+	默认为short
+
+--plain
+	配合list-dependencies, 输出格式为列表
+	默认格式为tree
+
+-p, --property=<properties>
+	配合show command, 限定显示的属性, 多个unit类型之间使用','分隔
+
+-q, --quiet
+	不输出信息到stdout
+	针对command列表:
+		snapshot/is-active/is-failed/is-enable/is-system-running/enable/disable
+
+-r, --recursive
+	显示unit的本地containers
+
+--reverse
+	配合list-dependencies, 显示被列表units依赖
+	该列表通过WantedBy/RequiredBy/RequiredByOverridable/PartOf/BoundBy指定,
+而非Wants或类似directive
+
+--root=<path>
+	配合enable/disable/is-enabled使用时, 使用该路径作为查找unit文件的根目录
+
+--show-types
+	显示socket时, 一并显示其类型
+
+--state=<unit_state>
+	限定unit状态, 多个unit类型之间使用','分隔 
+	状态列表: load/sub/active
+
+--system
+	与service manager进行通信
+	该选项为默认选项
 
 -t, --type=<unit_list>
-	指定unit类型列表, 多个unit类型之间使用','分隔
+	限定unit类型, 多个unit类型之间使用','分隔
+
+--version
+	版本信息
 
 
 
@@ -17,7 +108,29 @@ command参数
 daemon-reload
 	重新加载/usr/lib/systemd/system下的所有unit文件配置
 
+list-sockets
+	显示socket units列表, 根据listen字段排序
+
+list-timers
+	显示timer units列表, 根据next字段排序
+
+list-units
+	显示已知units列表
+	默认command
+
+reload
+	
+
+start
+	启动一个或多个units
+
+stop
+	关闭一个或多个units
+
+
 
 
 引用:
 [1] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd
+
+[2] man: systemctl(1)

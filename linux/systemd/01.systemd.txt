@@ -1,4 +1,4 @@
-配置文件:
+units文件:
 /usr/lib/systemd/system/*
 	所有已安装的units集合
 
@@ -7,6 +7,11 @@
 
 /etc/systemd/system/*
 	当前使用中的units集合
+
+
+
+配置文件:
+/etc/systemd/system.conf
 
 
 
@@ -59,7 +64,7 @@ unit类型列表:
 
 
 
-unit文件通用options(适用于所有unit type):
+通用options(适用于所有unit type):
 [Unit] section
 AllowIsolate
 	当值为true, 允许使用systemctl isolate控制该unit
@@ -131,6 +136,114 @@ WantedBy
 的.wants目录, 目录下包含当前unit
 
 
+service options
+[Service] section
+BusName
+	D-Bus名称, 配合Type=dbus使用
+
+ExecStart
+	启动service时, 执行的相关指令及参数
+	未指定该参数时, 必须指定RemainAfterExit=yes
+
+ExecStartPost
+	在ExecStart指定的指令启动后, 再进行启动的指令
+	当前面有指令启动失败, 后续也无法启动
+
+ExecStartPre
+	在ExecStart指定的指令启动前, 进行启动的指令
+	当前面有指令启动失败, 后续也无法启动
+
+ExecStop
+	关闭service时, 执行的相关指令及参数
+	未指定该参数时, 收到stop请求马上中断相关进程
+
+ExecStopPost
+	server关闭后的执行指令
+
+GuessMainPID
+	是否猜测service的主进程ID
+	只有Type=forking和PIDFile未设置时有效
+
+PIDFile
+	指定pid文件的路径
+	pid文件用于记录程序进程的进程ID
+
+RemainAfterExit
+	当前unit的所有进程退出后, 是否依然保持active
+	默认为false
+
+Restart
+	当出现进程意外关闭/超时, 是否重新启动service
+	手动关闭service不在控制范围
+	可选值列表:
+		no - 不重启, 默认值
+		on-success - exit code=0或SIGHUP/SIGINT/SIGTERM/SIGPIPE信号指定退出时,
+进行重启, 也可通过SuccessExitStatus额外指定
+		on-failure - exit code不为0或被coredump信号中断(不包含四种aforementiond)
+或操作/watchdog超时, 进行重启
+		on-abnormal - 被coredump信号中断(不包含四种aforementiond)或操作/watchdog
+超时, 进行重启
+		on-watchdog - watchdog超时, 进行重启
+		on-abort - 被无法捕捉的信号中断时, 进行重启
+		always - 非手动关闭退出时, 进行重启
+
+RestartForceExitStatus
+	强制service自动重新启动的退出码列表
+
+RestartPreventExitStatus
+	阻止service自动重新启动的退出码列表
+
+RestartSec
+	重启service之前的sleep时间
+	当值没有单位时, 默认为s; 也可以多个时间单位混合
+	默认为100ms
+
+SuccessExitStatus
+	额外定义的成功退出码, 多个值使用' '分隔
+	原有为exit code 0和SIGHUP/SIGINT/SIGTERM/SIGPIPE
+
+TimeoutSec
+	同时设置TimeoutStartSec和TimeoutStopSec的值
+
+TimeoutStartSec
+	当超过该时间未成功启动时, 则认为启动失败
+	当值没有单位时, 默认为s; 也可以多个时间单位混合
+	默认使用配置文件(/etc/systemd/system.conf)的DefaultTimeoutStartSec值
+
+TimeoutStopSec
+	当超过该时间未成功关闭时, 则认为关闭失败
+	当值没有单位时, 默认为s; 也可以多个时间单位混合
+	默认使用配置文件(/etc/systemd/system.conf)的DefaultTimeoutStopSec值
+
+Type
+	代表service的启动类型. 列表如下:
+		simple - service的主进程, 当该进程提供信息给其他进程时,
+建立通信channel, 紧接着启动后续units. 指定ExecStart时的默认值
+		forking - 启动daemon时调用fork(), 并且在子进程准备完毕后, 父进程退出
+		oneshot - 类似于simple, 但在启动后续units之前关闭当前unit,
+适于配合RemainAfterExit使用. 未指定EexcStart时的默认值
+		dbus - 类似于simple, 但在启动后续units之前在D-Bus请求name.
+指定BusName时的默认值
+		notify - 类似于simple, 但启动当前unit后发送notification信息,
+之后启动后续units
+		idle - 类似于simple, 但先启动其他units后, 再启动当前unit
+
+WatchdogSec
+	watchdog超时时间
+	默认为0, 关闭超时时间
+
+
+target无特殊选项, 即无[Target] section
+
+
+service隐式配置:
+DefaultDependencies=true
+Requires=basic.target
+After=basic.target
+Conflicts=shutdown.target
+Before=shutdown.target
+
+
 option补充
 1.当遇到不能识别的option, 会出现warning log message, 但会继续加载后续units
 
@@ -161,6 +274,41 @@ getty@tty3.service的getty@tty3
 
 
 
-引用:
-[1] man: systemd.unit(5)
+特殊target列表
+basic.target
+	基础启动相关
+	所有service的基础配置:
+		Requires=basic.target
+		After=basic.target
 
+default.target
+	系统启动默认使用的unit
+	为multi-user.target或graphical.target的symbolic链接
+
+getty.target
+	配置本地tty实例
+
+graphical.target
+	配置图形登录桌面
+
+multi-user.target
+	配置多用户系统(非图形桌面)
+
+rescue.target
+	进入救援模式
+
+shutdown.target
+	系统关闭时终端services
+
+
+
+引用:
+[1] man: systemd(1)
+
+[2] man: systemd.unit(5)
+
+[3] man: systemd.service(5)
+
+[4] man: systemd.target(5)
+
+[5] man: systemd.special(7)
