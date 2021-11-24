@@ -2,7 +2,7 @@ systemctl - 控制systemd系统和service管理
 
 
 语法
-systemctl [option] <command> [name]
+systemctl [option] <command> [<unit_name>]
 
 
 option参数
@@ -43,6 +43,13 @@ option参数
 		ignore-dependencies - 忽略新job的所有依赖, 并马上执行新job
 		ignore-requirements - 忽略require依赖, 顺序依赖(before/after)依然保留
 
+--kill-who=<process_type>
+	配合kill command使用, 将信号发送给指定进程
+	进程类型列表:
+		main - unit的主进程
+		control - unit的控制进程
+		all - unit的所有进程. 默认值
+
 -M, --machine=<container_name>
 	在本地container上执行操作
 
@@ -78,7 +85,7 @@ option参数
 	显示unit的本地containers
 
 --reverse
-	配合list-dependencies, 显示被列表units依赖
+	配合list-dependencies command, 显示被列表units依赖
 	该列表通过WantedBy/RequiredBy/RequiredByOverridable/PartOf/BoundBy指定,
 而非Wants或类似directive
 
@@ -87,6 +94,10 @@ option参数
 
 --show-types
 	显示socket时, 一并显示其类型
+
+-s, --signal=<signal>
+	配合kill command, 选择发送给unit的信号类型
+	默认为SIGTERM
 
 --state=<unit_state>
 	限定unit状态, 多个unit类型之间使用','分隔 
@@ -105,8 +116,32 @@ option参数
 
 
 command参数
-daemon-reload
-	重新加载/usr/lib/systemd/system下的所有unit文件配置
+Unit command:
+cat
+	查看unit配置文件内容
+
+help
+	查看指定unit的manual手册
+	当指定unit为active时, 可指定main PID指代unit
+
+is-active
+	查看unit是否为active状态
+
+is-failed
+	查看unit是否为failed状态
+
+isolate
+	启动指定unit和其依赖unit, 并停止其他所有units
+	当忽略unit后缀时, 默认为.target
+
+kill
+	发送信号给指定unit的进程
+	--kill-who指定进程目标
+	--signal指定发送的信号
+
+list-dependencies
+	显示依赖列表
+	可配合--reverse/--after/--before选项
 
 list-sockets
 	显示socket units列表, 根据listen字段排序
@@ -116,17 +151,130 @@ list-timers
 
 list-units
 	显示已知units列表
+	可配合-t限定unit type
 	默认command
 
 reload
-	
+	重新加载指定unit的配置文件. 如: Apache的httpd.conf
+
+reset-failed
+	当unit处于failed状态时, 重置状态
+
+restart
+	重启一个或多个units
+	unit没有启动时, 进行启动
+
+show
+	显示unit的配置列表
 
 start
 	启动一个或多个units
 
+status
+	查看unit的状态
+
 stop
 	关闭一个或多个units
 
+try-restart
+	当unit在running状态时, 重启unit
+
+
+Unit File commands:
+add-requires <target>
+	类似于Requires directive
+
+add-wants <target>
+	类似于Wants directive
+
+disable
+	关闭开机自启unit
+	删除/etc/systemd/system/的symbolic链接
+
+enable
+	开启开机自启unit
+	在/etc/systemd/system/创建到/usr/lib/systemd/system的symbolic链接
+
+get-default
+	获取系统启动默认使用的.target
+
+is-enabled
+	查看unit是否开启开机自启
+
+link <full_path>
+	在/etc/systemd/system/下建立到指定完整路径文件的symbolic链接
+	可使用disable撤销该操作
+
+list-unit-files
+	显示所有已安装units和enable状态
+
+mask
+	在/etc/systemd/system/下建立symbolic, 但指向/dev/null, 使其始终无法启动
+
+preset
+	应用预设的disable/enable规则
+
+preset-all
+	已安装的所有units应用预设的disable/enable规则
+
+reenable
+	重新disable后, 再enable unit
+
+set-default
+	设置系统启动默认使用的.target
+
+unmask
+	删除/etc/systemd/system/的symbolic链接
+
+
+Snapshot commands:
+delete
+	删除一个已创建的快照
+
+snapshot
+	创建一个当前快照
+
+
+Manager Lifecycle Commands:
+daemon-reexec
+	重新执行systemd管理器
+
+daemon-reload
+	重新加载所有units文件的内容, 方便下次启动时应用修改后的最新配置
+
+
+System Commands:
+is-system-running
+	当前systemd是否可操作. 状态列表如下:
+		initializing - 启动早期状态, basic.target未完全加载
+		starting - 启动后期状态
+		running - 已完全启动, 并且可操作
+		degraded - 可操作状态, 但一个或多个units进入failed状态
+		maintenance - 进入rescue/emergency模式
+		stopping - systemd管理器已关闭
+
+
+
+unit_specific格式为<unit_name>[.<unit_type>]
+当unit_type省略时, 默认为service
+
+
+
+示例1 - 重新启动httpd.service, 应用最新unit配置
+sudo systemctl daemon-reload
+sudo systemctl restart httpd.service
+
+示例2 - 验证httpd.service的TimeoutStartSec配置
+sudo systemctl show httpd.service -p TimeoutStartSec
+
+示例3 - 切换到GUI界面
+sudo systemctl isolate graphical.target
+
+示例4 - 默认以GUI界面启动
+sudo systemctl set-default graphical.target
+
+示例5 - 显示包含multi-user.target的target
+sudo systemctl --reverse list-dependencies multi-user.target
 
 
 

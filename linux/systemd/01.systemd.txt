@@ -1,16 +1,23 @@
 units文件:
 /usr/lib/systemd/system/*
-	所有已安装的units集合
+	所有已安装的units集合的默认配置
+	不建议直接修改该目录下的unit文件
 
 /run/systemd/system/*
 	units的runtime文件
 
 /etc/systemd/system/*
-	当前使用中的units集合
+	当前enable(开机自启)的units集合, 通常为/usr/lib/systemd/system下的symbolic链接
+	可直接修改unit文件
+	可额外拓展unit文件内容, 遵循unit文件格式, 以httpd.service举例:
+		mkdir /etc/systemd/system/httpd.service.d
+		touch /etc/systemd/system/httpd.service.d/self_script.conf
+	可覆盖默认配置, 以httpd.service举例:
+		cp /usr/lib/systemd/system/httpd.service /etc/systemd/system/httpd.service
 
 
 
-配置文件:
+全局配置文件:
 /etc/systemd/system.conf
 
 
