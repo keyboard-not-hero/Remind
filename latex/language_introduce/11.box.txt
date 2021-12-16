@@ -66,9 +66,9 @@
 内容讲解
 1.\framebox[width][hor_align]{content}用于限定内容为LR mode, 并且在盒子周围增加线条边框, 不能在内容中进行换行, width指定盒子长度; hor_align指定文本在盒子中的水平对齐方式, 可选列表: l/c/r/s, 其中, s代表弹性伸展, 单词之间需要留空, 汉字不需要, 默认为c. 但内容超过盒子大小时, 内容会跳脱出盒子
 
-2.fboxrule设置边框线宽度
+2.\fboxrule设置边框线宽度
 
-3.fboxsep设置边框线距离文字的距离, left/right/above/below四个方向
+3.\fboxsep设置边框线距离文字的距离, left/right/above/below四个方向
 
 4.\fbox{content}为framebox的简写方式, 但不能携带可选参数
 

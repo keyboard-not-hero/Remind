@@ -168,6 +168,7 @@
 	\hline
 \end{tabular}
 \footnotetext[99]{最后四个积分符号需要amsmath宏包}
+\footnotetext[99]{微分符号的实现: \textbackslash newcommand\{\textbackslash dif\}\{\textbackslash mathop\{\}\textbackslash !\textbackslash mathrm\{d\}\}}
 \end{minipage}
 \caption{公式-大小可变的运算符}
 \end{table}
@@ -438,20 +439,23 @@
 \end{table}
 
 \begin{table}[H]
+\begin{minipage}{\textwidth}
 \begin{tabular}{l l|l l|l l|l l}
 \hline
-172 & \ding{172} & 182 & \ding{182} & 192 & \ding{192} & 202 & \ding{202}\\
-173 & \ding{173} & 183 & \ding{183} & 193 & \ding{193} & 203 & \ding{203}\\
-174 & \ding{174} & 184 & \ding{184} & 194 & \ding{194} & 204 & \ding{204}\\
-175 & \ding{175} & 185 & \ding{185} & 195 & \ding{195} & 205 & \ding{205}\\
-176 & \ding{176} & 186 & \ding{186} & 196 & \ding{196} & 206 & \ding{206}\\
-177 & \ding{177} & 187 & \ding{187} & 197 & \ding{197} & 207 & \ding{207}\\
-178 & \ding{178} & 188 & \ding{188} & 198 & \ding{198} & 208 & \ding{208}\\
-179 & \ding{179} & 189 & \ding{189} & 199 & \ding{199} & 209 & \ding{209}\\
-180 & \ding{180} & 190 & \ding{190} & 200 & \ding{200} & 210 & \ding{210}\\
-181 & \ding{181} & 191 & \ding{191} & 201 & \ding{201} & 211 & \ding{211}\\
+\textbackslash ding\{172\} & \ding{172} & \textbackslash ding\{182\} & \ding{182} & \textbackslash ding\{192\} & \ding{192} & \textbackslash ding\{202\} & \ding{202}\\
+\textbackslash ding\{173\} & \ding{173} & \textbackslash ding\{183\} & \ding{183} & \textbackslash ding\{193\} & \ding{193} & \textbackslash ding\{203\} & \ding{203}\\
+\textbackslash ding\{174\} & \ding{174} & \textbackslash ding\{184\} & \ding{184} & \textbackslash ding\{194\} & \ding{194} & \textbackslash ding\{204\} & \ding{204}\\
+\textbackslash ding\{175\} & \ding{175} & \textbackslash ding\{185\} & \ding{185} & \textbackslash ding\{195\} & \ding{195} & \textbackslash ding\{205\} & \ding{205}\\
+\textbackslash ding\{176\} & \ding{176} & \textbackslash ding\{186\} & \ding{186} & \textbackslash ding\{196\} & \ding{196} & \textbackslash ding\{206\} & \ding{206}\\
+\textbackslash ding\{177\} & \ding{177} & \textbackslash ding\{187\} & \ding{187} & \textbackslash ding\{197\} & \ding{197} & \textbackslash ding\{207\} & \ding{207}\\
+\textbackslash ding\{178\} & \ding{178} & \textbackslash ding\{188\} & \ding{188} & \textbackslash ding\{198\} & \ding{198} & \textbackslash ding\{208\} & \ding{208}\\
+\textbackslash ding\{179\} & \ding{179} & \textbackslash ding\{189\} & \ding{189} & \textbackslash ding\{199\} & \ding{199} & \textbackslash ding\{209\} & \ding{209}\\
+\textbackslash ding\{180\} & \ding{180} & \textbackslash ding\{190\} & \ding{190} & \textbackslash ding\{200\} & \ding{200} & \textbackslash ding\{210\} & \ding{210}\\
+\textbackslash ding\{181\} & \ding{181} & \textbackslash ding\{191\} & \ding{191} & \textbackslash ding\{201\} & \ding{201} & \textbackslash ding\{211\} & \ding{211}\\
 \hline
 \end{tabular}
+\footnotetext{包含在pifont宏包中}
+\end{minipage}
 \caption{圆圈内数字}
 \end{table}
 \end{document}

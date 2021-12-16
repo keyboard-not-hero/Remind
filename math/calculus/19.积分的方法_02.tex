@@ -1,288 +1,236 @@
 \chapter{积分的方法 II}
-1.三角恒等式\\
-(1)形如$\sqrt{1\pm\cos(x)}$\\
+1.三角恒等式相关\\
+1)倍角公式\\
+\[\cos^2x=\frac{1}{2}(1+\cos2x)\]
+\[\sin^2x=\frac{1}{2}(1-\cos2x)\]
 例.\\
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x$\\
-推导原理:\\
-将一个数与三角函数的运算, 转化为该三角函数半角的三角函数平方, 便于开根号\\
+\phantom{例}$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos2x}\dif x$\\
 推导过程:\\
-由$\cos(2x)=1-2\sin^2(x)$, 得:\\
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=\sqrt{2}\int_0^{\frac{\pi}{2}}|\sin(x)|\dif x$\\
-由于$\sin(x)$在定义域区间$[0,\frac{\pi}{2}]$内为正, 所以:\\
-$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos(2x)}\dif x=-\sqrt{2}\cos(x)\Big{|}_0^{\frac{\pi}{2}}=0-(-\sqrt{2})=\sqrt{2}$\\
+由$\cos2x=1-2\sin^2x$, 得:\\
+$\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos2x}\dif x=\sqrt{2}\int_0^{\frac{\pi}{2}}|\sin x|\dif x$\\
+$\because\sin x$在$x\in[0,\frac{\pi}{2}]$值恒为非负\\
+$\therefore\displaystyle\int_0^{\frac{\pi}{2}}\sqrt{1-\cos2x}\dif x=-\sqrt{2}\cos x\Big{|}_0^{\frac{\pi}{2}}=0-(-\sqrt{2})=\sqrt{2}$\\
 
-(2)形如$\sqrt{1-\sin^2(x)}/\sqrt{1+\tan^2(x)}$\\
+2)毕达哥拉斯定理\\
+\[\sin^2x+\cos^2x=1\]
+\[\tan^2x+1=\sec^2x\]
+\[\cot^2x+1=\csc^2x\]
 例.\\
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x$\\
-推导原理:\\
-将根号下一个数字与三角函数平方的运算, 转化为该三角函数角的另一个三角函数的平方, 便于开根号\\
+\phantom{例}$\displaystyle\int\frac{1}{\sec x+1}\dif x$\\
 推导过程:\\
-由$\sin^2(x)=1-\cos^2(x)$, 得:\\
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sqrt{sin^2(x)}\dif x=\int_0^{\pi}|\sin(x)|\dif x$\\
-由于$\sin(x)$在区间$[0,\pi]$内为正, 所以:\\
-$\displaystyle\int_0^{\pi}\sqrt{1-\cos^2(x)}\dif x=\int_0^{\pi}\sin(x)\dif x=-\cos(x)\Big{|}_0^{\pi}=1-(-1)=2$\\
+分子分母同时乘以共轭表达式\\
+$\displaystyle\int\frac{1}{\sec x+1}\dif x=\int\frac{1}{\sec x+1}\times\frac{\sec x-1}{\sec x-1}\dif x=\int\frac{\sec x-1}{\sec^2x-1}\dif x$\\
+\phantom{$\displaystyle\int\frac{1}{\sec x+1}\dif x$}$\displaystyle=\int\frac{\sec x-1}{\tan^2x}\dif x=\int\frac{\sec x}{\tan^2x}\dif x-\int\frac{1}{\tan^2x}\dif x$\\
+$\displaystyle\because\int\frac{\sec x}{\tan^2x}\dif x=\int\frac{\cos x}{\sin^2x}\dif x=\int\cot x\csc x\dif x=-\csc x+C$\\
+\phantom{$\because$}$\displaystyle\int\frac{1}{\tan^2x}\dif x=\int\cot^2x\dif x=\int(\csc^2x-1)\dif x=\int\csc^2x\dif x-\int\dif x$\\
+\phantom{$\displaystyle\because\int\frac{1}{\tan^2x}\dif x$}$=-\cot x-x+C$\\
+$\displaystyle\therefore\int\frac{1}{\sec x+1}\dif x=-\csc x-\cot x-x+C$\\
 
-(3)形如$\displaystyle\frac{1}{\sec(x)-1}$\\
+
+3)角和/差公式\\
+\[\cos A\cos B=\frac{1}{2}(\cos(A-B)+\cos(A+B))\]
+\[\sin A\sin B=\frac{1}{2}(\cos(A-B)-\cos(A+B))\]
+\[\sin A\cos B=\frac{1}{2}(\sin(A-B)+\sin(A+B))\]
 例.\\
-$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$\\
-推导原理:\\
-将分子分母同时乘以分母的共轭式\\
+\phantom{例}$\displaystyle\int\cos3x\sin19x\dif x$\\
 推导过程:\\
-$\displaystyle\int\frac{1}{\sec(x)-1}\dif x=\int\frac{1}{\sec(x)-1}\times\frac{\sec(x)+1}{\sec(x)+1}\dif x=\int\frac{\sec(x)+1}{\sec^2(x)-1}\dif x$\\
-\phantom{$\displaystyle\int\frac{1}{\sec(x)-1}\dif x$}$\displaystyle=\int\frac{\sec(x)}{\tan^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x=\int\frac{\cos(x)}{\sin^2(x)}\dif x+\int\frac{1}{\tan^2(x)}\dif x$\\
-设$t=\sin(x)$, 则$\dif t=\cos(x)\dif x$, 得:\\
-$\displaystyle\int\frac{\cos(x)}{\sin^2(x)}\dif x=\int\frac{1}{t^2}\dif t=-\frac{1}{t}+C=-\csc(x)+C$\\
-由$\displaystyle\frac{\dif}{\dif x}\cot(x)=-\csc^2(x)$, 得:\\
-$\displaystyle\int\frac{1}{\tan^2(x)}\dif x=\int\cot^2(x)\dif x=\int\csc^2(x)\dif x-\int\dif x=-\cot(x)-x+C$\\
-$\therefore\displaystyle\int\frac{1}{\sec(x)-1}\dif x=-\csc(x)-\cot(x)-x+C$\\
+$\displaystyle\because\sin19x\cos3x=\frac{1}{2}(\sin(19x-3x)+\sin(19x+3x))$\\
+\phantom{$\displaystyle\because\sin19x\cos3x$}$\displaystyle=\frac{1}{2}(\sin16x+\sin22x)$\\
+$\displaystyle\therefore\int\cos3x\sin19x\dif x=\frac{1}{2}\int\sin16x\dif x+\frac{1}{2}\int\sin22x\dif x$\\
+\phantom{$\displaystyle\therefore\int\cos3x\sin19x\dif x$}$\displaystyle=-\frac{1}{32}\cos16x-\frac{1}{44}\cos22x+C$\\[2ex]
 
-(4)形如$\sin(\alpha)\cos(\beta)$\\
-例.\\
-$\displaystyle\int\sin(19x)\cos(3x)\dif x$\\
-推导原理:\\
-利用和/差角公式:
-{\par\centering
-    \framebox{$\sin(A+B)=\sin(A)\cos(B)+\cos(A)\sin(B)$}\\[2ex]
-    \framebox{$\cos(A+B)=\cos(A)\cos(B)-\sin(A)\sin(B)$}\\[2ex]
-    \framebox{$\sin(A-B)=\sin(A)\cos(B)-\cos(A)\sin(B)$}\\[2ex]
-    \framebox{$\cos(A-B)=\cos(A)\cos(B)+\sin(A)\sin(B)$}
-\par}\vspace{2ex}
-可推断出:
-{\par\centering
-	\framebox{$\sin(A)\cos(B)=\dfrac{1}{2}(\sin(A+B)+\sin(A-B))$}\\[2ex]
-	\framebox{$\cos(A)\cos(B)=\dfrac{1}{2}(\cos(A+B)+\cos(A-B))$}\\[2ex]
-	\framebox{$\sin(A)\sin(B)=\dfrac{1}{2}(\cos(A-B)-\cos(A+B))$}\\[2ex]
-\par}\newpage
-推导过程:\\
-$\displaystyle\therefore\int\sin(19x)\cos(3x)\dif x=\frac{1}{2}\int(\sin(19x+3x)+\sin(19x-3x))\dif x$\\
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\int(\sin(22x)+\sin(16x))\dif x$\\
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=\frac{1}{2}\left(-\frac{\cos(22x)}{22}-\frac{\cos(16x)}{16}\right)+C$\\
-$\displaystyle\phantom{\therefore\int\sin(19x)\cos(3x)\dif x}=-\frac{\cos(22x)}{44}-\frac{\cos(16x)}{32}+C$\\[4ex]
+2.三角函数幂的积分\\
+1)$\sin$的幂($\cos$类似)\\
+I、一次幂\\
+$\displaystyle\int\sin x\dif x=-\cos x+C$\\
 
-2.关于三角函数的幂的积分\\
-(1)$\sin$或$\cos$的幂\\
-I、至少一个乘积项为奇次幂\\
-例.\\
-$\displaystyle\int\sin^7(x)\cos^4(x)\dif x$\\
+II、二次幂\\
+$\displaystyle\int\sin^2x\dif x=\frac{1}{2}\int(1-\cos2x)\dif x=\frac{1}{2}\int\dif x-\frac{1}{2}\int\cos2x\dif x$\\
+\phantom{$\displaystyle\int\sin^2x\dif x$}$\displaystyle=\frac{1}{2}x-\frac{1}{4}\sin2x+C$\\
+
+III、三次幂及以上的奇次幂
 解题思路:\\
-将奇次幂分解为1次方和n-1次方, 并且将剩下的n-1偶次幂利用$\cos^2(x)+\sin^2(x)=1$进行转化\\
-推导过程:\\
-设$t=\cos(x)$, 则$\dif t=-\sin(x)\dif x$, 得:\\
-\(\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\sin^7(x)\cos^4(x)\dif x & =-\int\sin^6(x)\cos^4(x)(-\sin(x)\dif x)\\
-& =-\int(1-\cos^2(x))^3\cos^4(x)(-\sin(x)\dif x)\\
-& =-\int(1-t^2)t^4\dif t\\
-& =-\int(1-3t^2+3t^4-t^6)t^4\dif t\\
-& =-\int(t^4-3t^6+3t^8-t^{10})\dif t\\
-& =-\dfrac{1}{5}t^5+\dfrac{3}{7}t^7-\dfrac{1}{3}t^9+\dfrac{1}{11}t^{11}+C\\[1ex]
-& =-\dfrac{1}{5}\cos^5(x)+\dfrac{3}{7}\cos^7(x)-\dfrac{1}{3}\cos^9(x)+\dfrac{1}{11}\cos^{11}(x)+C
-\end{array}\)\\[2ex]
-
-II、两个乘积项都为偶次幂\\
+\phantom{解题}提取单次项与dx合并(用于换元), 剩余部分利用$\sin^2x+\cos^2x=1$进行转化\\
 例.\\
-$\displaystyle\int\cos^2(x)\sin^4(x)\dif x$\\
-解题思路:\\
-利用倍角公式降低幂次\\
+\phantom{例}$\displaystyle\int\sin^7x\dif x$\\
 推导过程:\\
-\(\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\cos^2(x)\sin^4(x)\dif x & =\int\dfrac{1}{2}(1+\cos(2x))(\dfrac{1}{2}(1-\cos(2x)))^2\dif x\\[1ex]
-& =\dfrac{1}{8}\int(1+\cos(2x))(1-\cos(2x))^2\dif x\\[1ex]
-& =\dfrac{1}{8}\int(1-\cos(2x)-\cos^2(2x)+\cos^3(2x))\dif x\\[1ex]
-& =\dfrac{1}{8}\int 1\dif x-\dfrac{1}{8}\int\cos(2x)\dif x-\dfrac{1}{8}\int\cos^2(2x)\dif x+\dfrac{1}{8}\int\cos^3(2x)\dif x\\[1ex]
-& =\dfrac{1}{8}x-\dfrac{1}{16}\sin(2x)-\dfrac{1}{16}\int(1+\cos(4x))\dif x+\dfrac{1}{8}\int(1-\sin^2(2x))\cos(2x)\dif x\\[1ex]
-& =\dfrac{1}{8}x-\dfrac{1}{16}\sin(2x)-\dfrac{1}{16}(x+\dfrac{\sin(4x)}{4})+\dfrac{1}{8}(\dfrac{\sin(2x)}{2}-\dfrac{\sin^3(2x)}{6})+C\\[1ex]
-& =\dfrac{1}{16}x-\dfrac{1}{48}\sin^3(2x)-\dfrac{1}{64}\sin(4x)+C
-\end{array}\)\\[2ex]
+设$t=\cos x$,则$\dif t=-\sin x\dif x$\\
+$\displaystyle\int\sin^7x\dif x=-\int(1-\cos^2x)^3\sin x\dif x=-\int(1-t^2)^3\dif t$\\
+\phantom{$\displaystyle\int\sin^7x\dif x$}$\displaystyle=-\int(1-3t^2+3t^4-t^6)\dif t$\\
+\phantom{$\displaystyle\int\sin^7x\dif x$}$\displaystyle=-(t-t^3+\frac{3}{5}t^5-\frac{1}{7}t^7)+C$\\
+\phantom{$\displaystyle\int\sin^7x\dif x$}$\displaystyle=-\cos x+\cos^3x-\frac{3}{5}\cos^5x+\frac{1}{7}\cos^7x+C$\\
 
-(2)$\tan$的幂($\cot$类似)\\
-I、当幂为1\\
+IV、四次幂及以上的偶次幂\\
 例.\\
-$\displaystyle\int\tan(x)\dif x$\\
+\phantom{例}$\displaystyle\int\sin^6x\dif x$\\
+\ding{172}使用倍角公式\\
+$\displaystyle\int\sin^6x\dif x=\int\frac{1}{8}(1-\cos2x)^3\dif x=\frac{1}{8}\int(1-3\cos2x+3\cos^22x-\cos^32x)\dif x$\\
+\phantom{$\displaystyle\int\sin^6x\dif x$}$\displaystyle=\int\frac{1}{8}\dif x-\frac{3}{8}\int\cos2x\dif x+\frac{3}{8}\int\cos^22x\dif x-\frac{1}{8}\int\cos^32x\dif x$\\
+$\displaystyle\because\int\cos^22x\dif x=\frac{1}{2}\int(1+\cos4x)\dif x=\frac{1}{2}(\int\dif x+\int\cos4x\dif x)$\\
+\phantom{$\displaystyle\because\int\cos^22x\dif x$}$\displaystyle=\frac{1}{2}+\frac{1}{8}\sin4x+C$\\
+\phantom{$\displaystyle\because$}$\displaystyle\int\cos^32x\dif x=\int(1-\sin^22x)\cos2x\dif x$\\
+\phantom{$\displaystyle\because$}设$t=\sin2x$, 则$\dif t=2\cos2x\dif x$\\
+\phantom{$\displaystyle\because$}$\displaystyle\int\cos^32x\dif x=\frac{1}{2}\int(1-t^2)\dif t=\frac{1}{2}t-\frac{1}{6}t^3+C=\frac{1}{2}\sin2x-\frac{1}{6}\sin^32x+C$\\
+$\displaystyle\therefore\int\sin^6x\dif x=\frac{1}{8}\int\dif x-\frac{3}{8}\int\cos2x\dif x+\frac{3}{8}\int\cos^22x\dif x-\frac{1}{8}\int\cos^32x\dif x$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=\frac{1}{8}x-\frac{3}{16}\sin2x+\frac{3}{8}(\frac{1}{2}x+\frac{1}{8}\sin4x)-\frac{1}{8}(\frac{1}{2}\sin2x-\frac{1}{6}\sin^32x)+C$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=\frac{5}{16}x-\frac{1}{4}\sin2x+\frac{1}{48}\sin^32x+\frac{3}{64}\sin4x+C$\\
+
+\ding{173}使用分部积分\\
+设$u=\sin^5x$, $\frac{\dif v}{\dif x}=\sin x$, 则:\\
+\phantom{设}$\frac{\dif u}{\dif x}=5\sin^4x\cos x$, $v=-\cos x$\\
+$\displaystyle\int\sin^6x\dif x=-\sin^5x\cos x+\int5\sin^4x\cos^2x\dif x$\\
+\phantom{$\displaystyle\int\sin^6x\dif x$}$\displaystyle=-\sin^5x\cos x+5\int\sin^4x(1-\sin^2x)\dif x$\\
+\phantom{$\displaystyle\int\sin^6x\dif x$}$\displaystyle=-\sin^5x\cos x+5\int\sin^4x\dif x-5\int\sin^6x\dif x$\\
+将$\displaystyle5\int\sin^6x\dif x$移动到等式左侧, 得:\\
+$\displaystyle\int\sin^6x\dif x=-\frac{1}{6}\sin^5x\cos x+\frac{5}{6}\int\sin^4x\dif x$\\
+设$h=\sin^3x\dif x$, $\frac{\dif k}{\dif x}=\sin x$, 则:\\
+\phantom{设}$\frac{\dif h}{\dif x}=3\sin^2x\cos x$, $k=-\cos x$\\
+$\displaystyle\int\sin^4x\dif x=-\sin^3x\cos x+3\int\sin^2x\cos^2x\dif x$\\
+\phantom{$\displaystyle\int\sin^4x\dif x$}$\displaystyle=-\sin^3x\cos x+3\int\sin^2x(1-\sin^2x)\dif x$\\
+\phantom{$\displaystyle\int\sin^4x\dif x$}$\displaystyle=-\sin^3x\cos x+3\int\sin^2x\dif x-3\int\sin^4x\dif x$\\
+将$\displaystyle3\int\sin^4x\dif x$移动到等式左侧, 得:\\
+$\displaystyle\int\sin^4x\dif x=-\frac{1}{4}\sin^3x\cos x+\frac{3}{4}\int\sin^2x\dif x$\\
+\phantom{$\displaystyle\int\sin^4x\dif x$}$\displaystyle=-\frac{1}{4}\sin^3x\cos x+\frac{3}{4}(\frac{1}{2}x-\frac{1}{4}\sin2x)+C$\\
+\phantom{$\displaystyle\int\sin^4x\dif x$}$\displaystyle=-\frac{1}{4}\sin^3x\cos x+\frac{3}{8}x-\frac{3}{16}\sin2x+C$\\
+$\displaystyle\therefore\int\sin^6x\dif x=-\frac{1}{6}\sin^5x\cos x+\frac{5}{6}\int\sin^4x\dif x$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=-\frac{1}{6}\sin^5x\cos x+\frac{5}{6}(-\frac{1}{4}\sin^3x\cos x+\frac{3}{8}x-\frac{3}{16}\sin2x)+C$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=-\frac{1}{6}\sin^5x\cos x-\frac{5}{24}\sin^3x\cos x+\frac{5}{16}x-\frac{5}{32}\sin2x+C$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=-\frac{1}{48}(1-\cos2x)^2\sin2x-\frac{5}{96}(1-\cos2x)\sin2x+\frac{5}{16}x-\frac{5}{32}\sin2x+C$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=-\frac{1}{48}(2\sin2x-\sin4x-\sin^32x)-\frac{5}{96}\sin2x+\frac{5}{192}\sin4x+\frac{5}{16}x-\frac{5}{32}\sin2x+C$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=\frac{5}{16}x-(\frac{1}{24}+\frac{5}{96}+\frac{5}{32})\sin2x+\frac{1}{48}\sin^32x+(\frac{1}{48}+\frac{5}{192})\sin4x$\\
+\phantom{$\displaystyle\therefore\int\sin^6x\dif x$}$\displaystyle=\frac{5}{16}x-\frac{1}{4}\sin2x+\frac{1}{48}\sin^32x+\frac{3}{64}\sin4x$\\
+
+V、$\sin$与$\cos$混合, 并且至少其中一个为奇次幂\\
 解题思路:\\
-转化为$\dfrac{\sin(x)}{\cos(x)}$格式\\
+提取奇数幂项的单次幂与$\dif x$放置一起(当两个都为奇次幂时, 提取次方幂小的项)\\
+例.\\
+\phantom{例}$\displaystyle\int\cos^7x\sin^{10}x\dif x$\\
 推导过程:\\
-假设$t=\cos(x)$,则$\dif t=-\sin(x)\dif x$\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\tan(x)\dif x & =\int\dfrac{\sin(x)}{\cos(x)}\dif x\\
-& =-\int\dfrac{1}{t}\dif t\\
-& =-\ln|t|+C\\
-& =-\ln|\cos(x)|+C
-\end{array}$\\[2ex]
+设$t=\sin x$,则$\dif t=\cos x\dif x$\\
+$\displaystyle\int\cos^7x\sin^{10}x\dif x=\int(1-\sin^2x)^3\sin^{10}x\cos x\dif x=\int(1-t^2)\dif t$\\
+\phantom{$\displaystyle\int\cos^7x\sin^{10}x\dif x$}$\displaystyle=\int(t^{10}-3t^{12}+3t^{14}-t^{16})\dif t$\\
+\phantom{$\displaystyle\int\cos^7x\sin^{10}x\dif x$}$\displaystyle=\frac{1}{11}t^{11}-\frac{3}{13}t^{13}+\frac{1}{5}t^{15}-\frac{1}{17}t^{17}+C$\\
+将$t=\sin x$代入上式:\\
+$\displaystyle\int\cos^7x\sin^{10}x\dif x=\frac{1}{11}\sin^{11}x-\frac{3}{13}\sin^{13}x+\frac{1}{5}\sin^{15}x-\frac{1}{17}\sin^{17}x+C$\\
 
-II、当幂为2\\
-例.\\
-$\displaystyle\int\tan^2(x)\dif x$\\
+VI、$\sin$与$\cos$混合, 并且都为偶次幂\\
 解题思路:\\
-将$\tan^2(x)$转化为$\sec^2(x)-1$\\
+使用倍角公式, 降低次幂\\
+例.\\
+\phantom{例}$\displaystyle\int\cos^2x\sin^4x\dif x$\\
 推导过程:\\
-$\displaystyle\int\tan^2(x)\dif x=\int(\sec^2(x)-1)\dif x$\\
-$\displaystyle\phantom{\int\tan^2(x)\dif x}=\int\sec^2(x)\dif x-\int 1\dif x$\\
-$\displaystyle\phantom{\int\tan^2(x)\dif x}=\tan(x)-x+C$\\[2ex]
+$\displaystyle\int\cos^2x\sin^4x\dif x=\frac{1}{8}\int(1+\cos2x)(1-2\cos2x+\cos^22x)\dif x$\\
+\phantom{$\displaystyle\int\cos^2x\sin^4x\dif x$}$\displaystyle=\frac{1}{8}\int(1-\cos2x-\cos^22x+\cos^32x)\dif x$\\
+\phantom{$\displaystyle\int\cos^2x\sin^4x\dif x$}$\displaystyle=\frac{1}{8}\int\dif x-\int\cos2x\dif x-\int\cos^22x\dif x+\int\cos^32x\dif x$\\
+$\displaystyle\because\int\cos^2x\dif x=\frac{1}{2}\int(1+\cos4x)\dif x=\frac{1}{2}x+\frac{1}{8}\sin4x+C$\\
+\phantom{$\displaystyle\because$}$\displaystyle\int\cos^32x\dif x=\int(1-\sin^22x)\cos2x\dif x=\int\cos2x\dif x-\int\sin^22x\cos2x\dif x$\\
+\phantom{$\displaystyle\because\int\cos^32x\dif x$}$\displaystyle=\frac{1}{2}\sin2x-\int\sin^22x\cos2x\dif x$\\
+\phantom{$\displaystyle\because$}设$t=\sin2x$, 则$\dif t=2\cos2x\dif x$\\
+$\displaystyle\therefore\int\cos^32x\dif x=\frac{1}{2}t-\frac{1}{2}\int t^2\dif t=\frac{1}{2}t-\frac{1}{6}t^3+C$\\
+\phantom{$\displaystyle\therefore\int\cos^32x\dif x$}$\displaystyle=\frac{1}{2}\sin2x-\frac{1}{6}\sin^32x+C$\\
+$\displaystyle\therefore\int\cos^2x\sin^4x\dif x=\frac{1}{8}(x-\frac{1}{2}\sin2x-\frac{1}{2}x-\frac{1}{8}\sin4x+\frac{1}{2}\sin2x-\frac{1}{6}\sin^32x)+C$\\
+\phantom{$\displaystyle\therefore\int\cos^2x\sin^4x\dif x$}$\displaystyle=\frac{1}{16}x-\frac{1}{48}\sin^32x-\frac{1}{64}\sin4x+C$\\
 
-III、当幂大于等于3\\
-例.\\
-$\displaystyle\int\tan^6(x)\dif x$\\
+2)$\tan$的幂($\cot$类似)\\
+I、一次幂\\
+$\displaystyle\tan x\dif x=\int\frac{\sin x}{\cos x}\dif x=-\int\frac{1}{\cos x}-\sin x\dif x$\\
+设$t=\cos x$, 则$\dif t=-\sin x\dif x$\\
+$\displaystyle\int\tan x\dif x=-\int\frac{1}{t}\dif t=-\ln|t|+C=-\ln|\cos x|+C$\\
+
+II、二次幂及以上次幂\\
 解题思路:\\
-首先, 从中提取一个$\tan^2(x)$变化为$\sec^2(x)-1$, 然后被积分部分分成两部分. 第一部分为关于$t=\tan^2(x)$的积分; 第二部分为$\tan(x)$的更低次幂, 继续循环当前操作
+依次提取$\tan^2x$, 转化为$\sec^2x-1$\\
+例.\\
+\phantom{例}$\displaystyle\int\tan^7x\dif x$\\
 推导过程:\\
-$\displaystyle\int\tan^6(x)\dif x=\int\tan^4(x)(\sec^2(x)-1)\dif x=\int\tan^4(x)\sec^2(x)\dif x-\int\tan^4(x)\dif x$\\
-设$t=\tan(x)$, 则$\dif t=\sec^2(x)\dif x$, 得:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\tan^4(x)\sec^2(x)\dif x & =\int t^4\dif t\\
-& =\dfrac{1}{5}t^5+C\\[1ex]
-& =\dfrac{1}{5}\tan^5(x)+C
-\end{array}$\\[1ex]
-设$t=\tan(x)$, 则$\dif t=\sec^2(x)\dif x$, 得:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\tan^4(x)\dif x & =\int\tan^2(x)(\sec^2(x)-1)\dif x\\
-& =\int\tan^2(x)\sec^2(x)\dif x-\int\tan^2(x)\dif x\\
-& =\int\tan^2(x)\sec^2(x)\dif x-\int(\sec^2(x)-1)\dif x\\
-& =\int\tan^2(x)\sec^2(x)\dif x-\int\sec^2(x)\dif x+\int 1\dif x\\
-& =\int t^2\dif t-\int 1\dif t+\dif 1\dif x\\
-& =\dfrac{1}{3}t^3-t+x+C\\[1ex]
-& =\dfrac{1}{3}\tan^3(x)-\tan(x)+x+C
-\end{array}$\\[1ex]
-合并结果, 得:\\
-$\displaystyle\int\tan^6(x)=\dfrac{1}{5}\tan^5(x)-\dfrac{1}{3}\tan^3(x)+\tan(x)-x+C$\\[4ex]
+$\displaystyle\int\tan^7x\dif x=\int\tan^5x(\sec^2x-1)\dif x=\int\tan^5x\sec^2x\dif x-\int\tan^5x\dif x$\\
+\phantom{$\displaystyle\int\tan^7x\dif x$}$\displaystyle=\int\tan^5x\sec^2x\dif x-\int\tan^3x(\sec^2x-1)\dif x$\\
+\phantom{$\displaystyle\int\tan^7x\dif x$}$\displaystyle=\int\tan^5x\sec^2x\dif x-\int\tan^3x\sec^2x\dif x+\int\tan^3x\dif x$\\
+\phantom{$\displaystyle\int\tan^7x\dif x$}$\displaystyle=\int\tan^5x\sec^2x\dif x-\int\tan^3x\sec^2x\dif x+\int\tan x\sec^2x\dif x-\int\tan x\dif x$\\
+设$t=\tan x$, 则$\dif t=\sec^2x\dif x$\\
+$\displaystyle\int\tan^5x\sec^2x\dif x=\int t^5\dif t=\frac{1}{6}t^6+C$\\
+$\displaystyle\int\tan^3x\sec^2x\dif x=\int t^3\dif t=\frac{1}{4}t^4+C$\\
+$\displaystyle\int\tan x\sec^2x\dif x=\int t\dif t=\frac{1}{2}t^2+C$\\
+$\displaystyle\therefore\int\tan^7x\dif x=\frac{1}{6}t^6-\frac{1}{4}t^4+\frac{1}{2}t^2+\ln|\cos x|+C$\\
+\phantom{$\displaystyle\therefore\int\tan^7x\dif x$}$\displaystyle=\frac{1}{6}\tan^6x-\frac{1}{4}\tan^4x+\frac{1}{2}\tan^2x+\ln|\cos x|+C$\\
+总结:\\
+$\displaystyle I_n=\frac{1}{n-1}\tan^{n-1}x-I_{n-2}$\\
 
-(3)$\sec$的特征($\csc$类似)\\
-I、当幂等于1\\
-例.\\
-$\displaystyle\int\sec(x)\dif x$\\
+3)$\sec$的幂($\csc$类似)\\
+I、一次幂\\
+$\displaystyle\int\sec x\dif x=\int\sec x\times\frac{\sec x+\tan x}{\sec x+\tan x}\dif x=\int\frac{\sec^2x+\tan x\sec x}{\sec x+\tan x}\dif x$\\
+设$t=\sec x+\tan x$, 则$\dif t=(\tan x\sec x+\sec^2x)\dif x$\\
+$\displaystyle\int\sec x\dif x=\int\frac{1}{t}\dif t=\ln|t|+C=\ln|\sec x+\tan x|+C$\\
+
+II、二次幂\\
+$\displaystyle\int\sec^2x\dif x=\tan x+C$\\
+
+III、三次幂及以上次幂\\
 解题思路:\\
-分子与分母同时乘以$\sec(x)+\tan(x)$, 得到形如$\displaystyle\int\frac{f'(x)}{f(x)}\dif x$的结果\\
+提取$\sec^2x$, 应用分部积分法, 将其视为$\frac{\dif v}{\dif x}$部分\\
+例.\\
+\phantom{例}$\displaystyle\sec^6x\dif x$\\
 推导过程:\\
-设$t=\sec(x)+\tan(x)$, 则$\dif t=\sec(x)\tan(x)+\sec^2(x)\dif x$, 得:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\sec(x)\dif x & =\int\sec(x)\times\dfrac{\sec(x)+\tan(x)}{\sec(x)+\tan(x)}\dif x\\[1ex]
-& =\int\dfrac{\sec^2(x)+\sec(x)\tan(x)}{\sec(x)+\tan(x)}\dif x\\[1ex]
-& =\int\dfrac{1}{t}\dif t\\[1ex]
-& =\ln|t|+C\\
-& =\ln|\sec(x)+\tan(x)|+C
-\end{array}$\\[2ex]
+设$u=\sec^4x$, $\frac{\dif v}{\dif x}=\sec^2x$, 则:\\
+\phantom{设}$\frac{\dif u}{\dif x}=4\sec^4x\tan x$, $v=\tan x$\\
+$\displaystyle\int\sec^6x\dif x=\sec^4x\tan x-4\int\sec^4x\tan^2x\dif x$\\
+\phantom{$\displaystyle\int\sec^6x\dif x$}$\displaystyle=\sec^4x\tan x-4\int\sec^4x(\sec^2x-1)\dif x$\\
+\phantom{$\displaystyle\int\sec^6x\dif x$}$\displaystyle=\sec^4x\tan x-4\int\sec^6x\dif x+4\int\sec^4x\dif x$\\
+将$4\int\sec^6x\dif x$移动到等式左侧, 得:\\
+$\displaystyle\int\sec^6x\dif x=\frac{1}{5}\sec^4x\tan x+\frac{4}{5}\int\sec^4x\dif x$\\
+设$h=\sec^2x$, $\frac{\dif k}{\dif x}=\sec^2x$, 则:\\
+\phantom{设}$\frac{\dif h}{\dif x}=2\sec^2x\tan x$, $k=\tan x$\\
+$\displaystyle\int\sec^4x\dif x=\sec^2x\tan x-2\int\sec^2x\tan^2x\dif x$\\
+\phantom{$\displaystyle\int\sec^4x\dif x$}$\displaystyle=\sec^2x\tan x-2\int\sec^2x(\sec^2x-1)\dif x$\\
+\phantom{$\displaystyle\int\sec^4x\dif x$}$\displaystyle=\sec^2x\tan x-2\int\sec^4x\dif x+2\int\sec^2x\dif x$\\
+将$2\int\sec^4x\dif x$移动到等式左侧, 得:\\
+$\displaystyle\int\sec^4x\dif x=\frac{1}{3}\sec^2x\tan x+\frac{2}{3}\int\sec^2x\dif x$\\
+$\displaystyle\therefore\int\sec^6x\dif x=\frac{1}{5}\sec^4x\tan x+\frac{4}{5}(\frac{1}{3}\sec^2x\tan x+\frac{2}{3}\int\sec^2x\dif x)$\\
+\phantom{$\displaystyle\therefore\int\sec^6x\dif x$}$\displaystyle=\frac{1}{5}\sec^4x\tan x+\frac{4}{15}\sec^2x\tan x+\frac{8}{15}\int\sec^2x\dif x$\\
+\phantom{$\displaystyle\therefore\int\sec^6x\dif x$}$\displaystyle=\frac{1}{5}\sec^4x\tan x+\frac{4}{15}\sec^2x\tan x+\frac{8}{15}\tan x+C$\\[2ex]
 
-II、当幂等于2\\
-例.\\
-$\displaystyle\int\sec^2(x)\dif x$\\
+3.三角换元法的积分\\
+1)$\sqrt{a^2-x^2}$的奇次幂\\
 解题思路:\\
-$\displaystyle\int\sec^2(x)\dif x=\tan(x)+C$\\[2ex]
-
-III、当幂大于等于3\\
+设$x=a\sin\theta$, 将$x$的积分转化为$\theta$的积分\\
 例.\\
-$\displaystyle\int\sec^6(x)\dif x$\\
-解题思路:\\
-提取出$\sec^2(x)$, 利用分部积分公式: $\displaystyle\int u\dif v=uv-\int v\dif u$\\
+\phantom{例}$\displaystyle\int\frac{x^2}{(9-x^2)^{\frac{3}{2}}}\dif x$\\
 推导过程:\\
-$\displaystyle\int\sec^6(x)\dif x=\int\sec^4(x)\sec^2(x)\dif x$\\
-利用分部积分公式, 可得到以下结论:\\
-$\begin{array}{c c}
-u=\sec^4(x) & v=\tan(x)\\
-\dfrac{\dif u}{\dif x}=4\sec^4(x)\tan(x) & \dfrac{\dif v}{\dif x}=\sec^2(x)
-\end{array}$\\[1ex]
-\begin{equation}
-\int\sec^4(x)\sec^2(x)\dif x=\sec^4(x)\tan(x)-4\int\sec^4(x)\tan^2(x)\dif x\label{integral:sec_01}
-\end{equation}
-\begin{eqnarray}
-\int\tan^2(x)\sec^4(x) & = & \int(\sec^2(x)-1)\sec^4(x)\dif x\nonumber\\
-& = & \int\sec^6(x)\dif x-\int\sec^4(x)\dif x\label{integral:sec_02}
-\end{eqnarray}
-将\eqref{integral:sec_02}代入\eqref{integral:sec_01}, 得:\\
-\begin{equation}
-\displaystyle\int\sec^6(x)\dif x=\frac{1}{5}\sec^4(x)\tan(x)+\frac{4}{5}\int\sec^4(x)\dif x\label{integral:sec_03}
-\end{equation}
-$\displaystyle\int\sec^4(x)\dif x=\int\sec^2(x)\sec^2(x)\dif x$\\
-利用分部积分公式, 得到如下结论:\\
-$\begin{array}{c c}
-u=\sec^2(x) & v=\tan(x)\\
-\dfrac{\dif u}{\dif x}=2\sec^2(x)\tan(x) & \dfrac{\dif v}{\dif x}=\sec^2(x)
-\end{array}$\\[1ex]
-$\displaystyle\int\sec^4(x)\dif x=\sec^2(x)\tan(x)-2\int\tan^2(x)\sec^2(x)\dif x$\\
-设$t=\tan(x)$, 则$\dif t=\sec^2(x)\dif x$, 得:\\
-$\displaystyle\int\tan^2(x)\sec^2(x)\dif x=\int t^2\dif t=\dfrac{1}{3}t^2+C=\dfrac{1}{3}\tan^3(x)+C$\\[1ex]
-\begin{equation}
-\displaystyle\int\sec^4(x)\dif x=\sec^2(x)\tan(x)-\dfrac{2}{3}\tan^3(x)+C\label{integral:sec_04}
-\end{equation}
-将\eqref{integral:sec_04}代入\eqref{integral:sec_03}, 得:\\
-$\displaystyle\int\sec^6(x)\dif x=\frac{1}{5}\sec^4(x)\tan(x)+\frac{4}{5}\sec^2(x)\tan(x)-\frac{8}{15}\tan^3(x)+C$\\[4ex]
+设$x=3\sin\theta$, 则$\dif t=3\cos\theta\dif\theta$\\
+$\displaystyle\int\frac{x^2}{(9-x^2)^{\frac{3}{2}}}\dif x=\int\frac{9\sin^2\theta}{27\cos^3\theta}\times3\cos\theta\dif\theta=\int\tan^2\theta\dif\theta$\\
+\phantom{$\displaystyle\int\frac{x^2}{(9-x^2)^{\frac{3}{2}}}\dif x$}$\displaystyle\int(\sec^2\theta-1)\dif\theta=\tan\theta-\theta+C$\\
+$\displaystyle\because\sin\theta=\frac{x}{3}$\\
+$\displaystyle\therefore\cos\theta=\frac{\sqrt{9-x^2}}{3}$, $\theta=\sin^{-1}(\frac{x}{3})$\\
+$\displaystyle\therefore\int\frac{x^2}{(9-x^2)^{\frac{3}{2}}}\dif x=\frac{x}{\sqrt{9-x^2}-\sin^{-1}(\frac{x}{3})}+C$\\
 
-3.关于三角换元法的积分\\
-(1)类型I($\sqrt{a^2-x^2}$)\\
-例.\\
-$\displaystyle\int\frac{x^2}{\sqrt{(9-x^2)^3}}\dif x$\\
+2)$\sqrt{x^2+a^2}$的奇次幂\\
 解题思路:\\
-将$x$转化为三角函数$\sin(\theta)$的积分\\
+设$x=a\tan\theta$, 将$x$的积分转化为$\theta$的积分\\
+例.\\
+\phantom{例}$\displaystyle\int(x^2+15)^{-\frac{5}{2}}\dif x$\\
 推导过程:\\
-设$x=3\sin(\theta)$且$\theta\in[-\frac{\pi}{2},\frac{\pi}{2}]$, 则$\dif x=3\cos(\theta)\dif\theta$, 得:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\frac{x^2}{\sqrt{(9-x^2)^3}}\dif x & =\int\frac{9\sin^2(\theta)}{(3\cos(\theta))^3}\times 3\cos(\theta)\dif\theta\\
-& =\int\tan^2(\theta)\dif\theta\\
-& =\int(\sec^2(\theta)-1)\dif\theta\\
-& =\tan(\theta)-\theta+C
-\end{array}$\\
-$\because\sin(\theta)=\dfrac{x}{3}$\\
-$\therefore\cos(\theta)=\sqrt{1-\sin^2(\theta)}=\dfrac{\sqrt{9-x^2}}{3}$\\
-$\phantom{\therefore}\tan(\theta)=\dfrac{x}{\sqrt{9-x^2}}$\\
-$\displaystyle\therefore\int\frac{x^2}{\sqrt{(9-x^2)^3}}\dif x=\frac{x}{\sqrt{9-x^2}}-\sin^{-1}+C$\\[2ex]
+设$x=\sqrt{15}\tan\theta$, 则$\dif x=\sqrt{15}\sec^2\theta\dif\theta$\\
+$\displaystyle\int(x^2+15)^{-\frac{5}{2}}\dif x=\int\frac{1}{(\sqrt{15}\sec\theta)^5}\times\sqrt{15}\sec^2\theta\dif\theta=\frac{1}{225}\int\frac{1}{\sec^3\theta}\dif\theta$\\
+\phantom{$\displaystyle\int(x^+15)^{-\frac{5}{2}}\dif x$}$\displaystyle=\frac{1}{225}\int\cos^3\theta\dif\theta$\\
+$\displaystyle\because\int\cos^3\theta\dif\theta=\int(1-\sin^2\theta)\cos\theta\dif\theta$\\
+\phantom{$\displaystyle\because$}设$t=\sin\theta$, 则$\dif t=\cos\theta\dif\theta$\\
+\phantom{$\displaystyle\because$}$\displaystyle\int\cos^3\theta\dif\theta=\int(1-t^2)\dif t=t-\frac{1}{3}t^3+C=\sin\theta-\frac{1}{3}\sin^3\theta+C$\\
+$\displaystyle\therefore\int(x^2+15)^{-\frac{5}{2}}\dif x=\frac{1}{225}(\sin\theta-\frac{1}{3}\sin^3\theta)+C$\\
+$\displaystyle\because\tan\theta=\frac{x}{\sqrt{15}}$\\
+$\displaystyle\therefore\sin\theta=\frac{x}{\sqrt{x^2+15}}$\\
+$\displaystyle\therefore\int(x^2+15)^{-\frac{5}{2}}\dif x=\frac{1}{225}(\frac{x}{\sqrt{x^2+15}}-\frac{x^3}{3(x^2+15)^{\frac{3}{2}}})+C$\\
 
-(2)类型II($\sqrt{x^2+a^2}$)\\
-例.\\
-$\displaystyle\int(x^+15)^{-\frac{5}{2}}\dif x$\\
+3)$\sqrt{x^2-a^2}$的奇次幂\\
 解题思路:\\
-将$x$转化为三角函数$tan(\theta)$的积分\\
-推导过程:\\
-设$x=\sqrt{15}\tan(\theta)$且$\theta\in(-\frac{\pi}{2},\frac{\pi}{2})$, 则$\dif x=\sqrt{15}\sec^2(\theta)\dif\theta$, 得:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int(x^2+15)^{-\frac{5}{2}}\dif x & =\int(15\tan^2(\theta)+15)^{-\frac{5}{2}}\times\sqrt{15}\sec^2(\theta)\dif\theta\\
-& =\int(15\sec^2(\theta))^{-\frac{5}{2}}\sqrt{15}\sec^2(\theta)\dif\theta\\
-& =\frac{1}{15^2}\int\cos^3(\theta)\dif\theta
-\end{array}$\\[1ex]
-设$t=\sin(\theta)$, 则$\dif t=\cos(\theta)\dif\theta$, 得:\\[1ex]
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int(x^2++15)^{-\frac{5}{2}}\dif x & =\frac{1}{15^2}\int(1-t^2)\dif t\\[1ex]
-& =\frac{1}{15^2}\int 1\dif t-\frac{1}{15^2}\int t^2\dif t\\[1ex]
-& =\frac{1}{15^2}t-\frac{1}{15^2\times 3}t^3+C\\[1ex]
-& =\frac{1}{225}\sin(\theta)-\frac{1}{675}\sin^3(\theta)+C
-\end{array}$\\
-$\because\tan(\theta)=\dfrac{x}{\sqrt{15}}$\\
-$\therefore\sec(\theta)=\sqrt{\tan^2(\theta)+1}=\dfrac{\sqrt{x^2+15}}{\sqrt{15}}$\\
-$\phantom{\therefore}\sin(\theta)=\sqrt{1-\cos^2(\theta)}=\sqrt{1-\dfrac{15}{x^2+15}}=\dfrac{x}{\sqrt{x^2+15}}$\\
-$\displaystyle\therefore\int(x^2+15)^{-\frac{5}{2}}\dif x=\frac{1}{225}\frac{x}{\sqrt{x^2+15}}-\frac{1}{675}\frac{x^3}{\sqrt{(x^2+15)^3}}+C$\\[2ex]
-
-(3)类型III($\sqrt{x^2-a^2}$)\\
+设$x=a\sec\theta$, 将$x$的积分转化为$\theta$的积分\\
 例.\\
-$\displaystyle\int\frac{1}{x^3\sqrt{x^2-4}}\dif x$\\
-解题思路:\\
-将$x$转化为三角函数$\sec(\theta)$的积分\\
+\phantom{例}$\displaystyle\int\frac{1}{x^3\sqrt{x^2-4}}\dif x$\\
 推导过程:\\
-设$x=2\sec(\theta)$且$\theta\in[0,\frac{\pi}{2})\cup(\frac{\pi}{2},\pi]$, 则$\dif x=2\sec(\theta)\tan(\theta)\dif\theta$, 得:\\
-$\displaystyle\int\frac{1}{x^3\sqrt{x^2-4}}\dif x=\int\frac{\sec(\theta)\tan(\theta)}{8\sec^3(\theta)\sqrt{\tan^2(\theta)}}\dif\theta$\\[1ex]
-$\because$当$\theta\in[0,\frac{\pi}{2})$时, $\sqrt{\tan^2(\theta)}=\tan(\theta)$\\
-\phantom{$\because$}当$\theta\in(\frac{\pi}{2},\pi]$时, $\sqrt{\tan^2(\theta)}=-\tan(\theta)$\\
-$\therefore$根据$\theta$的不同取值区间, 区分为两种不同情况.\\
-1)$\theta\in[0,\frac{\pi}{2})$时\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\frac{1}{x^3\sqrt{x^2-4}}\dif x & =\frac{1}{8}\int\frac{1}{\sec^2(\theta)}\dif\theta\\[1ex]
-& =\frac{1}{8}\int\cos^2(\theta)\dif\theta\\[1ex]
-& =\frac{1}{16}\int(1+\cos(2\theta))\dif\theta\\[1ex]
-& =\frac{1}{16}\int 1\dif\theta+\frac{1}{16}\int\cos(2\theta)\dif\theta\\[1ex]
-& =\frac{1}{16}\theta+\frac{1}{32}\sin(2\theta)+C
-\end{array}$\\
-$\because\sec(\theta)=\dfrac{x}{2}$\\
-$\therefore\sin(\theta)=\sqrt{1-\cos^2(\theta)}=\dfrac{\sqrt{x^2-4}}{x}$\\
-$\because\sin(2\theta)=2\sin(\theta)\cos(\theta)$\\
-$\therefore\sin(2\theta)=\dfrac{4\sqrt{x^2-4}}{x^2}$\\
-$\displaystyle\therefore\int\frac{1}{x^3\sqrt{x^2-4}}dif x=\frac{1}{16}\sec^{-1}(\frac{x}{2})+\frac{1}{8}\frac{\sqrt{x^2-4}}{x^2}+C$\\[1ex]
-2)$\theta\in(\frac{\pi}{2},\pi]$时\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int\frac{1}{x^3\sqrt{x^2-4}}\dif x & =-\frac{1}{8}\int\frac{1}{\sec^2(\theta)}\dif\theta\\[1ex]
-& =-\frac{1}{8}\int\cos^2(\theta)\dif\theta\\[1ex]
-& =-\frac{1}{16}\int(1+\cos(2\theta))\dif\theta\\[1ex]
-& =-\frac{1}{16}\int 1\dif\theta-\frac{1}{16}\int\cos(2\theta)\dif\theta\\[1ex]
-& =-\frac{1}{16}\theta-\frac{1}{32}\sin(2\theta)+C
-\end{array}$\\[1ex]
-$\because$在区间$(\dfrac{\pi}{2},\pi]$中, $\sec(\theta)=\dfrac{x}{2}\leqslant -1$\\[1ex]
-$\therefore x\leqslant -2$\\
-$\phantom{\therefore}\sin(\theta)=\sqrt{1-\cos^2(\theta)}=-\dfrac{\sqrt{x^2-4}}{x}$\\
-$\because\sin(2\theta)=2\sin(\theta)\cos(\theta)$\\
-$\therefore\sin(2\theta)=-\dfrac{4\sqrt{x^2-4}}{x^2}$\\
-$\displaystyle\therefore\int\frac{1}{x^3\sqrt{x^2-4}}\dif x=-\frac{1}{16}\sec^{-1}(\frac{x}{2})+\frac{1}{8}\frac{\sqrt{x^2-4}}{x^2}+C$
+设$x=2\sec\theta$, 则$\dif x=2\tan\theta\sec\theta$\\
+$\displaystyle\int\frac{1}{x^3\sqrt{x^2-4}}\dif x=\int\frac{2\tan\theta\sec\theta}{8\sec^3\theta\sqrt{4\tan^2\theta}}\dif\theta=\frac{1}{8}\int\frac{1}{\sec^2\theta}\dif\theta$\\
+\phantom{$\displaystyle\int\frac{1}{x^3\sqrt{x^2-4}}\dif x$}$\displaystyle=\frac{1}{8}\int\cos^2\theta\dif\theta$\\
+$\displaystyle\because\int\cos^2\theta\dif\theta=\frac{1}{2}\int(1+\cos2\theta)\dif\theta=\frac{\theta}{2}+\frac{\sin2\theta}{4}+C$\\
+$\displaystyle\therefore\int\frac{1}{x^3\sqrt{x^2-4}}\dif x=\frac{1}{16}(\theta+\frac{\sin2\theta}{2})+C$\\
+$\displaystyle\because\cos\theta=\frac{1}{\sec\theta}=\frac{2}{x}$\\
+$\displaystyle\therefore\sin\theta=\frac{\sqrt{x^2-4}}{x},\sin2\theta=2\sin\theta\cos\theta=\frac{4\sqrt{x^2-4}}{x^2},\theta=\sec^{-1}(\frac{x}{2})$\\
+$\displaystyle\therefore\int\frac{1}{x^3\sqrt{x^2-4}}\dif x=\frac{1}{16}(\sec^{-1}(\frac{x}{2})+\frac{2\sqrt{x^2-4}}{x^2})+C$\\

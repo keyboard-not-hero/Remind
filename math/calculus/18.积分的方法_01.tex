@@ -1,9 +1,9 @@
 \chapter{积分的方法 I}
-1.换元法
+1.换元法(链式求导的逆)
 {\par\centering
-\framebox{$\displaystyle\int\frac{f'(x)}{f(x)}\dif x=\ln|f(x)|+C$.}
+\framebox{$\displaystyle\int f'(x)g(f(x))\dif x=h(f(x))+C$.}
 \par}
-例.\\[1ex]
+例1.\\[1ex]
 $\displaystyle\int\frac{x}{x^2+8}\dif x$\\[1ex]
 推导过程:\\[1ex]
 $\displaystyle\because\frac{\dif}{\dif x}(x^2+8)=2x$\\[1ex]
@@ -11,49 +11,60 @@ $\therefore$使用换元法, 设$t=x^2+8$.\\[1ex]
 \phantom{$\therefore$}得到$\dif t=2x\dif x$\\[1ex]
 $\therefore\displaystyle\int\frac{x}{x^2+8}\dif x=\frac{1}{2}\int\frac{1}{t}\dif t=\frac{1}{2}\ln|t|+C=\frac{1}{2}\ln|x^2+8|+C$\\[2ex]
 
-2.形如$\sqrt[b]{ax+b}$的积分
-{\par\centering
-\framebox{在换掉$\sqrt[n]{ax+b}$之前, 设$t=\sqrt[n]{ax+b}$并对等式$t^n=ax+b$两端求导.}
-\par}
-例.\\[1ex]
-$\displaystyle\int x\sqrt[5]{3x+2}\dif x$\\[1ex]
+例2.\\[1ex]
+$\displaystyle\int\frac{3x^2+7}{x^3+7x+9}\dif x$\\[1ex]
 推导过程:\\[1ex]
-设$t=\sqrt[5]{3x+2}$, 得:\\[1ex]
-$\displaystyle x=\frac{1}{3}(t^5-2)$\\[1ex]
-等式两端$5$次方并求导, 得:\\[1ex]
-$\displaystyle\dif x=\frac{5}{3}t^4\dif t$\\[1ex]
-$\displaystyle\therefore\int x\sqrt[5]{3x+2}\dif x=\frac{5}{9}\int(t^{10}-2t^5)\dif t=\frac{5}{9}\int t^{10}\dif t-\frac{10}{9}\int t^5\dif t$\\[1ex]
-$\displaystyle\phantom{\therefore\int x\sqrt[5]{3x+2}\dif x}=\frac{5}{99}t^{11}-\frac{5}{27}t^6+C$\\[1ex]
-将$t=\sqrt[5]{3x+2}$代入上述等式, 得:\\[1ex]
-$\displaystyle\int x\sqrt[5]{3x+2}\dif x=\frac{5}{99}(3x+2)^{\frac{11}{5}}-\frac{5}{27}(3x+2)^{\frac{6}{5}}+C$\\[2ex]
+$\displaystyle\because\frac{\dif}{\dif x}(x^3+7x-9)=3x^2+7$\\[1ex]
+$\therefore$使用换元法, 设$t=x^3+7x-9$.\\[1ex]
+\phantom{$\therefore$}得到$\dif t=(3x^2+7)\dif x$\\[1ex]
+$\therefore\displaystyle\int\frac{3x^2+7}{x^3+7x-9}\dif x=\frac{1}{t}=\ln|t|+C=\ln|x^3+7x-9|+C$\\[2ex]
 
-3.分部积分法
+2.分部积分法(乘法求导法则的逆)
 {\par\centering
 \framebox{$\displaystyle\int u\frac{\dif v}{\dif x}\dif x=uv-\int v\frac{\dif u}{\dif x}\dif x$.}
 \par}
-例.\\[1ex]
+例1.\\[1ex]
 $\displaystyle\int xe^x\dif x$\\[1ex]
 推导过程:\\[1ex]
-设$u=x$, $v=e^x$, 得:\\[1ex]
+设$u=x$, $\frac{\dif v}{\dif x}=e^x$, 则:\\[1ex]
+\phantom{设}$v=e^x$, $\frac{\dif u}{\dif x}=1$\\[1ex]
 $\displaystyle\int xe^x\dif x=xe^x-\int e^x\dif x$\\[1ex]
 $\displaystyle\int xe^x\dif x=xe^x-e^x+C$\\[2ex]
 
-4.部分分式
+例2.\\[1ex]
+$\displaystyle\int\ln x\dif x$\\[1ex]
+推导过程:\\[1ex]
+设$u=\ln x$, $\frac{\dif v}{\dif x}=1$, 则:\\[1ex]
+\phantom{设}$v=x$, $\frac{\dif u}{\dif x}=\frac{1}{x}$\\[1ex]
+$\displaystyle\int\ln x\dif x=x\ln x-\int x\cdot\frac{1}{x}\dif x=x\ln x-x+C$\\[1ex]
+总结:\\[1ex]
+1.内容存在$\sin$/$\cos$或$e^x$, 视为已微分部分\\[1ex]
+2.内容不存在乘积时, 整个内容视为未微分部分\\[75ex]
+
+3.部分分式(有理函数积分)\\
+有理函数: 形如$\frac{P(x)}{Q(x)}$的函数
 {\par\centering
 \framebox{
 \begin{minipage}{\linewidth}
 部分分式处理步骤:\\
-(1)查看分子分母最高项的次数, 如有必要(分子次数$\geqslant$分母次数)做除法;\\
+(1)确保分子的次数小于分母的次数, 如有必要(分子次数$\geqslant$分母次数)做除法;\\
 (2)对分母进行因式分解;\\
-(3)进行"分部", 分部类别如下:\\[1ex]
-	\phantom{\qquad}1)\,线性式:$\displaystyle\frac{A}{x+a}$\\[1ex]
-	\phantom{\qquad}2)\,线性式的平方:$\displaystyle\frac{A}{(x+a)^2}+\frac{B}{x+a}$\\[1ex]
-	\phantom{\qquad}3)\,二次多项式:$\displaystyle\frac{Ax+B}{x^2+ax+b}$\\[1ex]
-	\phantom{\qquad}4)\,线性式的三次方:$\displaystyle\frac{A}{(x+a)^3}+\frac{B}{(x+a)^2}+\frac{C}{x+a}$\\[1ex]
-	\phantom{\qquad}5)\,线性式的四次方:$\displaystyle\frac{A}{(x+a)^4}+\frac{B}{(x+a)^3}+\frac{C}{(x+a)^2}+\frac{D}{x+a}$\\
-(4)计算分部中分子常数的值;\\
-(5)求解分母为线性项次幂的积分, 即(3)中的1)/2)/4)/5)类型. 涉及到对数或负次幂;\\
-(6)求解分母为二次多项式的积分, 即(3)中的3)类型. 具体方法: 先配方, 再换元. 涉及到对数和正切函数.
+(3)进行"分部"(将分母按隐式分解进行拆分). 分部类别如下:\\
+	\phantom{\qquad}1)\,线性式:
+		\[\frac{mx+n}{(x+a)(x+b)}=\frac{A}{x+a}+\frac{B}{x+a}\]
+	\phantom{\qquad}2)\,线性式的平方:
+		\[\frac{mx+b}{(x+a)^2}=\frac{A}{(x+a)^2}+\frac{B}{x+a}\]
+	\phantom{\qquad}3)\,二次多项式:
+		\[\frac{Ax+B}{x^2+ax+b}\]
+	\phantom{\qquad}4)\,线性式的三次方:
+		\[\frac{mx^2+nx+k}{(x+a)^3}=\frac{A}{(x+a)^3}+\frac{B}{(x+a)^2}+\frac{C}{x+a}\]
+	\phantom{\qquad}5)\,线性式的四次方:
+		\[\frac{mx^3+nx^2+kx+h}{(x+a)^4}=\frac{A}{(x+a)^4}+\frac{B}{(x+a)^3}+\frac{C}{(x+a)^2}+\frac{D}{x+a}\]
+(4)对各分部进行通分, 计算分部中A/B/C/D等常数项的值;\\
+(5)对各分部进行积分\\
+\phantom{\qquad}1)分母为单项, 该项为$x$的幂 - 积分结果为对数或$x$的负次幂;\\
+\phantom{\qquad}2)分母为二次多项式 - 对分母先进行配方, 然后进行换元, 最后根据分子的项数, 拆分为多个积分
+		\[\int\frac{1}{x^2+a^2}\dif x=\frac{1}{a}\tan^{-1}(\frac{x}{a})+C\]
 \end{minipage}}
 \par}
 例.\\[1ex]
