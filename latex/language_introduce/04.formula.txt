@@ -21,7 +21,7 @@
 
 4._用于指定公式的subscript, ^用于指定公式的supscript
 
-5.'在公式中为微分符号
+5.'在公式中为求导符号
 
 6.数学公式中, \because和\therefore为几何的因为/所以符号, 在amssymb宏包中定义
 

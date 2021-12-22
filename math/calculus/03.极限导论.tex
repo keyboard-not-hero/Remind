@@ -1,23 +1,40 @@
 \chapter{极限导论}
-极限: 描述函数的自变量接近于某一个值时, 相对应的函数值变化的趋势. 表示为:
-\[\lim_{x\to a}f(x)=L\]\\[1em]
-左极限: 描述函数的自变量从左边接近于某一个值时, 相对应的函数变化的趋势. 表示为
-\[\lim_{x\to a^-}f(x)=L\]\\[1em]
-右极限: 描述函数的自变量从右边接近于某一个值时, 相对应的函数变化的趋势. 表示为
-\[\lim_{x\to a^+}f(x)=L\]\\[1em]
-当左极限与右极限不相等时, 不存在双侧极限.
+\phantom{空格}函数$g$的定义域是所有实数, 并且$g(x)$可以被定义为如下的分段函数:\\
+\[
+	g(x)=\left\{
+	\begin{array}{l l}
+		x-1 & if\ x\neq2\\
+		3 & if\ x=2
+	\end{array}
+	\right.
+\]
+$\lim_{x\to2}g(x)$与$g(2)$的值是不相关的, 关键在于$x$接近于$2$时, $g(x)$的值, 结果为: $\lim_{x\to2}g(x)=1$.\\
+\phantom{空格}左极限: 描述函数的自变量从左边接近于某一个值时, 相对应的函数变化的趋势. 表示为
+\[\lim_{x\to a^-}f(x)=L\]\\
+\phantom{空格}右极限: 描述函数的自变量从右边接近于某一个值时, 相对应的函数变化的趋势. 表示为
+\[\lim_{x\to a^+}f(x)=L\]\\
+仅当左极限和右极限在$x=a$处都存在且相等, 双侧极限在$x=a$处存在. 用数学语言描述为:\\
+\[\lim_{x\to a^-}f(x)=L\quad\text{且}\quad\lim_{x\to a^+}f(x)=L\]
+等价于
+\[\lim_{x\to a}f(x)=L\]
+
+垂直渐近线的定义:
 {\par\centering
 \framebox{\begin{minipage}{10cm}
 ``$f$在$x=a$处有一条垂直渐近线''说的是, $\displaystyle\lim_{x\to a^+}f(x)$和$\displaystyle\lim_{x\to a^-}f(x)$, 其中至少有一个极限是$\infty$或-$\infty$
 \end{minipage}}
-\par}
+\par}\vspace{4ex}
 
+水平渐近线的定义:
 {\par\centering
 \framebox{\begin{minipage}{11cm}
 ``$f$在$y=L$处有一条右侧水平渐近线''意味着$\displaystyle\lim_{x\to\infty}f(x)=L$.\\
 ``$f$在$y=M$处有一条左侧水平渐近线''意味着$\displaystyle\lim_{x\to -\infty}f(x)=M$.
 \end{minipage}}
 \par}\vspace{4ex}
+
+对于大的数和小的数的非正式定义:\\
+
 
 三明治定理(夹逼定理):
 {\par\centering
