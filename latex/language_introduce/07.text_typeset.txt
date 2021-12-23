@@ -334,11 +334,15 @@ this is paragraph three
 
 十六、Demo(示例)16 - verbatim
 \documentclass{article}
+\usepackage{listings}
 \begin{document}
 \verb!this is \{}~ special charactor!
 \begin{verbatim}
-What the #%I&$-\^" i s ' 'going' ' Con) here \today \\\\????
+	A large animal, found in crossword puzzles, that causes no end of trouble. i like this boy, because he is a good one.
 \end{verbatim}
+\begin{lstlisting}
+	A large animal, found in crossword puzzles, that causes no end of trouble. i like this boy, because he is a good one.
+\end{lstlisting}
 \end{document}
 
 内容讲解
@@ -349,3 +353,6 @@ What the #%I&$-\^" i s ' 'going' ' Con) here \today \\\\????
 3.\begin{verbatim}...\end{verbatim}将环境内的内容原样输出
 
 4.\begin{verbatim*}...\end{verbatim*}与\begin{verbatim}...\end{verbatim}一致, 但使用|_|代替<space>
+
+5.\begin{lstlisting}...\end{lstlisting}用于可定制的逐字符输出,
+\lstset{breaklines=true}可自动换行. 包含在listings宏包中
