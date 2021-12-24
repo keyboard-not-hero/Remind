@@ -355,4 +355,5 @@ this is paragraph three
 4.\begin{verbatim*}...\end{verbatim*}与\begin{verbatim}...\end{verbatim}一致, 但使用|_|代替<space>
 
 5.\begin{lstlisting}...\end{lstlisting}用于可定制的逐字符输出,
-\lstset{breaklines=true}可自动换行. 包含在listings宏包中
+\lstset{breaklines=true}可自动换行. 包含在listings宏包中.
+具体参考文件extra_package_02.txt

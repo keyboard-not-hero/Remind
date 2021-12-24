@@ -40,6 +40,7 @@
 	\normalfont\bf\textendash - 破折号, 第二层嵌套默认符号
 	\textasteriskcentered - 星号(*), 第三层嵌套默认符号
 	\textperiodcentered - 上下居中的句号, 第四层嵌套默认符号
+	其他特殊符号参考symbol_summary的表23
 
 3.修改不同层级嵌套的默认符号, \renewcommand{\labelitemi}{\textbullet}. 层级列表如下:
 	\labelitemi - 第一层嵌套
@@ -54,7 +55,53 @@
 
 
 \begin{lstlisting}
-二、Demo02 - 特殊label的无序列表
+二、Demo02 - 有序列表
+\end{lstlisting}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\theenumi-}
+\begin{enumerate}
+	\item The item labels in an enumerated list are numerals or letters.
+	\item A list should have at least two items.
+\end{enumerate}\vspace{2ex}
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\begin{document}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\theenumi-}
+\begin{enumerate}
+	\item The item labels in an enumerated list are numerals or letters.
+	\item A list should have at least two items.
+\end{enumerate}
+\end{document}
+\end{lstlisting}\vspace{1ex}
+
+\begin{lstlisting}
+内容讲解:
+1.\begin{enumerate} ... \end{enumerate}用于序号列表
+
+2.\item为列表项内容
+
+3.\renewcommand{\theenumi}{\alph{enumi}}定义label的序号格式
+\renewcommand{\labelenumi}{\theenumi-}定义label的完整格式(序号+标记符号)
+四层嵌套label列表如下:
+\end{lstlisting}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+& 第一层 & 第二层 & 第三层 & 第四层\\
+\hline
+计数器名 & enumi & enumii & enumiii & enumiv\\
+序号指令 & \textbackslash theenumi & \textbackslash theenumii & \textbackslash theenumiii & \textbackslash theenumiv\\
+序号默认格式 & \textbackslash arabic\{enumi\} & \textbackslash alph\{enumii\} & \textbackslash roman\{enumiii\} & \textbackslash Alph\{enumiv\}\\
+label指令 & \textbackslash labelenumi & \textbackslash labelenumii & \textbackslash labelenumiii & \textbackslash labelenumiv\\
+label默认格式 & \textbackslash theenumi. & (\textbackslash theenumii) & \textbackslash theenumiii. & \textbackslash theenumiv.\\
+\hline
+\end{tabular}\vspace{6ex}
+
+
+\begin{lstlisting}
+三、Demo03 - 特殊label的列表(有序和无序)
 \end{lstlisting}
 求解相关变化率的方法:
 \begin{dinglist}{47}
@@ -62,9 +109,14 @@
 	\item 写出一个关联所有量的方程
 	\item 对方程关于时间t作隐函数求导
 	\item 将已知值代入方程中作替换
-\end{dinglist}\vspace{2ex}
-源代码:
+\end{dinglist}
+\begin{dingautolist}{172}
+    \item The item labels in an enumerated list are numerals or letters.
+    \item A list should have at least two items.
+\end{dingautolist}\vspace{2ex}
+
 \begin{lstlisting}
+源代码:
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{pifont}
 \begin{document}
@@ -74,45 +126,37 @@
 	\item 对方程关于时间t作隐函数求导
 	\item 将已知值代入方程中作替换
 \end{dinglist}
+\begin{dingautolist}{172}
+    \item The item labels in an enumerated list are numerals or letters.
+    \item A list should have at least two items.
+\end{dingautolist}
 \end{document}
 \end{lstlisting}\vspace{1ex}
 
 \begin{lstlisting}
 内容讲解:
-1.\begin{dinglist}{<num>}...{dinglist}为特殊label的无序列表. 包含在pifont环境中. label序号列表参考symbol_summary的表22
+1.\ding{<num>}为单个特殊符号
 
-2.\ding{<num>}为单个特殊符号
+2.\dingfill{<num>}使用特殊符号填充行
+
+3.\dingline{<num>}使用特殊符号占据行, 与\dingfill不同, 两侧会留更多空隙
+
+4.\begin{dinglist}{<num>}...{dinglist}为特殊label的无序列表(所有item使用相同label)
+
+5.\begin{dingautolist}{<num>}...{dingautolist}为特殊label的有序列表(随着item递增序号)
+
+6.以上指令都包含在pifont宏包中, label序号列表参考symbol_summary的表22
 \end{lstlisting}\vspace{6ex}
 
 
 \begin{lstlisting}
-三、Demo03 - enumerate list
+四、Demo04 - description list
 \end{lstlisting}
-\begin{enumerate}
-	\item The item labels in an enumerated list are numerals or letters.
-	\item A list should have at least two items.
-\end{enumerate}
-
-\begin{lstlisting}
-源代码:
-\begin{enumerate}
-	\item The item labels in an enumerated list are numerals or letters.
-	\item A list should have at least two items.
-\end{enumerate}
-
-内容讲解:
-1.\begin{enumerate} ... \end{enumerate}用于序号列表
-
-2.\item为列表项内容
-\end{lstlisting}
-
-
-%四、Demo04 - description list
-	\begin{description}
-		\item[gnat] A small animal, found in the North Woods, that causes no end of trouble.
-		\item[gnu] A large animal, found in crossword puzzles, that causes no end of trouble.
-		\item[armadillo] A medium-sized animal, named after a medium-sized Texas city.
-	\end{description}
+\begin{description}
+	\item[gnat] A small animal, found in the North Woods, that causes no end of trouble.
+	\item[gnu] A large animal, found in crossword puzzles, that causes no end of trouble.
+	\item[armadillo] A medium-sized animal, named after a medium-sized Texas city.
+\end{description}\vspace{2ex}
 
 %内容讲解
 %1.\begin{description} ... \end{description}用于描述性列表
