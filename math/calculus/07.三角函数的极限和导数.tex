@@ -41,6 +41,10 @@ $\displaystyle\phantom{\therefore}\lim_{x\to\infty}\frac{x\sin(11x^7)-\frac{1}{2
 例.\\
 \phantom{例}$\displaystyle\lim_{x\to\frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}$\\
 设$t=x-\frac{\pi}{2}$, 则\\
+$\displaystyle\lim_{x\to\frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}=\lim_{t\to 0}\frac{\cos(t+\frac{\pi}{2})}{t}$\\
+$\displaystyle\because\cos(\frac{\pi}{2}-x)=\sin x$\\
+$\displaystyle\therefore\cos(\frac{\pi}{2}+x)=\sin(-x)=-\sin x$\\
+$\displaystyle\therefore\lim_{t\to 0}\frac{\cos(t+\frac{\pi}{2})}{t}=\lim_{t\to 0}\frac{-\sin t}{t}=-1$\\[2ex]
 
 2.三角函数的导数\\[2ex]
 \framebox{$\displaystyle\frac{\dif}{\dif x}\sin(x)=\cos(x)$}\\[2ex]
@@ -49,3 +53,27 @@ $\displaystyle\phantom{\therefore}\lim_{x\to\infty}\frac{x\sin(11x^7)-\frac{1}{2
 \framebox{$\displaystyle\frac{\dif}{\dif x}\cot(x)=-\csc^2(x)$}\\[2ex]
 \framebox{$\displaystyle\frac{\dif}{\dif x}\sec(x)=\sec(x)\tan(x)$}\\[2ex]
 \framebox{$\displaystyle\frac{\dif}{\dif x}\csc(x)=-\csc(x)\cot(x)$}\\[2ex]
+
+例1.\\
+\phantom{例}$\displaystyle\frac{\dif}{\dif x}x^2\sin x$\\
+根据乘积法则:\\
+$u=x^2$, $v=\sin x$\\
+$\frac{\dif u}{\dif x}=2x$, $\frac{\dif v}{\dif x}=\cos x$\\
+$\frac{\dif y}{\dif x}=u\frac{\dif v}{\dif x}+v\frac{\dif u}{\dif x}=x^2\cos x+2x\sin x$\\[2ex]
+
+例2.\\
+\phantom{例}$\displaystyle\frac{\dif}{\dif x}(\frac{\sec x}{x^5})$\\
+根据商法则:\\
+$u=\sec x$, $v=x^5$\\
+$\frac{\dif u}{\dif x}=\tan x\sec x$, $\frac{\dif v}{\dif x}=5x^4$\\
+$\displaystyle\frac{\dif y}{\dif x}=\frac{v\frac{\dif u}{\dif x}-u\frac{\dif v}{\dif x}}{v^2}=\frac{x^5\tan x\sec x-5x^4\sec x}{x^{10}}=\frac{\sec x(x\tan x-5)}{x^6}$\\[2ex]
+
+例3.\\
+\phantom{例}$\displaystyle\frac{\dif}{\dif x}\cot x^3$\\
+根据链式求导法则:\\
+设$u=x^3$, 则:\\
+$\displaystyle\frac{\dif y}{\dif u}=-\csc^2u$\\
+$\displaystyle\frac{\dif u}{\dif x}=3x^2$\\
+$\displaystyle\frac{\dif y}{\dif x}=\frac{\dif y}{\dif u}\frac{\dif u}{\dif x}=-3x^2\csc^2(x^3)$
+
+%最后编辑于: 2021-12-27
