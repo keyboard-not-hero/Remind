@@ -1,20 +1,46 @@
 \chapter{三角函数的极限和导数}
-1.三角函数的极限:\\[2ex]
-\framebox{$\displaystyle\lim_{x\to 0}\frac{\sin(x)}{x}=1$}\\[2ex]
-\framebox{$\displaystyle\lim_{x\to 0}\frac{\tan(x)}{x}=1$}\\[2ex]
-实例.\\
+1.三角函数的极限:\\
+(1)$x\to 0$的情况\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=1$}\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{\tan x}{x}=1$}\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\cos x=1$}\\[2ex]
+\framebox{$\displaystyle\lim_{x\to 0}\frac{1-\cos x}{x}=0$}\\[2ex]
+例1.\\
+\phantom{例}$\displaystyle\lim_{x\to 0}\frac{\sin5x}{x}$\\
+$\displaystyle\lim_{x\to 0}\frac{\sin5x}{x}=\lim_{x\to 0}\frac{\frac{\sin5x}{5x}}{x}\times5x=1\times5=5$\\
+
+例2.\\
+\phantom{例}$\displaystyle\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}$
 $\displaystyle\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}=\lim_{x\to 0}\frac{[\frac{(\sin(2x))^3}{(2x)^3}\times (2x)^3]\cos(5x^{19})}{x[\frac{\tan(5x^2)}{5x^2}\times (5x^2)]}$\\
 $\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\lim_{x\to 0}\frac{\frac{(\sin(2x))^3}{(2x)^3}\cdot\cos(5x^{19})}{\frac{\tan(5x^2)}{5x^2}}\times\frac{(2x)^3}{x(5x^2)}$\\
-$\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\lim_{x\to 0}\frac{(\frac{\sin(2x)}{2x})^3\cos(5x^{19})}{\frac{\tan(5x^2)}{5x^2}}\times\frac{8x^3}{5x^3}=\frac{8}{5}$\\[2ex]
-\framebox{$\displaystyle\lim_{x\to 0}\frac{1-\cos(x)}{x}=0$}\\[2ex]
-证明:\\[2ex]
-$\displaystyle\lim_{x\to 0}\frac{1-\cos(x)}{x}=\lim_{x\to 0}\frac{1-\cos(x)}{x}\times\frac{1+\cos(x)}{1+\cos(x)}$\\
-$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\frac{1-\cos^2(x)}{x}\times\frac{1}{1+\cos(x)}$\\
-$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\frac{\sin^2(x)}{x}\times\frac{1}{1+\cos(x)}$\\
-$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=\lim_{x\to 0}\sin(x)\times\frac{\sin(x)}{x}\times\frac{1}{1+\cos(x)}$\\
-$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos(x)}{x}}=0\times 1\times\frac{1}{1+1}=0$\\[2ex]
-对于任意的$x$,\framebox{$-1\leqslant\sin(x)\leqslant 1$}和\framebox{$-1\leqslant\cos(x)\leqslant 1$}\\[2ex]
-面对$x\to a$的极限, 而$a\neq 0$时, 有一个很好的一般原则, 那就是用$t=x-a$作替换, 将问题转化为$t\to 0$\\[2ex]
+$\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\lim_{x\to 0}\frac{8x^3}{5x^3}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{\sin^3(2x)\cos(5x^{19})}{x\tan(5x^2)}}=\frac{8}{5}$\\
+
+例3.\\
+\phantom{例}$\displaystyle\lim_{x\to 0}x\sin(\frac{5}{x})$\\
+$\displaystyle\lim_{x\to 0}x\sin(\frac{5}{x})=\lim_{x\to 0}\frac{\sin(frac{5}{x})}{\frac{5}{x}}\times5=1\times5=5$\\
+
+例4.\\
+\phantom{例}$\displaystyle\lim_{x\to 0}\frac{1-\cos x}{x^2}$\\
+$\displaystyle\lim_{x\to 0}\frac{1-\cos x}{x^2}=\lim_{x\to 0}\frac{1-\cos x}{x^2}\times\frac{1+\cos x}{1+\cos x}=\lim_{x\to 0}\frac{1-\cos^2x}{x^2(1+\cos x)}$\\
+$\displaystyle\phantom{\lim_{x\to 0}\frac{1-\cos x}{x^2}}=\lim_{x\to 0}\frac{\sin^2x}{x^2}\times\frac{1}{1+\cos x}=1\times\frac{1}{2}=\frac{1}{2}$\\[2ex]
+
+(2)$x\to\infty/-\infty$的情况\\
+例.\\
+\phantom{例}$\displaystyle\lim_{x\to\infty}\frac{x\sin(11x^7)-\frac{1}{2}}{2x^4}$\\
+$\displaystyle\because-1\leqslant\sin(11x^7)\leqslant1$\\
+$\displaystyle\therefore-x-\frac{1}{2}\leqslant x\sin(11x^7)-\frac{1}{2}\leqslant x-\frac{1}{2}$\\
+$\displaystyle\phantom{\therefore}\frac{-x-\frac{1}{2}}{2x^4}\leqslant\frac{x\sin(11x^7)-\frac{1}{2}}{2x^4}\leqslant\frac{x-\frac{1}{2}}{2x^4}$\\
+而$\displaystyle\lim_{x\to\infty}\frac{-x-\frac{1}{2}}{2x^4}=\lim_{x\to\infty}-\frac{1}{2x^3}-\frac{1}{4x^4}=0$\\
+\phantom{而}$\displaystyle\lim_{x\to\infty}\frac{x-\frac{1}{2}}{2x^4}=\lim_{x\to\infty}\frac{1}{2x^3}-\frac{1}{4x^4}=0$\\
+$\displaystyle\therefore$根据夹逼定理\\
+$\displaystyle\phantom{\therefore}\lim_{x\to\infty}\frac{x\sin(11x^7)-\frac{1}{2}}{2x^4}=0$\\[2ex]
+
+(3)其他情况\\
+面对$x\to a$的极限, 而$a\neq 0$时, 使用$t=x-a$作替换, 将问题转化为$t\to 0$\\
+例.\\
+\phantom{例}$\displaystyle\lim_{x\to\frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}$\\
+设$t=x-\frac{\pi}{2}$, 则\\
 
 2.三角函数的导数\\[2ex]
 \framebox{$\displaystyle\frac{\dif}{\dif x}\sin(x)=\cos(x)$}\\[2ex]
