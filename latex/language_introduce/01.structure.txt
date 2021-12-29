@@ -124,10 +124,6 @@ report - [part] -> chapter -> section -> subsection...
 6.\tableofcontents生成目录索引, 包含两个步骤:
 	i. 生成.toc文件
 	ii.生成目标文件
-** 可使用\usepackage{hyperref}, 使目录超链接到指定页码, 并确保该宏包最后导入
-** hyperref默认使用红色边框限定超链接, 可选参数:
-	colorlinks=true - 链接边框模式修改为字体颜色模式
-	linkcolor=red - 修改链接字体颜色
 
 7.\listoffigures生成entry依据为\begin{figure}...\end{figure}中的\caption内容, \listoftables类似
 

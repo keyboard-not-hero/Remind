@@ -22,9 +22,10 @@ A gnat with gnarled wings gnashed
 
 
 
-二、Demo(示例)02 - index with MakeIndex
+二、Demo02 - makeidx宏
 \documentclass{article}
 \usepackage{makeidx}
+\usepackage[colorlinks=true]{hyperref}
 \makeindex
 \begin{document}
     this is a\index{an} test file\\
@@ -33,15 +34,17 @@ A gnat with gnarled wings gnashed
 \end{document}
 
 内容讲解
-1.\makeindex生成.idx格式的索引文件, 位于preamble区域
+1.\makeindex生成.idx格式的索引文件, 指令位于preamble区域
 
-2.index{idx_name}对单词配置索引, idx_name为索引名称. 特性如下:
+2.index{idx_name}对正文内容配置索引, idx_name为索引名称. 特性如下:
 	(1)可使用次级索引名称, 使用'!'与主索引分隔, 如: \index{gnat!good}. '!'可嵌套, 最多生成第2层子级索引(subsubentry)
-	(2)可跨页, 起始页位置使用\index{<index_name>|(}, 结束页位置使用\index{<index_name>|)}
-	(3)可利用额外单词确定index位置, \index{twenty@zero}中, twenty用于决定该index在队列中的位置, zero为显示的index内容
+	(2)可跨多页索引, 起始页位置使用\index{<index_name>|(}, 结束页位置使用\index{<index_name>|)}
+	(3)\index{twenty@zero}中, twenty用于排序(不显示), zero为实际显示的index内容
 	(4)以下三个特殊字符需要使用"(双引号)跳过特殊意义: ! @ |
 
-3.\printindex显示index列表. 包含在makeidx宏包中
+3.\printindex放置index列表. 包含在makeidx宏包中
 
 4.编译过程:
 	.tex --> .idx --> .ind
+
+5.\package[colorlinks=true]{hyperref}将index进行超链接, 并且为链接文字指定颜色

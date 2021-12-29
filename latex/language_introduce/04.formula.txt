@@ -337,26 +337,40 @@
 \usepackage{amsmath}
 \begin{document}
 \begin{gather}
-    x\!+\!y\!=\!z\\
+    x\negthinspace +\negthinspace y\negthinspace =\negthinspace z\\
     x+y=z\\
-    x\,+\,y\,=\,z\\
-    x\:+\:y\:=\:z\\
-    x\;+\;y\;=\;z\\
-    x\ +\ y\ =\ z
+    x\thinspace +\thinspace y\thinspace =\thinspace z\\
+    x\medspace +\medspace y\medspace =\medspace z\\
+    x\thickspace +\thickspace y\thickspace =\thickspace z\\
+    x\enskip +\enskip y\enskip =\enskip z\\
+    x\quad +\quad y\quad =\quad z\\
 \end{gather}
 \end{document}
 
 内容讲解
 1.math mode环境中, 忽视所有空格符号
 
-2.\!代表缩小与\,相同的间隔距离, 但\!为反向空格
+2.正水平间距列表(由小到大):
+	\thinspace - 简化版为\,
+	\medspace - 简化版为\: , 完整版在amsmath宏包中
+	\thickspace - 简化版为\; , 完整版在amsmath宏包中
+	\enskip - 比\quad略小
+	\quad
+	\qquad
 
-3.空格距离汇总: \! < <space> < \, < \: < \; < \<space>
+3.负水平间距列表(负距离由小到大, 间隔越来越小):
+	\negthinspace - 负距离最小, 间隔最大. 简化版为\!
+	\negmedspace - 在amsmath宏包中
+	\negthickspace - 负距离最大, 在amsmath宏包中
 
-4.\hspace{}用于指定水平空格距离
+4.水平间距汇总:
+	\negthickspace < \negmedspace < \negthinspace < none < \thinspace <
+\medspace < \thickspace < \enskip < \quad < \qquad
+
+5.\hspace{}用于指定水平空格距离
 \hspace*{}用于指定水平空格距离, 并且当其位于行首或行尾时, 也不移除该水平空格
 
-5.\vspace{}用于段落之间的垂直距离
+6.\vspace{}用于段落之间的垂直距离
 \vspace*{}用于段落之间的垂直距离, 并且当其位于页首或页尾时, 也不移除该垂直距离
 
 
@@ -484,10 +498,10 @@ Definition(定义)建议配置:
 	$\displaystyle\sum$\\
 	\[\sum\]\\
 	\[\textstyle\sum\]\\
-	a_i\\
-	a_{\textstyle i}\\
-	a_{i^j}\\
-	a_{i^{\scriptstyle j}}
+	$a_i$\\
+	$a_{\textstyle i}$\\
+	$a_{i^j}$\\
+	$a_{i^{\scriptstyle j}}$
 \end{document}
 
 内容讲解
@@ -514,17 +528,24 @@ Definition(定义)建议配置:
 内容讲解
 1.\frac{numerator}{denominator}为分数形式, numerator为分子, denominator为分母
 
-2.\sqrt[n]{number}为求次方根, n为所求次方根, number为求次方根的数字
+2.\cfrac[分子位置]{分子}{分母}为可指定分子位置的分数, 指令包含在amsmath宏包中. 分子位置的可选值列表:
+	l - 与分数线左侧对齐
+	c - 与分数线中间对齐, 默认值
+	r - 与分数线右侧对齐
 
-3._为下角标, ^为上脚标
+3.\sfrac{分子}{分母}用于斜分数, 包含在xfrac宏包中
 
-4.\substack{}用于提供多行格式的superscript/subscript, 包含在amsmath宏包中
+4.\sqrt[n]{number}为求次方根, n为所求次方根, number为求次方根的数字
 
-5.\limits可以指定上/下标位于内容正上/下方, 但对象必须为数学操作符
+5._为下角标, ^为上脚标
 
-6.\nolimits可以指定上/下标位于右上/下方, 但对象必须为数学操作符
+6.\substack{}用于提供多行格式的superscript/subscript, 包含在amsmath宏包中
 
-7.\underset{under}{content}可以使under直接位于content下方
+7.\limits可以指定上/下标位于内容正上/下方, 但对象必须为数学操作符
+
+8.\nolimits可以指定上/下标位于右上/下方, 但对象必须为数学操作符
+
+9.\underset{under}{content}可以使under直接位于content下方
 
 
 

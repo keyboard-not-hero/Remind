@@ -1,0 +1,141 @@
+一、Demo01 - 基础目录
+\documentclass{article}
+\usepackage{pifont}
+\begin{document}
+\tableofcontents
+\part{part I}
+this is part I
+    \section{section a}
+    this is section a
+        \subsection{subsection A}
+        this is subsection A
+            \subsubsection{subsubsection \ding{172}}
+                \paragraph{paragraph I}
+\part{part II}
+this is pater II
+    \section{section b}
+        this is section b
+        \subsection{subsection B}
+            this is subsection B
+            \subsubsection{subsubsection \ding{173}}
+                \paragraph{paragraph I}
+\end{document}
+
+内容讲解:
+1.\tableofcontents生成目录
+
+2.article目录层级:
+    \part                         level0
+    \section                      level1
+    \subsection                   level2
+    \subsubsection                level3
+    \paragraph                    level4
+    \subparagraph                 level5
+默认深度为3, 即0 - 3
+
+3.report/book目录层级:
+    \part                         level-1
+    \chapter(only report/book)    level0
+    \section                      level1
+    \subsection                   level2
+    \subsubsection                level3
+    \paragraph                    level4
+    \subparagraph                 level5
+默认深度为2, 即-1 - 2
+
+
+二、Demo02 - 设置目录属性
+\documentclass{book}
+\usepackage{pifont}
+\setcounter{tocdepth}{4}
+\begin{document}
+\pagenumber{Roman}
+\tableofcontents
+\part{part I}
+this is part I
+    \chapter{chapter 1}
+        this is chapter 1
+        \section{section a}
+            this is section a
+            \subsection{subsection A}
+                this is subsection A
+                \subsubsection{subsubsection \ding{172}}
+                    \paragraph{paragraph I}
+\pagenumbering{arabic}
+\part{part II}
+this is pater II
+    \chapter{chapter 2}
+        this is chapter 2
+        \section{section b}
+            this is section b
+            \subsection{subsection B}
+                this is subsection B
+                \subsubsection{subsubsection \ding{173}}
+                    \paragraph{paragraph I}
+\end{document}
+
+内容讲解:
+1.setcounter{tocdepth}{3}设置目录的深度
+
+2.\pagenumbering{arabic}从正文(chapter)部分开始重新页面计数,
+并将计数方式设置为阿拉伯数字
+
+
+三、Demo03 - 双栏目录
+\documentclass{book}
+\usepackage{pifont}
+\setcounter{tocdepth}{4}
+\usepackage[toc]{multitoc}
+\begin{document}
+\tableofcontents
+\part{part I}
+this is part I
+    \chapter{chapter 1}
+        this is chapter 1
+        \section{section a}
+            this is section a
+            \subsection{subsection A}
+\pagenumbering{arabic}
+\part{part II}
+this is pater II
+    \chapter{chapter 2}
+        this is chapter 2
+        \section{section b}
+            this is section b
+            \subsection{subsection B}
+\end{document}
+
+内容讲解:
+1.\usepackage[toc]{multitoc}生成双栏目录
+
+
+四、Demo04 - 目录超链接
+\documentclass{book}
+\usepackage{hyperref}
+\begin{document}
+\tableofcontents
+\part{part I}
+this is part I
+    \chapter{chapter 1}
+        this is chapter 1
+        \section{section a}
+            this is section a
+            \subsection{subsection A}
+\pagenumbering{arabic}
+\part{part II}
+this is pater II
+    \chapter{chapter 2}
+        this is chapter 2
+        \section{section b}
+            this is section b
+            \subsection{subsection B}
+\end{document}
+
+1.\usepackage[args]{hyperref}用于给目录建立超链接(必须确保hyperref宏包为最后一个导入宏包),
+可选参数列表:
+	colorlinks - 使用设置超链接为指定颜色. 值列表如下:
+		true - 使用红色字体色
+		false - 使用红色外边框
+	linkcolor - 当超链接为字体色时, 设置字体颜色
+	
+2.\hypersetup为宏包可选参数设置指令

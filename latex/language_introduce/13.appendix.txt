@@ -1,0 +1,43 @@
+一、Demo(示例)01 - 基础附录
+\documentclass{article}
+\title{simple demo}
+\begin{document}
+\section{Hello}
+Hello World!!
+\section{Done}
+this is done.
+\appendix
+\section{how}
+how are you
+\section{like}
+i like you
+\end{document}
+
+内容讲解
+1.\appendix为正文之后的附录, 作用如下:
+	1)report/book
+	将chapter标题修改为appendix
+	重置chapter/section计数器
+	将chapter计数器格式由阿拉伯数字修改为大写英文字母
+
+	2)article
+	重置section/subsection计数器
+	将section计数器格式由阿拉伯数字修改为大写英文字母	
+
+
+二、Demo02 - appendix宏包
+\documentclass{article}
+\usepackage{appendix}
+\begin{document}
+
+\end{document}
+
+内容讲解
+1.\appendixpage生成附录标题页
+
+2.\renewcommand{\appendixpagename}{<title_name>}可修改附录标题页的标题,
+默认为Appendices
+
+3.\renewcommand{\aapendixname}{<appendix_chapter_name>}可修改附录章节标题前缀
+
+4.\begin{appendices}...\end{appendices}用于替代\appendix生成附录正文内容
