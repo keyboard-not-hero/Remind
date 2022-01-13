@@ -215,11 +215,11 @@ bank, and of having nothing to do
 \end{document}
 
 内容讲解
-1.\noindent取消段落内的当前行缩进
+1.\noindent取消当前段落内的首行缩进
 
-2.\indent开启段落内的当前缩进
+2.\indent开启当前段落内的首行缩进
 
-3.\parindent代表段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
+3.\parindent设置所有段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
 
 
 

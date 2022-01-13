@@ -1,52 +1,52 @@
 \chapter{反常积分:基本概念}
-1.当$\int_a^bf(x)\dif x$出现以下情况， 称为反常积分:\\
+1.收敛和发散\\
+当$\int_a^bf(x)\dif x$出现以下情况， 称为反常积分:\\
 (1)函数$f$在$[a，b]$内是无界的(垂直渐近线)\\
 (2)$b=\infty$\\
 (3)$a=-\infty$\\[2ex]
 
-(1)函数在$[a，b]$内无界\\
-破裂点: 当函数$f$在$x=a$处有垂直渐近线时，$x=a$为其\textbf{破裂点}，也称为\textbf{瑕点}.
+如果积分不是反常积分, 那么它自然收敛.\\
+破裂点: 当函数$f(x)$在$x$接近于某点$c$时是无界的，那么我们说该函数在$x=c$处有一个破裂点.\\
+瑕点: 有限区间内的破裂点, 或$x\to\infty/-\infty$.\\[2ex]
+
 {\par\centering
 \framebox{\begin{minipage}{\textwidth}
 如果仅仅在$x$接近于$a$点该函数$f(x)$是无界的， 则定义
 \[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_{a+\varepsilon}^bf(x)\dif x\]
+如果极限存在, 该积分收敛; 否则该积分发散
 \end{minipage}}
 \par}
-如果上述极限存在， 则积分收敛， 否则积分发散\\
 例1.\\
-$\displaystyle\int_0^1\frac{1}{x}\dif x$\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{x}\dif x$\\
 推导过程:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int_0^1\frac{1}{x}\dif x & =\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{x}\dif x\\
-& =\lim_{\varepsilon\to 0^+}\ln|x|\Big|_{\varepsilon}^1\\
-& =\lim_{\varepsilon\to 0^+}(\ln(1)-\ln(\varepsilon))\\
-& =\infty
-\end{array}$\\
+$\displaystyle\int_0^1\frac{1}{x}\dif x=\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{x}\dif x=\lim_{\varepsilon\to 0^+}\ln|x|\Big|_{\varepsilon}^1$\\
+$\displaystyle\phantom{\int_0^1\frac{1}{x}\dif x}=\lim_{\varepsilon\to 0^+}(\ln(1)-\ln(\varepsilon))$\\
+$\displaystyle\phantom{\int_0^1\frac{1}{x}\dif x}=\infty$\\
 所以， 反常积分$\displaystyle\int_0^1\frac{1}{x}\dif x$发散\\[2ex]
 
 例2.\\
-$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$\\
 推导过程:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int_0^1\frac{1}{\sqrt{x}}\dif x & =\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{\sqrt{x}}\dif x\\
-& =\lim_{\varepsilon\to 0^+}2\sqrt{x}\Big|_{\varepsilon}^1=\lim_{\varepsilon\to 0^+}(2-2\sqrt{\varepsilon})=2
-\end{array}$\\
-所以， 反常积分$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$收敛
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-如果函数仅仅在$x$接近于$b$点是无界的， 则定义
-\[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_a^{b-\varepsilon}f(x)\dif x\]
-\end{minipage}}
-\par}
-如果上述极限存在， 则积分收敛， 否则积分发散\\
+$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x=\lim_{\varepsilon\to 0^+}\int_{\varepsilon}^1\frac{1}{\sqrt{x}}\dif x=\lim_{\varepsilon\to 0^+}2\sqrt{x}\Big|_{\varepsilon}^1$\\
+$\displaystyle\phantom{\int_0^1\frac{1}{\sqrt{x}}\dif x}=\lim_{\varepsilon\to 0^+}(2-2\sqrt{\varepsilon})$\\
+$\displaystyle\phantom{\int_0^1\frac{1}{\sqrt{x}}\dif x}=2$\\
+所以， 反常积分$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$收敛\\[2ex]
 
-{\par\centering
+\begin{center}
+\framebox{\begin{minipage}{\textwidth}
+如果函数仅仅在$x$接近于$b$点该函数是无界的， 则定义
+\[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_a^{b-\varepsilon}f(x)\dif x\]
+如果极限存在, 该积分收敛; 否则该积分发散
+\end{minipage}}
+\end{center}\vspace{2ex}
+
+\begin{center}
 \framebox{\begin{minipage}{\textwidth}
 如果函数在区间$[a，b]$内有破裂点$c$， 则定义
 \[\int_a^bf(x)\dif x=\lim_{\varepsilon\to 0^+}\int_a^{c-\varepsilon}f(x)\dif x+\lim_{\varepsilon\to 0^+}\int_{c+\varepsilon}^bf(x)\dif x\]
+只有当两个积分都收敛时, 总积分收敛; 否则发散
 \end{minipage}}
-\par}
-如果上述公式两部分的积分都收敛时，总积分收敛，否则发散\\
+\end{center}\vspace{4ex}
 
 (2)关于$\infty$区间上的积分
 {\par\centering

@@ -67,7 +67,7 @@ du [option]... [file]...
 	默认选项
 
 -S, --separate-dirs
-	目录空间使用情况不包含子目录空间使用情况
+	目录空间使用情况, 包含子目录空间使用情况
 	默认包含
 
 -s, --summarize
@@ -100,8 +100,13 @@ du [option]... [file]...
 示例1 - 统计指定目录(含子目录)下的空间使用情况
 du ~/demo
 
-示例2 - 统计指定目录的空间使用情况
+示例2 - 统计指定目录(不含子目录)的空间使用情况
 du -s ~/demo
 
-示例3 - 精确的空间使用情况
-du --apparent-size ~/demo
+示例3 - 统计指定目录(只包含下一层子目录)的空间使用情况
+du -d 1 ~/demo
+
+示例4 - 指定显示的单位(k/m/human)
+sudo du -k /
+sudo du -m /
+sudo du -h /

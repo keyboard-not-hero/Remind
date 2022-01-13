@@ -1,0 +1,406 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{fancybox}
+\usepackage{boxedminipage}
+\usepackage{listings}
+\lstset{breaklines=true}
+\begin{document}
+\begin{lstlisting}
+1.左右盒子 - 左右模式, 多余内容溢出右侧, 不进行换行.
+内容不能包含\verb等抄录指令/环境
+\mbox{content}
+	无边框盒子
+
+\fbox{content}
+	边框盒子
+
+\makebox[width][position]{content}
+	无边框盒子, 可指定盒子宽度/内容在盒子中的水平位置
+
+\framebox[width][position]{content}
+	边框盒子, 可指定盒子宽度/内容在盒子中的水平位置
+
+\raisebox{offset}[height][depth]{content}
+	上下垂直移动的盒子, 可指定基线位置/高度/深度
+
+\doublebox{content}
+	双边框盒子, 包含在fancybox宏包中
+
+\ovalbox{content}
+	圆角边框盒子, 包含在fancybox宏包中
+
+\shadowbox{content}
+	带阴影边框盒子, 包含在fancybox宏包中
+
+2.段落盒子 - 按段落处理的盒子, 内容可换行/分段落
+\parbox[outer_position][height][inner_position]{width}{content}
+	段落盒子. 不能使用\verb等抄录命令
+
+\begin{minipage}[outer_position][height][inner_position]{width}
+...
+\end{minipage}
+	段落盒子
+\end{lstlisting}\vspace{6ex}
+
+\begin{lstlisting}
+一、Demo(示例)01 - makebox
+\end{lstlisting}
+\noindent this is first line\\
+\makebox[0pt][r]{prefix}this is second line\\
+\[a^2+b^2=c^2\makebox{(勾股定理)}\]
+\[a^2+b^2=c^2\makebox[0pt][l]{(勾股定理)}\]
+Th\^e\makebox[0pt][r]{\raisebox{0.5ex}{\'{}}} Than\'anh\\\vspace{2ex}
+
+\begin{lstlisting}
+源代码:
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+\noindent this is first line\\
+\makebox[0pt][r]{prefix}this is second line\\
+\[a^2+b^2=c^2\makebox{(勾股定理)}\]
+\[a^2+b^2=c^2\makebox[0pt][l]{(勾股定理)}\]
+Th\^e\makebox[0pt][r]{\raisebox{0.5ex}{\'{}}} Than\'anh
+\end{document}
+
+内容讲解
+\makebox[width][position]{content}
+	无边框盒子, 可指定盒子宽度/内容在盒子中的水平位置. 参数如下:
+		width - 盒子的宽度, 参数类型列表:
+			<N> - 直接指定带单位的盒子宽度
+			\width - 盒子内容的规划宽度
+			\textwidth - 当前页的宽度
+		position - 内容相对盒子的位置. 列表如下:
+			l - 左对齐
+			c - 居中
+			r - 右对齐
+			s - 伸展平铺
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+二、Demo(示例)02 - framebox
+\end{lstlisting}
+\setlength{\fboxrule}{2pt}
+\setlength{\fboxsep}{5pt}
+\noindent this is first line\\
+\makebox[0pt][r]{\framebox{prefix}}this is second line\\
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\begin{document}
+\setlength{\fboxrule}{2pt}
+\setlength{\fboxsep}{5pt}
+\noindent this is first line\\
+\makebox[0pt][r]{\framebox{prefix}}this is second line\\
+\end{document}
+
+内容讲解
+1.\framebox[width][position]{content}
+	边框盒子, 可指定盒子宽度/内容在盒子中的水平位置. 参数如下:
+		width - 盒子的宽度, 参数类型列表:
+			<N> - 直接指定带单位的盒子宽度
+			\width - 盒子内容的规划宽度
+			\textwidth - 当前页的宽度
+		position - 内容相对盒子的位置. 列表如下:
+			l - 左对齐
+			c - 居中
+			r - 右对齐
+			s - 伸展平铺
+
+2.\setlength{\fboxrule}{2pt}设置边框的线条宽度, 默认为0.4pt
+
+3.\setlength{\fboxsep}{5pt}设置边框与内容的距离, 默认为3pt
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+三、Demo(示例)03 - raisebox
+\end{lstlisting}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of \raisebox{2ex}{having} nothing to do. \raisebox{-2ex}{Once} or twice she had peeped into the
+book her sister was reading, \raisebox{3ex}[5ex][10ex]{but} it had \raisebox{-3ex}[5ex][10ex]{no} pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or conversations?"
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of \raisebox{2ex}{having} nothing to do. \raisebox{-2ex}{Once} or twice she had peeped into the
+book her sister was reading, \raisebox{3ex}[5ex][10ex]{but} it had \raisebox{-3ex}[5ex][10ex]{no} pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or conversations?"
+\end{document}
+
+内容讲解
+\raisebox{offset}[height][depth]{content}
+	上下垂直移动的盒子, 可指定基线位置/高度/深度
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+四、Demo(示例)04 - doublebox/ovalbox/shadowbox(fancybox宏包)
+\end{lstlisting}
+\setlength{\fboxrule}{0.4pt}
+\setlength{\fboxsep}{6pt}
+\setlength{\shadowsize}{8pt}
+\noindent this is first line\\
+\doublebox{prefix}this is second line\\
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\usepackage{fancybox}
+\begin{document}
+\setlength{\fboxrule}{0.4pt}
+\setlength{\fboxsep}{6pt}
+\setlength{\shadowsize}{8pt}
+\noindent this is first line\\
+\doublebox{prefix}this is second line\\
+\end{document}
+
+内容讲解
+1.\doublebox{content}为双边框盒子, 内边框宽度为0.75*\fboxrule,
+外边框宽度为1.5*\fboxrule, 边框之间空隙为1.5\fboxrule plus 0.5pt
+
+2.\ovalbox{content}为圆角边框盒子, 圆角取长宽之中短的边作为初始直径l
+
+3.\cornersize{factor}设置圆角边框盒子的直径系数, 直径结果为factor*l,
+默认系数为0.5
+
+4.\cornersize*{diameter}直接设置圆角边框盒子的直径长
+
+5.\shadowbox{content}为带阴影边框盒子, 边框宽度为\fboxrule
+
+6.\setlength{\shadowsize}{8pt}用于设置阴影边框的阴影宽度, 默认为4pt
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+五、Demo(示例)05 - parbox
+\end{lstlisting}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\shadowbox{\parbox[b][60ex][s]{20ex}
+{\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+}}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\usepackage{fancybox}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\shadowbox{\parbox[b][60ex][s]{20ex}
+{\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+}}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+\end{document}
+
+内容讲解
+1.\parbox[outer_position][height][inner_position]{width}{content}
+	段落盒子. 内容不能使用抄录命令. 参数列表如下:
+		outer_position - 盒子与外部文本的垂直对齐方式. 可选参数:
+			t - 盒子顶部与外部文本对齐
+			c - 盒子垂直中间与外部文本对齐. 默认
+			b - 盒子底部与外部文本对齐
+		height - 指定盒子的高度. 未指定时, 根据内容行数变化
+		inner_position - 当盒子高度大于内容时(手动指定高度),
+内容与边框的垂直对齐方式. 列表如下:
+			t - 内容与边框顶部对齐
+			c - 内容与边框垂直中部对齐
+			b - 内容与边框底部对齐. 默认
+			s - 内容垂直分散填充满边框高度. 该值需要在环境中插入弹性行距指令,
+如: \baselineskip=12pt plus 2pt
+		width - 盒子的宽度, 参数类型列表:
+			<N> - 直接指定带单位的盒子宽度
+			\textwidth - 当前页的宽度
+
+2.可将\parbox嵌入\framebox或其他边框指令中, 给段落盒子添加边框
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+六、Demo(示例)06 - minipage
+\end{lstlisting}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\shadowbox{\begin{minipage}[b][60ex][s]{20ex}
+\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{minipage}}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\usepackage{fancybox}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\shadowbox{\begin{minipage}[b][60ex][s]{20ex}
+\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{minipage}}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+\end{document}
+
+内容讲解
+1.\begin{minipage}[outer_position][height][inner_position]{width}
+...
+\end{minipage}
+	段落盒子. 参数如下:
+		outer_position - 盒子与外部文本的垂直对齐方式. 可选参数:
+			t - 盒子顶部与外部文本对齐
+			c - 盒子垂直中间与外部文本对齐. 默认
+			b - 盒子底部与外部文本对齐
+		height - 指定盒子的高度. 未指定时, 根据内容行数变化
+		inner_position - 当盒子高度大于内容时(手动指定高度),
+内容与边框的垂直对齐方式. 列表如下:
+			t - 内容与边框顶部对齐
+			c - 内容与边框垂直中部对齐
+			b - 内容与边框底部对齐. 默认
+			s - 内容垂直分散填充满边框高度. 该值需要在环境中插入弹性行距指令,
+如: \baselineskip=12pt plus 2pt
+		width - 盒子的宽度, 参数类型列表:
+			<N> - 直接指定带单位的盒子宽度
+			\textwidth - 当前页的宽度
+
+2.可将minipage环境内嵌在\framebox等边框盒子中, 给段落内容增加边框
+\end{lstlisting}\vspace{6ex}
+
+
+\begin{lstlisting}
+七、Demo(示例)06 - boxedminipage(在boxedminipage宏包中)
+\end{lstlisting}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\begin{boxedminipage}[b]{20ex}
+\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{boxedminipage}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+
+\begin{lstlisting}
+源代码:
+\documentclass{article}
+\usepackage{fancybox}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do. Once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, "and what is the use of a book," thought Alice\\ 
+"without pictures or
+conversations?"
+\begin{boxedminipage}[b]{20ex}
+\baselineskip=12pt plus 2pt So she was considering in her own mind (as well as she could, for the
+day made her feel very sleepy and stupid), whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{boxedminipage}
+There was nothing so very remarkable in that, nor did Alice think it so
+very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh
+dear! I shall be too late!" But when the Rabbit actually took a watch
+out of its waistcoat-pocket and looked at it and then hurried on, Alice
+started to her feet, for it flashed across her mind that she had never
+before seen a rabbit with either a waistcoat-pocket, or a watch to take
+out of it, and, burning with curiosity, she ran across the field after
+it and was just in time to see it pop down a large rabbit-hole, under
+the hedge. In another moment, down went Alice after it!
+\end{document}
+
+内容讲解
+1.\begin{boxedminipage}[outer_position]{width}
+...
+\end{boxedminipage}
+	带边框的段落盒子, 类似于\framebox{\begin{minipage}...\end{minipage}}. 参数如下:
+		outer_position - 盒子与外部文本的垂直对齐方式. 可选参数:
+			t - 盒子顶部与外部文本对齐
+			c - 盒子垂直中间与外部文本对齐. 默认
+			b - 盒子底部与外部文本对齐
+		width - 盒子的宽度, 参数类型列表:
+			<N> - 直接指定带单位的盒子宽度
+			\textwidth - 当前页的宽度
+\end{lstlisting}
+\end{document}
