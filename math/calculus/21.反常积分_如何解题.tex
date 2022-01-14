@@ -1,204 +1,420 @@
 \chapter{反常积分:如何解题}
-1.拆分积分步骤\\
-(1)确定区间$[a,b]$上的所有瑕点;\\
-(2)将积分拆分为若干个积分之和，使每个积分只包含一个瑕点，这些瑕点作为相应积分的上限或下限;\\
-(3)分别讨论每个积分，如果某一积分发散，则整个积分发散，如果每个积分都收敛，则整个积分收敛.\\[2ex]
+1.如何解题\\
+1)拆分积分步骤\\
+\ding{172}确定区间$[a,b]$上的所有瑕点;\\
+\ding{173}将积分拆分为若干个积分之和，使拆分后的每个积分最多包含一个瑕点，这些瑕点作为相应积分的上限或下限;\\
+\ding{174}分别讨论每个积分，如果所有积分收敛，则整个积分收敛; 否则整个积分发散.\\[2ex]
 
-2.如何处理负函数值\\
-(1)如果被积函数$f(x)$在区间$[a,b]$上既有正值又有负值，考虑使用绝对收敛判别法\\
-例.\\
-$\displaystyle\int_1^{\infty}\frac{\sin(x)}{x^2}\dif x$\\
-推导过程:\\
-$\displaystyle\because|\frac{\sin(x)}{x^2}|\leqslant\frac{1}{x^2}$\\
-$\therefore$根据比较判别法:\\
-$\displaystyle\int_1^{\infty}\frac{|\sin(x)|}{x^2}\dif x\leqslant\int_1^{\infty}\frac{1}{x^2}\dif x$\\
-$\because$根据P判别法\\
-$\displaystyle\phantom{\because}\int_1^{\infty}\frac{1}{x^2}\dif x$收敛\\[1ex]
-$\displaystyle\therefore\int_1^{\infty}\frac{|\sin(x)|}{x^2}\dif x$收敛\\
-$\therefore$根据绝对收敛判别法\\
-$\displaystyle\phantom{\therefore}\int_1^{\infty}\frac{\sin(x)}{x^2}$收敛\\[2ex]
+2)如何处理负函数值\\
+\ding{172}如果被积函数$f(x)$在区间$[a,b]$上既有正值又有负值，考虑使用绝对收敛判别法\\
+\ding{173}如果被积函数$f(x)$在区间$[a,b]$上恒为非正, 即在$[a,b]$上$f(x)\leq0$, 则:
+\[\int_a^bf(x)\dif x=-\int_a^b-f(x)\dif x\]
+\ding{174}如果被积函数$f(x)$在区间$[a,b]$上正负无损/增益震荡, 积分发散. 如: $\sin x$, $\cos x$\\[4ex]
 
-(2)如果被积函数$f(x)$在区间$[a,b]$上恒为负，即在$[a,b]$上$f(x)\leqslant 0$，则:
-\[\int_a^bf(x)\dif x=-\int_a^b(-f(x))\dif x\]
-例.\\
-$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x$\\
-推导过程:\\
-$\because$在区间$[0,\frac{1}{2}]$上，$\ln(x)<0$\\
-$\displaystyle\therefore\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x=-\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln(x)|}\dif x$\\
-$\because$当$x\in(0,1)$时，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{\frac{1}{2}}}$(参考4.4, 位于第\pageref{integral:num_01}页)\\
-$\displaystyle\therefore\frac{1}{|\ln(x)|}\geqslant\frac{x^{\frac{1}{2}}}{C}$\\
-$\displaystyle\phantom{\therefore}\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln(x)|}\dif x\geqslant\frac{1}{C}\int_0^{\frac{1}{2}}\frac{1}{x^{\frac{3}{2}}}\dif x$\\
-$\because$根据P判别法\\
-$\displaystyle\phantom{\because}\int_0^{\frac{1}{2}}\frac{1}{x^{\frac{3}{2}}}\dif x=\infty$\\
-$\displaystyle\therefore\int_0^{\frac{1}{2}}\frac{1}{x^2\ln(x)}\dif x$发散\\[2ex]
 
-(3)如果被积函数$f(x)$在区间$[a,b]$上既有正值又有负值，但$f(x)$为震荡函数\\
-例.\\
-$\displaystyle\int_0^{\infty}\cos(x)\dif x$\\
-推导过程:\\
-$\displaystyle\int_0^{\infty}\cos(x)\dif x=\lim_{N\to\infty}\int_0^N\cos(x)\dif x=\lim_{N\to\infty}\sin(x)\Big|_0^N=\lim_{N\to\infty}(\sin(N)-0)=\lim_{N\to\infty}\sin(N)$\\
-所以，被积函数当前极限不存在，其发散\\[2ex]
+2.积分判别法汇总\\
+1)比较判别法
+\begin{center}
+\begin{boxedminipage}{\textwidth}
+如果在区间$(a,b)$内，函数$f(x)\geqslant g(x)\geqslant 0$，且积分$\displaystyle\int_a^bg(x)\dif x$是发散的，那么积分$\displaystyle\int_a^bf(x)\dif x$也是发散的. 即
+\[\int_a^bf(x)\dif x\geqslant\int_a^bg(x)\dif x=\infty\]
+\end{boxedminipage}
+\end{center}\vspace{2ex}
 
-3.常见函数在$\infty$和$-\infty$附近的表现\\
-(1)多项式和多项式函数在$\infty$和$-\infty$附近的表现
-{\par\centering
+\begin{center}
+\begin{boxedminipage}{\textwidth}
+如果在区间$(a,b)$内，函数$0\leqslant f(x)\leqslant g(x)$，且积分$\displaystyle\int_a^bg(x)\dif x$是收敛的，那么积分$\displaystyle\int_a^bf(x)\dif x$也一定是收敛的. 即
+\[\int_a^bf(x)\dif x\leqslant\int_a^bg(x)\dif x<\infty\]
+\end{boxedminipage}
+\end{center}\vspace{2ex}
+
+2)极限比较判别法
+\begin{center}
+\framebox{当$x\to a$时，$f(x)\sim g(x)$同$\displaystyle\lim_{x\to a}\frac{f(x)}{g(x)}=1$有着同样的意义}\\[2ex]
+\begin{boxedminipage}{\textwidth}
+如果当$x\to a$时$f(x)\sim g(x)$，且这两个函数在区间$[a,b]$上没有其他瑕点，那么积分$\displaystyle\int_a^bf(x)\dif x$和$\displaystyle\int_a^bg(x)\dif x$是同时收敛或同时发散的，这称为\textbf{极限比较判别法}
+\end{boxedminipage}
+\end{center}
+注解: 如果函数$g(x)$有原函数没有的瑕点, 需要将原函数在该瑕点处进行拆分\\[2ex]
+
+3)p判别法
+$\displaystyle\cdot\int^{\infty}$的情况：对于任意有限值$a>0$，积分
+\[\int_a^{\infty}\frac{1}{x^p}\dif x\]
+\phantom{$\cdot$}在$p>1$时是收敛的，在$p\leqslant 1$时是发散的\\
+
+$\displaystyle\cdot\int_0$的情况：对于任意有限值$a>0$，积分
+\[\int_0^a\frac{1}{x^p}\dif x\]
+\phantom{$\cdot$}在$p<1$时是收敛的，在$p\geqslant 1$时是发散的\\[2ex]
+
+4)绝对收敛判别法
+\begin{center}
+\framebox{如果$\displaystyle\int_a^b|f(x)|\dif x$是收敛的，那么$\displaystyle\int_a^bf(x)\dif x$也是收敛的}
+\end{center}\vspace{4ex}
+
+3.极限判别法的$g(x)$\\
+1)多项式和多项式型函数在$\infty$和$-\infty$附近的表现
+\begin{center}
 \framebox{若$P(x)$的最高次项是$ax^n$，则当$x\to\infty$或$x\to-\infty$时，有$P(x)\backsim ax^n$}
-\par}
+\end{center}
+
 例1.\\
-$\displaystyle\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x$\\
+\phantom{例}$\displaystyle\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x$\\
 推导过程:\\
-$\because$在区间$[1,\infty)$上, $\infty$为$\displaystyle\frac{1}{2+20\sqrt{x}}$唯一瑕点\\
-\phantom{$because$}而$x\to\infty$时，$\displaystyle\frac{1}{2+20\sqrt{x}}\backsim\frac{1}{20\sqrt{x}}$\\
-$\displaystyle\therefore\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x=\int_1^{\infty}\frac{1}{20\sqrt{x}}\dif x$\\
-$\because$由P判别法\\
+当$x\to\infty$时, $2+20\sqrt{x}\backsim20\sqrt{x}$\\
+$\displaystyle\therefore\frac{1}{2+20\sqrt{x}}\backsim\frac{1}{20\sqrt{x}}$\\
+由p判别法, 得:\\
 $\displaystyle\phantom{\because}\int_1^{\infty}\frac{1}{20\sqrt{x}}\dif x$发散\\
+由极限判别法, 得:\\
 $\displaystyle\therefore\int_1^{\infty}\frac{1}{2+20\sqrt{x}}\dif x$发散\\[1ex]
 
 例2.\\
-$\displaystyle\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$\\
+\phantom{例}$\displaystyle\int_0^\infty\frac{1}{x^5+4x^4+1}\dif x$\\
 推导过程:\\
-由于$\sqrt{x^4}$与$x^2$相消，所以:\\
-$\begin{array}{>{\displaystyle}r >{\displaystyle}l}
-\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x & =\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\times\frac{\sqrt{x^4+8x^3-9}+x^2}{\sqrt{x^4+8x^3-9}+x^2}\dif x\\
-& =\int_9^{\infty}\frac{\sqrt{x^4+8x^3-9}+x^2}{8x^3-9}\dif x
-\end{array}$\\
-$\because$在区间$[9,\infty)$上，仅有$\infty$为瑕点\\
-\phantom{$\because$}而$\sqrt{x^4+8x^3-9}\backsim x^2$，$8x^3-9\backsim 8x^3$\\
-$\therefore\sqrt{x^4+8x^3-9}+x^2\backsim 2x^2$\\
-$\displaystyle\phantom{\therefore}\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x\backsim\int_9^{\infty}\frac{1}{4x}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_9^{\infty}\frac{1}{4x}\dif x$发散\\
-$\displaystyle\therefore\int_9^{\infty}\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$发散\\[2ex]
-
-(2)三角函数在$\infty$或$-\infty$附近的表现
-{\par\centering
-\framebox{$|\sin(A)|\leqslant 1$}
-\framebox{$|\cos(A)|\leqslant 1$}
-\par}
-例.\\
-$\displaystyle\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$\\
-推导过程:\\
-$\because$由比较判别法\\
-$\displaystyle\phantom{\because}\frac{|\sin(x^4)|}{\sqrt(x)+x^2}\leqslant\frac{1}{\sqrt{x}+x^2}$\\
-$\displaystyle\therefore\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x\leqslant\int_5^{\infty}\frac{1}{\sqrt{x}+x^2}\dif x$\\
-$\because$在$x\to\infty$时，$\displaystyle\frac{1}{\sqrt{x}+x^2}\backsim\frac{1}{x^2}$\\
-$\displaystyle\therefore\int_5^{\infty}\frac{1}{\sqrt{x}+x^2}\dif x=\int_5^{\infty}\frac{1}{x^2}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_5^{\infty}\frac{1}{x^2}\dif x$收敛\\
-$\displaystyle\therefore\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$收敛\\[2ex]
-
-(3)指数在$\infty$和$-\infty$附近表现
-{\par\centering
-\framebox{对所有的$x>0$，$e^{-x}\leqslant\frac{C}{x^n}$}
-\par}
-例1.\\
-$\displaystyle\int_1^{\infty}x^3e^{-x}\dif x$\\
-推导过程:\\
-$\displaystyle\int_1^{\infty}x^3e^{-x}\dif x\leqslant\int_1^{\infty}x^3\frac{C}{x^5}\dif x=C\int_1^{\infty}\frac{1}{x^2}\dif x<\infty$\\[1ex]
-
-例2.\\
-$\displaystyle\int_{10}^{\infty}(x^{1000}+x^2+\sin(x))e^{-x^2+6}\dif x$\\
-推导过程:\\
-$\because x\to\infty$时，$x^{1000}+x^2+\sin(x)\backsim x^{1000}$\\
-$\displaystyle\phantom{\because}e^{-x^2+6}\leqslant\frac{C}{x^{1002}}$\\
-$\displaystyle\therefore\int_{10}^{\infty}(x^{1000}+x^+\sin(x))e^{-x^2+6}\dif x\leqslant C\int_{10}^{\infty}\frac{1}{x^2}\dif x<\infty$\\[1ex]
+当$x\to\infty$时, $x^5+4x^4+1\backsim x^5$\\
+$\displaystyle\therefore\frac{1}{x^5+4x^4+1}\backsim\frac{1}{x^5}$\\
+$\displaystyle\because\int_0^\infty\frac{1}{x^5}\dif x在[0,\infty)有两个瑕点$\\
+$\displaystyle\therefore\int_0^\infty\frac{1}{x^5+4x^4+1}\dif x=\int_0^1\frac{1}{x^5+4x^4+1}\dif x+\int_1^\infty\frac{1}{x^5+4x^4+1}\dif x$\\
+$\displaystyle\int_0^1\frac{1}{x^5+4x^4+1}\dif x$自然收敛\\
+由p判别法, 得:\\
+$\displaystyle\int_1^\infty\frac{1}{x^5}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_1^\infty\frac{1}{x^5+4x^4+1}\dif x$收敛\\
+$\displaystyle\therefore\int_0^\infty\frac{1}{x^5+4x^4+1}\dif x$收敛\\[1ex]
 
 例3.\\
-$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x$\\
+\phantom{例}$\displaystyle\int_2^\infty\frac{3x^5+2x^2+9}{x^6+22x^4+\sqrt{4x^{13}+18x}}\dif x$\\
 推导过程:\\
-设$t=-x$，则$\dif t=-\dif x$，得:\\
-$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x=-\int_{\infty}^4(-t)^{1000}e^{-t}\dif t=\int_4^{\infty}t^{1000}e^{-t}\dif t$\\
-$\displaystyle\because e^{-t}\leqslant\frac{C}{t^{1002}}$\\
-$\displaystyle\therefore\int_{-\infty}^{-4}x^{1000}e^x\dif x=\int_4^{\infty}\frac{1}{t^2}\dif t$\\
-根据P判别法\\
-$\displaystyle\int_{-\infty}^{-4}x^{1000}e^x\dif x<\infty$\\[2ex]
+当$x\to\infty$时, $\displaystyle\frac{3x^5+2x^2+9}{x^6+22x^4+\sqrt{4x^{13}+18x}}\backsim\frac{3x^5}{2x^{\frac{13}{2}}}=\frac{3}{2x^\frac{3}{2}}$\\
+由p判别法, 得:\\
+$\displaystyle\int_2^\infty\frac{3}{2x^\frac{3}{2}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_2^\infty\frac{3x^5+2x^2+9}{x^6+22x^4+\sqrt{4x^{13}+18x}}\dif x$收敛\\[1ex]
+
+例4.\\
+\phantom{例}$\displaystyle\int_9^\infty\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$\\
+推导过程:\\
+分子分母同时乘以分母的共轭表达式:\\
+$\displaystyle\int_9^\infty\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x=\displaystyle\int_9^\infty\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\times\frac{\sqrt{x^4+8x^3-9}+x^2}{\sqrt{x^4+8x^3-9}+x^2}\dif x$\\
+$\displaystyle\phantom{\int_9^\infty\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x}=\int_9^\infty\frac{\sqrt{x^4+8x^3-9}+x^2}{8x^3-9}\dif x$\\
+当$x\to\infty$时, $\displaystyle\frac{\sqrt{x^4+8x^3-9}+x^2}{8x^3-9}\backsim\frac{2x^2}{8x^3}=\frac{1}{4x}$\\
+由p判别法, 得:\\
+$\displaystyle\int_9^\infty\frac{1}{4x}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_9^\infty\frac{1}{\sqrt{x^4+8x^3-9}-x^2}\dif x$发散\\[2ex]
+
+2)三角函数在$\infty$或$-\infty$附近的表现
+\begin{center}
+\framebox{$|\sin(A)|\leqslant 1$}\qquad
+\framebox{$|\cos(A)|\leqslant 1$}
+\end{center}
+
+例.\\
+\phantom{例}$\displaystyle\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$\\
+推导过程:\\
+当$x\to\infty$时，$\displaystyle\frac{1}{\sqrt{x}+x^2}\backsim\frac{1}{x^2}$\\
+由p判别法, 得:\\
+$\displaystyle\phantom{\because}\int_5^{\infty}\frac{1}{x^2}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_5^\infty\frac{1}{\sqrt{x}+x^2}\dif x$收敛\\
+$\displaystyle\because\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x\leqslant\int_5^{\infty}\frac{1}{\sqrt{x}+x^2}\dif x<\infty$\\
+$\displaystyle\therefore\int_5^{\infty}\frac{|\sin(x^4)|}{\sqrt{x}+x^2}\dif x$收敛\\[2ex]
+
+3)指数在$\infty$和$-\infty$附近表现
+\begin{center}
+\framebox{对所有的$x>0$，$e^{-x}\leqslant\frac{C}{x^n}$}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\int_{10}^\infty(x^{1000}+x^2+\sin(x))e^{-x^2+6}\dif x$\\
+推导过程:\\
+当$x\to\infty$时，$(x^{1000}+x^2+\sin x)e^{-x^2+6}\backsim x^{1000}e^{-x^2+6}$\\
+$\displaystyle\because e^{-x^2+6}\leqslant\frac{C}{x^{1002}}$\\
+$\displaystyle\therefore\int_{10}^\infty x^{1000}e^{-x^2+6}\dif x\leqslant C\int_{10}^{\infty}\frac{1}{x^2}\dif x$\\
+由p判别法, 得:\\
+$\displaystyle C\int_{10}^\infty\frac{1}{x^2}$收敛\\
+即$\displaystyle\int_{10}^\infty x^{1000}e^{-x^2+6}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_{10}^\infty(x^{1000}+x^2+\sin x)e^{-x^2+6}\dif x$收敛\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\int_9^\infty\frac{x^{10}}{e^x-5x^{20}}\dif x$\\
+推导过程:\\
+当$x\to\infty$时, $e^x-5x^{20}\backsim e^x$\\
+$\displaystyle\because e^{-x}\leqslant\frac{C}{x^{12}}$\\
+$\displaystyle\therefore\int_9^\infty\frac{x^{10}}{e^x}\dif x\leqslant C\int_9^\infty\frac{1}{x^2}\dif x$\\
+由p判别法, 得:\\
+$\displaystyle C\int_9^\infty\frac{1}{x^2}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_9^\infty\frac{x^10}{e^x-5x^{20}}\dif x$收敛\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\int_{18}^\infty\frac{x^2}{7^x-4^x}\dif x$\\
+推导过程:\\
+当$x\to\infty$时, $7^x-4^x\backsim 7^x$\\
+$\because x>0$时, $\displaystyle 7^{-x}\leqslant\frac{C}{x^4}$\\
+$\displaystyle\therefore\int_{18}^\infty\frac{x^2}{7^x}\dif x\leqslant C\int_{18}^\infty\frac{1}{x^2}\dif x$\\
+由p判别法, 得:\\
+$\displaystyle C\int_{18}^\infty\frac{1}{x^2}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_{18}^\infty\frac{x^2}{7^x-4^x}\dif x$收敛\\[2ex]
 
 (4)对数在$\infty$附近的表现
-{\par\centering
+\begin{center}
 \framebox{对所有$x>1$，$\ln(x)\leqslant Cx^{\alpha}$}
-\par}
+\end{center}
+
 例1.\\
-$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$\\
+\phantom{例}$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$\\
 推导过程:\\
-$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x\leqslant\int_2^{\infty}\frac{Cx^{0.0005}}{x^{1.001}}\dif x=C\int_2^{\infty}\frac{1}{x^{1.0005}}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_2^{\infty}\frac{1}{x^{1.0005}}\dif x<\infty$\\
-$\displaystyle\therefore\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$收敛\\
+$\because x>1$时, $\ln x\leqslant Cx^{0.0001}$\\
+$\displaystyle\therefore\int_2^\infty\frac{\ln x}{x^{1.001}}\dif x\leqslant C\int_2^\infty\frac{1}{x^{1.0009}}\dif x$\\
+由p判别法, 得:\\
+$\displaystyle\int_2^{\infty}\frac{1}{x^{1.0009}}\dif x$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\int_2^{\infty}\frac{\ln(x)}{x^{1.001}}\dif x$收敛\\[1ex]
 
 例2.\\
 $\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x$\\
 推导过程:\\
-$\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x\geqslant\int_2^{\infty}\frac{1}{x^{1.001}\ln(2)}\dif x=\frac{1}{\ln(2)}\int_2^{\infty}\frac{1}{x^{1.001}}\dif x$\\
-$\because$由P判别法\\
+当$x\geqslant 2$时, $\ln x\geqslant\ln 2$\\
+$\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x\leqslant\frac{1}{\ln(2)}\int_2^{\infty}\frac{1}{x^{1.001}}\dif x$\\
+由p判别法, 得:\\
 $\displaystyle\phantom{\because}\frac{1}{\ln(2)}\int_2^{\infty}\frac{1}{x^{1.001}}\dif x<\infty$\\
-$\displaystyle\therefore\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\int_2^{\infty}\frac{1}{x^{1.001}\ln(x)}\dif x$收敛\\[1ex]
 
 例3.\\
-$\displaystyle\int_2^{\infty}\dif x$\\
+\phantom{例}$\displaystyle\int_2^\infty\frac{\ln x}{x}\dif x$\\
 推导过程:\\
-设$t=\ln(x)$，则$\dif t=\dfrac{1}{x}\dif x$，得:\\
-$\displaystyle\int_2^{\infty}\frac{1}{x\ln(x)}=\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t=\infty$\\
-$\displaystyle\therefore\int_2^{\infty}\frac{1}{x\ln(x)}\dif x$发散\\[4ex]
+当$x\geqslant 2$时, $\ln x\geqslant\ln 2$\\
+$\displaystyle\therefore\int_2^\infty\frac{\ln x}{x}\dif x\geqslant\ln 2\int_2^\infty\frac{1}{x}\dif x$\\
+由p判别法, 得:\\
+$\displaystyle\int_2^\infty\frac{1}{x}\dif x$发散\\
+由比较判别法, 得:\\
+$\displaystyle\int_2^\infty\frac{\ln x}{x}\dif x$发散\\[1ex]
 
-4.常见函数在$0$附近的表现\\
-(1)多项式和多项式函数在$0$附近的表现
-{\par\centering
-\framebox{若$P(x)$的最低次项是$bx^m$，则当$x\to\infty$时，$P(x)\backsim bx^m$}
-\par}
-例.\\
-$\displaystyle\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$\\
+例4.\\
+\phantom{例}$\displaystyle\int_2^\infty\frac{1}{x\ln x}\dif x$\\
 推导过程:\\
-$\because$当$x\to 0^+$时， $\displaystyle\frac{1}{x^2+\sqrt{x}}\backsim\frac{1}{\sqrt{x}}$\\
-\phantom{$\because$}由P判别法\\
-$\displaystyle\phantom{\because}\int_0^5\frac{1}{\sqrt{x}}\dif x<\infty$\\
-$\displaystyle\therefore\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$收敛\\[2ex]
+令$t=\ln x$, 则$\dif t=\frac{1}{x}\dif x$\\
+$\displaystyle\int_2^\infty\frac{1}{x\ln x}\dif x=\int_{\ln 2}^\infty\frac{1}{t}\dif t$\\
+由p判别法, 得:\\
+$\displaystyle\int_{\ln 2}^\infty\frac{1}{t}\dif t$发散\\
+$\displaystyle\therefore\int_2^\infty\frac{1}{x\ln x}\dif x$发散\\[2ex]
 
-(2)三角函数在$0$附近的表现
-{\par\centering
-\framebox{当$x\to 0$，$\sin(x)\backsim x$，$\tan(x)\backsim x$且$\cos(x)\backsim 1$}
-\par}
+5)多项式和多项式型函数在0附近的表现
+\begin{center}
+\framebox{若$p(x)$的最低次项是$bx^m$, 则当$x\to 0$, $p(x)\backsim bx^m$}
+\end{center}
+
 例1.\\
-$\displaystyle\int_0^1\frac{1}{\tan(x)}\dif x$\\
+\phantom{例}$\displaystyle\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$\\
 推导过程:\\
-$\because$当$x\to 0$，$\tan(x)\backsim x$\\
-$\displaystyle\therefore\int_0^1\frac{1}{\tan(x)}\dif x=\int_0^1\frac{1}{x}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_0^1\frac{1}{\sqrt{x}}\dif x<\infty$\\
-$\displaystyle\therefore\int_0^1\frac{\sin(x)}{x^{\frac{3}{2}}}\dif x$收敛\\[2ex]
-
-(3)指数函数在$0$附近的表现
-{\par\centering
-\framebox{当$x\to 0$时，$e^x\backsim 1$和$e^x-1\backsim x$}
-\par}
-例1.\\
-$\displaystyle\int_0^1\frac{e^x}{x\cos(x)}\dif x$\\
-推导过程:\\
-$\because$当$x\to 0$时, $e^x\backsim 1$，$\cos(x)\backsim 1$\\
-$\displaystyle\therefore\int_0^1\frac{e^x}{x\cos(x)}\dif x=\int_0^1\frac{1}{x}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_0^1\frac{1}{x}\dif x=\infty$\\
-$\displaystyle\therefore\int_0^1\frac{e^x}{x\cos(x)}\dif x$发散\\[1ex]
+当$x\to 0$时, $\displaystyle\frac{1}{x^2+\sqrt{x}}\backsim\frac{1}{\sqrt{x}}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^5\frac{1}{\sqrt{x}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^5\frac{1}{x^2+\sqrt{x}}\dif x$收敛\\[1ex]
 
 例2.\\
-$\displaystyle\int_0^2\frac{1}{\sqrt{e^x-1}}dif x$\\
+\phantom{例}$\displaystyle\int_0^1\frac{x+3}{x+x^5}\dif x$\\
 推导过程:\\
-$\because$当$x\to 0$时，$e^x-1\backsim x$\\
-$\displaystyle\therefore\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x=\int_0^2\frac{1}{\sqrt{x}}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_0^2\frac{1}{\sqrt{x}}\dif x<\infty$\\
-$\displaystyle\therefore\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x$收敛\\[2ex]
+当$x\to 0$时, $\displaystyle\frac{x+3}{x+x^5}\backsim\frac{3}{x}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{3}{x}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{x+3}{x+x^5}\dif x$发散\\[2ex]
 
-(4)对数函数在$0$附近的表现
-{\par\centering
-\framebox{对于所有$0<x<1$，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{\alpha}}$\label{integral:num_01}}
-\par}
-例.\\
-$\displaystyle\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x$\\
+6)三角函数在0附近的表现
+\begin{center}
+\framebox{当$x\to 0$, $\sin x\backsim x$, $\tan x\backsim x$且$\cos x\backsim 1$}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{\tan x}\dif x$\\
 推导过程:\\
-$\because$当$0<x<1$时，$\displaystyle|\ln(x)|\leqslant\frac{C}{x^{0.05}}$\\
-$\displaystyle\therefore\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x=\int_0^1\frac{C}{x^{0.95}}\dif x$\\
-$\because$由P判别法\\
-$\displaystyle\phantom{\because}\int_0^1\frac{C}{x^{0.95}}\dif x<\infty$\\
-$\displaystyle\therefore\int_0^1\frac{|\ln(x)|}{x^{0.9}}\dif x$收敛
+当$x\to 0$时, $\displaystyle\frac{1}{\tan x}\backsim\frac{1}{x}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{x}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{\tan x}\dif x$发散\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{\sqrt{\tan x}}\dif x$\\
+推导过程:\\
+当$x\to 0^+$时, $\displaystyle\frac{1}{\sqrt{\tan x}}\dif x\backsim\frac{1}{\sqrt{x}}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{\sqrt{x}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{\sqrt{\tan x}}\dif x$收敛\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\int_0^1\frac{\sin x}{x^\frac{3}{2}}\dif x$\\
+推导过程:\\
+当$x\to 0$时, $\displaystyle\frac{\sin x}{x^\frac{3}{2}}\backsim\frac{x}{x^\frac{3}{2}}\backsim\frac{1}{x^\frac{1}{2}}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{x^\frac{1}{2}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{\sin x}{x^\frac{3}{2}}\dif x$收敛\\[2ex]
+
+7)指数函数在0附近的表现
+\begin{center}
+\framebox{当$x\to 0$时, $e^x\backsim 1$并且$e^x-1\backsim x$}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\int_0^1\frac{e^x}{x\cos x}\dif x$\\
+推导过程:\\
+当$x\to 0$时, $\displaystyle\frac{e^x}{x\cos x}\backsim\frac{1}{x}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{x}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{e^x}{x\cos x}\dif x$发散\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\int_0^1\frac{e^{-\frac{1}{x}}}{x^5}\dif x$\\
+推导过程:\\
+当$x\to 0$时, $\displaystyle e^{-\frac{1}{x}}\leqslant\frac{C}{(\frac{1}{x})^5}=Cx^5$\\
+$\displaystyle\therefore\frac{e^{-\frac{1}{x}}}{x^5}\leqslant C$\\
+$\displaystyle\because C\int_0^1\dif x$没有瑕点\\
+$\displaystyle\therefore C\int_0^1\dif x$自然收敛\\
+$\displaystyle\therefore\int_0^1\frac{e^{-\frac{1}{x}}}{x^5}\dif x$收敛\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x$\\
+推导过程:\\
+当$x\to 0$时, $e^x-1\backsim x$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^2\frac{1}{\sqrt{x}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^2\frac{1}{\sqrt{e^x-1}}\dif x$收敛\\[2ex]
+
+8)对数函数在0附近的表现
+\begin{center}
+\framebox{对于所有$0<x<1$, $|\ln x|\leqslant\frac{C}{x^\alpha}$}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\int_0^1\frac{|\ln x|}{x^{0.9}}\dif x$\\
+推导过程:\\
+当$0<x<1$时, $|\ln x|\leqslant\frac{C}{x^{0.05}}$\\
+$\displaystyle\therefore\frac{|\ln x|}{x^{0.9}}\leqslant\frac{C}{0.95}$\\
+由p判别法, 得:\\
+$\displaystyle C\int_0^1\frac{1}{x^{0.95}}\dif x$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{|\ln x|}{x^{0.9}}\dif x$收敛\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln x|}\dif x$\\
+推导过程:\\
+当$0<x<1$时, $|\ln x|\leqslant\frac{C}{x}$\\
+$\displaystyle\therefore\frac{1}{x^2|\ln x|}\geqslant\frac{1}{Cx}$\\
+由p判别法, 得:\\
+$\displaystyle\frac{1}{C}\int_0^{\frac{1}{2}}\frac{1}{x}\dif x$发散\\
+由比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^2|\ln x|}\dif x$发散\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^{0.9}|\ln x|}\dif x$\\
+推导过程:\\
+当$0<x\leqslant\frac{1}{2}$时, $|\ln x|\geqslant|\ln(\frac{1}{2})|=\ln 2$\\
+$\displaystyle\therefore\frac{1}{x^{0.9}|\ln x|}\leqslant\frac{1}{\ln2 x^{0.9}}$\\
+由p判别法, 得:\\
+$\displaystyle\frac{1}{\ln 2}\int_0^{\frac{1}{2}}\frac{1}{x^{0.9}}\dif x$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x^{0.9}|\ln x|}\dif x$收敛\\[2ex]
+
+9)更一般的函数在0附近的表现
+\begin{center}
+\begin{boxedminipage}{\textwidth}
+若一个函数在0附近收敛于该函数的麦克劳林级数, 则函数在$x\to 0$时渐进等价于级数的最低次项.即
+		\[f(x)=a_nx^n+a_{n+1}x^{n+1}+...\text{, 当}x\to 0\text{, 则}f(x)\backsim a_nx^n\]
+\end{boxedminipage}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{1-\cos x}\dif x$\\
+推导过程:\\
+$\cos x$的麦克劳林级数:\\
+\[\cos x=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots\]
+$\displaystyle 1-\cos x=\frac{x^2}{2!}-\frac{x^4}{4!}+\cdots$\\
+$\therefore$当$x\to 0$时, $\displaystyle\frac{1}{1-\cos x}\backsim\frac{2}{x^2}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{2}{x^2}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{1-\cos x}\dif x$发散\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\int_0^1\frac{1}{(1-\cos x)^{\frac{1}{3}}}\dif x$\\
+推导过程:\\
+当$x\to 0$时, $\displaystyle 1-\cos x\backsim \frac{x^2}{2}$\\
+$\displaystyle\therefore\frac{1}{(1-\cos x)^{\frac{1}{3}}}\backsim\frac{\sqrt[3]{2}}{x^{\frac{2}{3}}}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^1\frac{\sqrt[3]{2}}{x^{\frac{2}{3}}}\dif x$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{(1-\cos x)^{\frac{1}{3}}}\dif x$收敛\\[2ex]
+
+10)不在0或$\infty$或$-\infty$处的瑕点\\
+\begin{itemize}
+	\item 若积分$\int_a^bf(x)\dif x$的唯一瑕点出现在$x=a$处, 进行$t=x-a$换元
+	\item 若积分$\int_a^bf(x)\dif x$的唯一瑕点出现在$x=b$处, 进行$t=b-x$换元
+\end{itemize}
+
+例.\\
+\phantom{例}$\displaystyle\int_0^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+$\displaystyle\int_0^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x$在积分范围内包含三个瑕点, 分别为$x=0,1,2$\\
+将原积分拆分为以下部分:\\
+\ding{172}$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+当$x\to 0$时, $\displaystyle\frac{1}{x(x+1)(x-1)(x-2)}\backsim\frac{1}{2x}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{2x}\dif x$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散\\[1ex]
+
+
+\ding{173}$\displaystyle\int_{\frac{1}{2}}^1\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+设$t=1-x, 则\dif t=-\dif x$\\
+$\displaystyle\int_{\frac{1}{2}}^1\frac{1}{x(x+1)(x-1)(x-2)}\dif x=-\int_{\frac{1}{2}}^0\frac{1}{t(1+t)(1-t)(2-t)}\dif t$\\
+$\displaystyle\phantom{\int_{\frac{1}{2}}^1\frac{1}{x(x+1)(x-1)(x-2)}\dif x}=\int_0^{\frac{1}{2}}\frac{1}{t(1+t)(1-t)(2-t)}\dif t$\\
+当$t\to 0$时, $\displaystyle\frac{1}{t(1+t)(1-t)(2-t)}\backsim\frac{1}{2t}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{2t}\dif t$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{t(1+t)(1-t)(2-t)}\dif t$发散\\
+即$\displaystyle\int_{\frac{1}{2}}^1\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散\\[1ex]
+
+
+\ding{174}$\displaystyle\int_1^{\frac{3}{2}}\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+设$t=x-1, 则\dif t=\dif x$\\
+$\displaystyle\int_1^{\frac{3}{2}}\frac{1}{x(x+1)(x-1)(x-2)}\dif x=-\int_0^{\frac{1}{2}}\frac{1}{t(t+1)(t+2)(1-t)}\dif t$\\
+当$t\to 0$时, $\displaystyle\frac{1}{t(t+1)(t+2)(1-t)}\backsim\frac{1}{2t}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{2t}\dif t$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{t(t+1)(t+2)(1-t)}\dif t$发散\\
+即$\displaystyle\int_1^{\frac{3}{2}}\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散\\[1ex]
+
+\ding{175}$\displaystyle\int_{\frac{3}{2}}^2\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+设$t=2-x, 则\dif t=-\dif x$\\
+$\displaystyle\int_{\frac{3}{2}}^2\frac{1}{x(x+1)(x-1)(x-2)}\dif x=\int_{\frac{1}{2}}^0\frac{1}{t(1-t)(2-t)(3-t)}\dif t$\\
+$\displaystyle\phantom{\int_{\frac{3}{2}}^2\frac{1}{x(x+1)(x-1)(x-2)}\dif x}=-\int_0^{\frac{1}{2}}\frac{1}{t(1-t)(2-t)(3-t)}\dif t$\\
+当$t\to 0$时, $\displaystyle\frac{1}{t(1-t)(2-t)(3-t)}\backsim\frac{1}{6t}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{6t}\dif t$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{t(1-t)(2-t)(3-t)}\dif t$发散\\
+即$\displaystyle\int_{\frac{3}{2}}^2\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散\\[1ex]
+
+\ding{176}$\displaystyle\int_2^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x$\\
+设$t=x-2, 则\dif t=\dif x$\\
+$\displaystyle\int_2^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x=\int_0^1\frac{1}{t(t+1)(t+2)(t+3)}\dif t$\\
+当$t\to 0$时, $\displaystyle\frac{1}{t(t+1)(t+2)(t+3)}\backsim\frac{1}{6t}$\\
+由p判别法, 得:\\
+$\displaystyle\int_0^{\frac{1}{2}}\frac{1}{6t}\dif t$发散\\
+由极限比较判别法, 得:\\
+$\displaystyle\int_0^1\frac{1}{t(t+1)(t+2)(t+3)}\dif t$发散\\
+即$\displaystyle\int_2^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散\\[1ex]
+
+综上, $\displaystyle\int_0^3\frac{1}{x(x+1)(x-1)(x-2)}\dif x$发散
+
+%最后编辑于: 2022-01-14
