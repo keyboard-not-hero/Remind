@@ -1,173 +1,291 @@
 \chapter{求解级数问题}
 1.级数的讨论\\
-(1)是否为几何级数\\
-(2)级数中的项是否趋于0 --- 第n项判别法\\
-(3)级数中是否有阶乘 --- 比式判别法\\
-(4)级数中的指数是否包含n --- 跟式判别法\\
-(5)级数中是否含$\frac{1}{n}$或对数 --- 积分判别法\\
-(6)级数中是否有负项 --- 第n项判别法/绝对收敛判别法/交错级数判别法\\
-(7)上述皆不适用 --- 比较判别法/P判别法/极限比较判别法\\[2ex]
+1)是否为几何级数\\
+\phantom{\quad}当级数为几何级数时, 应用几何级数规则\\
+2)级数中的项是否趋于0\\
+\phantom{\quad}当级数中的项不趋于0, 包含如下情况:\\
+\phantom{\qquad}\ding{172}数列的分子分母都为多项式, 且分子的次数大于等于分母\\
+\phantom{\qquad}\ding{173}对数的内容包含多项式, 并且多项式的值不趋于1\\
+\phantom{\quad}应用第n项判别法\\
+3)级数中是否有负项\\
+\phantom{\quad}当级数中包含负的项时, 应用第n项判别法/绝对收敛判别法/交错级数判别法\\
+4)级数中是否有阶乘\\
+\phantom{\quad}级数中的项包含阶乘, 应用比式判别法\\
+5)级数中是否底和指数都包含n\\
+\phantom{\quad}当级数的项, 底和指数都包含n时, 应用根式判别法\\
+6)级数中是否含1/n和对数\\
+\phantom{\quad}当级数中包含1/n和对数时, 应用积分判别法\\
+7)上述皆不适用\\
+\phantom{\quad}当以上方法都不适用时, 使用反常积分的判别法, 比较判别法/P判别法/极限比较判别法\\[2ex]
 
 2.具体解决方案\\
-(1)几何级数
+1)几何级数
 {\par\centering
-\framebox{若$-1<r<1$，无穷几何级数的和=$\displaystyle\frac{\text{首项}}{1-r}$}}
+\begin{boxedminipage}{8cm}
+若$-1<r<1$，无穷几何级数的和=$\displaystyle\frac{\text{首项}}{1-r}$\\
+如果$r\geqslant 1$或$r\leqslant 1$, 级数发散
+\end{boxedminipage}
+\par}
 
-例.\\
-$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}$\\[1ex]
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}$\\
 推导过程:\\
 $\displaystyle\because\frac{4}{3^n}=4(\frac{1}{3})^n$\\
 $\displaystyle\phantom{\because}-1<r=\frac{1}{3}<1$\\
-$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}=\sum_{n=5}^{\infty}4(\frac{1}{3})^n=\frac{4\times(\frac{1}{3})^5}{1-\frac{1}{3}}=\frac{2}{81}$\\[2ex]
+$\displaystyle\sum_{n=5}^{\infty}\frac{4}{3^n}=\frac{4\times(\frac{1}{3})^5}{1-\frac{1}{3}}=\frac{2}{81}$\\[1ex]
 
-(2)级数中的项是否趋于$0$ --- 第$n$项判别法
-{\par\centering
-\framebox{若$\displaystyle\lim_{n\to\infty}a_n\neq 0$或极限不存在，则级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散}}
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=2}^\infty\frac{2^{2n}-(-7)^n}{11^n}$\\
+推导过程:\\
+$\displaystyle\sum_{n=2}^\infty\frac{2^{2n}-(-7)^n}{11^n}=\sum_{n=2}^\infty\frac{4^n}{11^n}-\sum_{n=2}^\infty\frac{(-7)^n}{11^n}$\\
+$\displaystyle\because -1<\r_1=\frac{4}{11}<1$\\
+$\displaystyle\sum_{n=2}^\infty\frac{4^n}{11^n}=\frac{4^2}{11^2}\times\frac{1}{1-\frac{4}{11}}=\frac{16}{77}$\\
+$\displaystyle\because -1<\r_2=\frac{-7}{11}<1$\\
+$\displaystyle\sum_{n=2}^\infty\frac{(-7)^n}{11^n}=\frac{(-7)^2}{11^2}\times\frac{1}{1-(-\frac{7}{11})}=\frac{49}{198}$\\
+$\displaystyle\therefore\sum_{n=2}^\infty\frac{2^{2n}-(-7)^n}{11^n}=\frac{16}{77}-\frac{49}{198}=-\frac{5}{126}$\\
+$\displaystyle\sum_{n=2}^\infty\frac{2^{2n}-(-7)^n}{11^n}$收敛\\[2ex]
 
-该判别法不能用于级数收敛性的判定\\
-例.\\
-$\displaystyle\sum_{n=1}^{\infty}\frac{n^2-3n+7}{4n^2+2n+1}$\\[1ex]
+2)第$n$项判别法
+\begin{center}
+\framebox{若$\displaystyle\lim_{n\to\infty}a_n\neq 0$或极限不存在，则级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散}
+\end{center}
+注解: 该判别法不能用于级数收敛性的判定\\
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}\frac{n^2-3n+7}{4n^2+2n+1}$\\[1ex]
 推导过程:\\
 $\displaystyle\because\lim_{n\to\infty}\frac{n^2-3n+7}{4n^2+2n+1}=\frac{1}{4}\neq 0$\\
 $\therefore$由第n项判别法\\
-$\displaystyle\phantom{\therefore}\frac{n^2-3n+7}{4n^2+2n+1}$发散\\[2ex]
+$\displaystyle\phantom{\therefore}\sum_{n=1}^\infty\frac{n^2-3n+7}{4n^2+2n+1}$发散\\[1ex]
 
-(3)级数中是否有阶乘 --- 比式判别法
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-若$\displaystyle L=\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|$，则$\displaystyle n=\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，比式判别法无效
-\end{minipage}}}
-
-例.\\
-$\displaystyle\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$\\[1ex]
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=1}^\infty\ln(\frac{n^2+2}{3n^2+5})$\\
 推导过程:\\
-$\because\displaystyle\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|=\lim_{n\to\infty}\Big|\frac{\frac{(n+1)^{1000}}{2^{n+1}}}{\frac{n^{1000}}{2^n}}\Big|=\lim_{n\to\infty}\Big|\frac{(n+1)^{1000}}{n^{1000}}\times\frac{1}{2}\Big|=\frac{1}{2}\lim_{n\to\infty}(\frac{n+1}{n})^{1000}=\frac{1}{2}$\\
-$\therefore$由比式判别法\\
-$\displaystyle\phantom{\therefore}\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$收敛\\[2ex]
+$\displaystyle\lim_{n\to\infty}\ln(\frac{n^2+2}{3n^2+5})=-\ln3\neq0$\\
+由第n项判别式, 得:\\
+$\displaystyle\sum_{n=1}^\infty\ln(\frac{n^2+2}{3n^2+5})$发散\\[2ex]
 
-(4)级数中的指数是否包含$n$ --- 根式判别法
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-若$\displaystyle L=\lim_{n\to\infty}|a_n|^{\frac{1}{n}}$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，根式判别法无效
-\end{minipage}}}
-
+3)含负项的级数\\
+\ding{172}若所有项都为负，则在所有项前面添加负号来修改级数\\
 例.\\
-$\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$\\[1ex]
-推导过程:\\
-$\because\displaystyle\lim_{n\to\infty}|a_n|^{\frac{1}{n}}=\lim_{n\to\infty}\Big|(1-\frac{2}{n})^{n^2}\Big|^{\frac{1}{n}}=\lim_{n\to\infty}(1-\frac{2}{n})^n=e^{-2}<1$\\
-$\therefore$由根式判别法\\
-$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$收敛性\\[2ex]
-
-(5)级数中是否含$\displaystyle\frac{1}{n}$或对数 --- 积分判别法
-{\par\centering
-\framebox{若对连续递减函数$f$有$a_n=f(n)$，则$\displaystyle\sum_{n=N}^{\infty}a_n$与$\displaystyle\int_N^{\infty}f(x)\dif x$同时收敛或发散}}
-
-例.\\
-$\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln(n)}$\\[1ex]
-推导过程:\\
-级数的积分形式为:\\
-$\displaystyle\int_2^{\infty}\frac{1}{x\ln(x)}\dif x$\\
-设$t=\ln(x)$，则$\displaystyle\dif t=\frac{1}{x}\dif x$，得:\\
-$\displaystyle\int_2^{\infty}\frac{1}{x\ln(x)}\dif x=\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t$\\
-$\because$由P判别法\\
-$\phantom{\because}\displaystyle\int_{\ln(2)}^{\infty}\frac{1}{t}\dif t$发散\\
-$\therefore\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln(n)}$发散\\[2ex]
-
-(6)级数中是否有负项 --- 第n项判别式/绝对收敛判别法/交错级数判别法\\
-1)若所有项都为负，则在所有项前面添加负号来修改级数\\
-例.\\
-$\displaystyle\sum_{n=3}^{\infty}\ln(\frac{1}{n})\frac{1}{\sqrt{n}}$\\[1ex]
+\phantom{例}$\displaystyle\sum_{n=3}^{\infty}\ln(\frac{1}{n})\frac{1}{\sqrt{n}}$\\[1ex]
 推导过程:\\
 $\because$在$n\geqslant 3$时，$\ln(\frac{1}{n})<0$，$\ln(\frac{1}{n})\frac{1}{\sqrt{n}}<0$\\
 $\therefore\displaystyle\sum_{n=3}^{\infty}-\ln(\frac{1}{n})\frac{1}{\sqrt{n}}=\sum_{n=3}^{\infty}\ln(n)\frac{1}{\sqrt{n}}$\\
 $\because$当$n\in[3,\infty)$时，$\ln(n)\geqslant\ln(3)$\\
-$\therefore\displaystyle\sum_{n=3}^{\infty}\ln(n)\frac{1}{\sqrt{n}}\geqslant\sum_{n=3}^{\infty}\ln(3)\frac{1}{\sqrt{n}}=\ln(3)\sum_{n=3}^{\infty}\frac{1}{\sqrt{n}}=\infty$\\
+$\therefore\displaystyle\sum_{n=3}^{\infty}\ln(n)\frac{1}{\sqrt{n}}\geqslant\sum_{n=3}^{\infty}\ln(3)\frac{1}{\sqrt{n}}=\ln(3)\sum_{n=3}^{\infty}\frac{1}{\sqrt{n}}$\\
+由p判别法, 得:\\
+$\displaystyle\sum_{n=3}^\infty\frac{1}{\sqrt{n}}$发散\\
+由比较判别法, 得:\\
+$\displaystyle\sum_{n=3}^\infty\ln(n)\frac{1}{\sqrt{n}}$发散\\
 $\therefore\displaystyle\sum_{n=3}^{\infty}\ln(\frac{1}{n})\frac{1}{\sqrt{n}}$发散\\[2ex]
 
-2)若有些项为正，有些项为负，当$n\to\infty$时通项不趋于$0$，用第n项判别法\\
+\ding{173}若有些项为正，有些项为负，当$n\to\infty$时通项不趋于$0$，用第n项判别法\\
 例.\\
-$\displaystyle\sum_{n=1}^{\infty}(-1)^nn^2$\\[1ex]
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}(-1)^nn^2$\\[1ex]
 推导过程:\\
-$\because\displaystyle\lim_{n\to\infty}(-1)^nn^2$极限不为0\\
-$\therefore$由第n项判别法\\
-$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}(-1)^nn^2$发散\\[2ex]
+$\displaystyle\because\lim_{n\to\infty}(-1)^nn^2$图像进行增益震荡\\
+$\displaystyle\therefore\lim_{n\to\infty}(-1)^nn^2$极限不存在\\
+由第n项判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}(-1)^nn^2$发散\\[2ex]
 
-3)若有些项为正，有些项为负，当$n\to\infty$时通项趋于0，用绝对收敛判别法
-{\par\centering
-\framebox{若$\displaystyle\sum_{n=1}^{\infty}|a_n|$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}}
+\ding{174}若有些项为正，有些项为负，当$n\to\infty$时通项趋于0，用绝对收敛判别法
+\begin{center}
+\framebox{若$\displaystyle\sum_{n=1}^{\infty}|a_n|$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}
+\end{center}
 
 例.\\
 $\displaystyle\sum_{n=1}^{\infty}\frac{\sin(n)}{n^2}$\\[1ex]
 推导过程:\\
-$\because\displaystyle\sum_{n=1}^{\infty}\frac{|\sin(n)|}{n^2}\leqslant\sum_{n=1}^{\infty}\frac{1}{n^2}<\infty$\\
-$\therefore$由绝对收敛判别法\\
-$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{\sin(n)}{n^2}$收敛\\[2ex]
+$\displaystyle\because\sum_{n=1}^{\infty}\frac{|\sin(n)|}{n^2}\leqslant\sum_{n=1}^{\infty}\frac{1}{n^2}$\\
+由p判别法, 得:\\
+$\displaystyle\sum_{n=1}^\infty\frac{1}{n^2}$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{|\sin(n)|}{n^2}$收敛\\
+由绝对收敛判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{\sin(n)}{n^2}$收敛\\[2ex]
 
-4)若有些项为正，有些项为负，并且级数不是绝对收敛，用交错级数判别法
+\ding{175}若有些项为正，有些项为负，并且级数不是绝对收敛，用交错级数判别法
 {\par\centering
 \framebox{\begin{minipage}{\textwidth}
 若级数$\displaystyle\sum_{n=1}^{\infty}a_n$是交错的，且各项的绝对值递减趋于$0$，则级数收敛\\
 收敛条件列表:\\
-(1)\,$a_n$正负交错. 如:$(-1)^n$\\
-(2)\,$|a_n|$递减\\
-(3)\,$\displaystyle\lim_{n\to\infty}|a_n|=0$
-\end{minipage}}}
-
-例.\\
-$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$\\[1ex]
-推导过程:\\
-$\because$1)\,$\displaystyle\lim_{n\to\infty}\Big|\frac{(-1)^n}{n}\Big|=\lim_{n\to\infty}\frac{1}{n}=0$\\
-$\phantom{\because}$2)\,$\displaystyle\Big|\frac{(-1)^n}{n}\Big|=\frac{1}{n}$单调递减\\
-$\phantom{\because}$3)\,$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$正负交错\\
-$\therefore$由交错级数判别法\\
-$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$收敛\\[2ex]
-
-(7)上述皆不适用 --- 比式判别法/P判别法/极限比较判别法\\
-1)比较判别法
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-\textbf{发散的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$发散，则找一个同样发散的较小的级数，即找一个使得对所有n都有$a_n\geqslant b_n$的正项数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$发散. 则
-\[\sum_{n=1}^{\infty}a_n\geqslant\sum_{n=1}^{\infty}b_n=\infty\]
-所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散
-\end{minipage}}}\\
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-\textbf{收敛的情形:}若认为$\displaystyle\sum_{n=1}^{\infty}a_n$收敛，则找一个同样收敛的较大的级数，即找一个使得对所有n都有$a_n\leqslant b_n$的数列$b_n$，使得级数$\displaystyle\sum_{n=1}^{\infty}b_n$收敛. 则
-\[\sum_{n=1}^{\infty}a_n\leqslant\sum_{n=1}^{\infty}b_n<\infty\]
-所以级数$\displaystyle\sum_{n=1}^{\infty}a_n$收敛
-\end{minipage}}}\\[2ex]
-
-2)极限比较判别法
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-找一个简单级数$\displaystyle\sum_{n=1}^{\infty}b_n$，当$n\to\infty$时$a_n\backsim b_n$，则$\displaystyle\sum_{n=1}^{\infty}a_n$与$\displaystyle\sum_{n=1}^{\infty}a_n$同时收敛或同时发散
-\end{minipage}}}\\[2ex]
-
-3)P判别法
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
-若$a\geqslant 1$，级数
-\[\sum_{n=a}^{\infty}\frac{1}{n^p}\left\{\begin{array}{l l}
-\text{收敛} & \text{如果}p>1\\
-\text{发散} & \text{如果}p\leqslant 1
-\end{array}\right.\]
-\end{minipage}}}
+1.$a_n$正负交错. 如:$(-1)^n$\\
+2.$|a_n|$递减\\
+3.$\displaystyle\lim_{n\to\infty}|a_n|=0$
+\end{minipage}}
+\par}
 
 例1.\\
-$\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$\\[1ex]
 推导过程:\\
-$\because$由极限比较判别法\\
-$\phantom{\because}$当$n\to\infty$时，$\displaystyle\frac{2n^2+3n+7}{n^4+2n^3+1}\backsim\frac{2n^2}{n^4}=\frac{2}{n^2}$\\
-$\therefore\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}=\sum_{n=1}^{\infty}\frac{2}{n^2}$\\
-$\because$由P判别法\\
-$\phantom{\because}\displaystyle\sum_{n=1}^{\infty}\frac{2}{n^2},\infty$\\
-$\therefore\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$收敛\\[1ex]
+在区间$[1,\infty$上:\\
+1)\,$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$正负交错\\
+2)\,$\displaystyle\because(\frac{1}{n})'=-\frac{1}{n^2}$\\
+\phantom{2)\,}$\displaystyle\therefore\Big|\frac{(-1)^n}{n}\Big|=\frac{1}{n}$单调递减\\
+3)\,$\displaystyle\lim_{n\to\infty}\Big|\frac{(-1)^n}{n}\Big|=\lim_{n\to\infty}\frac{1}{n}=0$\\
+$\therefore$由交错级数判别法, 得:\\
+$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n}$收敛\\[1ex]
+
 例2.\\
-$\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$\\
+\phantom{例}$\displaystyle\sum_{n=2}^\infty\frac{(-1)^n}{\ln(n)}$\\
 推导过程:\\
-$\because$对于所有的$x>0$，$\displaystyle e^{-x}\leqslant\frac{C}{x^n}$\\
-$\therefore\displaystyle 2^{-n}\leqslant\frac{C}{n^{1002}}$\\
-$\phantom{\therefore}\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}\leqslant\sum_{n=1}^{\infty}\frac{C}{n^{1002}}\times n^{1000}=\sum_{n=1}^{\infty}\frac{C}{n^2}=C\sum_{n=1}^{\infty}\frac{1}{n^2}$\\
-$\because$由P判别法\\
-$\phantom{\because}\displaystyle C\sum_{n=1}^{\infty}\frac{1}{n^2}<\infty$\\
-$\therefore\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$收敛
+在区间$[2,\infty)$上:\\
+1)\,$\displaystyle\sum_{n=2}^\infty\frac{(-1)^n}{\ln(n)}$正负交错\\
+2)\,$\displaystyle\because(\frac{1}{\ln(n)})'=-\frac{\frac{1}{n}}{\ln^2n}=-\frac{1}{n\ln^2}$\\
+\phantom{2)\,}$\displaystyle\therefore\frac{1}{\ln(n)}单调递减$\\
+3)$\displaystyle\lim_{n\to\infty}\frac{1}{\ln(n)}=0$\\
+$\therefore$由交错级数判别法, 得:\\
+$\phantom{\therefore}\displaystyle\sum_{n=2}^\infty\frac{(-1)^n}{\ln(n)}$收敛\\[2ex]
+
+4)比式判别法
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+若$\displaystyle L=\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|$，则$\displaystyle n=\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，比式判别法无效
+\end{minipage}}
+\par}
+
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$\\[1ex]
+推导过程:\\
+$\displaystyle L=\lim_{n\to\infty}\Big|\frac{a_{n+1}}{a_n}\Big|=\lim_{n\to\infty}\left|\frac{\frac{(n+1)^{1000}}{2^{n+1}}}{\frac{n^{1000}}{2^n}}\right|=\frac{1}{2}\lim_{n\to\infty}(\frac{n+1}{n})^{1000}=\frac{1}{2}$\\
+由比式判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{n^{1000}}{2^n}$收敛\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=2}^\infty\frac{3^n}{n\ln(n)}$\\
+推导过程:\\
+$\displaystyle L=\lim_{n\to\infty}\left|\frac{\frac{3^{n+1}}{(n+1)\ln(n+1)}}{\frac{3^n}{n\ln(n)}}\right|=3\lim_{n\to\infty}\frac{n}{n+1}\frac{\ln(n)}{\ln(n+1)}$\\
+根据洛必达法则, 得:\\
+$\displaystyle\lim_{n\to\infty}\frac{\ln(n)}{\ln(n+1)}=\lim_{n\to\infty}\frac{\frac{1}{n}}{\frac{1}{n+1}}=\lim_{n\to\infty}\frac{n+1}{n}=1$\\
+$L=3>1$\\
+$\displaystyle\sum_{n=2}^\infty\frac{3^n}{n\ln(n)}$发散\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\sum_{n=1}^\infty\frac{(2n)!}{(n!)^2}$\\
+推导过程:\\
+$\displaystyle L=\lim_{n\to\infty}\left|\frac{\frac{(2n+2)!}{((n+1)!)^2}}{\frac{(2n)!}{(n!)^2}}\right|=\lim_{n\to\infty}\frac{(2n+1)(2n+2)}{(n+1)^2}=\lim_{n\to\infty}\frac{4n+2}{n+1}=4>1$\\
+由第n项判别法, 得:\\
+$\displaystyle\sum_{n=1}^\infty\frac{(2n)!}{(n!)^2}$发散\\[2ex]
+
+5)根式判别法
+{\par\centering
+\framebox{\begin{minipage}{\textwidth}
+若$\displaystyle L=\lim_{n\to\infty}|a_n|^{\frac{1}{n}}$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，根式判别法无效
+\end{minipage}}
+\par}
+
+例.\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$\\[1ex]
+推导过程:\\
+$\displaystyle L=\lim_{n\to\infty}|a_n|^{\frac{1}{n}}=\lim_{n\to\infty}\Big|(1-\frac{2}{n})^{n^2}\Big|^{\frac{1}{n}}=\lim_{n\to\infty}(1-\frac{2}{n})^n=e^{-2}<1$\\
+由根式判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}(1-\frac{2}{n})^{n^2}$绝对收敛\\[2ex]
+
+6)积分判别法
+{\par\centering
+\framebox{若对连续递减函数$f$有$a_n=f(n)$，则$\displaystyle\sum_{n=N}^{\infty}a_n$与$\displaystyle\int_N^{\infty}f(x)\dif x$同时收敛或发散}
+\par}
+
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln(n)}$\\[1ex]
+推导过程:\\
+令$\displaystyle f(x)=\frac{1}{x\ln x}$\\
+设$t=\ln x$，则$\displaystyle\dif t=\frac{1}{x}\dif x$\\
+$\displaystyle\int_2^{\infty}\frac{1}{x\ln x}\dif x=\int_{\ln 2}^{\infty}\frac{1}{t}\dif t$\\
+由p判别法, 得:\\
+$\displaystyle\int_{\ln 2}^{\infty}\frac{1}{t}\dif t$发散\\
+$\therefore\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln(n)}$发散\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=2}^\infty\frac{1}{n(\ln(n))^2}$\\
+推导过程:\\
+令$\displaystyle f(x)=\frac{1}{x(\ln x)^2}$\\
+设$t=\ln x$, 则$\displaystyle\dif t=\frac{1}{x}\dif x$\\
+$\displaystyle\int_2^{\infty}\frac{1}{x(\ln x)^2}\dif x=\int_{\ln 2}^{\infty}\frac{1}{t^2}\dif t$\\
+由p判别法, 得:\\
+$\displaystyle\int_{\ln 2}^{\infty}\frac{1}{t^2}\dif t$收敛\\
+$\therefore\displaystyle\sum_{n=2}^{\infty}\frac{1}{n(\ln(n))^2}$收敛\\[1ex]
+
+
+7)反常积分的判别法(比较判别法/极限比较判别法/p判别法)\\
+\ding{172}比较判别法
+{\par\centering
+\framebox{若对所有$n$，有$0\leqslant b_n\leqslant a_n$，且$\displaystyle\sum_{n==1}^{\infty}b_n$发散，则$\displaystyle\sum_{n=1}^{\infty}a_n$也发散}\\[1ex]
+\framebox{若对所有$n$，有$b_n\geqslant a_n\geqslant 0$，且$\displaystyle\sum_{n=1}^{\infty}b_n$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}
+\par}\vspace{4ex}
+
+\ding{173}极限比较判别法
+{\par\centering
+\framebox{若当$n\to\infty$时$a_n\backsim b_n$，且$a_n$和$b_n$均有限，则$\displaystyle\sum_{n=1}^{\infty}a_n$与$\displaystyle\sum_{n=1}^{\infty}b_n$同时收敛或发散}
+\par}\vspace{4ex}
+
+\ding{174}p判别法
+{\par\centering
+\framebox{$\displaystyle\sum_{n=a}^{\infty}\frac{1}{n^p}\left\{\begin{array}{l l}
+\text{收敛} & \text{如果}p>1\\
+\text{发散} & \text{如果}p\leqslant 1
+\end{array}
+\right.$}
+\par}\vspace{4ex}
+
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$\\
+推导过程:\\
+当$n\to\infty$时，$\displaystyle\frac{2n^2+3n+7}{n^4+2n^3+1}\backsim\frac{2n^2}{n^4}=\frac{2}{n^2}$\\
+由p判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{2}{n^2}$收敛\\
+由极限比较判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+3n+7}{n^4+2n^3+1}$收敛\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$\\
+推导过程:\\
+对于所有的$n>0$，$\displaystyle 2^{-n}\leqslant\frac{C}{n^1002}$\\
+$\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}\leqslant\sum_{n=1}^{\infty}\frac{C}{n^{1002}}\times n^{1000}=C\sum_{n=1}^{\infty}\frac{1}{n^2}$\\
+由p判别法, 得:\\
+$\displaystyle C\sum_{n=1}^{\infty}\frac{1}{n^2}$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\sum_{n=1}^{\infty}2^{-n}n^{1000}$收敛\\[1ex]
+
+例3.\\
+\phantom{例}$\displaystyle\sum_{n=2}^\infty\frac{\ln(n)}{n^{1.001}}$\\
+推导过程:\\
+对于所有的$n>1$, $\ln(n)\leqslant Cn^{0.0005}$\\
+$\displaystyle\sum_{n=2}^\infty\frac{\ln(n)}{n^{1.001}}\leqslant C\sum_{n=2}^\infty\frac{1}{n^{1.0005}}$\\
+由p判别法, 得:\\
+$\displaystyle C\sum_{n=2}^\infty\frac{1}{n^{1.0005}}$收敛\\
+由比较判别法, 得:\\
+$\displaystyle\sum_{n=2}^\infty\frac{\ln(n)}{n^{1.001}}$收敛\\[2ex]
+
+8)可折叠级数
+\begin{center}
+\begin{boxedminipage}{\textwidth}
+若数列$\{a_n\}$满足以下关系:\\
+		\ding{172}$a_n=A_n-B_n$\\
+		\ding{173}$B_n=A_{n+1}$\\
+则级数
+		\[\sum_{n=1}^\infty a_n=\lim_{n\to\infty}S_n=A_1-B_n\]
+\end{boxedminipage}
+\end{center}
+
+例1.\\
+\phantom{例}$\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+1)}$\\
+推导过程:\\
+$\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+1)}=\sum_{n=1}^\infty(\frac{1}{n}-\frac{1}{n+1})$\\
+$\displaystyle S_n=(1-\frac{1}{2})+(\frac{1}{2}-\frac{1}{3})+\cdots+(\frac{1}{n}-\frac{1}{n+1})$\\
+$\displaystyle\phantom{S_n}=1-\frac{1}{n+1}$\\
+$\displaystyle\phantom{S_n}=\frac{n}{n+1}$\\
+$\displaystyle\lim_{n\to\infty}S_n=\lim_{n\to\infty}\frac{n}{n+1}=1$\\
+$\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+1)}$收敛\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\sum_{n=1}^\infty\ln(\frac{n+1}{n+2})$\\
+推导过程:\\
+$\displaystyle\sum_{n=1}^\infty\ln(\frac{n+1}{n+2})=\sum_{n=1}^\infty[\ln(n+1)-\ln(n+2)]$\\
+$\displaystyle S_n=(\ln 2-\ln 3)+(\ln 3-\ln 4)+\cdots+[\ln(n+1)-\ln(n+2)]$\\
+$\displaystyle\phantom{S_n}=\ln 2-\ln(n+2)$\\
+$\displaystyle\phantom{S_n}=\ln(\frac{2}{n+2})$\\
+$\displaystyle\lim_{n\to\infty}S_n=\lim_{n\to\infty}\ln(\frac{2}{n+2})=-\infty$\\
+$\displaystyle\sum_{n=1}^\infty\ln(\frac{n+1}{n+2})$发散
+
+%最后编辑于: 2022-01-15

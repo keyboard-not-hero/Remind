@@ -1,99 +1,133 @@
 \chapter{数列和级数:基本概念}\
 1.数列的收敛和发散\\
-数列:一组有序的数. 如:$\{a_n\}=1,3,5,7,9$\\
+数列: 一组有序的数, 可能为有限项, 也可能为无穷项. 如:$\{a_n\}=1,3,5,7,9$\\
+无穷序列: 有无穷项的数列. 如:$\{b_n\}=1,3,5,\cdots$\\
 数列的项:数列中的第$n$项. 如:$a_n$
-{\par\centering
-\framebox{\begin{minipage}{\textwidth}
+\begin{center}
+\begin{boxedminipage}{\textwidth}
 当满足下列条件:
 \[\lim_{x\to\infty}a_n=L\]
 则称数列$\{a_n\}$收敛
-\end{minipage}}
-\par}
+\end{boxedminipage}
+\end{center}\vspace{2ex}
 
-三明治定理和洛必达法则同样适用于数列
-{\par\centering
-\framebox{$\displaystyle\lim_{n\to\infty}r^n\left\{\begin{array}{l l}
+数列的三明治定理(夹逼定理)
+\begin{center}
+\framebox{若$c_n\leqslant a_n\leqslant b_n$, 且当$n\to\infty$时, $b_n\to L$, $c_n\to L$, 则$a_n\to L$}
+\end{center}\vspace{2ex}
+
+洛必达法则的应用
+\begin{center}
+\framebox{利用洛必达法则求解$\displaystyle\lim_{x\to\infty}f(x)$, 从而得到$\displaystyle\lim_{n\to\infty}a_n$}
+\end{center}
+
+例.\\
+\phantom{例}$\displaystyle\lim_{n\to\infty}\frac{\ln(n)}{\sqrt{n}}$\\
+推导过程:\\
+令$\displaystyle f(x)=\frac{\ln x}{\sqrt{n}}$\\
+$\displaystyle\lim_{x\to\infty}\frac{\ln x}{\sqrt{x}}=\lim_{x\to\infty}\frac{\frac{1}{x}}{\frac{1}{2\sqrt{x}}}=\lim_{x\to\infty}\frac{2}{\sqrt{x}}=0$\\
+由于$a_n$的极限为0\\
+$\therefore$数列$\{a_n\}$收敛\\[2ex]
+
+数列的收敛与发散规则
+\begin{center}
+$\displaystyle\lim_{n\to\infty}r^n\left\{
+\begin{array}{l l}
 =0 & \text{如果} -1<r<1\\
 =1 & \text{如果} r=1\\
 =\infty & \text{如果} r>1\\
 \text{不存在} & \text{如果} r\leqslant -1
-\end{array}\right.$}\\[2ex]
-\framebox{$\displaystyle\lim_{n\to\infty}(1+\frac{k}{n})^n=e^k$}
-\par}\vspace{4ex}
+\end{array}
+\right.$
+\end{center}\vspace{6ex}
 
 2.级数的收敛和发散\\
 级数: 将数列${a_n}$的所有项加起来. 表示为:
-\[\sum_{n=1}^{\infty}a_n=\lim_{N\to\infty}\sum_{n=1}^Na_n=a_1+a_2+\cdots+a_{n-1}+a_n\]
-几何级数: 等比数列的级数. 表示为:
-\[\sum_{n=1}^{\infty}r^n=1+r+r^2+\cdots+r^n\]
-{\par\centering
-\framebox{\begin{minipage}{6cm}
+\[\sum_{n=1}^{\infty}a_n=\lim_{N\to\infty}\sum_{n=1}^Na_n=a_1+a_2+\cdots+a_{n-1}+a_n\]\vspace{4ex}
+
+3.几何级数\\
+由等比数列构成的无穷的级数, 称为几何级数. 表示为:
+\[\sum_{n=1}^{\infty}r^n=1+r+r^2+\cdots+r^n=\frac{1-r^{n+1}}{1-r}\]
+
+规律总结:
+\begin{center}
+\begin{boxedminipage}{6cm}
 如果$-1<r<1$，$\displaystyle\sum_{n=0}^{\infty}r^n=\frac{1}{1-r}$\\
 如果$r\geqslant 1$或$r\leqslant -1$，级数发散
-\end{minipage}}
-\par}\vspace{4ex}
+\end{boxedminipage}
+\end{center}\vspace{4ex}
 
-3.第$n$项判别法(理论)
+\begin{center}
+\begin{boxedminipage}{6cm}
+如果$-1<r<1$，$\displaystyle\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}$\\
+如果$r\geqslant 1$或$r\leqslant -1$，级数发散
+\end{boxedminipage}
+\end{center}\vspace{6ex}
+
+4.第$n$项判别法(理论)
 {\par\centering
 \framebox{若$\displaystyle\lim_{n\to\infty}a_n\neq 0$，或极限不存在，则级数$\displaystyle\sum_{n=1}^{\infty}a_n$发散}
 \par}
-以上判别法不能用于级数收敛性的判断\\[4ex]
+注解: 以上判别法不能用于级数收敛性的判断\\[4ex]
 
-4.无穷级数和反常积分的性质\\
-(1)比较判别法(理论)
+5.无穷级数和反常积分的性质\\
+1)比较判别法(理论)
 {\par\centering
 \framebox{若对所有$n$，有$0\leqslant b_n\leqslant a_n$，且$\displaystyle\sum_{n==1}^{\infty}b_n$发散，则$\displaystyle\sum_{n=1}^{\infty}a_n$也发散}\\[2ex]
 \framebox{若对所有$n$，有$b_n\geqslant a_n\geqslant 0$，且$\displaystyle\sum_{n=1}^{\infty}b_n$收敛，则$\displaystyle\sum_{n=1}^{\infty}a_n$也收敛}
-\par}\vspace{2ex}
+\par}\vspace{4ex}
 
-(2)极限比较判别法(理论)
+2)极限比较判别法(理论)
 {\par\centering
 \framebox{若当$n\to\infty$时$a_n\backsim b_n$，且$a_n$和$b_n$均有限，则$\displaystyle\sum_{n=1}^{\infty}a_n$与$\displaystyle\sum_{n=1}^{\infty}b_n$同时收敛或发散}
-\par}\vspace{2ex}
+\par}\vspace{4ex}
 
-(3)P判别法{理论}
+3)p判别法{理论}
 {\par\centering
 \framebox{$\displaystyle\sum_{n=a}^{\infty}\frac{1}{n^p}\left\{\begin{array}{l l}
 \text{收敛} & \text{如果}p>1\\
 \text{发散} & \text{如果}p\leqslant 1
 \end{array}
 \right.$}
-\par}\vspace{2ex}
+\par}\vspace{4ex}
 
-(4)绝对收敛判别法(理论)
+4)绝对收敛判别法(理论)
 {\par\centering
 \framebox{如果级数$\displaystyle\sum_{n=m}^{\infty}|a_n|$收敛，则级数$\displaystyle\sum_{n=m}^{\infty}a_n$收敛}
-\par}\vspace{2ex}
+\par}\vspace{6ex}
 
-5.级数的新判别法\\
-(1)比式判别法(理论)
+6.级数的新判别法\\
+1)比式判别法(理论)
 {\par\centering
-\framebox{\begin{minipage}{\textwidth}
-若$\displaystyle L=\lim_{n\to\infty}|\frac{a_{n+1}}{a_n}|$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，比式判别法无效\end{minipage}}
-\par}\vspace{2ex}
+\begin{boxedminipage}{\textwidth}
+若$\displaystyle L=\lim_{n\to\infty}|\frac{a_{n+1}}{a_n}|$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，比式判别法无效
+\end{boxedminipage}
+\par}\vspace{4ex}
 
-(2)根式判别法(理论)
+2)根式判别法(理论)
 {\par\centering
-\framebox{\begin{minipage}{\textwidth}
+\begin{boxedminipage}{\textwidth}
 若$\displaystyle L=\lim_{n\to\infty}|a_n|^{\frac{1}{n}}$，则$\displaystyle\sum_{n=1}^{\infty}a_n$在$L<1$时绝对收敛，在$L>1$时发散；但当$L=1$或极限不存在时，根式判别法无效
-\end{minipage}}
-\par}\vspace{2ex}
+\end{boxedminipage}
+\par}\vspace{4ex}
 
-(3)积分判别法(理论)
+3)积分判别法(理论)
 {\par\centering
-\framebox{\begin{minipage}{\textwidth}
+\begin{boxedminipage}{\textwidth}
 若对连续递减函数$f$有$a_n=f(n)$，则$\displaystyle\sum_{n=N}^{\infty}a_n$与$\displaystyle\int_N^{\infty}f(x)\dif x$同时收敛或发散
-\end{minipage}}
-\par}\vspace{2ex}
+\end{boxedminipage}
+\par}\vspace{4ex}
 
-(4)交错级数判别法(理论)\\
-当一个级数收敛而其绝对值形式发散，我们称该级数\textbf{条件收敛}
+4)交错级数判别法(理论)\\
+当一个级数收敛而其绝对值形式发散，该级数\textbf{条件收敛}
 {\par\centering
-\framebox{\begin{minipage}{\textwidth}
+\begin{boxedminipage}{\textwidth}
 若级数$\displaystyle\sum_{n=1}^{\infty}a_n$是交错的，且各项的绝对值递减趋于$0$，则级数收敛\\
 收敛条件列表:\\
 (1)\,$a_n$正负交错. 如:$(-1)^n$\\
 (2)\,$|a_n|$递减\\
 (3)\,$\displaystyle\lim_{n\to\infty}|a_n|=0$
-\end{minipage}}
+\end{boxedminipage}
 \par}
+
+%最后编辑于: 2022-01-15
