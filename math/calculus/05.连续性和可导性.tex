@@ -1,19 +1,30 @@
 \chapter{连续性和可导性}
-1.在一点处连续\\[1ex]
-\framebox{如果$\displaystyle\lim_{x\to a}f(x)=f(a)$, 函数$f$在点$x=a$处连续}\\[4ex]
-2.在区间上连续\\
-在区间$(a,b)$上连续 - 函数在区间范围内的所有点都连续(不包括$a,b$)\\
-在区间$[a,b]$上连续 - (1)函数在(a,b)上连续; (2)函数在$x=a$处右连续(即$\displaystyle\lim_{x\to a^+}=f(a)$); (3)函数在$x=b$处左连续(即$\displaystyle\lim_{x\to a^-}=f(b)$)\\[4ex]
-\framebox{
-\begin{minipage}[c]{12cm}
-	\textbf{介值定理:}如果$f$在$[a,b]$上连续, 并且$f(a)<0$且$f(b)>0$, 那么在区间$(a,b)$上至少有一点$c$, 使得$f(c)=0$. 代之以$f(a)>0$且$f(b)<0$, 同样成立.
-\end{minipage}}\\[4ex]
-\framebox{
-\begin{minipage}[c]{12cm}
+1.连续性\\
+1)在一点处连续
+\begin{center}
+\framebox{如果$\displaystyle\lim_{x\to a}f(x)=f(a)$, 函数$f$在点$x=a$处连续}
+\end{center}\vspace{6ex}
+
+2)在区间上连续\\
+函数$f$在区间$[a,b]$上连续, 如果\\
+(1)函数$f$在(a,b)中的每一点都连续;\\
+(2)函数$f$在点$x=a$处右连续; 即$\displaystyle\lim_{x\to a^+}f(x)$存在(且有限), $f(a)$存在, 并且这两个量相等;\\
+(3)函数$f$在点$x=b$处左连续; 即$\displaystyle\lim_{x\to a^-}f(x)$存在(且有限), $f(b)$存在, 并且这两个量相等.\\[2ex]
+
+\begin{boxedminipage}{12cm}
+	\textbf{介值定理:}如果$f$在$[a,b]$上连续, 并且$f(a)<0$且$f(b)>0$, 那么在区间$(a,b)$上至少有一点$c$, 使得$f(c)=0$.
+\end{boxedminipage}\vspace{4ex}
+
+\begin{boxedminipage}{12cm}
 	\textbf{最大值与最小值定理:}如果$f$在$[a,b]$上连续, 那么$f$在$[a,b]$上至少有一个最大值和一个最小值.
-\end{minipage}}\\[4ex]
-求导公式:
-\[f'(x)=f^{(1)}(x)=\frac{\dif y}{\dif x}=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}\]
+\end{boxedminipage}\vspace{6ex}
+
+2.可导性\\
+通过$(x,f(x))$的切线的斜率是$x$的一个函数, 称为$f$的\textbf{导数}. 表示为
+\[f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}\]
+
+导数的导数称为\textbf{二阶导}
+
 二阶及多阶导数:\\
 \begin{math}
 \begin{array}{l}
@@ -22,4 +33,15 @@
 	\cdots
 \end{array}
 \end{math}\\[2ex]
+
+右导数:\\
+$\displaystyle\phantom{\qquad}\lim_{h\to 0^+}\frac{f(x+h)-f(x)}{h}$\\
+
+左导数:\\
+$\displaystyle\phantom{\qquad}\lim_{h\to 0^-}\frac{f(x+h)-f(x)}{h}$\vspace{6ex}
+
+\begin{center}
 \framebox{如果一个函数$f$在$x$上可导, 那么它在$x$上连续}
+\end{center}
+
+%最后编辑于: 2022-01-19
