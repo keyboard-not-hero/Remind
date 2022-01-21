@@ -3,13 +3,15 @@ outformat="pdf";
 pdfviewer="evince";
 
 
-// '//'为注释符, ';'为每条语句结束标识符
+// '//'为注释符
+
+// ';'为每条语句结束标识符
 
 // import settings; 导入settings包
 
-// outformat; 设置输出格式. 默认为eps
+// outformat; 设置输出格式. 默认为PostScript文件(.eps后缀)
 
-// pdfviewer; 设置pdf格式预览器. 默认为adobe reader
+// pdfviewer; 设置pdf格式预览器
 
 // config文件搜索路径, 按优先级序排列:
 // 1.当前工程目录

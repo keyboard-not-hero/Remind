@@ -7,89 +7,62 @@
 (4)对于所有的在$(a,b)$中的$x$, $f'(x)\leqslant 0$且对于有限个数的$x$, $f'(x)=0$.\\
 则$f$有反函数.\\[2ex]
 
-2.反函数的导数\\[1ex]
+反函数的导数:
+\begin{center}
 \framebox{如果$\displaystyle y=f^{-1}(x)$, 则$\displaystyle\frac{\dif y}{\dif x}=\frac{1}{f'(y)}=\frac{1}{f'(f^{-1}(x))}$}\\[1ex]
-** $f(y)$是将$f(x)$中的$x$替换为$y$的版本, $f'(y)$类似.\\[2ex]
+\end{center}
+例.\\
+\phantom{例}$h(x)=x^3$, 如果$y=h^{-1}(x)$, 求$\displaystyle\frac{\dif y}{\dif x}$\\
+推导过程:\\
+$\displaystyle\frac{\dif y}{\dif x}=\frac{1}{f'(y)}=\frac{1}{(y^3)'}=\frac{1}{3y^2}$\\
+$\displaystyle y=h^{-1}(x)=x^{\frac{1}{3}}$\\
+$\displaystyle\therefore\frac{\dif y}{\dif x}=\frac{1}{3y^2}=\frac{1}{3x^{\frac{2}{3}}}$\\[2ex]
 
-3.反三角函数\\
+2.反三角函数\\
 (1)$\sin^{-1}$是奇函数; 其定义域为$[-1,1]$, 值域为$\displaystyle[-\frac{\pi}{2},\frac{\pi}{2}]$\\[1ex]
 (2)$\displaystyle\frac{\dif }{\dif x}\sin^{-1}(x)=\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
-{\par\centering
-\begin{tikzpicture}
-\datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\sin^{-1}(x)$}, x axis={label=$x$}]
-data[format=function]{
-	var y : interval [-pi/2:pi/2];
-	func x = sin(\value{y} r);
-};
-\end{tikzpicture}\\[1ex]
-\par}
+如图:
+\begin{figure}[H]
+\centering
+	\includegraphics{asin.pdf}
+\end{figure}
+例.\\
+\phantom{例}$\displaystyle\frac{\dif}{\dif x}\sin^{-1}(x)$\\
+推导过程:\\
+
 (3)$\cos^{-1}$既不是偶函数也不是奇函数; 其定义域为$[-1,1]$, 值域为$[0,\pi]$.\\[1ex]
 (4)$\displaystyle\frac{\dif }{\dif x}\cos^{-1}(x)=-\frac{1}{\sqrt{1-x^2}}$, 其中$-1<x<1$.\\[1ex]
-{\par\centering
-\begin{tikzpicture}
-\datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\cos^{-1}(x)$}, x axis={label=$x$}]
-data[format=function]{
-	var y : interval [0:pi];
-	func x = cos(\value{y} r);
-};
-\end{tikzpicture}\\[1ex]
-\par}
+如图:
+\begin{figure}[H]
+\centering
+	\includegraphics{acos.pdf}
+\end{figure}
 (5)$\tan^{-1}$是奇函数; 其定义域是$\mathbb{R}$且值域是$\displaystyle(-\frac{\pi}{2},\frac{\pi}{2})$.\\[1ex]
 (6)对于所有的实数$x$, $\displaystyle\frac{\dif }{\dif x}\tan^{-1}(x)=\frac{1}{1+x^2}$.\\[1ex]
-{\par\centering
-\begin{tikzpicture}[scale=0.5]
-\datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={-1.6,1.6}, label=$\tan^{-1}(x)$}, x axis={ticks=none, label=$x$}]
-data[format=function]{
-    var y : interval [-pi*7/16:pi*7/16];
-    func x = tan(\value{y} r);
-};
-\draw[dashed] (-5.2, pi/2) -- (5.2, pi/2);
-\draw[dashed] (-5.2, -pi/2) -- (5.2, -pi/2);
-\end{tikzpicture}\\[1ex]
-\par}
+如图:
+\begin{figure}[H]
+\centering
+	\includegraphics{atan.pdf}
+\end{figure}
 (7)$\cot^{-1}$既不是奇函数也不是偶函数; 其定义域为$\mathbb{R}$且值域是$(0,\pi)$\\[1ex]
 (8)对于所有的实数$x$, $\displaystyle\frac{\dif }{\dif x}\cot^{-1}(x)=-\frac{1}{1+x^2}$.\\[1ex]
-{\par\centering
-\begin{tikzpicture}[scale=0.5]
-\datavisualization[school book axes, visualize as smooth line, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={3.2}, label=$\cot^{-1}(x)$}, x axis={ticks=none, label=$x$}]
-data[format=function]{
-    var y : interval [pi*1/16:pi*15/16];
-    func x = cot(\value{y} r);
-};
-\draw[dashed] (-5.2, pi) -- (5.2, pi);
-\end{tikzpicture}
-\par}
+\begin{figure}[H]
+\centering
+	\includegraphics{acot.pdf}
+\end{figure}
 (9)$\sec^{-1}$既不是奇函数也不是偶函数; 其定义域是$(-\infty,-1]\cup[1,\infty)$且值域是$\displaystyle[0,\frac{\pi}{2})\cup(\frac{\pi}{2},\pi]$.\\[1ex]
 (10)对于$x>1$或$x<-1$, $\displaystyle\frac{\dif }{\dif x}\sec^{-1}(x)=\frac{1}{|x|\sqrt{x^2-1}}$.\\[1ex]
-{\par\centering
-\begin{tikzpicture}[scale=0.5]
-\datavisualization[school book axes, visualize as smooth line/.list={sec1, sec2}, y axis={ticks={step=(pi/2), major={at={(pi/2),(pi)}}, tick typesetter/.code=\mytypesetter{##1}}, label=$\sec^{-1}(x)$}, x axis={ticks={major={at={-1,0,1}}}, label=$x$}]
-data [set=sec1, format=function] {
-var y : interval [0:pi*7/16];
-func x = 1/cos(\value y r);
-}
-data [set=sec2,format=function] {
-var y : interval [pi*9/16:pi];
-func x = 1/cos(\value y r);
-};
-\draw[dashed] (-5.2, 0.5*pi) -- (5.2, 0.5*pi);
-\end{tikzpicture}
-\par}
+\begin{figure}[H]
+\centering
+	\includegraphics{asec.pdf}
+\end{figure}
+
 (11)$\csc^{-1}$是奇函数; 其定义域为$(-\infty,-1]\cup[1,\infty)$且值域是$\displaystyle[-\frac{\pi}{2},0)\cup(0,\frac{\pi}{2}]$.\\[1ex]
 (12)对于$x>1$或$x<-1$, $\displaystyle\frac{\dif }{\dif x}\csc^{-1}(x)=-\frac{1}{|x|\sqrt{x^2-1}}$.\\[2ex]
-{\par\centering
-\begin{tikzpicture}[scale=0.5]
-\datavisualization[school book axes, visualize as smooth line/.list={csc1, csc2}, y axis={ticks={step=(pi/2), major={at={(-pi/2),(pi/2)}}, tick typesetter/.code=\mytypesetter{##1}}, include value={-1.6,1.6}, label=$\csc^{-1}(x)$}, x axis={ticks={major={at={-1,0,1}}}, label=$x$}]
-data [set=csc1, format=function] {
-var y : interval [pi*1/16:pi/2];
-func x = 1/sin(\value y r);
-}
-data [set=csc2,format=function] {
-var y : interval [-pi/2:-pi*1/16];
-func x = 1/sin(\value y r);
-};
-\end{tikzpicture}
-\par}\vspace{2ex}
+\begin{figure}[H]
+\centering
+	\includegraphics{acsc.pdf}
+\end{figure}\vspace{2ex}
 
 4.计算反三角函数\\
 化简形如$\sin^{-1}(\sin(\alpha))$的三角函数:\\

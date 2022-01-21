@@ -97,7 +97,18 @@ $\displaystyle y=x^{\sin(x)}$\\
 2)等式两边关于$x$隐式求导:\\
 \phantom{\qquad}$\displaystyle\frac{1}{y}\frac{\dif y}{\dif x}=\cos(x)\ln(x)+\frac{\sin(x)}{x}$\\
 3)等式两边乘以$y$, 并将$y$替换为$x^{\sin(x)}$:\\
-\phantom{\qquad}$\displaystyle\frac{\dif y}{\dif x}=[\cos(x)\ln(x)+\frac{\sin(x)}{x}]x^{\sin(x)}$\\[2ex]
+\phantom{\qquad}$\displaystyle\frac{\dif y}{\dif x}=\left[\cos(x)\ln(x)+\frac{\sin(x)}{x}\right]x^{\sin(x)}$\\[1ex]
+
+例2.\\
+\phantom{例}$\displaystyle\frac{\dif}{\dif x}[(1+x^2)^{\frac{1}{x^3}}]$\\
+推导过程:\\
+$\displaystyle y=(1+x^2)^{\frac{1}{x^3}}$\\
+1)等式两边取自然对数:\\
+\phantom{\qquad}$\displaystyle\ln(y)=\frac{1}{x^3}\ln(1+x^2)$\\
+2)等式两边关于$x$隐式求导:\\
+\phantom{\qquad}$\displaystyle\frac{1}{y}\frac{\dif y}{\dif x}=-\frac{3}{x^4}\ln(1+x^2)+\frac{2x}{x^3(1+x^2)}=\frac{2}{x^2(1+x^2)}-\frac{3\ln(1+x^2)}{x^4}$\\
+3)等式两边乘以$y$, 并将$y$替换为$(1+x^2)^{\frac{1}{x^3}}$:\\
+\phantom{\qquad}$\displaystyle\frac{\dif y}{\dif x}=\left[\frac{2}{x^2(1+x^2)}-\frac{3\ln(1+x^2)}{x^4}\right](1+x^2)^{\frac{1}{x^3}}$\\[2ex]
 
 6.指数增长与指数衰变\\
 (1)指数增长方程: $\displaystyle P(t)=P_0e^{kt}$\\
@@ -105,8 +116,8 @@ $\displaystyle y=x^{\sin(x)}$\\
 \phantom{空格}假如三年前兔子的总数是1000只, 而现在增长至64000只, 那么从现在开始, 一年后兔子总数是多少?\\
 解答:\\
 由指数增长方程:\\
-\phantom{qquad}$\displaystyle 64000=1000e^{3k}$\\
-$\displaystyle k=\frac{\ln64}{3}=2\ln2$\\
+\phantom{\qquad}$\displaystyle 64000=1000e^{3k}$\\
+\phantom{\qquad}$\displaystyle k=\frac{\ln64}{3}=2\ln2$\\
 一年后兔子总量:\\
 $\displaystyle P(4)=1000e^{8\ln2}=1000\times2^8=256000$\\[1ex]
 
@@ -115,11 +126,28 @@ $\displaystyle P(4)=1000e^{8\ln2}=1000\times2^8=256000$\\[1ex]
 \phantom{空格}如果原料的半衰期为七年, 开始时有50磅原料, 十年后还剩多少磅? 多久之后, 原料会减少到1磅?\\
 解答:\\
 由指数衰减方程:\\
+\phantom{\qquad}$\displaystyle P(7)=\frac{1}{2}P_0=P_0e^{-kt}$\\
+\phantom{\qquad}$\displaystyle k=\frac{\ln2}{7}$\\
+十年之后剩余的磅数:\\
+$\displaystyle P(10)=P_0e^{-kt}=50e^{-\frac{10ln2}{7}}$\\
+原料剩余1磅所需要的时间:\\
+$\displaystyle P(t)=50e^{-\frac{\ln2}{7}t}=1$\\
+$\displaystyle\frac{\ln2}{7}t=\ln50$\\
+$\displaystyle\phantom{\frac{\ln2}{7}}t=\frac{7\ln50}{\ln2}$\\[2ex]
 
-
-13.双曲函数\\[1ex]
-(1)双曲余弦: $\displaystyle\cosh(x)=\frac{e^x+e^{-x}}{2}$\\[1ex]
+7.双曲函数\\
 (2)双曲正弦: $\displaystyle\sinh(x)=\frac{e^x-e^{-x}}{2}$\\[1ex]
+如图:
+\begin{figure}[H]
+\centering
+\includegraphics{sinh.pdf}
+\end{figure}
+(2)双曲余弦: $\displaystyle\cosh(x)=\frac{e^x+e^{-x}}{2}$\\[1ex]
+如图:
+\begin{figure}[H]
+\centering
+\includegraphics{cosh.pdf}
+\end{figure}
 (3)双曲线方程: $\cosh^2(x)-\sinh^2(x)=1$\\[1ex]
-(4)导数:\\[1ex]
-$\displaystyle\frac{\dif }{\dif x}\sinh(x)=\cosh(x)$\qquad$\displaystyle\frac{\dif }{\dif x}\cosh(x)=\sinh(x)$\\[1ex]
+
+%最后编辑于: 2022-01-21

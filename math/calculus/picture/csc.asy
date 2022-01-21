@@ -4,6 +4,9 @@ outformat="pdf";
 
 import graph;
 unitsize(1cm);
+//画坐标轴
+draw((-pi-0.5, 0)--(pi+0.5, 0));
+draw((0, -4.5)--(0, 4.5));
 //刻度线路径
 path y1=(0,1)--(0.1,1);
 path y2=(0,-1)--(0.1,-1);
@@ -11,9 +14,6 @@ path x1=(-pi, 0)--(-pi, 0.1);
 path x2=(-pi/2, 0)--(-pi/2, 0.1);
 path x3=(pi/2, 0)--(pi/2, 0.1);
 path x4=(pi, 0)--(pi, 0.1);
-//画坐标轴
-draw((-pi-0.5, 0)--(pi+0.5, 0));
-draw((0, -4.5)--(0, 4.5));
 //画刻度线
 draw(y1, L="1", align=W);
 draw(y2, L="-1", align=W);

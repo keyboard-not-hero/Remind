@@ -149,7 +149,7 @@ scale(expression)
 sqrt(expression)
 	求平方根. expression为负数时，出现run time错误
 
-数学函数库
+数学函数库(bc -l)
 s(x)
 	sin值
 c(x)
