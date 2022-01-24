@@ -1,38 +1,45 @@
 \chapter{线性代数中的线性方程组}
 \section{线性方程组}
-线性方程:
+包含变量$x_1,x_2,\cdots,x_n$的线性方程:
 	\[ a_{1}x_{1}+a_{2}x_{2}+\cdots +a_{n}x_{n}=b \]
 其中, $b$与系数$a_{1}$,$a_{2}$,$\cdots$,$a_{n}$是实数或复数, 通常为已知数. n为任意正整数\\[2ex]
 
-线性方程组 -- 由一个或几个包含相同变量的线性方程组成, 如:
-\[\left\{\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
+线性方程组 -- 由一个或几个包含相同变量$x_1,x_2,\cdots,x_n$的线性方程组成, 如:
+\[\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
 	2x_1 & - & x_2 & + & 1.5x_3 & = & 8\\
 	x_1  &   &     & - & 4x_3   & = & -7		
-\end{array}\right.\]
+\end{array}\]
 若线性方程组的方程个数少于未知数个数, 称之为\textbf{欠定方程组}\\
-若线性方程组的方程个数多余未知数个数, 称之为\textbf{超定方程组}\\
-方程组所有可能的解的集合称为线性方程组的\textbf{解集}\\
-若两个方程组有相同的解集, 则这两个方程组称为\textbf{等价}的\\[2ex]
+若线性方程组的方程个数多余未知数个数, 称之为\textbf{超定方程组}\\[1ex]
 
-线性方程组解集情况:\\
+方程组所有可能的解的集合称为线性方程组的\textbf{解集}\\
+若两个方程组有相同的解集, 则这两个方程组称为\textbf{等价的}\\[2ex]
+
+\begin{center}
+\begin{boxedminipage}{8cm}
+线性方程组的解有下列三种情况:\\
 1.无解;\\
 2.有唯一解;\\
-3.有无穷多解.\\[1ex]
-当方程组无解时, 称线性方程组\textbf{不相容}\\
-当方程组有唯一解或无穷多解时, 称线性方程组\textbf{相容}\\[2ex]
+3.有无穷多解.
+\end{boxedminipage}
+\end{center}\vspace{2ex}
+
+当方程组有唯一解或无穷多解时, 称线性方程组\textbf{相容}; 当方程组无解时, 称线性方程组\textbf{不相容}\\[2ex]
 
 线性方程组
-\[\left\{\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
+\[\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
 x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 	& 	& 2x_2 & - & 8x_3 & = & 8\\
 -4x_1 & + & 5x_2 & + & 9x_3 & = & -9
-\end{array}\right.\]
+\end{array}\]
+
 线性方程组的\textbf{系数矩阵}
 \[\left[\begin{array}{r r r}
 	1 & -2 & 1\\
 	0 & 2  & -8\\
 	-4 & 5 & 9
 \end{array}\right]\]
+
 线性方程组的\textbf{增广矩阵}
 \[\left[\begin{array}{r r r r}
 	1 & -2 & 1 & 0\\
@@ -40,85 +47,113 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 	-4 & 5 & 9 & -9
 \end{array}\right]\]\\[2ex]
 
-解线性方程组\\
-思路: 将方程组用一个更容易求解的等价方程组替代\\
+矩阵的\textbf{维数}说明它包含的行数和列数. 如: 当矩阵包含3行4列, 则维数为3$\times$4\\[2ex]
 
-化简方程组的三种基本变换:\\
+\begin{center}
+\begin{boxedminipage}{10cm}
+初等行变换:\\
 1.倍加变换 - 将某方程替换为它与另一方程倍数的和;\\
 2.对换变换 - 交换两个方程的位置;\\
-3.倍乘变换 - 方程的所有系数乘以一个非0实数.\\
+3.倍乘变换 - 方程的所有系数乘以一个非0实数.
+\end{boxedminipage}
+\end{center}
 
-例. 简化如下方程组
+当其中一个矩阵可以经过一系列初等行变换称为另一个矩阵, 则称两个矩阵为\textbf{行等价的}\\
+
+例1.解下列方程组\\
 \[\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
-x_1 & - & 2x_2 & + &  x_3 & = & 0\\
-	& 	& 2x_2 & - & 8x_3 & = & 8\\
--4x_1 & + & 5x_2 & + & 9x_3 & = & -9
-\end{array}\qquad\left[\begin{array}{r r r r}
+	x_1 & - & 2x_2 & + & x_3 & = & 0\\
+	& & 2x_2 & - & 8x_3 & = & 8\\
+	-4x_1 & + & 5x_2 & + & 9x_3 & = & -9
+\end{array}\]
+推导过程:\\
+增广矩阵:\\
+\[\left[\begin{array}{r r r r}
 	1 & -2 & 1 & 0\\
 	0 & 2 & -8 & 8\\
-	-4 & 5 & 9 & -9
+	5 & 0 & -5 & 10
 \end{array}\right]\]
-步骤1 -- \ding{194}+4\ding{192}
-\[\left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 2 & -8 & 8\\
-    -4 & 5 & 9 & -9
-\end{array}\right] \Rightarrow \left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 2 & -8 & 8\\
-    0 & -3 & 13 & -9
+1)\ding{174}-5\ding{172}, 得:\\
+\[\left[\begin{array}{r r r r r} 
+	1 & -2 & 1 & 0\\
+	0 & 2 & -8 & 8\\
+	0 & 10 & -10 & 10
 \end{array}\right]\]
-步骤2 -- $\dfrac{1}{2}$\ding{193}
-\[\left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 2 & -8 & 8\\
-    0 & -3 & 13 & -9
-\end{array}\right] \Rightarrow \left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 1 & -4 & 4\\
-    0 & -3 & 13 & -9
-\end{array}\right]\]
-步骤3 -- \ding{194}+3\ding{193}
-\[\left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 1 & -4 & 4\\
-    0 & -3 & 13 & -9
-\end{array}\right] \Longrightarrow \left[\begin{array}{r r r r}
+2)$\frac{1}{2}$\ding{173}, 得:\\
+\[\left[\begin{array}{r r r r r} 
 	1 & -2 & 1 & 0\\
 	0 & 1 & -4 & 4\\
-	0 & 0 & 1 & 3
+	0 & 10 & -10 & 10
 \end{array}\right]\]
-步骤4 -- \ding{193}+4\ding{194}
-\[\left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 1 & -4 & 4\\
-    0 & 0 & 1 & 3
-\end{array}\right] \Longrightarrow \left[\begin{array}{r r r r}
+3)\ding{174}-10\ding{172}, 得:\\
+\[\left[\begin{array}{r r r r r} 
 	1 & -2 & 1 & 0\\
-	0 & 1 & 0 & 16\\
-	0 & 0 & 1 & 3
+	0 & 1 & -4 & 4\\
+	0 & 0 & 30 & -30
 \end{array}\right]\]
-步骤5 -- \ding{192}+(-\ding{194})
+4)$\frac{1}{30}$\ding{174}, 得:\\
+\[\left[\begin{array}{r r r r r} 
+	1 & -2 & 1 & 0\\
+	0 & 1 & -4 & 4\\
+	0 & 0 & 1 & -1
+\end{array}\right]\]
+5)\ding{173}+4\ding{174}, 得:\\
+\[\left[\begin{array}{r r r r r} 
+	1 & -2 & 1 & 0\\
+	0 & 1 & 0 & 0\\
+	0 & 0 & 1 & -1
+\end{array}\right]\]
+6)\ding{172}-\ding{174}, 得:\\
+\[\left[\begin{array}{r r r r r} 
+	1 & -2 & 0 & 1\\
+	0 & 1 & 0 & 0\\
+	0 & 0 & 1 & -1
+\end{array}\right]\]
+7)\ding{172}+2\ding{173}, 得:\\
+\[\left[\begin{array}{r r r r r} 
+	1 & 0 & 0 & 1\\
+	0 & 1 & 0 & 0\\
+	0 & 0 & 1 & -1
+\end{array}\right]\]
+方程组的解:(1,0,-1)\\[1ex]
+
+例2.确定方程组是否相容\\
+\[\begin{array}{r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r@{\hspace{1.5pt}}l@{\hspace{1.5pt}}r}
+	& & x_2 & - & 4x_3 & = & 8\\
+	2x_1& - & 3x_2 & + & 2x_3 & = & 1\\
+	4x_1 & - & 8x_2 & + & 12x_3 & = & 1
+\end{array}\]
+推导过程:\\
+增广矩阵:\\
 \[\left[\begin{array}{r r r r}
-    1 & -2 & 1 & 0\\
-    0 & 1 & 0 & 16\\
-    0 & 0 & 1 & 3
-\end{array}\right] \Longrightarrow \left[\begin{array}{r r r r}
-	1 & -2 & 0 & -3\\
-	0 & 1 & 0 & 16\\
-	0 & 0 & 1 & 3
+	0 & 1 & -4 & 8\\
+	2 & -3 & 2 & 1\\
+	4 & -8 & 12 & 1
 \end{array}\right]\]
-步骤6 -- \ding{192}+2\ding{193}
+1)\ding{172}$\rightleftharpoons$\ding{173}, 得:\\
 \[\left[\begin{array}{r r r r}
-    1 & -2 & 0 & -3\\
-    0 & 1 & 0 & 16\\
-    0 & 0 & 1 & 3
-\end{array}\right] \Longrightarrow \left[\begin{array}{r r r r}
-	1 & 0 & 0 & 29\\
-	0 & 1 & 0 & 16\\
-	0 & 0 & 1 & 3
+	2 & -3 & 2 & 1\\
+	0 & 1 & -4 & 8\\
+	4 & -8 & 12 & 1
 \end{array}\right]\]
-\framebox{若两个线性方程组的增广矩阵是行等价的, 则它们具有相同的解集}\vspace{6ex}
+2)\ding{174}-2\ding{172}, 得:\\
+\[\left[\begin{array}{r r r r}
+	2 & -3 & 2 & 1\\
+	0 & 1 & -4 & 8\\
+	0 & -2 & 8 & -1
+\end{array}\right]\]
+3)\ding{174}+2\ding{173}, 得:\\
+\[\left[\begin{array}{r r r r}
+	2 & -3 & 2 & 1\\
+	0 & 1 & -4 & 8\\
+	0 & 0 & 0 & 15
+\end{array}\right]\]
+方程组不相容\\[1ex]
+
+\begin{center}
+\framebox{若两个线性方程组的增广矩阵是行等价的, 则它们具有相同的解集}
+\end{center}
+\newpage
 
 \section{行化简与阶梯形矩阵}
 非零行(列): 矩阵中至少包含一个非零元素的行(列)\\
@@ -137,9 +172,15 @@ x_1 & - & 2x_2 & + &  x_3 & = & 0\\
 每个矩阵行等价于唯一的简化阶梯形矩阵.
 \end{TheoremTwo}\vspace{2ex}
 
+若矩阵A行等价于阶梯形矩阵U, 则称U为A的\textbf{阶梯形}; 若U是简化阶梯形, 则称U为A的\textbf{简化阶梯形}. \\
+RREF(Reduced Row-Echelon Form): 简化阶梯形\\
+REF(Row-Echelon Form): 阶梯形\\[2ex]
+
 \begin{definition}
 矩阵A中的{\heiti 主元位置}是A中对应于它的阶梯形中先导元素的位置.{\heiti 主元列}是A中含有主元位置的列.
 \end{definition}\vspace{2ex}
+
+例1.将下列矩阵
 
 基本变量: 位于主元列的变量\\
 自由变量: 位于非主元列的变量\\[2ex]
