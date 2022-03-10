@@ -190,6 +190,51 @@ REF(Row-Echelon Form): 阶梯形\\[2ex]
 \end{array}
 \right]\]
 推导过程:\\
+1)\ding{172}$\rightleftharpoons$\ding{175}, 得:\\
+\[\left[
+\begin{array}{r r r r r}
+	1 & 4 & 5 & -9 & -7\\
+	-1 & -2 & -1 & 3 & 1\\
+	-2 & -3 & 0 & 3 & -1\\
+	0 & -3 & -6 & 4 & 9
+\end{array}
+\right]\]
+2)\ding{173}+\ding{172}, 得:\\
+\[\left[
+\begin{array}{r r r r r}
+	1 & 4 & 5 & -9 & -7\\
+	0 & 2 & 4 & -6 & -6\\
+	-2 & -3 & 0 & 3 & -1\\
+	0 & -3 & -6 & 4 & 9
+\end{array}
+\right]\]
+3)\ding{174}+2\ding{172}, 得:\\
+\[\left[
+\begin{array}{r r r r r}
+	1 & 4 & 5 & -9 & -7\\
+	0 & 2 & 4 & -6 & -6\\
+	0 & 5 & 10 & -15 & -15\\
+	0 & -3 & -6 & 4 & 9
+\end{array}
+\right]\]
+4)\ding{174}-$\frac{5}{2}$\ding{173}, 得:\\
+\[\left[
+\begin{array}{r r r r r}
+	1 & 4 & 5 & -9 & -7\\
+	0 & 2 & 4 & -6 & -6\\
+	0 & 0 & 0 & 0 & 0\\
+	0 & -3 & -6 & 4 & 9
+\end{array}
+\right]\]
+5)\ding{174}$\rightleftharpoons$\ding{175}, 得:\\
+\[\left[
+\begin{array}{r r r r r}
+	1 & 4 & 5 & -9 & -7\\
+	0 & 2 & 4 & -6 & -6\\
+	0 & -3 & -6 & 4 & 9\\
+	0 & 0 & 0 & 0 & 0
+\end{array}
+\right]\]
 
 
 基本变量: 位于主元列的变量\\
@@ -208,20 +253,22 @@ REF(Row-Echelon Form): 阶梯形\\[2ex]
 2.应用行化简算法把增广矩阵化为阶梯形, 确定方程组是否相容, 如果没有解则停止; 否则进行下一步\\
 3.继续行化简算法得到它的简化阶梯形\\
 4.写出简化阶梯形矩阵对应的方程组\\
-5.将每个非零方程改写为使用自由变量表示基本变量的形式\\[4ex]
+5.将每个非零方程改写为使用自由变量表示基本变量的形式
+\newpage
 
 \section{向量方程}
-列向量: 仅含一列的矩阵, 简称为向量. 如:
-\[u=\left[\begin{array}{c}
+仅含一列的矩阵称为列向量, 简称为向量. 包含两个元素得向量如下:
+\[u=\left[\begin{array}{r}
 	3\\
 	-1
-\end{array}\right] \text{\quad or\quad} u=(3, -1)\]\\[2ex]
-行向量: 仅含一行的矩阵. 如:
-\[v=\left[\begin{array}{c c}
-	2 & 5
-\end{array}\right]\]\\[2ex]
-所有两个元素的向量表示为$\mathbb{R}^2$, $\mathbb{R}$表示元素为实数, 2表示向量包含两个元素\\
-向量加法:
+\end{array}\right] \text{\quad or\quad} u=(3, -1)\]\\[1ex]
+所有两个元素的向量表示为$\mathbb{R}^2$, $\mathbb{R}$表示向量中的元素为实数, 2表示向量包含两个元素\\[1ex]
+
+向量相等:\\
+两个向量相等当且仅当其对应元素相等\\[1ex]
+
+向量加法:\\
+将向量的对应元素相加
 \begin{equation*}
 \left[\begin{array}{c}
 	1\\
@@ -243,7 +290,9 @@ REF(Row-Echelon Form): 阶梯形\\[2ex]
 	3
 \end{array}\right]
 \end{equation*}
+
 标量乘法:\\
+将向量的元素乘以系数\\
 \indent 若$u=\left[\begin{array}{c}3\\-1\end{array}\right]$, $c=5$, 则:
 \[cu=5\left[\begin{array}{c}3\\-1\end{array}\right]=\left[\begin{array}{c}15\\-5\end{array}\right]\]
 

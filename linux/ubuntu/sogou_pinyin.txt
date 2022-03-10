@@ -47,3 +47,5 @@ fcitx配置 >> 附加组件 >> 勾选高级 >> 勾选"X11支持"
 [1]:https://fcitx-im.org/wiki/Special:MyLanguage/Fcitx
 [2]:https://wiki.archlinux.org/index.php/Fcitx_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29
 [3]:https://code.google.com/archive/p/fcitx/
+
+最后编辑于: 2022-02-24

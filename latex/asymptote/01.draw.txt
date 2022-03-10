@@ -4,6 +4,7 @@ outformat="pdf";
 pdfviewer="evince";
 
 一、Demo(示例)01 - basic line
+size(100);
 draw((0,0)--(100,100));
 
 // draw((start_coor)--(end_coor)); 作一条从坐标start_coor到坐标end_coor的直线, --代表线条类型为直线. 默认长度单位为bp, 1 bp=1/72 inch, 默认长度为0.5 bp
@@ -11,19 +12,22 @@ draw((0,0)--(100,100));
 // draw(picture pic=currentpicture, Label L="", path g, align align=NoAlign, pen p=currentpen, arrowbar arrow=None, arrowbar bar=None, margin margin=NoMargin, Label legend="", marker marker=nomarker)
 // pic - 默认为currentpicture
 // L - 直线的注解label
-// g - 作图路径
-// align - 注解相对于直线中心的位置. 可选N/S/W/E及其组合. 默认为下方(自左至右)
-// p - 线条颜色/类型/宽度, label大小, 详情见后续.可使用'+'组合, 如: p=fontsize(10)+blue
-    1.线条颜色
-    pen gray(real g); g为灰度, 范围[0,1], 0代表黑色
-    pen rgb(real r, real g, real b); r/g/b分别为rgb颜色深度, 范围[0,1]
-    pen RGB(int r, int g, int b); r/g/b分别为rgb颜色深度, 范围[0,255]
-    pen cmyk(real c, real m, real y, real k); c/m/y/k分别为cmyk颜色深度, 范围[0,1]
-    pen invisible; 设置为不可见, 可通过invisible(pen p)查看pen是否可见 
-    可通过colorspace(pen p)查看色彩模式, 默认颜色为black
-    2.线条类型
-    pen linetype(real[] a, real offset=0, bool scale=true, bool adjust=true); 指定线条类型, a[0]代表第一个虚线的宽度, a[1]代表第一个虚线之间的间隔, a[2]代表第二个虚线的宽度, a[3]代表第二个虚线间隔..., 元素以此循环类推, a元素单位长度参考linewidth的0.5bp; offset代表
-    预定义线条: 
+// g - 作图路径, 格式: (x1,y1)--(x2,y2)--cycle, cycle代表将最后一个点连接到第一个点, 闭合图形
+// align - 注解相对于线条中心的位置. 可选N/S/W/E及其组合. 默认为S
+// p - 画笔所勾勒线条的属性. 列表如下:
+    颜色(默认为black):
+        pen gray(real g) - 区间范围为[0,1]的灰度
+        pen rgb(reak r, real g, real b) - 使用RGB表示颜色, 每个原始色的区间为[0,1]
+        pen RGB(reak r, real g, real b) - 使用RGB表示颜色, 每个原始色的区间为[0,255]
+        pen cmyk(real c, real m, real y, real k) - 使用cmyk表示颜色, 每个原始色的区间为[0,1]
+        pen invisible - 不可见
+    类型(默认为实线, 即new real[])
+        pen linetype(real[] a, real offset=0, bool scale=true, bool adjust=true)
+            a - 代表各部分的长度, 如下:
+            ___  .  ___  .  ___
+             1 2 3 4
+            示例: linetype(new real[]{8, 8, 1, 8})
+        预定义线条类型: 
 	pen solid - linetype(new real[]);
 	pen dotted - linetype(new real[]{0,4});
 	pen dashed - linetype(new real[]{8,8});
@@ -31,40 +35,57 @@ draw((0,0)--(100,100));
 	pen dashdotted - linetype(new real[]{8,8,0,8});
 	pen longdashdotted - linetype(new real[]{24,8,0,8});
 	pen Dotted - linetype(new real[]{0,3})+2*linewidth(currentpen);
-    默认为solid实线
-    3.线条宽度
-    pen linewidth(real width); width指定线条宽度, 默认为0.5bp
-    4.label大小
-    pen fontsize(real size, real lineskip=1.2*size); 指定label字体大小, size为字体大小, 默认单位为pt, 默认大小为12pt; lineskip为行距(字体高度+行间隔)
-// arrow - 箭头类型. 箭头位置如下:
-		None - 没有箭头
-		Blank - 没有箭头
-		BeginArrow - 起始位置放置箭头, 接受箭头类型参数
-		MidArrow - 中间位置放置箭头, 接受箭头类型参数 
-		EndArrow - 结束位置放置箭头, 接受箭头类型参数. Arrow与之含义相同
-		Arrows - 起始和结束位置放置箭头, 接受箭头类型参数
-	箭头类型, 以Arrow为例(BeginArrow格式为BeginArcArrow), 可选列表如下:
-		Arrow()
-		ArcArrow()
-		Arrow(SimpleHead)
-		ArcArrow(SimpleHead)
-		Arrow(HookHead)
-		ArcArrow(HookHead)
-		Arrow(TexHead)
-		ArcArrow(TeXHead)
+    宽度(默认为0.5bp)
+        pen linewidth(real)
+    图形角弧度类型(默认为1)
+        pen linecap(int)
+        int数字列表:
+            0 - 直角弧度, 从原始位置
+            1 - 圆角弧度
+            2 - 直角弧度, 从圆角弧度的最外距离
+    多种属性组合格式:
+        linetype(new real[]{8, 8}) + linewidth(2bp)
+    默认pen属性修改
+        default(p)
+// arrow - 箭头类型. 箭头位置方法如下:
+    None - 没有箭头
+    Blank - 没有箭头
+    BeginArrow(arrowhead arrowhead=DefaultHead, real size=7.5, real angle=15, filltype filltype, real position)
+        起始位置放置反向箭头, 接受箭头类型参数. 参数列表如下:
+        arrowhead - 箭头类型, 列表: DefaultHead/SimpleHead/HookHead/TeXHead
+        size - 箭头大小
+        angle -  箭头斜边与水平线的夹角度数
+        filltype - 箭头填充类型. 列表如下:
+            FillDraw - 填充内部, 画边界
+            Fill - 填充内部
+            NoFill - 不填充内部, 画边界
+            Draw - 只画边界
+            UnFill - 不填充内部(裁剪内部边缘)
+        position - 箭头在线条的位置. 格式为: point(path p, real t)
+            p的格式为(x1,y1)--(x2,y2), 每个数值的取值范围为[0,1], 代表直线的起始百分比位置和结束百分比位置; t代表从该路径上取的百分比位置
+            示例: draw((0,0)--(4,0), arrow=BeginArrow(DefaultHead, position=point((0.2, 0.2)--(1,1), 0.25))); 
+            从(0,0)--(4,0)截取[0.2, 1]区间的线条, 再将箭头放置到截取后的线条0.25部位处
+    MidArrow(arrowhead arrowhead, real size, real angle, filltype filltype)
+        中间位置放置正向箭头, 接受箭头类型参数 
+    EndArrow(arrowhead arrowhead, real size, real angle, filltype filltype, real position)
+        结束位置放置正向箭头, 接受箭头类型参数
+    Arrows(arrowhead arrowhead, real size, real angle, filltype filltype)
+        起始位置放置反向箭头和结束位置放置正向箭头, 接受箭头类型参数
+    差异版本箭头:
+        BeginArcArrow/MidArcArrow/EndArcArrow/ArcArrows
 // bar - bar类型. 可选位置如下:
-		None - 没有bar
-		BeginBar - 起始位置放置bar, 可接受bar大小参数
-		EndBar - 结束位置放置bar, 可接受bar大小参数. Bar与之含义相同
-		Bars - 起始和结束位置放置bar, 可接受bar大小参数
-// margin - 路径起始或结尾处的边距, 可选列表如下:
-		NoMargin - 不包含margin
-		BeginMargin - path起始处包含margin
-		EndMargin - path结尾处包含margin
-		Margins - path起始和结尾处包含margin
-		TrueMargin(begin_margin, end_margin) - 用于详细指定起始和结尾处的margin尺寸, 详情见例11
-// legend - 线条图例名称
-// marker - 线条的描点, 为Mark/MarkFill数组元素, Mark数组包含7个元素, MarkFill包含5个元素
+    None - 没有bar
+    BeginBar(real size=7.5) 
+        起始位置放置bar
+    EndBar(real size=7.5)
+        结束位置放置bar
+    Bars(real size=7.5)
+        起始和结束位置放置bar
+// margin - 线条与起始或结尾处的距离, 可选列表如下:
+    NoMargin - 不包含margin
+    Margin(real begin, real end=begin)
+        线条与起始和结尾处的距离
+// legend - 线条在legend中的label名称
 
 
 
@@ -72,14 +93,19 @@ draw((0,0)--(100,100));
 size(100);
 draw((0,0)--(1,1));
 
-// size(100, 100)设定方向允许的最大长度, 图像按长宽比例进行调整, 但都不能大于对应方向指定的长度. size(100)/size(0,100)/size(100,0)都等同于size(100,100), 默认单位为bp, 可选单位列表:
+// size(picture pic=currentpicture, real x, real y=x, bool keepAspect=Aspect)
+// x - 代表x轴上的单位长度
+// y - 代表y轴上的单位长度
+// * x或y其中一个为0时, 根据另一个轴取单位长度
+// x/y默认长度单位为bp, 可选长度单位列表:
 	1 bp = 1/72 inch
 	1 pt = 1/72.27 inch
 	1 cm 
 	1 mm
 	1 inch
-
-// draw((0,0)--(1,1)); 作一条横向和纵向都为单位长度的直线
+// keepAspect - 遵守size或path的长宽比率. 列表如下:
+    Aspect/true - 遵守path的长宽比率(x轴的长度不大于x值, y轴的长度不大于y值)
+    IgnoreAspect/false - 遵守size的长宽比率(x轴的长度等于x值, y轴的长度等于y值)
 
 
 
@@ -93,41 +119,110 @@ draw((0,0)--(2,2));
 
 
 
-四、Demo(示例)04 - arraw
-size(3cm);
-draw((0,0)--(1,1), arrow=Arrow);
+四、Demo04 - axis
+import graph;
+size(100);
+xaxis("$x$", xmin=-5, xmax=5);
 
-// draw((0,0)--(1,1), arrow=Arrow); 作一条路径为直线, 终点为箭头的图像. 箭头列表:
-	Arrow()
-	ArcArrow()
-	Arrow(SimpleHead)
-	ArcArrow(SimpleHead)
-	Arrow(HookHead)
-	ArcArrow(HookHead)
-	Arrow(TexHead)
+// axis包含在graph模块中
+// xaxis("$x$", xmin=-5, xmax=5); 作x轴, 起始值为-5, 终止值为5
+// xaxis(picture pic=currentpicture, Label L="", axis axis=YZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks ticks=NoTicks, arrowbar arrow=None, bool above=false);
+    x坐标轴, 参数如下:
+// pic - 默认为currentpicture
+// L - 坐标轴的label
+// axis - 坐标轴放置的位置. 列表如下:
+    YZero(bool extend=true) - y=0的位置
+    YEquals(real Y, bool extend=true) - y=Y的位置
+    Bottom(bool extend=false) - 位于最底部
+    Top(bool extend=false) - 位于最顶部
+    BottomTop(bool extend=false) - 顶部和底部都作一个坐标轴
+// xmin - 起始位置
+// xmax - 终止位置
+// p - 画笔属性, 参考draw方法的p参数
+// ticks - 刻度线, 列表如下:
+    NoTicks - 没有刻度线, 默认值
+    LeftTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左边的刻度线(等分或划单元). 参数列表如下:
+        format - 刻度线label格式, 支持LaTeX数学格式(即$$), 默认为$%.4g$. 列表如下:
+            $$ - LaTeX math模式
+            % - 不输出刻度线label
+        beginlabel - 起始刻度线的label是否显示
+        endlabel - 结束刻度线的label是否显示
+        N - 将区间[xmin, xmax]等分为N份major, 并显示刻度线
+        n - 将每个major等分为n份minor, 并显示刻度线
+        Step - 当N=0时, 将区间[xmin, xmax]分为每份大小为Step的major
+        step - 当n=0时, 将major分为每份大小为step的minor
+        begin - 起始major刻度线是否显示
+        end - 结束monjor刻度线是否显示
+        Size - major刻度线的大小
+        size - minor刻度线的大小
+        pTick - major刻度线的pen, 参考draw方法的p参数
+        ptick - minor刻度线的pen, 参考draw方法的p参数
+    LeftTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, real[] Ticks, real ticks=new real[], real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左边的刻度线(具体刻度位置). 参数列表如下:
+        Ticks - major刻度线位置数组, 格式: Ticks=new real[]{...}
+        ticks - minor刻度线位置数组, 格式: ticks=new real[]{...}
+    RightTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 右边的刻度线(等分或划单元)
+    Ticks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左/右边的刻度线(等分或划单元)
+// arrow - 箭头, 参考draw的arrow参数
+// above - 是否位于最顶层图层. true代表位于最顶层, false代表位于最底层
+
+// yaxis(picture pic=currentpicture, Label L="", axis axis=XZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks ticks=NoTicks, arrowbar arrow=None, bool above=false, bool autorotate=true);
+    y坐标轴, 与x轴差异参数如下:
+// axis - 坐标轴放置的位置. 列表如下:
+       XZero(bool extend=true)
+           放置在x=0处
+       XEquals(real X, bool extend=true)
+           放置在x=X处
+       Left(bool extend=true)
+           放置在最左侧
+       Right(bool extend=true)
+           放置在最右侧
+       LeftRight(bool extend=true)
+           放置在左右两侧
+// autorotate - 标签L是否开启autorotate特性
+
+// void axes(picture pic=currentpicture, Label xlabel="", Label ylabel="", bool extend=true, pair min=(-infinity,-infinity), pair max=(infinity,infinity), pen p=currentpen, arrowbar arrow=None, bool above=false);
+    x/y坐标轴.  参数列表如下:
+// xlabel - x轴的标签
+// ylabel - y轴的标签
+// min - x和y轴的起始点
+// max - x和y轴的结束点
+// p - 坐标轴的画笔属性, 参考draw方法的p参数
+// arrow - 坐标轴箭头格式, 参考draw方法的arrow参数
+// above - 是否将坐标轴放置在最顶层
 
 
 
-五、Demo(示例)05 - cycle
-size(3cm);
-draw((0,0)--(1,0)--(1,1)--(0,1)--cycle);
-
-// draw((0,0)--(1,0)--(1,1)--(0,1)--cycle); 作一条闭环路径, cycle用于连接线条的终点和起点, 使其闭环
-
-
-
-六、Demo(示例)06 - unit shape
+五、Demo(示例)05 - unit shape
 unitsize(1cm);
 draw(unitsquare);
 
-// unitsquare为边长为单位长度的正方形, 可选单位图像如下:
-//		unitsquare - 左下角为(0,0), 边长为单位长度的正方形
-//		unitcircle - 圆心为(0,0), 半径为单位长度的圆形
-//      polygon - 限定在单位圆内的正多边形
+// draw(unitsquare); 作边长为单位长度的正方形, 可选单位图像如下:
+//    unitsquare - 左下角为(0,0), 边长为单位长度的正方形
+//    unitcircle - 圆心为(0,0), 半径为单位长度的圆形
+
+
+
+六、Demo06 - dot
+void dot(picture pic=currentpicture, Label L, pair z, align align=NoAlign, string format=defaultformat, pen p=currentpen, filltype filltype=dotfilltype);
+    作一个点. 参数列表如下:
+//      L - 点的标签
+//      z - 点坐在的坐标
+//      align - lable相对于点的位置, 可选列表: N/S/E/W或其结合. 默认为E
+//      p - 点的画笔属性. 参考draw方法的p参数
+//      filltype - 填充类型. 列表如下:
+            FillDraw - 填充内部, 画边界
+            Fill - 填充内部
+            NoFill - 不填充内部, 画边界
+            Draw - 只画边界
+            UnFill - 不填充内部(裁剪内部边缘)
 
 
 七、Demo(示例)07 - path
-size(100,0);
+size(100);
 path p=(1,0){up}..{left}(0,1)
 draw(p, arrow=Arrow);
 
