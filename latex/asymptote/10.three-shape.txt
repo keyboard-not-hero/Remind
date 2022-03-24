@@ -1,0 +1,262 @@
+一、Demo(示例)01 - sphere
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+prc=false;
+
+import three;
+unitsize(5cm);
+
+draw(unitsphere);
+
+// prc=false; 不启动interactive模式. interactive模式图像可旋转, 被adobe reader支持, 但label在旋转图像后会出现消失等现象
+
+// import three; 导入three包, 绘制三维图像必须的包
+
+// unitsphere - 单位半径球体
+
+
+
+二、Demo(示例)02 - 作直线(triple)
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+prc=false;
+
+import three;
+unitsize(1cm);
+
+draw(O--2X, blue);
+draw(O--2Y, green);
+draw(O--2Z, red);
+
+// (1,2,3)是一个triple类型的三维坐标
+
+// 向量与对应的alias, 列表如下:
+       O - (0,0,0)
+       X - (1,0,0)
+       Y - (0,1,0)
+       Z - (0,0,1)
+
+
+
+三、Demo(示例)03 - 矢量图
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+render=0;
+prc = false;
+
+import three;
+size(1cm, 0);
+draw((0,0,0) -- (1,1,1), linewidth(2pt));
+
+// render=0
+       矢量图设置
+
+
+
+四、Demo(示例)04 - 栅栏化图形的优化2(修改目标文件格式并提升渲染度)
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=16;
+prc = false;
+
+import three;
+size(1cm, 0);
+draw((0,0,0) -- (1,1,1), linewidth(2pt));
+
+// outformat="png"
+       修改目标文件为png, 该格式为栅栏化最佳匹配格式
+
+// render=16
+       提升图片的渲染精度
+
+
+
+五、Demo05 - axes
+
+
+// void xaxis3(picture pic=currentpicture, Label L="", axis axis=YZZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks3 ticks=NoTicks3, arrowbar3 arrow=None, bool above=false);
+作三维坐标的x轴. 参数列表如下:
+    pic - 坐标轴所在picture
+    L - 坐标轴的label
+    axis - 当前坐标轴相对于其他两个坐标轴的位置. 可选列表:
+        axis YZEquals(real y, real z, triple align=0, bool extend=false)
+            指定x坐标轴的0点在相对于y/z轴的位置. 参数列表如下:
+                y - x坐标轴0点相对于y轴的位置
+                z - x坐标轴0点相对于z轴的位置
+                align - label L相对于x轴末端、y/z零点的距离
+        axis YZZero(triple align=0, bool extend=false)
+        axis Bounds(int type=Both, int type2=Both, triple align=0, bool extend=false)
+    xmin - 坐标轴的起始位置
+    xmax - 坐标轴的结束位置
+    p - 坐标轴的pen属性
+    ticks - 坐标轴的刻度. 列表如下:
+        NoTicks3 - 没有刻度
+        InTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, real[] Ticks, real[] ticks=new real[], real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+          向内的刻度线, 参数列表如下:
+            format - 刻度线label格式, 支持LaTeX数学格式(即$$), 默认为$%.4g$. 列表如下:
+                $$ - LaTeX math模式
+                % - 不输出刻度线label
+            beginlabel - 起始刻度线的label是否显示
+            endlabel - 结束刻度线的label是否显示
+            Ticks - major刻度线位置数组, 格式: Ticks=new real[]{...}
+            ticks - minor刻度线位置数组, 格式: ticks=new real[]{...}
+            Size - major刻度线的大小
+            size - minor刻度线的大小
+            pTick - major刻度线的pen, 参考draw方法的p参数
+            ptick - minor刻度线的pen, 参考draw方法的p参数
+        OutTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, real[] Ticks, real[] ticks=new real[], real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+          向外的刻度线
+        InOutTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, real[] Ticks, real[] ticks=new real[], real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+          两侧的刻度线
+    arrow - 箭头类型. 列表如下:
+        None - 没有箭头
+        Blank - 不显示箭头和坐标轴
+        BeginArrow3(arrowhead arrowhead=DefaultHead3, real size=7.5, real angle=15, filltype filltype, real position)
+            起始位置放置反向箭头. 参数列表如下:
+                arrowhead - 箭头类型, 列表: DefaultHead3/HookHead3/TeXHead3. 也可在三维空间使用二维箭头. 列表: DefaultHead2/HookHead2/TeXHead2
+                size - 箭头大小
+                angle - 箭头斜边与水平线的夹角度数
+                filltype - 箭头填充类型. 列表如下:
+                    Draw - 只画边界
+                    Draw(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                        画边界. 参数列表如下:
+                            xmargin - x轴方向向外扩充的大小
+                            ymargin - y轴方向向外扩充的大小
+                            p - 向外扩充边缘pen的属性, nullpen代表currentpen
+                    FillDraw - 填充内部, 画边界
+                    FillDraw(real xmargin=0, real ymargin=xmargin, pen fillpen=nullpen)
+                        填充内部, 画边界. 参数列表如下:
+                            xmargin - x轴方向向外扩充的大小
+                            ymargin - y轴方向向外扩充的大小
+                            fillpen - 填充pen的属性, nullpen代表currentpen
+                    Fill - 填充内部
+                    Fill(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                        填充内部. 参数列表如下:
+                            xmargin - x轴方向向外扩充的大小
+                            ymargin - y轴方向向外扩充的大小
+                            p - 填充pen的属性, nullpen代表currentpen
+                    NoFill - 不填充内部
+                    UnFill - 不填充内部
+                    UnFill(real xmargin=0, real ymargin=xmargin)
+                        不填充内部. 参数列表如下:
+                            xmargin - x轴方向向外扩充的大小
+                            ymargin - y轴方向向外扩充的大小
+                    RadialShade(pen penc, pen penr)
+                        由圆心到边缘的颜色渐变. 参数列表如下:
+                            penc - 圆心的颜色
+                            penc - 边缘的颜色
+                    RadialShadeDraw(real xmargin=0, real ymargin=xmargin, pen penc, pen penr, pen drawpen=nullpen)
+                        由圆心到边缘的颜色渐变, 并且可向外扩充大小. 参数列表如下:
+                            xmargin - x轴方向向外扩充的大小
+                            ymargin - y轴方向向外扩充的大小
+                            penc - 圆心的颜色
+                            penc - 边缘的颜色
+                            drawpen - 向外扩充区域边缘的pen属性
+                position - 箭头在线条的位置, 即path time, 参考subpath指令. 也可使用Relative(real)指定百分比
+        MidArrow3(arrowhead arrowhead=DefaultHead3, real size=7.5, real angle=15, filltype filltype)
+            中间位置放置正向箭头
+        EndArrow3(arrowhead arrowhead=DefaultHead3, real size=7.5, real angle=15, filltype filltype, real position)
+            结束位置放置正向箭头
+        Arrows3(arrowhead arrowhead=DefaultHead3, real size=7.5, real angle=15, filltype filltype)
+            起始位置放置反向箭头, 结束位置放置正向箭头
+        差异版本箭头:
+            BeginArcArrow3/MidArcArrow3/EndArcArrow3/ArcArrow3
+    above - 是否将坐标轴放置在最上层. 默认false, 即放置在最下层
+
+
+
+六、Demo(示例)06 - smooth curve
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=8;
+import three;
+size(4cm,0);
+draw(-X --- X .. Y .. X-Y+Z .. cycle);
+dot(-X ^^ X ^^ Y ^^ X-Y+Z);
+
+// '---'连接两点, 与'--'不同, 该符号修改两点的另一边, 使其尽量线条更圆滑
+
+
+
+七、Demo(示例)07 - parallelogram
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=16;
+import three;
+unitsize(4cm);
+draw(O--2X ^^ O--2Y ^^ O--2Z, black);
+draw(plane(u=Y-X, v=Z-X, O=X), blue);
+
+// plane(u=Y-X, v=Z-X, O=X); 指定平行四边形的一个角为X, u为起始于O的边向量, v为起始于O的另一个边向量
+
+// path3 plane(triple u, triple v, triple O=O), 参数列表如下:
+	u - 确定平行四边形的一个边向量
+	v - 确定平行四边形的另一个边向量
+	O - 两个向量的起始角
+
+
+
+八、Demo(示例)08 - 3D box
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=16;
+import three;
+unitsize(4cm);
+draw(O--2X ^^ O--2Y ^^ O--2Z, black);
+draw(box(v1=O, v2=(1,0.5,2)), blue);
+
+// box(v1=O, v2=(1,0.5,2)); 指定一个对角为v1和v2的长方体
+
+// path3[] box(triple v1, triple v2), 参数列表如下:
+	v1 - 长方体的一个角
+	v2 - 与v1互为对角的另一个角
+
+
+
+九、Demo(示例)09 - circle
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=16;
+import three;
+unitsize(4cm);
+draw(O--2X ^^ O--2Y ^^ O--2Z, black);
+triple circleCenter=X+(Y+Z)/sqrt(2);
+path3 mycircle=circle(c=circleCenter, r=1, normal=Y+Z);
+draw(mycircle, blue);
+draw(plane(u=2X, v=sqrt(2)*(Z-Y), O=sqrt(2)*Y), mediumgray);
+draw(shift(circleCenter)*(O--Y+Z), green, arrow=Arrow3());
+
+// circle(c=circleCenter, r=1, normal=Y+Z); 以c为中心, r为半径, 法线为normal的圆
+
+// circle(triple c, real r, triple normal=Z), 参数列表如下:
+	c - 圆的中心
+	r - 圆的半径
+	normal - 圆的法线, 默认为Z, 即圆位于X+Y平面
+
+
+
+十、Demo(示例)10 - 2D convert 3D
+import settings;
+outformat="png";
+pdfviewer="evince";
+render=16;
+import three;
+unitsize(4cm);
+path p=box((0,0),(3,1));
+draw(path3(p, plane=XYplane), green);
+draw(path3(p, plane=ZXplane), blue);
+draw(path3(p, plane=YZplane), red);
+
+// path3(p, plane=XYplane); 将原来的2D图像贴合带三维空间的X轴和Y轴组成的平面上
+
+// path3 path3(path p, triple plane(pair)=XYplane); 列表如下:
+	p - 原二维路径
+	plane - 贴合到三维图像的哪一个平面

@@ -1,0 +1,686 @@
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - basic line
+size(100);
+draw((0,0)--(100,100));
+
+// draw((start_coor)--(end_coor)); 作一条从坐标start_coor到坐标end_coor的直线, --代表线条类型为直线. 默认长度单位为bp, 1 bp=1/72 inch, 默认长度为0.5 bp
+
+// draw(picture pic=currentpicture, Label L="", path g, align align=NoAlign, pen p=currentpen, arrowbar arrow=None, arrowbar bar=None, margin margin=NoMargin, Label legend="", marker marker=nomarker)
+
+// pic - 默认为currentpicture
+
+// L - 直线的注解label
+
+// g - 作图路径, 格式: (x1,y1)--(x2,y2)--cycle, cycle代表将最后一个点连接到第一个点, 闭合图形
+
+// align - 注解相对于线条中心的位置. 可选N/S/W/E及其组合(方向前可加数字系数). 默认为S
+
+// p - 画笔所勾勒线条的属性. 列表如下:
+    颜色(默认为black):
+        pen gray(real g) - 区间范围为[0,1]的灰度
+        pen rgb(reak r, real g, real b) - 使用RGB表示颜色, 每个原始色的区间为[0,1]
+        pen RGB(reak r, real g, real b) - 使用RGB表示颜色, 每个原始色的区间为[0,255]
+        pen cmyk(real c, real m, real y, real k) - 使用cmyk表示颜色, 每个原始色的区间为[0,1]
+        pen invisible - 不可见
+    类型(默认为实线, 即new real[])
+        pen linetype(real[] a, real offset=0, bool scale=true, bool adjust=true)
+            a - 代表各部分的长度, 如下:
+            ___  .  ___  .  ___
+             1 2 3 4
+            示例: linetype(new real[]{8, 8, 1, 8})
+        预定义线条类型: 
+	pen solid - linetype(new real[]);
+	pen dotted - linetype(new real[]{0,4});
+	pen dashed - linetype(new real[]{8,8});
+	pen longdashed - linetype(new real[]{24,8});
+	pen dashdotted - linetype(new real[]{8,8,0,8});
+	pen longdashdotted - linetype(new real[]{24,8,0,8});
+	pen Dotted - linetype(new real[]{0,3})+2*linewidth(currentpen);
+    宽度(默认为0.5bp)
+        pen linewidth(real)
+    图形角弧度类型(默认为1)
+        pen linecap(int)
+        int数字列表:
+            0 - 直角弧度, 从原始位置
+            1 - 圆角弧度
+            2 - 直角弧度, 从圆角弧度的最外距离
+    多种属性组合格式:
+        linetype(new real[]{8, 8}) + linewidth(2bp)
+    默认pen属性修改
+        defaultpen(p)
+        如: defaultpen(linewidth(2pt)), 修改默认线条宽度
+
+// arrow - 箭头类型. 箭头位置方法如下:
+    None - 没有箭头
+    Blank - 不显示箭头和path
+    BeginArrow(arrowhead arrowhead=DefaultHead, real size=7.5, real angle=15, filltype filltype, real position)
+        起始位置放置反向箭头. 参数列表如下:
+        arrowhead - 箭头类型, 列表: DefaultHead/SimpleHead/HookHead/TeXHead
+        size - 箭头大小
+        angle -  箭头斜边与水平线的夹角度数
+        filltype - 箭头填充类型. 列表如下:
+            Draw - 只画边界
+            Draw(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                画边界. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    p - 向外扩充边缘pen的属性, nullpen代表currentpen
+            FillDraw - 填充内部, 画边界
+            FillDraw(real xmargin=0, real ymargin=xmargin, pen fillpen=nullpen)
+                填充内部, 画边界. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    fillpen - 填充pen的属性, nullpen代表currentpen
+            Fill - 填充内部
+            Fill(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                填充内部. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    p - 填充pen的属性, nullpen代表currentpen
+            NoFill - 不填充内部
+            UnFill - 不填充内部
+            UnFill(real xmargin=0, real ymargin=xmargin)
+                不填充内部. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+            RadialShade(pen penc, pen penr)
+                由圆心到边缘的颜色渐变. 参数列表如下:
+                    penc - 圆心的颜色
+                    penc - 边缘的颜色
+            RadialShadeDraw(real xmargin=0, real ymargin=xmargin, pen penc, pen penr, pen drawpen=nullpen)
+                由圆心到边缘的颜色渐变, 并且可向外扩充大小. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    penc - 圆心的颜色
+                    penc - 边缘的颜色
+                    drawpen - 向外扩充区域边缘的pen属性
+        position - 箭头在线条的位置, 即path time, 参考subpath指令
+    MidArrow(arrowhead arrowhead, real size, real angle, filltype filltype)
+        中间位置放置正向箭头
+    EndArrow(arrowhead arrowhead, real size, real angle, filltype filltype, real position)
+        结束位置放置正向箭头
+    Arrows(arrowhead arrowhead, real size, real angle, filltype filltype)
+        起始位置放置反向箭头, 结束位置放置正向箭头
+    差异版本箭头:
+        BeginArcArrow/MidArcArrow/EndArcArrow/ArcArrows
+
+// bar - bar类型. 可选位置如下:
+    None - 没有bar
+    BeginBar(real size=7.5) 
+        起始位置放置bar
+    EndBar(real size=7.5)
+        结束位置放置bar
+    Bars(real size=7.5)
+        起始和结束位置放置bar
+
+// margin - 线条与起始或结尾处的距离, 可选列表如下:
+    NoMargin - 不包含margin
+    Margin(real begin, real end=begin)
+        线条与起始和结尾处的距离, 结果为: n * labelmargin(currentpen)
+    DotMargin(real begin, real end=begin)
+        线条与起始和结尾处的距离, 结果为: n * dotfactor * labelmargin(currentpen)
+    PenMargin(real begin, real end=begin)
+        线条与起始和结尾处的距离, 结果为: n * linewidth(currentpen)
+    TrueMargin(real begin, real end=begin)
+        线条与起始和结尾处的距离, 结果为: n
+    ** 默认值: linewidth(currentpen) = 0.5
+               dotfactor = 6
+               labelmargin(currentpen) = 3.5865504358655
+
+// legend - 线条在legend中的label名称
+
+// marker - 线条描点. 列表如下:
+       Mark[0] - 空心圆
+       MarkFill[0] - 实心圆
+       Mark[1] - 空心三角形
+       MarkFill[1] - 实心三角形
+       Mark[2] - 空心正方形
+       MarkFill[2] - 实心正方形
+       Mark[3] - 空心五边形
+       MarkFill[3] - 实心五边形
+       Mark[4] - 空心倒三角形
+       MarkFill[4] - 实心倒三角形
+       Mark[5] - x符号
+       Mark[6] - *符号
+
+
+
+二、Demo(示例)02 - size
+size(100);
+draw((0,0)--(1,1));
+
+// size(picture pic=currentpicture, real x, real y=x, bool keepAspect=Aspect)
+// x - 代表x轴上的长度
+// y - 代表y轴上的长度
+// * x或y其中一个为0时, 根据另一个轴取长度
+// x/y默认长度单位为bp, 可选长度列表:
+	1 bp = 1/72 inch
+	1 pt = 1/72.27 inch
+	1 cm 
+	1 mm
+	1 inch
+// keepAspect - 遵守size或path的长宽比率. 列表如下:
+    Aspect/true - 遵守path的长宽比率(x轴的长度不大于x值, y轴的长度不大于y值)
+    IgnoreAspect/false - 遵守size的长宽比率(x轴的长度等于x值, y轴的长度等于y值)
+
+
+
+三、Demo(示例)03 - unit size
+unitsize(100);
+draw((0,0)--(2,2));
+
+// unitsize(100); 设定方向单位长度, 覆盖size值, 不论语句顺序先后
+
+// unitsize(picture pic=currentpicture, real x, real y=x)
+       指定x轴单位长度为x, y轴单位长度为y
+
+
+
+四、Demo04 - axis
+import graph;
+size(100);
+xaxis("$x$", xmin=-5, xmax=5);
+
+// axis包含在graph模块中
+
+// xaxis("$x$", xmin=-5, xmax=5); 作x轴, 起始值为-5, 终止值为5
+
+// xaxis(picture pic=currentpicture, Label L="", axis axis=YZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks ticks=NoTicks, arrowbar arrow=None, bool above=false);
+    x坐标轴, 参数如下:
+      pic - 默认为currentpicture
+
+      L - 坐标轴的label
+
+      axis - 坐标轴放置的位置. 列表如下:
+        YZero(bool extend=true) - y=0的位置
+        YEquals(real Y, bool extend=true) - y=Y的位置
+        Bottom(bool extend=false) - 位于最底部
+        Top(bool extend=false) - 位于最顶部
+        BottomTop(bool extend=false) - 顶部和底部都作一个坐标轴
+
+      xmin - 起始位置
+
+      xmax - 终止位置
+
+      p - 画笔属性, 参考draw方法的p参数
+
+      ticks - 刻度线, 列表如下:
+        NoTicks - 没有刻度线, 默认值
+        LeftTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左边的刻度线(等分或划单元). 参数列表如下:
+          format - 刻度线label格式, 支持LaTeX数学格式(即$$), 默认为$%.4g$. 列表如下:
+            $$ - LaTeX math模式
+            % - 不输出刻度线label
+          beginlabel - 起始刻度线的label是否显示
+          endlabel - 结束刻度线的label是否显示
+          N - 将区间[xmin, xmax]等分为N份major, 并显示刻度线
+          n - 将每个major等分为n份minor, 并显示刻度线
+          Step - 当N=0时, 将区间[xmin, xmax]分为每份大小为Step的major
+          step - 当n=0时, 将major分为每份大小为step的minor
+          begin - 起始major刻度线是否显示
+          end - 结束monjor刻度线是否显示
+          Size - major刻度线的大小
+          size - minor刻度线的大小
+          pTick - major刻度线的pen, 参考draw方法的p参数
+          ptick - minor刻度线的pen, 参考draw方法的p参数
+
+        LeftTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, real[] Ticks, real[] ticks=new real[], real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左边的刻度线(具体刻度位置). 参数列表如下:
+          Ticks - major刻度线位置数组, 格式: Ticks=new real[]{...}
+          ticks - minor刻度线位置数组, 格式: ticks=new real[]{...}
+
+        RightTicks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 右边的刻度线(等分或划单元)
+        
+        Ticks(Label format="", ticklabel ticklabel=null, bool beginlabel=true, bool endlabel=true, int N=0, int n=0, real Step=0, real step=0, bool begin=true, bool end=true, tickmodifier modify=None, real Size=0, real size=0, bool extend=false, pen pTick=nullpen, pen ptick=nullpen)
+        顺着直线方向, 左/右边的刻度线(等分或划单元)
+
+// arrow - 箭头, 参考draw的arrow参数
+
+// above - 是否位于最顶层图层. true代表位于最顶层, false代表位于最底层
+
+// yaxis(picture pic=currentpicture, Label L="", axis axis=XZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks ticks=NoTicks, arrowbar arrow=None, bool above=false, bool autorotate=true);
+    y坐标轴, 与x轴差异参数如下:
+//      axis - 坐标轴放置的位置. 列表如下:
+          XZero(bool extend=true)
+            放置在x=0处
+          XEquals(real X, bool extend=true)
+            放置在x=X处
+          Left(bool extend=true)
+            放置在最左侧
+          Right(bool extend=true)
+            放置在最右侧
+          LeftRight(bool extend=true)
+            放置在左右两侧
+//      autorotate - 标签L是否开启autorotate特性
+
+// void axes(picture pic=currentpicture, Label xlabel="", Label ylabel="", bool extend=true, pair min=(-infinity,-infinity), pair max=(infinity,infinity), pen p=currentpen, arrowbar arrow=None, bool above=false);
+    x/y坐标轴.  参数列表如下:
+//      xlabel - x轴的标签
+
+//      ylabel - y轴的标签
+
+//      min - x和y轴的起始点
+
+//      max - x和y轴的结束点
+
+//      p - 坐标轴的画笔属性, 参考draw方法的p参数
+
+//      arrow - 坐标轴箭头格式, 参考draw方法的arrow参数
+
+//      above - 是否将坐标轴放置在最顶层
+
+
+
+五、Demo(示例)05 - unit shape
+// 单位正方形代码
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(unitsquare);
+
+// 单位圆代码
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(unitcircle);
+
+// unitsquare - 左下角为(0,0), 边长为单位长度的正方形
+
+// unitcircle - 圆心为(0,0), 半径为单位长度的圆
+
+
+
+六、Demo06 - dot
+import graph;
+size(5cm);
+xaxis("$x$", xmin=-5, xmax=5, ticks=LeftTicks(Ticks=new real[]{-5,-4,-3,-2,-1,1,2,3,4,5}));
+yaxis("$y$", ymin=-5, ymax=5, ticks=RightTicks(Ticks=new real[]{-5,-4,-3,-2,-1,1,2,3,4,5}));
+dot((2,0), linewidth(6bp));
+
+void dot(picture pic=currentpicture, Label L, pair z, align align=NoAlign, string format=defaultformat, pen p=currentpen, filltype filltype=dotfilltype);
+    作一个点. 参数列表如下:
+//      L - 点的标签
+
+//      z - 点坐在的坐标
+
+//      align - lable相对于点的位置, 可选列表: N/S/E/W或其结合. 默认为E
+
+//      p - 点的画笔属性. 参考draw方法的p参数
+
+//      filltype - 填充类型. 列表如下:
+            Draw - 只画边界
+            Draw(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                画边界. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    p - 向外扩充边缘pen的属性, nullpen代表currentpen
+            FillDraw - 填充内部, 画边界
+            FillDraw(real xmargin=0, real ymargin=xmargin, pen fillpen=nullpen)
+                填充内部, 画边界. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    fillpen - 填充pen的属性, nullpen代表currentpen
+            Fill - 填充内部
+            Fill(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
+                填充内部. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    p - 填充pen的属性, nullpen代表currentpen
+            NoFill - 不填充内部
+            UnFill - 不填充内部
+            UnFill(real xmargin=0, real ymargin=xmargin)
+                不填充内部. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+            RadialShade(pen penc, pen penr)
+                由圆心到边缘的颜色渐变. 参数列表如下:
+                    penc - 圆心的颜色
+                    penc - 边缘的颜色
+            RadialShadeDraw(real xmargin=0, real ymargin=xmargin, pen penc, pen penr, pen drawpen=nullpen)
+                由圆心到边缘的颜色渐变, 并且可向外扩充大小. 参数列表如下:
+                    xmargin - x轴方向向外扩充的大小
+                    ymargin - y轴方向向外扩充的大小
+                    penc - 圆心的颜色
+                    penc - 边缘的颜色
+                    drawpen - 向外扩充区域边缘的pen属性
+** 与dot相同效果: draw(z, linewidth(3bp))
+                  fill(circle((2,1), 0.5))
+
+
+
+七、Demo(示例)07 - path
+size(100);
+path p=(1,0){up}..{left}(0,1)
+draw(p, arrow=Arrow);
+
+// path p=(1,0){up}..{left}(0,1) 定义一条坐标(1,0)到坐标(0,1)的路径, ..代表线条类型为曲线; (1,0){up}的up代表从(1,0)的出向切线为(0,1), {left}(0,1)的left代表从(0,1)的入向切线为(-1,0). 
+	path连接方式列表:
+	-- - 直线
+	.. - 曲线
+	^^ - 无连接
+	切线方向列表:
+	up - (0,1)
+	down - (0,-1)
+	left - (-1,0)
+	right - (1,0)
+	可使用(x,y)灵活定义切线方向
+
+
+
+八、Demo(示例)08 - circle/ellipse
+unitsize(1cm);
+draw(circle((0,0),5), pen=green);
+draw(ellipse((0,0),5,2), pen=blue);
+
+// circle((0,0),5);
+       圆心为(0,0), 半径为5的圆
+
+// path circle(pair c, real r)
+       圆心为c, 半径为r的圆
+** 与此相同含义: shift(c)*scale(r)*unitcircle
+
+// path ellipse((0,0),5,2)
+        圆心为(0,0), 水平直径为10, 垂直直径为4的椭圆
+
+
+
+九、Demo(示例)09 - box/polygon
+unitsize(1cm);
+draw(box((0,0),(1,1)));
+draw(unitcircle);
+draw(polygon(6));
+
+// path box(pair a, pair b)
+       作两个对角分别为a和b的矩形
+
+// path polygon(int n)
+       限定在单位圆内的正n边形
+
+
+
+十、Demo10 - arc
+unitsize(1cm);
+pen p=linewidth(5pt);
+draw((0,0)--(0,6), p=p);
+draw((0,0)--(6,0), p=p);
+draw(arc((0,0),5,0,90), red, arrow=Arrow());
+
+// path arc(pair c, real r, real angle1, real angle2)
+       圆心为c, 半径为r, 起始角度为angle1, 结束角度为angle2的圆弧
+
+// path arc(pair c, real r, real angle1, real angle2, bool direction=CCW)
+       带方向的圆弧版本, direction可选参数: CCW为逆时针, CW为顺时针
+
+// path arc(pair c, explicit pair z1, explicit pair z2, bool direction=CCW)
+       圆心为c, 半径为|z1-c|, 起始为直线c到z1的终点, 结束点为直线c到z2的某一点, |z2-c|=|z1-c|
+
+
+
+十一、Demo11 - fill
+size(100);
+path g=(0,0)--(0,1)--(1,1)--(1,0)--cycle;
+fill(g, p=RGB(128,0,0));
+
+void fill(picture pic=currentpicture, path g, pen p=currentpen)
+    填充闭合路径g. 参数列表如下:
+//      g - 包含cycle关键字的闭合路径
+//      p - 填充画笔属性
+
+
+
+十二、Demo(示例)12 - filldraw
+size(100);
+path g=(0,0)--(0,1)--(1,1)--(1,0)--cycle;
+filldraw(g, fillpen=RGB(200,200,200), drawpen=RGB(255,0,0));
+
+// filldraw(g, fillpen=RGB(200,200,200), drawpen=RGB(255,0,0));
+       作指定路径图, 填充色为灰色, 边界色为红色
+
+void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
+    填充闭合路径g, 并绘制边界. 参数列表如下:
+//      g - 包含cycle关键字的闭合路径
+//      fillpen - 填充画笔属性
+//      drawpen - 边界画笔属性
+
+
+
+十三、Demo(示例)13 - clip
+unitsize(1cm);
+path box1=box((0,0),(1,1));
+path box2=shift(0.5,0.5)*box1;
+path box3=shift(-0.5,-0.5)*box1;
+fill(box1, blue);
+draw(box2, green);
+clip(box1);
+draw(box3, red);
+
+// clip(box1); 裁剪图像只剩下box1区域，只作用于clip指令之前的内容, clip之后的内容不影响
+
+// void clip(picture pic=currentpicture, path g, stroke=false, pen fillrule=currentpen)
+       裁剪路径g的内容. 参数列表如下:
+           g - 指定路径
+           stroke - 是否只进行描边内容显示. 当为true, 用于闭合路径时, 只显示边界内容; 非闭合路径, 只能使用true
+
+
+
+十四、Demo14 - arrow
+unitsize(1cm);
+draw((0,0)--(1,0), bar=Bars);
+draw((-0.5, -0.4)--(-0.5, 0.4));
+draw((1.5, -0.4)--(1.5, 0.4));
+arrow((0,0), W, length=0.5cm, margin=TrueMargin(0,0.2cm));
+arrow((1,0), E, length=0.5cm);
+
+// void arrow(picture pic=currentpicture, Label L="", pair b, pair dir, real length=arrowlength, align align=NoAlign, pen p=currentpen, arrowbar arrow=Arrow, margin margin=EndMargin);
+       指向坐标b的箭头, 并指定箭头相对于坐标b的位置dir. 参数列表如下:
+           L - 箭头的label
+           b - 箭头的指向位置
+           dir - 箭头相对于坐标b的位置
+           length - 箭头的长度
+           align - label相对于箭头的位置
+           p - pen的属性. 参考draw的p参数
+           arrow - 箭头的类型. 参考draw的p参数
+           margin - 箭头与起始结束位置的距离. 参考draw的margin参数
+
+
+
+十五、Demo15 - latticeshade
+import graph;
+size(100);
+xaxis("$x$", xmin=-5, xmax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}), EndArrow);
+yaxis("$y$", ymin=-5, ymax=5, ticks=RightTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}), EndArrow);
+pen[][] p={{RGB(0,255,0)}, {RGB(255,0,0)}};
+latticeshade((0,0)--(2,0)--(1,1.5)--cycle, p);
+
+// latticeshade((0,0)--(2,0)--(1,1.5)--cycle, p);
+       作指定路径的图, 颜色由上到下和由左到右进行渐变. 颜色使用二维数组表示, 第一维代表由上到下的颜色渐变, 第二维代表由左到右的颜色渐变
+
+void latticeshade(picture pic=currentpicture, path g, bool stroke=false, pen fillrule=currentpen, pen[][] p)
+
+
+
+十六、Demo16 - dir
+示例1:
+import graph;
+unitsize(1cm);
+xaxis("$x$", xmin=-5, xmax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,0,1,2,3,4}));
+yaxis("$y$", ymin=-5, ymax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+path p1=(0,0)--(2,0);
+path p2=(0,0)--(2,2);
+pair r=dir(p1,p2);
+draw(p1);
+draw(p2);
+draw((0,0)--r, p=RGB(255,0,0));
+draw(arc((0,0), 1, 0, 45), p=RGB(200,200,0));
+
+示例2:
+unitsize(1cm);
+path p = (-1,1) .. (0,0) .. (-1,-1);
+path q = (1/2,0) .. (-1/3,0) .. (1/2,-1/2) ..
+(1,0) .. (-1/2,1/2);
+draw(q,green, arrow=MidArcArrow());
+draw(p,blue, arrow=MidArcArrow());
+real[] intersect = intersect(p, q);
+pair s=point(p, intersect[0]);
+dot(s);
+pair v=dir(p, intersect[0]);
+draw(s -- (s.x+v.x, s.y+v.y));
+
+// pair dir(path p)
+       取向量p的单位长度
+
+// dir(path p, path q)
+       取p和q的单位向量u和v, 将该u和v两个向量相加, 并取结果向量的单位长度
+       unit(dir(p)+dir(q))
+
+// pair dir(real degrees)
+       返回与x轴成指定夹角角度的单位向量
+
+// pair dir(path p, int t, int sign=0, bool normalize=true)
+       返回路径p在第t个节点处的切线方向
+       当sign<0, 为入向切线; 当sign>0, 为出向切线
+
+// pair dir(path p, real t, bool normalize=true)
+       路径p在path time为t处的切线方向
+       path time参考Demo16
+       参考dir示例2
+
+
+
+十七、Demo17 - subpath
+非subpath方案:
+import graph;
+unitsize(1cm);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}));
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}));
+path g=(0,0){up}..(1,1)..(2, sqrt(2));
+fill(g--(2,0)--cycle, p=RGB(120,120,120));
+draw((1.2, 0) -- (1.2, sqrt(1.2)) -- (1.4, sqrt(1.4)) -- (1.4, 0) -- cycle, blue);
+
+subpath方案1:
+import graph;
+unitsize(1cm);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}));
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}));
+path g=(0,0){up}..(1,1)..(2, sqrt(2));
+fill(g--(2,0)--cycle, p=RGB(120,120,120));
+path strip = subpath(g, 1.2, 1.4);
+draw((1.2, 0) -- strip -- (1.4, 0) -- cycle, blue);
+
+subpath方案2:
+import graph;
+unitsize(1cm);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}));
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}));
+path g=(0,0){up} .. (1/4, 1/2) .. (1/2, sqrt(1/2)) .. (1,1) .. (2, sqrt(2));
+fill(g -- (2,0) -- cycle, p=RGB(120,120,120));
+path strip = subpath(g, 3.2, 3.4);
+draw((1.2, 0) -- strip -- (1.4, 0) -- cycle, blue);
+
+// subpath(path p, real a, real b)
+       选取路径p的path time区间[a, b]
+
+// path time
+       由subpath方案1与subpath方案2比较可得, p路径的第一个节点至第二个节点的path time区间为[0, 1], 第二个节点至第三个节点的path time区间为[1, 2], 以此类推...
+       path time不依赖于坐标轴取值范围
+
+
+
+十八、Demo18 - times
+size(4cm,0);
+path p = (-2,0) .. (0,7/4) .. (6/4,0)
+.. (0,-5/4) .. (-4/4,0) .. (0,3/4)
+.. (2/4,0) .. (0,-1/4) .. (0,0);
+draw(p);
+real[] isections = times(p,1/3);
+draw(subpath(p,isections[0],isections[1]), blue+linewidth(0.8), arrow=MidArcArrow(TeXHead));
+draw(subpath(p,isections[2],isections[3]), red+linewidth(0.8), arrow=MidArcArrow(TeXHead));
+draw((1/3,-1.5) -- (1/3,2), RGB(100,100,100) + linewidth(0.2));
+
+// real[] times(path p, real x)
+       返回路径与垂直线x=x所有相交点的path time
+
+
+
+十九、Demo19 - intersect
+unitsize(1cm);
+path p = (-1,1) .. (0,0) .. (-1,-1);
+path q = (1/2,0) .. (-1/3,0) .. (1/2,-1/2) ..
+(1,0) .. (-1/2,1/2);
+draw(q,green, arrow=MidArcArrow());
+draw(p,blue, arrow=MidArcArrow());
+real[] isections = intersect(p,q);
+dot(point(p,isections[0]));
+
+// real[] intersect(path p, path q, real fuzz=-1)
+       返回path p与q的第一个交点, arr[0]为path p的path time, arr[1]为path q的path time
+
+
+
+二十、Demo20 - intersections
+unitsize(1cm);
+path p = (-1,1) .. (0,0) .. (-1,-1);
+path q = (1/2,0) .. (-1/3,0) .. (1/2,-1/2) ..
+(1,0) .. (-1/2,1/2);
+draw(q, green, arrow=MidArcArrow());
+draw(p, blue, arrow=MidArcArrow());
+real[][] isections = intersections(q, p);
+dot(point(q,isections[0][0]), red);
+dot(point(p,isections[1][1]), purple);
+dot(point(q,isections[2][0]), black);
+
+// real[][] intersections(path p, path q, real fuzz=-1)
+       返回交点的二维数组, arr[0][i]代表第一个交点, 交点顺序由p方向确认; arr[i][0]为p的path time
+
+
+
+二十一、Demo21 - point
+size(4cm,0);
+path p = (-2,0) .. (0,7/4) .. (6/4,0)
+.. (0,-5/4) .. (-4/4,0) .. (0,3/4)
+.. (2/4,0) .. (0,-1/4) .. (0,0);
+draw(p);
+real[] isections = times(p,1/3);
+draw((1/3,-1.5) -- (1/3,2), RGB(100,100,100) + linewidth(0.2));
+dot(point(p,isections[0]));
+
+// pair point(path p, real t);
+       返回路径p对应path time的坐标
+
+
+
+二十二、Demo22 - intersectionpoint
+unitsize(1cm);
+path p = (-1,1) .. (0,0) .. (-1,-1);
+path q = (1/2,0) .. (-1/3,0) .. (1/2,-1/2) ..
+(1,0) .. (-1/2,1/2);
+draw(q,green, arrow=MidArcArrow());
+draw(p,blue, arrow=MidArcArrow());
+pair ispoint = intersectionpoint(p,q);
+dot(ispoint);
+
+// pair intersectionpoint(path p, path q, real fuzz=-1)
+       返回路径p与q第一个交点坐标
+
+
+
+二十三、Demo23 - intersectionpoints
+unitsize(1cm);
+path p = (-1,1) .. (0,0) .. (-1,-1);
+path q = (1/2,0) .. (-1/3,0) .. (1/2,-1/2) ..
+(1,0) .. (-1/2,1/2);
+draw(q,green, arrow=MidArcArrow());
+draw(p,blue, arrow=MidArcArrow());
+pair[] ispoints = intersectionpoints(q,p);
+draw(ispoints[0] -- ispoints[1], red);
+
+// pair[] intersectionpoints(path p, path q, real fuzz=-1)
+       返回路径p与q所有交点的坐标数组, 顺序由p的方向确定
+
+
+最后编辑于: 2022-03-16

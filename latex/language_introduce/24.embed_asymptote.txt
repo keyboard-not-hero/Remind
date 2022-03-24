@@ -1,0 +1,26 @@
+一、Demo01 - 嵌入asymptote内容
+配置文件:
+vi ~/.config/latexmk/latexmkrc
+sub asy {return system("asy \"$_[0]\"");}
+add_cus_dep("asy","eps",0,"asy");
+add_cus_dep("asy","pdf",0,"asy");
+add_cus_dep("asy","tex",0,"asy");
+
+内容文件:
+\documentclass{article}
+\usepackage{asymptote}
+\begin{document}
+this is line one, please remember\\[2ex]
+\begin{center}
+\begin{asy}
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+size(100);
+draw((-2,0)--(2,0), Arrow);
+draw((0,-2)--(0,2), Arrow);
+\end{asy}
+\end{center}
+\end{document}
+

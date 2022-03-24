@@ -1,0 +1,14 @@
+import settings;
+outformat="pdf";
+prc=false;
+pdfviewer="evince";
+render=0;
+
+size(5cm);
+for (int n = 3; n <= 7; ++n) {
+    draw(shift(2.2*(n-3), 0) * polygon(n));
+}
+
+// for(int n = 3; n <= 7; ++n){} 
+       用于循环语句
+       自增/减只能使用++n/--m, n--解释为(pair p) -- (pair q)格式

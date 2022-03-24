@@ -1,0 +1,97 @@
+// warning: Asymptote的变量为C-like变量, 变量为强类型, 赋值/使用之前需要声明类型
+
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - void
+void printt(real a){
+    label(string(a));
+}
+printt(100);
+
+// void只能用于函数, 代表该函数无返回值
+
+
+
+二、Demo(示例)02 - bool
+bool b=true
+
+// bool值用于判定真假, 可选值列表: true/false
+
+//只声明未指定时, 该值为false
+
+
+
+三、Demo03 - int
+int i=10;
+
+// int值为整数. 默认值为0
+// 最小整数为intMin, 最大整数为intMax
+
+
+
+四、Demo(示例)04 - real number
+real xmin=-0.1;
+
+// real代表实数(浮点数)类型, 默认值为0.0
+// 最小实数为realMin, 最大实数为realMax
+
+
+
+五、Demo(示例)05 - pair
+import graph;
+size(100);
+pair z=(3,4);
+xaxis("$x$", xmin=-5, xmax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+yaxis("$y$", ymin=-5, ymax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+draw((0,0)--z, p=RGB(200,0,0));
+pair c=conj(z);
+draw((0,0)--c, p=RGB(0,200,0));
+
+// pair z代表复数的实部和虚部, 可使用z.x和z.y分别获取实部和虚部. 默认值为(0.0, 0.0)
+
+// pair conj(pair z)
+       求z的共轭复数, 即(z.x, -z.y)
+
+// real length(pair z)
+       求z的长度, 即sqrt(z.x^2 + z.y^2)
+
+// real angle(pair z, bool warn=true)
+       z与x轴形成的夹角, 使用弧度表示, 取值范围为[-pi, pi]
+       当warn为true时, 如果z=(0,0), 进行报错
+       当warn为false时, 如果z=(0,0), 返回值0
+
+// real degrees(pair z, bool warn=true)
+       z与x轴形成的夹角, 使用角度表示, 取值范围为[0, 360)
+       当warn为true时, 如果z=(0,0), 进行报错
+       当warn为false时, 如果z=(0,0), 返回值0
+
+// pair unit(pair z)
+       返回z方向上的单位向量
+
+// pair dir(real degrees)
+       返回与x轴成指定夹角角度的单位向量
+
+
+
+六、Demo06 - triple
+参考three-shape
+
+
+
+七、Demo07 - string
+size(100);
+string s="love you";
+string h="123";
+int l=length(s);
+int hex=hex(h);
+label(string(l), position=(0,0));
+label(string(hex), position=(1,1));
+
+// int hex(string s)
+//     将十六进制数字的字符串, 转化为十进制整数  
+
+// string string(real x, int digits=realDigits)
+//     将实数转化为字符串

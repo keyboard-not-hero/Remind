@@ -167,4 +167,23 @@ $pdf_previewer = 'start evince %O %S';
 
 ** -c由$clean_ext和$generated_exts共同决定
 
-最后编辑于: 2020-08-26
+
+将asymptote嵌入latex文件
+配置文件:
+sub asy {return system("asy \"$_[0]\"");}
+add_cus_dep("asy","eps",0,"asy");
+add_cus_dep("asy","pdf",0,"asy");
+add_cus_dep("asy","tex",0,"asy");
+** 参考链接: 
+   https://raw.githubusercontent.com/vectorgraphics/asymptote/HEAD/doc/latexmkrc
+
+正文格式:
+\documentclass{article}
+\usepackage{asymptote}
+\begin{document}
+\begin{asy}
+...
+\end{asy}
+\end{document}
+
+最后编辑于: 2022-03-11

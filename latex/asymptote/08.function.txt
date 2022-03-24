@@ -1,0 +1,149 @@
+// warning: 每个示例头三行必添加内容
+import settings;
+outformat="pdf";
+pdfviewer="evince";
+
+一、Demo(示例)01 - create/use function
+unitsize(1cm);
+import graph;
+real f(real x) {
+    return sqrt(x);
+}
+path g=graph(f,0,2);
+draw(g);
+
+// import graph; 导入graph包, graph function必须借助该包
+
+// 以下是定义函数:
+	real f(real x) {
+		return sqrt(x);
+	}
+
+// path g=graph(f,0,2); 调用函数f, 并且定义域区间为[0,2]
+
+// graph原型:
+       guide graph(picture pic=currentpicture, real f(real), real a, real b, int n=ngraph, real T(real)=identity, interpolate join=operator --)
+       使用关于变量t的函数构造路径, 该函数的定义域为[a, b], 函数的点为[x, f(x)]. 参数列表如下:
+           f - 调用的自定义函数
+           a - 函数定义域左区间
+           b - 函数定义域右区间
+           n - 区间样本数
+           T - 转化函数, 将a/b转化后再配置[T(a),T(b)]为f的定义域
+           join - 线条类型, 列表如下:
+               operator -- 
+                   直线
+               operator ..
+                   分段式贝塞尔曲线
+               Hermite
+                   Hermite曲线
+
+
+
+二、Demo(示例)02 - promote precision
+unitsize(1cm);
+import graph;
+real f1(real x) {
+    return sin(x)*cos(57*x);
+}
+guide g=graph(f1,0,pi);
+draw(g);
+
+real f2(real x) {
+    return sin(x)*cos(57*x)-2;
+}
+guide g2=graph(f2,0,pi,n=1000);
+draw(g2);
+
+real f3(real x) {
+    return sin(x)*cos(57*x)-4;
+}
+guide g3=graph(f3,0,pi,operator ..);
+draw(g3);
+
+real f4(real x) {
+    return sin(x)*cos(57*x)-6;
+}
+guide g4=graph(f4,0,pi,Hermite);
+draw(g4);
+
+// g2为利用n提升精度
+
+// g3为利用operator ..提升精度
+
+// g4为利用Hermite提升精度
+
+
+
+三、Demo03 - 关于t的函数
+示例1 - y=sqrt(x)函数
+import graph;
+unitsize(0.4cm);
+xaxis("$x$", xmin=-1, xmax=10, ticks=LeftTicks(Ticks=new real[]{1, 2, 3, 4, 5, 6, 7, 8, 9}), arrow=Arrow(TeXHead));
+yaxis("$y$", ymin=-4, ymax=4, ticks=LeftTicks(Ticks=new real[]{-3, -2, -1, 1, 2, 3}), arrow=Arrow(TeXHead));
+pair f(real t){
+    return(t^2, t);
+}
+path g = graph(f, -3, 3);
+draw(g);
+
+示例2 - y=1/x的函数
+size(4cm,3cm, keepAspect=false);
+import graph;
+pair f(real t) {
+return (1/t, sin(t));
+}
+draw(graph(f, 1, 10^4, n=5*10^5),
+thin());
+draw((0,-1.1)--(0,1.3), arrow=Arrow(TeXHead));
+draw((0,0)--(1.05,0), arrow=Arrow(TeXHead));
+
+// guide graph(picture pic=currentpicture, pair z(real), real a, real b, int n=ngraph, real T(real)=identity, interpolate join=operator --)
+       使用关于变量t的函数构造路径, 该函数的定义域为[a, b], 函数的点为[x(t), y(t)]
+
+
+
+四、Demo04 - 关于直线的映射
+import graph;
+unitsize(1cm);
+//坐标轴
+draw((-0.2,0)--(4.2,0));
+draw((0,-0.2)--(0,4.2));
+//刻度线
+path x1=(1,0)--(1,0.1);
+path x2=(3,0)--(3,0.1);
+path x3=(4,0)--(4,0.1);
+path y1=(0,3)--(0.1,3);
+path y2=(0,4)--(0.1,4);
+draw(x1, L="1", align=S);
+draw(x2, L="3", align=S);
+draw(x3, L="4", align=S);
+draw(y1, L="3", align=W);
+draw(y2, L="4", align=W);
+//作抛物线图
+real f(real x){
+    return (x-1)^2;
+}
+guide g1=graph(f,1,3);
+draw(g1);
+//g1关于y=x对称的内容
+guide g2=reflect((0,0),(1,1))*g1;
+draw(g2);
+
+//reflect(pair1,pair2)*g1, pair1与pair2组成直线l, g1关于直线l对称的内容
+
+//ratote(angle,z=(0,0))图像关于点z旋转angle度数
+
+
+预定义函数列表:
+sin/cos/tan
+asin/acos/atan
+sinh/cosh/tanh
+asinh/acosh/atanh
+exp/log/pow10/log10
+
+asin
+	sin的反函数
+exp
+	e为底的指数
+pow10
+	10为底的指数

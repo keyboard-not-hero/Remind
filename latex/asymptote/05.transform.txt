@@ -1,0 +1,69 @@
+一、Demo01 - reflect
+import graph;
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(reflect((1,0),(2,0))*unitsquare);
+
+// reflect(pair a, pair b)
+       内容关于点a/b构成直线对称
+
+
+
+二、Demo02 - rotate
+import graph;
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(rotate(90)*unitsquare);
+
+// rotate(real angle, pair z=(0,0))
+       内容关于点z进行旋转angle度
+
+
+
+三、Demo03 - scale
+import graph;
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(xscale(2)*unitcircle);
+
+// xscale(real x)
+       将内容沿x轴方向拉伸x倍
+
+// yscale(real y)
+       将内容沿y轴方向拉伸y倍
+
+// scale(real s)
+       将内容同时沿x/y轴方向拉伸s倍
+
+// scale(real x, real y)
+       将内容沿x轴拉伸x倍, 沿y轴拉伸y倍
+
+
+
+四、Demo04 - shift
+import graph;
+size(100);
+xaxis("$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+yaxis("$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), EndArrow);
+draw(shift((1,1))*unitsquare);
+
+// shift(pair z)
+       将内容根据z的值, 分别在x/y轴移动指定单位
+
+// shift(real x, real y)
+       将内容在x轴移动x单位, 在y轴移动y单位
+
+
+
+五、Demo05 - slant
+import graph;
+size(100);
+xaxis("$x$", xmin=-5, xmax=5, ticks=LeftTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}), EndArrow);
+yaxis("$y$", ymin=-5, ymax=5, ticks=RightTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}), EndArrow);
+draw(slant(1)*scale(2,1)*unitsquare);
+
+// slant(real s)
+       内容在x轴方向倾斜s*y单位. 即: (x,y) –> (x+s*y,y)

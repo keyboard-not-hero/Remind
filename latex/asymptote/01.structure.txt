@@ -1,0 +1,11 @@
+1.frame
+    底层画布
+    创建新frame:
+        frame f
+
+2.picture
+    frame上的绘图面板. 默认picture为currentpicture
+    创建新picture: 
+        picture pic
+    anonymous picture创建:
+        new picture
