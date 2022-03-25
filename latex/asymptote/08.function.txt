@@ -134,6 +134,25 @@ draw(g2);
 //ratote(angle,z=(0,0))图像关于点z旋转angle度数
 
 
+
+五、Demo05 - 三维曲线函数
+import graph3;
+size(4.15cm, 0);
+currentprojection =
+orthographic(0,2,1);
+triple f(real t) {
+    return (t*cos(t), t*sin(t), t);
+}
+path3 spiral = graph(f, 0, 8pi, operator ..);
+draw(spiral);
+
+// 三维曲线方程
+triple f(real t) {
+    return (t*cos(t), t*sin(t), t);
+}
+
+
+
 预定义函数列表:
 sin/cos/tan
 asin/acos/atan

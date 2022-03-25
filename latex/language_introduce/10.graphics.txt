@@ -43,7 +43,7 @@ Hello World
 内容讲解
 1.\usepackage[draft]{graphicx}导入graphicx宏包, draft代表包含图片名称的图片占位, 并不实际加载图片, 节约加载时间, 与之相对的为final(默认)
 
-2.\graphicspath{{./pic/}}指定图片所在目录
+2.\graphicspath{{./pic/}}指定图片在当前目录的pic子目录下
 
 3.\includegraphics[transform_navigate]{pic_name}用于导入指定名称图片, 并执行转化操作. transform_navigate为对图片的转化, 列表如下:
 	width - 转化后图片的宽度, 当height未提供, 成比例拉伸高度

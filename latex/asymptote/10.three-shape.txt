@@ -56,7 +56,7 @@ draw((0,0,0) -- (1,1,1), linewidth(2pt));
 
 
 
-四、Demo(示例)04 - 栅栏化图形的优化2(修改目标文件格式并提升渲染度)
+四、Demo(示例)04 - 提高图片精度
 import settings;
 outformat="png";
 pdfviewer="evince";
@@ -68,15 +68,19 @@ size(1cm, 0);
 draw((0,0,0) -- (1,1,1), linewidth(2pt));
 
 // outformat="png"
-       修改目标文件为png, 该格式为栅栏化最佳匹配格式
+       修改目标文件为png, 提升图片精度
 
 // render=16
-       提升图片的渲染精度
+       提高render, 有效提升图片的渲染精度
 
 
 
 五、Demo05 - axes
-
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=blue, ticks=InOutTicks(format="$%.4g$", beginlabel=false, endlabel=false, Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}, ticks=new real[]{-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5}, Size=3bp, size=2bp, pTick=purple, ptick=orange), arrow=BeginArrow3(arrowhead=HookHead3, size=20, angle=75, filltype=Fill(s), position=point((-5,0)--(5,0), 0.25)));
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green);
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red);
 
 // void xaxis3(picture pic=currentpicture, Label L="", axis axis=YZZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks3 ticks=NoTicks3, arrowbar3 arrow=None, bool above=false);
 作三维坐标的x轴. 参数列表如下:
@@ -169,94 +173,100 @@ draw((0,0,0) -- (1,1,1), linewidth(2pt));
 
 
 
-六、Demo(示例)06 - smooth curve
-import settings;
-outformat="png";
-pdfviewer="evince";
-render=8;
-import three;
-size(4cm,0);
-draw(-X --- X .. Y .. X-Y+Z .. cycle);
-dot(-X ^^ X ^^ Y ^^ X-Y+Z);
+六、Demo06 - 平行四边形与长方体
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=RGB(204,255,255));
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green);
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red);
+draw(plane(O=X, Y-X, Z-X), purple);
+draw(box(O, (1,1,1)), olive);
 
-// '---'连接两点, 与'--'不同, 该符号修改两点的另一边, 使其尽量线条更圆滑
+// path3 plane(triple u, triple v, triple O=O)
+       角为O, 紧邻该角两条边为u/v的平行四边形
 
-
-
-七、Demo(示例)07 - parallelogram
-import settings;
-outformat="png";
-pdfviewer="evince";
-render=16;
-import three;
-unitsize(4cm);
-draw(O--2X ^^ O--2Y ^^ O--2Z, black);
-draw(plane(u=Y-X, v=Z-X, O=X), blue);
-
-// plane(u=Y-X, v=Z-X, O=X); 指定平行四边形的一个角为X, u为起始于O的边向量, v为起始于O的另一个边向量
-
-// path3 plane(triple u, triple v, triple O=O), 参数列表如下:
-	u - 确定平行四边形的一个边向量
-	v - 确定平行四边形的另一个边向量
-	O - 两个向量的起始角
+// path3[] box(triple v1, triple v2)
+       对角分别为v1/v2的长方体
 
 
 
-八、Demo(示例)08 - 3D box
-import settings;
-outformat="png";
-pdfviewer="evince";
-render=16;
-import three;
-unitsize(4cm);
-draw(O--2X ^^ O--2Y ^^ O--2Z, black);
-draw(box(v1=O, v2=(1,0.5,2)), blue);
+七、Demo07 - circle/dir
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=blue);
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green);
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red);
+draw(circle(O, 1, Y));
+for(int i = 0; i < 100; i=i+30){
+    draw(O -- dir(i, 0), purple);
+}
 
-// box(v1=O, v2=(1,0.5,2)); 指定一个对角为v1和v2的长方体
+// path3 circle(triple c, real r, triple normal=Z)
+       作圆心为c, 半径为r, 垂直于指定方向的圆
+       normal代表与圆垂直的向量, 如: Z(0, 0, 1)代表与Z轴垂直
 
-// path3[] box(triple v1, triple v2), 参数列表如下:
-	v1 - 长方体的一个角
-	v2 - 与v1互为对角的另一个角
-
-
-
-九、Demo(示例)09 - circle
-import settings;
-outformat="png";
-pdfviewer="evince";
-render=16;
-import three;
-unitsize(4cm);
-draw(O--2X ^^ O--2Y ^^ O--2Z, black);
-triple circleCenter=X+(Y+Z)/sqrt(2);
-path3 mycircle=circle(c=circleCenter, r=1, normal=Y+Z);
-draw(mycircle, blue);
-draw(plane(u=2X, v=sqrt(2)*(Z-Y), O=sqrt(2)*Y), mediumgray);
-draw(shift(circleCenter)*(O--Y+Z), green, arrow=Arrow3());
-
-// circle(c=circleCenter, r=1, normal=Y+Z); 以c为中心, r为半径, 法线为normal的圆
-
-// circle(triple c, real r, triple normal=Z), 参数列表如下:
-	c - 圆的中心
-	r - 圆的半径
-	normal - 圆的法线, 默认为Z, 即圆位于X+Y平面
+// triple dir(real colatitude, real longitude)
+       指定纬/经度的单位向量. 参数列表如下:
+           colatitude - 纬度. 南纬90 - 北纬90
+           longitude - 经度
 
 
 
-十、Demo(示例)10 - 2D convert 3D
-import settings;
-outformat="png";
-pdfviewer="evince";
-render=16;
-import three;
-unitsize(4cm);
-path p=box((0,0),(3,1));
-draw(path3(p, plane=XYplane), green);
-draw(path3(p, plane=ZXplane), blue);
-draw(path3(p, plane=YZplane), red);
+八、Demo08 - arc
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=RGB(204,255,255), InTicks(Ticks=new real[]{-2,-1,1,2}));
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green);
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red);
+draw(arc(O, 2X, Y), p=RGB(128,128,0));
 
-// path3(p, plane=XYplane); 将原来的2D图像贴合带三维空间的X轴和Y轴组成的平面上
+// path3 arc(triple c, triple v1, triple v2, triple normal=O)
+       圆心为c, 半径为|v1-c|, 向量v1-c到向量v2-c的圆弧
+       c/v1/v2构成的圆弧通常小于180度, 此时normal可不必指定
+       当c/v1/v2在一条直线上(即180度圆弧), 必须指定圆弧垂直的向量normal
 
-// path3 path3(path p, triple plane(pair)=XYplane); 列表如下:
-	p - 原二维路径
-	plane - 贴合到三维图像的哪一个平面
+// path3 arc(triple c, real r, real theta1, real phi1, real theta2, real phi2, triple normal=O);
+
+
+
+九、Demo09 - 将二维图像投射到三维空间
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=RGB(204,255,255), InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green, InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red, InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+real f(real x){
+    return sqrt(x);
+}
+path p=graph(f, 0, 2);
+path3 g=path3(p, plane=ZXplane);
+draw(g, purple);
+
+// path3 path3(path p, triple plane(pair) = XYplane);
+       将二维路径转化为三维空间内某平面的图像. 参数列表如下:
+           p - 原二维路径
+           plane - 转化到三维空间的平面. 列表如下: XYplane/YZplane/ZXplane
+
+
+
+十、Demo10 - surface
+import graph3;
+unitsize(1cm);
+xaxis3("$x$", axis=YZZero, xmin=-5, xmax=5, p=RGB(204,255,255), InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+yaxis3("$y$", axis=XZZero, ymin=-5, ymax=5, p=green, InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+zaxis3("$z$", axis=XYZero, zmin=-5, zmax=5, p=red, InTicks(Ticks=new real[]{-4,-3,-2,-1,1,2,3,4}));
+real f(real x){
+    return sqrt(x);
+}
+path p=graph(f, 0, 4);
+path3 g=path3(p, plane=ZXplane);
+draw(surface(c=O, g, axis=Z, angle1=90.5, angle2=360), purple);
+
+// surface surface(triple c, path3 g, triple axis, int n=12, real angle1=0, real angle2=360)
+       构造surface内容. 参数列表如下:
+           c - 中心轴上的起始点
+           g - 外表面的路径
+           axis - 中心轴方向
+           n - 构图精度
+           angle1 - 起始角度
+           angle2 - 结束角度
