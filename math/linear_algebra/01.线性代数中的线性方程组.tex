@@ -377,6 +377,46 @@ d. & $A$在每一行都有一个主元位置.\\[2ex]
 若乘积$A\bm{x}$有定义, 则$A\bm{x}$中的第$i$个元素是$A$的第$i$行元素与$\bm{x}$的相应元素乘积之和.
 \end{law}\vspace{2ex}
 
+例1.\\
+$\displaystyle a.\left[\begin{array}{r r r}
+	1 & 2 & -1\\
+	0 & -5 & 3
+    \end{array}\right]
+    \left[\begin{array}{r}
+        4\\
+	3\\
+	7
+    \end{array}\right]=
+    \left[\begin{array}{r}
+        1\cdot4+2\cdot3+(-1)\cdot7\\
+	0\cdot4+(-5)\cdot3+3\cdot7
+    \end{array}\right]=
+    \left[\begin{array}{r}
+        3\\
+	6
+    \end{array}\right]$\\[2ex]
+
+$\displaystyle b.\left[\begin{array}{r r r}
+	1 & 0 & 0\\
+	0 & 1 & 0\\
+	0 & 0 & 1
+    \end{array}\right]
+    \left[\begin{array}{r}
+        r\\
+	s\\
+	t
+    \end{array}\right]=
+    \left[\begin{array}{r}
+        1\cdot r+0\cdot s+0\cdot t\\
+	0\cdot r+1\cdot s+0\cdot t\\
+	0\cdot r+0\cdot s+1\cdot t
+    \end{array}\right]=
+    \left[\begin{array}{r}
+	r\\
+	s\\
+	t
+    \end{array}\right]$\\[2ex]
+
 矩阵的主对角线上元素为1, 其他位置上元素为0, 这个矩阵称为\textbf{单位矩阵}, 并记为$I$.\\
 如果矩阵为$n\times n$单位矩阵, 记为$I_n$.\\[2ex]
 
@@ -400,7 +440,8 @@ b. & $A(c\bm{u})=c(A\bm{u})$
 \end{law}\vspace{2ex}
 
 $\bm{x}=s\bm{u}+t\bm{v}$为$A\bm{x}=\bm{0}$的\textbf{参数向量形式}, 并称之为\textbf{参数向量方程}. 其中, $s$,$t$为自由变量\\
-$\bm{x}=\bm{p}+t\bm{v}$为$A\bm{x}=\bm{b}$的\textbf{参数向量形式}, 并称之为\textbf{参数向量方程}. 其中, $t$为自由变量\\
+$\bm{x}=\bm{p}+t\bm{v}$为$A\bm{x}=\bm{b}$的\textbf{参数向量形式}, 并称之为\textbf{参数向量方程}. 其中, $t$为自由变量\\[1ex]
+
 例.\\
 $x_1=0.3x_2+0.2x_3$\\[1ex]
 $\bm{x}=
@@ -432,7 +473,7 @@ x_3
 0\\
 1
 \end{array}\right]
-$\\[1ex]
+$\\[2ex]
 因此, $A\bm{x}=\bm{b}$的解集是一条通过$\bm{p}$而平行于$A\bm{x}=\bm{0}$的解集的直线. 也称为将$\bm{v}$沿着$\bm{p}$进行直线移动.\\[2ex]
 
 \begin{TheoremOne}
@@ -447,7 +488,20 @@ $\\[1ex]
 \end{law}\vspace{4ex}
 
 \section{线性方程组的应用}
-1.经济学 - 部分的收支平衡\\
+1.经济学 - 部分的收支平衡\\[1ex]
+例1.\\
+假设一个经济体系由煤炭、电力和钢铁三个部门组成, 各部门之间的分配如下所示, 其中每一列中的数表示该部门总产出所占的比例
+\begin{table}[H]
+\begin{tabular}{c|c|c|c}
+    \hline
+    \multicolumn{3}{c|}{部门的产出分配} & \multirow{2}{*}{采购部门}\\\cline{1-3}
+    煤炭 & 电力 & 钢铁 & \\\hline
+    0.0 & 0.4 & 0.6 & 煤炭\\\hline
+    0.6 & 0.1 & 0.2 & 电力\\\hline
+    0.4 & 0.5 & 0.2 & 钢铁\\\hline
+\end{tabular}
+\end{table}
+
 2.化学式 - 等号两边原子守恒\\
 3.网络流 - 节点的进/出流量恒等\\[4ex]
 

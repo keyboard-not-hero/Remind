@@ -35,18 +35,18 @@
 
 内容讲解
 1.\begin{tabular}{aligns...} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). aligns可使用如下内容:
-	l - 当前列的每一行左对齐
-	c - 当前列的每一行中间对齐
-	r - 当前列的每一行右对齐
-	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
-	@{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
-			  text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
-			  text为<null>时, 列之间无分隔符
-			  text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐
-	*{num}{cols} - 指定num个连续列都采用cols指定格式
-	>{} - 应用于后一列
-	<{} - 应用于前一列
+    l - 当前列的每一行左对齐
+    c - 当前列的每一行中间对齐
+    r - 当前列的每一行右对齐
+    | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
+    @{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
+        text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
+        text为<null>时, 列之间无分隔符
+        text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+    p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐
+    *{num}{cols} - 指定num个连续列都采用cols指定格式
+    >{} - 应用于后一列
+    <{} - 应用于前一列
 
 2.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
 
@@ -107,6 +107,39 @@ tabbing与tabular的不同点:
 
 2.\multicolumn也可用于单独cell对齐方式设置
 
+
+
+四、Demo04 - multirow
+\documentclass{article}
+\usepackage{multirow}
+\begin{document}
+\begin{tabular}{l|l|l|l}
+    \hline
+    name & sex & item & \multirow{4}*{score}\\
+    \cline{1-3}
+    peter & male & math &\\
+    \cline{1-3}
+    david & male & english &\\
+    \cline{1-3}
+    steven & male & english &\\
+    \hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
+    upos - 内容在多行块中的垂直位置. 可选列表: t/c(默认)/b
+    nrows - 需要合并的行数
+    bigstruts - 配合\bigstrut指令使用, 代表增加行高或/和行深后的合并文字归位. \bigstrut包含在bigstrut宏包中, 指令及对应消耗的bigstrut列表如下:
+        \bigstrut - 2, 增加行高和行深
+        \bigstrut[<x>] - 1, 代表增加行高(x=t)或行深(x=b)
+    width - 指定合并行的宽度. 可选格式:
+        <N> - 直接使用数字和单位指定宽度, 正文处于段落模式可换行
+        * - 根据文字长度自动确定宽度, 正文处于左右模式不可换行
+    vmove - 垂直移动合并文字. 正数代表向上移, 负数代表向下移
+    text - 合并行的正文内容
+** 合并行数原理: 保留一行数据, 该列的其他行内容留空
+    
 
 
 四、Demo(示例)04 -- cross-reference
