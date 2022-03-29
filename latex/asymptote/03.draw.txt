@@ -48,6 +48,9 @@ draw((0,0)--(100,100));
             0 - 直角弧度, 从原始位置
             1 - 圆角弧度
             2 - 直角弧度, 从圆角弧度的最外距离
+    文字大小
+	pen fontsize(real size, real lineskip=1.2*size)
+	文字的大小, 默认为12pt
     多种属性组合格式:
         linetype(new real[]{8, 8}) + linewidth(2bp)
     默认pen属性修改
@@ -98,7 +101,7 @@ draw((0,0)--(100,100));
                     penc - 圆心的颜色
                     penc - 边缘的颜色
                     drawpen - 向外扩充区域边缘的pen属性
-        position - 箭头在线条的位置, 即path time, 参考subpath指令
+        position - 箭头在线条的位置, 可使用Relative()或path time, path time参考subpath指令
     MidArrow(arrowhead arrowhead, real size, real angle, filltype filltype)
         中间位置放置正向箭头
     EndArrow(arrowhead arrowhead, real size, real angle, filltype filltype, real position)

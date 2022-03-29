@@ -14,22 +14,22 @@ label("Hello World", (0,0), align=N);
        在坐标(0,0)的北方显示指定字符
 
 // void label(picture pic=currentpicture, Label L, pair position, align align=NoAlign, pen p=currentpen, filltype filltype=NoFill)
-       在指定位置显示字符. 参数列表如下:
-// pic - 默认为currentpicture
-// L - 字符串内容或Label对象. 字符串符合LaTeX规则, 如: $...$为公式内容, \textbf{}为加粗字体
-// position - 内容放置坐标
-// align - 内容偏移位置, 默认为S. 列表: N/S/W/E, 可任意组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
-// p - 文字大小, fontsize对象或颜色名称, 可使用'+'进行组合. 如: p=fontsize(10)
-// filltype - 背景色和边框填充类型, 列表如下:
+    在指定位置显示字符. 参数列表如下:
+	pic - 默认为currentpicture
+	L - 字符串内容或Label对象. 字符串符合LaTeX规则, 如: $...$为公式内容, \textbf{}为加粗字体
+	position - 内容放置坐标
+	align - 内容偏移位置, 默认为S. 列表: N/S/W/E, 可任意组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
+	p - 文字大小, fontsize对象或颜色名称, 可使用'+'进行组合. 如: p=fontsize(10)
+	filltype - 背景色和边框填充类型, 列表如下:
 	FillDraw(real xmargin=0, real ymargin=xmargin, pen fillpen=nullpen, pen drawpen=null)
-		边框色和背景填充色, 参数列表如下:
+	    边框色和背景填充色, 参数列表如下:
 		xmargin - 在x轴的拓宽外距
 		ymargin - 在y轴的拓宽外距
 		fillpen - 背景填充色, 默认与drawpen同色, 当两个参数都未提供, 为黑色
 		drawpen - 边框色, 默认与fillpen同色, 当两个参数都未提供, 为黑色
 
 	Fill(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
-		背景填充色, 参数列表如下:
+	    背景填充色, 参数列表如下:
 		xmargin - 在x轴的拓宽外距
 		ymargin - 在y轴的拓宽外距
 		p - 背景填充色, 默认为黑色
@@ -37,18 +37,18 @@ label("Hello World", (0,0), align=N);
 	NoFill - 无背景填充色和边框色
 	
 	Draw(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
-		边框色, 参数列表如下:
+	    边框色, 参数列表如下:
 		xmargin - 在x轴的拓宽外距
 		ymargin - 在y轴的拓宽外距
 		pen - 边框色, 默认为黑色
 
 	UnFill(real xmargin=0, real ymargin=xmargin)
-		无背景填充色和边框色, 参数列表如下:
+	    无背景填充色和边框色, 参数列表如下:
 		xmargin - 在x轴的拓宽外距
 		ymargin - 在y轴的拓宽外距
 		
 	RadialShade(pen penc, pen penr)
-		圆形扩散渐变色, 参数列表如下:
+	    圆形扩散渐变色, 参数列表如下:
 		penc - 圆心的颜色, 位于文字重心
 		penr - 边缘的颜色
 
@@ -120,8 +120,8 @@ draw((2,0) -- (2,4), arrow=Arrow(TeXHead), L=Lz);
        生成Label对象. 补充参数如下:	
            position - Label相对于path的位置, 列表如下:
                EndPoint - path末端, 等于Relative(1)
-               Midpoint - path中间, 等于Relative(0.5). 默认值
-               Beginpoint - path起始端, 等于Relative(0)
+               MidPoint - path中间, 等于Relative(0.5). 默认值
+               BeginPoint - path起始端, 等于Relative(0)
                Relative(real) - Label位置位于path总长的比值, 区间为[0,1]
 
 
