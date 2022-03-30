@@ -1,0 +1,26 @@
+一、Demo01 - 矩形栅栏
+import patterns;
+unitsize(1cm);
+
+add("checker", checker());
+filldraw(unitcircle, pattern("checker"));
+
+// picture checker(real Hx=5mm, real Hy=0, pen p=currentpen)
+    矩形填充栅栏(国际象棋棋盘). 参数列表如下:
+        Hx - 栅栏的宽. 默认为5mm
+	Hy - 栅栏的高. 默认与Hx相等
+	p - 填充p的属性
+
+// picture tile(real Hx=5mm, real Hy=0, pen p=currentpen, filltype filltype=NoFill)
+    矩形边框栅栏, 并可指定填充类型(瓷砖). 补充参数:
+        filltype - 栅栏的填充类型. 参考draw指令arrow参数的filltype
+
+// picture brick(real Hx=5mm, real Hy=0, pen p=currentpen)
+    矩形边框栅栏(交错型, 类似砌砖块)
+
+// picture hatch(real H=5mm, pair dir=NE, pen p=currentpen)
+    斜线花纹. 补充参数:
+        dir - 斜线方向
+
+// picture crosshatch(real H=5mm, pen p=currentpen)
+    交叉斜线花纹

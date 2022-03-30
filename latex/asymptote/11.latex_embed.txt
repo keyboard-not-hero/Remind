@@ -10,6 +10,7 @@ path end_line=(0,0) -- (0,1);
 draw(rotate(20)*start_line, arrow=EndArrow(size=3pt));
 draw(rotate(20)*end_line, arrow=EndArrow(size=3pt));
 
+usepackage("latexsym");
 Label x=Label("$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
     1\\
     0
@@ -24,7 +25,10 @@ label(x, position=(1,0), align=2S+E);
 label(y, position=(0,1), align=2N+1.5W);
 
 内容讲解
-1.$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
+1.usepackage("latexsym");
+    导入latex的宏包
+
+2.$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
     0\\
     1
 \end{array}\right]$

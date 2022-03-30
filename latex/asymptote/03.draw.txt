@@ -448,7 +448,10 @@ filldraw(g, fillpen=RGB(200,200,200), drawpen=RGB(255,0,0));
 void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
     填充闭合路径g, 并绘制边界. 参数列表如下:
 //      g - 包含cycle关键字的闭合路径
-//      fillpen - 填充画笔属性
+//      fillpen - 填充画笔属性. 参考draw的p属性. 补充:
+            样式(适用于filldraw指令)
+	        pen pattern(string str)
+	        指定样式的填充
 //      drawpen - 边界画笔属性
 
 
