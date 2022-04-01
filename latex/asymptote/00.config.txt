@@ -15,6 +15,7 @@ pdfviewer="evince";
 
 // config文件搜索路径, 按优先级序排列:
 // 1.当前工程目录
-// 2.环境变量ASYMPTOTE_DIR的值(UNIX使用:分隔目录, Windows使用;分隔目录)
+// 2.环境变量ASYMPTOTE_DIR的值或配置文件中dir指令(UNIX使用:分隔目录, Windows使用;分隔目录)
 // 3.环境变量ASYMPTOTE_HOME的值或~/.asy目录
 // 4.system级目录(UNIX - /usr/local/share/asymptote, Windows - C:\Program Files\Asymptote)
+// 5.example目录(UNIX - /usr/local/share/doc/asymptote/examples, Windows - C:\Program Files\Asymptote\examples)

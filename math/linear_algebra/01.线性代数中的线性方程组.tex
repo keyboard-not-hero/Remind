@@ -718,7 +718,25 @@ $($ & ii & $)$ & 对$T$的定义域中的一切$\bm{u}$和数$c$, $T(c\bm{u})=cT
 a. & $T$把$\mathbb{R}^n$映上到$\mathbb{R}^m$, 当且仅当$A$的列生成$\mathbb{R}^m$.\\
 b. & $T$是一对一的, 当且仅当$A$的列线性无关.
 \end{tabular}
-\end{TheoremOne}\vspace{6ex}
+\end{TheoremOne}\vspace{2ex}
+
+\begin{longtable}{>{\raggedright}m{0.35\linewidth}>{\centering}m{0.35\linewidth}>{\centering\arraybackslash}m{0.25\linewidth}}
+\hline
+变换名称 & 变换图像 & 标准矩阵\\\hline
+旋转 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{rotate}} & $\left[\begin{array}{r r}\cos\varphi & -\sin\varphi\\ \sin\varphi & \cos\varphi\end{array}\right]$\\\hline
+关于$x$轴对称 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{symmetry_01}} & $\left[\begin{array}{r r} 1 & 0\\ 0 & -1\end{array}\right]$\\\hline
+关于$y$轴对称 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{symmetry_02}} & $\left[\begin{array}{r r} -1 & 0\\ 0 & 1\end{array}\right]$\\\hline
+关于直线$y=x$对称 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{symmetry_03}} & $\left[\begin{array}{r r} 0 & 1\\ 1 & 0\end{array}\right]$\\\hline
+关于直线$y=-x$对称 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{symmetry_04}} & $\left[\begin{array}{r r} 0 & -1\\ -1 & 0\end{array}\right]$\\\hline
+关于原点对称 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{symmetry_05}} & $\left[\begin{array}{r r} -1 & 0\\ 0 & -1\end{array}\right]$\\\hline
+沿$x$轴拉伸 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{scale_01}} & $\left[\begin{array}{r r} k & 0\\ 0 & 1\end{array}\right]$\\\hline
+沿$y$轴拉伸 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{scale_02}} & $\left[\begin{array}{r r} 1 & 0\\ 0 & k\end{array}\right]$\\\hline
+沿$x$轴倾斜 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{slant_01}} & $\left[\begin{array}{r r} 1 & k\\ 0 & 1\end{array}\right]$\\\hline
+沿$y$轴倾斜 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{slant_02}} & $\left[\begin{array}{r r} 1 & 0\\ k & 1\end{array}\right]$\\\hline
+投影到$x$轴 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{shadow_01}} & $\left[\begin{array}{r r} 1 & 0\\ 0 & 0\end{array}\right]$\\\hline
+投影到$y$轴 & \raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{shadow_02}} & $\left[\begin{array}{r r} 0 & 0\\ 0 & 1\end{array}\right]$\\\hline
+\caption{线性变换一览}
+\end{longtable}\vspace{6ex}
 
 \section{商业、科学和工程中的线性模型}
 \begin{law}[基尔霍夫电压定律]\ \\

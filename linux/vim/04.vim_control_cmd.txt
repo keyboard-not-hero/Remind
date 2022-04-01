@@ -257,6 +257,15 @@ flags选项:
 
 
 
+:[range]d[elete]
+        将指定行进行删除
+
+range - 参考:substitute的range. 默认当前所在行
+--------------------------------------------
+** 指令模式 - delete
+
+
+
 :[range]g[lobal]/pattern/command
 	将指定行(range)匹配的内容pattern执行指令操作
 
@@ -512,12 +521,14 @@ demo01.txt:1:google is a big company
 demo02.txt:1:google have a funny spelling
 demo02.txt:2:it is gooooooogle
 
+
 示例3 - 将当前段落合并为一行
 g/./,/^$/join
 分段解析:
 g/./ - 非空白行
 /^$/ - 向下查找到第一个空白行
 join - 合并
+
 
 示例4 - 将匹配到的指定数字值+1
 /20[0-9][0-9]<Enter>
@@ -527,24 +538,31 @@ ctrl-A
 n
 ...
 
+
 示例5 - 删除文件中的空白行
 g/^$/d
+
 
 示例6 - 修改文件列表中所有文件的内容
 :argdo %s/man/woman/ge | update
 
+
 示例7 - 将后续为空格的单词(三个连续数字)添加指定文字环绕
 :100s/\([0-9]\{3}\) /\\textbackslash ding\\{\1\\} /g
-剖析:
-\(exp\) - 代表子群组表达式, \1代表引用该值
-\{3} - 代表引用前面的内容3次
-\\ - 代表\字符串
+
+解析:
+\(exp\) - 代表group, \1代表引用该值
+\{3} - 代表匹配前面的字符3次
+\\ - 代表"\"字符串
+
 
 示例8 - 替换多个特殊模式行之后一行的内容
 g/例/+1s/^/\t/
-剖析:
+
+解析:
 g/例/ - 匹配所有包含'例'字的行
 +1 - 指定行的下一行
+
 
 示例9 - 将指定的的所有数字加上指定值, 并输出为整数
 100,200s/\d\{2,3}/\=printf('%.0f', str2float(submatch(0))+10)/g
@@ -552,3 +570,39 @@ g/例/ - 匹配所有包含'例'字的行
 100,200s/\d\{2,3}/\=str2nr(submatch(0))+10/g
 或
 100,200s/\d\{2,3}/\=float2nr(submatch(0)+10)/g
+
+解析:
+\=
+  将之后的内容解释为特殊表达式, 可使用内建函数
+
+str2nr
+  将字符串转化为整数
+
+submatch(0)
+  匹配pattern完整内容. 类似于一般指令模式下的\0或&
+
+
+示例10 - 将指定字符插入(之后、之间与之后)添加内容
+:13,17s/\(\\includegraphics\)\({.\{-}}\)/\\raisebox{0pt}[4.2cm][0.2cm]{\1[totalh
+eight=4cm]\2}
+
+替换前的内容:
+\includegraphics{rotate}
+
+替换后的内容
+\raisebox{0pt}[4.2cm][0.2cm]{\includegraphics[totalheight=4cm]{rotate}}
+
+解析:
+\(\\includegraphics\)
+第一个group内容, 内容为\includegraphics
+
+\({.\{-}}\)
+第二个group内容
+.匹配任何字符
+\{-}匹配之前的字符任意次(尽可能少的匹配)
+
+\1
+引用第一个group内容
+
+\2
+引用第二个group内容

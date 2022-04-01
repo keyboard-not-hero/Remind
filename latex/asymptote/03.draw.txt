@@ -42,15 +42,24 @@ draw((0,0)--(100,100));
 	pen Dotted - linetype(new real[]{0,3})+2*linewidth(currentpen);
     宽度(默认为0.5bp)
         pen linewidth(real)
-    图形角弧度类型(默认为1)
+    线条角弧度
         pen linecap(int)
-        int数字列表:
+        线条角弧度. 可选列表:
             0 - 直角弧度, 从原始位置
-            1 - 圆角弧度
+            1 - 圆角弧度. 默认值
             2 - 直角弧度, 从圆角弧度的最外距离
+    箭头弧度
+        pen linejoin(int)
+	箭头角弧度. 可选列表:
+	    0 - 尖角
+	    1 - 圆角. 默认值
+	    2 - 截角
     文字大小
 	pen fontsize(real size, real lineskip=1.2*size)
 	文字的大小, 默认为12pt
+    闭合路径填充类型
+	pen pattern(string)
+	    在闭合路径内填充图案, 依赖于patterns包
     多种属性组合格式:
         linetype(new real[]{8, 8}) + linewidth(2bp)
     默认pen属性修改
@@ -448,10 +457,7 @@ filldraw(g, fillpen=RGB(200,200,200), drawpen=RGB(255,0,0));
 void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
     填充闭合路径g, 并绘制边界. 参数列表如下:
 //      g - 包含cycle关键字的闭合路径
-//      fillpen - 填充画笔属性. 参考draw的p属性. 补充:
-            样式(适用于filldraw指令)
-	        pen pattern(string str)
-	        指定样式的填充
+//      fillpen - 填充画笔属性. 参考draw的p属性
 //      drawpen - 边界画笔属性
 
 

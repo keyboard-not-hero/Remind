@@ -59,6 +59,7 @@ label("Hello World", (0,0), align=N);
 
 
 二、Demo(示例)02 - Label
+示例1
 unitsize(1cm);
 Label Lx = Label("$x$", position=EndPoint);
 Label Ly = Label("$y$", position=BeginPoint);
@@ -67,6 +68,18 @@ draw((0,0) -- (0,4), arrow=Arrow(TeXHead), L=Lx);
 draw((1,0) -- (1,4), arrow=Arrow(TeXHead), L=Ly);
 draw((2,0) -- (2,4), arrow=Arrow(TeXHead), L=Lz);
 
+示例2
+size(1cm);
+pair A=(0,0);
+pair B=(3,0);
+pair C=(3,4);
+
+draw("$3$",A--B);
+draw("$4$",B--C);
+
+draw(Label("$5$", embed=Rotate(dir(A--C)), align=W),A--C);
+
+
 // Label("$x$", position=EndPoint); 表示将Label放置于路径的末端, 详情参考函数参数列表
 
 // Label Label(string s="", align align=NoAlign, pen p=nullpen, embed embed=Rotate, filltype filltype=NoFill)
@@ -74,11 +87,8 @@ draw((2,0) -- (2,4), arrow=Arrow(TeXHead), L=Lz);
            s - 字符串内容. 符合LaTeX规则, 如: $...$为公式内容, \textbf{}为加粗字体
            align - 相对于原始位置的方位, 列表: N/S/W/E或其组合(如: NE), 并可与任意数字组合(如: 1.5N+4E)
            p - 字符串的大小或颜色, 参考draw方法的p参数
-           embed - 允许进行的transfer操作, 列表如下:
-               Shift - 进行平移
-               Rotate - 进行旋转
-               Slant - 进行倾斜
-               Scale - 进行伸缩
+           embed - 进行的transform操作, 列表如下:
+	       Rotate(pair z) - 跟随指定向量进行旋转
            filltype - 填充类型, 列表如下:
             Draw - 只画边界
             Draw(real xmargin=0, real ymargin=xmargin, pen p=nullpen)
