@@ -204,74 +204,10 @@
 \end{document}
 
 内容讲解
-1.\begin{array}{horiz_aligns...} ... \end{array}用于指定数学公式表格环境, aligns可使用如下内容:
-	l - 当前列的每一行左对齐
-	c - 当前列的每一行中间对齐
-	r - 当前列的每一行右对齐
-	| - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度. 默认使用空格分隔
-	@{dec} - 使用指定内容作为列之间的分割线或左/右侧边线, dec可选格式如下:
-		\hspace{width} - 使用指定长度空白作为当前列分隔符
-		<null> - 列之间无分隔符
-		\extracolsep{width} - 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-	p{width} - 设置当前列为指定宽度, 当内容达到该宽度后自动换行. 内容左对齐, 垂直方向上对齐. 指定列处于paragraph mode
-		类似于\parbox[t]{width}, 并且由于LR mode, 不能包含\\, 除非内嵌minipage等paragraph mode盒子
-	*{num}{cols} - 指定num个连续列都采用指定对齐格式(l/r/c)
-	以下包含在array宏包中:
-	m{width} - 类似于p{width}, 但垂直方向居中对齐. 指定列处于paragraph mode
-	b{width} - 类似于p{width}, 但垂直方向向下对齐. 指定列处于paragraph mode
-	>{dec} - 对后一列(l/c/r/p{width}/m{width}/b{width}指定)的属性指定	
-	<{dec} - 对前一列(l/c/r/p{width}/m{width}/b{width}指定)的属性指定
-	!{dec} - 类似于@{dec}, 但保留原本列之间的<space>空间
-	w{align}{width} - 当前列指定水平对齐方式(l/c/r)和宽度, 内容超出指定长度会溢出覆盖其他列内容. 左对齐覆盖右侧内容, 右对齐覆盖左侧内容. 指定列处于paragraph mode
-		类似于\makebox[width][align]{cell}
-	W{align}{width} - 类似于w{align}{width}, 但内容溢出始终覆盖右侧内容. 指定列处于paragraph mode
-	\newcolumntype{name}{content} - 定义新的列类型, 其中, name只能为单字符. 如: \newcolumntype{C}{>{$}c<{$}}
-	
-	例1. 将指定列的内容指定为math内容(适用于tabular表格)
-	\begin{tabular}{l >{$}l<{$} l l}
+1.\begin{array}{}{vertical_align}{column_format} ... \end{array}用于math mode
 
-	例2. 将指定列上色(需借助colortbl宏包)	
-	\begin{array}{l >{\columncolor[gray]{0.4}}l l l}
-	解析:
-		\columncolor[model]{color_spec}[left_overhang][right_overhang] - 用于指定列的背景配色, model配合color_spec可指定颜色(或单独使用color_spec来引用已预定义颜色), left_overhang用于指定背景色超出最长内容的左侧宽度, right_overhang用于指定背景色超出最长内容的右侧宽度(未指定时使用left_overhang), left_overhang默认使用\tablecolsep(tabular)或\arraycolsep宽度(array)
+2.array环境与tabular环境完全一致, 除了tabular可用于段落/数学/左右等各种模式
 
-	例3. 设置指定列字体
-	\begin{tabular}{l >{\bfseries}l l l}
-	
-	例4. 列指定对齐方式和宽度(由于w/W/p/m/b会修改math mode为paragraph mode, 所以需要使用>{$}和<{$}修正)
-	\begin{array}{l >{$}w{r}{1cm}<{$} l l}
-
-	例5. 列指定对齐方式和宽度, 并修正为math mode, 最后进行背景上色
-	\newcolumntype{W}{>{\columncolor[gray]{0.8}[0pt]$}w{r}{4.5mm}<{$}}
-	\newcolumntype{R}{>{$}w{r}{4.5mm}<{$}}
-	\begin{array}{@{\hspace{1.5mm}}R@{\hspace{1.5mm}}W@{\hspace{1.5mm}}R@{\hspace{1.5mm}}R@{\hspace{1.5mm}}}
-
-
-2.\begin{array}[vert_align]{horiz_aligns...} ... \end{array}, vert_align表示使用指定位置对齐中线位置, 可选列表: b/c/t, 默认为c
-
-3.数组的列之间使用'&'分隔
-
-4.\multicolumn{num}{col}{item}用于合并多列为1列, num指定合并的列数; col代表合并后内容的水平对齐方式(l/r/c)或|或@{text}; item为合并后填充的内容
-
-5.\vline填充当前列之间整个行高度的垂直线
-
-6.\hline用于添加表格行之间的填充整行的水平线, 需要在第一行之前或紧跟\\之后
-
-7.\cline{<col_1>-<col_2>}用于添加表格行之间的填充指定列的水平线, 需要在第一行之前或紧跟\\之后
-
-8.\\用于换行
-\\*可阻止当前行后换页
-\\[2ex]用于换行, 并指定当前行与下一行的垂直距离
-\\*[2ex]用于换行, 并阻止当前行后换页, 且指定当前行与下一行的垂直距离
-最后一行末尾不能使用'\\'
-
-9.array只能用于math mode环境内
-
-10.其他参数设置, 列表如下:
-	\arraycolsep - 表格列之间空格距离的1/2长度, 语法:\setlength{\arraycolsep}{2ex}
-	\arrayrulewidth - '|'、\hline、\cline、\vline线条宽度, 语法:\setlength{\arrayrulewidth}{2pt}
-	\doublerulesep - 两个连续'|'或\hline之间的距离, 语法:\setlength{\doublerulesep}{1ex}
-	\arraystretch - 行之间垂直距离的系数, 语法:\renewcommand{\arraystretch}{1.5}
 
 
 九、Demo(示例)09 - Overlining and Underlining

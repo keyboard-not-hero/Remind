@@ -25,8 +25,11 @@ label(x, position=(1,0), align=2S+E);
 label(y, position=(0,1), align=2N+1.5W);
 
 内容讲解
-1.usepackage("latexsym");
-    导入latex的宏包
+1. void usepackage(string s, string options="")
+    导入latex的宏包. 参数列表如下:
+	s - 代表宏包名称
+	options - 导入宏包时的可选参数
+    例: usepackage("latexsym");
 
 2.$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
     0\\

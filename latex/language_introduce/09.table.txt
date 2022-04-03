@@ -1,25 +1,4 @@
-一、Demo(示例)01 -- tabbing
-\documentclass{article}
-\begin{document}
-\begin{tabbing}
-    this is \= column one\\
-    this \> is column two\\
-    this is column three \kill
-\end{tabbing}
-\end{document}
-
-内容讲解
-1.\begin{tabbing} ... \end{tabbing}用于指定表格环境
-
-2.\=设定下一列的起始位置(锚), \>跳转到下一列(定位), \\换行符, \kill不显示当前行
-
-3.tabbing可跨页
-
-4.tabbing只适用于paragraph mode
-
-
-
-二、Demo(示例)02 -- basic tabular
+一、Demo(示例)01 -- tabular
 示例1
 \documentclass{article}
 \begin{document}
@@ -51,68 +30,68 @@
 \end{document}
 
 内容讲解
-1.\begin{tabular}{aligns...} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). aligns可使用如下内容:
-    l - 当前列的每一行左对齐
-    c - 当前列的每一行中间对齐
-    r - 当前列的每一行右对齐
-    | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
-    @{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
-        text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
-        text为<null>时, 列之间无分隔符
-        text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-    p{width} - 设置列为指定宽度, 内容垂直top对齐
-    m{width} - 设置列为指定宽度, 内容垂直居中对齐. 包含在array宏包中
-    b{width} - 设置列为指定宽度, 内容垂直bottom对齐. 包含在array宏包中
-    *{num}{cols} - 指定num个连续列都采用cols指定格式
-    >{} - 应用于后一列. 包含在array宏包中
-    <{} - 应用于前一列. 包含在array宏包中
-    例子: 指定一列宽度为3cm, 并指定垂直对齐方式为top, 水平对齐方式为居中. \begin{tabular}{>{\centering}p{3cm}}. 左对齐和右对齐格式raggedright/raggedleft
-** 观察示例2, 最后一列之前的>{}内需要使用\arraybackslash(放在\centering等等之后)
+1.\begin{tabular}[vertical_align]{column_format} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). 参数列表如下:
+    vertical_align
+        表格与同一行外部内容的垂直对齐方式, 可选列表: t/c(默认)/b
+    column_format
+        表格内每一列的格式. 内容如下:
+            l - 当前列的每一行左对齐
+            c - 当前列的每一行居中对齐
+            r - 当前列的每一行右对齐
+            | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
+	    || - 列之间的或侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
+            @{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
+                text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
+                text为<null>时, 列之间无分隔符
+                text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+            *{num}{cols} - 指定num个连续列都采用cols格式指定
+            p{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向top对齐
+            m{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直居中对齐. 包含在array宏包中
+            b{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向bottom对齐. 包含在array宏包中
+            >{} - 应用于后一列. 包含在array宏包中
+            <{} - 应用于前一列. 包含在array宏包中
+	    !{text} - 类似于@{text}, 但不删除原有的分隔空间. 包含在array宏包中
+            例子: 指定一列宽度为3cm, 并指定垂直对齐方式为top, 水平对齐方式为居中. \begin{tabular}{>{\centering}p{3cm}}. 左对齐和右对齐格式raggedright/raggedleft
+        ** 观察示例2, 最后一列之前的>{}内需要使用\arraybackslash(放在\centering等等之后)
 
+2.&代表列与列之间的正文分隔
 
-2.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
+3.\\代表换行
 
-3.&代表列与列之间的正文分隔
-
-4.\\代表换行
+4.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
 
 5.\cline{i-j}用于作水平铺满指定列的水平线, 必须位于表格第一行或紧跟在\\后
 
 6.\vline可以在单独一行内作垂直线
 
-7.\tabcolsep配置列之间的间隔. 配置示例: \setlength{\tabcolsep}{1cm}
+7.设定表格属性
+1)\arrayrulewidth
+    配置数组边框宽度. 格式: \setlength{\arrayrulewidth}{2pt}. 默认为0.4pt
 
-8.\arrayrulewidth配置线条宽度. 配置示例: \setlength{\arrayrulewidth}{2pt}. 线条列表: | \vline \hline \cline
+2)\doublerulesep
+    双表格线的间距. 格式: \setlength{\doublerulesep}{3pt}. 默认为2pt
 
-9.\doublerulesep配置两个紧邻线条的距离. 配置示例: \setlength{\doublerulesep}{3pt}
+3)\arraystretch
+    配置表格上下单元的距离系数. 格式: \renewcommand{\arraystretch}{1.3}. 默认为1
 
-10.\arraystretch配置行之间距离的系数(过低会造成表格内的内容与边框过近). 配置示例: \renewcommand{\arraystretch}{1.3}
+4)\extrarowheight
+    对表格单元额外增加的高度(深度不变). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
 
-11.\columncolor[modle]{model-spec}[left_margin][right_margin]用于指定表格的列背景色, model为颜色模式, 列表: gray/rgb/cymk; model-spec用于指定颜色模式参数, 当model未提供, 为提供的颜色名称; left_margin代表列内容左边界延伸宽度, 默认为\tabcolsep宽度; right_margin代表列内容右边界延伸宽度, 默认为left_margin内容. \columncolor只能用于tabular/array的aligns参数列表的>{}格式中. 包含在colortbl宏包中, 并依赖于xcolor宏包
+5)\tabcolsep
+    两列的间隔距离/2. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
-12.\rawcolor[model]{model-spec}[left_margin][right_margin]参数与\columncolor一致, 用于指定表格的行背景色. 用于表格一行的起始位置. 包含在colortbl宏包中, 并依赖于xcolor宏包
+8.tabular特性
+1)tabular作为字符盒子, 不可跨页
 
-13.\cellcolor[model]{model-spec}用于指定表格单元格的背景色. 包含在colortbl宏包中, 并依赖于xcolor宏包
+2)tabular适用于math mode/paragraph mode/LR mode所有模式
 
-14.tabular不可跨页
+3)tabular可嵌套
 
-15.tabular适用于math mode/paragraph mode/LR mode所有模式
-
-16.tabular不可内嵌float环境
-
-
-tabbing与tabular的不同点:
-1.tabbing只能用于paragraph mode; tabular可用于所有模式
-
-2.tabbing可以跨页; tabular不可跨页, 需借助table
-
-3.tabbing需设定列的锚点和跨列位置; tabular自动检测列的宽度
-
-4.tabbing从环境中间改变格式更为容易
+4)tabular不可内嵌float环境
 
 
 
-三、Demo(示例)03 -- span column of tabular
+二、Demo(示例)02 -- span column of tabular
 \documentclass{article}
 \begin{document}
 \begin{tabular}{l|l|l|l}
@@ -127,13 +106,16 @@ tabbing与tabular的不同点:
 \end{document}
 
 内容讲解
-1.\multicolumn{num}{align}{content}用于合并多列, num为合并的列数; align为合并后内容的水平对齐方式, 可选为l/c/r, 合并列右侧不使用表格的列分隔符, |为手动添加到其后的列分隔符; content为合并单元格的内容
+1.\multicolumn{num}{align}{content}用于合并多列, 参数列表如下:
+    num - 合并的列数
+    align - 合并后内容的水平对齐方式, 可选为l/c/r, 合并列右侧不使用表格的列分隔符, |为手动添加到其后的列分隔符
+    content - 合并单元格的内容
 
 2.\multicolumn也可用于单独cell对齐方式设置
 
 
 
-四、Demo04 - multirow
+三、Demo03 - multirow
 \documentclass{article}
 \usepackage{multirow}
 \begin{document}
@@ -166,6 +148,45 @@ tabbing与tabular的不同点:
     
 
 
+四、Demo(示例)04 - multi-page table
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{texnames}
+\usepackage{amssymb}
+\usepackage{longtable}
+\begin{document}
+\begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
+	\caption{数学普通符号}\\
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath\\
+	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash  wp & $\Re$ & \textbackslash  Re\\
+	$\Im$ & \textbackslash  Im & $\partial$ & \textbackslash  partial & $\infty$ & \textbackslash infty\\
+ 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash  nabla\\
+	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
+	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
+	\hline
+\begin{minipage}{\textwidth}
+\footnotetext[1]{\textbackslash  backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash  setminus}
+\footnotetext[99]{从\textbackslash  backprime开始是\AMS 符号, 包含在amssymb宏包中}
+\end{minipage}
+\end{longtable}
+\end{document}
+
+内容讲解
+1.\begin{longtable}[align]{column_format}
+...
+\end{longtable}
+    longtable为可跨页的表格. 类似于tabular, 也拥有table的浮动特性(自动换新行), 并且与table使用相同的计数器, 包含在longtab宏包中. 参数列表如下:
+        align - 表格在页面的位置. 列表如下: l/c/r
+	column_format - 列的格式, 与tabular一直, 参考tabular
+
+2.可使用\caption指令, \caption可位于表格第一行(尾部需加\\)或表格最后一行
+
+3.第一列的宽度默认比较高, 建议使用p{width}指定第一列宽度
+
+
+
 五、Demo(示例)05 -- cross-reference
 \documentclass{article}
 \begin{document}
@@ -195,41 +216,7 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 
 
 
-六、Demo(示例)06 - multi-page table
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{texnames}
-\usepackage{amssymb}
-\usepackage{longtable}
-\begin{document}
-\begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
-	\caption{数学普通符号}\\
-	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
-	\hline
-	$\hbar$ & \textbackslash hbar & $\imath$ & \textbackslash imath & $\jmath$ & \textbackslash jmath\\
-	$\ell$ & \textbackslash ell & $\wp$ & \textbackslash  wp & $\Re$ & \textbackslash  Re\\
-	$\Im$ & \textbackslash  Im & $\partial$ & \textbackslash  partial & $\infty$ & \textbackslash infty\\
- 	$\prime$ & \textbackslash prime & $\emptyset$ & \textbackslash emptyset & $\nabla$ & \textbackslash  nabla\\
-	$\diagup$ & \textbackslash  diagup & $\Game$ & \textbackslash  Game & $\diagdown$ & \textbackslash  diagdown \\
-	$\Bbbk$ & \textbackslash  Bbbk & $\because$ & \textbackslash  because & $\therefore$ & \textbackslash  therefore\\
-	\hline
-\begin{minipage}{\textwidth}
-\footnotetext[1]{\textbackslash  backslash同时也是长度可变的定界符，并有一个同形的二元运算符\textbackslash  setminus}
-\footnotetext[99]{从\textbackslash  backprime开始是\AMS 符号, 包含在amssymb宏包中}
-\end{minipage}
-\end{longtable}
-\end{document}
-
-内容讲解
-1.longtable宏包拥有与tabular类似的格式, 并且与table拥有相同的\caption/counter, 并且\listoftables也会生成目录item
-
-2.caption可位于表格前(需加\\)或表格后(表格内容结束后必须立即接\caption指令)
-
-3.第一列的宽度默认比较高, 建议使用p{width}指定第一列宽度
-
-
-
-七、Demo07 - graphic in table
+六、Demo06 - graphic in table
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{adjustbox}
 \usepackage{array}
@@ -257,3 +244,112 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
     图片的最底部(非基准线)与外部raisebox盒子的基准线(该线以下为行深, 以上为行高)重合
     raisebox盒子的行高-图片总高度=图像距离顶部边框距离
     raisebox盒子的行深=图像距离底部边框距离
+
+
+
+七、Demo07 - 外部文字与表格第一行内容对齐
+示例1
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+表格
+\begin{tabular}[t]{|c|}
+hline
+11\\
+22\\\hline
+\end{tabular}
+\end{document}
+
+示例2
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{array}
+\begin{document}
+表格
+\begin{tabular}[t]{|c|}
+\firsthline
+11\\
+22\\\hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.当表格与外部文字顶部对齐时, 表格的上边框与外部文字对齐, 如示例1, 并且我们想要的效果
+解决方案:
+将第一行之前的\hline替换为\firsthline, 此时表格第一行内容与外部文字顶部对齐
+\firsthline指令包含在array宏包中
+
+2.将表格与外部文字底部对齐, 可使用\lasthline替换最后一个\hline
+\lasthline指令包含在array宏包中
+
+
+
+八、Demo08 - width of vertical/horizontal line
+示例1
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{array}
+\begin{document}
+\begin{tabular}{!{\vrule width 3pt}r|r|}
+1 & 2\\
+3 & 4
+\end{tabular}
+\end{document}
+
+示例2
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{booktabs}
+\begin{document}
+\begin{tabular}{l c r}
+\toprule
+name & sex & score\\
+\cmidrule{1-2}
+peter & male & 98\\
+\midrule
+lucy & female & 79\\
+\midrule
+lily & female & 99\\
+\midrule
+david & male & 65\\
+\bottomrule
+\end{tabular}
+\end{document}
+
+内容讲解
+1. !{\vrule width 3pt}
+    设置列的分割线, 并且设置宽度
+
+2.水平分割线宏包booktabs, 提供的水平分割线属性指令如下:
+1)\toprule[width]
+    表格顶部水平线
+
+2)\midrule[width]
+    表格中间水平线(非顶部和底部), 两个\midrule使用\doublerulesep分隔. \doublerulesep设置格式: \setlength{\doublerulesep}{2pt}
+
+3)\bottomrule[width]
+    表格底部水平线
+
+4)\heavyrulewidth
+    设置顶部和底部水平线的默认宽度. 格式: \setlength{\heavyrulewidth}{2pt}
+
+5)\lightrulewidth
+    设置中间水平线的默认宽度. 格式: \setlength{\lightrulewidth}{2pt}
+
+6)\cmidrule[line_width](position{trim_width}){i-j}
+    限定指定列的中间水平线. 参数列表如下:
+        line_width - 线条宽度
+	position - 从线条指定位置进行截取, 可选列表: l/r. 当多次使用l和r时, 只有最后一个l和r有效. 如: (lrrlr{0.75em})与(lr{0.75em})效果一致
+	trim_width - 截取宽度. 默认为\cmidrulekern指令的值, 该指令默认取值0.5em, 设置格式: \setlength{\cmidrulekern}{2pt}
+	i-j - 指定水平覆盖的列
+
+7)\cmidrulewidth
+    设置指定列中间水平线的默认宽度. 格式: \setlength{\cmidrulewidth}{2pt}
+
+8)\addlinespace[width]
+    用于添加边框线与表格内容的距离
+
+9)\defaultaddspace
+    \addlinespace的默认距离. 格式: \setlength{\defaultaddspace}{2pt}
+
+10)\morecmidrules
+    用于分隔连续两个\cmidrule, 否则\cmidrule重合. 使用方法: \cmidrule\morecmidrules\cmidrule
+
+11)\cmidrulesep
+    连续两个\cmidrule的间隔. 格式: \setlength{\cmidrulesep}{2pt}
