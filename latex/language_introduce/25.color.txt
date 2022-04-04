@@ -1,2 +1,49 @@
-一、Demo01 - color macro package
+一、Demo01 - color
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{color}
+\begin{document}
+\definecolor{own}{rgb}{0.8, 0.9, 0.7}
+\color{own}{i love you}
+\end{document}
 
+内容讲解
+** 以下所有内容包含在color宏包中
+
+1.\definecolor{name}{model}{color_specification}
+    定义颜色. 参数列表如下:
+        name - 自定义颜色的名称
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]
+
+2.\color{name}
+    使用已定义颜色名称name改变后续所有字体颜色
+\color[model]{specification}
+    使用指定模式的颜色改变后续所有字体颜色. 参数列表:
+        model - 定义颜色使用的模式. 参考\definecolor的model参数
+	specification - 根据model种类, 使用不同的数字表示颜色. 参考\definecolor的color_specification参数
+
+3.\textcolor{name}{text}
+    使用已定义颜色名称name, 改变指定字体text的颜色
+\textcolor[model]{specification}{text}
+    使用指定模式的颜色, 改变指定字体text的颜色. 参数列表可参考\definecolor的model和color_specification参数
+
+4.\pagecolor{name}
+    使用已定义颜色名称修改后续所有页面背景色
+\pagecolor[model]{specification}
+    使用指定模式的颜色, 修改后续所有页面背景色. 参数可参考\definicolor的model和corlor_specification参数
+\nopagecolor
+    从当前页开始, 停止前面\pagecolor的作用, 变回普通页面背景色
+
+5.\colorbox{name}{text}
+    使用已定义颜色名称给指定文字上背景色
+\colorbox[model]{specification}{text}
+    使用指定模式的颜色, 给指定文字上背景色. 参数可参考\definecolor的model和color_specification参数
+
+6.\fcolorbox{name1}{name2}{text}
+    使用已定义颜色name2名称给指定文字上背景色, 边框颜色为name1
+\fcolorbox[model]{specification1}{specification2}{text}
+    使用指定模式的颜色, 给指定文字上背景色specification2, 边框颜色为specification1. 参数可参考\definication的model和color_specification
+    背景色宽度可使用\fboxsep指定, 边框线宽度可使用\fboxrule指定. 格式: \setlength{\fboxrule}{2pt}
