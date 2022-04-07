@@ -206,7 +206,7 @@
 内容讲解
 1.\begin{array}{}{vertical_align}{column_format} ... \end{array}用于math mode
 
-2.array环境与tabular环境完全一致, 除了tabular可用于段落/数学/左右等各种模式
+2.array环境与tabular环境完全一致, 除了tabular可用于段落/数学/左右等各种模式. 参考09.table.txt的Demo01
 
 
 

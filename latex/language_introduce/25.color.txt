@@ -47,3 +47,82 @@
 \fcolorbox[model]{specification1}{specification2}{text}
     使用指定模式的颜色, 给指定文字上背景色specification2, 边框颜色为specification1. 参数可参考\definication的model和color_specification
     背景色宽度可使用\fboxsep指定, 边框线宽度可使用\fboxrule指定. 格式: \setlength{\fboxrule}{2pt}
+
+
+
+二、Demo02 - color table
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{colortbl}
+\begin{document}
+\arrayrulecolor{green}
+\begin{tabular}{|l!{\color{blue}\vline}c|}
+\hline
+one & two\\
+\hline
+three & four\\
+\hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.colortbl宏包依赖于color和array宏包, 导入colortbl时自动导入color和array宏包
+
+2.\columncolor[model]{color_specification}[left_overhang][right_overhang]
+    给表格的指定列上色, 必须用于列表参数内的>{}格式. 参数列表如下:
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	** 未指定model时, 使用已定义的颜色名称指定颜色
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]
+	left_overhang - 超出左边部分. 默认为\tabcolsep(tabular)/\arraycolsep(array)
+	right_overhang - 超出右边部分. 默认等于left_overhang
+
+2.\rowcolor[model]{color_specification}[left_overhang][right_overhang]
+    给表格的指定行上色, 必须用于一行的起始位置. 参数列表如下:
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	** 未指定model时, 使用已定义的颜色名称指定颜色
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]
+	left_overhang - 超出左边部分. 默认为\tabcolsep(tabular)/\arraycolsep(array)
+	right_overhang - 超出右边部分. 默认等于left_overhang
+	** 未指定overhang时, 首先参考\columncolor的overhang, 然后参考\tabcolsep或\arraycolsep的值
+
+3.列表参数的>{\rowcolor...}格式, 会覆盖\columncolor和行内的\rowcolor配置
+
+4.\cellcolor[model]{specification}
+    给表格的指定单元上色, 可用于单元的任意位置. 参数列表如下:
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	** 未指定model时, 使用已定义的颜色名称指定颜色
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]
+
+5.上述color指令的优先级:
+\cellcolor > \rowcolor > \columncolor
+
+6.\arrayrulecolor[model]{color_specification}
+    给表格的边框上色. 参数列表如下:
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	** 未指定model时, 使用已定义的颜色名称指定颜色
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]
+    ** \arrayrulecolor可使用的位置及作用范围:
+        1)表格外 - 作用于表格所有边框
+	2)行的起始位置 - 作用与该行所有列边框及所有后续边框
+	3)\\之后\hline之前 - 作用于之后的所有边框
+    ** 只设置指定列边框的颜色!{\color{red}\vline}
+
+7.\doublerulesepcolor[mode]{color_specification}
+    给表格的连续边框(由||或\hline\hline组成)上色. 参数列表如下:
+	model - 定义颜色使用的模式. 列表如下: rgb/cmyk/gray
+	** 未指定model时, 使用已定义的颜色名称指定颜色
+	color_specification - 根据model种类, 使用不同的数字表示颜色. 对应列表如下:
+	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
+	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
+	    gray - 一个数字, 数字范围为[0,1]

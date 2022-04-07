@@ -120,3 +120,29 @@ this is fifth paragraph
 
 内容讲解
 1.\definecolor{color_name}{model}{color_spec}用于定义名字为color_name的颜色, 该颜色采用model颜色模式, 并且使用color_spec指定该模式下的颜色数值. 包含在color宏包中
+
+
+
+七、Demo07 - newcolumntype
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{array}
+\begin{document}
+\newcolumntype{k}[1]{>{\centering\arraybackslash}p{#1\textwidth}}
+\begin{tabular}{|k{0.2}|k{0.4}|}
+\hline
+aaaa & bbbb\\
+\hline
+cccc & dddd\\
+\hline
+eeee & ffff\\
+\hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.newcolumntype{name}[args_num]{column_format}
+    定义新的列格式. 列表如下:
+        name - 列格式的名称, 该名称只能为一个字母
+	args_num - 新名称可以使用的参数数量. 默认为0
+	column_format - 列格式, 参考tabular环境的column_format参数. #1代表名称第一个参数的值, #2代表第二个, 以此类推
+

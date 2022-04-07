@@ -6,6 +6,7 @@
 \usepackage{boxedminipage}
 \usepackage{cancel}
 \usepackage{colortbl}
+\usepackage{dcolumn}
 \usepackage{float}
 \usepackage[Bjornstrup]{fncychap}
 \usepackage{framed}
@@ -48,6 +49,7 @@
 \newcolumntype{R}{>{$}w{r}{4.5mm}<{$}}
 \newcolumntype{B}{>{\columncolor{lightgray}[0pt]$}w{r}{4.5mm}<{$}}
 \newcolumntype{W}{>{\columncolor{white}[0pt]$}w{r}{4.5mm}<{$}}
+\newcolumntype{M}[1]{D{.}{.}{#1}}
 \newcounter{bean}
 \graphicspath{{./picture/}}
 \begin{document}

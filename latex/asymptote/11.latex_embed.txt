@@ -31,7 +31,10 @@ label(y, position=(0,1), align=2N+1.5W);
 	options - 导入宏包时的可选参数
     例: usepackage("latexsym");
 
-2.$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
+2.void texpreamble(string s)
+    导入latex的宏包. 例: texpreamble("\usepackage[framed]{ntheorem}")
+
+3.$\left[\begin{array}{@{\hspace{0.2mm}}r@{\hspace{0.2mm}}}
     0\\
     1
 \end{array}\right]$

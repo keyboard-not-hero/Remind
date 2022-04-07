@@ -52,7 +52,7 @@
             <{} - 应用于前一列. 包含在array宏包中
 	    !{text} - 类似于@{text}, 但不删除原有的分隔空间. 包含在array宏包中
             例子: 指定一列宽度为3cm, 并指定垂直对齐方式为top, 水平对齐方式为居中. \begin{tabular}{>{\centering}p{3cm}}. 左对齐和右对齐格式raggedright/raggedleft
-        ** 观察示例2, 最后一列之前的>{}内需要使用\arraybackslash(放在\centering等等之后)
+        ** 观察示例2, 由于水平方向对齐指令会影响表格环境对换行指令\\的处理, 所以需要在>{}内使用\arraybackslash(放在centering/raggedright/raggedleft之后)
 
 2.&代表列与列之间的正文分隔
 
@@ -80,7 +80,13 @@
 5)\tabcolsep
     两列的间隔距离/2. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
-8.tabular特性
+8.newcolumntype{name}[args_num]{column_format}
+    定义新的列格式. 列表如下:
+        name - 列格式的名称, 该名称只能为一个字母
+	args_num - 新名称可以使用的参数数量. 默认为0
+	column_format - 列格式, 参考tabular环境的column_format参数. #1代表名称第一个参数的值, #2代表第二个, 以此类推
+
+9.tabular特性
 1)tabular作为字符盒子, 不可跨页
 
 2)tabular适用于math mode/paragraph mode/LR mode所有模式
@@ -91,7 +97,7 @@
 
 
 
-二、Demo(示例)02 -- span column of tabular
+二、Demo(示例)02 -- span column of table
 \documentclass{article}
 \begin{document}
 \begin{tabular}{l|l|l|l}
@@ -108,29 +114,58 @@
 内容讲解
 1.\multicolumn{num}{align}{content}用于合并多列, 参数列表如下:
     num - 合并的列数
-    align - 合并后内容的水平对齐方式, 可选为l/c/r, 合并列右侧不使用表格的列分隔符, |为手动添加到其后的列分隔符
+    align - 合并列的格式. 内容如下:
+        l - 当前列的每一行左对齐
+        c - 当前列的每一行居中对齐
+        r - 当前列的每一行右对齐
+        | - 左/右侧边线, 该垂直线占据整个深度
+        || - 侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
+        @{text} - 使用指定字符text作为左/右侧边线
+            text为\hspace{width}时, 使用指定长度空白作为边线
+            text为<null>时, 无左/右侧边线
+        p{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向top对齐
+        m{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直居中对齐. 包含在array宏包中
+        b{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向bottom对齐. 包含在array宏包中
+        >{} - 应用于后一列. 包含在array宏包中
+        <{} - 应用于前一列. 包含在array宏包中
     content - 合并单元格的内容
 
-2.\multicolumn也可用于单独cell对齐方式设置
+2.\multicolumn也可用于单个cell对齐方式设置
 
 
 
-三、Demo03 - multirow
-\documentclass{article}
+三、Demo03 - span row of table
+示例1
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{multirow}
+\usepackage{bigstrut}
+\renewcommand{\multirowsetup}{\centering}
 \begin{document}
-\begin{tabular}{l|l|l|l}
-    \hline
-    name & sex & item & \multirow{4}*{score}\\
-    \cline{1-3}
-    peter & male & math &\\
-    \cline{1-3}
-    david & male & english &\\
-    \cline{1-3}
-    steven & male & english &\\
-    \hline
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multirow{2}[4]{0.7\textwidth}{年级} & \multicolumn{3}{c|}{科目}\bigstrut\\
+\cline{2-4}
+ & 语文 & 数学 & 英语\bigstrut\\
+\hline
+一年级 & 85 & 93 & 96\\
+二年级 & 83 & 95 & 86\\
+三年级 & 87 & 78 & 92\\
+\hline
 \end{tabular}
 \end{document}
+
+示例2
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\usepackage{colortbl}
+\begin{document}
+\begin{tabular}{l>{\columncolor{yellow}}l}
+aaaa & \\
+cccc & \\
+dddd & \multirow{-3}*{bbbb}\\
+\end{tabular}
+\end{document}
+
 
 内容讲解
 1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
@@ -140,15 +175,58 @@
         \bigstrut - 2, 增加行高和行深
         \bigstrut[<x>] - 1, 代表增加行高(x=t)或行深(x=b)
     width - 指定合并行的宽度. 可选格式:
-        <N> - 直接使用数字和单位指定宽度, 正文处于段落模式可换行
-        * - 根据文字长度自动确定宽度, 正文处于左右模式不可换行
+        <N> - 直接使用数字和单位指定宽度, 此时正文处于段落模式(可换行)
+        * - 根据文字长度自动确定宽度, 此时正文处于左右模式(不可换行)
     vmove - 垂直移动合并文字. 正数代表向上移, 负数代表向下移
     text - 合并行的正文内容
-** 合并行数原理: 保留一行数据, 该列的其他行内容留空
-    
+    ** 合并行数原理: 保留一行数据, 该列的其他行内容留空
+
+2.\renewcommand{\multirowsetup}{\centering}
+    设置合并行的内容在水平方向居中对齐. 默认左对齐(raggedright)
+
+3.\bigstrut[vertical_align]
+    增加行高或行深, 放置于\\之前的任何地方. 参数如下:
+        vertical_align - 在指定位置增加垂直距离. 可选列表:
+	    t - 增加行高
+	    b - 增加行深
+	    ** 默认增加行高和行深
+\bigstrutjot代表增加的行高/行深高度, 默认为2pt. 格式: \setlength{\bigstrutjot}{4pt}
+
+4.如示例2, colortbl宏包上色合并行指令:
+\multirow{-3}*{bbbb}
+合并行上色的原理: 对每个原始cell分别进行上色. 当合并三行时, 先对第一行上色, 然后填入内容, 然后对第二行上色, 上色会覆盖内容(垂直方向居中内容位于第二行)
+** colortbl宏包参考文档25.color.txt的Demo02
+
+5.\usepackage[longtable]{multirow}
+    multirow宏包的longtable可选参数, 可保持在longtable环境中, \\*继续阻止在合并行的中间行进行pagebreak
 
 
-四、Demo(示例)04 - multi-page table
+
+四、Demo04 - combine multirow and multicolumn
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\begin{document}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\multirow{2}*{各年级不同科目平均分}} & \multicolumn{3}{c|}{科目}\\
+\cline{3-5}
+ \multicolumn{2}{|c|}{}  & 语文 & 数学 & 英语\\
+\hline
+\multirow{3}*{年级} & 一年级 & 85 & 93 & 96\\
+ & 二年级 & 83 & 95 & 86\\
+ & 三年级 & 87 & 78 & 92\\
+\hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\multicolumn{2}{|c|}{\multirow{2}*{各年级不同科目平均分}}
+    嵌套合并行与列时, 将\multirow嵌套在\multicolumn内部, 并且之后的行需要使用\multicolumn{columns}{align}{}进行行占位
+    ** 引用地址: https://tex.stackexchange.com/questions/516833/how-to-combine-multirow-and-multicolumn-in-simplest-example
+
+
+
+五、Demo(示例)05 - multi-page table
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{texnames}
 \usepackage{amssymb}
@@ -181,13 +259,20 @@
         align - 表格在页面的位置. 列表如下: l/c/r
 	column_format - 列的格式, 与tabular一直, 参考tabular
 
-2.可使用\caption指令, \caption可位于表格第一行(尾部需加\\)或表格最后一行
+2.\caption{title}
+    表格标题, 可位于表格第一行(尾部需加\\)或最后一行
 
+\caption*{title}
+    不带表格号码的标题
+
+\LTcapwidth
+    标题宽度, 默认为4in. 格式: \setlength{\LTcapwidth}{2in}
+    
 3.第一列的宽度默认比较高, 建议使用p{width}指定第一列宽度
 
 
 
-五、Demo(示例)05 -- cross-reference
+六、Demo(示例)06 -- cross-reference
 \documentclass{article}
 \begin{document}
 \begin{table}
@@ -216,7 +301,7 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 
 
 
-六、Demo06 - graphic in table
+七、Demo07 - graphic in table
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{adjustbox}
 \usepackage{array}
@@ -247,7 +332,7 @@ we get a detect result, please reference table \ref{tab:detect} in page \pageref
 
 
 
-七、Demo07 - 外部文字与表格第一行内容对齐
+八、Demo08 - 外部文字与表格第一行内容对齐
 示例1
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
@@ -282,7 +367,7 @@ hline
 
 
 
-八、Demo08 - width of vertical/horizontal line
+九、Demo09 - width of vertical/horizontal line
 示例1
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{array}
@@ -353,3 +438,33 @@ david & male & 65\\
 
 11)\cmidrulesep
     连续两个\cmidrule的间隔. 格式: \setlength{\cmidrulesep}{2pt}
+
+
+
+十、Demo10 - align with decimal point
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\newcolumntype{M}[1]{D{.}{.}{#1}}
+\begin{document}
+\begin{tabular}{|l|M{-1}M{-1}M{-1}|M{10}|}
+\hline
+\multirow{2}{*}{营养素(克)} & \multicolumn{3}{c|}{每100克成分所含营养素} & \multicolumn{1}{>{\centering}p{0.33\textwidth}|}{\multirow{2}{*}{剑桥食谱每天供应量(克)}}\\
+\cline{2-4}
+ & \multicolumn{1}{>{\centering}p{0.16\textwidth}}{脱脂牛奶} & \multicolumn{1}{>{\centering}p{0.16\textwidth}}{大\quad 豆\quad 粉} & \multicolumn{1}{>{\centering}p{0.16\textwidth}|}{乳\qquad 清} &\\
+\hline
+蛋白质 & 36 & 51 & 13 & 33\\
+碳水化合物 & 52 & 34 & 74 & 45\\
+脂肪 & 0 & 7 & 1.1 & 3\\
+\hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\D{input_delimiter}{output_delimiter}{decimal_point_num}
+    根据小数点对齐, 指令包含在dcolumn宏包中. 参数列表如下:
+        input_delimiter - 识别输入分隔符
+	output_delimiter - 输出分隔符
+	decimal_point_num - 小数点位数. 为正数时, 右侧保留指定小数位数的宽度; 为负数时, 小数点居中
+
+2.使用小数点对齐的列, header需要使用\multicolumn{1}{align}{content}指定单元对齐格式
