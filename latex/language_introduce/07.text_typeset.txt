@@ -17,19 +17,29 @@
 
 
 二、Demo(示例)02 - font decorate
+示例1
 \documentclass{article}
 \begin{document}
-	it is a normal text\\
-	\emph{i'm italic} text\\
-	it is normal text too\\
-	\em it's italic text\\
-	and continued to here\\
-	it is normal text\\
-	\begin{em}
-		it is italic text
-	\end{em}
-	\underline{this is underline text}\\
-	\sout{this is delete text}
+    it is a normal text\\
+    \emph{i'm italic} text\\
+    it is normal text too\\
+    \em it's italic text\\
+    and continued to here\\
+    it is normal text\\
+    \begin{em}
+	it is italic text
+    \end{em}
+    $\overline{x}^2 + y^2 = z^2$\\
+    \underline{this is} underline text\\
+    \sout{this is delete text}
+\end{document}
+
+示例2
+\documentclass{article}
+\begin{document}
+\[
+a+b+\rlap{$\overbrace{c+d+e+f+g}^x$}c+d+\underbrace{e+f+g+h+i}_y+j+k=e^2
+\]
 \end{document}
 
 内容讲解
@@ -39,9 +49,16 @@
 
 3.\begin{em} ... \end{em}为\emph{}的环境版本模式
 
-4.\underline{}用于字体下划线
+4.\overline{}用于给内容上方加上划线. 只作用于math mode
 
-5.\sout{}用于字体水平删除线, 并只能用于paragraph mode, 但可以使用\sout{$$}限定公式内容. 包含在ulem宏包中
+5.\underline{}用于给内容下方加下划线. 作用于math/paragraph/LF mode
+
+6.\overbrace{}用于给内容上方加{括号. 只作用于math mode
+
+7.\underbrace{}用于给内容下方加{括号. 只作用于math mode
+
+8.\sout{}用于字体水平删除线, 并只能用于paragraph mode, 但可以使用\sout{$$}限定公式内容. 包含在ulem宏包中
+** 示例2引用地址: https://tex.stackexchange.com/questions/12963/how-to-have-overlapping-under-braces-and-over-braces
 
 
 
@@ -254,40 +271,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-十三、Demo(示例)13 - color
-\documentclass{article}
-\usepackage{color}
-\begin{document}
-    \pagecolor[rgb]{0.9,0.9,0.9}
-    \definecolor{mygray}{gray}{0.75}
-    this \textcolor{mygray}{is} color \textcolor{red}{text}.
-
-    \textcolor[rgb]{0.8,0.85,1}{the whole line is color text.}
-
-    \fcolorbox{red}{green}{this is box text}
-\end{document}
-
-内容讲解
-1.\usepackage{color}使用color宏包, 该宏包包含颜色内容. 色彩模式如下:
-	gray - 灰度, 一个数字表示, 范围[0,1]
-	rgb - RGB模式, 三个数字表示, 每个数字范围[0,1]
-	cmyk - CMYK模式, 四个数字表示, 每个数字范围[0,1]
-
-2.\pagecolor[model]{model_num}用于指定页面背景颜色, model为色彩模式; model_num为指定模式对应的数字组, 多个数字使用','分隔. 其他语法\pagecolor{color_name}、\nopagecolor
-
-3.\definecolor{color_name}{model}{model_num}用于自定义颜色, color_name为自定义颜色名称; model为颜色模式; model_num为对应颜色模式的数字
-
-4.\textcolor{color_name}{text}用于对指定文字上色, color_name为颜色名称; text为指定文本. 对应的declaration指令为\color{color_name}
-
-5.\textcolor[model]{model_num}{text}用于灵活对文字上色, 颜色采用model自定义模式. 对应的declaration指令为\color[model]{model_num}
-
-6.\colorbox{color_name}{text}用于指定背景色的盒子. \colorbox[model]{model_num}{text}灵活指定盒子背景色
-
-7.\fcolorbox{frame_color_name}{bg_color_name}{text}指定边框色和背景色的盒子. \fcolorbox[model]{frame_model_num}{bg_model_num}{text}灵活定义边框色和背景色
-
-
-
-十四、Demo(示例)14 - font in circle
+十三、Demo(示例)13 - font in circle
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{pifont}
@@ -306,7 +290,7 @@ Comment çava? Où se trouve l'aéroport?
 
 
 
-十五、Demo(示例)15 - quote
+十四、Demo(示例)14 - quote
 \documentclass{article}
 \begin{document}
 \begin{quote}
@@ -332,7 +316,7 @@ this is paragraph three
 
 
 
-十六、Demo(示例)16 - verbatim
+十五、Demo(示例)15 - verbatim
 \documentclass{article}
 \usepackage{listings}
 \begin{document}

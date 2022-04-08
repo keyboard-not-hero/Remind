@@ -13,10 +13,13 @@
 
 2.\quad表示一个较大的空格, \qquad表示两个\quad距离
 
-3.\\用于段落内换行
-\\*用于段落内换行, 并且不允许在当前行之后马上进行换页(可将当前也移动到下一页)
-\\[value]用于换行, 并指定与下一行的行间距
-\\*[value]用于换行, 并指定与下一行的行间距, 且不允许在当前行之后换页(可将当前行移动到下一页)
+3.\\[len]
+    用于段落内换行
+    可选参数用于在换行时添加指定的垂直距离
+
+\\*[len]
+    用于段落内换行, 并且不允许在当前行之后马上进行换页(可将当前也移动到下一页)
+    可选参数用于在换行时添加指定的垂直距离
 
 4.\newline用于段落内换行, 类似于\\
 
@@ -59,18 +62,17 @@ this is page two
 
 
 
-四、Demo(示例)04 -- horizontal space
+四、Demo04 -- horizontal space
 \documentclass{article}
 \begin{document}
-    ```fi\ i' or `fum''' he said
-
-    ```f\,i' or `fum''' he said
-
-    ```f\/i' or `fum''' he said
-
-    ```f{}i' or `fum''' he said
-
-    ```fi' or `fum''' he said
+    \noindent xy\\
+    f\/i\\
+    x\,y\\
+    x\:y\\
+    x\;y\\
+    x\ y\\
+    x\quad y\\
+    x\qquad y\\
 
     this\hspace{1cm} is a big space\\
     \hspace{5cm} this is no space
@@ -95,8 +97,8 @@ bank, and of having nothing to do
 
 3.'\/'用于解决字母之间的连接过于紧密问题, 或者词距补偿(直立体之间插入斜体, 斜体左边比右边词距大, 在右边插入该符号), 空间小于'\,'. 如: f与i, --分离
 
-4.{}类似于\/, 但空间比\/更小, 针对多个字母在一起时, 效果不佳. 水平距离大小如下:
-	\<space> > \, > \/ > {}
+4.水平距离排序如下:
+    \/  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
 
 5.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
 
@@ -157,28 +159,27 @@ bank, and of having nothing to do
 七、Demo{示例}07 -- 句子结束相关的空格
 \documentclass{article}
 \begin{document}
-    this is the line on@. but nothing more\\
-    this is the line one. but nothing more\\
-    this is the line one.\ but nothing more\\
-    this is the line onE. but nothing more\\
-    this is the line onE\@. but nothing more\\
-	this is the line (one.) but nothing more\\
-	this is the line (one.)\ but nothing more
+this is WWW. I don't think it's easy
+
+this is WWW\@. I don't think it's easy
+
+this is tom. I think he is funny
+
+this is tom.\ I think he is funny
 \end{document}
 
 内容讲解
-1.word之间的的空格为\<space>, 句子结束时的空格为<space>, \<space>的空间小于<space>
-	空格空间大小: {} < \/ < \,  <  \<space>  <  <space>
+1.\<space>
+    用于'.'之后, 取消句子之后的多余空格
 
-2.当.之前为非大写字母(小写字母和其他字符)时, 后续代表句子结束, 后续<space>默认为<space>. 可强制使用\<space>定义单词之间的空格
+2.\@
+    用于'.'之前, 保留句子之后的多余空格
 
-3.在.之前为大写字母时, 默认不是句子结束, 后续<space>默认为\<space>, 即单词之间的空格. 可强制在'.'之前使用\@指定句子结束, 使用<space>空格
-
-4.当.之后有)/'/"时，规则同上述2
-
-5.?/!/:语句结束符号效果同.效果一致
-
-6.\frenchspacing可用于将正文中的句子结束的水平间距调整为与word之间的水平间距一致. 在preamble区域使用
+** 情景拓展:
+1)'.'之前为大写符号时, 不代表句子结束, '.'之后的间隔略小, 如果需要句子结束时的间隔, 使用\@
+2)'.'之前为非大写符号时, 代表句子结束, '.'之后的间隔为句子结束间隔, 如果不需要该间隔, 使用\<space>
+3)当'.'后紧跟以下符号, 句末间隔会放置到该符号之后. 列表:
+    )/'/?/!/:
 
 
 

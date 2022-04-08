@@ -270,43 +270,28 @@
 
 十二、Demo(示例)12 - space
 \documentclass{article}
-\usepackage{amsmath}
 \begin{document}
-\begin{gather}
-    x\negthinspace +\negthinspace y\negthinspace =\negthinspace z\\
-    x+y=z\\
-    x\thinspace +\thinspace y\thinspace =\thinspace z\\
-    x\medspace +\medspace y\medspace =\medspace z\\
-    x\thickspace +\thickspace y\thickspace =\thickspace z\\
-    x\enskip +\enskip y\enskip =\enskip z\\
-    x\quad +\quad y\quad =\quad z\\
-\end{gather}
+\noindent$\sqrt{2}\!x$\\
+$\sqrt{2}x$\\
+$\sqrt{2}\,x$\\
+$\sqrt{2}\:x$\\
+$\sqrt{2}\;x$\\
+$\sqrt{2}\ x$
 \end{document}
 
 内容讲解
 1.math mode环境中, 忽视所有空格符号
 
-2.正水平间距列表(由小到大):
-	\thinspace - 简化版为\,
-	\medspace - 简化版为\: , 完整版在amsmath宏包中
-	\thickspace - 简化版为\; , 完整版在amsmath宏包中
-	\enskip - 比\quad略小
-	\quad
-	\qquad
+2.间距列表(由小到大):
+    \! - 减少指定间隔
+    \, - 增加指定间隔, 该距离与\!距离一直
+    排序汇总:
+    \!  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
 
-3.负水平间距列表(负距离由小到大, 间隔越来越小):
-	\negthinspace - 负距离最小, 间隔最大. 简化版为\!
-	\negmedspace - 在amsmath宏包中
-	\negthickspace - 负距离最大, 在amsmath宏包中
-
-4.水平间距汇总:
-	\negthickspace < \negmedspace < \negthinspace < none < \thinspace <
-\medspace < \thickspace < \enskip < \quad < \qquad
-
-5.\hspace{}用于指定水平空格距离
+3.\hspace{}用于指定水平空格距离
 \hspace*{}用于指定水平空格距离, 并且当其位于行首或行尾时, 也不移除该水平空格
 
-6.\vspace{}用于段落之间的垂直距离
+4.\vspace{}用于段落之间的垂直距离
 \vspace*{}用于段落之间的垂直距离, 并且当其位于页首或页尾时, 也不移除该垂直距离
 
 

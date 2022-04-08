@@ -64,3 +64,24 @@
 
 内容解释
 1.\ziju{<factor>}设置字距
+
+
+
+五、Demo05 - space
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\begin{document}
+我\/爱你\\
+我\,爱你\\
+我\:爱你\\
+我\;爱你\\
+我\ 爱你\\
+我\quad 爱你\\
+我\qquad 爱你\\
+\end{document}
+
+内容讲解
+1.水平距离排序
+    \/  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
+
+2.hspace{}
+    用于设置指定长度水平间隔
