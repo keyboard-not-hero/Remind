@@ -465,6 +465,6 @@ david & male & 65\\
     根据小数点对齐, 指令包含在dcolumn宏包中. 参数列表如下:
         input_delimiter - 识别输入分隔符
 	output_delimiter - 输出分隔符
-	decimal_point_num - 小数点位数. 为正数时, 右侧保留指定小数位数的宽度; 为负数时, 小数点居中
+	decimal_point_num - 小数点位数. 为正数时, 小数点右侧保留指定小数位数的宽度; 为负数时, 小数点居中
 
 2.使用小数点对齐的列, header需要使用\multicolumn{1}{align}{content}指定单元对齐格式

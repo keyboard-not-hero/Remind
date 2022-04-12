@@ -297,7 +297,7 @@ $\sqrt{2}\ x$
 
 
 十三、Demo(示例)13 - theorem
-示例1 - newtheorem
+示例i - newtheorem
 \documentclass{article}
 \newtheorem{guess}{definition}[section]
 \begin{document}
@@ -309,6 +309,30 @@ $3^2+4^2=5^2$
 \begin{guess}
 $e=mc^2$
 \end{guess}
+\end{document}\
+
+示例ii - amsthm
+\documentclass{article}
+\usepackage{amsthm}
+\newtheoremstyle{note}
+{0.5\topsep}
+{0.5\topsep}
+{\normalfont}
+{}
+{\itshape}
+{.}
+{\newline}
+{\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
+\theoremstyle{note}
+\newtheorem{boy}{lucy boyz}
+\begin{document}
+\begin{boy}
+\leavevmode \vspace{-\baselineskip}
+\begin{enumerate}
+    \item The item labels in an enumerated list are numerals or letters.
+    \item A list should have at least two items.
+\end{enumerate}
+\end{boy}
 \end{document}
 
 内容讲解
@@ -323,9 +347,77 @@ $e=mc^2$
 2.\begin{env_name}[aux_label]...\end{env_name}
     限定定理环境, 使用\newtheorem指定的标题, 并可以指定副标题aux_label
 
-3.\theoremstyle{style}
+** 后续内容包含在amsthm宏包中
+3.newtheoremstyle{name}
+{/topsep} 
+    % 定理环境与之前内容的垂直距离
+{/topsep} 
+    % 定理环境与之后内容的垂直距离
+{\itshape} 
+    % 定理环境正文内容的文字格式
+{2pt} 
+    % 定理header的缩进. 特殊值列表如下:
+        {} - 没有缩进
+	\parindent - 正常段落的缩进
+{\bfseries} 
+    % 定理header的文字格式
+{.} 
+    % header之后的符号
+{5pt plus 1pt minus 1pt} 
+    % header之后保留的空白. 特殊值列表如下:
+        { } - 普通单词间的空白
+	\newline - 换行, 正文内容与header在不同行
+{\thmname{#1}\thenumber{ #2}\thmnote{ (#3)}} 
+    % header的详细格式
+
+4.\theoremstyle{style}
     设定定理格式风格. style可选列表如下:
-	plain/definition/remark
+	plain - 默认格式, 配置如下:
+	    \newtheoremstyle{plain}
+	    {\topsep}
+            {\topsep}
+            {\itshape}
+            {}
+            {\bfseries}
+            {.}
+            {5pt plus 1pt minus 1pt}
+            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
+	    
+	definition - 配置如下:
+	    \newtheoremstyle{definition}
+	    {\topsep}
+            {\topsep}
+            {\normalfont}
+            {}
+            {\bfseries}
+            {.}
+            {5pt plus 1pt minus 1pt}
+            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
+
+	remark
+	    \newtheoremstyle{remark}
+	    {0.5\topsep}
+            {0.5\topsep}
+            {\normalfont}
+            {}
+            {\itshape}
+            {.}
+            {5pt plus 1pt minus 1pt}
+            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
+
+5.\newtheorem*{env_name1}[env_name2]{theorem_label}[section]
+    \newtheorem的不编号格式
+
+6.\swapnumbers
+    交换定理与定理编号的位置. 可多次嵌套
+
+7.\leavevmode
+    与header后换行的\newline配合, 用于正文为列表的情况, 只使用\newline无法使列表正文换行. 参考示例ii
+
+8.\qedsymbol
+    设置放置于正文内容最后的符号. 格式: \renewcommand{\qedsymbol}{\openbox}
+    \qed - 用于在正文指定位置放置该符号
+    \qedhere - 用于预定义proof环境中放置该符号
 
 
 

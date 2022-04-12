@@ -56,14 +56,10 @@ steven@~$ sudo fc-cache -fsv
 steven@~$ sudo fc-list :lang=zh-cn
 
 
-4.安装TeXworks编辑器
-steven@~$ sudo add-apt-repository ppa:texworks/stable
 
-steven@~$ sudo apt-get update
+备注:
+latex package所在路径 - <install_package>/texmf-dist/tex/latex/, 安装在/usr/local目录时, install_package为/usr/local/texlive/2021
 
-steven@~$ sudo apt-get install texworks
-
-在launchpad中搜索texworks打开图形编辑界面
 
 
 引用: 
@@ -71,4 +67,4 @@ steven@~$ sudo apt-get install texworks
 2.LaTeX: https://www.latex-project.org
 3.CTAN: https://www.ctan.org
 
-最后编辑于: 2020-08-26
+最后编辑于: 2022-04-12
