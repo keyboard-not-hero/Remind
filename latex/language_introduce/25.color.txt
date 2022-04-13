@@ -8,7 +8,6 @@
 
 内容讲解
 ** 以下所有内容包含在color宏包中
-
 1.\definecolor{name}{model}{color_specification}
     定义颜色. 参数列表如下:
         name - 自定义颜色的名称
@@ -126,3 +125,63 @@ three & four\\
 	    rgb - R, G, B三个数字, 每个数字范围为[0,1]
 	    cmyk - C, M, Y, K四个数字, 每个数字范围为[0,1]
 	    gray - 一个数字, 数字范围为[0,1]
+
+
+
+三、Demo03 - xcolor
+\documentclass{article}
+\usepackage{xcolor}
+\begin{document}
+\noindent\textcolor{red!50!green!70!blue}{this is standard model}\\
+\textcolor{rgb:red!50!green!70!blue,2;blue,1}{this is extended model}
+\end{document}
+
+内容讲解:
+1.xcolor提供类似color的指令, 如:
+\definecolor
+\textcolor
+\pagecolor
+...
+
+额外提供可替换类似\textcolor{name}{text}中name的格式
+基本配色模式:
+<prefix><col_name_1>!<pct_1>!<color_name_2>!<pct_2>!...<color_name_N>!<pct_N><postfix>
+
+pct_N
+    取值范围为[0,100]的实数
+
+prefix
+    当prefix为奇数个数的'-'时, 对后续结果取补
+
+原理:
+1)取pct_1%的col_name_1颜色, 与(100-pct_1)%的col_name_2混合
+2)取pct_2%的步骤1结果, 与(100-pct_2)%的col_name_3混合
+...
+
+例:
+\textcolor{red!50!green!70!blue}{this is demo}
+1)取50%red与50%green混合, 结果为(128,128,0)
+2)取70%的(128,128,0)与30%blue混合, 结果为(90,90,77)
+
+** red!40等同于red!40!white
+
+
+拓展配色模式:
+<core_model>:<exp_1>,<dec_1>;<exp_2>,<dec_2>;...;<exp_N>,<dec_N>
+
+core_model
+    核心调色模式, 将结果统一转化为core_model的核心模式. 可选列表: rgb/cmy/cmyk/hsb/gray
+
+exp_N
+    基本配色模式的表达式
+
+dec_N
+    对应exp_N所占的份额, 任意实数
+
+原理:
+1)取dec_1份(份额为dec_1/dev_sum)exp_1结果, 取dec_2份exp_2结果, 取dec_3份exp_3结果, ..., 进行混合
+** dev_sum=dec_1+...+dec_N
+
+例:
+\textcolor{rgb:red!50!green!70!blue,2;blue,1}{this is demo}
+1)取2份(2/3)的(90,90,77), 取1份(1/3)的(0,0,255), 进行混合, 结果为(90*2/3, 90*2/3, 77*2/3 + 255*1/3) = (60, 60, 136)

@@ -335,6 +335,35 @@ $e=mc^2$
 \end{boy}
 \end{document}
 
+示例iii - mdframed
+documentclass{article}
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage{xcolor}
+\newmdtheoremenv[
+skipabove = 20pt,
+leftmargin      = 20,
+rightmargin     = 10,
+innerleftmargin = 20pt,
+backgroundcolor = yellow!100,
+innertopmargin  = 20pt,
+innerbottommargin  = 20pt,
+linewidth = 0.4pt,
+linecolor = red,
+fontcolor = blue,
+shadow = true,
+shadowsize = 4pt,
+shadowcolor = black!20,
+]{theorem}{Theorem}
+\begin{document}
+\begin{theorem}[Pythagorean theorem]
+In any right triangle, the area
+of the square whose side is the hypotenuse is equal to the sum of the areas
+of the squares whose sides are the two legs.
+\[a^2+b^2=c^2\]
+\end{theorem}
+\end{document}
+
 内容讲解
 1.\newtheorem{env_name1}[env_name2]{theorem_label}[section]
     新建定理环境, 参数列表如下:
@@ -418,6 +447,91 @@ $e=mc^2$
     设置放置于正文内容最后的符号. 格式: \renewcommand{\qedsymbol}{\openbox}
     \qed - 用于在正文指定位置放置该符号
     \qedhere - 用于预定义proof环境中放置该符号
+
+9.mdframed宏包
+mdframed特性:
+1)mdframed必须在amsthm之后导入
+2)当需要使用xcolor, 建议mdframed在xcolor之后导入
+3)mdframed提供跨页功能
+
+\newmdtheoremenv[frame_options]{env_name1}[env_name2]{theorem_label}[section]
+    带边框的定理环境. 参数如下:
+        frame_option - 边框选项. 详情参考frame_options列表
+        env_name1 - 当前定理环境名称
+        env_name2 - 使用相同定理编号计数器的其他定理环境
+        theorem_label - 定理显示的主标签名称
+        section - 以section为单位区分定理计数器, 也可以为其他chapter/subsection>等
+
+frame_options列表:
+skipabove
+    边框顶部距离外部内容的垂直距离
+
+leftmargin
+    边框左侧距离页面左边缘的距离
+
+rightmargin
+    边框右侧距离页面右边缘的距离
+
+innerleftmargin
+    内容距离边框左侧的距离
+
+innerrightmargin
+    内容距离边框右侧的距离
+
+innertopmargin
+    内容距离边框顶部的距离
+
+innerbottommargin
+    内容距离边框底部的距离
+
+linewidth
+    边框的宽度
+
+linecolor
+    边框的颜色
+
+backgroundcolor
+    背景颜色
+
+fontcolor
+    字体颜色
+
+shadow
+    是否开启阴影
+
+shadowsize
+    阴影大小
+
+shadowcolor
+    阴影颜色
+
+topline/bottomline
+    是否显示顶/底部边框线
+
+leftline/rightline
+    是否显示左/右侧边框线
+
+hidealllines
+    是否隐藏所有边框线
+
+默认值:
+skipabove = 0pt
+skipbelow = 0pt
+leftmargin = 0pt
+rightmargin = 0pt
+innerleftmargin = 10pt
+innerrightmargin = 10pt
+innertopmargin = 5pt
+innerbottommargin = 5pt
+linewidth = 0.4pt
+linecolor = black
+fontcolor = black
+backgroundcolor = white
+shadow = false
+shadowsize = 8pt
+shadowcolor = black!50
+topline/bottomline/leftline/rightline = true
+hidealllines = false
 
 
 
