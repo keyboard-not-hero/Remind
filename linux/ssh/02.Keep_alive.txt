@@ -1,4 +1,4 @@
-1.针对服务器
+1.针对服务器(所有连接到该服务器的客户端都会使用该设置)
 vi /etc/ssh/sshd_config
 ClientAliveInterval 30
 ClientAliveCountMax 6
@@ -8,9 +8,11 @@ systemctl restart sshd
 ** 总计30 * 6=180秒不断线
 
 
-2.针对客户端
+2.针对客户端(通过该客户端连接的所有服务器使用该设置)
 vi ~/.ssh/config
 ServerAliveInterval 30
+
+** 每30秒发送一次消息给服务器
 
 
 3.针对指定连接

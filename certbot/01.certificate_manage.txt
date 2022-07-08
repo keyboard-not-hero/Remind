@@ -1,0 +1,89 @@
+基于CentOS 7系统，Nginx Web服务器软件
+log路径:
+/var/log/letsencrypt
+
+
+安装证书
+1.安装并启动snapd, 并重启系统
+yum install epel-release
+yum install snapd
+systemctl enable --now snapd.socket
+ln -s /var/lib/snapd/snap /snap
+shutdown -r now
+
+2.更新snap
+snap install core
+snap refresh core
+
+3.移除使用OS包管理器安装的certbot
+yum remove certbot
+
+4.安装certbot
+snap install --classic certbot
+
+5.创建certbot的链接
+ln -s /snap/bin/certbot /usr/bin/certbot
+
+6.获取并安装证书
+certbot --nginx
+
+** 当安装证书出现Could not automatically find a matching server block for <domain>, 在配置文件中添加服务器名称, 然后再次进行安装
+vi /etc/nginx/nginx.conf
+server {
+    server_name <domain_name>;
+}
+
+7.自动更新证书
+echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random()*3600)' && certbot renew -q" | tee -a /etc/crontab > /dev/null
+
+8.校验certbot是否生效
+访问https://yourwebsite.com
+
+
+其他证书操作
+查看证书
+certbot certificates
+
+只获取证书
+certbot certonly
+** 以下指令用于更新指定名称ssl证书所包含的域名
+certbot certonly --cert-name <certificate_name> --domains <domain_name>
+
+模拟更新证书
+certbot renew --dry-run
+
+更新所有证书
+certbot renew
+
+强制更新证书(不管证书是否即将过期)
+certbot renew --force-renewal 
+
+更新指定证书
+certbot renew --cert-name <cert_name>
+
+撤销指定证书
+certbot revoke --cert-name <cert_name>
+
+删除与证书有关的内容
+certbot delete
+** 切记需删除nginx配置文件中与certbot有关的内容(包含"#manage by certbot"后缀内容的行), 重启nginx
+
+静默安装(常用于cron排程)
+certbot --quiet renew
+
+
+certbot更新问题
+1.'ascii' codec can't decode byte 0xe5
+问题说明：nginx/apache配置文件中包含ascii以外的文本(如，中文)，删除中文说明
+解决步骤：
+i.查找包含报错文本的文件
+grep -r -P '[^\x00-\x7f]' /etc/apache2 /etc/letsencrypt /etc/nginx
+ii.删除报错文本
+
+
+最后编辑时间: 2021-10-12
+
+
+引用:
+[1] https://blog.longwin.com.tw/2019/01/letsencrypt-ascii-codec-decode-fixed-2019/
+[2] https://certbot.eff.org/instructions

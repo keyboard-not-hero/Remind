@@ -473,15 +473,26 @@ option列表
 1.普通下载
 curl -o robot.jpg https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/2019/08/Robots-Square-300x300.jpg
 
+
 2.通过socks5 proxy下载文件
 curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
-curl --preproxy socks5://127.0.0.1:<port> -O https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
+curl --preproxy socks5://127.0.0.1:<port> -o spider_man https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
-3.使用verbose模式查看出错信息
+
+3.指定下载到本地的文件名
+1)保留源文件名称
+curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+
+2)指定下载后的名称
+curl -o <name> https://nginx.org/download/nginx-1.22.0.tar.gz
+
+
+4.使用verbose模式查看出错信息
 curl -v <url>
 
-4.显示服务器的响应header
+
+5.显示服务器的响应header
 curl -I <url>
 
 

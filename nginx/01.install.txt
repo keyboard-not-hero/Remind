@@ -1,8 +1,6 @@
-CentOS
-1.安装yum管理工具
-yum install yum-utils
-
-2.添加nginx仓库源
+下载package安装
+1.CentOS系统
+1)添加nginx仓库源
 [nginx-stable]
 name=nginx stable repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
@@ -11,43 +9,16 @@ enabled=1
 gpgkey=https://nginx.org/keys/nginx_signing.key
 module_hotfixes=true
 
-[nginx-mainline]
-name=nginx mainline repo
-baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=https://nginx.org/keys/nginx_signing.key
-module_hotfixes=true
-
-3.启动/关闭nginx源(可选，nginx-stable源默认启动)
-yum-config-manager --enable nginx-mainline
-
-4.安装nginx
+2)安装nginx
 yum install nginx
 
-5.打开防火墙
-systemctl status firewalld
-firewall-cmd --add-service=http
-firewall-cmd --add-service=https
 
+从source code进行安装
+1)下载source code
+下载地址: https://nginx.org/en/download.html
+例. 下载nginx-1.22.0.tar.gz
+curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
 
-Ubuntu
-1.安装前提环境
-sudo apt install curl gnupg2 ca-certificates lsb-release
-
-2.添加apt源
-stable版本
-echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | sudo tee /etc/apt/sources.list.d/nginx.list
-
-mainline版本
-echo "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" | sudo tee /etc/apt/sources.list.d/nginx.list
-
-3.添加nginx签名
-curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
-
-4.显示秘钥指纹
-apt-key finger ABF5BD827BD9BF62
-
-5.安装nginx
-sudo apt update
-sudo apt install nginx
+2)解压缩
+tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
+cd /tmp/nginx-x.xx.x

@@ -2,7 +2,13 @@
 LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
 
 1.安装Nginx:
-[root@vultr ~]# yum install epel-release
+[root@vultr ~]# vi /etc/yum.repos.d/nginx.repo
+[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
 
 [root@vultr ~]# yum install nginx
 
@@ -25,11 +31,11 @@ LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本�
 2.安装MariaDB(10.1或以上版本):
 # 添加新版本源：
 [root@vultr ~]# vi /etc/yum.repos.d/MariaDB.repo
-[mariadb] 
-name = MariaDB 
-baseurl = http://yum.mariadb.org/10.5/centos7-amd64
-gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB 
-gpgcheck=1 
+[mariadb]
+name = MariaDB
+baseurl = https://mirrors.gigenet.com/mariadb/yum/10.7/centos7-amd64
+gpgkey=https://mirrors.gigenet.com/mariadb/yum/RPM-GPG-KEY-MariaDB
+gpgcheck=1
 其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
 
 [root@vultr ~]# yum install MariaDB-server MariaDB-client
@@ -38,7 +44,7 @@ gpgcheck=1
 
 [root@vultr ~]# systemctl enable mariadb
 
-[root@vultr ~]# mysql_secure_installation
+[root@vultr ~]# mariadb-secure-installation
 
 # 防火墙设置
 [root@vultr ~]# firewall-cmd --permanent --add-service=mysql
@@ -112,6 +118,7 @@ server{
 4.wordpress站点设置(与数据库连接):
 (1)借助wordpress按步骤设置:
 浏览器输入ip/wp-admin/setup-config.php，step by step进行设置
+
 (2)复制wp-config-sample.php为wp-config.php, 修改以下内容:
 define( 'DB_NAME', 'database_name_here' );
 
@@ -134,6 +141,8 @@ define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
 define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
 define( 'NONCE_SALT',       'put your unique phrase here' );
 
+(3)修改文件所属
+chown nginx:nginx wp-config.php
 
 
 
@@ -142,7 +151,7 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
 
 
 四、HTTP加密
-部署HTTPS, 参考Remind/linux/certbot/01.certificate_manage.txt
+部署HTTPS, 参考Remind/certbot/01.certificate_manage.txt
 
 
 引用：

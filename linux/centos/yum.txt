@@ -222,4 +222,17 @@ enabled=1
 
 问题修复：
 1. another app is currently holding the yum lock
+
 rm –f /var/run/yum.pid
+
+
+2.Not using downloaded repomd.xml because it is older than what we have
+
+rm -f /var/cache/yum/x86_64/7/mariadb/*
+
+
+3.使用yum安装软件, 遇到错误: GPG key retrieval failed: [Errno 14] curl#60 - "Peer's Certificate has expired."
+
+查看本地时间与服务器时间是否一致, 当不一致时, 使用如下解决方案
+yum install ntpdate
+ntpdate ntp.aliyun.com

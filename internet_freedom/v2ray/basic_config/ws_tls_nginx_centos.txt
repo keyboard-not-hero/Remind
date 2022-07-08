@@ -1,14 +1,15 @@
 1.搭建https网站，参考wordpress/deploy_centos.txt
 
+
 2.配置nginx
 # 更改配置文件
 [root@~ ]$ vi /etc/nginx/nginx.conf
 server {
-	location /ray/ { # the same with v2ray path config
+	location /ray { # the same with v2ray path config
     	proxy_redirect off;
-		proxy_pass http://127.0.0.1:1080; # nginx proxy traffic to port 1080
-		proxy_http_version 1.1;
-		proxy_set_header Upgrade $http_upgrade;
+	proxy_pass http://127.0.0.1:10000; # nginx proxy traffic to port 1000
+	proxy_http_version 1.1;
+	proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -16,45 +17,57 @@ server {
     }
 }
 
-
 # 重新加载配置文件
 [root@~ ]$ nginx -s reload
 
 
-3.服务器端配置
+3.下载V2ray：
+curl -L -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+
+
+4.安装/更新V2ray(系统需自带systemd)：
+bash install-release.sh
+**v2ray每周更新。版本号vX.Y.Z，X为大更新版本(一年)，Y为小更新版本(一周)，Z为0则>为稳定版本
+
+
+5.服务器端配置
 [root@~ ]$ vi /usr/local/etc/v2ray/config.json
 {
-  "inbounds": [
+    "inbounds": [
     {
-      "port": 1080, // 服务器监听端口
-      "listen": "127.0.0.1" //只监听本地
-      "protocol": "vmess",    // 主传入协议
-      "settings": {
-        "clients": [
-          {
-            "id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
-            "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/ray/"
-        }
-      }
+	"port": 10000, // 服务器监听端口
+	"listen": "127.0.0.1", //只监听本地
+	"protocol": "vmess",    // 主传入协议
+	"settings": {
+	    "clients": [
+	    {
+		"id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
+		"alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
+	    }
+	    ]
+	},
+	"streamSettings": {
+	    "network": "ws",
+	    "wsSettings": {
+	        "path": "/ray"
+	    }
+	}
     }
-  ],
-  "outbounds": [
+    ],
+    "outbounds": [
     {
-      "protocol": "freedom",  // 主传出协议
-      "settings": {}
+	"protocol": "freedom",  // 主传出协议
+	"settings": {}
     }
-  ]
+    ]
 }
-[root@~ ]$ systemctl restart v2ray
 
-4.客户端配置
+[root@~ ]$ systemctl start v2ray
+
+[root@~ ]$ systemctl enable v2ray
+
+
+6.客户端配置
 [root@~ ]$ vi config.json
 {
   "inbounds": [
@@ -93,7 +106,7 @@ server {
         "network": "ws",
         "security": "tls",
         "wsSettings": {
-          "path": "/ray/"
+          "path": "/ray"
         }
       }
     }

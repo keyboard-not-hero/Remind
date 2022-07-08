@@ -1,0 +1,14 @@
+--help
+  帮助信息
+
+--prefix=<path>
+  
+
+--sbin-path=<path>
+
+
+--conf-path=<path>
+  
+
+--with-http_ssl_module
+  添加HTTPS协议支持
