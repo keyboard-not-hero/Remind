@@ -2,13 +2,19 @@
   帮助信息
 
 --prefix=<path>
-  
+  安装路径, 默认为/usr/local/nginx
+  也适用于configure参数值和nginx.conf的directive(相对路径)
 
 --sbin-path=<path>
-
+  可执行文件安装的路径, 默认为<prefix>/sbin/nginx
 
 --conf-path=<path>
-  
+  配置文件的安装路径, 默认为<prefix>/conf/nginx.conf
 
 --with-http_ssl_module
   添加HTTPS协议支持
+
+--without-http_rewrite_module
+  关闭rewrite module
+  该功能用于服务器是否可以重定向请求URI
+  该功能依赖于PCRE库(yum install pcre-devel)

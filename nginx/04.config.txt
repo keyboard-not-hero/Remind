@@ -1,66 +1,119 @@
 配置文件位置
+package安装
 /etc/nginx/nginx.conf
-/etc/nginx/conf.d/*.d
 
-查看master进程ID
+源文件编译安装
+<prefix>/conf/nginx.conf
+
+
+查看master进程ID(由config文件的pid directive决定)
+package安装
 /var/run/nginx.pid
 
-log位置
-/var/log/nginx/
+源文件编译安装
+<prefix>/logs/nginx.pid
 
-web文件根目录
+
+log文件(由config文件的error_log和access_log directive决定)
+package安装
+/var/log/nginx/error.log
+/var/log/nginx/access.log
+
+源文件编译安装
+<prefix>/logs/error.log
+<prefix>/logs/access.log
+
+
+web文件根目录(由config文件的{http}/{server}/{location /} directive决定)
+package安装
 /usr/share/nginx/html
 
+源文件编译安装
+<prefix>/html
 
-directives格式
-key <space> value;
-#开头为注释
 
-层级
-main─┬─events
-     │ 
-     └─http───server───location   
-main - 配置文件全局环境
-events - 
-http - http开放连接服务相关
-server - http服务的端口和服务器名称
-location - web服务可访问的根目录及默认文件名
-** 当一个server中包含多个location时，请求与最长符合路径匹配。具体参考示例
+directive种类:
+1.simple directive
+格式
+  key <space> value;
 
+2.block directive
+格式
+  key {
+    simple directives...
+  }
+
+以#为开头的行即注释
+
+
+directive层级
+main ─┬─ events 
+      │ 
+      └─ http ─── server ─── location   
+
+directive列表
+main - 最外层的directives都是main区域
+
+http - 
+
+server - 
+
+location - web服务可访问的根目录指代
+** 当一个server中包含多个location时，请求只与最长符合路径匹配. 如:
+location / {
+    root /usr/local/nginx/html;
+    index index.html index.htm;
+}
+
+location /image/ {
+    root /usr/local/nginx;
+}
+
+访问URI/image/cat.jpeg时, 匹配顺序:
+1)由于URI/image与location /image匹配, 搜寻路径/usr/local/nginx/image/cat.jpeg
+2)当第一步不成功, 返回404错误
 
 
 示例1 - 普通web服务
 server {
-    listen      1054;
-    # listen - 监听端口
-    server_name  localhost;
-
+    listen	    80;
+    # list - 监听端口, 默认为80
+    server_name localhost;
+    # server_name - 服务器域名, 默认为localhost
     location / {
         root /data/www;
-		# root - 访问文件根目录
+	# root - 访问文件根目录
 
         index index.html index.htm;
         # index - 默认文件名称
     }
 
     location /image/ {
-        root /data/image;
+        root /data;
     }
 }
-** 当client请求/image/demo.jpg时，与/image/根目录匹配，完整查找路径为/data/image/demo.jpg。
-** 只有当/image/根目录不存在时，从/目录搜寻，此时具体路径为/data/www/image/demo.jpg
+
+当URI中包含URL/image/部分时, 首先将 '/image/' 的 '/' 替换为 '/data', 结果为/data/image/
+
 
 示例2 - 代理
+proxied server:
 server {
-    listen		80;
+    listen 8080;
 
-	location / {
-		proxy_pass http://<domain_name>:<port>;
-        # proxy_pass - 代表重定向服务器和端口(代理)
-	}
+    location / {
+        root /data/up1;
+    }
+}
+
+proxy server:
+server {
+    location / {
+	proxy_pass http://localhost:8080;
+        # proxy_pass - 代理服务器指向的主机与端口
+    }
    
-    location ~ \.(gif|jpg|png)$ {
-    # ~为Regular Expression前缀
-		root /data/image;
-	}
+    location /image/ {
+	root /data;
+    }
 }

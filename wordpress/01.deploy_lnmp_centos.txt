@@ -25,7 +25,9 @@ gpgkey=https://nginx.org/keys/nginx_signing.key
 
 [root@vultr ~]# firewall-cmd --list-services
 
-**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现欢迎界面，出现则成功安装
+[root@vultr ~]# curl -I 127.0.0.1
+HTTP/1.1 200 OK
+Server: nginx/1.22.0
 
 
 2.安装MariaDB(10.1或以上版本):

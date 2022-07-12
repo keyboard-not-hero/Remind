@@ -12,6 +12,14 @@ module_hotfixes=true
 2)安装nginx
 yum install nginx
 
+3)启动nginx
+nginx
+
+4)测试nginx
+curl -I 127.0.0.1
+HTTP/1.1 200 OK
+Server: nginx/1.22.0
+
 
 从source code进行安装
 1)下载source code
@@ -21,4 +29,18 @@ curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
 
 2)解压缩
 tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
+
+3)编译安装
 cd /tmp/nginx-x.xx.x
+./configure
+make
+sudo make install
+
+4)启动nginx
+ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
+nginx
+
+5)测试nginx
+curl -I 127.0.0.1
+HTTP/1.1 200 OK
+Server: nginx/1.22.0
