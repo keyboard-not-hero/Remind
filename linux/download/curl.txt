@@ -496,4 +496,11 @@ curl -v <url>
 curl -I <url>
 
 
+error集锦:
+1.certificate has expired
+服务器时间与本地时间是否一致, 不一致执行如下操作:
+yum install ntpdate
+ntpdate ntp.aliyun.com
+
+
 最后编辑于: 2021-11-19

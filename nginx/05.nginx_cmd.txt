@@ -13,7 +13,7 @@ nginx [option]
   默认为<prefix>/conf/nginx.conf
 
 -e <filename>
-  指定error log文件的读取位置
+  指定error log信息的存放位置
   默认为<prefix>/logs/error.log
 
 -g <directive>
@@ -37,8 +37,14 @@ nginx [option]
 -t
   测试config文件语法
 
+-T
+  测试config文件语法, 并将配置信息输出到stdout
+
 -v
-  版本信息
+  nginx版本信息
+
+-V
+  nginx版本, build版本信息和configure编译参数
 
 
 示例1 - 启动nginx
@@ -49,3 +55,6 @@ nginx -s stop
 
 示例3 - 重新读取配置文件
 nginx -s reload
+
+示例4 - 全局directive
+nginx -g "pid /var/run/nginx.pid; worker_processes `sysctl -n hw.ncpu`;"

@@ -52,11 +52,20 @@ main ─┬─ events
       └─ http ─── server ─── location   
 
 directive列表
+level 1
 main - 最外层的directives都是main区域
 
+level 2
 http - 
 
+level 3
 server - 
+
+level 4
+listen - 监听的网络接口和端口
+
+server_name - 服务器名称
+** 当接收到一个请求时(前提接口与端口匹配), 请求域名与server_name匹配, 则使用当前server_name所属server的内容; 否则, 匹配默认server(即第一个server)
 
 location - web服务可访问的根目录指代
 ** 当一个server中包含多个location时，请求只与最长符合路径匹配. 如:

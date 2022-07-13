@@ -30,17 +30,22 @@ curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
 2)解压缩
 tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
 
-3)编译安装
+3)安装必要软件
+yum install zlib-devel pcre-devel
+curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
+tar -zxvf openssl-3.0.5.tar.gz -C /usr/local
+
+4)编译安装
 cd /tmp/nginx-x.xx.x
-./configure
+./configure --with-http_ssl_module --with-openssl=/usr/local/openssl-3.0.5
 make
 sudo make install
 
-4)启动nginx
+5)启动nginx
 ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 nginx
 
-5)测试nginx
+6)测试nginx
 curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.22.0

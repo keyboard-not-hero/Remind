@@ -27,7 +27,10 @@ ln -s /snap/bin/certbot /usr/bin/certbot
 6.获取并安装证书
 certbot --nginx
 
-** 当安装证书出现Could not automatically find a matching server block for <domain>, 在配置文件中添加服务器名称, 然后再次进行安装
+** 当nginx从source code编译时, 使用如下指令安装:
+certbot --nginx --nginx-server-root=/usr/local/nginx/conf
+
+** 当安装证书出现Could not automatically find a matching server block for <domain>, 在配置文件中添加服务器名称(server/server_name directive), 然后再次进行安装
 vi /etc/nginx/nginx.conf
 server {
     server_name <domain_name>;
