@@ -1,0 +1,4 @@
+1.最简单的php tag
+<?php
+    echo 'Hello World';
+?>

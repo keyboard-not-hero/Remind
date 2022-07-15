@@ -1,0 +1,8 @@
+--prefix=<path>
+  安装路径. 默认为/usr/local
+
+--enable-fpm
+  添加fpm(FastCGI Process Manager)支持
+
+--with-mysqli[=<file>]
+  添加对MySQL 4.1及以上版本的支持. 可指定mysql_config的路径

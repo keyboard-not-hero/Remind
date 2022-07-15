@@ -33,12 +33,15 @@ Server: nginx/1.22.0
 2.安装MariaDB(10.1或以上版本):
 # 添加新版本源：
 [root@vultr ~]# vi /etc/yum.repos.d/MariaDB.repo
+# MariaDB 10.8 CentOS repository list - created 2022-07-15 08:34 UTC
+# https://mariadb.org/download/
 [mariadb]
 name = MariaDB
-baseurl = https://mirrors.gigenet.com/mariadb/yum/10.7/centos7-amd64
-gpgkey=https://mirrors.gigenet.com/mariadb/yum/RPM-GPG-KEY-MariaDB
+baseurl = https://mirrors.aliyun.com/mariadb/yum/10.8/centos7-amd64
+gpgkey=https://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB
 gpgcheck=1
-其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
+
+** 其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
 
 [root@vultr ~]# yum install MariaDB-server MariaDB-client
 
@@ -55,12 +58,14 @@ gpgcheck=1
 
 
 3.安装php(7.4或以上版本):
-# 添加remi源
-[root@vultr ~]# yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+# 添加remi源(tsinghua)
+[root@vultr ~]# yum install https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
+** 源镜像列表: https://rpms.remirepo.net/
 
-# 安装php7.4
-[root@vultr ~]# yum install yum-utils
-[root@vultr ~]# yum-config-manager --enable remi-php74
+# 安装php8.1
+[root@vultr ~]# vi /etc/yum.repos.d/remi-php81.repo
+[remi-php81]
+enableed=1
 [root@vultr ~]# yum install php php-devel php-fpm php-mysqlnd
 
 # 启动php-fpm
@@ -77,7 +82,7 @@ server{
     location / {
         index index.php index.html index.htm;
     }
-    location ~ .php$ {
+    location ~ \.php$ {
         root /usr/share/nginx/html;   
         fastcgi_pass 127.0.0.1:9000; 
         fastcgi_index index.php;
@@ -88,12 +93,12 @@ server{
 
 [root@vultr nginx]# systemctl restart nginx
 
-[root@vultr ~]# vi /usr/share/nginx/html/phpinfo.php
+[root@vultr ~]# vi /usr/share/nginx/html/index.php
 <?php
-   echo phpinfo();
+   phpinfo();
 ?>
 
-**浏览器栏输入<server_ip>/phpinfo.php, 测试是否出现php欢迎界面
+**浏览器栏输入<server_ip>/index.php, 测试是否出现php欢迎界面
 
 
 

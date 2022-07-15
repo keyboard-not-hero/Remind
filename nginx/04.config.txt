@@ -51,36 +51,80 @@ main ─┬─ events
       │ 
       └─ http ─── server ─── location   
 
-directive列表
-level 1
-main - 最外层的directives都是main区域
+directive层级列表
+main区域(config文件最外层directive)
+    events {}
+        影响连接进程的context
 
-level 2
-http - 
+        worker_connections
+	    单个worer process最大同时连接数量
 
-level 3
-server - 
+    http {}
+        HTTP服务器的context
 
-level 4
-listen - 监听的网络接口和端口
+        server {}
+	    virtual host配置. 有IP-based/name_based模式
 
-server_name - 服务器名称
-** 当接收到一个请求时(前提接口与端口匹配), 请求域名与server_name匹配, 则使用当前server_name所属server的内容; 否则, 匹配默认server(即第一个server)
+	    error_page <error_codes> <uri>
+	        指定错误code使用指定界面
 
-location - web服务可访问的根目录指代
-** 当一个server中包含多个location时，请求只与最长符合路径匹配. 如:
-location / {
-    root /usr/local/nginx/html;
-    index index.html index.htm;
-}
+            listen [<address>:]<port> [default_server] [ssl]...
+	        监听的网络接口和端口
 
-location /image/ {
-    root /usr/local/nginx;
-}
+            location [ = | ~ | ~* | ^~ ] <uri> {}
+	        请求文件定位. 定位格式如下:
+		    =  精确匹配路径. 如: location = /只能匹配<url>格式的请求
+		    ~  正则匹配模式(大小写敏感)
+		    ~* 正则匹配模式(大小写不敏感)
+		    ^~ 当最长符合路径匹配时, 不继续进行正则模式匹配
+	        
+                ** 当一个server中包含多个location时，请求只与最长符合路径匹配. 如:
+                    location / {
+                        root /usr/local/nginx/html;
+                        index index.html index.htm;
+                    }
+    
+                    location /image/ {
+                        root /usr/local/nginx;
+                    }
+    
+                访问URI/image/cat.jpeg时, 匹配顺序:
+                1)由于URI/image与location /image匹配, 搜寻路径/usr/local/nginx/image/cat.jpeg
+                2)当第一步不成功, 返回404错误
 
-访问URI/image/cat.jpeg时, 匹配顺序:
-1)由于URI/image与location /image匹配, 搜寻路径/usr/local/nginx/image/cat.jpeg
-2)当第一步不成功, 返回404错误
+		allow <address> | CIDR | all
+		    服务器允许连接的客户端
+
+		deny <address> | CIDR | all
+		    服务器拒绝连接的客户端
+
+                index <file>
+		    指定索引文件
+
+	        root <path>
+		    URL请求的根目录
+
+            server_name <name>
+	        服务器名称. 包含精确名称/通配符/正则表达式格式
+                ** 格式匹配优先顺序:
+                   1)精确名称
+                   2)最长内容匹配, 以'*'开头的名称
+                   3)最长内容匹配, 以'*'结尾的名称
+                   4)正则表达式(以波浪线'~'起始)
+                ** 当接收到一个请求时, 请求域名与server_name匹配, 则使用当前server_name所属server的内容; 否则, 匹配默认server(第一个server或listen内包含default_server关键字的server)
+
+            ssl_certificate <file>
+	        指定服务器的证书
+
+            ssl_certificate_key
+	        指定服务器的私钥
+
+    pid <file>
+        保存master process ID的文件
+
+    user <user> [group]
+        执行worker process的用户. user默认为nobody, 当group省略时, 默认等于user的值
+
 
 
 示例1 - 普通web服务

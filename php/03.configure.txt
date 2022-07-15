@@ -1,0 +1,15 @@
+php配置文件:
+package安装
+/etc/php.ini
+
+source code安装
+/usr/local/php/php.ini
+
+
+PHP-FPM配置文件
+package安装
+/etc/php-fpm.conf
+
+source code安装
+/usr/local/etc/php-fpm.conf
+** php-fpm.conf的语法与php.ini一致, 并且相对路径使用php的prefix参数
