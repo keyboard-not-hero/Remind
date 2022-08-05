@@ -1,0 +1,129 @@
+1.变量的赋值与引用
+<?php
+    $var1 = 1;
+    $var2 = 2;
+    echo "$var1, $var2";
+?>
+
+结果
+1, 2
+
+要点
+变量规则:
+1)变量赋值与引用时, 使用'$'作为前缀
+
+2)变量名称可以使用字母/'_'起始, 后续可以使用字母/'_'/数字
+
+3)变量名称区分大小写
+
+
+2.引用变量值
+引用值:
+<?php
+    $foo = "Bob";
+    $bar = $foo;
+    $foo = "David";
+    echo $foo;
+    echo $bar;
+?>
+
+引用指针:
+<?php
+    $foo = "Bob";
+    $bar = &$foo;
+    $foo = "David";
+    echo $foo;
+    echo $bar;
+?>
+
+结果
+DavidDavid
+
+要点
+php引用变量值时, 使用变量的值; &可以使用变量的指针
+
+
+3.使用变量的值, 作为其他变量的名称
+<?php
+    $foo = "Hello";
+    ${$foo} = "World";
+    echo "$foo ${$foo}";
+?>
+
+结果
+Hello World
+
+
+4.变量的作用域
+全局域与方法域:
+<?php
+    $a = 1;
+    function test()
+    {
+        echo $a;
+    }
+
+test();
+?>
+
+结果
+error
+
+分析
+global域变量值不能作用到方法域
+
+对全局域变量的引用
+<?php
+    $a = 1;
+    function test()
+    {
+        global $a;
+        echo $a;
+    }
+
+test();
+?>
+
+结果
+1
+
+分析
+在方法中使用global可以引用全局域变量的值
+
+
+5.static变量
+普通变量:
+<?php
+    function test()
+    {
+        $a = 0;
+        echo $a;
+        $a++;
+    }
+
+test();
+test();
+?>
+
+结果
+00
+
+静态变量:
+<?php
+    function test()
+    {
+        static $a = 0;
+        echo $a;
+        $a++;
+    }
+
+test();
+test();
+?>
+
+结果
+01
+
+分析
+在每次调用方法时, 普通变量初始化赋值;
+static变量只在第一次调用方法时, 进行初始化赋值

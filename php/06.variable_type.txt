@@ -1,0 +1,346 @@
+类型汇总:
+boolean
+int
+float
+string
+array
+object
+callable
+iterable
+resource
+null
+
+
+类型详情
+1.boolean
+有两个值, true和false(不区分大小写)
+
+将其他类型转化为boolean类型的方式:
+1)bool或boolean关键字进行强制转化
+
+2)根据上下文自动转化
+
+转化规则:
+1)integer 0(false)
+
+2)float 0.0(false)
+
+3)string ""/"0"(false)
+
+4)array [](false)
+
+5)NULL(false)
+
+
+2.integer
+整数格式:
+1)十进制
+直接使用数字表示
+
+2)十六进制
+以0x开头的数字
+
+3)八进制
+以0开头的数字
+
+4)二进制
+以2b开头的数字
+
+将其他类型转化为integer的方式:
+1)int或integer关键字进行强制转化
+
+2)使用intval()方法进行强制转化
+
+3)根据上下文进行自动转化
+
+转化规则:
+1)boolean false(0)
+
+2)float(省略小数位, 但round()进行四舍五入)
+
+3)string, 分为以下三种情况:
+    1]当字符串内容为数字时, 直接转化为数字; 
+    2]当字符串前置内容为数字时, 只将该部分转化为数字; 
+    3]其他情况, 直接转化为0
+
+4)NULL(0)
+
+
+3.float point number
+将其他类型转化为float的方式:
+1)float或double关键字进行转化
+
+2)根据上下文进行自动转化
+
+转化规则:
+1)boolean false(0)
+
+2)string, 分为以下三种情况:
+    1]当字符串内容为数字时, 直接转化为数字; 
+    2]当字符串前置内容为数字(或.)时, 只将该部分转化为数字; 
+    3]其他情况, 直接转化为0
+
+3)其他情况(先转化为int, 再转化为float)
+
+
+4.string
+php的字符串只支持256个字符, 不支持Unicode编码
+
+字符串格式:
+1)''限定的内容, 只有\'和\\被解释为特殊字符, 其他字符原样输出
+
+2)""限定的内容, 可解释大部分特殊字符
+
+3)heredoc, 格式如下:
+<<< <delimiter>
+content
+<delimiter>;
+
+heredoc特性:
+1] delimiter结束限定符可缩进, 代表正文的起始位置, 但缩进必须比正文最短的缩进小
+2] 正文或delimiter可使用space或tab进行缩进, 但不可混合使用space和tab
+3] 类似于""环境, 可解释大部分特殊字符
+
+4)nowdoc, 格式如下:
+<<< '<delimiter>'
+content
+<delimiter>;
+
+nowdoc特性:
+1] delimiter结束限定符可缩进, 代表正文的起始位置, 但缩进必须比正文最短的缩进小
+2] 正文或delimiter可使用space或tab进行缩进, 但不可混合使用space和tab
+3] 类似于''环境, 但\'和\\也按原样输出
+
+将其他类型转化为string的方式:
+1)string关键字进行强制转化
+
+2)使用strval()方法进行强制转化
+
+3)根据上下文进行自动转化
+
+转化规则:
+1)boolean
+false转化为"", true转化为"1"
+
+2)int/float
+转化为数字对应的字符串
+
+3)array
+转化为字符串"Array"
+
+4)object
+使用__toString方法
+
+5)null
+转化为""
+
+将string转化为int类型规则:
+1)当string为纯数字, 转化为int类型, 当数字大于PHP_INT_MAX时, 取PHP_INT_MAX值
+
+2)当string开头部分为数字, 截取开头部分的数组, 转化为int类型; 当数字大于PHP_INT_MAX时, 取PHP_INT_MAX值
+
+string串联
+string串联使用"."符号
+
+例:
+<?php
+$a = "this is "."concatenation content";
+echo $a;
+?>
+
+结果:
+this is concatenation content
+
+
+5.arrays
+array为有序map
+
+array定义方式:
+1) array(
+    key1  =>  value1,
+    key2  =>  value2,
+    ...
+)
+
+2)[
+    key1  =>  value1,
+    key2  =>  value2,
+    ...
+]
+
+** 注意事项:
+1)key可以为int(float/bool转化为int)或string(null转化为string), 数字类型string转化为int; value可以为任何类型
+
+示例:
+<?php
+$array = array(
+    2    => "a",
+    "3"  => "b",
+    4.5  => "c",
+    true => "d",
+);
+var_dump($array);
+?>
+
+结果:
+array(4) { [2]=> string(1) "a" [3]=> string(1) "b" [4]=> string(1) "c" [1]=> string(1) "d" }
+
+2)index类array可以不指定key
+示例:
+<?php
+$array = array(
+    "a",
+    "b",
+    6  => "c",
+    "d",
+);
+var_dump($array);
+?>
+
+结果:
+array(4) { [0]=> string(1) "a" [1]=> string(1) "b" [6]=> string(1) "c" [7]=> string(1) "d" }
+
+array访问:
+array_var_name[key]
+
+修改/添加array元素:
+array_var_name[key] = value
+
+删除array元素:
+unset(array_var_name[key])
+** unset(array_var_name)删除array所有元素
+
+array unpack:
+...array_var_name
+
+例:
+<?php
+$a = array(1,2,3,4);
+$b = array(...$a);
+print_r($b);
+?>
+
+结果:
+Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+
+** array赋值默认引用array内的元素值, 引用指针也需要使用&符号
+例:
+<?php
+$a = array(1,2,3,4);
+$b = $a;
+$a[2] = 100;
+print_r($a);
+print_r($b);
+
+$c = array(1,2,3,4);
+$d = &$c;
+$c[2] = 100;
+print_r($c);
+print_r($d);
+?>
+
+结果:
+Array ( [0] => 1 [1] => 2 [2] => 100 [3] => 4 ) 
+Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 ) 
+Array ( [0] => 1 [1] => 2 [2] => 100 [3] => 4 ) 
+Array ( [0] => 1 [1] => 2 [2] => 100 [3] => 4 )
+
+
+6.object
+class的实例化, 使用new创建新object
+
+例:
+<?php
+class foo
+{
+    function do_foo()
+    {
+        echo "Doing foo.";
+    }
+}
+
+$bar = new foo();
+$bar->do_foo();
+?>
+
+
+7.callable
+使用call_user_func()调用function或object method, 称为callable
+
+例:
+function my_callback_function() {
+    echo 'hello world!';
+}
+
+class MyClass {
+    static function myCallbackMethod() {
+        echo 'Hello World!';
+    }
+}
+
+// Type 1: Simple callback
+call_user_func('my_callback_function');
+
+// Type 2: Object method call
+$obj = new MyClass();
+call_user_func(array($obj, 'myCallbackMethod'));
+
+// Type 3: Static class method call
+call_user_func(array('MyClass', 'myCallbackMethod'));
+
+// Type 4: Static class method call
+call_user_func('MyClass::myCallbackMethod');
+
+
+8.iterable
+可使用foreach的序列或generator(yield生成的惰性序列)
+
+内容可以为array或实现Traversable接口的对象
+
+例1:
+<?php
+function bar(): iterable{
+    return [1,2,3];
+}
+
+foreach(bar() as $i){
+    echo $i;
+}
+?>
+
+结果:
+1
+2
+3
+
+例2:
+<?php
+function bar(): iterable{
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+foreach(bar() as $i){
+    echo $i;
+}
+?>
+
+结果:
+1
+2
+3
+
+
+9.null
+代表没有值的变量
+
+例:
+<?php
+$a = 100;
+unset($a);
+var_dump($a);
+?>
+
+结果:
+NULL

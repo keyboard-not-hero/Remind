@@ -2,3 +2,28 @@
 <?php
     echo 'Hello World';
 ?>
+
+
+2.short echo tag
+<?=
+    'Hello World';
+?>
+
+相同语义:
+<?php
+    echo 'Hello World';
+?>
+
+
+3.comment
+<?php
+    echo 'This is test'; // This is one-line c++ style comment
+    /* This is multi-line c style comment
+    block */
+    echo 'This is another test'; # This is one-line shell-style comment
+?>
+
+三种注释格式:
+1) #为shell格式单行注释
+2) //为c++语言格式单行注释
+3) /* */为c语言格式多行注释, 该注释不可嵌套
