@@ -1,0 +1,298 @@
+1.if
+1] if
+if (exp) {
+    statement
+}
+
+2] if...else
+if (expr) {
+  false_statement
+} 
+else {
+  true_statement
+}
+
+规则:
+1)if可内嵌
+
+2)当内嵌if时, else与最内层未匹配的if进行匹配
+
+例:
+<?php
+$a = 4;
+if ($a > 1)
+    if ($a == 2){
+        echo '$a equal 2';
+    }
+else {
+    echo '$a great than 1';
+}
+?>
+
+结果:
+$a great than 1
+
+3] if...elseif...else
+if (exp_1) {
+    if_statement
+}
+elseif (exp_2) {
+    else_if_statement
+}
+else {
+    else_statement
+}
+
+替代语法:
+if (exp_1):
+    if_statement
+elseif (exp_2):
+    else_if_statement
+else:
+    else_statement
+endif;
+
+例:
+<?php
+$a = 4;
+if ($a > 5) {
+    echo '$a great than 5';
+}
+elseif ($a > 1) {
+    echo '$a great than 1';
+}
+else {
+    echo '$a less or equal than 1';
+}
+?>
+
+结果:
+$a great than 1
+
+
+2.while/do-while
+1]while
+while (exp)
+    statement
+
+替代语法:
+while (exp):
+    statement
+endwhile;
+
+2]do-while
+do {
+    statement
+}
+while(exp);
+
+
+3.for/foreach
+1]for
+for (exp1; exp2; exp3) {
+    statement
+}
+
+exp1为循环初始操作(多个表达式使用','分隔);
+exp2为每次迭代开始的添加判断(多个表达式使用','分隔, 根据最后一个表达式进行条件判断; 该部分留空时默认为true);
+exp3为每次迭代结束的操作.
+
+替代语法:
+for (exp1; exp2; exp3):
+    statement
+endfor;
+
+例:
+<?php
+for ($i=1; $i<10; $i++)
+    echo "$i";
+?>
+
+结果:
+123456789
+
+2]foreach
+foreach用于迭代array或object
+1)从数组中取出value
+foreach (iterable_exp as $value)
+    statement
+
+2)从数组中取出key和value
+foreach (iterable_exp as $key => $value)
+    statement
+
+例:
+<?php
+$a = [1,2,3,4];
+foreach ($a as $k => $v){
+    echo "a[$k] => $v\n";
+}
+?>
+
+结果:
+a[0] => 1 a[1] => 2 a[2] => 3 a[3] => 4
+
+
+4.switch
+switch(exp){
+    case val_1:
+        case_1_statement
+        break;
+    case val_2:
+        case_2_statement
+        break;
+    default:
+        default_statement
+}
+
+替代语法:
+switch(exp):
+    case val_1:
+        case_1_statement
+        break;
+    case val_2:
+        case_2_statement
+        break;
+    default:
+        default_statement
+endswitch;
+
+
+5.break
+退出for/foreach/while/do-while循环或switch case
+
+break [N]退出N层环境, N默认为1
+
+例1:
+<?php
+for($i=1; $i<6; $i++)
+    for($j=1; $j<6; $j++){
+        if($i==2)
+            break;
+        echo "$i $j<br \>";
+    }
+?>
+结果1:
+1 1
+1 2
+1 3
+1 4
+1 5
+3 1
+3 2
+3 3
+3 4
+3 5
+4 1
+4 2
+4 3
+4 4
+4 5
+5 1
+5 2
+5 3
+5 4
+5 5
+
+例2:
+<?php
+for($i=1; $i<6; $i++)
+    for($j=1; $j<6; $j++){
+        if($i==2)
+            break 2;
+        echo "$i $j<br \>";
+    }
+?>
+
+结果2:
+1 1
+1 2
+1 3
+1 4
+1 5
+
+
+6.continue
+continue退出for/foreach/while/do-while的当前迭代
+
+continue [N]退出N层循环的当前迭代, N默认为1
+
+例1:
+<?php
+for($i=1; $i<6; $i++){
+    for($j=1; $j<6; $j++){
+        if($i==2)
+            continue;
+        echo "$i $j<br \>";
+    }
+    echo "$i<br \>";
+}
+?>
+
+结果1:
+1 1
+1 2
+1 3
+1 4
+1 5
+1
+2
+3 1
+3 2
+3 3
+3 4
+3 5
+3
+4 1
+4 2
+4 3
+4 4
+4 5
+4
+5 1
+5 2
+5 3
+5 4
+5 5
+5
+
+例2:
+<?php
+for($i=1; $i<6; $i++){
+    for($j=1; $j<6; $j++){
+        if($i==2)
+            continue 2;
+        echo "$i $j<br \>";
+    }
+    echo "$i<br \>";
+}
+?>
+
+结果2:
+1 1
+1 2
+1 3
+1 4
+1 5
+1
+3 1
+3 2
+3 3
+3 4
+3 5
+3
+4 1
+4 2
+4 3
+4 4
+4 5
+4
+5 1
+5 2
+5 3
+5 4
+5 5
+5
+
+
+
