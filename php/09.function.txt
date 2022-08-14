@@ -1,0 +1,124 @@
+1.定义function
+function func_name(args){
+    statement
+}
+
+
+2.args类别
+1)mandatory参数
+例:
+<?php
+$a = 1;
+function pass($arg){
+    $arg = 2;
+}
+pass($a);
+echo "$a";
+?>
+
+结果:
+1
+
+2)引用值参数
+例:
+<?php
+$a = 1;
+function pass(&$arg){
+    $arg = 2;
+}
+pass($a);
+echo "$a";
+?>
+
+结果:
+2
+
+3)默认值参数
+例:
+<?php
+function pass($arg="nana"){
+    echo "I'm lady $arg.<br \>";
+}
+pass();
+pass("gaga");
+?>
+
+结果:
+I'm lady nana.
+I'm lady gaga.
+
+特性:
+1] 当默认值参数与mandatory参数混合使用时, 先指定mandatory参数
+例:
+<?php
+function pass($m, $d="nana"){
+    echo "I'm $m $d.<br \>";
+}
+pass("lady");
+pass("many", "gaga");
+?>
+
+结果:
+I'm lady nana.
+I'm many gaga.
+
+2] 当包含多个默认值参数时, 可指定特定参数值
+例:
+<?php
+function pass($f="lady", $s="nana", $t="thompson"){
+    echo "I'm $f $s $t.<br \>";
+}
+pass(t:"peter");
+?>
+
+结果:
+I'm lady nana peter.
+
+4)可变长度参数
+1]可变长度形参(pack to array)
+例:
+<?php
+function sum(...$numbers) {
+    $acc = 0;
+    foreach ($numbers as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+
+结果:
+10
+
+补充:
+指定所有可变长度形参的类型
+例:
+<?php
+function sum(int ...$numbers) {
+    foreach($numbers as $n){
+        echo "this is $n<br \>";
+    }
+}
+
+echo sum(1, 2, 3);
+?>
+
+结果:
+this is 1
+this is 2
+this is 3
+
+2]可变长度实参(unpack array)
+例:
+<?php
+function sum($a, $b) {
+    return $a + $b;
+}
+
+echo sum(...[1, 2]);
+?>
+
+结果:
+3
