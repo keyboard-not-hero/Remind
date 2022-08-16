@@ -1,9 +1,9 @@
-1.下载V2ray：
-下载地址：https://github.com/v2ray/v2ray-core/releases
-2.解压缩：
-unzip -d v2ray v2ray-linux-64.zip
-3.编辑配置文件：
-vi config.json
+﻿1.下载v2rayN
+下载地址:
+https://github.com/2dust/v2rayN/releases
+
+2.配置文件设置：
+配置文件名称：config.json
 {
   "inbounds": [
     {
@@ -25,10 +25,10 @@ vi config.json
         "vnext": [
           {
             "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
-            "port": 16823,  // 服务器端口
+            "port": 1910,  // 服务器端口
             "users": [
               {
-                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+                "id": "16f838e3-2b66-fe8b-6162-d0e61bbb706c",  // 用户 ID，必须与服务器端配置相同
                 "alterId": 64 // 此处的值也应当与服务器相同
               }
             ]
@@ -38,5 +38,7 @@ vi config.json
     }
   ]
 }
-4.启动软件：
-nohup ./v2ray --config=config.json &>/dev/null &
+3.启动软件：
+二选其一
+v2ray.exe - 命令行显示log
+wv2ray.exe - 后台执行

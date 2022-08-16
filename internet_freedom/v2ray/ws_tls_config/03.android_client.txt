@@ -1,0 +1,35 @@
+1.下载v2rayNG
+下载地址:
+https://github.com/2dust/v2rayNG/releases
+
+
+2.配置
+address:
+服务器的IP(**特定)
+
+port:
+443
+
+ID:
+服务器的uuid(**特定, 与服务器保持一致)
+
+alterID:
+服务器的额外ID(**特定, 与服务器保持一致)
+
+加密方式:
+auto
+
+传输协议:
+ws
+
+伪装域名:
+服务器http web使用的域名
+
+path:
+/ray
+
+底层传输安全:
+tls
+
+
+最后编辑于: 2022-08-16

@@ -62,53 +62,13 @@ bash install-release.sh
     ]
 }
 
+
+6.语法检查/启动
+[root@~ ]$ /usr/local/bin/v2ray --test --config /usr/local/etc/v2ray/config.json
+
 [root@~ ]$ systemctl start v2ray
 
 [root@~ ]$ systemctl enable v2ray
 
 
-6.客户端配置
-[root@~ ]$ vi config.json
-{
-  "inbounds": [
-    {
-      "port": 1080, // 监听端口
-      "listen":"127.0.0.1",
-      "protocol": "socks", // 入口协议为 SOCKS 5
-      "sniffing": {
-        "enabled": true,
-        "destOverride": ["http", "tls"]
-      },
-      "settings": {
-        "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "vmess", // 出口协议
-      "settings": {
-        "vnext": [
-          {
-            "address": "example.com", // 服务器域名地址
-            "port": 443,  // 服务器端口
-            "users": [
-              {
-                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
-                "alterId": 64 // 此处的值也应当与服务器相同
-              }
-            ]
-          }
-        ]
-      },
-     
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "wsSettings": {
-          "path": "/ray"
-        }
-      }
-    }
-  ]
-}
+最后更新于: 2022-08-16

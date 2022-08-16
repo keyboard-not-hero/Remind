@@ -1,0 +1,79 @@
+unzip - 解压缩.zip后缀的文件
+
+语法
+unzip [option] comp_file[.suffix] [targ_file ...] [-x file] [-d exdir]
+
+参数释义
+null
+    解压缩文件到当前目录(递归)
+
+-c
+    将解压缩的内容输出到stdout
+    提供每个解压缩后archive的文件名
+
+-d exdir
+    解压缩文件到指定目录
+
+-f
+    只解压缩已存在并且mtime新于旧文件的文件, 覆盖旧文件时进行询问
+    配合-o可跳过询问
+
+-j
+    解压缩文件到当前目录, 并且子孙目录下的文件也提取到当前目录
+
+-l
+    显示压缩文件内archive列表
+
+-n
+    不对已存在于system的文件进行覆盖
+
+-o
+    当文件已存在时, 不询问进行覆盖
+
+-p
+    将解压缩的内容输出到stdout
+
+-q
+    静默操作, 不显示额外信息
+
+-t
+    对压缩文件内archive进行CRC校验, 并与原校验码进行比对
+
+-u
+    解压缩当前system不存在的archive, 解压缩已存在并且mtime新于旧文件的文件, 覆盖旧文件时进行询问
+    配合-o可跳过询问
+
+
+-v
+    显示压缩文件内archive的详细信息
+    类似于-l, 较之-l详细
+
+-x files...
+    在解压缩时, 不进行解压缩的文件
+
+-z
+    只显示压缩文件的注释文字
+
+
+文件:
+comp_file
+    需要解压缩的文件
+
+targ_file
+    只解压压缩文件内指定的文件. 可使用wildcard进行匹配
+
+
+示例1 - 解压缩压缩文件
+unzip demo.zip
+
+示例2 - 只解压缩压缩文件内的demo01.txt文件
+unzip demo.zip demo01.txt
+
+示例3 - 解压缩压缩文件内的所有archive, 除了demo01.txt文件
+unzip demo.zip -x demo01.txt
+
+示例4 - 解压缩压缩文件内的所有archive, 并且只有mtime更新时才进行覆盖(不进行询问)
+unzip -uo demo.zip
+
+示例5 - 解压缩文件到指定目录
+unzip demo.zip -d ~/diy_d

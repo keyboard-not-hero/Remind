@@ -1,55 +1,9 @@
-本教程在centos 7和ubuntu 18.04均配置成功
-1.下载V2Ray：
-curl -L -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
-
-2.安装/更新V2Ray(系统需自带systemd)：
-bash install-release.sh
-**v2ray每周更新。版本号vX.Y.Z，X为大更新版本(一年)，Y为小更新版本(一周)，Z为0则为稳定版本
-
-3.编辑配置文件：
-vi /usr/local/etc/v2ray/config.json
-{
-  "inbounds": [
-    {
-      "port": 1910, // 服务器监听端口
-      "protocol": "vmess",    // 主传入协议
-      "settings": {
-        "clients": [
-          {
-            "id": "c9019c45-980d-40ad-806d-b5b195c1ac34",  // 用户 ID，客户端与服务器必须相同
-            "alterId": 64  //客户端需一致，30~100合理，越大越占用服务器内存
-          }
-        ]
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",  // 主传出协议
-      "settings": {}
-    }
-  ]
-}
-**uuid生成方式：
+uuid生成方式：
 I.system进程：cat /proc/sys/kernel/random/uuid
 II.工具网站在线生成：http://www.uuid.online/
 
-3.语法检查
-/usr/local/bin/v2ray --test --config /usr/local/etc/v2ray/config.json
 
-4.启动/关闭/重启软件：
-systemctl start v2ray
-
-5.运行状态查看：
-systemctl status v2ray
-
-6.防火墙开放/查看(ubuntu不需要该步骤)：
-firewall-cmd --add-port=1910/tcp
-firewall-cmd --add-port=1910/udp
-firewall-cmd --list-ports
-
-
-v2ray文件结构符合FHS标准, 如下:
+服务器端v2ray文件结构符合FHS标准, 如下:
 /usr/local/bin/v2ray
 /usr/local/bin/v2ctl
 /usr/local/share/v2ray/geoip.dat
@@ -60,6 +14,10 @@ v2ray文件结构符合FHS标准, 如下:
 /var/log/v2ray/error.log
 /etc/systemd/system/v2ray.service
 /etc/systemd/system/v2ray@.service
+
+
+语法检查
+/usr/local/bin/v2ray --test --config /usr/local/etc/v2ray/config.json
 
 
 v2ray须知：
@@ -82,7 +40,7 @@ v2ray须知：
 解答：v2ray配置inbound为socks，而浏览器代理协议使用http
 
 
-最后编辑时间: 2021-10-12
+最后编辑时间: 2022-08-16
 
 
 引用:
