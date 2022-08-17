@@ -1,15 +1,15 @@
-1.搭建https网站，参考wordpress/deploy_centos.txt
+1.搭建https网站，参考wordpress/deploy_lnmp_centos.txt
 
 
 2.配置nginx
 # 更改配置文件
 [root@~ ]$ vi /etc/nginx/nginx.conf
 server {
-	location /ray { # the same with v2ray path config
-    	proxy_redirect off;
-	proxy_pass http://127.0.0.1:10000; # nginx proxy traffic to port 1000
-	proxy_http_version 1.1;
-	proxy_set_header Upgrade $http_upgrade;
+    location /ray { # the same with v2ray path config
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:10000; # nginx proxy traffic to port 1000
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;

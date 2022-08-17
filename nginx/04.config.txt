@@ -24,7 +24,7 @@ package安装
 <prefix>/logs/access.log
 
 
-web文件根目录(由config文件的{http}/{server}/{location /} directive决定)
+web文件根目录(由config文件的{http}/{server}/{location /}/root directive决定)
 package安装
 /usr/share/nginx/html
 

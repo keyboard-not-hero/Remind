@@ -1,6 +1,7 @@
 下载package安装
 1.CentOS系统
 1)添加nginx仓库源
+[root@vultr ~]# vi /etc/yum.repos.d/nginx.repo
 [nginx-stable]
 name=nginx stable repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
@@ -13,7 +14,8 @@ module_hotfixes=true
 yum install nginx
 
 3)启动nginx
-nginx
+systemctl start nginx
+systemctl enable nginx
 
 4)测试nginx
 curl -I 127.0.0.1
@@ -22,30 +24,26 @@ Server: nginx/1.22.0
 
 
 从source code进行安装
-1)下载source code
-下载地址: https://nginx.org/en/download.html
-例. 下载nginx-1.22.0.tar.gz
+1)安装必要软件
+yum install zlib-devel pcre-devel openssl-devel
+
+2)下载source code
+下载地址
 curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+** 下载列表参考: https://nginx.org/en/download.html
 
-2)解压缩
+3)编译安装
 tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
-
-3)安装必要软件
-yum install zlib-devel pcre-devel
-curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
-tar -zxvf openssl-3.0.5.tar.gz -C /usr/local
-
-4)编译安装
 cd /tmp/nginx-x.xx.x
-./configure --with-http_ssl_module --with-openssl=/usr/local/openssl-3.0.5
+./configure --with-http_ssl_module
 make
 sudo make install
 
-5)启动nginx
+4)启动nginx
 ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 nginx
 
-6)测试nginx
+5)测试nginx
 curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.22.0

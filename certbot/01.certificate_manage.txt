@@ -27,7 +27,19 @@ ln -s /snap/bin/certbot /usr/bin/certbot
 6.获取并安装证书
 certbot --nginx
 
-** 当nginx从source code编译时, 使用如下指令安装:
+1)邮件, 用于通知整证书过期和安全提示
+xxx@gmail.com
+
+2)同意书(Y/N)
+Y
+
+3)邮件是否接收群组信息(Y/N)
+Y
+
+4)证书包含的域名
+www.example.com
+
+** 当nginx从source code编译时, 使用如下指令安装(指定nginx.conf路径):
 certbot --nginx --nginx-server-root=/usr/local/nginx/conf
 
 ** 当安装证书出现Could not automatically find a matching server block for <domain>, 在配置文件中添加服务器名称(server/server_name directive), 然后再次进行安装
@@ -47,7 +59,7 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
 查看证书
 certbot certificates
 
-只获取证书
+获取证书
 certbot certonly
 ** 以下指令用于更新指定名称ssl证书所包含的域名
 certbot certonly --cert-name <certificate_name> --domains <domain_name>
@@ -55,7 +67,7 @@ certbot certonly --cert-name <certificate_name> --domains <domain_name>
 模拟更新证书
 certbot renew --dry-run
 
-更新所有证书
+更新所有证书(证书快过期)
 certbot renew
 
 强制更新证书(不管证书是否即将过期)

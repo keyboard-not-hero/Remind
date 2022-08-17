@@ -9,6 +9,7 @@ baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
 
 [root@vultr ~]# yum install nginx
 
@@ -33,12 +34,13 @@ Server: nginx/1.22.0
 2.安装MariaDB(10.1或以上版本):
 # 添加新版本源：
 [root@vultr ~]# vi /etc/yum.repos.d/MariaDB.repo
-# MariaDB 10.8 CentOS repository list - created 2022-07-15 08:34 UTC
+
+# MariaDB 10.8 CentOS repository list - created 2022-08-16 16:47 UTC
 # https://mariadb.org/download/
 [mariadb]
 name = MariaDB
-baseurl = https://mirrors.aliyun.com/mariadb/yum/10.8/centos7-amd64
-gpgkey=https://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB
+baseurl = https://mirrors.xtom.com/mariadb/yum/10.8/centos7-amd64
+gpgkey=https://mirrors.xtom.com/mariadb/yum/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 
 ** 其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
@@ -50,6 +52,28 @@ gpgcheck=1
 [root@vultr ~]# systemctl enable mariadb
 
 [root@vultr ~]# mariadb-secure-installation
+1)使用db的root用户密码进入设置(初次安装没有设置root密码)
+[enter]
+
+2)是否允许nobody登录(y/n)
+n
+
+3)是否修改root用户密码(y/n)
+y
+passwd: <passwd>
+confirm passwd: <passwd>
+
+4)是否移除anonymous用户(y/n)
+y
+
+5)是否禁止root用户远程登录(y/n)
+y
+
+6)是否移除test数据库(y/n)
+y
+
+7)是否应用上述设置(y/n)
+y
 
 # 防火墙设置
 [root@vultr ~]# firewall-cmd --permanent --add-service=mysql
@@ -58,8 +82,8 @@ gpgcheck=1
 
 
 3.安装php(7.4或以上版本):
-# 添加remi源(tsinghua)
-[root@vultr ~]# yum install https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
+# 添加remi源
+[root@vultr ~]# yum install https://mirror.usi.edu/pub/remi/enterprise/remi-release-7.rpm
 ** 源镜像列表: https://rpms.remirepo.net/
 
 # 安装php8.1
@@ -80,6 +104,7 @@ enableed=1
 [root@vultr ~]# vi /etc/nginx/nginx.conf
 server{
     location / {
+        root /usr/share/nginx/html;
         index index.php index.html index.htm;
     }
     location ~ \.php$ {
@@ -111,45 +136,22 @@ server{
 [root@vultr ~]# cd /tmp/wordpress && mv * /usr/share/nginx/html
 
 2.修改/var/www/html目录所属(递归):
-[root@vultr ~]# chown -R nginx:nginx /usr/share/nginx/html
+[root@vultr ~]# chown -R apache:apache /usr/share/nginx/html
 
 3.创建数据库和账号:
 [root@vultr ~]# mysql -u root -p
 
 # 创建数据库
->create database wordpress;
-#添加相关帐号并授权(语法：GRANT ALL PRIVILEGES ON database.table TO user@host IDENTIDIED BY passwd)
+MariaDB> create database wordpress;
 
->GRANT ALL PRIVILEGES ON wordpress.* TO <user>@localhost IDENTIFIED BY <passwd>;
+# 添加相关帐号并授权(语法：GRANT ALL PRIVILEGES ON database.table TO user@host IDENTIDIED BY passwd)
+MariaDB> GRANT ALL PRIVILEGES ON wordpress.* TO "<user>"@localhost IDENTIFIED BY "<passwd>";
+
+# 适用更改
+MariaDB> flush privileges;
 
 4.wordpress站点设置(与数据库连接):
-(1)借助wordpress按步骤设置:
 浏览器输入ip/wp-admin/setup-config.php，step by step进行设置
-
-(2)复制wp-config-sample.php为wp-config.php, 修改以下内容:
-define( 'DB_NAME', 'database_name_here' );
-
-define( 'DB_USER', 'username_here' );
-
-define( 'DB_PASSWORD', 'password_here' );
-
-define( 'DB_HOST', 'localhost' );
-
-define( 'DB_CHARSET', 'utf8' );
-
-define( 'DB_COLLATE', '' );
-
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
-
-(3)修改文件所属
-chown nginx:nginx wp-config.php
 
 
 
@@ -161,6 +163,20 @@ chown nginx:nginx wp-config.php
 部署HTTPS, 参考Remind/certbot/01.certificate_manage.txt
 
 
+五、修改siteurl和home的值
+[root@vultr ~]# mysql -u <user> -p
+
+MariaDB> use wordpress;
+
+MariaDB> update wp_options set option_value="https://www.example.com" where option_name="home";
+
+MariaDB> update wp_options set option_value="https://www.example.com" where option_name="siteurl";
+
+
 引用：
 [1]mariadb源：https://downloads.mariadb.org/mariadb/repositories
+
 [2]wordpress中文站点：https://cn.wordpress.org/txt-download/
+
+
+最后编辑于: 2022-08-17
