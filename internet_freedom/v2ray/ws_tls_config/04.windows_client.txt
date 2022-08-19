@@ -1,0 +1,42 @@
+﻿1.下载v2rayN
+下载地址:
+https://github.com/2dust/v2rayN/releases
+
+
+2.配置文件
+解压缩zip文件, 打开v2rayN.exe, 右键单击托盘图标, 选择不改变系统代理
+
+选择菜单: server -- add vmess server
+
+配置选项:
+remarks:
+便于识别的别名
+
+address:
+服务器的IP地址
+
+port:
+443
+
+UUID:
+*特定, 与服务器一致
+
+alterID:
+*特定, 与服务器一致
+
+加密方式:
+auto
+
+传输协议:
+ws
+
+伪装域名:
+www.example.com
+
+路径:
+/ray
+
+传输安全:
+tls
+
+** warning: v2rayN默认开放本地10808端口, 而非常用的1080端口

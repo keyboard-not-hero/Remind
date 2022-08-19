@@ -1,187 +1,196 @@
-yum - RHEL/CentOS系在线安装包管理器
+yum - RHEL/CentOS系在线安装包管理器, 基于RPM包
+
 
 语法
 yum [option] <action> [package ...]
 
+
 参数释义
---assumeno
-	后续出现交互式询问时, 回复no
-
--C, --cacheonly
-	将操作在cache中进行, 而不对metadata进行更新
-
--c, --config=<config_file>
-	指定配置文件
-	支持http/ftp/本地文件格式
-
--d, --debuglevel=<number>
-	设置信息详细等级. 范围: 0~10
-
---disablerepo=<repo>
-	disable指定容器
-
---downloadonly
-	只下载软件包
-	此时yum lock被释放
-
--e, --errorlevel=<number>
-	设置error过滤等级. 范围: 0~10
-
---enablerepo=<repo>
-	enable指定容器
-
 -h, --help
-	帮助信息
-
---installroot=<root_dir>
-	指定安装参考根目录
-	类似于chroot <root_dir> yum
-
---nogpgcheck
-	不进行gpg校验
-
---obsoletes
-	只作用于update action, 同时更新系统的发行版本
-
--q, --quiet
-	不输出信息到stdout
-
--R, --randomwait=<wait_for_minutes>
-	允许的最大超时时间, 等待时间在该值范围内随机波动
-
---security
-	软件包不含安全问题
-
---showduplicates
-	显示所有结果, 不将info/list/search结果限制在最新版本
-
--v, --verbose
-	输出更详细的信息
-
---version
-	版本信息
+    帮助信息
 
 -y, --assumeyes
-	后续出现交互式询问时, 回复yes
+    后续出现的所有交互式询问, 默认yes
+
+--assumeno
+    后续出现的所有交互式询问, 默认no
+    该选项覆盖--assymeyes选项
+
+-c, --config=<config_file>
+    指定配置文件
+    支持http/ftp协议
+
+-q, --quiet
+    静默模式, 不输出信息到stdout
+
+-v, --verbose
+    verbose模式, 输出更详细的信息
+
+-d, --debuglevel=<number>
+    设置信息详细等级. 范围: 0~10
+
+-e, --errorlevel=<number>
+    设置error过滤等级. 范围: 0~10
+    0表示critical error, 10表示更详尽输出
+
+-R, --randomwait=<wait_for_minutes>
+    允许等待yum操作的最长时间, 允许等待时间在该最大值范围内随机波动
+
+--version
+    显示yum和rpm的版本信息
+
+--showduplicates
+    info/list/search显示所有结果, 而不是只罗列latest版本
+
+--installroot=<root_dir>
+    指定安装软件的参考根目录
+    类似于chroot <root_dir> yum
+
+--enablerepo=<repoid>
+    临时enable指定容器. repoid为repo文件内'[]'限定内容, 可使用通配符
+
+--disablerepo=<repoid>
+    临时disable指定容器. repoid为repo文件内'[]'限定内容, 可使用通配符
+
+--obsoletes
+    只能与update action配合使用, 参考update
 
 
 
 action列表
-1)针对包个体
-autoremove
-	卸载非显式(手动)安装并且没有被其他软件依赖的包
-
-check-update
-	检查是否有更新
-	返回码:
-		0 - 没有更新
-		1 - 出现错误
-		100 - 有更新
-
-clean
-	清除cache目录下的内容
-
-deplist
-	软件包的依赖列表
-
-distro-sync
-	将软件版本与系统释出版本同步, 将软件upgrade/downgrade到释出版本的最终版本
-
-downgrade
-	将软件版本降到上一个版本(或指定版本)
-
-info
-	显示软件包的详细信息
-
 install
-	安装软件包
-
-list
-	可获得的软件列表
-	列表类型:
-		all - 所有可获得/已安装的软件. 默认类型
-		available - 可获得并且未安装的软件
-		extras - 已安装但无法从容器中获得的软件列表
-		installed - 已安装软件列表
-		update - 可更新软件列表
-		
-	
-localinstall
-	用于安装本地rpm文件
-	可解决本地安装的依赖问题
-
-localupdate
-	用于使用本地rpm文件更新软件
-	只有当已安装老版本软件时, 才会进行更新
-	可解决本地安装依赖问题
-
-makecache
-	更新源信息
-
-provides | whatprovides
-	显示提供指令/文件的软件包
-
-reinstall
-	重新安装软件包
-
-remove | erase
-	卸载软件包和依赖于它的包
-
-repoinfo [{enabled | disabled | all}]
-	显示容器的详细信息
-
-repolist [{enabled | disabled | all}]
-	容器列表
-
-repository-packages <repo_name>
-	针对容器进行包管理操作. 如: list/info/check-update/install等
-	
-search
-	根据关键字查找软件包
-	先根据包名和summaries字段查找, 如果没有结果, 再根据descriptions和url字段查找
-
-swap
-	同时卸载一些包和安装一些包
-	如:
-		yum swap foo far
-		yum swap remove foo -- install far
+    安装源或本地软件包
+    当package名称以'@'开头时, 与groupinstall一致
+    当package名称以'-'开头时, 代表不需要安装的包. 由于'-'与参数格式一致, 需要使用'--'注明参数结束
 
 update
-	更新软件包
-	当软件包未指定时, 更新所有已安装的软件包
+    更新指定软件包; 当未指定软件包时, 更新所有已安装的软件包
+    当指定的包未安装时, 不进行安装
+    当配合--obsolete使用时, 
 	
 update-to
-	类似于update, 但指定升级的目标版本
+    类似于update, 但可以指定需要升级到的目标版本
 	
+check-update
+    检查指定软件是否有更新版本(显示版本为更新后版本)
+    未指定软件时, 显示所有可更新软件
+    返回码:
+	0 - 没有更新
+	1 - 出现错误
+	100 - 有更新
+
 upgrade
-	类似于--obsoletes update, 将系统的发行版本一起更新
+    类似于--obsoletes update, 在必要时进行系统版本升级
 	
 upgrade-to
-	类似于upgrade, 但指定升级的目标版本
+    类似于upgrade, 但可以指定需要升级到的目标版本
+
+remove | erase
+    卸载软件包和相关依赖它的包
+
+autoremove
+    卸载非显手动安装并且没有被其他软件依赖的包
+
+list [all | available | extras | installed | update]
+    可获得的软件列表. 列表类型:
+	all - 所有可获得/已安装的软件. 默认类型
+        available - 可由install获得的软件
+	updates - 可由update获得的软件
+	installed - 已安装的软件
+	extras - 已安装但无法从源容器中获得的软件
+	obsoletes - 已安装但在源容器中被废弃的软件
+		
+provides | whatprovides
+    获取提供该指令的软件包名称
+
+search
+    包含指定字符串的相关软件
+    先查找package和summary字段, 当fail时, 查找descriptions和url
+
+info
+    列出软件包的summary和description字段
+
+clean [expire-cache | dbcache | all]
+    删除enbale repository的缓存文件. 列表如下:
+        expire-cache - 删除cookie文件
+	packages - 删除安装包文件
+	metadata - 删除xml文件
+        dbcache - 删除相关sqlite格式文件(repository目录的sqlite压缩文件和子目录gen下的sqlite文件)
+        all - 删除上述所有文件
+
+makecache [fast]
+    创建enable repository的缓存文件
+    fast只创建必要缓存文件, 更快完成
+
+group {install | update | list | remove | info | summary | mark}
+    对指定的包群组进行操作. 列表如下:
+    install  - 对群组内的软件进行安装
+
+    update - 更新群组内的软件
+
+    list - 显示所有可获得的群组
+
+    remove - 移除群组内的所有软件
+
+    info - 显示群组的description和群组内包列表. 包名称起始符号的意义:
+        "-" - 包没有安装, 并且不会跟随群组被安装
+	"+" - 包没有安装, 但在下次更新所有包(yum upgrade)或更新群组(yum group update)时更新
+	" " - 包已经安装, 但不会跟随群组被安装/卸载
+	"=" - 包已经安装, 并且会跟随群组被安装/卸载
+
+    summary - 汇总已安装群组和可获得群组
+
+localinstall
+    安装本地rpm软件
+    可利用源容器解决依赖
+    主要用于向后兼容
+
+localupdate
+    更新到指定的本地rpm软件, 必须已安装一个旧版本
+    可利用源容器解决依赖
+    主要用于向后兼容
+
+reinstall
+    重新安装已安装的软件
+    当软件没有安装时, 不进行安装
+
+downgrade
+    将当前已安装软件, 安装前一个版本(或指定版本)
+
+swap
+    同时安装和卸载. 使用'--'分隔安装和卸载部分
+    例: yum swap -- group install "development tools" -- remove nginx
+
+deplist
+    软件的依赖, 并显示提供该依赖的包
+
+repolist [enabled | disabled | all]
+    显示源容器列表. 后续参数如下:
+        enabled - enable的容器. 默认参数
+	disabled - disable的容器
+	all - enable和disable的容器
+
+repoinfo [enabled | disabled | all]
+    类似于yum -v repolist
 
 help
-	所有action的帮助文档, 或指定action的较详细文档
+    所有option和action的帮助文档, 或指定action的更详细文档
 
 
-2)针对包群组
-group info
-	显示群组的详细信息
 
-group install
-	安装群组内的所有包
+package
+    指定源的包或完整本地包路径, 可使用wildcard匹配多个包
 
-group list
-	所有可获得群组的列表
 
-group remove
-	卸载群组内的所有包
 
-group summary
-	所有群组信息的简单汇总
+配置文件:
+/etc/yum.conf
 
-group update
-	更新群组内的包
+源配置路径:
+/etc/yum.repos.d/
 
+cache文件路径:
+/var/cache/yum/<Architecture>/<major_release>/
 
 
 fastestmirror特性:
@@ -200,39 +209,27 @@ vi /etc/yum/pluginconf.d/fastestmirror.conf
 enabled=1
 
 
-
-常用第三方源目录：
-1.EPEL：Extra Package for Enterprise Linux
-官网：http://fedoraproject.org/wiki/EPEL
-安装方法：yum install -y epel-release
-
-2.ELRepo：The Community Enterprise Linux Repository
-官网：http://elrepo.org/
-安装方法：yum install https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-
-3.SCL：Software Collections
-官网：https://www.softwarecollections.org
-安装方法：yum install centos-release-scl
-
-4.REMI：
-官网：https://rpms.remirepo.net/
-安装方法：yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-备注：REMI仓库依赖于EPEL仓库的包
+示例1 - 安装MariaDB开头的系列包, 除MariaDB-backup*外
+yum -- install MariaDB-* -MariaDB-backup*
 
 
-问题修复：
-1. another app is currently holding the yum lock
 
+问题汇总:
+1.问题:
+another app is currently holding the yum lock
+解决方案:
 rm –f /var/run/yum.pid
 
 
-2.Not using downloaded repomd.xml because it is older than what we have
-
+2.问题:
+Not using downloaded repomd.xml because it is older than what we have
+解决方案:
 rm -f /var/cache/yum/x86_64/7/mariadb/*
 
 
-3.使用yum安装软件, 遇到错误: GPG key retrieval failed: [Errno 14] curl#60 - "Peer's Certificate has expired."
-
+3.问题:
+使用yum安装软件, 遇到错误: GPG key retrieval failed: [Errno 14] curl#60 - "Peer's Certificate has expired."
+解决方案:
 查看本地时间与服务器时间是否一致, 当不一致时, 使用如下解决方案
 yum install ntpdate
 ntpdate ntp.aliyun.com

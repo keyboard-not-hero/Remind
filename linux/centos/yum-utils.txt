@@ -1,0 +1,11 @@
+yum-utils - yum包管理器的额外工具集
+
+指令列表:
+yum-builddep
+    安装build目标的相关依赖包. build目标必须在软件源中包含相关rpm包
+
+yum-config-manager
+    
+
+指令详情:
+yum-builddep

@@ -1,0 +1,17 @@
+常用第三方源目录：
+1.EPEL：Extra Package for Enterprise Linux
+官网：http://fedoraproject.org/wiki/EPEL
+安装方法：yum install -y epel-release
+
+2.ELRepo：The Community Enterprise Linux Repository
+官网：http://elrepo.org/
+安装方法：yum install https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
+3.SCL：Software Collections
+官网：https://www.softwarecollections.org
+安装方法：yum install centos-release-scl
+
+4.REMI：
+官网：https://rpms.remirepo.net/
+安装方法：yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+备注：REMI仓库依赖于EPEL仓库的包

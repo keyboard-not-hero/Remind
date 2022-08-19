@@ -3,24 +3,35 @@ LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本�
 
 1.安装Nginx:
 
-[root@vultr ~]# apt-get install nginx
+[root@vultr ~]# sudo apt install nginx
 
 [root@vultr ~]# systemctl start nginx
 
 [root@vultr ~]# systemctl enable nginx
 
-**浏览器输入127.0.0.1(远程主机用服务器ip)测试是否出现welcome to nginx欢迎界面，出现则成功安装
+[root@vultr ~]# curl -I 127.0.0.1 
 
 
 2.安装MariaDB:
+steven@steven-MSI:~$ sudo apt-get install apt-transport-https curl
 
-[root@vultr ~]# apt-get install mariadb-server mariadb-client
+steven@steven-MSI:~$ sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
 
-[root@vultr ~]# systemctl start mariadb
+steven@steven-MSI:~$ vi /etc/apt/sources.list.d/mariadb.list
+# MariaDB 10.8 repository list - created 2022-08-17 15:21 UTC
+# https://mariadb.org/download/
+deb https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
+# deb-src https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
 
-[root@vultr ~]# systemctl enable mariadb
+steven@steven-MSI:~$ sudo apt-get update
 
-[root@vultr ~]# mysql_secure_installation
+steven@steven-MSI:~$ sudo apt-get install mariadb-server mariadb-client
+
+steven@steven-MSI:~$ systemctl start mariadb
+
+steven@steven-MSI:~$ systemctl enable mariadb
+
+[root@vultr ~]# mariadb-secure-installation
 
 
 3.安装php:
