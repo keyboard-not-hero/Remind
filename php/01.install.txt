@@ -1,40 +1,48 @@
 从package安装
-1.添加remi源
+1.CentOS
+1)添加remi源
 [root@vultr ~]# yum install https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
 ** 源镜像列表: https://rpms.remirepo.net/
 
-2.安装php8.1
-[root@vultr ~]# vi /etc/yum.repos.d/remi-php81.repo
-[remi-php81]
-enableed=1
+2)安装php8.1
+[root@vultr ~]# yum install yum-utils
+
+[root@vultr ~]# yum-config-manager --enable remi-php81
+
 [root@vultr ~]# yum install php php-devel php-fpm php-mysqlnd
 
-3.启动php-fpm
+3)修改php-fpm process的owner/group
+[root@vultr ~]# vi /etc/php-fpm.d/www.conf
+user = nginx
+group = nginx
+
+4)启动php-fpm
 [root@vultr ~]# systemctl start php-fpm
 
 [root@vultr ~]# systemctl enable php-fpm
 
-4.添加nginx对php支持
+5)添加nginx对php支持
 [root@vultr ~]# cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 
 [root@vultr ~]# vi /etc/nginx/nginx.conf
-server{
-    location / {
-        index index.php index.html index.htm;
+    server{
+        location / {
+            root /usr/share/nginx/html;
+            index index.php index.html index.htm;
+        }
+        location ~ \.php$ {
+            root /usr/share/nginx/html;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
     }
-    location ~ \.php$ {
-        root /usr/share/nginx/html;
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-}
 
-5.重启web server(nginx)
+6)重启web server(nginx)
 [root@vultr nginx]# systemctl restart nginx
 
-6.验证安装结果
+7)验证安装结果
 [root@vultr ~]# vi /usr/share/nginx/html/index.php
 <?php
    phpinfo();
@@ -45,63 +53,75 @@ server{
 
 
 从source code编译安装
-1.下载php
-curl -O https://www.php.net/distributions/php-8.1.8.tar.gz
+1)下载php
+[root@vultr ~]# curl -O https://www.php.net/distributions/php-8.1.8.tar.gz
 
-2.必需环境
-前提软件: libxml2/sqlite3/gcc/make/web server(nginx/apacha等)
-yum install libxml2-devel sqlite-devel gcc make
+2)必需环境
+前提软件: libxml2/sqlite3/zlib/bzip2/libcurl/gcc/make/web server(nginx/apacha等)
+[root@vultr ~]# yum install libxml2-devel sqlite-devel zlib-devel bzip2-devel libcurl-devel gcc make
 
-3.编译安装
-tar -zxvf php-8.1.8.tar.gz -C /tmp
-cd /tmp/php-8.1.8
-./configure --enable-fpm --with-mysqli
-make
-sudo make install
+3)编译安装
+[root@vultr ~]# tar -zxvf php-8.1.8.tar.gz -C /tmp
 
-4.配置文件
-cp php.ini-development /usr/local/php/php.ini
-cp sapi/fpm/php-fpm /usr/local/bin
-cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
-cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf
+[root@vultr ~]# cd /tmp/php-8.1.8
 
-5.当文件不存在时, 不将请求转发给PHP-FPM
-vi /usr/local/php/php.ini
+[root@vultr ~]# ./configure --enable-fpm --with-mysqli --with-pdo-mysql --with-zlib --with-bz2 --with-curl
+
+[root@vultr ~]# make
+
+[root@vultr ~]# sudo make install
+
+4)配置文件
+[root@vultr ~]# cp php.ini-development /usr/local/lib/php.ini
+
+[root@vultr ~]# cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
+
+[root@vultr ~]# cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf
+
+5)php.in配置
+[root@vultr ~]# vi /usr/local/lib/php.ini
 cgi.fix_pathinfo=0
+mysqli.default_socket = /var/lib/mysql/mysql.sock
+pdo_mysql.default_socket=/var/lib/mysql/mysql.sock
 
-6.修改php-fpm.conf包含的配置文件
-vi /usr/local/etc/php-fpm.conf
+6)修改php-fpm.conf包含的配置文件
+[root@vultr ~]# vi /usr/local/etc/php-fpm.conf
 143gg
-include=/usr/local/etc/php-fpm.d/*conf
+include=etc/php-fpm.d/*conf
 
-7.修改php-fpm的执行者/群组为web server执行者, 并启动php-fpm
-vi /usr/local/etc/php-fpm.d/www.conf
+7)修改php-fpm的执行者/群组为web server执行者, 并启动php-fpm
+[root@vultr ~]# vi /usr/local/etc/php-fpm.d/www.conf
 user = nginx
 group = nginx
-/usr/local/sbin/php-fpm
 
-8.配置nginx支持php, 并重启nginx
-vi /usr/local/nginx/conf/nginx.conf
-location / {
-    root    html;
-    index   index.php index.html index.htm;
-}
+[root@vultr ~]# php-fpm
 
-location ~* \.php$ {
-    fastcgi_index   index.php;
-    fastcgi_pass    127.0.0.1:9000;
-    include         fastcgi_params;
-    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
-}
+8)配置nginx支持php, 并重启nginx
+[root@vultr ~]# vi /etc/nginx/nginx.conf
+    server{
+        location / {
+            root /usr/share/nginx/html;
+            index index.php index.html index.htm;
+        }
+        location ~ \.php$ {
+            root /usr/share/nginx/html;
+            fastcgi_index index.php;
+            fastcgi_pass 127.0.0.1:9000;
+            include fastcgi_params;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+        }
+    }
 
-nginx -s stop
-nginx
 
-9.创建测试文件
-vi /usr/local/nginx/html/index.php
+
+[root@vultr ~]# systemctl restart nginx
+
+9)创建测试文件
+[root@vultr ~]# vi /usr/local/nginx/html/index.php
 <?php
     phpinfo();
 ?>
 
-http://localhost/index.php
+
+最后编辑于: 2022-08-23

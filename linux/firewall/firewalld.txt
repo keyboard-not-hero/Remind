@@ -14,51 +14,73 @@ firewall-cmd是firewalld的主要CLI控制工具。本文主要介绍firewall-cm
 Generic use:
 --state
     firewall-cmd是否可使用("running" or "not  running",取决于firewalld)
+
 --reload
     重新加载配置，使永久化配置立即生效(使用permanent创建新runtime，保留已连接状态服务)
+
 --complete-reload
     重新加载配置，使永久化配置立即生效(所有连接马上断开)
+
 --runtime-to-permanent
     使用runtime的规则覆盖permanent的规则
+
 --permanent
     持久化，不添加默认为runtime(下列选项外可选，除panic)
+
 --zone=zone_name 
     指定zone操作(下列选项外可选，除panic)
+
 --get-zones
     可用zone列表
+
 --list-all-zones
     可用zone列表及属性
+
 --list-all
     当前zone属性
+
 --get-default-zone
     当前使用zone
+
 --get-active-zone
     当前使用zone和相关接口
+
 --set-default-zone=zone_name
     设置zone
+
 --get-services
     支持的service列表
 
 --add/remove/query-service=ser_name [--timeout=N]
     开启/关闭/查询服务[N秒]
+
 --list-services
     开启服务列表
+
 --add/remove/query-port=port[-port]/proto [--timeout=sec]
     开启/关闭/查询端口[序列]/协议对
+
 --list-ports
     开启端口列表
+
 --get-icmptypes
     支持icmp类型列表
+
 --add/remove/query-icmp-block=icmp_type
     添加/移除/查询icmp指定type阻塞
+
 --add/remove/query-masquerade
     添加/移除/查询ip伪装(仅限ipv4)
+
 --add/remove/query-forward-port=(port=s_port[-port]):(proto=pro_type){:(toport=t_port[-port])|:(toaddr=tar_addr)|:(toport=t_port[-port]:toaddr=tar_addr)}
     "增加/移除/查询"端口/主机重定向     *"()"用于增加阅读性，实际应用请clear
+
 --panic-on/off
     开启/关闭紧急模式，关闭所有网络连接
+
 --query-panic
     查询紧急模式是否开启
+
 Direct options:
 syntax：firewall-cmd --direct --passthrough { ipv4 | ipv6 | eb } <args>
 

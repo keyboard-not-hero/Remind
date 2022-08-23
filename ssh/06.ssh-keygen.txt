@@ -143,4 +143,4 @@ ssh-keygen -Q -f krl_file file ...
 
 
 示例1 - 从known_hosts中移除指定目标主机的公钥
-ssh-keygen -f "/home/<user>/.ssh/known_hosts" -R "<dest_addr> | <dest_ip>"
+ssh-keygen -f "/home/<user>/.ssh/known_hosts" -R "[<dest_ip>]:<port>"

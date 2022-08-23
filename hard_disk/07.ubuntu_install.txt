@@ -18,7 +18,7 @@ Rufus下载地址: https://rufus.ie/zh/
 1)格式化U盘
 
 2)使用dd将ubuntu镜像写入U盘
-dd if=/PATH/ubuntu.iso of=/dev/sdb 
+sudo dd if=/PATH/ubuntu.iso of=/dev/sdb 
 
 
 二、安装Ubuntu 20.04
@@ -41,5 +41,3 @@ swap	   =memory
 /	   30G
 /home	   100G
 /usr/local    150G
-
-grub安装到efi

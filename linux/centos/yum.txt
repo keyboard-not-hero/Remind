@@ -55,6 +55,50 @@ yum [option] <action> [package ...]
 --obsoletes
     只能与update action配合使用, 参考update
 
+-x, --exclude=<package>
+    将指定软件排除, 如同不在源容器中
+    package可以为name或通配符
+
+--color=[always | auto | never]
+    视为将结果标注色彩
+
+--disableexcludes=[all | main | repoid]
+    关闭config文件中定义的exclude内容. 列表如下:
+        all - 关闭所有exclude内容
+        main - 关闭config内定义于[main]内的exclude
+        repoid - 关闭config内定义于指定repoid内的exclude
+
+--disableincludes=[all | repoid]
+    关闭config文件中定义的include内容
+
+--disableplugin=<plugin>
+    在关闭指定插件的条件下运行
+    plugin为','分隔的列表, 字段可以使用通配符进行匹配
+
+--noplugins
+    关闭所有插件
+
+--nogpgcheck
+    不进行GPG检查
+
+--skip-broken
+    当需要移除软件解决依赖问题是, 移除该软件
+
+-t, --tolerant
+    降低yum运行速度, 方便查看error信息
+
+--downloadonly
+    只下载, 不进行安装/升级
+
+--downloaddir=<directory>
+    指定下载软件的存放目录
+    directory建议使用绝对路径; '~'不是家目录, 没有特殊含义
+
+--setopt=<option>=<value>
+    用于设置yum.conf或repo文件配置选项
+    yum.conf选项格式: --setopt=<option>=<value>
+    repo文件选项格式: --setopt=<repoid>.<option>=<value>
+
 
 
 action列表
@@ -66,7 +110,7 @@ install
 update
     更新指定软件包; 当未指定软件包时, 更新所有已安装的软件包
     当指定的包未安装时, 不进行安装
-    当配合--obsolete使用时, 
+    当配合--obsolete使用时, 删除不需要的依赖(常用于系统版本变更)
 	
 update-to
     类似于update, 但可以指定需要升级到的目标版本
@@ -193,25 +237,13 @@ cache文件路径:
 /var/cache/yum/<Architecture>/<major_release>/
 
 
-fastestmirror特性:
-将多个镜像按速度由高到低排列
-
-开启fastestmirror
-1)启动plugins功能
-sudo vi /etc/yum.conf
-plugins=1
-
-2)安装fastestmirror
-sudo yum install yum-plugin-fastestmirror
-
-3)开启fastestmirror
-vi /etc/yum/pluginconf.d/fastestmirror.conf
-enabled=1
-
 
 示例1 - 安装MariaDB开头的系列包, 除MariaDB-backup*外
 yum -- install MariaDB-* -MariaDB-backup*
 
+示例2 - 更新源
+yum clean all
+yum makecache
 
 
 问题汇总:
@@ -233,3 +265,5 @@ rm -f /var/cache/yum/x86_64/7/mariadb/*
 查看本地时间与服务器时间是否一致, 当不一致时, 使用如下解决方案
 yum install ntpdate
 ntpdate ntp.aliyun.com
+
+最后更新于: 2022-08-20

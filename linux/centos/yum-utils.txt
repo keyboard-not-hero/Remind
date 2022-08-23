@@ -8,4 +8,58 @@ yum-config-manager
     
 
 指令详情:
-yum-builddep
+yum-config-manager - 管理yum主配置文件或repositories
+
+语法
+yum-config-manager [options] [section ...]
+
+options释义
+-h, --help
+    帮助信息
+
+--setopt=<option>=<value>
+    设置yum.conf文件或源容器的选项
+    yum.conf文件配置格式: --setopt=<option>=<value>
+    源容器配置格式: --setopt=<repoid>.<option>=<value>, 其中, repoid可以为通配符格式
+
+--save
+    保存当前选项, 配合--setopt使用
+
+--enable
+    开启指定repositories, 自动保存设置
+    开启所有repositories: yum-config-manager --enable \*
+
+--disable
+    关闭指定repositories, 自动保存设置
+    关闭所有repositories: yum-config-manager --disable \*
+
+--add-repo=<url|file>
+    从url/file添加repository, 并自动开启
+
+拓展:
+yum-config-manager集成所有yum指令选项, 其他选项参考man 8 yum
+
+
+
+section含义
+    yum.conf的main或源容器的repoid
+    未指定时, 默认为main和所有enable的repoid
+    例:
+    [nginx-stable]
+    name=nginx stable repo
+    enabled=1
+
+    [nginx-mainline]
+    name=nginx mainline repo
+    enabled=0
+    nginx-stable和nginx-mainline为repoid
+
+
+
+示例1 - 开启nginx.repo内的nginx-stable
+yum-config-manager --enable nginx-stable
+
+示例2 - 修改nginx-stable的name选项值, 并保存
+yum-config-manager --setopt=nginx-stable.name="nginx stable branch" --save nginx-stable
+
+最后更新于: 2022-08-21

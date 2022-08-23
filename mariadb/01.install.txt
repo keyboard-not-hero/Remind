@@ -1,4 +1,5 @@
-CentOS
+从package安装
+1)CentOS
 1.添加源
 [root@vultr ~]# vi /etc/yum.repos.d/MariaDB.repo
 
@@ -24,8 +25,7 @@ gpgcheck=1
 [root@vultr ~]# mariadb-secure-installation
 
 
-
-Ubuntu
+2)Ubuntu
 1.添加源
 steven@steven-MSI:~$ sudo apt-get install apt-transport-https curl
 
@@ -69,6 +69,7 @@ y
 
 7)是否应用上述设置(y/n)
 y
+
 
 
 引用:

@@ -19,6 +19,8 @@ enabled=0
 gpgkey=https://nginx.org/keys/nginx_signing.key
 module_hotfixes=true
 
+[root@vultr ~]# yum makecache
+
 [root@vultr ~]# yum install nginx
 
 [root@vultr ~]# systemctl start nginx
@@ -26,9 +28,9 @@ module_hotfixes=true
 [root@vultr ~]# systemctl enable nginx
 
 # 防火墙设置
-[root@vultr ~]# firewall-cmd --permanent --zone=public --add-service=http
+[root@vultr ~]# firewall-cmd --permanent --add-service=http
 
-[root@vultr ~]# firewall-cmd --permanent --zone=public --add-service=https
+[root@vultr ~]# firewall-cmd --permanent --add-service=https
 
 [root@vultr ~]# firewall-cmd --reload
 
@@ -52,6 +54,8 @@ gpgkey=https://mirrors.xtom.com/mariadb/yum/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 
 ** 其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
+
+[root@vultr ~]# yum makecache
 
 [root@vultr ~]# yum install MariaDB-server MariaDB-client
 
@@ -95,10 +99,16 @@ y
 ** 源镜像列表: https://rpms.remirepo.net/
 
 # 安装php8.1
-[root@vultr ~]# vi /etc/yum.repos.d/remi-php81.repo
-[remi-php81]
-enableed=1
+[root@vultr ~]# yum install yum-utils
+
+[root@vultr ~]# yum-config-manager --enable remi-php81
+
 [root@vultr ~]# yum install php php-devel php-fpm php-mysqlnd
+
+# 修改php-fpm process的owner/group
+[root@vultr ~]# vi /etc/php-fpm.d/www.conf
+user = nginx
+group = nginx
 
 # 启动php-fpm
 [root@vultr ~]# systemctl start php-fpm
@@ -110,19 +120,19 @@ enableed=1
 [root@vultr ~]# cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 
 [root@vultr ~]# vi /etc/nginx/nginx.conf
-server{
-    location / {
-        root /usr/share/nginx/html;
-        index index.php index.html index.htm;
-    }
-    location ~ \.php$ {
-        root /usr/share/nginx/html;   
-        fastcgi_pass 127.0.0.1:9000; 
-        fastcgi_index index.php;
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        include fastcgi_params;  
-    }
-} 
+    server{
+        location / {
+            root /usr/share/nginx/html;
+            index index.php index.html index.htm;
+        }
+        location ~ \.php$ {
+            root /usr/share/nginx/html;   
+            fastcgi_pass 127.0.0.1:9000; 
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;  
+        }
+    } 
 
 [root@vultr nginx]# systemctl restart nginx
 
@@ -144,7 +154,7 @@ server{
 [root@vultr ~]# cd /tmp/wordpress && mv * /usr/share/nginx/html
 
 2.修改/var/www/html目录所属(递归):
-[root@vultr ~]# chown -R apache:apache /usr/share/nginx/html
+[root@vultr ~]# chown -R nginx:nginx /usr/share/nginx/html
 
 3.创建数据库和账号:
 [root@vultr ~]# mysql -u root -p
@@ -157,6 +167,7 @@ MariaDB> GRANT ALL PRIVILEGES ON wordpress.* TO "<user>"@localhost IDENTIFIED BY
 
 # 适用更改
 MariaDB> flush privileges;
+MariaDB> exit
 
 4.wordpress站点设置(与数据库连接):
 浏览器输入ip/wp-admin/setup-config.php，step by step进行设置
