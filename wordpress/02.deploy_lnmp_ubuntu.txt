@@ -2,14 +2,25 @@
 LNMP(Linux + Nginx + MariaDB + PHP)是基于Linux服务器动态网站的基本套件，部署wordpress之前我们需要先安装好套件环境。
 
 1.安装Nginx:
+1)添加PPA源
+steven@steven-MSI:$ sudo apt-get install software-properties-common
 
-[root@vultr ~]# sudo apt install nginx
+steven@steven-MSI:$ sudo add-apt-repository ppa:ondrej/nginx
 
-[root@vultr ~]# systemctl start nginx
+** PPA源查找: https://launchpad.net/~ondrej
 
-[root@vultr ~]# systemctl enable nginx
+2)安装nginx
+steven@steven-MSI:$ sudo apt-get update
 
-[root@vultr ~]# curl -I 127.0.0.1 
+steven@steven-MSI:$ sudo apt-get install nginx
+
+3)启动nginx
+steven@steven-MSI:$ sudo systemctl start nginx
+
+steven@steven-MSI:$ sudo systemctl enable nginx
+
+4)测试nginx
+steven@steven-MSI:$ curl -I 127.0.0.1
 
 
 2.安装MariaDB:
@@ -17,88 +28,112 @@ steven@steven-MSI:~$ sudo apt-get install apt-transport-https curl
 
 steven@steven-MSI:~$ sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
 
-steven@steven-MSI:~$ vi /etc/apt/sources.list.d/mariadb.list
+steven@steven-MSI:~$ sudo vi /etc/apt/sources.list.d/mariadb.list
 # MariaDB 10.8 repository list - created 2022-08-17 15:21 UTC
 # https://mariadb.org/download/
 deb https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
 # deb-src https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
 
+** 源仓库列表: https://mariadb.org/download/?t=repo-config
+
 steven@steven-MSI:~$ sudo apt-get update
 
 steven@steven-MSI:~$ sudo apt-get install mariadb-server mariadb-client
 
-steven@steven-MSI:~$ systemctl start mariadb
+steven@steven-MSI:~$ sudo systemctl start mariadb
 
-steven@steven-MSI:~$ systemctl enable mariadb
+steven@steven-MSI:~$ sudo systemctl enable mariadb
 
-[root@vultr ~]# mariadb-secure-installation
+steven@steven-MSI:~$ sudo mariadb-secure-installation
+1)使用db的root用户密码进入设置(初次安装没有设置root密码)
+[enter]
+
+2)是否允许nobody登录(y/n)
+n
+
+3)是否修改root用户密码(y/n)
+y
+passwd: <passwd>
+confirm passwd: <passwd>
+
+4)是否移除anonymous用户(y/n)
+y
+
+5)是否禁止root用户远程登录(y/n)
+y
+
+6)是否移除test数据库(y/n)
+y
+
+7)是否应用上述设置(y/n)
+y
 
 
 3.安装php:
-
 # 添加PPA源
-[root@vultr ~]# apt-get install software-properties-common
+steven@steven-MSI:~$ sudo apt-get install software-properties-common
 
-[root@vultr ~]# add-apt-repository ppa:ondrej/php
+steven@steven-MSI:~$ sudo add-apt-repository ppa:ondrej/php
 
-[root@vultr ~]# apt-get update
+** PPA源查找: https://launchpad.net/~ondrej
 
-# 安装php7.2
-[root@vultr ~]# apt-get install php7.2 php7.2-dev php7.2-mysql php7.2-fpm
+steven@steven-MSI:~$ sudo apt-get update
 
-# 启动php7.2-fpm
-[root@vultr ~]# systemctl start php7.2-fpm
+# 安装php8.1
+steven@steven-MSI:~$ sudo apt-get install php8.1 php8.1-dev php8.1-fpm php8.1-mysql
 
-[root@vultr ~]# systemctl enable php7.2-fpm
+# 启动php-fpm
+steven@steven-MSI:~$ systemctl start php8.1-fpm
+
+steven@steven-MSI:~$ systemctl enable php8.1-fpm
 
 # 修改nginx配置，将.php文件传递给php执行
-[root@vultr ~]# vi /etc/nginx/sites-available/default
+steven@steven-MSI:~$ vi /etc/nginx/sites-available/default
 # 索引文件添加index.php，用于对php支持
 index index.html index.htm index.nginx-debian.html index.php;
+
 # 将以下内容解除注解
-location ~ .php$ {
-    fastcgi_pass 127.0.0.1:9000;   
-    include snippets/fastcgi-php.conf;   
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php8.1-fpm.sock;
 } 
 
-[root@vultr ~]# systemctl restart nginx
+steven@steven-MSI:~$ systemctl restart nginx
 
-# 修改php-fpm监听配置，line 36左右
-[root@vultr ~]# vi /etc/php/7.2/fpm/pool.d/www.conf
-listen = 127.0.0.1:9000
-
-[root@vultr ~]# systemctl restart php7.2-fpm
-
-[root@vultr ~]# vi /var/www/html/phpinfo.php
+steven@steven-MSI:~$ vi /var/www/html/index.php
 <?php
   echo phpinfo();
 ?>
-**浏览器栏输入remote_ip/phpinfo.php，测试是否出现php欢迎界面
+
+**浏览器栏输入remote_ip/index.php，测试是否出现php欢迎界面
 
 
 wordpress环境部署：
 
 1.官网下载wordpress，并解压缩:
-[root@vultr ~]# wget https://wordpress.org/latest.tar.gz
+steven@steven-MSI:~$ wget https://wordpress.org/latest.tar.gz
 
 # 解压缩wordpress
-[root@vultr ~]# tar -zxvf latest.tar.gz -C /tmp
+steven@steven-MSI:~$ tar -zxvf latest.tar.gz -C /tmp
 
 #将wordpress文件夹内容移动到/var/www/html下
-[root@vultr ~]# cd /tmp/wordpress && mv * /var/www/html
+steven@steven-MSI:~$ cd /tmp/wordpress
+
+steven@steven-MSI:~$ sudo mv * /var/www/html
 
 2.修改/var/www/html目录所属(递归):
-[root@vultr ~]# chown -R www-data:www-data /var/www/html
+steven@steven-MSI:~$ sudo chown -R www-data:www-data /var/www/html
 
 3.创建数据库和账号:
-
-[root@vultr ~]# mysql -u root -p
+steven@steven-MSI:~$ mysql -u root -p
 
 # 创建数据库
 >create database wordpress;
 
 # 添加相关帐号并授权(语法：GRANT ALL PRIVILEGES ON database.table TO user@host IDENTIDIED BY passwd)
 >GRANT ALL PRIVILEGES ON wordpress.* TO user@localhost IDENTIFIED BY passwd;
+
+>flush privileges;
 
 4.wordpress站点设置(与数据库连接)：
 浏览器输入ip/wp-admin/install.php，step by step进行设置

@@ -1,35 +1,62 @@
 配置文件位置
 package安装
+CentOS:
 /etc/nginx/nginx.conf
+/etc/nginx/conf.d/*.conf
+
+Ubuntu:
+/etc/nginx/nginx.conf
+/etc/nginx/sites-enabled/*
+
 
 源文件编译安装
+CentOS/Ubuntu:
 <prefix>/conf/nginx.conf
+
 
 
 查看master进程ID(由config文件的pid directive决定)
 package安装
+CentOS:
 /var/run/nginx.pid
 
+Ubuntu:
+/run/nginx.pid
+
+
 源文件编译安装
+CentOS/Ubuntu
 <prefix>/logs/nginx.pid
+
 
 
 log文件(由config文件的error_log和access_log directive决定)
 package安装
+CentOS/Ubuntu:
 /var/log/nginx/error.log
 /var/log/nginx/access.log
 
+
 源文件编译安装
+CentOS/Ubuntu:
 <prefix>/logs/error.log
 <prefix>/logs/access.log
 
 
+
 web文件根目录(由config文件的{http}/{server}/{location /}/root directive决定)
 package安装
+CentOS:
 /usr/share/nginx/html
 
+Ubuntu:
+/var/www/html
+
+
 源文件编译安装
+CentOS/Ubuntu:
 <prefix>/html
+
 
 
 directive种类:

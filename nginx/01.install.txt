@@ -11,81 +11,101 @@ gpgkey=https://nginx.org/keys/nginx_signing.key
 module_hotfixes=true
 
 2)安装nginx
-yum makecache
-yum install nginx
+[root@vultr ~]# yum makecache
+[root@vultr ~]# yum install nginx
 
 3)启动nginx
-systemctl start nginx
-systemctl enable nginx
+[root@vultr ~]# systemctl start nginx
+[root@vultr ~]# systemctl enable nginx
 
 4)测试nginx
-curl -I 127.0.0.1
+[root@vultr ~]# curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.22.0
 
 
 2.Ubuntu
-1)安装nginx
-sudo apt-get update
-sudo apt-get install nginx
+1)添加PPA源
+root@steven:~# sudo apt-get install software-properties-common
 
-2)启动nginx
-systemctl start nginx
+root@steven:~# sudo add-apt-repository ppa:ondrej/nginx
 
-3)测试nginx
-curl -I 127.0.0.1
+** PPA源查找: https://launchpad.net/~ondrej
+
+2)安装nginx
+root@steven:~# sudo apt-get update
+
+root@steven:~# sudo apt-get install nginx
+
+3)启动nginx
+root@steven:~# sudo systemctl start nginx
+
+root@steven:~# sudo systemctl enable nginx
+
+4)测试nginx
+root@steven:~# sudo curl -I 127.0.0.1
 
 
 
 从source code进行安装
 1.CentOS
 1)安装依赖环境
-yum install zlib-devel pcre-devel openssl-devel
+[root@vultr ~]# yum install zlib-devel pcre-devel openssl-devel gcc make
 
 2)下载source code
 下载地址
-curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+[root@vultr ~]# curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
 ** 下载列表参考: https://nginx.org/en/download.html
 
 3)编译安装
-tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
-cd /tmp/nginx-x.xx.x
-./configure --with-http_ssl_module
-make
-sudo make install
+[root@vultr ~]# tar -zxvf nginx-1.22.0.tar.gz -C /tmp
+
+[root@vultr ~]# cd /tmp/nginx-1.22.0
+
+[root@vultr ~]# ./configure --with-http_ssl_module
+
+[root@vultr ~]# make
+
+[root@vultr ~]# sudo make install
 
 4)启动nginx
-ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
-nginx
+[root@vultr ~]# ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
+
+[root@vultr ~]# nginx
 
 5)测试nginx
-curl -I 127.0.0.1
+[root@vultr ~]# curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.22.0
 
 
 2.Ubuntu
 1)安装依赖环境
-apt install zlib1g-dev libpcre3-dev libssl-dev
+steven@steven-MSI:~$ sudo apt install zlib1g-dev libpcre3-dev libssl-dev curl gcc make
 
 2)下载source code
 下载地址
-curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+steven@steven-MSI:~$ curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
 ** 下载列表参考: https://nginx.org/en/download.html
 
 3)编译安装
-tar -zxvf nginx-x.xx.x.tar.gz -C /tmp
-cd /tmp/nginx-x.xx.x
-./configure --with-http_ssl_module
-make
-sudo make install
+steven@steven-MSI:~$ tar -zxvf nginx-1.22.0.tar.gz -C /tmp
+
+steven@steven-MSI:~$ cd /tmp/nginx-1.22.0
+
+steven@steven-MSI:~$ ./configure --with-http_ssl_module
+
+steven@steven-MSI:~$ make
+
+steven@steven-MSI:~$ sudo make install
 
 4)启动nginx
-ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
-nginx
+steven@steven-MSI:~$ sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
+
+steven@steven-MSI:~$ sudo nginx
 
 5)测试nginx
-curl -I 127.0.0.1
+steven@steven-MSI:~$ curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.22.0
 
