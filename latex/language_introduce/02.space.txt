@@ -222,6 +222,8 @@ this is tom.\ I think he is funny
 
 3.\parindent设置所有段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
 
+4.\hangindet设置当前段落内所有行(除首行)的缩进, 配置方法: \hangindent=1cm
+
 
 
 十、Demo(示例)10 - 行距/段落距/页面内容宽高

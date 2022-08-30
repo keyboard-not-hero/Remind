@@ -1,0 +1,100 @@
+配置文件(顺序读取):
+/etc/my.cnf
+/etc/mysql/my.cnf
+~/.my.cnf
+
+获取配置文件路径及读取顺序:
+mysql --help --verbose|head -n 10
+
+
+语法:
+1.'#'开头为注释
+
+2.empty line被忽略
+
+3.分组directive使用[group_name]
+
+4.相同名称分组可以多次出现
+
+5.!include用于包含其他单个配置文件
+
+6.!includedir用于包含指定目录下的所有配置文件
+补充: Unix-line配置文件为.cnf结尾, Windows配置文件为.cnf或.ini结尾
+
+7.dash(-)和underscore(_)可互换
+
+8."可用于限定值
+
+9.特殊字符列表:
+      \n - 换行
+      \r - 回车
+      \t - 制表符<tab>
+      \b - <backspace>
+      \s - <space>
+      \" - 双引号
+      \' - 单引号
+      \\ - 反斜杠
+
+
+group name:
+server option group
+[client-server]
+    client/server都会读取的directive. 如port/socket
+
+[server]
+    MariaDB server读取
+
+[mariadb]
+    MariaDB server读取
+
+[mariadbd]
+    MariaDB server读取
+    自MariaDB 10.4.6版本可使用
+
+[mariadbd-X.Y]
+    限指定版本MariaDB server读取
+    自MariaDB 10.4.6版本可使用
+
+[mariadb-X.Y]
+    限指定版本MariaDB server读取
+
+[mysqld]
+    MariaDB/MySQL server读取
+
+[mysqld-X.Y]
+    限指定版本MariaDB/MySQL server读取
+
+[galera]
+    编译时获取Galera Cluster支持的MariaDB server读取
+    自MariaDB 10.1版本, 所有编译版本获取Galera Cluster支持
+
+client option group
+[client]
+    MariaDB/MySQL client读取
+
+[client-server]
+    client/server都会读取的directive. 如port/socket
+
+[client-mariadb]
+    MariaDB client读取
+
+
+
+directives:
+socket
+    启动的套接口
+
+port
+    开启的端口
+
+!include
+    包含其他单个配置文件
+    如: 
+        include /etc/mysql/mariadb.cnf
+        代表包含/etc/mysql/mariadb.cnf配置文件
+!includedir
+    包含其他目录下的所有配置文件
+    如: 
+        !includedir /etc/mysql/
+        代表包含/etc/mysql/目录下的所有配置文件(Unix-like为.cnf后缀, Windows为.cnf或.ini后缀)
+    

@@ -1,0 +1,54 @@
+openssl-genpkey - 生成私钥
+
+语法
+openssl genpkey [option]...
+
+参数释义
+-help
+    显示用例信息
+
+-out <file_name>
+    结果输出到指定文件
+    默认输出到stdout
+
+-outform DER|PEM
+    输出格式
+    默认PEM
+    当指定-genparam时, 该选项被忽略
+
+-quiet
+    不输出状态符号'.'
+
+-pass <arg>
+    输出文件密码来源. 列表如下:
+        1.pass:<passwd> - 直接指定密码
+        2.env:<var> - 从指定的环境变量名称获取密码值
+        3.file:<file> - 指定文件的第一行内容读取为密码
+        4.fd:<number> - 从指定文件描述符读取密码
+        5.stdin - 从stdin读取密码
+
+-<cipher>
+    使用指定加密格式加密私钥
+
+-algorithm <alg>
+    使用的公钥算法, 必须位于-pkeyopt参数之前
+    与-paramfile参数互斥
+    生成密钥算法列表: RSA/RSA-PSS/EC/X25591/X448/ED25591/ED448
+
+-pkeyopt <opt>:<value>
+    生成密钥算法对应的选项. 列表如下:
+        RSA相关
+            rsa_keygen_bits:<num_bits> - 密钥的位数. 默认为2048
+            rsa_keygen_primes:<num_primes> - 素数个数. 默认为2
+            rsa_keygen_pubexp:<value> - 指定e值. 默认为65537 
+
+-genparam
+    生成参数集, 替代生成私钥
+    必须位于-algorithm/-paramfile/-pkeyopt参数之前
+
+-text
+    显示DER/PEM结构private/public钥的明文内容
+
+
+示例1 - 生成私钥
+openssl genpkey -algorithm RSA -out fd.key -pkeyopt rsa_keygen_bits:2048

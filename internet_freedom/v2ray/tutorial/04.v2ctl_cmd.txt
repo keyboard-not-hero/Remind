@@ -1,0 +1,6 @@
+语法
+v2ctl <command> [option]
+
+command列表:
+uuid
+    随机生成一个uuid

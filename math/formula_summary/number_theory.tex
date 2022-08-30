@@ -1,0 +1,60 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{parskip}
+\usepackage{float}
+\begin{document}
+最大公约数(greatest common divisor, gcd)\\
+计算方法: \\
+1)分别列出两数的质因数分解, 并计算共同项的乘积\\
+例:\\
+$12=2*2*3$\\
+$28=2*2*7$\\
+最大公约数: $2*2=4$\\[1ex]
+
+2)两个数除以共同质因数, 直到两个数互质, 所有除数的乘积\\
+例:\\
+\begin{table}[H]
+\begin{tabular}{lllll}
+\multicolumn{1}{l|}{2} &                        & 12 &  & 28 \\ \cline{2-5} 
+                       & \multicolumn{1}{l|}{2} & 6  &  & 14 \\ \cline{3-5} 
+                       &                        & 3  &  & 7 
+\end{tabular}
+\end{table}
+最大公约数: $2*2=4$
+\newpage
+
+最小公倍数(least common multiple, lcm)\\
+计算方法:\\
+1)分别列出两数的质因数分解, 使用不同因数的最高次幂相乘\\
+$9=3^2$\\
+$21=3*7$\\
+最小公倍数: $3^2*7=63$\\[1ex]
+
+2)两个数除以共同质因数, 直到两个数互质, 所有除数和商的乘积\\
+例:\\
+\begin{table}[H]
+\begin{tabular}{llll}
+\multicolumn{1}{l|}{3} & 9 &  & 21 \\ \cline{2-4}
+                       & 3 &  & 7
+\end{tabular}
+\end{table}
+最小公倍数: $3*3*7=63$
+\newpage
+
+卡迈克尔函数(Carmichael function)\\
+对于$\lambda(n)$满足\\
+\[a^m\equiv 1\qquad (mod n)\]
+其中:\\
+\phantom{\qquad}1)$n$为正整数;\\
+\phantom{\qquad}2)$a\in[1,n]$并且$a$为整数;\\
+\phantom{\qquad}3)$a$与$n$互质\footnote{两个或多个数的最大公约数为1}.\\
+求:\\
+\phantom{\qquad}满足该条件的最小正整数$m$\\[2ex]
+
+例.当$n=6$时, $a\in{1,5}$\\
+\[1^m\%6=1\]
+\[5^m\%6=1\]
+$m=2$满足以上等式, 即$\lambda(6)=2$\\
+**特殊情况:\\
+1)如果$n$为素数, $\lambda(n)=n-1$\\
+2)如果$n=pq$, $\lambda(n)=lcm(\lambda(p),\lambda(q))$
+\end{document}

@@ -1,0 +1,42 @@
+引擎列表:
+1.InnoDB - 通用的事务型引擎. 自MariaDB 10.2大部分情况最好的选择, 并设置为默认引擎
+
+2.XtraDB - 性能加强版InnoDB. MariaDB server 10.2之前InnoDB基于Percona的XtraDB设计
+
+3.Aria - MariaDB现代化提升版本MyISAM
+
+4.MyISAM - 拥有更小的空间和易于备份, 属于MySQL最老版本引擎. 通常只用于老版本兼容
+
+
+引擎特性:
+InnoDB
+InnoDB 逻辑存储单元主要分为表空间、段、区和页. 层级关系为 tablespace -> segment -> extent (64个page) -> page(默认16K)
+
+innodb_page_size可选列表: 4KB/8KB/16KB/32KB/64KB
+
+1.limitation
+schema
+    1)最多包含1017列
+
+    2)最多能有64个次级索引
+
+    3)多列索引最多能包含16列. 超出返回Error 1070
+
+size
+    1)最大行长度(VARBINARY/VARCHAR/BLOB/TEXT类型除外)为page_size/2
+
+    2)BLOB/TEXT列的最大长度为4GB
+
+    3)最大行长度(BLOB/TEXT类型除外)为64KB. 当包含BLOB/TEXT类型时, 只计算9-12bytes引用值, 实际值进行分开保存
+
+    4)32 bit操作系统有2GB文件大小限制, 此时需配置更小的Innodb文件大小
+
+    5)所有log文件的大小进行统计, 最大限制为512GB
+    
+    6)tablespace的最小大小为10MB, 最大大小列表如下:
+    page size    |    max tablespace size
+    4KB               16TB
+    8KB               32TB
+    16KB              64TB
+    32KB              128TB
+    64KB              256TB

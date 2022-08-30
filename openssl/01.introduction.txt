@@ -1,0 +1,70 @@
+openssl功能
+1.提供openssl指令工具，用于加密任务和生成/操作证书
+2.提供密码库libcrypto
+3.提供server/client端通信的TLS/SSL协议库libssl
+
+
+查看openssl版本
+openssl version -a
+
+
+Shared objects are searched for in this order:
+    1. Using directories specified in rpath(-Wl,-rpath,<path>)
+    2. Using the environment variable LD_LIBRARY_PATH
+    3. Using directories specified in runpath(-Wl,--enable-new-dtags,-path,<path>)
+    4. Using system shared object caches and default directories
+
+
+名词解释:
+CA(Certificate Authority) - 证书授权机构
+CRL(Certificate Revocation List) - 证书吊销列表
+CSR(Certificate Signing Request) - 证书签名请求
+
+
+文件格式:
+DER(Distinguished Encoding Rules) - binary文件, 使用DER编码的ASN.1格式证书内容
+
+PEM(Privacy-Enhanced Mail) - 使用base-64编码的内容, 使用---BEGIN <label>---和---END <label>---包围内容. 包含内容分类:
+    certificate - 后缀列表: .pem/.cer/.crt, label列表: CERTIFICATE/CERTIFICATE REQUEST/X509 CRL. 通常一个文件质包含一个证书
+    key - 后缀为.key, label为PRIVATE KEY
+
+PKCS #1 - 使用DER编码的ASN.1格式私钥内容(老版本openssl默认格式)
+
+PKCS #7 - 用于传输签名/加密数据, 文件后缀为.p7b或.p7c. 被Java的keytool工具支持
+
+PKCS #8 - 新版本openssl默认格式
+
+
+自签名证书
+1)生成private key. 考虑因素如下:
+    1]密钥算法: 支持RSA/DSA/ECDSA/EdDSA, 但DSA已淘汰, EdDSA没有被广泛支持, 所以只有RSA/ECDSA适用
+    2]密钥size: 默认支持的512 bit RSA安全性不足, 建议2048 bit RSA或256 bit ECDSA
+    3]密码保护: product环境增加安全性不高, 不建议适用
+    生成私钥指令示例: openssl genpkey -algorithm RSA -out fd.key -pkeyopt rsa_keygen_bits:2048
+2)创建证书签名请求(Certificate Signing Request, CSR), 发送给CA
+    生成请求指令示例: openssl req -new -key fd.key -out fd.csr
+    填写信息时, <blank>代表默认值, '.'代表留空
+3)在web服务器上安装CA提供的证书
+    安装self-signed证书指令示例: openssl x509 -req -days 365 -in fd.csr -signkey fd.key -out fd.crt
+    
+
+查看证书: openssl x509 -text -in fd.crt -noout
+
+
+openssl benchmark:
+使用单CPU: openssl speed rsa
+使用多CPU: openssl speed -multi <core-number> rsa
+使用硬件加速: openssl speed -evp rsa
+
+
+引用:
+[1] official web: https://www.openssl.org/
+
+[2] git: https://git.openssl.org/
+
+[3] wiki: https://wiki.openssl.org/index.php/Compilation_and_Installation
+
+[4] rpath VS runpath: https://amir.rachum.com/blog/2016/09/17/shared-libraries/
+
+
+最后编辑于: 2022-08-28

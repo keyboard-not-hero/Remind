@@ -3,10 +3,10 @@
 # 选择download from a nearby CTAN mirror
 
 # 校验完整性
-steven@Downloads$ md5sum -c texlive2019-20190410.iso.md5
+steven@Downloads$ md5sum -c texlive2022.iso.md5
 
 # 挂载iso文件
-steven@Downloads$ sudo mount -o loop texlive2019-20190410.iso /mnt 
+steven@Downloads$ sudo mount -o loop texlive2022.iso /mnt 
 
 # 安装Texlive
 steven@Downloads$ cd /mnt
@@ -29,9 +29,9 @@ cd install-tl-*
 
 2.配置PATH
 steven@~$ vi ~/.bashrc
-export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH
+export PATH=/usr/local/texlive/2022/bin/x86_64-linux:$PATH
 
-steven@~$ source .bashrc
+steven@~$ source ~/.bashrc
 
 # 测试安装是否成功
 steven@~$ tex --version
@@ -39,11 +39,11 @@ steven@~$ tex --version
 
 3.TexLive字体查找配置
 # 系统字体(windows会自动查找)
-steven@~$ sudo vi /usr/local/texlive/2020/texmf.cnf
+steven@~$ sudo vi /usr/local/texlive/2022/texmf.cnf
 OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
 
 # texlive附带字体
-steven@~$ sudo cp /usr/local/texlive/2020/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
+steven@~$ sudo cp /usr/local/texlive/2022/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
 
 # windows默认自带宋体/楷书/黑体/仿宋, ubuntu默认自带宋体/楷书
 # 安装字体(黑体)
@@ -58,7 +58,7 @@ steven@~$ sudo fc-list :lang=zh-cn
 
 
 备注:
-latex package所在路径 - <install_package>/texmf-dist/tex/latex/, 安装在/usr/local目录时, install_package为/usr/local/texlive/2021
+latex package所在路径 - <install_package>/texmf-dist/tex/latex/, 安装在/usr/local目录时, install_package为/usr/local/texlive/2022
 
 
 

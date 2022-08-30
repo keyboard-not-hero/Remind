@@ -158,7 +158,7 @@ $ps_previewer = 'start ghostscript %O %S';
 	ps格式文件预览器
 
 $pdf_previewer = 'start evince %O %S';
-	pdf格式文件预览器
+	pdf格式文件预览器evince
 
 @generated_exts = ('aux', 'bbl', 'idx', 'inf', 'lof', 'lot', 'out', 'toc', $fdb_ext);
 	1.指定-c和-C需要额外删除的指定格式文件;

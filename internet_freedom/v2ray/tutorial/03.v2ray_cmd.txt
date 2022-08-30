@@ -1,0 +1,20 @@
+语法
+v2ray [-version] [-test] [-config=config.json] [-format=json]
+
+参数释义
+-version
+    版本信息
+
+-test
+    测试配置文件语法
+
+-config=<file>
+    指定配置文件路径. 格式如下:
+        1.本地文件 - 可使用绝对路径和相对路径
+        2."stdin:" - 从stdin读取
+        3.http/https - 从http[s]路径加载文件
+
+-format=<format>
+    指定配置文件的格式. 列表如下:
+        json - json格式
+        pb/protobuf - Protobuf格式

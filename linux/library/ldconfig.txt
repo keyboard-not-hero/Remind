@@ -1,0 +1,76 @@
+ldconfig - 将包含寻找动态依赖库路径(/etc/ld.so.conf)的配置, 生成缓存(/etc/ld.so.cache)
+
+语法
+ldconfig [-nNvXV] [-f conf] [-C cache] [-r root] directory...
+
+ldconfig -l [-v] library...
+
+ldconfig -p
+
+
+参数释义
+-c <fmt>, --format=<fmt>
+    指定cache文件格式
+    列表: old, new, compat(默认)
+
+-C <cache>
+    指定缓存文件
+    默认为: /etc/ld.so.cache
+    
+-f <conf>
+    指定配置文件
+    默认为: /etc/ld.so.conf
+    
+-i, --ignore-aux-cache
+    忽略附属cache文件
+    
+-l
+    手动链接不同动态依赖库
+    
+-n
+    只从指定目录中读取查找路径, 忽略trusted目录和/etc/ld.so.conf配置
+    隐式包含-N
+    
+-N
+    不更新cache
+    当-X也指定时, 依然进行更新
+
+-p, --print-cache
+    显示所有定位到的动态库
+    
+-r <root>
+    将指定目录作为根目录
+    
+-v, --verbose
+    显示扫描的目录和所有库的完整名称
+    
+-V, --version
+    版本信息
+    
+-X
+    不更新库链接
+    当-N也指定时, 依然更新
+
+
+** 补充:
+1.扫描路径必定包含trusted目录
+trusted目录: 必定包含32位系统的/lib和/usr/lib, 64位系统的/lib/x86_64-linux-gnu、/usr/lib和/usr/lib/x86_64-linux-gnu
+
+2.扫描的库格式
+lib*.so*和ld-*.so*
+
+
+Shared objects are searched for in this order:
+    1. Using directories specified in rpath(-Wl,-rpath,<path>)
+    2. Using the environment variable LD_LIBRARY_PATH
+    3. Using directories specified in runpath(-Wl,--enable-new-dtags,-path,<path>)
+    4. Using system shared object caches and default directories
+
+步骤4即为ldconfig操作内容
+
+
+示例1 - 读取配置文件, 生成缓存
+ldconfig
+
+示例2 - 只从/usr/local/private中读取动态库
+ldconfig -d /usr/local/private

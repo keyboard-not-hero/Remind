@@ -1,0 +1,63 @@
+安装openssl
+package
+Ubuntu:
+sudo apt install openssl libssl-dev
+
+CentOS:
+sudo yum install openssl openssl-devel
+
+
+
+source code
+Ubuntu:
+1.下载
+teven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
+
+下载参考列表: https://www.openssl.org/source/
+
+2.安装前提环境(perl版本至少为5.10.0)
+1)make
+2)gcc
+3)perl 5 and core
+4)perl module `Text::Template`
+teven@steven:~$ sudo apt install gcc make perl
+
+teven@steven:~$ sudo apt search Text::Template
+
+teven@steven:~$ sudo apt install libtext-template-perl
+
+3.安装
+teven@steven:~$ tar -zxvf openssl-3.0.5.tar.gz -C /tmp
+
+teven@steven:~$ cd /tmp/openssl-3.0.5/
+
+teven@steven:~$ sudo mkdir -p /usr/local/ssl/lib
+
+teven@steven:~$ sudo cp libssl.so.3 /usr/local/ssl/lib
+
+teven@steven:~$ sudo cp libcrypto.so.3 /usr/local/ssl/lib
+
+#Shared objects are searched for in this order:
+#    1. Using directories specified in rpath(-Wl,-rpath,<path>)
+#    2. Using the environment variable LD_LIBRARY_PATH
+#    3. Using directories specified in runpath(-Wl,--enable-new-dtags,-path,<path>)
+#    4. Using system shared object caches and default directories
+
+# 验证rpath/runpath
+teven@steven:~$ readelf main -d | grep path
+0x000000000000000f (RPATH)              Library rpath: [.]
+
+# 设置RPATH
+teven@steven:~$ ./Configure -Wl,-rpath,/usr/local/ssl/lib
+或者
+
+# 设置RUNPATH
+teven@steven:~$ ./Configure -Wl,--enable-new-dtags,-rpath,/usr/local/ssl/lib
+
+teven@steven:~$ make
+
+teven@steven:~$ sudo make install
+
+
+
+最后编辑于: 2022-08-28

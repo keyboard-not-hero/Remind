@@ -64,7 +64,7 @@ bash install-release.sh
 
 
 6.语法检查/启动
-[root@~ ]$ /usr/local/bin/v2ray --test --config /usr/local/etc/v2ray/config.json
+[root@~ ]$ /usr/local/bin/v2ray -test -config /usr/local/etc/v2ray/config.json
 
 [root@~ ]$ systemctl start v2ray
 

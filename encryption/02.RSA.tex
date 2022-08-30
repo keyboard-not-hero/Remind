@@ -1,0 +1,39 @@
+\documentclass[UTF8, fontset=ubuntu]{ctexart}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage{amssymb}
+\begin{document}
+\hangindent=1cm RSA(Rivest–Shamir–Adleman)\\
+    RSA算法加/解密速度较慢, 常用于传输对称算法, 再由对称算法加/解密数据\\
+    算法模型: $m/d/e$为三个极大数, 已知$m/n/e$($0\leqslant m<n$), 求d的值\\
+    \[(m^d)^e \equiv m\quad(mod\quad n)\]\\
+    原理: $m$代表需要加密的内容, $n/e$代表公钥, $d$代表私钥($n$也包含在私钥中)\\
+    密钥生成步骤:\\
+        \phantom{\hspace{1cm}}1.随机生成两个不同素数$p/q$, 两个数相同量级\\
+	\phantom{\hspace{1cm}}2.计算$n=pq$, 即RSA bits\\
+	\phantom{\hspace{1cm}}3.计算$\lambda(n)$, $\lambda(n)=lcm(\lambda(p),\lambda(q))$, 又$p/q$为素数, 所以$\lambda(n)=lcm(p-1,q-1)$\\
+        \phantom{\hspace{1cm}}4.选取整数$e$, 并且满足$1<e<\lambda(n)$和$gcd(e,\lambda(n))=1$\\
+	\phantom{\hspace{1cm}}5.获得$d$值, 通过$d\cdot e\equiv 1(mod\quad\lambda(n))$\\[2ex]
+    加密步骤:\\
+	\phantom{\hspace{1cm}}初始内容为M, 通过padding schemes(即在begin/middle/end位置添加bit内容), 转化为m
+        \[c\equiv m^e\quad(mod\quad n)\]
+    解密步骤:\\
+        \[c^d\equiv(m^e)^d\equiv m\quad(mod\quad n)\]
+    示例:\\
+    生成密钥:\\
+    \phantom{\hspace{1cm}}1.选择$p/q$值\\
+    \phantom{\hspace{2cm}}$p=61$,$q=53$\\
+    \phantom{\hspace{1cm}}2.计算$n=pq$\\
+    \phantom{\hspace{2cm}}$n=61\times 53=3233$\\
+    \phantom{\hspace{1cm}}3.计算$\lambda(n)$(根据Carmichael function)\\
+    \phantom{\hspace{2cm}}$\lambda(3233)=lcm(60,52)=780$\\
+    \phantom{\hspace{1cm}}4.选择$e$, 满足$1<e<780$, 并且与$\lambda(n)$互质\\
+    \phantom{\hspace{2cm}}e=17\\
+    \phantom{\hspace{1cm}}5.计算$d$\\
+    \phantom{\hspace{2cm}}$d\times 17\equiv 1\quad(mod\quad 780)\qquad\Longrightarrow\qquad d=413$\\
+    加密:\\
+    \phantom{\hspace{1cm}}假设$m=65$\\
+    \phantom{\hspace{1cm}}$c=m^e\ mod\ n=65^{17}\ mod\ 3233=2790$\\
+    解密:\\
+    \phantom{\hspace{1cm}}$m=c^d\ mod\ n=2790^{413}\ mod\ 3233=65$\\
+\end{document}

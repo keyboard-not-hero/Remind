@@ -438,7 +438,10 @@ include=etc/php-fpm.d/*conf
 steven@steven-MSI:~$ sudo vi /usr/local/etc/php-fpm.d/www.conf
 user = www-data
 group = www-data
-listen = 127.0.0.1:9000
+listen = /usr/local/php/php-fpm.sock
+
+listen.owner = www-data
+listen.group = www-data
 
 steven@steven-MSI:~$ sudo php-fpm
 
@@ -457,7 +460,7 @@ index index.html index.htm index.php;
 location ~ \.php$ {
     root           html;
     # fastcgi_pass需要与php-fpm配置文件的listen一致(sock或ip:port)
-    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_pass   unix:/usr/local/php/php-fpm.sock;
     fastcgi_index  index.php;
     # if nginx build from source, take care the $document_root
     fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;

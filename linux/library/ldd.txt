@@ -1,0 +1,25 @@
+ldd - 显示程序或库的动态依赖库
+
+语法
+ldd [option...] file...
+
+参数释义
+--version
+    版本信息
+    
+-v, --verbose
+    详细信息, 显示动态依赖库的二级依赖
+
+-u, --unused
+    无法定位的依赖库
+
+--help
+    帮助信息
+
+
+file
+    使用绝对路径指定的程序/库
+
+
+示例1 - 查看openssl依赖的动态库
+ldd /usr/local/bin/openssl

@@ -1,0 +1,59 @@
+mysql database
+1.global_priv(自MariaDB 10.4.1版本, 用于替换mysql.user table)
+用途: 对MariaDB server的访问权限
+
+table字段:
+Host
+    可以访问Server的host
+
+User
+    访问的用户名
+
+Priv
+    权限字段, 使用json格式. 可使用JSON_DETAILED提取
+
+例.
+select Host, User, JSON_DETAILED(Priv) from mysql.global_priv;
+
+
+2.user(自MariaDB 10.4.1版本, 可使用mysql.global table替换)
+用途: 对MariaDB server的访问权限
+
+table字段:
+Host
+    可以访问Server的host
+
+User
+    访问的用户名
+
+Password
+    用户的密码
+    格式: hash字符串
+    可使用password()方法生成该字符串
+
+Select_priv
+Insert_priv
+Update_priv
+Delete_priv
+    可使用select/insert/update/delete语句
+
+Create_priv
+Drop_pri
+    可使用create/drop databse和create/drop table语句
+
+Reload_priv
+    可使用flush语句
+
+Shutdown_priv
+    可使用shutdown语句
+    shutdown用于关闭MariaDB server, 但不退出db cmd环境
+
+Process_priv
+    可使用show processlist语句
+
+File_priv
+    读取/写入文件的权限
+    如: load data infile
+
+Grant_priv
+    可使用grant语句
