@@ -1,6 +1,7 @@
 uuid生成方式：
 I.system进程：cat /proc/sys/kernel/random/uuid
 II.工具网站在线生成：http://www.uuid.online/
+III.v2ctl工具生成: v2ctl uuid
 
 
 服务器端v2ray文件结构符合FHS标准, 如下:
@@ -17,7 +18,7 @@ II.工具网站在线生成：http://www.uuid.online/
 
 
 语法检查
-/usr/local/bin/v2ray --test --config /usr/local/etc/v2ray/config.json
+/usr/local/bin/v2ray -test -config /usr/local/etc/v2ray/config.json
 
 
 v2ray须知：
@@ -44,6 +45,8 @@ v2ray须知：
 
 
 引用:
-[1] github地址：https://github.com/v2ray/v2ray-core
-[2] 官方手册地址：https://www.v2ray.com/
-[3] 配置参考地址：https://toutyrater.github.io/
+[1] github地址: https://github.com/v2fly/v2ray-core
+
+[2] 官方手册地址: https://www.v2fly.org/
+
+[3] 配置参考地址: https://guide.v2fly.org/

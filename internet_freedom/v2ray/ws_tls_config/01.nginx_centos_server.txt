@@ -6,6 +6,9 @@
 [root@~ ]$ vi /etc/nginx/nginx.conf
 server {
     location /ray { # the same with v2ray path config
+        if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+            return 404;
+        }
         proxy_redirect off;
         proxy_pass http://127.0.0.1:10000; # nginx proxy traffic to port 1000
         proxy_http_version 1.1;

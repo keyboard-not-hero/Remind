@@ -1,6 +1,6 @@
 1.下载v2ray
 下载地址:
-https://github.com/v2ray/v2ray-core/releases
+https://github.com/v2fly/v2ray-core/releases
 
 
 2.解压缩:

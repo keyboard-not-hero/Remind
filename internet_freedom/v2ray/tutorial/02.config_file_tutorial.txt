@@ -1,479 +1,340 @@
+## 架构概览:
 {
-  # RFC API
-  "api": {},
+    "log": {},
+    "dns": {},
+    "inbounds": [],
+    "outbounds": [],
+    "api": {},
+    "routing": {},
+    "policy": {},
+    "transport": {},
+    "stats": {},
+    "reverse": {},
+    "fakedns": [],
+    "browserForwarder": {},
+    "observatory": {}
+}
+
+## 详细配置
+#1 日志配置
+"log": {
+    # 定义error记录日志等级
+    # 日志等级列表:
+    #     "Debug" - 最详细的信息
+    #     "Info" - 运行时的状态信息
+    #     "Warning" - 可能出现问题, 但不影响运行
+    #     "Error" - 无法正常运行
+    #     "None" - 不记录任何信息
+    "loglevel": "info",
+
+    # 访问日志输出地址, 默认为stdout
+    # 输出格式列表:
+    #     "none" - 不输出信息
+    #     "" - 输出到stdout
+    #     <string> - 字符串格式的路径
+    "access": "/var/log/access.log",
+
+    # 错误日志输出地址, 默认为stdout
+    # 输出格式列表:
+    #     "none" - 不输出信息
+    #     "" - 输出到stdout
+    #     <string> - 字符串格式的路径
+    "error": "/var/log/error.log"
+},
 
 
-  # 内部DNS配置，否则使用system的DNS配置
-  "dns": {},
 
 
-  # 入向流量，数组形式
-  "inbound": [
-    {
-      # 监听端口
-      "port": <number>,
-      
-      # 监听地址，默认为0.0.0.0
-      "listen": "<IP>",
+#2 内部DNS配置, 否则使用system的DNS配置
+"dns": {},
+
+
+
+
+#3 入向流量, 数组形式
+"inbound": [{
+    # 监听的IP地址, 默认为0.0.0.0
+    "listen": "<IP>",
   
-      # 传输协议
-      "protocol": "<pro_name>",
-      #协议名称列表:
-      # Dokodemo - 监听本地端口，并且将其转发至指定服务器端口，达到端口映射
-      # HTTP - 使用HTTP协议
-      # MTProto - Telegram专用协议
-      # Shadowsocks - Shadowsocks兼容协议
-      # SOCKS - socks协议，支持socks4/socks4a/socks5
-      # VMess - 加密传输协议，依赖于系统时间，C/S的utc时间相差不能超过90s，与时区无关
 
-      # 协议相关配置
-      "settings": {
-        # 1.Dokodemo对应配置
-        # 转发的目标IP和端口，followRedirect为true时，可忽略
-        "address": "<des_ip>",
-        "port": <port>,
-        # 转发的流量类型，默认为tcp
-        "network": "tcp" | "udp" | "tcp,udp",
-        # 入站数据的时间限制，默认为300s
-        "timeout": <timeout>,
-        # 接受iptables配置的转发目标IP和port
-        "followRedirect": false,
-        "userLevel": <level>
+    # 监听端口
+    # 端口类型:
+    #     <number> - 具体的端口号
+    #     "env:<VAR_ENV>" - 从环境变量读取端口值
+    #     "<string>" - 具体数值, 开放一个端口; 数值范围, 参考allocate参数
+    "port": <number>|<string>,
 
-        # 2.HTTP配置
-        # 读取超时，默认为300s
-        "timeout": <timeout>,
-        "accounts": [
-          "user": "<user_name>",
-          "pass": "<passwd>"
-        ],
-        "allowTransparent": false,
-        "userLevel": <levle>
+  
+    # 入站传输协议
+    # 支持的协议列表:
+    # Dokodemo - 监听本地端口, 并且将其转发至指定服务器端口, 达到端口映射
+    # HTTP - 使用HTTP协议. 没有加密, 适宜本机或局域网监听
+    # SOCKS - socks5协议, 适宜本机或局域网监听
+    # Shadowsocks - Shadowsocks兼容协议
+    # Trojan - 需工作在TLS隧道中
+    # VLESS - 无状态的轻量传输协议, 不自带加密, 需配合TLS
+    # VMess - 加密传输协议, 依赖于系统时间, C/S的utc时间相差不能超过90s, 与时区无关
+    "protocol": "<pro_name>",
 
-        # 3.MTProto对应配置
-        "users": [
-          {
-            "email": "<email>",
-            "level": <level>,
-            # 密钥，生成指令：openssl rand -hex 16
-            "secret": "<ID>"
-          }
-        ]
 
-        # 4.Shadowsocks对应配置
-        # 邮件名，用于标识用户
-        "email": "<email>",
-        # 加密方式
-        "method": "<encryp_method>",
-        # 密码
-        "password": "<passwd>",
-        "level": <level>,
-        # 是否强制使用OTA机制
-        "ota": true,
-        # 可接受的连接类型
-        "network": "tcp" | "udp" | "tcp,udp"
-
-        # 5.SOCKS对应配置
-        # 支持的认证方式，可选noauth/password，默认为noauth
-        "auth": "noauth",
-        # 认证用户信息，auth为password时有效
-        "accounts": [
-          {
-            "user": "<user_name>",
-            "pass": "<passwd>"
-          }
-        ],
-        # 是否开启udp协议支持，默认为false
-        "udp": false,
-        # 当开启udp协议支持时，本机的ip地址
-        "ip": "<ip>",
+    # 协议相关配置
+    "settings": {
+        # Dokodemo对应配置
+        # 转发的目标IP, followRedirect为true时, 可忽略
+        "address": "<ip>",
+        # 转发的目标端口
+        "port": <number>,
+        # 可接收的流量类型, 默认为tcp
+        "networks": "tcp" | "udp" | "tcp,udp",
+        # 是否识别iptables转发而来的数据
+        "followRedirect": true | false,
+        # 用户等级
         "userLevel": <number>
 
-        # 6.VMess对应配置
-        # 服务器认证用户
-        "clients": [
-          {
+        # HTTP配置
+        # 没有传输加密, 适用于本机或局域网
+        # 从客户端读取的超时限制, 0表示不限时, 默认为300
+        "timeout": <number>,
+        # 对连接进行账号验证, 留空不进行验证
+        "accounts":[{
+            "user": "david",
+            "pass": "hatelily"
+        },{
+            "user": "tom",
+            "pass": "lovelucy"
+        }],
+        # 是否转发请求, 而非代理, 设置不当容易造成死循环
+        "allowTransparent": true | false,
+        # 用户等级
+        "userLevel": <number>
+
+        # SOCKS对应配置
+        # 没有传输加密, 适用于本机或局域网
+        # 认证方式:
+        #     "noauth" - 匿名方式
+        #     "password" - 账号密码方式, 参考accounts参数
+        "auth": "noauth",
+        # auth参数为password时的账号密码数组
+        "accounts": [{
+            "user": "david",
+            "pass": "hatelily"
+        },{
+            "user": "tom",
+            "pass": "lovelucy"
+        }],
+        # 是否开启udp协议支持, 默认为false
+        "udp": true | false,
+        # 用户等级
+        "userLevel": <number>
+   
+        # Shadowsocks对应配置
+        # 密码加密方式
+        # 加密方式列表:
+        #     "none" - 服务器不验证密码
+        #     "plain" - 不对密码进行加密
+        #     "aes-128-gcm"
+        #     "aes-256-gcm" 
+        #     "chacha20-poly1305" 
+        # 手机使用chacha20-poly1305可获得更好体验, 电脑使用aes-gcm体验更好(当有aes加速)
+        # 查看电脑是否有aes加速:
+        #     grep -m1 -o aes /proc/cpuinfo
+        "method": "<string>",
+        # 密码
+        "password": "<string>",
+        # 用户等级, 默认为0
+        "level": <number>,
+        # 可接收的入站流量类型
+        # 类型列表:
+        #     "tcp" - 只接受tcp流量, 默认值
+        #     "udp" - 只接受udp流量
+        #     "tcp,udp" - 只接受tcp和udp流量
+        "network": "<string>"
+        
+        # Trojan配置
+        "clients": [{
+            # 密码
+            "password": <string>,
+            # 用户等级
+            "level": <number>,
+            # 邮箱, 用于区分不同用户
+            "email": <string>
+        }],
+
+        # VLESS配置
+        # VLESS没有自带加密, 必须使用TLS
+        # VLESS不依赖于系统时间, 同样使用UUID, 但不需要alterId
+        "clients": [{
             "id": "<UUID>",
-            "level": <level>,
+            # 用户等级
+            "level": <number>,
+            # 邮箱, 用于区分不同用户
+            "email": <string>
+        }],
+        # 解密方式(不能留空), 该字段用于以后添加的加密方式
+        "decryption": "none"
+
+        # VMess对应配置
+        # VMess依赖于系统时间, C/S误差不能超过90s, 与时区无关
+        # 服务器认证用户
+        "clients": [{
+            "id": "<UUID>",
+            # v4.28.1版本之后必须设置为0, 以启动VMess AEAD
             "alterId": <number>,
-            "email": "<email>"
-          }
-        ]
-        # 用户配置默认信息，结合detour使用
-        "default" {
-          "level": <level>,
-          "alterId": <number>
-        },
-        # 转发用户请求到另一个服务器
-        "detour": {
-          "to": "tag_to_detour"
-        },
-        # 是否禁止客户端使用不安全的加密方式，默认为false。不安全加密方式 - none/aes-128-cfb
+            # 用户等级
+            "level": <number>,
+            # 邮箱, 用于区分不同用户
+            "email": <string>
+        }],
+        # 是否禁止客户端指定不安全的加密方式, 默认为false
+        # 不安全加密列表: 
+        #     "none"/"aes-128/cfb"
         "disableInsecureEncryption": false
-      },
-     
-      # 流量探测
-      "sniffing": {
-        #是否开启流量探测
-        "enabled": true|false,
 
-        # 入向连接流量类型制定
-        "destOverride": ["http", "tls"]
-      },
+    },
 
-      # 底层连接配置(入向配置)
-      "streamSettings": {
-        # 流传输类型，默认为TCP，列表：
-        # tcp - 是否使用http伪装
-        # kcp - mKCP使用UDP模拟TCP连接，牺牲带宽降低延迟
-        # ws - websocket伪装
-        # http
-        # domainsocket
-        # quic
-        "network": "tcp",
-
-        # 加密策略，列表 - [none, tls]，默认为none
+    # stream配置
+    "streamSettings": {
+        # 数据流使用的网络类型, 默认为tcp. 列表如下:
+        #     "tcp"/"kcp"/"ws"/"http"/"domainsocket"/"quic"/"grpc"
+        "network": "<string>",
+        # 是否启用传输层加密, 由客户端指定, 服务器自适应, 默认为none
+        # 列表:
+        #     "none"/"tls"
         "security": "none",
-
-        # TLS配置(服务器端)，不支持DTLS - UDP版本TLS
-        "tlsSettings": {
-          # 用于ip请求时，调用的域名。域名请求不需要配置
-          "serverName": "<domain>",
-
-          # 是否允许不安全连接(用户客户端)，即不检查服务器TLS证书有效性
-          "allowInsecure": false,
-
-          # 客户端向服务器发送支持的协议。默认为http/1.1
-          "alpn": ["http/1.1"],
-
-          # 可使用证书列表
-          "certificates": [
-            # 证书的用途，默认为encipherment。列表：
-            # encipherment - 用于TLS认证与加密
-            # verify - 用于验证远端TLS证书。当前证书必须为CA证书
-            # issue - 用于签发其他证书。当前证书必须为CA证书
-            "usage": "encipherment",
-            # 证书文件路径，生成指令：v2ctl cert -ca，后缀为.crt
-            "certificateFile": "<cert_path>",
-            # 密钥文件路径，后缀为.key。目前暂时不支持
-            "keyFile": "<key_path>",
-            # 证书内容，与certificateFile二选一。同时指定优先选择certificateFile
-            "certificate": [
-              "---BEGIN CERTIFICATE---",
-              ...
-              "---END CERTIFICATE---"
-            ],
-            # 密钥内容，与keyFile二选一
-            "key": [
-              "---BEGIN RSA PRIVATE KEY---",
-              ...
-              "---END RSA PRIVATE KEY---"
-            ]
-          ],
- 
-          # 是否禁用系统自带CA证书，默认为false
-          "disableSystemRoot": false | true,
-
-          # 是否允许使用不安全的密码套件，默认为false，只允许使用TLS103。切换为true后，可接受RSA秘钥
-          allowInsecureCiphers: true | false
-        },
-
-        # TCP连接配置
-        "tcpSettings": {
-          # tcp数据包头部伪装配置
-          "header": {
-            # 头部伪装类型，默认为none，列表：
-            # none - 没有头部伪装
-            # http - 使用http伪装头部
-            "type": "http"
-            # 伪装的http请求信息
-            "request": {
-              # http版本，默认为1.1
-              "version": "1.1",
-              # http方法，默认为GET
-              "method": "GET",
-              # 请求路径数组，每次请求随机选取元素，元素值基于documentRoot(如：/var/www/html)
-              "path": ["/"],
-              # http头，每个键都是数组，每次请求从数组中随机选取
-              "header": {
-                "Host": ["www.baidu.com"],
-                "User-Agent": [
-                  "Mozilla/5.0 (Windows NT 10.0;WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-                  "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
-                ],
-                "Accept-Encoding": ["gzip, deflate"],
-                "Connection": ["keep-alive"],
-                "Pragma": "no-cache"
-              }
-            },
-
-            "response": {
-              "version": "1.1",
-              "status": "200",
-              "reason": "OK",
-              "headers": {
-                "Content-Type": <str_arr>,
-                "Transfer-Encoding": <str_arr>,
-                "Connection": <str_arr>,
-                "Pragma": "no-cache"
-              }
-            }
-          }
-        },
-
-        # mKCP连接配置
-        "kcpSettings": {
-          # MTU，介于576-1460之间，默认为1350
-          "mtu": 1350,
-          # 传输时间间隔(transmission time interval)，单位为ms，介于10-100，默认为50
-          "tti": 20,
-          # 上行链路最大带宽，默认为5 MBit/S
-          "uplinkCapacity": 5,
-          # 下行链路最大带宽，默认为20 MBit/S
-          "downlinkCapacity": 20,
-          # 是否启用拥塞控制，默认为false
-          "congestion": false,
-          # 单个连接的读取缓冲区大小，默认为2 MBit/s
-          "readBufferSize": 1,
-          # 单个连接的写入缓冲区大小，默认为2 MBit/s
-          "writeBufferSize": 1,
-          # 数据包伪装配置
-          "header": {
-            # 伪装类型，默认为none，列表：
-            # none - 不进行伪装
-       　   # srtp - 伪装成SRTP数据包，识别为视频通话
-            # utp - 伪装成UTP数据包，识别为BT下载
-            # wechat-video - 伪装成微信视频通话
-            # dtls - 伪装成DTLS1.2数据包
-            # wireguard - 伪装成WireGuard数据包
-            "type": "none"
-          }
-        },
-
-        # WebSocket连接配置
+        # TLS的详细配置
         "wsSettings": {
-          # WebSocket使用的HTTP协议路径。默认为'/'
-          "path": "/",
-
-          # 自定义HTTP头
-          "headers": {
-            "Host": "v2ray.com"
-          }
-        },
-
-        # HTTP/2连接配置
-        "httpSettings": {},
-
-        # Domain Socket连接配置
-        "dsSettings": {},
-
-        # QUIC连接配置(V2Ray 4.7+)
-        "quicSettings": {},
-
-        "sockopt": {
-          # 用于出站接口，值为非0时，接口标记SO_MARK。限制：
-          # 仅适用于Linux
-          # 需要CAP_NET_ADMIN权限
-          "mark": 0,
-          # 是否强制开启TCP Fast Open，操作系统限制：
-          # Windows 10(1604)
-          # Mac OS 10.11/IOS 9
-          # Linux 3.16(系统默认开启)
-          "tcpFastOpen": false,
-          # 是否开启透明代理(仅适用于Linux)，代理需要root或CAP_NET_ADMIN权限，列表：
-          # redirect - 使用redirect模式透明代理。支持TCP/IPv4和UDP连接
-          # tproxy - 使用tproxy模式透明代理。支持TCP和UDP连接
-          # off - 关闭透明代理
-          "tproxy": "off"
+            # WebSocket使用的HTTP协议路径, 默认值为"/"
+            "path": <string>,
+            # 自定义HTTP header
+            "headers":{
+                "Host": <string>,
+                ...
+            }
         }
-      },
- 
-      # 入站标识，用于routing字段定位
-      "tag": "<label>",
+    },
 
-      # 端口分配
-      "allocate": {
-        # 端口监听类型，always为port指定的所有端口进行同时监听，random代表同时监听端口数量为concurrency指定数量
-        "strategy": "always|random",
+    # 当前入站连接的tag, 用于定位
+    "tag": <string>,
+  
+    # 端口分配策略
+    "allocate": {
+        # 端口分配策略, 列表如下:
+        #     "always" - 总是分配port指定的所有端口
+        #     "random" - 每间隔refresh时间, 在port范围内选取concurrency个端口来进行监听
+        "strategy": "always",
 
-        # 监听端口分配刷新间隔
+        # 监听端口分配刷新间隔, 单位为min, 只有strategy为random时有效
+        # 最小值为2, 建议值为5
         "refresh": <number>,
 
-        # random模式下，同时监听的端口数量
+        # 同时开启的端口数量, 只有strategy为random时有效
         "concurrency": <number>
-      }
-    },
-    {
-      备用入站选项
     }
-    ...
-  ],
+}],
 
 
-  # 日志配置
-  "log": {
-    # 访问日志输出地址，默认为stdout
-    "access": "<fp>",
-    
-    # 错误日志输出地址，默认为stdout
-    "error": "<fp>",
+# 出向流量
+"outbound": [{
+    # 用于本机发送数据的IP地址
+    "sendThrough": "0.0.0.0",      
 
-    # 错误日志级别
-    "loglevel": "<log_level>"
-    # 列表 - [debug, info, warning, error, non]
-  },
-
-
-  # 出向流量
-  "outbound": [
-    {
-      # 用于发送数据的IP地址
-      "sendThrough": "0.0.0.0",      
-
-      # 传输协议
-      "protocol": "<pro_name>",
-
-      #协议名称列表:
-      # Blackhole - 将输出数据灌到黑洞
-      # DNS - 拦截和转发DNS查询至指定DNS服务器(V2Ray 4.16+)
-      # Freedom - 用来向任意网络发送TCP或UDP数据
-      # HTTP - 使用HTTP协议。未加密，不适用于公网传输
-      # MTProto - Telegram专用代理协议
-      # Shadowsocks - 与shadowsocks协议兼容
-      # SOCKS - 使用Socks协议，兼容Socks 4/Socks 4a/Socks 5。未加密，不适用于公网传输
-      # VMess - 加密传输协议。依赖于系统时间，C/S的UTC时间误差必须在90s以内，与时区无关
+    # 出站协议
+    # 支持的出站协议列表:
+    # Blackhole - 阻碍数据出站, 配合路由(routing), 可禁止访问某些网站
+    # DNS - 拦截和转发DNS查询至指定DNS服务器(V2Ray 4.16+)
+    # Freedom - 用来向任意网络发送TCP或UDP数据
+    # HTTP - 使用HTTP协议. 未加密, 不适用于公网传输
+    # SOCKS - 使用Socks协议, 兼容Socks 4/Socks 4a/Socks 5. 未加密, 不适用于公网传输
+    # Shadowsocks - 与shadowsocks协议兼容
+    # VLESS - 无状态的轻量传输协议
+    # VMess - 加密传输协议. 依赖于系统时间, C/S的UTC时间误差必须在90s以内, 与时区无关
+    "protocol": "<string>",
 
 
-      # 协议相关配置
-      "settings": {
+    # 协议相关配置
+    "settings": {
         # Blackhole对应配置
         "response": {
-          #该接口对请求的响应类型，不响应直接丢弃(none)或返回HTTP 403(http)
-          "type": "none|http"
+            # 响应类型, 列表如下:
+            #     "none" - 直接关闭连接, 默认值
+            #     "http" - 返回HTTP 403
+            "type": "none"
         }
 
         # DNS对应配置
-        # 将DNS的传输层协议修改为tcp或udp
+        # 将DNS的传输层协议修改为指定协议, 未指定保持不变. 列表如下:
+        #     "tcp"/"udp"
         "network": "tcp",
+        # DNS服务器地址, 未指定保持不变
         "address": "1.1.1.1",
+        # DNS服务器端口, 未指定保持不变
         "port": 53
 
-        # Freedom对应配置
-        # domainStrategyd代表针对域名的连接方式，列表：
-        #   AsIs - 直接向域名发起连接
-        #   UseIP - 解析为IP再连接。根据sendThrough标记的IP类型判断v4/v6
-        #   UseIPv4 - 解析为IPv4再连接
-        #   UseIPv6 - 解析为IPv6再连接
+        # Freedom配置
+        # 当目标地址为域名时, 采取的操作, 列表如下:
+        #     "AsIs" - 直接向该域名发出连接, 默认选项
+        #     "UseIP" - 解析为IP后再发出连接, 当设置了sendThrough时, 根据该类型判断解析为IPv4或IPv6
+        #     "UseIPv4" - 解析为IPv4后再发出连接
+        #     "UseIPv6" - 解析为IPv6后再发出连接
+        # 解析操作通过内建dns
         "domainStrategy": "AsIs",
-        # redirect代表重定向，将所有请求重定向到指定IP和port，":443"代表只重定向port，"IP:0"代表只重定向IP。IP也可替换为域名
-        "redirect": "127.0.0.1:2266",
-        "userLevel": 0
+        # 将入向流量目标地址进行重导向. 列表如下:
+        #     "127.0.0.1:80" - 重导向IP和port
+        #     "223.5.5.5:" - 重导向IP
+        #     ":123" - 重导向port
+        "redirect": "127.0.0.1:80",
+        # 用户等级
+        "userLevel": <number>
 
-        # Shadowsocks对应配置
-        "server": [
-          {
-            # 用于标识用户
-            "email": "<email>",
-            # 服务器地址，支持IPv4/IPv6/域名
-            "address": "<server_IP>",
-            # 服务器端口
+        # VLESS配置
+        "vnext":[{
+            # 服务器的IP或域名
+            "address": <string>,
+            # 服务器的端口
             "port": <number>,
-            # 加密方式，列表 - [aes-128-cfb, aes-256-cfb, chacha20, chacha20-ietf, aes-128-gcm, aes-256-gcm, chacha20-poly1305]
-            "method": "<encrypt_method>",
-            # 密码
-            "password": "<passwd>",
-            # 是否开启一次验证(one time auth)
-            "ota": true | false,
-            # 用户等级
-            "level": <number>,
-          }
-        ]
-
-        # SOCKS对应配置
-        "servers": [{
-          "address": "127.0.0.1",
-          "port": 1234,
-          # 用户认证信息
-          "user": [
-            {
-              "user": "<user_name>",
-              "pass": "<passwd>",
-              "level": 0
-            }
-          ]
+            # 服务器认可的账号信息
+            "users":[
+                # UUID
+                "id": <uuid>,
+                # 加密方式(不能留空), 值为"none", 用于后续拓展
+                "encryption": "none",
+                # 用户等级
+                "level": <number>
+            ]
         }]
 
-        # VMess对应配置
-        "vnext": [
-          {
-            "address": "<serv_add>",
-            "port": <port_num>,
-            "users": [
-              {
-                # C/S端认证UUID
-                "id": "<UUID>",
-                # 额外生成ID数量，用户防探测。默认值为0，推荐为4，不能超过服务器端指定值
+        # VMess配置
+        "vnext":[{
+            # 服务器的IP或域名
+            "address": <string>,
+            # 服务器的端口
+            "port": <number>,
+            # 服务器认可的账号信息
+            "users":[
+                # UUID
+                "id": <uuid>,
+                # alterId, 默认为0. v4.28.1之后建议设置为0
                 "alterId": <number>,
-                # 加密方式，客户端配置，服务器自动识别。列表：
-                # aes-128-gcm - 适用于PC使用
-                # chacha20-poly1305 - 适用于手机端使用
-                # auto - 默认值，自动选择。安全性与兼容性最高
-                # none - 不加密    
+                # 加密方式, 建议使用"auto". 可选列表:
+                #     "aes-128-gcm" - 在有aes加速的pc上体验较好
+                #     "chacha20-poly1305" - 在手机端体验较好
+                #     "auto" - 自动根据架构选择, 默认值
+                #     "none" - 不加密
+                #     "zero" - 不加密, 也不进行消息认证
                 "security": "auto",
-                "level": <user_level>
-              }
+                # 用户等级
+                "level": <number>
             ]
-          }
-        ] 
-      },
+        }]
+    }
+}],
+
+# 路由
+"routing": {},
   
-      "tag": "<label>",
+# 本地策略权限相关(包含用户等级)
+"policy": {},
 
-      "streamSettings": {
-      },
+# 反向代理
+"reverse": {},
 
-      "proxySettings": {
-        # 当前outbound的协议类型，转化为包含该tag的outbound的协议类型
-        "tag": "another-outbound-tag"
-      }
-
-      "mux": {
-        # 是否开启mux，只在客户端配置
-        "enable": true
-      }
-    },{}...   
-  ],
-
-  # 本地策略权限相关
-  "policy": {},
-
-  # 反向代理
-  "reverse": {},
-
-  # 路由
-  "routing": {},
-  
-  # 信息统计
-  "stats": {},
-
-  # 底层传输配置(全局配置，入向和出向默认使用该配置)
-  "transport": {
-    # TCP连接配置
-    "tcpSettings": {},
-
-    # mKCP连接配置
-    "kcpSettings": {},
-
-    # WebSocket连接配置
-    "wsSettings": {},
-
-    # HTTP/2连接配置
-    "httpSettings": {},
-
-    # Domain Socket连接配置
-    "dsSettings": {},
-
-    # QUIC连接配置(V2Ray 4.7+)
-    "quicSettings": {}
-  }
-}
