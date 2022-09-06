@@ -17,7 +17,8 @@ sudo apt-get purge ibus
 sudo dpkg -i sogoupinyin_<version>.deb
 
 6.安装输入法依赖
-sudo apt install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2sudo apt install libgsettings-qt1
+sudo apt install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2
+sudo apt install libgsettings-qt1
 
 7.重启
 

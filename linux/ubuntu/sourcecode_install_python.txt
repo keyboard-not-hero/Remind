@@ -4,89 +4,111 @@ packages.ubuntu.com
 
 python3编译：
 1.必要环境安装
-[thompson@~] sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
+steven@steven:~$ sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
 
 
-2.openssl编译(需大于等于1.0.2)
-[thompson@~] cd /tmp && git clone https://github.com/openssl/openssl.git && cd openssl
+2.openssl编译
+steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
 
-# openssl默认安装路径为/usr/local(即--prefix=/usr/local)，对应动态库安装路径为/usr/local/lib
-[thompson@openssl] ./config
+下载参考列表: https://www.openssl.org/source/
 
-[thompson@openssl] nproc
-16
+# 安装前提环境(perl版本至少为5.10.0)
+1)make
+2)gcc
+3)perl 5 and core
+4)perl module `Text::Template`
+steven@steven:~$ sudo apt install gcc make perl
 
-[thompson@openssl] make -j16
+steven@steven:~$ sudo apt search Text::Template
 
-[thompson@openssl] sudo make install
+steven@steven:~$ sudo apt install libtext-template-perl
+
+# 安装
+steven@steven:~$ tar -zxvf openssl-3.0.5.tar.gz -C /tmp
+
+steven@steven:~$ cd /tmp/openssl-3.0.5/
+
+# 设置RPATH
+steven@steven:~$ ./Configure -Wl,-rpath,/usr/local/ssl/lib
+或者
+
+# 设置RUNPATH
+steven@steven:~$ ./Configure -Wl,--enable-new-dtags,-rpath,/usr/local/ssl/lib
+
+steven@steven:~$ make
+
+steven@steven:~$ sudo make install
+
+steven@steven:~$ sudo mkdir -p /usr/local/ssl/lib
+
+steven@steven:~$ sudo cp libssl.so.3 /usr/local/ssl/lib
+
+steven@steven:~$ sudo cp libcrypto.so.3 /usr/local/ssl/lib
+
+#Shared objects are searched for in this order:
+#    1. Using directories specified in rpath(-Wl,-rpath,<path>)
+#    2. Using the environment variable LD_LIBRARY_PATH
+#    3. Using directories specified in runpath(-Wl,--enable-new-dtags,-path,<path>)
+#    4. Using system shared object caches and default directories
+
+# 验证rpath/runpath
+steven@steven:~$ readelf /usr/local/bin/openssl -d | grep path
+0x000000000000000f (RPATH)              Library rpath: [/usr/local/ssl/lib]
 
 
 3.tcl/tk编译
 下载地址：http://www.tcl.tk/software/tcltk/download.html
 
-[thompson@Downloads] sudo tar -zxf tcl8.6.10-src.tar.gz -C /usr/local/src
+steven@steven:~$ tar -zxf tcl8.6.10-src.tar.gz -C /tmp
 
-[thompson@Downloads] cd /usr/local/src/tcl8.6.10/unix
+steven@steven:~$ cd /tmp/tcl8.6.10/unix
 
-[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
+steven@steven:~$ ./configure
 
-[thompson@unix] sudo make -j16
+steven@steven:~$ make -j16
 
-[thompson@unix] sudo make install
+steven@steven:~$ sudo make install
 
 ------------------------------------------------------------
 
-[thompson@Downloads] sudo tar -zxf tk8.6.10-src.tar.gz -C /usr/local/src
+steven@steven:~$ tar -zxf tk8.6.10-src.tar.gz -C /tmp
 
-[thompson@Downloads] cd /usr/local/src/tk8.6.10/unix
+steven@steven:~$ cd /tmp/tk8.6.10/unix
 
-[thompson@unix] sudo apt-get install libx11-dev
+steven@steven:~$ sudo apt-get install libx11-dev
 
-[thompson@unix] sudo ./configure --prefix=/usr/local/tcl
+steven@steven:~$ ./configure
 
-[thompson@unix] sudo make -j16
+steven@steven:~$ make -j16
 
-[thompson@unix] sudo make install
+steven@steven:~$ sudo make install
 
-[thompson@unix] cd;sudo rm -rf /usr/local/src/tcl8.6.10;sudo rm -rf /usr/local/src/tk8.6.10
+steven@steven:~$ sudo ldconfig
 
 
 4.编译python
 下载python
-[thompson@~] curl -O https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tar.xz
+steven@steven:~$ curl -O https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tar.xz
 
-[thompson@~] sudo tar -Jxf Python-3.8.7.tar.xz -C /usr/local/src
+steven@steven:~$ tar -Jxf Python-3.10.6.tar.xz -C /tmp
 
 # 试编译
-[thompson@~] cd /usr/local/src/Python3.8.7
+steven@steven:~$ cd /tmp/Python3.10.6
 
-[thompson@Python3.8.7] sudo make distclean
+steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/ssl/lib
 
-[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python
+steven@steven:~$ make -j16
 
-[thompson@Python3.8.7] sudo make -j16
+steven@steven:~$ sudo make install
 
-# 重新编译
-[thompson@Python3.8.7] sudo make distclean
+steven@steven:~$ sudo chown -R thompson:thompson /usr/local/python
 
-# 参考引用[1]
-[thompson@Python3.8.7] sudo ./configure --prefix=/usr/local/python --with-tcltk-includes="-I/usr/local/tcl/include -I/usr/local/tcl/include" --with-tcltk-libs="-L/usr/local/tcl/lib -ltcl8.6 -L/usr/local/tcl/lib -ltk8.6 -Wl,-rpath,/usr/local/tcl/lib -Wl,-rpath,/usr/local/tcl/lib"
+steven@steven:~$ sudo ln -s /usr/local/python/bin/python3.10 /usr/bin/python
 
-[thompson@Python3.8.7] sudo make -j16
-
-[thompson@Python3.8.7] sudo make test
-
-[thompson@Python3.8.7] sudo make install
-
-[thompson@Python3.8.7] sudo chown -R thompson:thompson /usr/local/python
-
-[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/python3.8 /usr/bin/python
-
-[thompson@Python3.8.7] sudo ln -s /usr/local/python/bin/pip3.8 /usr/bin/pip
-
-[thompson@Python3.8.7] cd;sudo rm -rf /usr/local/src/Python-3.8.7
-
+steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.10 /usr/bin/pip
 ** warning: 使用python/pip指令名称，与系统自带python3版本区分
+
+
 
 报错集：
 1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
@@ -138,24 +160,9 @@ sudo apt purge python3-apt
 sudo apt autoremove
 sudo apt install python3-apt
 
-5.编译python出现提示libssl.so.3和libcrypto.so.3 not found，这两个动态库属于程序openssl
-[thompson@~] ldd /usr/local/bin/openssl
-    libssl.so.3 ==> not found
-    libcrypto.so.3 ==> not found
-
-解决:
-系统默认查找库为/lib、/usr/lib，而第2步的openssl库默认安装在/usr/local/lib下。创建软链接
-[thompson@Python3.8.7] sudo ln -s /usr/local/lib/libssl.so.3 /usr/lib/libssl.so.3
-[thompson@Python3.8.7] sudo ln -s /usr/local/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3
-
-6.编译python出现提示_tkinter not found
-解决(setup.py的detect_tkinter_explicitly方法中注释内容):
-sudo ./configure添加如下参数:
---with-tcltk-includes="-I/path/to/tclincludes -I/path/to/tkincludes"
---with-tcltk-libs="-L/path/to/tcllibs -ltcl8.6 -L/path/to/tklibs -ltk8.6"
 
 引用:
 [1]tkinter error: https://bugs.python.org/issue31817
 
 
-编辑于: 2021-01-04
+编辑于: 2022-09-06

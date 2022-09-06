@@ -1,0 +1,119 @@
+CUDA与TensorFlow参照表
+https://www.tensorflow.org/install/source#linux
+
+1.安装CUDA 11.2
+# 确保linux-headers安装
+sudo apt install linux-headers-$(uname -r)
+
+CUDA下载列表: 
+https://developer.nvidia.com/cuda-toolkit-archive
+
+curl -O https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+
+curl -O https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb
+
+sudo dpkg -i cuda-repo-ubuntu2004-11-1-local_11.1.1-455.32.00-1_amd64.deb
+
+sudo apt-key add /var/cuda-repo-ubuntu2004-11-1-local/7fa2af80.pub
+
+sudo apt-get update
+
+sudo apt-get -y install cuda
+** 注意: 某些kernel与nvidia-driver-460不兼容, 可更换其他kernel后尝试
+
+# 添加path
+export PATH=/usr/local/cuda/bin:$PATH
+
+# 验证版本
+nvcc --version
+
+
+2.安装cuDNN 8.1.0
+sudo apt install zlib1g-dev
+
+登录Nvidia个人账号，进入下载界面: https://developer.NVIDIA.com/cudnn
+根据CUDA版本下载对应的cuDNN
+sudo dpkg -i libcudnn8*.deb
+
+# 验证cudnn是否成功安装
+下载freeimage
+下载链接: https://freeimage.sourceforge.io/download.html
+
+unzip FreeImage3180.zip
+
+cd FreeImage
+
+make -j16
+
+sudo make install
+
+mkdir -p ~/cudnn_samples_v8/mnistCUDNN/FreeImage/include
+
+mkdir -p ~/cudnn_samples_v8/mnistCUDNN/FreeImage/lib/linux/x86_64
+
+cp /usr/include/FreeImage.h ~/cudnn_samples_v8/mnistCUDNN/FreeImage/include
+
+cp /usr/lib/libfreeimage.a ~/cudnn_samples_v8/mnistCUDNN/FreeImage/lib/linux/x86_64
+
+cp -r /usr/src/cudnn_samples_v8/ ~
+
+cd ~/cudnn_samples_v8/mnistCUDNN
+
+sudo make all TARGET_ARCH=x86_64
+
+./mnistCUDNN
+
+# 验证成功结果
+Test passed!
+
+
+3.安装TensorFlow
+pip install tensorflow
+
+
+4.测试是否获得GPU支持
+imort tensorflow as tf
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+出现如下提示说明已提供GPU支持:
+/job:localhost/replica:0/task:0/device:GPU:0 -> device: 0, name: GeForce RTX 2070 SUPER, pci bus id: 0000:01:00.0, compute capability: 7.5
+
+
+
+安装其他后端引擎(可选)
+1.Theano
+pip install theano
+
+配置theano使用GPU
+vi ~/.theanorc
+[global]
+floatX = float32
+device = gpu0
+
+[nvcc]
+fastmath = True
+
+2.CNTK
+依赖库安装(OpenMPI):
+sudo apt-get install openmpi-bin
+
+安装GPU版本CNTK
+pip install cntk-gpu
+
+
+
+安装Keras
+pip install keras
+keras运行一次后，自动生成配置文件~/.keras/keras.json
+
+
+
+引用:
+[1]Docker install manual: https://docs.docker.com/engine/install/
+
+[2]Theano github: https://github.com/Theano/Theano
+
+[3]TensorFlow GPU support test: https://stackoverflow.com/questions/38009682/how-to-tell-if-tensorflow-is-using-gpu-acceleration-from-inside-python-shell
+
+编辑于: 2022-09-06

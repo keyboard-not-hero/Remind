@@ -1,0 +1,14 @@
+1.查看image列表
+sudo apt-cache search linux-image | grep generic
+
+2.下载指定版本kernel
+sudo apt-get install linux-modules-5.4.0-74-generic linux-modules-extra-5.4.0-74-generic linux-image-5.4.0-74-generic linux-headers-5.4.0-74-generic
+
+3.重启
+shutdown -r now
+
+4.选择安装的新kernel进行启动
+在启动选择"Advanced options for Ubuntu"  -- 5.4.0-74
+
+5.删除旧版本kernel
+sudo apt remove linux-headers-5.15.0-46-generic linux-image-5.15.0-46-generic linux-modules-extra-5.15.0-46-generic linux-modules-5.15.0-46-generic
