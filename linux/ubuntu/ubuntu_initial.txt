@@ -124,22 +124,45 @@ steven@~$ nvidia-smi
 安装goldendict
 sudo apt-get install goldendict
 
-添加在线词典支持
+添加在线字典
 编辑 - 词典 - 词典来源 - 网站, 点击右侧'添加'按钮, 输入以下内容:
 '词典名称'   '词典地址'
-勾选'已启用', 点击'apply'按钮, 并点击'OK'按钮
+勾选'已启用', 点击'apply'按钮
 
-可选词典列表:
+可选在线字典列表:
 欧陆 - https://dict.eudic.net/dicts/en/%GDWORD%
 有道 - http://dict.youdao.com/search?q=%GDWORD%&ue=utf8
 必应 - https://cn.bing.com/dict/search?q=%GDWORD%
 
 
-将词典添加进指定群组
-编辑 - 字典 - 群组, 点击'添加群组'按钮, 输入群组名称, 并点击'OK'按钮, 将词典添加进群组
+添加离线字典
+将各自词典目录放入指定总目录, 选择编辑 - 词典 - 词典来源 - 文件, 点击右侧'添加', 读取指定词典目录, 勾选'recursive', 点击'rescan now', 扫描读取成功后, 点击'apply'
+
+
+将字典添加进指定群组
+编辑 - 字典 - 群组, 点击'添加群组'按钮, 输入群组名称, 并点击'OK'按钮, 点击'apply'按钮, 添加群组成功
+编辑 - 字典 - 群组, 选中指定字典, 点击'>'按钮, 点击'apply'按钮, 将字典添加进群组
 点击'apply'按钮, 并点击'OK'按钮
 
 调用词典
 选中单词 - ctrl+c+c组合键
 
-参考引用: https://www.pdawiki.com/forum/thread-14077-1-1.html
+
+修改音频输出
+编辑 -- 首选项 -- 音频, 选择'Use externel program', 输入mplayer(需自行安装)
+
+
+英语构词规则
+下载: https://sourceforge.net/projects/goldendict/files/better%20morphologies/1.0/en_US_1.0.zip/download
+
+unzip en_US_1.0.zip -d myspell
+
+编辑 -- 字典 -- 字典来源 -- 词法(Morphology), 点击'change'选择myspell文件夹, 勾选'Enabled', 点击'apply'
+
+
+最后编辑时间: 2022-09-07
+
+
+参考引用
+[1] goldendict wiki: https://github.com/goldendict/goldendict/wiki
+

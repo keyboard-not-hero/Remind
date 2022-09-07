@@ -38,7 +38,7 @@ steven@steven:~$ ./Configure -Wl,-rpath,/usr/local/ssl/lib
 # 设置RUNPATH
 steven@steven:~$ ./Configure -Wl,--enable-new-dtags,-rpath,/usr/local/ssl/lib
 
-steven@steven:~$ make
+steven@steven:~$ make -j16
 
 steven@steven:~$ sudo make install
 

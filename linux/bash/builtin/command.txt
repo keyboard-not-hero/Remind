@@ -707,81 +707,116 @@ shopt [option] [optname...]
 	quiet模式, 不打印一般信息
 
 -s
-	enable(set)相关选项
+	set(enable)相关选项
 
 -u
-	disable(unset)相关选项
+	unset(disable)相关选项
 
 ** 当提供多个optname时, 所有操作生效才返回status code=0
 
-选项名称列表(optname)
-autocd - 当command为一个目录时, 自动将其作为cd指令的参数目录
 
-cdable_vars - 当cd指令的参数不是一个目录时, 将其视为包含目录值的变量
+optname列表:
+autocd
+    当command为一个目录时, 自动将其作为cd指令的参数目录
 
-cdspell - 针对cd指令的参数修正, 当与匹配目录含一个字符差异时, 显示正确目录并切换
+cdable_vars
+    当cd指令的参数不是一个目录时, 将其视为包含目录值的变量
 
-checkhash - 在执行path搜寻前, 先匹配hash表内容
+cdspell
+    针对cd指令的参数修正, 当与匹配目录含一个字符差异时, 显示正确目录并切换
 
-checkwinsize - 在执行command后, 检查窗口大小, 并调节LINES和COLUMNS值
+checkhash
+    在执行path搜寻前, 先匹配hash表内容
 
-cmdhist - 将占有多行的同一个指令保存为一条历史记录
+checkwinsize
+    在执行command后, 检查窗口大小, 并调节LINES和COLUMNS值
 
-compat31 - bash 3.1兼容版本
+cmdhist
+    将占有多行的同一个指令保存为一条历史记录
 
-compat32 - 类似于compat31
+compat31
+    bash 3.1兼容版本
 
-compat40 - 类似于compat31
+compat32
+    类似于compat31
 
-compat41 - 类似于compat31
+compat40
+    类似于compat31
 
-compat42 - 类似于compat31
+compat41
+    类似于compat31
 
-compat43 - 类似于compat31
+compat42
+    类似于compat31
 
-dotglob - 在文件名pathname expansion(通配符)匹配中, 包含以'.'开头的文件
+compat43
+    类似于compat31
 
-expand_aliases - 开启alias展开功能
+dotglob
+    在文件名pathname expansion(通配符)匹配中, 包含以'.'开头的文件
 
-extglob - 启动拓展pathname expansion功能
+expand_aliases
+    开启alias展开功能
 
-extquote - $'string'和$"string"视为${string}
+extglob
+    启动拓展pathname expansion功能
 
-failglob - 当pathname expansion失败时, 返回expansion err错误
+extquote
+    $'string'和$"string"视为${string}
 
-globstar - 在pathname expansion中, '**'匹配所有文件、目录、递归子目录
+failglob
+    当pathname expansion失败时, 返回expansion err错误
 
-gnu_errfmt - err信息全部为GNU标准err信息格式
+globstar
+    在pathname expansion中, '**'匹配所有文件、目录、递归子目录
 
-histappend - 当退出bash时, 将history列表的内容append到HISTFILE定义的文件, 而非覆盖
+gnu_errfmt
+    err信息全部为GNU标准err信息格式
 
-histreedit - 当使用readline时, 可获得机会重写失败的hitory替换
+histappend
+    当退出bash时, 将history列表的内容append到HISTFILE定义的文件, 而非覆盖
 
-hostcomplete - 当使用readline时, 在@后面可自动补足主机名
+histreedit
+    当使用readline时, 可获得机会重写失败的hitory替换
 
-huponexit - 当login bash退出时, 向所有job发送SIGHUP信号
+hostcomplete
+    当使用readline时, 在@后面可自动补足主机名
 
-interactive_comments - 在bash中, #后续的字符视为注释
+huponexit
+    当login bash退出时, 向所有job发送SIGHUP信号
 
-lithist - 当cmdhist开启, 在history记录中, 使用内嵌<newline>代替';'
+interactive_comments
+    在bash中, #后续的字符视为注释
 
-login_shell - 当shell为login shell时, 该选项自动配置. 不可手动修改
+lithist
+    当cmdhist开启, 在history记录中, 使用内嵌<newline>代替';'
 
-mailwarn - 当bash检查的mail文件已经被访问过, 出现提示
+login_shell
+    当shell为login shell时, 该选项自动配置. 不可手动修改
 
-no_empty_cmd_completion - 当使用readline时, 如果bash试图在空指令行上补全指令, 不会搜索PATH
+mailwarn
+    当bash检查的mail文件已经被访问过, 出现提示
 
-nocaseglob - 使用pathname expansion时, 不在乎大小写
+no_empty_cmd_completion
+    当使用readline时, 如果bash试图在空指令行上补全指令, 不会搜索PATH
 
-nullglob - 当pathname expansion匹配不到任何文件时, 将内容置换为空字符串进行匹配
+nocaseglob
+    使用pathname expansion时, 不在乎大小写
 
-progcomp - 开启programmable completion
+nullglob
+    当pathname expansion匹配不到任何文件时, 将内容置换为空字符串进行匹配
 
-promptvars - prompt可经过parameter expansion/command substitution/arithmetic expansion
+progcomp
+    开启programmable completion
 
-shift_verbose - 使用shift时, 当n>$#, 显示警告信息
+promptvars
+    prompt可经过parameter expansion/command substitution/arithmetic expansion
 
-sourpath - 使用source(.)时, 使用PATH变量内容查找文件所在
+shift_verbose
+    使用shift时, 当n>$#, 显示警告信息
+
+sourpath
+    使用source(.)时, 使用PATH变量内容查找文件所在
 
 ** glob代表使用通配符进行匹配
 
