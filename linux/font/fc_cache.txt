@@ -1,0 +1,37 @@
+fc-cache - 从目录中搜寻字体文件, 生成cache
+
+语法
+fc-cache [option] [dir...]
+
+参数释义
+-E, --error-on-no-fonts
+    当目录中没有字体文件时, 抛出error
+
+-f, --force
+    强制更新cache文件
+
+-h, --help
+    帮助信息
+
+-r, --really-force
+    删除所有cache文件, 并重新扫描字体文件
+
+-s, --system-only
+    只扫描system-wide目录, 忽略user-wide目录(home目录)
+
+-V, --version
+    显示版本信息
+
+-v, --verbose
+    显示详细状态信息
+
+-y, --sysroot=<sysroot>
+    使用chroot进行层级目录查找
+
+dir
+    扫描的目录
+    未指定时, 扫描配置文件指定的所有目录
+
+
+实例1 - 更新cache
+fc-cache -v

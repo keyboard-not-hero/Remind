@@ -1,0 +1,34 @@
+fc-list - 可获得字体列表
+
+语法
+fc-list [option] [pattern [element...]]
+
+option列表
+-h, --help
+    帮助信息
+
+-f, --format
+    指定输出格式
+
+-q, --quiet
+    静默模式
+
+-V, --version
+    版本信息
+
+-v, --verbose
+    字体的详细信息
+
+
+pattern
+    指定匹配模式
+    如: 查看中文字体, :lang=zh-cn
+
+
+element
+    字体的属性file/family/style等
+    参考: https://www.freedesktop.org/software/fontconfig/fontconfig-devel/x19.html
+
+
+实例1 - 查看中文字体
+fc-list :lang=zh-cn

@@ -22,12 +22,15 @@ else:
     **注意：for i in array会试图创建一个无穷大的列表，用于insert/append会导致失败，使用copy方式for i in array[:]
 	**for语句的实质: 使用built-in方法iter()，返回对象的iterator
 
+
 while语句：
 while CONDITION:
     STATEMENT
 
+
 退出循环
 continue：退出当前层单次循环，继续后续迭代
 break：直接退出当前层全部循环
+
 
 pass：在必须使用语句但不执行任何操作的地方使用

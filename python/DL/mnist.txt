@@ -1,0 +1,14 @@
+from keras.datasets import mnist
+
+nrow = 2
+ncol = 3
+# load_data首先从cache目录(~/.keras/datasets)读取指定名称的文件
+# 当cache目录找不到文件时, 从以下链接下载文件到cache目录
+#     https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+(x_train, y_train),(x_test, y_test)=load_data()
+fig = plt.figure()
+for i in range(nrow * ncol):
+    ax = fig.add_subplot(nrow, ncol, i+1)
+    ax.imshow(x_train[331+i], cmap=plt.get_cmap('gray'))
+plt.show()
+
