@@ -140,6 +140,8 @@ MAIL    用户邮件存放位置(/var/spool/mail/<user>)
 OLDPWD    上一个工作目录, -参考该变量值
 
 PATH    指令查找路径(使用':'分隔路径, '.'或者''都代表当前目录)
+** sudo的PATH由/etc/sudoers的secure_path确定, 修改方法:
+**     sudo EDITOR=vim visudo
 
 POSIXLY_CORRECT    shell是否处于posix兼容模式. 当该值为'y'时, 代表处于posix模式(set -o posix)
 

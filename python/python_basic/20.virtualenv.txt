@@ -1,120 +1,41 @@
-virtualenv - 隔离的Python运行环境
+virtualenv -- 隔离的Python运行环境
+
 
 安装
 pip install virtualenv
 
 
-语法
-virtualenv [options] destination
+创建虚拟环境的阶段:
+1.发现python解释器
 
-参数释义
---version
-    版本信息
+2.在env中创建python副本, 用于env环境
 
---read-only-app-date
-	cache目录是否为只读. 默认为False
+3.安装必要packgae, 例如: pip/setuptools/wheel
 
---app-data <PATH>
-    cache目录. 默认为$HOME/.local/share/virtualenv
+4.安装激活env的脚本
 
---reset-app-data
-    激活virtualenv时, 清空cache. 默认False
-
--h, --help
-    帮助信息
-
--v, --verbose
-    消息警告等级设置为2
-
--q, --quiet
-    消息警告等级设置为0
-
--p <PATH>, --python <PATH>
-    创建的virtualenv使用的python解释器路径. 默认为安装virtualenv使用的Python版本
-
---clear
-    当目标目录存在时, 移除该目录. 默认为False
-
---system-site-packages
-    允许virtualenv访问系统的site-package目录(只读), 当使用的库系统site-packages已有时, 直接使用. 默认为False
-
---symlinks
-	使用链接库文件, 代替复制. 默认为True
-
---copies, --always-copy
-    使用复制库文件, 代替链接. 默认为False
-
---seeder <TYPE>
-	seeder来源(seeder代表使用额外的库管理), 列表如下: app-data/pip. 默认为app-data
-
---no-seed, --without-pip
-	不使用seeder, 即默认不安装pip/setuptools/wheel, 直接使用系统级site-packages(读写). 默认为False
-
---no-download, --never-download
-	不从PyPI更新到pip/wheel/setuptools最新版本. 默认为True
-
---download
-	从PyPI更新到pip/wheel/setuptools最新版本. 默认为False
-
---extra-search-dir <dir>...
-    额外查找pip/wheel/setuptools的目录. 默认为[]
-
---pip <TYPE>
-	安装的pip版本. 列表如下: 
-		embed - 由app-date的embed目录下的pip.json文件指定
-		bundle - 系统级site-packages指定
-		<detail_version> - 手动指定具体安装的版本
-
---wheel <TYPE>
-	安装的wheel版本. 列表如下: 
-		embed - 由app-date的embed目录下的wheel.json文件指定
-		bundle - 系统级site-packages指定
-		<detail_version> - 手动指定具体安装的版本
-
---setuptools <TYPE>
-	安装的setuptools版本. 列表如下: 
-		embed - 由app-date的embed目录下的setuptools.json文件指定
-		bundle - 系统级site-packages指定
-		<detail_version> - 手动指定具体安装的版本
-
---no-pip
-    virtualenv中不安装pip. 默认为False
-
---no-setuptools
-    virtualenv中不安装setuptools. 默认为False
-    
---no-wheel
-    virtualenv中不安装wheel. 默认为False
-
---activators <TERMINAL1, TERMINAL2, ...>
-	指定可在指定终端下使用启动器(activate). 列表如下: bash/batch/cshell/fish/poweshell/python/xonsh. 默认支持所有
-
---prompt <PROMPT>
-    virtualenv的提示符. 默认为(<env_name>)
-
-destination
-    创建环境的名称(同名文件夹)
+5.创建env环境的文件(目前只支持git)
 
 
 
 virtualenv操作步骤:
 1.创建虚拟环境:
-virtualenv ENV_NAME
+virtualenv <env_name>
 
 
-激活虚拟环境：
+2.激活虚拟环境:
 GNU/Linux
-source /PATH/bin/activate
+source <env_name>/bin/activate
 
 Windows
-/PATH/Scripts/activate
+<env_name>/Scripts/activate
 
 
-退出虚拟环境：
+3.退出虚拟环境:
 (ENV_NAME)> deactivate
 
 
-删除虚拟环境：
+4.删除虚拟环境：
 GNU/Linux
 > rm -r /PATH/TO/ENV_NAME
 
@@ -122,5 +43,16 @@ Windows
 > rmdir /S ENV_NAME
 
 
+
+实例1 - 指定导入的本地python目录
+virtualenv --python /usr/local/python/bin env
+
+实例2 - 指定创建virtual env的完整路径(默认在当前目录)
+sudo virtualenv /usr/local/virtual/env
+
+
+最后编辑于: 2022-09-16
+
+
 引用:
-[1]virtualenv pypa: https://virtualenv.pypa.io/en/latest/index.html
+[1]virtualenv document: https://virtualenv.pypa.io/en/latest/index.html
