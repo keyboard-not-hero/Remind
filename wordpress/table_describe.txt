@@ -1,0 +1,16 @@
+wp_posts
+    发表文章相关
+
+各列的作用
+ID
+    文章的id
+
+post_date
+    文章发表/修改日期和时间
+
+post_status
+    文章的状态. 列表如下:
+        publish - 当前发表
+
+guid
+    文章url

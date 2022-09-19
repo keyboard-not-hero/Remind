@@ -3,3 +3,24 @@
 > update wp_options set option_value='https://<domain_name>' where option_name='siteurl'
 > update wp_options set option_value='https://<domain_name>' where option_name='home'
 
+
+2.安装主题遇到如下error:
+413: request entity too large error in WordPress
+
+解决方案:
+1)手动上传主题
+scp -P <port> kratos-4.1.4.zip <user>@<ip>:<path>
+unzip kratos-4.1.4.zip
+
+2)通过编辑/etc/nginx/nginx.conf和/etc/php.ini
+vi /etc/nginx/nginx.conf
+http{
+    client_max_body_size 100M;
+}
+
+systemctl restart nginx
+
+vi /etc/php.ini
+upload_max_filesize = 100M
+
+systemctl restart php-fpm

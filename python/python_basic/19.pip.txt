@@ -68,7 +68,7 @@ general option选项：
     服务器上的CA路径
 
 
-install option：
+install option:
 -r, --requirement <file>
     从file内获取安装包体名称
 
@@ -96,7 +96,6 @@ install option：
 --user
     安装到用户级库目录
     GNU/Linux为~/.local/, Windows为%AppData%/Python/
-    Debian在非virtualenv环境和非root用户默认使用该选项
 
 --root <dir>
     chroot应用, 安装到以该目录为根目录的相对路径
