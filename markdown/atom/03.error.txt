@@ -1,0 +1,3 @@
+1.自动删除行末space
+Packages >> Setting View >> Open >> Packages
+搜索'whitespace', 选择移除'Settings', 取消选中'Remove Trailing Whitespace'

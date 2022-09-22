@@ -1,0 +1,5 @@
+下载地址:
+https://atom.io/
+
+安装:
+dpkg -i atom-amd64.deb

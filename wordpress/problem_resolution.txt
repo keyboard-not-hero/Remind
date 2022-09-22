@@ -24,3 +24,13 @@ vi /etc/php.ini
 upload_max_filesize = 100M
 
 systemctl restart php-fpm
+
+
+3.安装插件遇到如下错误:
+您点击的链接已过期 
+
+解决方案:
+vi /etc/php.ini
+max_execution_time = 300
+upload_max_filesize = 128M
+post_max_size = 256M

@@ -174,5 +174,8 @@ pip config set global.proxy socks5://<host>:<port>
 pip3 install --proxy socks5://<ADDR>:<PORT> <package>
 
 
+最后编辑于: 2022-09-10
+
+
 引用
 [1]Stack Overflow：https://stackoverflow.com/questions/9510474/removing-pips-cache#:~:text=0%2C%20pip%20provides%20an%20on,no%2Dcache%2Ddir%20option.

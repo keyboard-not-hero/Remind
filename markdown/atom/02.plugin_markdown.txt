@@ -1,0 +1,6 @@
+atom安装markdown插件
+Packages >> Settings View >> Open >> Install
+搜索如下插件
+language-markdown
+markdown-writer
+markdown-preview

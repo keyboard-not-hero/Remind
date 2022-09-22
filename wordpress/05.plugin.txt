@@ -1,0 +1,30 @@
+主题安装方式:
+1.wordpress store
+控制面板 -- 插件 -- 安装插件
+
+2.下载zip进行本地上传(文件较小)
+控制面板 -- 插件 -- 安装插件 -- 上传插件 -- 选择本地zip文件
+
+3.下载压缩文件, 手动上传
+scp <theme>.zip <user>@<server_address>:<wp_path>/wp-content/plugins
+unzip <plugin>.zip
+
+
+
+推荐插件:
+1.Simple Local Avatars(wordpress store)
+可本地上传头像
+
+设置个人头像:
+用户 -- 个人资料 -- 上传头像
+
+设置所有用户通用头像:
+设置 -- 讨论 -- 默认头像
+
+
+2.WP statistics(wordpress store)
+访问者信息统计
+
+
+3.WP Githuber MD(wordpress store)
+编辑器支持MarkDown语法

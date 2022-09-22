@@ -5,6 +5,7 @@
 
 插件获取：
 1.vim包自带--$VIMRUNTIME/macros(全局)、$VIMRUNTIME/ftplugin(文件类型)
+** 通过:!echo $VIMRUNTIME查看变量值
 
 2.网络下载(如www.vim.org)
 
@@ -39,9 +40,9 @@
 
 
 插件汇总
-一、插件管理器--vundle(其他管理器：vim-plug/pathogen/neobundle)
-原理：vundle追踪配置文件~/.vimrc的Plugin值对插件进行集中激活管理，安装位置~/.vim/bundle
-1.依赖工具：
+一、插件管理器 -- vundle(其他管理器：vim-plug/pathogen/neobundle)
+原理: vundle追踪配置文件~/.vimrc的Plugin值对插件进行集中激活管理，安装位置~/.vim/bundle
+1.依赖工具:
   git
   curl(用于搜索)
 
@@ -94,10 +95,9 @@
   " see :h vundle for more details or wiki for FAQ
   " Put your non-Plugin stuff after this line
 
-4.安装插件(将~/.vimrc的Plugin指定插件进行安装，并自动添加helptags路径)
+4.安装插件(安装~/.vimrc的Plugin directive指定的插件，并自动添加helptags路径)
+  :so ~/.vimrc
   :PluginInstall
-  或者
-  thompson@~$ vim +PluginInstall +qall
 
 5*.单个(或多个)插件安装
   :PluginInstall <name1> [name2]
