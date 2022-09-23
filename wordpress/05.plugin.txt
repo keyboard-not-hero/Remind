@@ -27,4 +27,4 @@ unzip <plugin>.zip
 
 
 3.WP Githuber MD(wordpress store)
-编辑器支持MarkDown语法
+编辑器支持MarkDown语法, 并支持markdown extend syntax
