@@ -5,7 +5,7 @@
 
 3.Aria - MariaDB现代化提升版本MyISAM
 
-4.MyISAM - 拥有更小的空间和易于备份, 属于MySQL最老版本引擎. 通常只用于老版本兼容
+4.MyISAM - 非事务型引擎, 拥有更小的空间和易于备份, 属于MySQL最老版本引擎
 
 
 引擎特性:
@@ -40,3 +40,16 @@ size
     16KB              64TB
     32KB              128TB
     64KB              256TB
+
+
+查看支持的引擎:
+MariaDB [(none)]> show engines;
+
+transaction
+    代表引擎是否支持事务处理
+
+XA
+    代表引擎是否支持分布式事务
+
+savepoint
+    代表引擎是否支持事务的部分回滚

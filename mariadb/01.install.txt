@@ -11,7 +11,7 @@ baseurl = https://mirrors.xtom.com/mariadb/yum/10.8/centos7-amd64
 gpgkey=https://mirrors.xtom.com/mariadb/yum/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 
-** 其他版本参考: https://downloads.mariadb.org/mariadb/repositories/#mirror=nxtHost
+** 其他版本参考: https://mariadb.org/download/?t=repo-config
 
 2.安装
 [root@vultr ~]# yum clean all
@@ -31,11 +31,13 @@ steven@steven-MSI:~$ sudo apt-get install apt-transport-https curl
 
 steven@steven-MSI:~$ sudo curl -o /etc/apt/trusted.gpg.d/mariadb_release_signing_key.asc 'https://mariadb.org/mariadb_release_signing_key.asc'
 
-steven@steven-MSI:~$ vi /etc/apt/sources.list.d/mariadb.list
+steven@steven-MSI:~$ sudo vi /etc/apt/sources.list.d/mariadb.list
 # MariaDB 10.8 repository list - created 2022-08-17 15:21 UTC
 # https://mariadb.org/download/
 deb https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
 # deb-src https://mirrors.xtom.com/mariadb/repo/10.8/ubuntu focal main
+
+** 其他版本参考: https://mariadb.org/download/?t=repo-config
 
 2.安装mariadb并启动
 steven@steven-MSI:~$ sudo apt-get update
@@ -46,11 +48,11 @@ steven@steven-MSI:~$ systemctl start mariadb
 
 steven@steven-MSI:~$ systemctl enable mariadb
 
-steven@steven-MSI:~$ mariadb-secure-installation
+steven@steven-MSI:~$ sudo mariadb-secure-installation
 1)使用db的root用户密码进入设置(初次安装没有设置root密码)
 [enter]
 
-2)是否允许nobody登录(y/n)
+2)是否切换为unix_socket认证(y/n)[即使用系统账号作为mysql账号]
 n
 
 3)是否修改root用户密码(y/n)

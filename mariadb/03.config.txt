@@ -1,4 +1,13 @@
-配置文件(顺序读取):
+配置文件名称:
+1)Uninx-like系统:
+my.cnf
+
+2)Windows系统:
+my.ini
+
+
+配置文件读取顺序(所有发现的文件都进行读取):
+1)Unix-like系统:
 /etc/my.cnf
 /etc/mysql/my.cnf
 ~/.my.cnf
