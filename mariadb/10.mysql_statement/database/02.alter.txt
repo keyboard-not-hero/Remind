@@ -1,0 +1,19 @@
+ALTER {DATABASE | SCHEMA} [db_name] alter_specification ...
+  修改数据库的默认字符集/排列规则/注释
+  db_name未提供时, 使用默认数据库
+
+
+ALTER {DATABASE | SCHEMA} db_name
+    UPGRADE DATA DIRECTORY NAME
+  将MySQL 5.1之前的数据库目录名称升级为MySQL 5.1及之后的数据库目录名称
+  如: MySQL数据库名称为a-b-c, MySQL 5.1之前目录名称为a-b-c, MySQL 5.1及之后的目录名称为a@002db@002dc
+
+
+alter_specification:
+    [DEFAULT] CHARACTER SET [=] charset_name
+  | [DEFAULT] COLLATE [=] collation_name
+  | COMMENT [=] 'comment'
+
+
+示例 - 修改数据库db1的默认字符集/排列规则
+ALTER DATABASE db1 CHARACTER SET='utf8' COLLATE='utf8_bin';

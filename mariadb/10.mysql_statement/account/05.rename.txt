@@ -1,0 +1,6 @@
+RENAME USER old_user TO new_user[, old_user TO new_user] ...
+  重命名已存在账号
+  必须拥有全局CREATE USER权限或mysql数据库的UPDATE权限
+
+示例 - 重命名'peter'@'localhost'为'david'@'localhost'
+RENAME USER 'peter'@'localhost' TO 'david'@'localhost';

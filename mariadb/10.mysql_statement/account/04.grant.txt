@@ -1,0 +1,85 @@
+GRANT
+    priv_type [(column_list)] [, priv_type [(column_list)]] ...
+    ON [object_type] priv_level
+    TO user_specification [ user_options ...]
+
+
+priv_type:
+  USAGE
+  | ALL PRIVILEGES
+
+  USAGE
+    无实际权限. 新建账号使用show grants for 'user'@'host'显示该权限
+
+  ALL PRIVILEGES
+    授予所有可获取的权限(grant除外)
+    可使用ALL代替
+
+  <others>:
+    根据global/database/table/columns来指定权限范围
+    参考: https://mariadb.com/kb/en/grant/
+
+
+column_list
+  只对表格的指定列进行授权
+
+
+object_type:
+  TABLE
+  | FUNCTION
+  | PROCEDURE
+  | PACKAGE
+
+
+priv_level:
+  *
+  | *.*
+  | db_name.*
+  | db_name.tbl_name
+  | tbl_name
+  | db_name.routine_name
+
+  *.*
+    全局权限, 适用于所有数据库. MariaDB 10.4之前保存在mysql.user表格中, MariaDB 10.4及之后保存在mysql.global_priv表格中
+
+  db_name.*
+    指定数据库的权限. 保存在mysql.db表格中
+
+  *
+    默认数据库的权限
+
+  db_name.tbl_name
+    指定数据库下, 指定表格的权限
+
+  tbl_name
+    默认数据库的指定表格的权限
+
+
+user_specification:
+  username [authentication_option]
+  | PUBLIC
+
+  authentication_option:
+    IDENTIFIED BY 'password' 
+    | IDENTIFIED BY PASSWORD 'password_hash'
+    | IDENTIFIED {VIA|WITH} authentication_rule [OR authentication_rule  ...]
+
+
+user_options:
+    [REQUIRE {NONE | tls_option [[AND] tls_option] ...}]
+    [WITH with_option [with_option] ...]
+
+  with_option:
+    GRANT OPTION
+  | resource_option
+
+    GRANT OPTION
+      用于给用户赋予授权其他用户权限的能力, 但只能授权当前用户所拥有的权限
+
+
+** 当授权的账户不存在时, 默认创建账户
+** 当sql_mode包含NO_AUTO_CREATE_USER值时, 必须指定authentication_option才会自动创建不存在的账号
+
+
+示例 - 授予'peter'@'localhost'用户权限(包括grant权限)
+GRANT ALL PRIVILEGES ON  *.* to 'pter'@'localhost' WITH GRANT OPTION;

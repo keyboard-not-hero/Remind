@@ -163,7 +163,7 @@ group = nginx
 MariaDB> create database wordpress;
 
 # 添加相关帐号并授权(语法：GRANT ALL PRIVILEGES ON database.table TO user@host IDENTIDIED BY passwd)
-MariaDB> GRANT ALL PRIVILEGES ON wordpress.* TO "<user>"@localhost IDENTIFIED BY "<passwd>";
+MariaDB> GRANT ALL PRIVILEGES ON wordpress.* TO "<user>"@'localhost' IDENTIFIED BY "<passwd>";
 
 # 适用更改
 MariaDB> flush privileges;

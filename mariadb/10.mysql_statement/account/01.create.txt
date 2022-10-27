@@ -1,0 +1,109 @@
+CREATE [OR REPLACE] USER [IF NOT EXISTS] 
+  user_specification [,user_specification ...] 
+  [REQUIRE {NONE | tls_option [[AND] tls_option ...] }]
+  [WITH resource_option [resource_option ...] ]
+  [lock_option] [password_option]
+
+
+OR REPLACE类似于以下组合:
+DROP USER IF EXISTS <user_name>;
+CREATE USER <user_name> ...;
+
+
+IF NOT EXISTS:
+当指定账户不存在时创建账户; 当账户已存在时, 返回warning
+** 显示warning语句:
+** show warnings;
+
+
+user_specification:
+  username [authentication_option]
+
+  username:
+    'user_name'@'host_name'格式
+    user_name与host_name也可以不使用'限定, 但包含通配符或-时, 必须使用"或'限定
+
+    user_name:
+      精确匹配, 大小写敏感
+
+    host_name:
+      %代表匹配任意数量(0-n)字符
+      _代表匹配任意单个字符
+      大小写不敏感
+
+  authentication_option:
+    IDENTIFIED BY 'password' 
+    | IDENTIFIED BY PASSWORD 'password_hash'
+    | IDENTIFIED {VIA|WITH} authentication_rule [OR authentication_rule  ...]
+
+    IDENTIFIED BY 'passwd'
+      使用明文passwd指定账号密码, 在保存到mysql.user/mysql.global_priv_table之前, 使用PASSWORD函数进行加密
+      authentication插件mysql_native_password支持该clause
+
+    IDENTIFIED BY PASSWORD 'password_hash'
+      使用已经经过PASSWORD函数加密的密码password_hash指定账号密码
+      authentication插件mysql_native_password支持该clause
+
+    IDENTIFIED {VIA|WITH} authentication_rule
+      指定验证方法 
+
+    authentication_rule:
+      authentication_plugin
+      | authentication_plugin {USING|AS} 'authentication_string'
+      | authentication_plugin {USING|AS} PASSWORD('password')
+
+      authentication_plugin
+        验证方法的名称
+        可通过一下语句获取可获得验证方法列表: show plugins;
+        安装plugin(如pam): INSTALL PLUGIN pam SONAME 'auth_pam';
+
+
+tls_option:
+  SSL 
+  | X509
+  | CIPHER 'cipher'
+  | ISSUER 'issuer'
+  | SUBJECT 'subject'
+
+  SSL
+    TLS必须, 但是有效x509证书非必须
+
+  x509
+    TLS必须, 有效x509证书也是必须
+
+  CIPHER
+    指定使用的加密方法
+    隐式包含SSL
+
+  ISSUER
+    证书授权机构必须为指定列表其中之一
+    隐式包含x509
+
+  SUBJECT
+    主题为指定列表其中之一
+    隐式包含x509
+
+
+resource_option:
+  MAX_QUERIES_PER_HOUR count
+  | MAX_UPDATES_PER_HOUR count
+  | MAX_CONNECTIONS_PER_HOUR count
+  | MAX_USER_CONNECTIONS count
+  | MAX_STATEMENT_TIME time
+
+
+lock_option:
+    ACCOUNT LOCK
+  | ACCOUNT UNLOCK
+}
+
+
+password_option:
+  PASSWORD EXPIRE
+  | PASSWORD EXPIRE DEFAULT
+  | PASSWORD EXPIRE NEVER
+  | PASSWORD EXPIRE INTERVAL N DAY
+
+
+示例 - 创建peter@localhost账户, 并设置密码
+CREATE USER 'peter'@'localhost' IDENTIFIED BY 'cctv1969';

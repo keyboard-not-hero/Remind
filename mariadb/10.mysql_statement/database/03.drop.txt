@@ -1,0 +1,7 @@
+DROP {DATABASE | SCHEMA} [IF EXISTS] db_name
+  删除数据库, 并丢弃数据库里所有表格
+  删除数据库后, 用户对于该数据库的权限不会自动删除
+
+
+示例 - 删除数据库db1
+DROP DATABASE db1;

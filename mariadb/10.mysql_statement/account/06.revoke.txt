@@ -1,0 +1,59 @@
+REVOKE
+    priv_type [(column_list)] [, priv_type [(column_list)]] ...
+    ON [object_type] priv_level
+    FROM user[, user ...]
+    撤销用户的指定权限
+    操作指令用户必须包含GRANT权限, 并且撤销的权限必须为操作指令用户所拥有
+
+
+priv_type:
+  <others>:
+    根据global/database/table/columns来指定权限范围
+    参考: https://mariadb.com/kb/en/grant/
+
+
+column_list
+  只对表格的指定列进行撤销权限
+
+
+object_type:
+  TABLE
+  | FUNCTION
+  | PROCEDURE
+  | PACKAGE
+
+
+priv_level:
+  *
+  | *.*
+  | db_name.*
+  | db_name.tbl_name
+  | tbl_name
+  | db_name.routine_name
+
+  *.*
+    全局权限, 适用于所有数据库. MariaDB 10.4之前保存在mysql.user表格中, MariaDB 10.4及之后保存在mysql.global_priv表格中
+
+  db_name.*
+    指定数据库的权限. 保存在mysql.db表格中
+
+  *
+    默认数据库的权限
+
+  db_name.tbl_name
+    指定数据库下, 指定表格的权限
+
+  tbl_name
+    默认数据库的指定表格的权限
+
+
+user
+  'user_name'@'host'格式
+
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM user [, user] ...
+  撤销指定用户的所有权限(包括grant)
+
+
+示例 - 授予'peter'@'localhost'用户权限(包括grant权限)
+REVOKE ALL PRIVILEGES, GRANT OPTION from 'pter'@'localhost';

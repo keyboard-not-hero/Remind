@@ -1,0 +1,21 @@
+CREATE [OR REPLACE] {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
+  [create_specification] ...
+
+
+OR REPLACE相当于下列两条语句:
+  DROP DATABASE IF EXISTS <db_name>;
+  CREATE DATABASE <db_name> ...;
+
+
+SCHEMA:
+  DATABASE的同义词
+
+
+create_specification:
+  [DEFAULT] CHARACTER SET [=] charset_name
+  | [DEFAULT] COLLATE [=] collation_name
+  | COMMENT [=] 'comment'
+
+
+示例 - 创建数据库db1:
+CREATE DATABASE db1;

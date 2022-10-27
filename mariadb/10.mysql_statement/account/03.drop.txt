@@ -1,0 +1,12 @@
+DROP USER [IF EXISTS] user_name [, user_name] ...
+
+
+IF EXISTS:
+  当用户存在时进行删除; 不存在时, 返回note
+
+
+** 当删除的用户为当前连接的用户, 用户不会进行删除
+
+
+示例 - 删除peter@localhost账户
+DROP USER 'peter'@'localhost';
