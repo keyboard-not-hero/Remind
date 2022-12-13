@@ -1,0 +1,49 @@
+Windows 10下安装GNS3
+1.下载GNS3并安装
+https://www.gns3.com/software/download
+
+2.下载VMware Workstation系统镜像
+https://www.gns3.com/software/download-vm
+
+3.下载VMware Workstation Pro并安装
+
+4.将VMware Workstation系统镜像导入VMware Workstation Pro
+文件  -->  打开  -->  选择VMware Workstation系统镜像
+
+5.GNS3上编辑使用系统镜像
+Edit  -->  Preferences  -->  GNS3 VM  -->  Enable the gns3 vm, 配置其他选项, 点击'apply', 然后点击'OK'
+
+6.确保VMware Workstation Pro开机后, KVM support available为True; 如果为False, 执行如下操作:
+重启Windows 10, 在BIOS界面设置Intel Virtualization Technology为Enabled; 启动系统, 在VMware Workstation界面设置, GNS3 VM  -->  虚拟机设置  -->  处理器  -->  勾选'虚拟化Intel VT-x/ept或AMD-V/RVI(V)'
+启动GNS3, 查看VMware Workstation的KVM support available是否成功为True
+
+
+Ubuntu 20.04下安装GNS3
+1.添加PPA源
+sudo add-apt-repository ppa:gns3/ppa
+sudo apt update                                
+
+2.安装gns3
+sudo apt install gns3-gui gns3-server
+
+3.下载VMware Workstation系统镜像
+下载地址: https://www.gns3.com/software/download-vm
+
+unzip GNS3.VM.VMware.Workstation.2.2.34.zip
+
+4.下载VMware Workstation Pro并安装
+下载地址: https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html
+
+sudo chmod a+x VMware-Workstation-Full-16.2.4-20089737.x86_64.bundle
+
+sudo ./VMware-Workstation-Full-16.2.4-20089737.x86_64.bundle
+
+5.将VMware Workstation系统镜像导入VMware Workstation Pro
+file  -->  open  -->  选择VMware Workstation系统镜像
+
+6.GNS3上编辑使用系统镜像
+Edit  -->  Preferences  -->  GNS3 VM  -->  Enable the gns3 vm, 配置其他选项, 点击'apply', 然后点击'OK'
+
+7.确保VMware Workstation Pro开机后, KVM support available为True; 如果为False, 执行如下操作:
+重启Ubuntu, 在BIOS界面设置Intel Virtualization Technology为Enabled; 启动系统, 在VMware Workstation界面设置, GNS3 VM  -->  虚拟机设置  -->  处理器  -->  勾选'虚拟化Intel VT-x/ept或AMD-V/RVI(V)'
+启动GNS3, 查看VMware Workstation的KVM support available是否成功为True

@@ -1,0 +1,190 @@
+DHCP服务器搭建
+交换机
+switch(config)# ip dhcp excluded-address 192.168.0.1 192.168.0.10
+switch(config)# ip dhcp pool sales
+switch(dhcp-config)# network 192.168.0.1 255.255.255.0
+switch(dhcp-config)# default-router 192.168.0.1
+
+PC
+PC> ip dhcp
+
+cisco客户端
+switch(config-if)# ip address dhcp
+
+
+DHCP中继(主机与DHCP服务器不在一个网段)
+路由器1(DHCP服务器)
+(config)# interface f0/0
+(config-if)# ip address 192.168.0.1 255.255.255.0
+(config-if)# no shutdown
+(config-if)# exit
+(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
+(config)# ip dhcp pool sales
+(dhcp-config)# network 192.168.1.0 255.255.255.0
+(dhcp-config)# default-router 192.168.1.1
+(dhcp-config)# exit
+(config)# router rip
+(config-router)# version 2
+(config-router)# no auto-summary
+(config-router)# network 192.168.0.0
+
+路由器2(DHCP中继)
+(config)# interface f0/0
+(config-if)# ip address 192.168.0.2 255.255.255.0
+(config-if)# no shutdown
+(config-if)# exit
+(config)# interface f0/1
+(config-if)# ip address 192.168.1.1 255.255.255.0
+(config-if)# ip helper-address 192.168.0.1
+(config-if)# no shutdown
+(config-if)# exit
+(config)# router rip
+(config-router)# version 2
+(config-router)# no auto-summary
+(config-router)# network 192.168.0.0
+(config-router)# network 192.168.1.0
+
+PC
+PC> ip dhcp
+
+
+DHCP配置验证
+已租借ip情况
+show ip dhcp binding
+
+IP池信息
+show ip dhcp pool [pool_name]
+
+DHCP服务器信息统计
+show ip dhcp server statistics
+
+IP冲突
+show ip dhcp conflict
+
+
+系统日志
+日志的方式:
+1.显示到console(console连接, 默认)
+2.显示到terminal(monitor日志, 使用vty连接, 默认)
+3.存储到缓冲区
+4.存储到日志服务器(trap日志)
+
+日志级别
+emergence        0
+alert                  1
+critical               2
+errot                 3
+warning            4
+notification       5
+informational    6
+debugging        7
+
+配置console日志
+(config)# logging console [logging_level]
+(config)# no logging console
+
+配置monitor日志
+(config)# logging monitor [logging_level]
+(config)# no logging monitor
+
+配置buffer日志
+(config)# logging buffered [logging_level]
+(config)# no logging buffered
+
+配置trap日志
+(config)# logging host <hostname_or_ip>
+(config)# logging trap [log_level]
+(config)# no logging trap
+
+消息格式
+sequence-numbers: timestamps: %facility-severity-MNEMONIC: description
+
+配置消息格式
+1.序列号(sequence numbers)
+(config)# [no] service sequence-numbers
+2.时间戳(timestamps)
+(config)# service timestamps {log | debug} [datetime | uptime]
+(config)# no service timestamps
+
+显示当前日志的配置
+# show logging
+
+
+网络时间协议(Network Time Protocol, NTP)
+配置ntp服务器
+(config)# ntp master
+
+配置ntp客户端
+(config)# ntp server <server_ip> version <version>
+
+查看ntp同步状态(stratum等于16时未收到同步信息; 低于16时, 值越小优先级越高)
+# show ntp status
+
+设置时间(month使用月份的前三个字母)
+(config)# clock set [hh:mm:ss] [month] [day] [year]
+
+查看时间
+# show clock detail
+
+
+思科发现协议(Cisco Discovery Protocol, CDP)
+CDP只显示直连设备信息
+cdp定时器: 指定间隔时间从所有活动接口向外发送cdp分组
+cdp保持器: 将从邻接设备收到的分组保留多长时间
+
+配置cdp定时器
+(config)# cdp timer <time>
+
+配置cdp保持器
+(config)# cdp holdtime <time>
+
+查看cdp定时器/保持器配置
+# show cdp
+
+在所有接口上打开/关闭cdp
+(config)# [no] cdp run
+
+在指定接口上打开/关闭cdp
+(config-if)# [no] cdp enable
+
+查看cdp状态
+# show cdp neighbors [detail]
+
+
+telnet配置
+从当前telnet连接暂停连接
+ctrl+shift+6      x
+
+查看当前设备到远程的telnet连接
+# show session
+
+从已有连接序列中重新恢复连接
+# <session_number>
+
+结束暂停的连接
+# disconnect <session_number>
+
+查看从console端口或其他设备通过vty连接到本设备的连接
+# show users
+
+
+解析主机名
+1.创建主机表
+1)创建主机表项
+(config)# ip host <host_name> <ip>
+
+2)删除主机表项
+(config)# no ip host <host_name>
+
+3)查看主机表
+# show hosts
+
+2.DNS系统
+1)开启/关闭域名查找
+(config)# [no] ip domain-lookup
+
+2)指定DNS服务器地址
+(config)# ip name-server <server_ip>
+
+3)需要添加的域名后缀
+(config)# ip domain-name <domain>.<domain_suffix>

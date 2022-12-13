@@ -1,0 +1,47 @@
+Windows 10
+1.下载CiscoIOUKengen.py
+下载地址: https://github.com/obscur95/gns3-server/blob/master/IOU/CiscoIOUKeygen.py
+
+2.将CiscoIOUKengen.py上传到vm
+打开winscp, 登录vm(user/passwd: gns3), 上传
+
+3.在虚拟机生成license
+python3 CiscoIOUKengen.py
+
+4.将生成内容记录在本地iourc.txt
+[license]
+gns3vm = xxxxxxxx;
+
+5.上传iourc.txt和L2/L3 IOU
+上传iourc.txt:
+GNS3  -->  Edit  -->  Preferences  -->  IOS on UNIX  -->  Browse
+上传L2/L3 IOU
+GNS3  -->  Edit  -->  Preferences  -->  IOU Devices  -->  New
+
+
+Ubuntu 20.04
+1.下载CiscoIOUKengen.py
+curl --socks5 127.0.0.1:1080 -O https://raw.githubusercontent.com/obscur95/gns3-server/master/IOU/CiscoIOUKeygen.py
+
+2.将CiscoIOUKengen.py上传到vm
+scp CiscoIOUKeygen.py gns3@<gns3_vm_ip>:~
+passwd: gns3
+
+3.在虚拟机生成license
+python3 CiscoIOUKengen.py
+
+4.将生成内容记录在本地iourc.txt
+[license]
+gns3vm = xxxxxxxx;
+
+5.上传iourc.txt和L2/L3 IOU
+上传iourc.txt:
+GNS3  -->  Edit  -->  Preferences  -->  IOS on UNIX  -->  Browse
+上传L2/L3 IOU
+GNS3  -->  Edit  -->  Preferences  -->  IOU Devices  -->  New
+
+
+最后编辑于: 2022-10-28
+
+引用:
+[1] IOU参考: https://ccie.lol/blog/2016/07/03/cisco-ios-image-download/

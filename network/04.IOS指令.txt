@@ -1,0 +1,164 @@
+指令行模式:
+用户exec模式
+    只能执行一些基本的命令
+    提示符'>'
+    使用enable进入特权模式  
+
+特权exec模式
+    可以访问所有的IOS命令
+    提示符'#'
+    使用disable返回用户模式
+    使用configure terminal进入全局配置模式
+
+全局配置模式
+    提示符'(config)#'
+    使用exit返回特权exec模式
+    使用interface <int_type> <int_spec>进入接口配置模式
+    使用line <line_type> <line_spec>进入登录模式的密码配置
+    
+接口配置模式
+    提示符'(config-if)#'
+    使用exit返回全局配置模式
+
+
+管理配置:
+1.主机名配置
+(config)# hostname steven
+
+2.banner配置
+1)exec banner
+在用户exec模式之前显示消息
+(config)# banner exec <beg_delimiter> <prompt_message> <end_delimiter>
+
+2)login banner
+给需要登录的终端显示消息
+(config)# banner login <beg_delimiter> <prompt_message> <end_delimiter>
+
+3)motd(message of the day) banner
+给通过telnet/AUX/console连接的人显示消息
+(config)# banner motd <beg_delimiter> <prompt_message> <end_delimiter>
+
+3.description配置
+(config-if)# description <description>
+
+4.登录密码配置
+1)启用密码(进入特权exec模式, 10.3之前的系统)
+(config)# enable password <passwd>
+
+2)启用加密密码(进入特权exec模式, 10.3及之后的系统; 新版系统中, 优先级高于启用密码)
+设置密码
+(config)# enable secret <passwd>
+
+撤销密码
+(config)# no enable secret
+
+3)控制台密码(通过console端口连接)
+设置密码
+(config)# line console <num>
+(config-line)# password <passwd>
+(config-line)# login
+** 避免console消息覆盖输入指令
+(config-line)# logging synchronous
+
+撤销密码
+(config)# line console <num>
+(config-line)# no login
+
+4)vty密码(通过telnet/SSH连接)
+i.telnet连接(没有设置密码时, 无法通过telnet登录)
+设置密码
+(config)# line vty <num_1> <num_2>
+(config-line)# password <passwd>
+(config-line)# transport input telnet
+(config-line)# login
+
+撤销密码(无密码通过telnet登录)
+(config)# line vty <num_1> <num_2>
+(config-line)# no login
+
+ii.SSH连接
+(config)# hostname <host_name>
+(config)# ip domain-name <domain_name>
+(config)# username <host_name> password <passwd>
+(config)# crypto key generate rsa
+(config)# ip ssh version 2
+(config)# line vty <num_1> <num_2>
+(config-line)# login local
+(config-line)# transport input ssh
+
+5)辅助端口密码(通过AUX端口连接)
+(config)# line aux <num>
+(config-line)# password <passwd>
+(config-line)# login
+
+** cisco默认只对启用加密密码加密, 其他都明文显示(show running-config可查看), 所有密码加密指令:
+(config)# service password-encryption
+
+5.配置IP地址
+1)手动配置IP地址
+(config-if)# ip address 192.168.1.1 255.255.255.0
+
+2)DHCP客户端自动配置IP地址
+(config-if)# ip address dhcp
+
+
+show相关命令在特权exec模式下执行(#提示符)
+前置do可以在全局配置(接口配置等)模式下指令show指令, 即
+(config)# do show ...
+
+
+接口设置
+1)查看接口摘要信息
+# show ip interface brief
+
+2)查看接口第二层信息
+# show interface f0/0
+** 重置接口计数器
+# clear counter <interface>
+
+3)查看接口第三层信息
+# show ip interface f0/0
+
+4)启用接口
+(config)# interface f0/0
+(config-if)# no shutdown
+
+5)设置ip(不要给第二层交换机的接口设置IP, 给vlan设置IP)
+(config)# interface f0/0
+(config-if)# no shutdown
+(config-if)# ip address 192.168.1.2 255.255.255.0
+
+6)使用管道查看指定部分内容
+# show running-config | begin interface
+# show ip route | include 192.168.1.10
+
+
+通过serial接口连接两台路由器时(非product环境; product环境中, 路由器通常作为DTE), 必须有一台作为DCE(提供时钟频率)
+(config)# interface serial 0
+(config-if)# clock rate 1000000
+
+查看设备serial接口为DCE或DTE
+# show controllers s0/0
+
+设置带宽(单位为kbit/s)
+(config)# interface s0/0
+(config-if)# bandwidth 1000
+
+
+查看当前配置
+# show running-config
+
+
+查看启动配置
+# show startup-config
+
+
+将运行配置保存到启动配置
+# copy running-config startup-config
+
+
+重启, 将启动配置加载为运行配置
+# reload
+
+删除启动配置
+# erase startup-config
