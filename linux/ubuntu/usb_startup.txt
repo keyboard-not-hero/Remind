@@ -1,0 +1,30 @@
+制作Linux启动盘
+1.下载镜像文件
+Rocky Linux下载地址: https://rockylinux.org/download/
+Ubuntu下载地址: https://ubuntu.com/download/desktop
+
+2.使用dd指令制作可引导U盘
+1)使用如下指令查看U盘设备文件名
+sudo fdisk -l
+
+2)卸载U盘
+sudo umount /dev/sd[x]*
+
+3)制作启动U盘
+sudo dd if=<image_file> of=/dev/sd[x] bs=4M
+
+3.测试启动U盘是否创建成功
+1)安装测试工具qemu
+sudo apt-get install qemu
+
+2)测试
+sudo qemu-system-x86_64 -hda /dev/sd[x]
+当弹出窗口, 显示boot安装界面则成功
+
+
+引用:
+[1]initramfs unpack failed bug solution: 
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1835660
+
+
+最后编辑于: 2023-05-10

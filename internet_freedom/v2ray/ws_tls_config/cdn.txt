@@ -13,31 +13,10 @@ cloudflare服务类型：
 
 2.配置顶级域名
 
-3.将DNS解析服务从域名服务商迁移到cloudflare，并配置www DNS记录，并且配置为DNS only
+3.在域名服务商站点修改nameserver为cloudflare DNS
+kayleigh.ns.cloudflare.com	
+abdullah.ns.cloudflare.com	
 
-4.在SSL/TLS中选择full连接模式
+4.在cloudflare并配置www DNS记录
 
-
-进阶版本配置：
-## 使用partern版本，不允许使用cloudflare DNS服务
-1.登录partern网站，使用cloudflare账号登录，新增根域名
-  添加新记录，填写CNAME记录(cf-->2级子域名)指向服务器
-    **二级子域名指定格式，如：cf.www.baidu.com
-  生成对应CNAME值(主机-->cf)
-
-  parter可选列表：
-  https://cdn.moeelf.com/
-
-  https://cdn.kevsrv.com/
-
-  https://cdn.wzfou.com/
-
-2.登录DNS解析服务商后台，进入DNS服务器管理界面，填写对应CNAME记录(主机--cf)，并填写cf到服务器的A记录(2级子域名-->服务器IP)
-
-3.在DNS服务商后台，添加couldflare的官方节点IP为指定入口流量(移动、联通、电信)A记录
-  couldflare官方节点参考：
-  中国联通移动
-  104.23.240.0-104.23.243.254
-
-进阶版原理图：
-主机  ---DNS--->  CF  ---DNS--->  [二级子域名--->]  服务器
+5.在SSL/TLS中选择full连接模式

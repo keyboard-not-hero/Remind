@@ -8,7 +8,7 @@ log路径:
 yum install epel-release
 yum install snapd
 systemctl enable --now snapd.socket
-ln -s /var/lib/snapd/snap /snap
+ln -s /var/lib/snapd/snap  /snap
 shutdown -r now
 
 2.更新snap
@@ -25,7 +25,7 @@ snap install --classic certbot
 ln -s /snap/bin/certbot /usr/bin/certbot
 
 6.获取并安装证书
-certbot --nginx
+certbot --nginx --domains www.example.com
 
 1)邮件, 用于通知整证书过期和安全提示
 xxx@gmail.com
@@ -35,9 +35,6 @@ Y
 
 3)邮件是否接收群组信息(Y/N)
 Y
-
-4)证书包含的域名
-www.example.com
 
 ** 当nginx从source code编译时, 使用如下指令安装(指定nginx.conf路径):
 certbot --nginx --nginx-server-root=/usr/local/nginx/conf
@@ -52,7 +49,7 @@ server {
 echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random()*3600)' && certbot renew -q" | tee -a /etc/crontab > /dev/null
 
 8.校验certbot是否生效
-访问https://yourwebsite.com
+访问https://yourwebsite
 
 
 其他证书操作

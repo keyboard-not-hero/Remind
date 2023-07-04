@@ -192,6 +192,12 @@ MariaDB> update wp_options set option_value="https://www.example.com" where opti
 MariaDB> update wp_options set option_value="https://www.example.com" where option_name="siteurl";
 
 
+** 当无法打开https地址, 可检测是否IP/port被封
+** 国内端口测试: https://tool.chinaz.com/port
+** 国外端口测试: https://www.yougetsignal.com/tools/open-ports/
+** 更换IP地址: https://bwh81.net/ipchange.php
+
+
 引用：
 [1]mariadb源：https://downloads.mariadb.org/mariadb/repositories
 

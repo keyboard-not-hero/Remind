@@ -40,6 +40,9 @@ steven@steven-MSI:~$ sudo apt-get update
 
 steven@steven-MSI:~$ sudo apt-get install mariadb-server mariadb-client
 
+** 1.提示: Depends: libssl1.1 (>= 1.1.1) but it is not installable
+** sudo apt-get install libssl-dev
+
 steven@steven-MSI:~$ sudo systemctl start mariadb
 
 steven@steven-MSI:~$ sudo systemctl enable mariadb
