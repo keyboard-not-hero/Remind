@@ -52,6 +52,20 @@ $ vi naiveproxy-v113.0.5672.62-2-linux-x64/config.json
 nohup ./naive &>/dev/null & 
 
 
+Windows客户端
+1.下载客户端
+下载地址:
+https://github.com/klzgrad/naiveproxy/releases
+
+2.编辑config.json配置文件
+{
+    "listen": "socks://127.0.0.1:1080",
+    "proxy": "https://<user>:<pass>@<example.com>:<port>" # user替换成用户名, pass替换成密码, example.com换成web服务器域名, port为服务器开放的https端口
+}
+
+3.点击naive.exe, 启动naive
+
+
 IOS客户端(shadowrocket)
 类型  HTTP2
 地址  example.com

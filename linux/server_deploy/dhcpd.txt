@@ -1,0 +1,79 @@
+DHCP服务器搭建步骤
+1.安装dhcp
+sudo yum install dhcp
+IPADDR=192.168.152.11
+
+
+2.配置文件设定
+配置文件路径: /etc/dhcp/dhcpd.conf
+配置实例:
+subnet 192.168.2.0 netmask 255.255.255.0 {
+    range 192.168.2.20 192.168.2.100;
+    option routers 192.168.2.1;
+}
+
+subnet 192.168.3.0 netmask 255.255.255.0 {
+    range 192.168.3.40 192.168.3.150;
+    option routers 192.168.3.1;
+}
+# 备注: 当DHCP与分配的子网不在一个网段时, 必须先指定DHCP服务器所在子网
+
+3.指定服务器的静态ip
+ifconfig查看网卡名称, 如: ensp30
+sudo vi /etc/sysconfig/network-scripts/ifcfg-ensp30
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=192.168.2.6
+NETMASK=255.255.255.0
+GATEWAY=192.168.2.1
+
+sudo systemctl restart network
+
+4.启动dhcp
+systemctl start dhcpd
+
+
+
+
+配置文件语法:
+1.'#'为注释符
+
+2.除了以'{'和'}'结尾, 每一行结尾都要添加';'
+
+3.主要设定格式为: <arg_name> <value>
+
+4.部分设定格式为: option <arg_name> <value>
+
+
+
+配置文件directive列表:
+default-lease-time <seconds>;
+    默认租约时间, 当没有特别指定时, 默认使用该值
+
+
+max-lease-time <seconds>;
+    最大租约时间, 当特别指定的值大于该值时, 取该值
+
+
+option domain-name <domain_name>;
+    设置域名
+
+
+option domain-name-servers <server_add>;
+    DNS服务器地址
+
+
+subnet <subnet> netmask <mask> {
+}
+    分配的子网和掩码. 该括号内可包含如下directive:
+    range <start_ip> <end_ip>;
+        该子网用于动态分配的ip范围
+
+    host <host_name> {
+        hardware ethernet <mac>; 
+        fixed-address <ip>;
+    }
+        对含有指定mac地址的目标分配固定ip地址
+
+    option routers <default_gateway>;
+        默认网关

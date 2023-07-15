@@ -2,6 +2,7 @@
 1.下载镜像文件
 Rocky Linux下载地址: https://rockylinux.org/download/
 Ubuntu下载地址: https://ubuntu.com/download/desktop
+CentOS下载地址: https://www.centos.org/centos-linux/
 
 2.使用dd指令制作可引导U盘
 1)使用如下指令查看U盘设备文件名
@@ -27,4 +28,4 @@ sudo qemu-system-x86_64 -hda /dev/sd[x]
 https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1835660
 
 
-最后编辑于: 2023-05-10
+最后编辑于: 2023-07-12
