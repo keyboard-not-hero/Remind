@@ -141,7 +141,7 @@ I have two search engine: [google][link_1] and [baidu][link_2]
 <br/>
 
 #### 行内图片  
-![image not found](pic/cat.jpg)  
+![image not found](pic/cat_01.jpg)  
 ![image not found](pic/dog.jpeg "dog")
 <br/>
 <br/>
