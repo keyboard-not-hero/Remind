@@ -14,7 +14,7 @@
 i love you see this can you know this
 ==
 
-i catch you, because you run so slow
+i catch you, because you run so slo
 --
 <br/>
 <br/>
@@ -141,8 +141,8 @@ I have two search engine: [google][link_1] and [baidu][link_2]
 <br/>
 
 #### 行内图片  
-![image not found](/home/steven/Downloads/cat.jpg)  
-![image not found](/home/steven/Downloads/dog.jpg "dog")
+![image not found](pic/cat.jpg)  
+![image not found](pic/dog.jpeg "dog")
 <br/>
 <br/>
 <br/>

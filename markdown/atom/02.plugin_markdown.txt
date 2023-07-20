@@ -1,5 +1,0 @@
-1.markdown插件
-Packages >> Settings View >> Open >> Install
-搜索如下插件
-markdown-preview-enhanced(预览增强, 被墙, 需代理)
-language-markdown(语法高亮)

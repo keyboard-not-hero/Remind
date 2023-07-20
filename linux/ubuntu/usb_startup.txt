@@ -8,10 +8,13 @@ CentOS下载地址: https://www.centos.org/centos-linux/
 1)使用如下指令查看U盘设备文件名
 sudo fdisk -l
 
-2)卸载U盘
+2)删除分区
+sudo fdisk /dev/sd[x]
+
+3)卸载U盘
 sudo umount /dev/sd[x]*
 
-3)制作启动U盘
+4)制作启动U盘
 sudo dd if=<image_file> of=/dev/sd[x] bs=4M
 
 3.测试启动U盘是否创建成功
