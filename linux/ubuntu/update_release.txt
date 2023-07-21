@@ -14,7 +14,7 @@ sudo apt autoremove
 5.重启
 sudo shutdown -r now
 
-6.选择是否支持非LTS版本
+6.选择普通版本或LTS版本
 vi /etc/update-manager/release-upgrades
 
 7.ubuntu release升级(软件:update-manager-core，发布一段时间后才能进行更新)
@@ -22,6 +22,7 @@ do-release-upgrade -m desktop
 
 当出现以下提示：Failed to connect to https://changelogs.ubuntu.com/meta-release
 解决方案：sudo rm /var/lib/ubuntu-release-upgrader/release-upgrade-available
+
 
 18.04-->20.04
 GUI更新

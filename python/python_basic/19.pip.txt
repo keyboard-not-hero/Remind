@@ -5,10 +5,10 @@ pip <command> [options] [packages]
 
 command选项：
 help
-	帮助信息
+    帮助信息
 
 install
-	安装package
+    安装package
 
 download
     下载package
@@ -154,10 +154,10 @@ Windows - C:\ProgramData\pip\pip.ini, 支持Windows 7与之后的版本, Vista�
 
 例1. pip更换源
 永久更换
-[thompson@.pip] pip config set global.index-url https://pypi.python.org/simple
+pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 临时更换
-pip3 install -i http://pypi.python.org/simple <package_name>
+pip install -i https://mirrors.aliyun.com/pypi/simple/ <package_name>
 
 
 例2. 升级pip
