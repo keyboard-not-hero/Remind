@@ -352,6 +352,11 @@ option列表
 --socks5-basic 
 	使用带基础认证的socks5代理
 
+--socks5-hostname <host:[port]>
+	使用socks5代理, 并且由代理解析主机名称
+	port默认为1080
+        
+
 --ssl
 	尝试使用SSL连接, 当服务器不支持时, 返回非SSL连接
 
@@ -502,5 +507,21 @@ error集锦:
 yum install ntpdate
 ntpdate ntp.aliyun.com
 
+2.curl: (35) error:0A000126:SSL routines::unexpected eof while reading
+选项--socks5/--preproxy不适用于IPv6
+方案1.
+使用选项--socks5-hostname
+方案2.
+本地禁用IPv6
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+将数字1修改为0可恢复IPv6
 
-最后编辑于: 2021-11-19
+
+最后编辑于: 2023-07-22
+
+
+引用:
+[1]curl issue: https://github.com/curl/curl/issues/835
+
+[2]disable IPv6: https://www.geeksforgeeks.org/how-to-disable-ipv6-in-linux/

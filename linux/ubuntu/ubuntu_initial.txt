@@ -1,27 +1,30 @@
-1.替换Ubuntu 20.04的阿里云源
+1.安装vim
+steven@~$ sudo apt-get install vim
+
+
+2.替换Ubuntu 22.04的清华镜像源
 steven@~$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
 steven@~$ sudo vi /etc/apt/sources.list
-deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+# # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
 
-deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
 
 steven@~$ sudo apt-get update
-
-
-2.安装vim
-steven@~$ sudo apt-get install vim
 
 
 3.中文环境下，恢复家目录下子目录的英文显示
@@ -134,10 +137,8 @@ sudo apt-get install goldendict
 有道 - http://dict.youdao.com/search?q=%GDWORD%&ue=utf8
 必应 - https://cn.bing.com/dict/search?q=%GDWORD%
 
-
 添加离线字典
 将各自词典目录放入指定总目录, 选择编辑 - 词典 - 词典来源 - 文件, 点击右侧'添加', 读取指定词典目录, 勾选'recursive', 点击'rescan now', 扫描读取成功后, 点击'apply'
-
 
 将字典添加进指定群组
 编辑 - 字典 - 群组, 点击'添加群组'按钮, 输入群组名称, 并点击'OK'按钮, 点击'apply'按钮, 添加群组成功
@@ -147,10 +148,8 @@ sudo apt-get install goldendict
 调用词典
 选中单词 - ctrl+c+c组合键
 
-
 修改音频输出
 编辑 -- 首选项 -- 音频, 选择'Use externel program', 输入mplayer(需自行安装)
-
 
 英语构词规则
 下载: https://sourceforge.net/projects/goldendict/files/better%20morphologies/1.0/en_US_1.0.zip/download
@@ -160,7 +159,7 @@ unzip en_US_1.0.zip -d myspell
 编辑 -- 字典 -- 字典来源 -- 词法(Morphology), 点击'change'选择myspell文件夹, 勾选'Enabled', 点击'apply'
 
 
-最后编辑时间: 2022-09-07
+最后编辑时间: 2023-07-22
 
 
 参考引用

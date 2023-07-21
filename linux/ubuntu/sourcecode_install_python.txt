@@ -17,7 +17,7 @@ steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
 2)gcc
 3)perl 5 and core
 4)perl module `Text::Template`
-steven@steven:~$ sudo apt install gcc make perl
+steven@steven:~$ sudo apt install perl
 
 steven@steven:~$ sudo apt search Text::Template
 
@@ -88,12 +88,13 @@ steven@steven:~$ sudo ldconfig
 
 4.编译python
 下载python
-steven@steven:~$ curl -O https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tar.xz
+下载地址: https://www.python.org/downloads/source/
+steven@steven:~$ curl -O https://www.python.org/ftp/python/3.11.4/Python-3.11.4.tar.xz
 
-steven@steven:~$ tar -Jxf Python-3.10.6.tar.xz -C /tmp
+steven@steven:~$ tar -Jxf Python-3.11.4.tar.xz -C /tmp
 
 # 试编译
-steven@steven:~$ cd /tmp/Python3.10.6
+steven@steven:~$ cd /tmp/Python3.11.4
 
 steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/ssl/lib
 
@@ -103,9 +104,9 @@ steven@steven:~$ sudo make install
 
 steven@steven:~$ sudo chown -R steven:steven /usr/local/python
 
-steven@steven:~$ sudo ln -s /usr/local/python/bin/python3.10 /usr/bin/python
+steven@steven:~$ sudo ln -s /usr/local/python/bin/python3.11 /usr/bin/python
 
-steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.10 /usr/bin/pip
+steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.11 /usr/bin/pip
 ** warning: 使用python/pip指令名称，与系统自带python3版本区分
 
 
@@ -165,4 +166,4 @@ sudo apt install python3-apt
 [1]tkinter error: https://bugs.python.org/issue31817
 
 
-编辑于: 2022-09-06
+编辑于: 2023-07-21

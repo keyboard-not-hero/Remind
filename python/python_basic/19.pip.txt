@@ -130,6 +130,9 @@ package:
 	安装的库, 可使用'==<detail_release>'指定版本
 
 
+手动安装pip
+sudo apt install python3-pip
+
 
 pip配置文件完整路径
 1.用户级

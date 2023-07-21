@@ -1,0 +1,55 @@
+1.添加拓展支持
+1)单文档 - 按下列格式添加到文档第一行
+<!-- Required extensions: sane_lists, headerid(level=3) -->
+
+2)目录 - 将拓展功能添加到该目录下的markdown-extensions.txt文件
+sane_lists
+headerid(level=3)
+
+3)所有文档 - 将拓展功能添加到~/.config/markdown-extensions.txt文件
+sane_lists
+headerid(level=3)
+
+
+2.python自带markdown拓展
+列表参考:
+https://python-markdown.github.io/extensions/#officially-supported-extensions
+
+每个Entry Point即为拓展功能关键字. 可选列表如下:
+codehilite
+    代码高亮
+
+
+3.第三方markdown拓展
+参考地址:
+https://github.com/Python-Markdown/markdown/wiki/Third-Party-Extensions
+
+pymdown-extensions - 该包为一系列拓展的集合
+caret
+    上角标
+
+tilde
+    下角标和删除线
+
+tasklist
+    任务清单
+
+magiclink
+    自动链接http/ftp/email地址
+
+
+
+markdown-extensions.txt示例
+codehilite
+pymdownx.caret
+pymdownx.tilde
+pymdownx.emoji
+pymdownx.tasklist(custom_checkbox=true)
+magiclink
+
+
+最后编辑于: 2023-07-22
+
+
+引用:
+[1]github issue: https://github.com/retext-project/retext/issues/369
