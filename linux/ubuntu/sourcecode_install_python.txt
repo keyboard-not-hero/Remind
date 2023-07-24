@@ -8,7 +8,7 @@ steven@steven:~$ sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurse
 
 
 2.openssl编译
-steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.0.5.tar.gz
+steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.1.1.tar.gz
 
 下载参考列表: https://www.openssl.org/source/
 
@@ -24,7 +24,7 @@ steven@steven:~$ sudo apt search Text::Template
 steven@steven:~$ sudo apt install libtext-template-perl
 
 # 安装
-steven@steven:~$ tar -zxvf openssl-3.0.5.tar.gz -C /tmp
+steven@steven:~$ tar -zxvf openssl-3.1.1.tar.gz -C /tmp
 
 steven@steven:~$ cd /tmp/openssl-3.0.5/
 
@@ -57,7 +57,7 @@ steven@steven:~$ readelf /usr/local/bin/openssl -d | grep path
 
 
 3.tcl/tk编译
-下载地址：http://www.tcl.tk/software/tcltk/download.html
+下载地址: http://www.tcl.tk/software/tcltk/download.html
 
 steven@steven:~$ tar -zxf tcl8.6.10-src.tar.gz -C /tmp
 

@@ -24,6 +24,9 @@ action列表
 -i, --install <package_file>
 	安装deb包
 
+-L, --listfiles <package-name>
+        指定软件的相关文件
+
 -P, --purge {<package> | -a, --pending}
 	卸载软件, 并删除配置文件
 	如果指定-a, 则卸载所有unpacked或已removed,

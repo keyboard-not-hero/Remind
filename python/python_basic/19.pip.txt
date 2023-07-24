@@ -174,7 +174,7 @@ Windows - python -m pip -U pip
 pip config set global.proxy socks5://<host>:<port>
 
 2.临时配置
-pip3 install --proxy socks5://<ADDR>:<PORT> <package>
+pip install --proxy socks5://<ADDR>:<PORT> <package>
 
 
 最后编辑于: 2022-09-10

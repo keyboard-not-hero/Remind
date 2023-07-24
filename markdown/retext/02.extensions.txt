@@ -45,7 +45,7 @@ pymdownx.caret
 pymdownx.tilde
 pymdownx.emoji
 pymdownx.tasklist(custom_checkbox=true)
-magiclink
+pymdownx.magiclink
 
 
 最后编辑于: 2023-07-22

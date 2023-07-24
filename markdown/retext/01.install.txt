@@ -1,7 +1,7 @@
-前提条件: 已安装python 3与pip 3
+前提条件: 
+由于retext使用python模块, 需要确保安装python 3与pip 3
 
-pip install ReText
-
+sudo apt install retext
 
 最后编辑于: 2023-07-22
 
