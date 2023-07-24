@@ -24,13 +24,7 @@ steven@steven:~$ tar -zxvf openssl-3.1.1.tar.gz -C /tmp
 steven@steven:~$ cd /tmp/openssl-3.1.1/
 
 # configure
-steven@steven:~$ ./Configure -Wl,-rpath,/usr/local/lib64
-# -Wl,-rpath指定openssl搜寻动态库的路径(runtime library path, rpath)
-#Shared objects are searched for in this order:
-#    1. Using directories specified in rpath(-Wl,-rpath,<path>)
-#    2. Using the environment variable LD_LIBRARY_PATH
-#    3. Using directories specified in runpath(-Wl,--enable-new-dtags,-path,<path>)
-#    4. Using system shared object caches and default directories
+steven@steven:~$ ./Configure --prefix=/usr/local/openssl
 
 steven@steven:~$ make -j16
 
@@ -38,9 +32,15 @@ steven@steven:~$ make test
 
 steven@steven:~$ sudo make install
 
+# 添加crypto.so/ssl.so到动态库
+steven@steven:~$ sudo vi /etc/ld.so.d/openssl.conf
+/usr/local/openssl/lib64
+
+steven@steven:~$ sudo ldconfig
+
 # 验证rpath
-steven@steven:~$ readelf /usr/local/bin/openssl -d | grep path
-0x000000000000000f (RPATH)              Library rpath: [/usr/local/lib64]
+steven@steven:~$ readelf /usr/local/openssl/bin/openssl -d | grep path
+0x000000000000000f (RPATH)              Library rpath: [/usr/local/openssl/lib64]
 
 
 3.tcl/tk编译
@@ -87,7 +87,7 @@ steven@steven:~$ tar -Jxf Python-3.11.4.tar.xz -C /tmp
 # 试编译
 steven@steven:~$ cd /tmp/Python3.11.4
 
-steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/lib64
+steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/openssl/lib64
 
 steven@steven:~$ make -j16
 
@@ -102,15 +102,8 @@ steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.11 /usr/bin/pip
 
 
 
-报错集：
-1.subprocess.CalledProcessError: Command '('lsb_release', '-a')' returned non-zero exit status 1.
-解决:
-# lsb_release指定详细系统自带python版本
-[thompson@~] sudo vi /usr/bin/lsb_release
-#!/usr/bin/python3.8
-
-
-2.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
+报错集:
+1.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
 解决：
 # python添加socks支持(先取消proxy)
 [thompson@~] unset ALL_PROXY
@@ -118,39 +111,6 @@ steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.11 /usr/bin/pip
 
 [thompson@~] sudo pip install pysocks
 
-
-3.安装完成后无法打开terminal，在ctrl+alt+F1输入gnome-terminal显示无'gi'模块
-解决方法1：
-## 系统自带gi模块目录：/usr/lib/python/dist-packages/gi
-## 如不在该目录，使用find / -name gi查找
-## 使用情况: 
-	系统自带3.8及以上版本(ubuntu 20.04)，并且手动安装也是3.8及以上版本；
-	系统自带3.7及以下版本(ubuntu 18.04及以下系统版本)，并且手动安装也是3.7及以下版本
-	原因是ubuntu自带的python库在ubuntu 20.04做了很大变动，造成python库不兼容
-
-## 将gi模块目录转移到手动安装python库目录(安装目录为/usr/local/python时，对应于/usr/local/pytnon/lib/python3.7/site-packages)
-[thompson@~] cp -fr /usr/lib/python/dist-packages/gi /usr/local/python/lib/python3.7/site-packages
-
-## 修改指定动态库匹配的python版本(系统默认版本为3.6，以修改为手动安装的3.7为例，主.次版本相同则不用修改)
-[thompson@~] cd /usr/local/python/lib/python3.8/site-packages/gi
-
-[thompson@gi] mv _gi_cairo.cpython-36m-x86_64-linux-gnu.so _gi_cairo.cpython-37m-x86_64-linux-gnu.so
-
-[thompson@gi] mv _gi.cpython-36m-x86_64-linux-gnu.so _gi.cpython-37m-x86_64-linux-gnu.so
-
-解决方法2：
-## 将gnome-terminal使用的python版本指向系统自带版本
-## 使用情况，系统自带Python3.7及以下版本，手动安装3.8版本；或者系统自带Python3.8版本，手动安装3.7及以下版本
-sudo vi /usr/bin/gnome-terminal
-#!/usr/bin/python3
-修改为
-#!/usr/bin/python3.6
-
-4.ModuleNotFoundError: No module named 'CommandNotFound'
-解决:
-sudo apt purge python3-apt
-sudo apt autoremove
-sudo apt install python3-apt
 
 
 引用:
