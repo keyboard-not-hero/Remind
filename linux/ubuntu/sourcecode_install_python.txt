@@ -1,17 +1,9 @@
-ubuntu官方packages列表：
-packages.ubuntu.com
-
-
 python3编译：
 1.必要环境安装
 steven@steven:~$ sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
 
 
 2.openssl编译
-steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.1.1.tar.gz
-
-下载参考列表: https://www.openssl.org/source/
-
 # 安装前提环境(perl版本至少为5.10.0)
 1)make
 2)gcc
@@ -23,14 +15,17 @@ steven@steven:~$ sudo apt search Text::Template
 
 steven@steven:~$ sudo apt install libtext-template-perl
 
-# 安装
+# 安装openssl
+steven@steven:~$ curl -O https://www.openssl.org/source/openssl-3.1.1.tar.gz
+下载参考列表: https://www.openssl.org/source/
+
 steven@steven:~$ tar -zxvf openssl-3.1.1.tar.gz -C /tmp
 
-steven@steven:~$ cd /tmp/openssl-3.0.5/
+steven@steven:~$ cd /tmp/openssl-3.1.1/
 
 # configure
-steven@steven:~$ ./Configure --prefix=/usr/local/openssl -Wl,-rpath,/usr/local/ssl/lib
-# -Wl,-rpath指定openssl搜寻动态库的路径(rpath)
+steven@steven:~$ ./Configure -Wl,-rpath,/usr/local/lib64
+# -Wl,-rpath指定openssl搜寻动态库的路径(runtime library path, rpath)
 #Shared objects are searched for in this order:
 #    1. Using directories specified in rpath(-Wl,-rpath,<path>)
 #    2. Using the environment variable LD_LIBRARY_PATH
@@ -39,21 +34,17 @@ steven@steven:~$ ./Configure --prefix=/usr/local/openssl -Wl,-rpath,/usr/local/s
 
 steven@steven:~$ make -j16
 
+steven@steven:~$ make test
+
 steven@steven:~$ sudo make install
-
-steven@steven:~$ sudo mkdir -p /usr/local/ssl/lib
-
-steven@steven:~$ sudo cp libssl.so.3 /usr/local/ssl/lib
-
-steven@steven:~$ sudo cp libcrypto.so.3 /usr/local/ssl/lib
 
 # 验证rpath
 steven@steven:~$ readelf /usr/local/bin/openssl -d | grep path
-0x000000000000000f (RPATH)              Library rpath: [/usr/local/ssl/lib]
+0x000000000000000f (RPATH)              Library rpath: [/usr/local/lib64]
 
 
 3.tcl/tk编译
-下载地址: http://www.tcl.tk/software/tcltk/download.html
+tcl/tk下载地址: http://www.tcl.tk/software/tcltk/download.html
 
 steven@steven:~$ tar -zxf tcl8.6.10-src.tar.gz -C /tmp
 
@@ -63,22 +54,26 @@ steven@steven:~$ ./configure
 
 steven@steven:~$ make -j16
 
+steven@steven:~$ make test
+
 steven@steven:~$ sudo make install
 
 ------------------------------------------------------------
+steven@steven:~$ sudo apt-get install libx11-dev
 
 steven@steven:~$ tar -zxf tk8.6.10-src.tar.gz -C /tmp
 
 steven@steven:~$ cd /tmp/tk8.6.10/unix
 
-steven@steven:~$ sudo apt-get install libx11-dev
-
 steven@steven:~$ ./configure
 
 steven@steven:~$ make -j16
 
+steven@steven:~$ make test
+
 steven@steven:~$ sudo make install
 
+# 更新tcl/tk动态链接缓存
 steven@steven:~$ sudo ldconfig
 
 
@@ -92,7 +87,7 @@ steven@steven:~$ tar -Jxf Python-3.11.4.tar.xz -C /tmp
 # 试编译
 steven@steven:~$ cd /tmp/Python3.11.4
 
-steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/ssl/lib
+steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/lib64
 
 steven@steven:~$ make -j16
 
