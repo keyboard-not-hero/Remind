@@ -469,36 +469,33 @@ option列表
 
 
 
-启动配置文件:
+配置文件:
 ~/.curlrc
 
+参数格式: 使用长参数和对应值. 如下
+socks5 = 127.0.0.1:1080
+等价于
+curl --socks5 127.0.0.1:1080 https://www.baidu.com
 
 
-实例
-1.普通下载
-curl -o robot.jpg https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/2019/08/Robots-Square-300x300.jpg
+
+示例1 - 保持下载到本地的文件名与原文件名相同
+curl -O https://blogs.3ds.com/northamerica/wp-content/uploads/sites/4/2019/08/Robots-Square-300x300.jpg
 
 
-2.通过socks5 proxy下载文件
-curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
-
-curl --preproxy socks5://127.0.0.1:<port> -o spider_man https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
-
-
-3.指定下载到本地的文件名
-1)保留源文件名称
-curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
-
-2)指定下载后的名称
+示例2 - 指定下载到本地的文件名
 curl -o <name> https://nginx.org/download/nginx-1.22.0.tar.gz
 
 
-4.使用verbose模式查看出错信息
-curl -v <url>
+示例3 - 通过socks5 proxy下载文件
+1)永久配置
+vi ~/.curlrc
+socks5 = 127.0.0.1:<port>
+
+2)单次下载配置
+curl --socks5 127.0.0.1:<port> -o spider_man.jpg https://ichef.bbci.co.uk/news/800/cpsprodpb/70A8/production/_113804882_gettyimages-1185672022.jpg
 
 
-5.显示服务器的响应header
-curl -I <url>
 
 
 error集锦:
@@ -507,10 +504,14 @@ error集锦:
 yum install ntpdate
 ntpdate ntp.aliyun.com
 
+
 2.curl: (35) error:0A000126:SSL routines::unexpected eof while reading
-选项--socks5/--preproxy不适用于IPv6
+选项--socks5不适用于IPv6
 方案1.
 使用选项--socks5-hostname
+或者
+选项--preproxy socks5h://
+
 方案2.
 本地禁用IPv6
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1

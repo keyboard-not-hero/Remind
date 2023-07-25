@@ -140,6 +140,10 @@ unzip en_US_1.0.zip -d myspell
 编辑 -- 字典 -- 字典来源 -- 词法(Morphology), 点击'change'选择myspell文件夹, 勾选'Enabled', 点击'apply'
 
 
+9.安装图片处理工具GIMP
+sudo apt install gimp
+
+
 最后编辑时间: 2023-07-22
 
 

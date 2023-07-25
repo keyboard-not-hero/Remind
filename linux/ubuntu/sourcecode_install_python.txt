@@ -1,6 +1,6 @@
 python3编译：
 1.必要环境安装
-steven@steven:~$ sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev gcc make
+steven@steven:~$ sudo apt-get install zlib1g-dev libffi-dev libbz2-dev libncurses5-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libsqlite3-dev uuid-dev libreadline-dev build-essential
 
 
 2.openssl编译
@@ -32,15 +32,21 @@ steven@steven:~$ make test
 
 steven@steven:~$ sudo make install
 
-# 添加crypto.so/ssl.so到动态库
-steven@steven:~$ sudo vi /etc/ld.so.d/openssl.conf
+# 重新配置openssl指令
+steven@steven:~$ sudo mv /usr/bin/c_rehash /usr/bin/c_rehash.bak
+
+steven@steven:~$ sudo mv /usr/bin/openssl /usr/bin/openssl.bak
+
+steven@steven:~$ vi ~/.bashrc
+PATH=$PATH:/usr/local/openssl/bin
+
+steven@steven:~$ source ~/.bashrc
+
+# 创建libssl/libcrypto的动态链接缓存
+steven@steven:~$  sudo vi /etc/ld.so.conf.d/openssl.conf
 /usr/local/openssl/lib64
 
-steven@steven:~$ sudo ldconfig
-
-# 验证rpath
-steven@steven:~$ readelf /usr/local/openssl/bin/openssl -d | grep path
-0x000000000000000f (RPATH)              Library rpath: [/usr/local/openssl/lib64]
+steven@steven:~$ sudo ldconfig -v
 
 
 3.tcl/tk编译
@@ -73,31 +79,34 @@ steven@steven:~$ make test
 
 steven@steven:~$ sudo make install
 
-# 更新tcl/tk动态链接缓存
-steven@steven:~$ sudo ldconfig
+# 更新libtcl/libtk动态链接缓存
+steven@steven:~$ sudo ldconfig -v
+
+# 将openssl的pkgconfig内容复制到/usr/local/lib/pkgconfig
+steven@steven:~$ sudo cp /usr/local/openssl/lib64/pkgconfig/* /usr/local/lib/pkgconfig 
 
 
 4.编译python
 下载python
 下载地址: https://www.python.org/downloads/source/
-steven@steven:~$ curl -O https://www.python.org/ftp/python/3.11.4/Python-3.11.4.tar.xz
+steven@steven:~$ curl --socks5-hostname 127.0.0.1:1080 -O https://www.python.org/ftp/python/3.11.4/Python-3.11.4.tar.xz
 
 steven@steven:~$ tar -Jxf Python-3.11.4.tar.xz -C /tmp
 
 # 试编译
 steven@steven:~$ cd /tmp/Python3.11.4
 
-steven@steven:~$ ./configure --prefix=/usr/local/python --with-openssl-rpath=/usr/local/openssl/lib64
+steven@steven:~$ ./configure --prefix=/usr/local/python3.11
 
 steven@steven:~$ make -j16
 
 steven@steven:~$ sudo make install
 
-steven@steven:~$ sudo chown -R steven:steven /usr/local/python
+steven@steven:~$ sudo chown -R steven:steven /usr/local/python3.11
 
-steven@steven:~$ sudo ln -s /usr/local/python/bin/python3.11 /usr/bin/python
+steven@steven:~$ sudo ln -s /usr/local/python3.11/bin/python3 /usr/bin/python
 
-steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.11 /usr/bin/pip
+steven@steven:~$ sudo ln -s /usr/local/python3.11/bin/pip3 /usr/bin/pip
 ** warning: 使用python/pip指令名称，与系统自带python3版本区分
 
 
@@ -117,4 +126,4 @@ steven@steven:~$ sudo ln -s /usr/local/python/bin/pip3.11 /usr/bin/pip
 [1]tkinter error: https://bugs.python.org/issue31817
 
 
-编辑于: 2023-07-21
+最后编辑于: 2023-07-25

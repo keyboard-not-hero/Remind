@@ -18,6 +18,7 @@ Debian系统：
 apt-get install git
 apt-get install git-svn git-email git-gui gitk
 **较老的Debian分支系统(Ubuntu10.04及以下，Debian lenny及以下版本)，名称为git-core
+
 Redhat系统：
 yum install git
 yum install git-svn git-email git-gui gitk
@@ -26,21 +27,28 @@ yum install git-svn git-email git-gui gitk
 下载地址：https://mirrors.edge.kernel.org/pub/software/scm/git/
 参考INSTALL文件
 
+
 2.查看版本
 git --version
+
 
 3.配置/查看/删除变量
 配置用户名和邮件
 git config --global user.name NAME
 git config --global user.email EMAIL
+
 配置默认调用编辑文本
 git config --global core.editor vim
+
 配置代理
 git config --global http.proxy 'socks5://127.0.0.1:1080'  #http://
+
 查看配置
 git config --global user.name
+
 罗列配置
 git config --global --list
+
 删除配置
 git config --unset --global user.name
 **git config中，--system代表适用于所有用户与所有仓库(/etc/gitconfig)

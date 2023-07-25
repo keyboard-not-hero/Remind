@@ -115,7 +115,7 @@ b <label>
 c <text>
 	将指定行的内容替换为指定文本
 	示例:
-	seq 3|sed 'c this is demo'
+	seq 3|sed '2c this is demo'
 	1
 	this is demo
 	3

@@ -95,7 +95,8 @@ install option:
 
 --user
     安装到用户级库目录
-    GNU/Linux为~/.local/, Windows为%AppData%/Python/
+    GNU/Linux为~/.local/
+    Windows为%AppData%/Python/
 
 --root <dir>
     chroot应用, 安装到以该目录为根目录的相对路径
@@ -135,49 +136,92 @@ sudo apt install python3-pip
 
 
 pip配置文件完整路径
-1.用户级
-GNU/Linux - $HOME/.config/pip/pip.conf
-Windows - %AppData%\pip\pip.ini, 即c:\user\<user_name>\AppData\pip\pip.ini
+1.global - 针对所有用户
+GNU/Linux
+    /etc/pip.conf
 
-旧版本
-GNU/Linux - $HOME/.pip/pip.conf
-Windows - %HOME%\pip\pip.ini, 即c:\user\<user_name>\pip\pip.ini
-
-2.virtualenv
-GNU/Linux - $VIRTUAL_ENV/pip.conf
-Windows - %VIRTUAL_ENV%/pip.ini
-
-3.system级 
-GNU/Linux - /etc/pip.conf
-Windows - C:\ProgramData\pip\pip.ini, 支持Windows 7与之后的版本, Vista不支持
-
-优先级：virtualenv > per-user > site-wide
+Windows
+    C:\ProgramData\pip\pip.ini, 支持Windows 7与之后的版本, Vista不支持
 
 
+2.user - 针对单个用户
+GNU/Linux
+    $HOME/.config/pip/pip.conf
 
-例1. pip更换源
-永久更换
-pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-
-临时更换
-pip install -i https://mirrors.aliyun.com/pypi/simple/ <package_name>
-
-
-例2. 升级pip
-GNU/Linux - pip install -U pip
-Windows - python -m pip -U pip
-** warning：Windows不能使用pip3 install -U pip升级pip, Windows会先卸载pip3,导致后续无法进行
+Windows
+    %AppData%\pip\pip.ini, 即c:\user\<user_name>\AppData\pip\pip.ini
 
 
-例3. socks5 proxy配置(需要pysocks支持)
-1.永久配置(per-user)
+3.virtualenv - 针对单个环境
+GNU/Linux
+    $VIRTUAL_ENV/pip.conf
+
+Windows
+    %VIRTUAL_ENV%/pip.ini
+
+读取顺序: 
+1.global
+
+2.user
+
+3.virtualenv
+** 总是依次读取配置文件, 后续文件会覆盖之前读取的配置文件
+
+
+库的安装位置
+1.system
+{python_install_path}/lib/python<version>/sitepackages
+
+2.user
+~/.local/lib/python3.11/site-packages
+
+
+
+例1. 安装numpy库
+python -m pip install numpy
+
+
+例2. 卸载numpy库
+python -m pip uninstall numpy
+
+
+例3. 升级pip
+Linux
+python -m pip install --upgrade pip
+
+Windows
+py -m pip install --upgrade pip
+
+
+例4. pip更换源
+1.永久更换
+1)cmd方式
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+2)config方式
+vi /etc/pip.conf
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+
+2.单次下载更换
+python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple <package_name>
+
+
+例5. socks5 proxy配置(需要pysocks支持)
+1.永久配置
+1)cmd方式
 pip config set global.proxy socks5://<host>:<port>
 
-2.临时配置
-pip install --proxy socks5://<ADDR>:<PORT> <package>
+2)config方式
+vi /etc/pip.conf
+[global]
+proxy = socks5://<host>:<port>
+
+2.单次下载配置
+pip install --proxy socks5://[<user>:<passwd>@]<ADDR>:<PORT> <package>
 
 
-最后编辑于: 2022-09-10
+最后编辑于: 2023-07-25
 
 
 引用
