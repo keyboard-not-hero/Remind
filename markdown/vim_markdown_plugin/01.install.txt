@@ -1,28 +1,25 @@
 安装前提:
-1.需要安装xdg-utils/curl/git/nodejs/npm
-sudo apt install xdg-utils curl git nodejs npm
-
-2.需要安装instant-markdown-d
-sudo npm -g install instant-markdown-d
+sudo apt install git curl
 
 
 
 插件配置
-1.安装vim插件vim-instant-markdown(基于Vundle插件管理器)
-github地址: https://github.com/instant-markdown/vim-instant-markdown
+1.安装vim插件markdown-preview.nvim(基于Vundle插件管理器)
+github地址: https://github.com/iamcco/markdown-preview.nvim
 vi ~/.vimrc
-Plugin 'instant-markdown/vim-instant-markdown'
-
+Plugin 'iamcco/markdown-preview.nvim'
 
 2.进行安装插件操作
 " PluginInstall使用git作为下载工具
-:so ~/.vimrc
+" call mkdp#util#install()使用curl作为下载工具
+:source %
 :PluginInstall
+:call mkdp#util#install()
 
 
 3.进行markdown预览
 " 开始预览
-:InstantMarkdownPreview
+:MarkdownPreview
 
 " 停止预览
-:InstantMarkdownStop
+:MarkdownPreviewStop
