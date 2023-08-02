@@ -1,38 +1,36 @@
 DHCP服务器搭建步骤
 1.安装dhcp
 sudo yum install dhcp
-IPADDR=192.168.152.11
 
 
 2.配置文件设定
 配置文件路径: /etc/dhcp/dhcpd.conf
 配置实例:
+subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.40 192.168.1.150;
+    option routers 192.168.1.1;
+}
+
 subnet 192.168.2.0 netmask 255.255.255.0 {
     range 192.168.2.20 192.168.2.100;
     option routers 192.168.2.1;
 }
 
-subnet 192.168.3.0 netmask 255.255.255.0 {
-    range 192.168.3.40 192.168.3.150;
-    option routers 192.168.3.1;
-}
 # 备注: 当DHCP与分配的子网不在一个网段时, 必须先指定DHCP服务器所在子网
 
 3.指定服务器的静态ip
 ifconfig查看网卡名称, 如: ensp30
-sudo vi /etc/sysconfig/network-scripts/ifcfg-ensp30
+sudo vi /etc/sysconfig/network-scripts/ifcfg-enp3s0
 BOOTPROTO=static
 ONBOOT=yes
-IPADDR=192.168.2.6
+IPADDR=192.168.1.1
 NETMASK=255.255.255.0
-GATEWAY=192.168.2.1
+GATEWAY=192.168.1.2
 
 sudo systemctl restart network
 
 4.启动dhcp
 systemctl start dhcpd
-
-
 
 
 配置文件语法:
