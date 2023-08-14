@@ -58,17 +58,6 @@ this is line 3
 
 
 
-### `缩进 - &nbsp;`
-this is first line  
-&nbsp;&nbsp;&nbsp;&nbsp;I'm indent four space
-<br>
-<br>
-<br>
-<br>
-
-
-
-
 ### 加粗, 在内容前后添加**或__  
 **like you**  
 __love you__
