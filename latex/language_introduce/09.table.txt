@@ -135,7 +135,7 @@
 
 
 三、Demo03 - span row of table
-示例1
+示例1 - multirow初探
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{multirow}
 \usepackage{bigstrut}
@@ -158,40 +158,53 @@
 \end{tabular}
 \end{document}
 
+示例2 - bigstrut的使用
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{array}
+\renewcommand{\multirowsetup}{\centering}
+\setlength{\bigstrutjot}{10pt}
+\begin{document}
+\begin{tabular}{|c|c|}
+    \hline
+        \multirow{3}[t 2]{*}{TOP} & T \bigstrut[t]\\
+    \cline{2-2}
+        & X \bigstrut[t]\\
+    \cline{2-2}
+        & B\\
+    \hline
+\end{tabular}
+\end{document}
+
 
 内容讲解
 1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
     upos - 内容在多行块中的垂直位置. 可选列表: t/c(默认)/b
     nrows - 需要合并的行数. 如果为正数, 合并当前行和之后的行; 如果为负数, 合并当前行和之前的行
-    bigstruts - 配合\bigstrut指令使用, 代表增加行高或/和行深后的合并文字归位. \bigstrut包含在bigstrut宏包中, 指令及对应消耗的bigstrut列表如下:
-        \bigstrut - 2, 增加行高和行深
-        \bigstrut[<x>] - 1, 代表增加行高(x=t)或行深(x=b)
+    bigstruts - 配合\bigstrut指令使用, 代表增加行高或/和行深后的合并文字归位. \bigstrut包含在bigstrut宏包中, 列表如下:
+        t <num> - 只考虑使用的num个\bigstrut[t]指令
+        b <num> - 只考虑使用的num个\bigstrut[b]指令
     width - 指定合并行的宽度. 可选格式:
         <N> - 直接使用数字和单位指定宽度, 此时正文处于段落模式(可换行)
         * - 根据文字长度自动确定宽度, 此时正文处于左右模式(不可换行)
-        = - 使用合并前该列的宽度
+        = - 使用合并前该列的宽度, 此时正文处于段落模式(可换行)
     vmove - 垂直移动合并文字. 正数代表向上移, 负数代表向下移
     text - 合并行的正文内容
     ** 合并行数原理: 保留一行数据, 该列的其他行内容留空
 
-2.\renewcommand{\multirowsetup}{\centering}
-    设置合并行的内容在水平方向居中对齐. 默认左对齐(raggedright)
-
-3.\bigstrut[vertical_align]
+2.\bigstrut[vertical_align]
     增加行高或行深, 放置于\\之前的任何地方. 参数如下:
         vertical_align - 在指定位置增加垂直距离. 可选列表:
 	    t - 增加行高
 	    b - 增加行深
 	    ** 默认增加行高和行深
-\bigstrutjot代表增加的行高/行深高度, 默认为2pt. 格式: \setlength{\bigstrutjot}{4pt}
 
-4.如示例2, colortbl宏包上色合并行指令:
-\multirow{-3}*{bbbb}
-合并行上色的原理: 对每个原始cell分别进行上色. 当合并三行时, 先对第一行上色, 然后填入内容, 然后对第二行上色, 上色会覆盖内容(垂直方向居中内容位于第二行)
-** colortbl宏包参考文档25.color.txt的Demo02
+3.\renewcommand{\multirowsetup}{\centering}
+    设置合并行的内容在水平方向居中对齐. 默认左对齐(raggedright)
 
-5.\usepackage[longtable]{multirow}
-    multirow宏包的longtable可选参数, 可保持在longtable环境中, \\*继续阻止在合并行的中间行进行pagebreak
+4.\setlength{\bigstrutjot}{10pt}
+代表增加的行高/行深高度, 默认为2pt
 
 
 
