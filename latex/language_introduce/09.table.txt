@@ -38,6 +38,7 @@
             l - 当前列的每一行左对齐
             c - 当前列的每一行居中对齐
             r - 当前列的每一行右对齐
+            ** l/c/r不会对内容进行自动换行
             | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
 	    || - 列之间的或侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
             @{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
@@ -48,6 +49,7 @@
             p{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向top对齐
             m{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直居中对齐. 包含在array宏包中
             b{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向bottom对齐. 包含在array宏包中
+            ** p/b/m需要某个单元格内容居中, 可以使用\centering指令
             >{} - 应用于后一列. 包含在array宏包中
             <{} - 应用于前一列. 包含在array宏包中
 	    !{text} - 类似于@{text}, 但不删除原有的分隔空间. 包含在array宏包中
@@ -78,7 +80,7 @@
     对表格单元额外增加的高度(深度不变). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
 
 5)\tabcolsep
-    两列的间隔距离/2. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
+    文字边缘与单元分隔符的距离. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
 8.newcolumntype{name}[args_num]{column_format}
     定义新的列格式. 列表如下:
@@ -163,24 +165,21 @@
 \usepackage{multirow}
 \usepackage{bigstrut}
 \usepackage{array}
-\renewcommand{\multirowsetup}{\centering}
-\setlength{\bigstrutjot}{10pt}
+\setlength{\tabcolsep}{3pt}
 \begin{document}
-\begin{tabular}{|c|c|}
-    \hline
-        \multirow{3}[t 2]{*}{TOP} & T \bigstrut[t]\\
-    \cline{2-2}
-        & X \bigstrut[t]\\
-    \cline{2-2}
-        & B\\
-    \hline
+\begin{tabular}{|c|c|p{1.8cm}|p{1.8cm}|c|c|c|c|c|c|}
+\hline
+    \multirow{2}[b 8]{*}{CHNL\_ID} & \multirow{2}{*}{$F_c$(MHz)} & DSSS \centering& OFDM \centering& \multirow{2}{*}{FCC} & \multirow{2}{*}{IC} & \multirow{2}{*}{ETSI} & \multirow{2}{*}{Spain} & \multirow{2}{*}{France} & \multirow{2}{*}{MKK}\\
+\cline{3-4}
+    & & Frequency (MHz) & Frequency (MHz) & & & & & &\\
+\hline
 \end{tabular}
 \end{document}
 
 
 内容讲解
 1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
-    upos - 内容在多行块中的垂直位置. 可选列表: t/c(默认)/b
+    upos - 内容在多行块中的垂直位置(将表格的每一行视为不换行的单行). 可选列表: t/c(默认)/b
     nrows - 需要合并的行数. 如果为正数, 合并当前行和之后的行; 如果为负数, 合并当前行和之前的行
     bigstruts - 配合\bigstrut指令使用, 代表增加行高或/和行深后的合并文字归位. \bigstrut包含在bigstrut宏包中, 列表如下:
         t <num> - 只考虑使用的num个\bigstrut[t]指令
