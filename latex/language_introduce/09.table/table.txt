@@ -1,104 +1,3 @@
-一、Demo(示例)01 -- tabular
-示例1
-\documentclass{article}
-\begin{document}
-\begin{tabular}{l|l|l l}
-    \hline
-    name & sex & item & score\\
-    \cline{1-2}
-    peter & male & math & 99\\
-    david & male & english & 76\\
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\end{document}
-
-示例2
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{bigstrut}
-\usepackage{multirow}
-\usepackage{array}
-\begin{document}
-\begin{tabular}{>{\centering}p{0.2\textwidth}|>{\centering}p{0.2\textwidth}|>{\centering}p{0.2\textwidth}|>{\centering\arraybackslash}p{0.2\textwidth}}
-    \hline
-    \multicolumn{3}{c|}{部门的产出分配} & \multirow{2}*{采购部门}\\\cline{1-3}
-    煤炭 & 电力  & 钢铁 & \\\hline
-    0.0 & 0.4 & 0.6 & 煤炭\\\hline
-    0.6 & 0.1 & 0.2 & 电力\\\hline
-    0.4 & 0.5 & 0.2 & 钢铁\\\hline
-\end{tabular}
-\end{document}
-
-内容讲解
-1.\begin{tabular}[vertical_align]{column_format} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). 参数列表如下:
-    vertical_align
-        表格与同一行外部内容的垂直对齐方式, 可选列表: t/c(默认)/b
-    column_format
-        表格内每一列的格式. 内容如下:
-            l - 当前列的每一行左对齐
-            c - 当前列的每一行居中对齐
-            r - 当前列的每一行右对齐
-            ** l/c/r不会对内容进行自动换行
-            | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
-	    || - 列之间的或侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
-            @{text} - 使用指定字符text作为列之间的分割线或左/右侧边线
-                text为\hspace{width}时, 使用指定长度空白作为当前列分隔符
-                text为<null>时, 列之间无分隔符
-                text为\extracolsep{width}, 使用指定长度空白作为之后所有的列分隔符, 适用于后续所有列分隔, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-            *{num}{cols} - 指定num个连续列都采用cols格式指定
-            p{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向top对齐
-            m{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直居中对齐. 包含在array宏包中
-            b{width} - 设置列为指定宽度, 内容水平方向左对齐, 垂直方向bottom对齐. 包含在array宏包中
-            ** p/b/m需要某个单元格内容居中, 可以使用\centering指令
-            >{} - 应用于后一列. 包含在array宏包中
-            <{} - 应用于前一列. 包含在array宏包中
-	    !{text} - 类似于@{text}, 但不删除原有的分隔空间. 包含在array宏包中
-            例子: 指定一列宽度为3cm, 并指定垂直对齐方式为top, 水平对齐方式为居中. \begin{tabular}{>{\centering}p{3cm}}. 左对齐和右对齐格式raggedright/raggedleft
-        ** 观察示例2, 由于水平方向对齐指令会影响表格环境对换行指令\\的处理, 所以需要在>{}内使用\arraybackslash(放在centering/raggedright/raggedleft之后)
-
-2.&代表列与列之间的正文分隔
-
-3.\\代表换行
-
-4.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
-
-5.\cline{i-j}用于作水平铺满指定列的水平线, 必须位于表格第一行或紧跟在\\后
-
-6.\vline可以在单独一行内作垂直线
-
-7.设定表格属性
-1)\arrayrulewidth
-    配置数组边框宽度. 格式: \setlength{\arrayrulewidth}{2pt}. 默认为0.4pt
-
-2)\doublerulesep
-    双表格线的间距. 格式: \setlength{\doublerulesep}{3pt}. 默认为2pt
-
-3)\arraystretch
-    配置表格上下单元的距离系数. 格式: \renewcommand{\arraystretch}{1.3}. 默认为1
-
-4)\extrarowheight
-    对表格单元额外增加的高度(深度不变). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
-
-5)\tabcolsep
-    文字边缘与单元分隔符的距离. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
-
-8.newcolumntype{name}[args_num]{column_format}
-    定义新的列格式. 列表如下:
-        name - 列格式的名称, 该名称只能为一个字母
-	args_num - 新名称可以使用的参数数量. 默认为0
-	column_format - 列格式, 参考tabular环境的column_format参数. #1代表名称第一个参数的值, #2代表第二个, 以此类推
-
-9.tabular特性
-1)tabular作为字符盒子, 不可跨页
-
-2)tabular适用于math mode/paragraph mode/LR mode所有模式
-
-3)tabular可嵌套
-
-4)tabular不可内嵌float环境
-
-
-
 二、Demo(示例)02 -- span column of table
 \documentclass{article}
 \begin{document}
@@ -199,10 +98,12 @@
 	    b - 增加行深
 	    ** 默认增加行高和行深
 
-3.\renewcommand{\multirowsetup}{\centering}
+3.\cline{i-j}作指定范围列的水平分割线, 列号码由1起始
+
+4.\renewcommand{\multirowsetup}{\centering}
     设置合并行的内容在水平方向居中对齐. 默认左对齐(raggedright)
 
-4.\setlength{\bigstrutjot}{10pt}
+5.\setlength{\bigstrutjot}{10pt}
 代表增加的行高/行深高度, 默认为2pt
 
 

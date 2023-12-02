@@ -1,0 +1,97 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{array}
+\begin{document}
+\begin{table}
+\centering
+\begin{tabular}{|l|c|r||c|}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{列对齐方式与基础分隔符}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|@{i}c|!{i}c|@{\hspace{2pt}}c|!{\hspace{2pt}}c|}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+
+\begin{tabular}[t]{|@{\extracolsep{1cm}}c|c|!{\extracolsep{1cm}}c|c|}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{在表格中填充额外内容}
+\end{table}
+
+\begin{table}
+\setlength{\tabcolsep}{1cm}
+\centering
+\begin{tabular}{|*{4}{c|}}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{格式重复的列与分隔符}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|p{1.2cm}|m{2cm}|b{2cm}|c|}
+    \hline
+    channel id & frequency (center)& Frequency range (MHz) & Frequency range (MHz)\\
+    \hline
+    1 & 2412 & 2401–2423 & 2402–2422\\
+    \hline
+    2 & 2417 & 2406–2428 & 2407–2427\\
+    \hline
+    3 & 2422 & 2411–2433 & 2412–2432\\
+    \hline
+\end{tabular}
+\caption{指定列宽度, 并自动换行}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|>{\centering\arraybackslash}m{2cm}|m{2cm}|m{2cm}|m{2cm}<{\raggedleft\arraybackslash}|}
+    \hline
+    channel id & frequency (center)& Frequency range (MHz) & Frequency range (MHz)\\
+    \hline
+    1 & 2412 & 2401–2423 & 2402–2422\\
+    \hline
+    2 & 2417 & 2406–2428 & 2407–2427\\
+    \hline
+    3 & 2422 & 2411–2433 & 2412–2432\\
+    \hline
+\end{tabular}
+\caption{使用指定列宽后, 修改列内容水平对齐方向}
+\end{table}
+\end{document}
+
