@@ -1,0 +1,117 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{color}
+\usepackage{colortbl}
+\begin{document}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|>{\columncolor[gray]{0.8}[0.5\tabcolsep][0.9\tabcolsep]}c|}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{整列背景颜色}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor[rgb]{0.56,0.84,0.72}[0.6\tabcolsep] name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{整行背景颜色}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \cellcolor[gray]{0.8} name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{单元格背景颜色}
+\end{table}
+
+\begin{table}
+\centering
+\rowcolors[\hline]{2}{red}{green}
+\begin{tabular}{|c|c|c|c|}
+    name & sex & item & score\\
+    peter & male & math & 99\\
+    david & male & english & 76\\
+    \hiderowcolors
+    steven & male & english & 59\\
+    david & male & english & 76\\
+    \showrowcolors
+    steven & male & english & 59\\
+    david & male & english & 76\\
+    steven & male & english & 59\\
+\end{tabular}
+\caption{间隔行背景色}
+\end{table}
+
+\begin{table}
+\centering
+\arrayrulecolor{blue}
+\doublerulesepcolor{yellow}
+\begin{tabular}{|c|c|c||c|}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{分隔符颜色}
+\end{table}
+\end{document}
+
+
+内容讲解
+1.\columncolor[color_mode]{color_val}[left_margin][right_margin]用于指定列的背景色, 参数列表如下:
+    color_mode - 颜色模式
+    color_val - 颜色值
+    left_margin - 单元格内容与左分隔符的距离(默认为\tabcolsep值)
+    right_margin - 单元格内容与右分隔符的距离(默认与left_margin一致)
+    指令包含在colortbl宏包中
+
+2.\rowcolor[color_mode]{color_val}[left_margin][right_margin]用于指定行的背景色, 必须在行的起始位置进行指定. 包含在colortbl宏包中
+
+3.\cellcolor[color_mode]{color_val}用于指定单元格的背景色. 包含在colortbl宏包中
+
+4.colortbl宏包依赖于color宏包
+
+5.\cellcolor覆盖\rowcolor, \rowcolor覆盖\columncolor
+
+6.\rowcolors[command]{row}{odd_row_color}{even_row_color}用于指定每两行切换背景色, 参数列表如下:
+    command - 用于指定额外参数, 如\hline可以自带水平分割线
+    row - 从指定行开始背景色, 行号由1起始
+    odd_row_color - 奇数行的背景色
+    even_row_color - 偶数行的背景色
+    配合\showrowcolors和\hiderowcolors指令可以指定后续行是否显示背景色
+    指令包含在colortbl宏包中
+
+7.\arrayrulecolor{color}用于指定分隔符颜色
+
+8.\doublerulesepcolor{color}用于指定分隔符||之间的填充色

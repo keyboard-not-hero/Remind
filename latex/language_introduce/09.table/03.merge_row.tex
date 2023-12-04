@@ -1,0 +1,54 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{array}
+\renewcommand{\multirowsetup}{\centering}
+\begin{document}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    Code & Subcode\\
+    \hline
+    \multirow{3}{*}{0} & 0\\
+    \cline{2-2}
+     & 1\\
+    \cline{2-2}
+     & 2\\
+    \hline
+     & 0\\
+    \cline{2-2}
+    \multirow{-2}*{1} & 1\\
+    \hline
+\end{tabular}
+\caption{合并行}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|>{\centering\arraybackslash}p{1.6cm}|>{\centering}p{1.6cm}|c|c|c|c|c|c|}
+\hline
+\multirow{2}[b 8]{*}{CHNL\_ID} & \multirow{2}{*}{$F_c$(MHz)} & DSSS & OFDM & \multirow{2}{*}{FCC} & \multirow{2}{*}{IC} & \multirow{2}{*}{ETSI} & \multirow{2}{*}{Spain} & \multirow{2}{*}{France} & \multirow{2}{*}{MKK}\\
+\cline{3-4}
+    & & Frequency (MHz) & Frequency (MHz) & & & & & &\\
+\hline
+\end{tabular}
+\caption{合并行的垂直位置}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\multirow{2}*{各年级不同科目平均分}} & \multicolumn{3}{c|}{科目}\\
+\cline{3-5}
+ \multicolumn{2}{|c|}{}  & 语文 & 数学 & 英语\\
+\hline
+\multirow{3}*{年级} & 一年级 & 85 & 93 & 96\\
+ & 二年级 & 83 & 95 & 86\\
+ & 三年级 & 87 & 78 & 92\\
+\hline
+\end{tabular}
+\caption{合并行与列}
+\end{table}
+\end{document}

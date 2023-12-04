@@ -1,0 +1,25 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{makecell}
+\begin{document}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    \makecell{Channel ID\\(20 MHz)} & $F_c$(MHz) & \makecell{Frequency\\ range\\ (MHz)}\\
+    \hline
+    32 & 5160 & 5150-5170 \\
+    \hline
+    36 & 5180 & 5170-5190 \\
+    \hline
+    40 & 5200 & 5190-5210 \\
+    \hline
+    44 & 5220 & 5210-5230 \\
+    \hline
+\end{tabular}
+\caption{手动单元格内容断行}
+\end{table}
+\end{document}
+
+
+内容讲解
+1.\makecell{content}可以在内容content手动插入换行符\\, 对内容进行手动换行. 包含在宏包makecell中

@@ -93,5 +93,56 @@
 \end{tabular}
 \caption{使用指定列宽后, 修改列内容水平对齐方向}
 \end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+    Hello World
+    \begin{tabular}[c]{|c|c|}
+    \hline
+        A & B\\
+        \hline
+        C & D\\
+    \hline
+    \end{tabular} &
+    Hello World
+    \begin{tabular}[t]{|c|c|}
+    \hline
+        A & B\\
+    \hline
+        C & D\\
+    \hline
+    \end{tabular} &
+        Hello World
+    \begin{tabular}[b]{|c|c|}
+    \hline
+        A & B\\
+    \hline
+        C & D\\
+    \hline
+    \end{tabular}\\
+\hline
+     &
+    Hello World
+    \begin{tabular}[t]{|c|c|}
+    \firsthline
+        A & B\\
+    \hline
+        C & D\\
+    \lasthline
+    \end{tabular} &
+        Hello World
+    \begin{tabular}[b]{|c|c|}
+    \hline
+        A & B\\
+    \hline
+        C & D\\
+    \lasthline
+    \end{tabular}\\
+\hline
+\end{tabular}
+\caption{列表与外部行的垂直对齐方式}
+\end{table}
 \end{document}
 
