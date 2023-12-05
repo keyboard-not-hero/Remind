@@ -1,6 +1,7 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{color}
 \usepackage{colortbl}
+\usepackage{array}
 \begin{document}
 \begin{table}
 \centering
@@ -84,5 +85,22 @@
     \hline
 \end{tabular}
 \caption{分隔符颜色}
+\end{table}
+
+\begin{table}
+\centering
+\arrayrulecolor{black}
+\begin{tabular}{|c|c|c|>{\color[gray]{0.8}}c|}
+    \hline
+    \color[rgb]{0,1,1}name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{文字上色}
 \end{table}
 \end{document}

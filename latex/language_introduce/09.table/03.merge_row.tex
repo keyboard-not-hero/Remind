@@ -2,6 +2,9 @@
 \usepackage{multirow}
 \usepackage{bigstrut}
 \usepackage{array}
+\usepackage{makecell}
+\usepackage{color}
+\usepackage{colortbl}
 \renewcommand{\multirowsetup}{\centering}
 \begin{document}
 \begin{table}
@@ -50,5 +53,32 @@
 \hline
 \end{tabular}
 \caption{合并行与列}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \makecell{IEEE\\ standard} & Adopted & Generation & \makecell{Maximum\\ link rate\\(Mbit/s)} & \makecell{Radio\\ frequency\\ (GHz)}\\
+    \hline
+    802.11b & 1999 & Wi-Fi 1 & 1-11 & 2.4\\
+    \hline
+    802.11a & 1999 & Wi-Fi 2 & 6-54 & 5\\
+    \hline
+    802.11g & 2003 & Wi-Fi 3 & 6-54 & 2.4\\
+    \hline
+    802.11n & 2008 & Wi-Fi 4 & 72-600 & 2.4, 5\\
+    \hline
+    802.11ac & 2014 & Wi-Fi 5 & 433-6933 & 5\\
+    \hline
+    \multirow{2}{*}{802.11ax} & 2019 & Wi-Fi 6 & \multirow{2}{*}{574-9608} & 2.4, 5\\
+    \cline{2-3}
+    \cline{5-5}
+    & 2020 & Wi-Fi 6E & & 6\\
+    \hline
+    802.11be & \cellcolor[gray]{0.8}2024 & Wi-Fi 7 & 1376-46120 & 2.4, 5, 6\\
+    \hline
+\end{tabular}
+\caption{\\cline的应用}
 \end{table}
 \end{document}

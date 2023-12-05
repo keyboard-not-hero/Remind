@@ -85,6 +85,23 @@
 \end{tabular}
 \caption{分隔符颜色}
 \end{table}
+
+\begin{table}
+\centering
+\arrayrulecolor{black}
+\begin{tabular}{|c|c|c|>{\color[gray]{0.8}}c|}
+    \hline
+    \color[rgb]{0,1,1}name & sex & item & score\\
+    \hline
+    peter & male & math & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+\caption{文字上色}
+\end{table}
 \end{document}
 
 
@@ -115,3 +132,7 @@
 7.\arrayrulecolor{color}用于指定分隔符颜色
 
 8.\doublerulesepcolor{color}用于指定分隔符||之间的填充色
+
+9.\color[color_mod]{color_val}可以给文字上色. 包含在color宏包中. 示例:
+    \color[gray]{0.8}使用color_val的值范围[0,1]
+    \color[rgb]{0.2,0.3,0.4}使用color_val为r,g,b组合, 每个元素的值范围[0,1]
