@@ -1,0 +1,57 @@
+asy - 编译asy文件工具
+Texlive默认包含asymptote
+
+
+语法
+asy [options] [file ...]
+
+
+option列表
+-f, -outformat <format>
+    目标文件格式, 默认为eps
+    可永久配置目标格式:
+    settings.outformat="pdf";
+
+-o, -outname <name>
+    目标文件名
+    默认文件名称只保留第一个.之前的内容
+
+-V, -View
+    编译完后, 预览结果
+    可配置预览的软件, 如下:
+    settings.pdfviewer="evince";
+    
+
+源文件格式:
+<name>.asy
+
+
+
+示例1 - 编译源文件
+asy <name>
+
+示例2 - 编译源文件, 预览结果, 指定目标文件名称
+asy -V -o <des_name>.<suffix> <src_name>
+
+
+
+Error list:
+1.libglut.so.3: cannot open shared object file: No such file or directory
+
+安装freeglut3
+sudo apt-get install freeglut3
+
+
+2.Error: /undefined in .setfillconstantalpha
+GPL Ghostscript 9.50: Unrecoverable error, exit code 1
+
+安装最新版本ghostscript
+sudo apt remove ghostscript
+下载gs, 下载链接: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases
+./configure --prefix=/usr
+make
+sudo make install
+
+
+引用:
+[1] sourceforge: https://sourceforge.net/p/asymptote/discussion/409349/thread/6fd84befa5/?limit=25#59fd
