@@ -19,8 +19,10 @@ option列表
 -V, -View
     编译完后, 预览结果
     可配置预览的软件, 如下:
+    pdf格式
     settings.pdfviewer="evince";
-    
+    png格式
+    settings.display="shotwell";
 
 源文件格式:
 <name>.asy

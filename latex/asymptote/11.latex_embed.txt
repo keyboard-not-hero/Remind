@@ -3,3 +3,8 @@
 \begin{asy}
     <asy_code>
 \end{asy}
+
+
+latexmk -pdf <name>
+asy <name>-<seq>
+latexmk -pdf -pv <name>

@@ -1,0 +1,20 @@
+import settings;
+import graph3;
+import bsp;
+outformat="png";
+currentprojection=oblique;
+
+unitsize(4cm);
+real dt=0.2;
+draw((0,0) -- (6+dt,0), arrow=ArcArrow(SimpleHead));
+real x(real t){return t;};
+real y1(real t){return t*0;};
+real y2(real t){return sin(pi*t);};
+real z1(real t){return sin(pi*t);};
+real z2(real t){return t*0;};
+path3 p1=graph(x,y1,z1,0,6,join=operator --)--cycle;
+path3 p2=graph(x,y2,z2,0,6,join=operator --)--cycle;
+face[] faces;
+filldraw(faces.push(p1),project(p1),fillpen=RGB(153,204,255));
+filldraw(faces.push(p2),project(p2),fillpen=RGB(153,255,204));
+add(faces);
