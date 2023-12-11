@@ -1,7 +1,3 @@
-import settings;
-import graph;
-outformat="pdf";
-pdfviewer="evince";
 // unitsize(picture pic=currentpicture, real x, real y=x)
 //     指定x/y轴的单元尺寸, 默认为1bp, 等于0.353mm. 参数列表如下:
 //         x - 指定x轴方向的单元长度
@@ -54,18 +50,64 @@ pdfviewer="evince";
 //             DotMargin(real begin, real end=begin) - 可以指定间隔包含几个单位
 //             ** DotMargin的1个单位为dotfactor*linewidth(p), 约等于3bp, 可以使用label(string(dotfactor*linewidth(currentpen)))显示数值
 //             ** 不带参数的DotMargin编译的结果有问题, 这里不进行描述
-//         legend -
-//         marker -
+//         legend - 用于在legend进行标记的字符串
+//         marker - 使用marker函数自定义创建marker类型
+
+// frame legend(picture pic=currentpicture, int perline=1,
+//              real xmargin=legendmargin, real ymargin=xmargin,
+//              real linelength=legendlinelength,
+//              real hskip=legendhskip, real vskip=legendvskip,
+//              real maxwidth=0, real maxheight=0,
+//              bool hstretch=false, bool vstretch=false, pen p=currentpen);
+//     组织一个legend对象. 参数列表如下:
+//         perline - legend每行标记的个数, 默认为1, 为0时代表自动选择个数
+//         xmargin - legend字符串左右与边框的额外距离
+//         ymargin - legend字符串上下与边框的额外距离
+//         linelength - legend内标识线段的长度
+//         p - legend边框线的pen属性
+
+// void add(picture src, pair position, bool group=true, filltype filltype=NoFill, bool above=true);
+//     将picture src添加到currentpicture上. 参数列表如下:
+//         position - src(src的左下角, 如果为legend对象, 则是第一个标志线段的左边)>位于dest的位置
+//         filltype - 参考label方法的filltype参数
+
+// void attach(picture dest=currentpicture, frame src,
+//              pair position=0, pair align, bool group=true,
+//              filltype filltype=NoFill, bool above=true); 
+//     将frame src添加到dest上. 参数列表如下: 
+//         position - src(src的左下角, 如果为legend对象, 则是第一个标志线段的左边)>位于dest的位置
+//         align - 可以使用N/S/W/E进行指定. 列表如下:
+//             N - src的下边界(水平center)位于position位置的上方
+//             S - src的上边界(水平center)位于position位置的下方
+//             W - src的右边界(垂直center)位于position位置的左方
+//             N - src的左边界(垂直center)位于position位置的右方
+//         filltype - 参考label方法的filltype参数
+
+// marker marker(path g, markroutine markroutine=marknodes,
+//               pen p=currentpen, filltype filltype=NoFill,
+//               bool above=true);
+//     使用path作为marker内容. 参数列表如下:
+//         g - marker的路径
+//         p - marker的pen属性. 可被filltype的drawpen覆盖
+//         filltype - 参考label方法的filltype参数
+
 
 // 示例1 - g/p参数
+import settings;
+import graph;
+outformat="pdf";
+pdfviewer="evince";
 unitsize(1cm);
 draw((-.1,0) -- (1,1) -- (2,sqrt(2)));
 draw((-.1,0) .. (1,1) .. (2,sqrt(2)), p=green);
+
 // 示例2 - L/align参数
 draw(L="me",(-.1,-.5) -- (2,-.5), align=N);
+
 // 示例3 - p参数
 draw((-.1,-1) -- (2,-1), p=linewidth(1pt)+red);
-// 示例3 - bar/arrow参数
+
+// 示例4 - bar/arrow参数
 draw((-.1,-1.5) -- (2,-1.5), arrow=EndArrow(DefaultHead), bar=BeginBar);
 draw((-.1,-2) -- (2,-2), arrow=EndArcArrow(DefaultHead), bar=BeginBar);
 draw((-.1,-2.5) -- (2,-2.5), arrow=EndArrow(SimpleHead), bar=BeginBar);
@@ -74,10 +116,41 @@ draw((-.1,-3.5) -- (2,-3.5), arrow=EndArrow(HookHead), bar=BeginBar(10pt));
 draw((-.1,-4) -- (2,-4), arrow=EndArcArrow(HookHead), bar=BeginBar(10pt));
 draw((-.1,-4.5) -- (2,-4.5), arrow=EndArrow(TeXHead), bar=BeginBar(4pt));
 draw((-.1,-5) -- (2,-5), arrow=EndArcArrow(TeXHead), bar=BeginBar(4pt));
-// 示例4 - margin
+
+// 示例5 - margin
 draw((-.1,-6) -- (2,-6), margin=PenMargin(1,6));
 draw((-.1,-6.2) -- (2,-6.2), margin=DotMargin(0,1));
 draw((-.1,-6.4) -- (2,-6.4), margin=EndMargin);
+
+// 示例6 - legend
+unitsize(3cm);
+real dt=0.2;
+draw((-dt,-8) -- (4+dt,-8), arrow=ArcArrow(SimpleHead));
+draw((0,-9-dt) -- (0,-7+dt), arrow=ArcArrow(SimpleHead));
+real f1(real t){
+   return sin(pi*t);
+};
+real f2(real t){
+   return cos(pi*t);
+};
+path p1=graph(f1,0,4);
+path p2=graph(f2,0,4);
+draw(shift(0,-8)*p1, p=green, legend="$\sin(\pi x)$");
+draw(shift(0,-8)*p2, p=blue, legend="$\cos(\pi x)$");
+path pl=(4.5,0.8) -- (4.5,0.8);
+draw(shift(0,-8)*pl, p=linewidth(4pt)+red);
+add(src=legend(), position=shift(0,-8)*(4.5,0.8));
+
+// 示例7 - marker
+path p1=(0,0) -- (4,0);
+path p2=(0,0) -- (0,3);
+path p3=(0,0) -- (1,1) -- (3,2);
+draw(shift(0,-14)*p1);
+draw(shift(0,-14)*p2);
+//draw(shift(0,-14)*p3, marker=marker(g=unitcircle, filltype=FillDraw(fillpen=green, drawpen=blue)));
+//draw(shift(0,-14)*p3, marker=marker(g=rotate(90)*polygon(3), filltype=FillDraw(fillpen=red)));
+draw(shift(0,-14)*p3, marker=marker(cross(4), filltype=FillDraw(fillpen=red)));
+
 
 // pen的多个属性可以使用'+'相连, 属性列表:
 //     color - 可以使用已定义的颜色名称(如red)或指定颜色模式, 默认为black. 颜色模式方法列表:
@@ -99,19 +172,22 @@ draw((-.1,-6.4) -- (2,-6.4), margin=EndMargin);
 //     opacity - 使用opacity(real opacity=1, string blend="Compatible")指定透明度, 仅适用于目标文件为pdf格式
 //     ** 可使用defaultpen(pen)设置默认pen的属性, 并且在修改后, 可以使用resetdefaultpen()恢复defaultpen的初始值
 
-// 示例5 - color/line_type参数
-draw((0,-7) -- (2,-7),p=RGB(128,20,90)+linetype(new real[]));
-draw((0,-7.2) -- (2,-7.2),p=RGB(51,255,255)+linetype(new real[]{0,4}));
-draw((0,-7.4) -- (2,-7.4),p=RGB(153,153,255)+linetype(new real[]{8,8}));
-draw((0,-7.6) -- (2,-7.6),p=RGB(204,153,255)+linetype(new real[]{24,8}));
-draw((0,-7.8) -- (2,-7.8),p=RGB(255,204,153)+linetype(new real[]{8,8,0,8}));
-draw((0,-8) -- (2,-8),p=RGB(20,255,153)+linetype(new real[]{8,8,0,8}, offset=4));
-draw((0,-8.2) -- (2,-8.2),p=RGB(20,20,153)+linetype(new real[]{8,8,0,8}, false));
-// 示例6 - line_width/line_cap参数
-draw((0,-9) -- (2,-9), p=linewidth(2pt)+linecap(1));
-draw((0,-9.4) -- (2,-9.4), p=linewidth(2pt)+linecap(2));
-// 示例7 - opacity参数
-draw((0,-10.4) -- (2,-10.4), p=linewidth(2pt)+opacity(0.5));
+
+// 示例8 - color/line_type参数
+draw((0,-15) -- (2,-15),p=RGB(128,20,90)+linetype(new real[]));
+draw((0,-15.2) -- (2,-15.2),p=RGB(51,255,255)+linetype(new real[]{0,4}));
+draw((0,-15.4) -- (2,-15.4),p=RGB(153,153,255)+linetype(new real[]{8,8}));
+draw((0,-15.6) -- (2,-15.6),p=RGB(204,153,255)+linetype(new real[]{24,8}));
+draw((0,-15.8) -- (2,-15.8),p=RGB(255,204,153)+linetype(new real[]{8,8,0,8}));
+draw((0,-16) -- (2,-16),p=RGB(20,255,153)+linetype(new real[]{8,8,0,8}, offset=4));
+draw((0,-16.2) -- (2,-16.2),p=RGB(20,20,153)+linetype(new real[]{8,8,0,8}, false));
+
+// 示例9 - line_width/line_cap参数
+draw((0,-17) -- (2,-17), p=linewidth(2pt)+linecap(1));
+draw((0,-17.4) -- (2,-17.4), p=linewidth(2pt)+linecap(2));
+
+// 示例10 - opacity参数
+draw((0,-18.4) -- (2,-18.4), p=linewidth(2pt)+opacity(0.5));
 
 // void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
 //     画直线并且填充闭合线条. 参数列表如下:
@@ -121,10 +197,11 @@ draw((0,-10.4) -- (2,-10.4), p=linewidth(2pt)+opacity(0.5));
 //         fillpen - 填充pen的属性, 具体参考pen
 //         drawpen - 边框pen的属性, 具体参考pen
 
-// 示例8 - filldraw
+
+// 示例11 - filldraw
 real dt=0.3;
-draw((0,-12) -- (6*pi+dt,-12));
-draw((0,-13-dt) -- (0,-11+dt));
+draw((0,-21) -- (6*pi+dt,-21));
+draw((0,-22-dt) -- (0,-20+dt));
 path p=graph(sin,0,6*pi, join=operator --)--cycle;
-filldraw(shift(0,-12)*p);
+filldraw(shift(0,-21)*p);
 
