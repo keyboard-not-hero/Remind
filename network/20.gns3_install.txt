@@ -3,10 +3,10 @@
 GNS3 all-in-one, 其中的client提供GUI给使用者
 
 2.server
-1)本地GNS3服务器
+1)本地GNS3服务器(Linux系统推荐)
 使用与all-in-one相同的本地计算机, 并且使用当前系统, 其中的server提供环境, 对路由器/交换机等进行环境模拟
 
-2)本地GNS3 Virtual Machine
+2)本地GNS3 Virtual Machine(Windows/Mac系统推荐)
 使用与all-in-one相同的本地计算机, 并且安装虚拟机操作系统镜像(利用VMware Workstation/Virtualbox/Hyper-V), 对路由器/交换机等环境进行模拟
 
 3)远程GNS3 Virtual Machine
@@ -28,7 +28,8 @@ VIRL(Virtual Internet Routing Lab), Cisco官方提供方式, 获得完整支持,
 4.GNS3
 提供如下镜像方式:
 1)Dynamips
-使用真实IOS镜像文件, 镜像可以从本地IOS设备复制或网上下载, 仅适用于router
+使用真实IOS镜像文件, 模拟1700/2600/3600/3700/7200路由器
+镜像可以从本地IOS设备复制或网上下载, 文件后缀为image
 
 2)IOU(IOS on Unix)
 
@@ -39,56 +40,81 @@ Ubuntu 20.04下安装GNS3
 sudo add-apt-repository ppa:gns3/ppa
 sudo apt update                                
 
-
 2.安装gns3
 sudo apt install gns3-gui gns3-server
 
+3.IOU安装
+1)下载CiscoIOUKengen.py
+curl --socks5 127.0.0.1:1080 -O https://raw.githubusercontent.com/obscur95/gns3-server/master/IOU/CiscoIOUKeygen.py
+
+2)生成license
+python3 CiscoIOUKengen.py
+
+3)将生成内容记录在iourc.txt
+[license]
+<host_name> = xxxxxxxx;
+
+4)上传iourc.txt和L2/L3 IOU
+上传iourc.txt:
+GNS3  -->  Edit  -->  Preferences  -->  IOS on UNIX  -->  Browse
+上传L2/L3 IOU
+GNS3  -->  Edit  -->  Preferences  -->  IOU Devices  -->  New
+
+
+Windows 10下安装GNS3
+1.下载GNS3
+下载地址: https://www.gns3.com/software/download
+
+2.安装GNS3
 
 3.下载VMware Workstation系统镜像
 下载地址: https://www.gns3.com/software/download-vm
 
-unzip GNS3.VM.VMware.Workstation.2.2.34.zip
-
-
 4.下载VMware Workstation Pro并安装
 下载地址: https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html
-
-sudo chmod a+x VMware-Workstation-Full-16.2.4-20089737.x86_64.bundle
-
-sudo ./VMware-Workstation-Full-16.2.4-20089737.x86_64.bundle
-
+** VMware Workstation Pro 17序列号参考
+https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251
 
 5.将VMware Workstation系统镜像导入VMware Workstation Pro
 file  -->  open  -->  选择VMware Workstation系统镜像
-
 
 6.GNS3上编辑使用系统镜像
 Edit  -->  Preferences  -->  GNS3 VM  -->  Enable the gns3 vm, 配置其他选项, 点击'apply', 然后点击'OK'
 ** 显示eth0未配置时, 需重启计算机
 
 7.确保VMware Workstation Pro开机后, KVM support available为True; 如果为False, 执行如下操作:
-重启Ubuntu, 在BIOS界面设置Intel Virtualization Technology为Enabled; 启动系统, 在VMware Workstation界面设置, GNS3 VM  -->  虚拟机设置  -->  处理器  -->  勾选'虚拟化Intel VT-x/ept或AMD-V/RVI(V)'
+重启系统, 在BIOS界面设置Intel Virtualization Technology为Enabled; 启动系统, 在VMware Workstation界面设置, GNS3 VM  -->  虚拟机设置  -->  处理器  -->  勾选'虚拟化Intel VT-x/ept或AMD-V/RVI(V)'
 启动GNS3, 查看VMware Workstation的KVM support available是否成功为True
 
+8.IOU安装
+1)下载CiscoIOUKengen.py
+下载地址: https://raw.githubusercontent.com/obscur95/gns3-server/master/IOU/CiscoIOUKeygen.py
 
-
-IOU安装
-1.下载CiscoIOUKengen.py
-curl --socks5 127.0.0.1:1080 -O https://raw.githubusercontent.com/obscur95/gns3-server/master/IOU/CiscoIOUKeygen.py
-
-2.将CiscoIOUKengen.py上传到vm
+2)将CiscoIOUKengen.py上传到vm
 scp CiscoIOUKeygen.py gns3@<gns3_vm_ip>:~
 passwd: gns3
 
-3.在虚拟机生成license
+3)在虚拟机生成license
 python3 CiscoIOUKengen.py
 
-4.将生成内容记录在本地iourc.txt
+4)将生成内容记录在本地iourc.txt
 [license]
 gns3vm = xxxxxxxx;
 
-5.上传iourc.txt和L2/L3 IOU
+5)上传iourc.txt和L2/L3 IOU
 上传iourc.txt:
 GNS3  -->  Edit  -->  Preferences  -->  IOS on UNIX  -->  Browse
 上传L2/L3 IOU
 GNS3  -->  Edit  -->  Preferences  -->  IOU Devices  -->  New
+
+
+Ubuntu下, IOU问题集锦:
+1.not executable
+sudo chmod 700 xxx.bin
+
+2.libcrypto.so.4 cannot be found
+steven@steven-IRH8:/tmp$ find / -name '*libcrypto*' 2>/dev/null
+/usr/lib/i386-linux-gnu/libcrypto.so.3
+/usr/lib/x86_64-linux-gnu/libcrypto.so.3
+steven@steven-IRH8:/tmp$ sudo ln -s /usr/lib/i386-linux-gnu/libcrypto.so.3 /usr/lib/i386-linux-gnu/libcrypto.so.4
+
