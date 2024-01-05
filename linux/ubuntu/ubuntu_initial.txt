@@ -77,6 +77,7 @@ setting -- network -- network proxy -- disabled
 6.设置bash的拼写修正(修正一个字母)
 vi ~/.bashrc
 shopt -s cdspell
+source ~/.bashrc
 
 
 7.github同步

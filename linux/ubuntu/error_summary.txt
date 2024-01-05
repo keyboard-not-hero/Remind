@@ -1,0 +1,3 @@
+1.y7000p IRH8(2023)安装Ubuntu 20.04后无法使用触控板/wifi
+由于intel wifi 6e ax211模块需要linux kernel 5.14及以上, 而Ubuntu 20.04的linux kernel为5.11, 所以建议安装Ubuntu 22.04(linux kernel 6.2)
+intel wifi fireware与内核对应参考: https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi

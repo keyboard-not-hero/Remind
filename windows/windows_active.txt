@@ -38,3 +38,8 @@ Windows已使用数字许可证激活, 但Microsoft账户未链接到数字许�
 Windows已使用数字许可证激活, 并且Microsoft账户已链接到数字许可证
 
 已经通过使用你所在阻止的激活服务激活Windows
+
+
+Windows 10/11和office激活方式:
+使用管理员身份打开powershell, 输入以下指令:
+irm https://massgrave.dev/get | iex

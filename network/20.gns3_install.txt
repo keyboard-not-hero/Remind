@@ -28,11 +28,18 @@ VIRL(Virtual Internet Routing Lab), Cisco官方提供方式, 获得完整支持,
 4.GNS3
 提供如下镜像方式:
 1)Dynamips
-使用真实IOS镜像文件, 模拟1700/2600/3600/3700/7200路由器
+使用真实IOS镜像文件, 模拟1700/2600/3600/3700/7200路由器, 1700/2600不建议
 镜像可以从本地IOS设备复制或网上下载, 文件后缀为image
 
 2)IOU(IOS on Unix)
 
+3)virtualbox/vmware vm
+使用虚拟机的操作系统与Router/Switch/ASA连接
+** Windows手动配置IP
+控制面板 -- 网络和Internet -- 网络和共享中心 -- 更改适配器设置 -- 右键单击以太网卡 -- 选择'属性' -- 选择'Internet协议版本4(TCP/IPv4)' -- 属性 -- 手动配置IP地址/子网掩码/网关
+** GNU/Linux手动配置IP
+sudo ifconfig eth0 192.168.1.10 netmask 255.255.255.0 up
+sudo route add default gw 192.168.1.1
 
 
 Ubuntu 20.04下安装GNS3
@@ -67,26 +74,20 @@ Windows 10下安装GNS3
 
 2.安装GNS3
 
-3.下载VMware Workstation系统镜像
+3.下载VirtualBox系统镜像
 下载地址: https://www.gns3.com/software/download-vm
 
-4.下载VMware Workstation Pro并安装
-下载地址: https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html
-** VMware Workstation Pro 17序列号参考
-https://gist.github.com/PurpleVibe32/30a802c3c8ec902e1487024cdea26251
+4.下载VirtualBox并安装
+下载地址: https://download.virtualbox.org/virtualbox/7.0.12/VirtualBox-7.0.12-159484-Win.exe
 
-5.将VMware Workstation系统镜像导入VMware Workstation Pro
-file  -->  open  -->  选择VMware Workstation系统镜像
+5.将VirtualBox系统镜像导入VirtualBox
+file  -->  import appliance  -->  选择VirtualBox系统镜像
 
 6.GNS3上编辑使用系统镜像
 Edit  -->  Preferences  -->  GNS3 VM  -->  Enable the gns3 vm, 配置其他选项, 点击'apply', 然后点击'OK'
 ** 显示eth0未配置时, 需重启计算机
 
-7.确保VMware Workstation Pro开机后, KVM support available为True; 如果为False, 执行如下操作:
-重启系统, 在BIOS界面设置Intel Virtualization Technology为Enabled; 启动系统, 在VMware Workstation界面设置, GNS3 VM  -->  虚拟机设置  -->  处理器  -->  勾选'虚拟化Intel VT-x/ept或AMD-V/RVI(V)'
-启动GNS3, 查看VMware Workstation的KVM support available是否成功为True
-
-8.IOU安装
+7.IOU安装
 1)下载CiscoIOUKengen.py
 下载地址: https://raw.githubusercontent.com/obscur95/gns3-server/master/IOU/CiscoIOUKeygen.py
 
@@ -118,3 +119,22 @@ steven@steven-IRH8:/tmp$ find / -name '*libcrypto*' 2>/dev/null
 /usr/lib/x86_64-linux-gnu/libcrypto.so.3
 steven@steven-IRH8:/tmp$ sudo ln -s /usr/lib/i386-linux-gnu/libcrypto.so.3 /usr/lib/i386-linux-gnu/libcrypto.so.4
 
+
+VPCS命令汇总
+设置IPv4/IPv6地址
+ip 192.168.1.250 255.255.255.0 192.168.1.1
+ip 192.168.1.250 /24 192.168.1.1
+ip 2001:db8::1 /64
+
+通过DHCP获得IPv4地址
+ip dhcp
+
+通过SLAAC获取IPv6地址
+ip auto
+
+ping网络连通
+ping 192.168.1.100 -c 5
+
+
+
+最后编辑于: 2024-01-04

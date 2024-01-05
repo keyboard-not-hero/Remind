@@ -1,0 +1,8 @@
+1.下载UltraISO
+下载地址: https://www.ultraiso.com/download.html
+选择FREE TRIAL
+
+2.制作引导盘
+1)插入U盘
+2)进入UltraISO, 文件 -- 打开 -- 选择指定版本系统(Windows/Ubuntu)
+3)启动 -- 写入硬盘镜像 -- 选择U盘为硬盘驱动器 -- 写入方式选择'USB-HDD+' -- 写入

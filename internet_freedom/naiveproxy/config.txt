@@ -53,9 +53,8 @@ nohup ./naive &>/dev/null &
 
 
 Windows客户端
-1.下载客户端
-下载地址:
-https://github.com/klzgrad/naiveproxy/releases
+1.下载naive proxy客户端
+下载地址: https://github.com/klzgrad/naiveproxy/releases
 
 2.编辑config.json配置文件
 {
@@ -63,7 +62,19 @@ https://github.com/klzgrad/naiveproxy/releases
     "proxy": "https://<user>:<pass>@<example.com>:<port>" # user替换成用户名, pass替换成密码, example.com换成web服务器域名, port为服务器开放的https端口
 }
 
-3.点击naive.exe, 启动naive
+3.下载v2rayN客户端(选择with-core版本) 
+下载地址: https://github.com/2dust/v2rayN/releases
+
+4.配置v2rayN客户端
+服务器 -- 添加自定义配置服务器, 配置如下:
+-------------------
+别名: anyway
+地址: 点击'浏览'按钮 -- 选择step 2配置的config.json
+core类型: naiveproxy
+socks端口: 1080
+-------------------
+右键单击刚刚编辑的item, 点击'设置为活动服务器'
+系统桌面右下角, 右键点击v2rayN图标, 点击'自动配置系统代理'
 
 
 IOS客户端(shadowrocket)
@@ -88,3 +99,6 @@ https://github.com/SagerNet/SagerNet/releases
 服务器端口  443
 用户名      <user>
 密码        <pass>
+
+
+最后编辑于: 2024-01-05
