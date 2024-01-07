@@ -43,3 +43,8 @@ Windows已使用数字许可证激活, 并且Microsoft账户已链接到数字�
 Windows 10/11和office激活方式:
 使用管理员身份打开powershell, 输入以下指令:
 irm https://massgrave.dev/get | iex
+
+HWID(Hardware ID)适用于consumer版Windows 10/11
+Windows 8只能使用Online KMS激活(180天有效期)
+
+Ohook适用于office 2013及以上版本的产品
