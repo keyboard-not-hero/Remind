@@ -1,0 +1,31 @@
+组合键:
+<host_key>  
+默认为ctrl键, 可用于keyboard/mouse退出guest os
+
+<host_key> + Del
+重启组合键, 发送ctrl+alt+del给guest os
+ctrl+alt+del被host os拦截
+
+<host_key> + Backspace
+X window重启组合键(GNU/Linux), 发送ctrl+alt+backspace给guest os
+ctrl+alt+backspace被host os拦截
+
+<host_key> + F<n>
+virtual terminal切换组合键(GNU/Linux), 发送ctrl+alt+F<n>给guest os
+ctrl+alt+F<n>被host os拦截
+n为1-6的整数
+
+<host_key> + F
+全屏切换
+
+<host_key> + C
+窗口为scale模式
+
+
+
+将USB添加到指定guest OS
+1)系统关闭时
+从system list选中指定OS -- settings -- USB -- 点击'+', 并选择USB连接的外部设备 -- 点击'OK'
+
+2)系统启动时
+VM窗口 -- Devices -- USB -- 选中USB连接的外部设备
