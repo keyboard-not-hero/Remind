@@ -1,7 +1,0 @@
-ethtool - 查询和控制有线网卡的驱动或硬件设置
-
-ethtool <dev_name>
-
-
-实例1 - 查看硬件信息
-ethtool enp3s0
