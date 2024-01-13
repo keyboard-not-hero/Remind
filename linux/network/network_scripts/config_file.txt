@@ -1,0 +1,145 @@
+启动网络:
+systemctl start network
+
+
+
+/etc/hosts
+用于静态解析主机名的文件
+
+
+directive格式
+<IPv4_or_IPv6>   <host_name>
+
+** host_name只能包含字母/数字/-/.符号, 并且必须以字母开始, 以字母或数字结尾
+
+
+示例 - /etc/hosts内容模板
+# The following lines are desirable for IPv4 capable hosts
+127.0.0.1       localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1             localhost ip6-localhost ip6-loopback
+ff02::1         ip6-allnodes
+
+
+
+
+/etc/resolv.conf
+指定DNS服务器的地址
+
+
+directive list:
+nameserver <IPv4_or_IPv6>
+指定DNS服务器的IP地址
+最多可指定三个, 每个nameserver directive指定一个
+
+
+
+
+/etc/sysconfig/network
+network配置信息
+
+
+directive list:
+NETWORKING=<bool>
+启动(yes)/关闭(no)网络
+
+HOSTNAME=<str>
+主机名, 建议使用Fully Qualified Domain Name(FQDN). 如: raspberry.dataforthompson.cn
+重启后生效
+
+GATEWAY=<IP>
+网关地址
+
+NM_BOND_VLAN_ENABLED=<bool>
+是否允许NetworkManager管理网络
+
+
+
+
+/etc/sysconfig/network-scripts/ifcfg-<interface_name>
+指定接口的配置信息
+
+
+directive list:
+BOOTPROTO=<protocol>
+启动时使用获取IP的协议. 列表如下:
+    none - 不使用协议
+    bootp - 使用bootstrap协议
+    dhcp - 使用DHCP协议
+
+DEVICE=<name>
+网络接口名称
+
+DHCP_HOSTNAME=<name>
+发送给DHCP服务器的, 当前主机名称
+
+DHCPV6C=<bool>
+接口是否通过DHCP服务器获取IPv6地址
+默认为no
+
+GATEWAY=<IP>
+网关地址
+
+HWADDR=<mac_add>
+网络接口的MAC地址
+
+IPADDR[n]=<address>
+指定IPv4地址
+当接口包含多个IPv4地址时, 使用n指定, n由0起始
+
+IPV6ADDR=<address>
+指定IPv6地址
+
+NETMASK[n]=<netmask>
+IPv4的掩码,
+当接口包含多个IPv4地址时, 使用n指定对应掩码
+
+NETWORK=<subnet_id>
+子网地址
+
+NM_CONTROLLED=<bool>
+是否允许NetworkManager配置该接口
+
+ONBOOT=<bool>
+是否在开机时启动该接口
+
+PEERDNS=<bool>
+是否可以修改/etc/resolv.conf内容
+
+TYPE=<asnwer>
+接口类型.  列表如下:
+    Ethernet - 以太网接口
+    Bridge - 网桥虚拟接口
+
+USERCTL=<bool>
+非root用户是否可以控制该接口
+
+控制接口开关的指令:
+/sbin/ifup
+/sbin/ifdown
+
+DHCP demo:
+DEVICE=eth0
+HWADDR=...
+TYPE=Ethernet
+ONBOOT=yes
+BOOTPROTO=dhcp
+
+manual demo:
+DEVICE=eth0
+HWADDR=...
+TYPE=Ethernet
+ONBOOT=yes
+BOOTPROTO=none
+IPADDR=192.168.1.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+
+
+
+
+/etc/sysconfig/network-scripts/route-<interface_name>
+配置接口的路由信息
+
+{<targ_subnet>|<default>} via <next_hop> dev <interface_name>
