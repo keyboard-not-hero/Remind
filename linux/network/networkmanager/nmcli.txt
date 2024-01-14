@@ -12,20 +12,21 @@ nmcli [option] <action>
     默认为auto
 
 --complete-args
-    提供可能补充的action列表
+    为缩写形式的action, 补全为完整名称
 
 -e, --escape {yes | no}
-    是否在tabular模式中跳脱':'和'\'字符, 跳脱字符为'\'
+    是否在terse模式中, 使用前置'\'符号, 对':'和'\'字符进行escape
     默认为yes
 
--f, --fields {field1, field2... | all | common}
+-f, --fields {field1,field2... | all | common}
     显示指定字段. 列表如下:
-        field1, field2... - 显示指定字段
+        field1,field2... - 显示指定字段. ','之后不能有空格
         all - 显示所有字段
-        common - 显示常用字段. 未提供选项时, 默认该值
+        common - 显示常用字段. 默认值
 	
--g, --get-values{field1, field2... | all | common}
-    显示指定字段, 类似于-f, 但不显示字段名称
+-g, --get-values {field1, field2... | all | common}
+    显示指定字段, field使用:分隔, 并且不显示header行
+    类似于--terse, --fields的集合
 
 -h, --help
     帮助信息
@@ -35,20 +36,21 @@ nmcli [option] <action>
         tabular - 一行为一条记录, 每列为一条属性. 大多数指令默认使用该格式
         multiline - 每条记录为多行, 每行由属性名称和对应值构成.
         如下指令默认使用该格式:
-            nmcli connection show <id>
+            nmcli connection show <uuid>
             nmcli device show
 
 -p, --pretty
-    使用pretty输出格式(每一列的值对齐, 并显示header)
+    使用pretty输出格式(每一列的值对齐, 并显示header, header与内容使用虚线分隔)
 
 -s, --show-secrets
     显示密码相关字段
 
 -t, --terse
-    简化输出
+    简化版本的输出. 不包含header, 列之间使用:分隔
+    使用于script
 	
 -v, --version
-    版本信息
+    nmcli的版本信息
 
 -w, --wait <seconds>
     等待指令完成的时间
@@ -57,9 +59,7 @@ nmcli [option] <action>
 
 
 action说明
-general command
 nmcli general {status | hostname | permissions | logging}
-
 
 status	
     显示总体网络状态. 默认action
@@ -75,7 +75,7 @@ hostname [<hostname>]
 
 
 permissions
-    各种网络功能的权限位是否启动
+    各种网络功能操作是否启用认证
 
 
 logging [level <level>] [domains <domain>...]
@@ -83,16 +83,14 @@ logging [level <level>] [domains <domain>...]
 
 
 
-networking control command
 nmcli networking [on | off | connectivity]
 
-
 on | off
-    从NetworkManger软件层面启动/关闭所有网络
+    使用NetworkManager启动/关闭所有网络接口
 
 
 connectivity
-    查询NetworkManager软件层面的网络连接状态. 结果列表如下:
+    查询NetworkManager的网络连接状态. 结果列表如下:
         none - 没有连接任何网络
         portal - 无法建立完整网络连接
         limited - 已连接到网络, 但无法访问Internet
@@ -101,30 +99,22 @@ connectivity
 
 
 
-radio transmission control command
 nmcli radio {all | wifi | wwan}
 
-
 wifi [on | off]
-    显示或启动/关闭软件层面的wifi
+    使用NetworkManager启动/关闭wifi
 
 
 wwan [on | off]
-    显示或启动/关闭移动蜂窝网络(如2G/3G/4G)接口
+    使用NetworkManager启动/关闭移动蜂窝网络(如3G/4G/5G)
 
 
 all [on | off]
-    显示或启动/关闭所有上述两种无线网络接口
+    使用NetworkManager启动/关闭上述两种无线网络接口
 
 
 
-activity monitor command
-nmcli monitor
-    监测网络状态
-
-
-
-connection management command
+*********************
 nmcli connection {show | up | down | modify | add | edit | clone | delete |
 monitor | reload | load | import | export}
 
