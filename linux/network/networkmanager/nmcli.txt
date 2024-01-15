@@ -114,19 +114,29 @@ all [on | off]
 
 
 
-*********************
 nmcli connection {show | up | down | modify | add | edit | clone | delete |
 monitor | reload | load | import | export}
+    每一个ethernet网络配置或wifi ssid即为一个connection, 并且每个时间点只能有一个connection为active状态
+
+show [--active] [--order [+-]<category_01>:<category_02>...]
+    显示已配置的连接. 默认action
+    active只显示当前活跃网络
+    order用于根据指定类型排序, +代表升序(默认值), -代表降序. 排序类型如下:
+        active - active status
+        name - name field
+        type - type field
+        path - D-Bus path
+        ** 默认为active:name:path
 
 
 show [--active] [id | uuid | path | apath] <id>
-    显示内存中或磁盘中的已配置的连接. 默认action
+    显示已配置的连接. 默认action
     active只显示当前活跃网络
-    id等用于显示指定连接的详细信息. 列表如下:
-        id - 连接的名称
-        uuid - 连接的UUID
-        path - D-Bus静态配置(deactive)连接路径,格式为/org/freedesktop/NetworkManager/Settings/<num>或<num>
-        apath - D-Bus活跃配置(active)连接路径,格式为/org/freedesktop/NetworkManager/ActiveConnection/<num>或<num>
+    id/uuid参数用于根据指定指定连接的详细信息. 列表如下:
+        id - 根据指定NAME field显示详细信息
+        uuid - 根据指定的UUID field显示详细信息
+        path - D-Bus静态配置(deactive)连接路径, 格式为/org/freedesktop/NetworkManager/Settings/<num>或<num>
+        apath - D-Bus活跃配置(active)连接路径, 格式为/org/freedesktop/NetworkManager/ActiveConnection/<num>或<num>
 
 
 up [id | uuid | path] <id> [ifname <ifname>] [ap <ssid>] [passwd-file <file>]
@@ -134,29 +144,95 @@ up [id | uuid | path] <id> [ifname <ifname>] [ap <ssid>] [passwd-file <file>]
 
 
 down [id | uuid | path | apath] <id>
-    停用指定的连接
-    但后续设备可执行自动激活
+    停用指定的连接, 但不阻止connection的自动激活
+
+
+modify [--temporary] [id | uuid | path] <id> {<option> <value> | [+-]<setting.property> <value>}...
+    添加/修改/删除connection的propertys. 形式如下:
+        <property> <value>
+        直接修改property值, value为""时, 移除property值
+        +<property> <item>
+        append指定item值到property
+        -<property> <item>
+        从property中移除指定item值
+        -<property> <position>
+        从value中移除指定position的值, position由0起始
+        ** +-只作用于multi-value property, 如ipv4.dns/ipv4.addresses等
+
+
+add [save {yes | no}] {<option> <value> | [+-]<setting.property> <value>}...
+    使用指定propertys创建新connection. 列表如下:
+        save - 是否将配置保存到磁盘. 默认为yes
+        setting.property配置规则参考nmcli connection modidy
+    构造connection必须包含connection.type. type列表如下:
+        ethernet/wifi/wimax/pppoe/gsm
+        cdma/infiniband/bluetooth/vlan/bond
+        bond-slave/team/team-slave/bridge/bridge-slave
+        vpn/olpc-mesh/adsl/tun/ip-tunnel
+        macvlan/vxlan/dummy
+
+
+edit {[id | uuid | path] <id> | [type <type>] [con-name <name>]}
+    使用交互式编辑器, 编辑已存在的connection或创建新connection. 列表如下:
+        id - 用于编辑已存在connection
+        type - 指定新connection的connection.type property
+        con-name - 指定新connection的connection.id property
+
+
+clone [--temporary] [id | uuid | path] <id> <new_name>
+    克隆已存在的connection, 并指定克隆后的新名称为new_name
+    temporary表示不保存到磁盘
+
+
+delete [id | uuid | path] <id>...
+    根据指定field删除connection
+
+
+monitor [id | uuid | path] <id>...
+    实时监测指定connection的变化
+
+
+reload
+    从磁盘重新加载所有connections
+
+
+load <filename>...
+    加载/重新加载指定connection配置文件
+
+
+import [--temporary] type <type> file <file>
+    导入指定connection.type property的connection配置文件
+    目前只支持VPN
+
+
+export [id | uuid | path] <id> [<file>]
+    将指定connection导出到指定文件
+    如果file未指定, 则输出到stdout
+    目前只支持VPN
 
 
 
-device management command
 nmcli device {status | show | set | connect | reapply | modify | disconnect |
 delete | monitor | wifi | lldp}
-
+    显示和管理网络接口设备
 
 status
-    显示设备接口状态
-    默认action
+    显示接口设备状态, 默认action
 
 
 show [<ifname>]
-    显示接口的详细信息
+    显示指定接口的详细信息
+    如果接口未指定, 显示所有接口的详细信息
 
 
 set <ifname> [autoconnect {yes | no}] [managed {yes | no}]
-    设置接口的属性
+    设置接口的属性. 参数列表如下:
+        autoconnect - 是否允许接口自动连接网络
 
 
+
+
+****************************
 connect <ifname>
     连接到指定接口, 自动选择合适的网络
 
@@ -219,14 +295,15 @@ lldp [list [ifname <ifname>]]
 
 
 
-示例1 - 查看NetworkManager状态, 以及接口硬件/软件层面的状态
-nmcli general
 
-示例2 - 硬件接口的详情状态
-nmcli device status
+示例1- 硬件接口的详情状态
+nmcli device
 
-示例3 - 软件层面启动wifi
-nmcli radio wifi on
+示例2 - 软件层面网络是否启动
+nmcli networking
+
+示例3 - wifi是否启动
+nmcli radio wifi
 
 示例4 - 实时可获得的wifi
 nmcli device wifi list --rescan yes
@@ -237,9 +314,10 @@ nmcli device wifi connect <ssid> password <passwd>
 
 
 引用:
-[1] man 1 nmcli
-[2] man 7 nmcli-examples
-[3] http://www.freedesktop.org/wiki/Software/polkit
+[1] man nmcli
+[2] man nm-settings
+[3] man nmcli-examples
+[4] http://www.freedesktop.org/wiki/Software/polkit
 
 
 最后编辑于: 2023-07-12
