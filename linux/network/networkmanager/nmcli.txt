@@ -230,28 +230,25 @@ set <ifname> [autoconnect {yes | no}] [managed {yes | no}]
         autoconnect - 是否允许接口自动连接网络
 
 
-
-
-****************************
 connect <ifname>
-    连接到指定接口, 自动选择合适的网络
+    使用指定接口连接到网络, 自动查找适合的connection进行连接
 
 
 reapply <ifname>
-    更新active连接的配置
+    更新接口的配置, 并使用新配置重新进行连接
 
 
 disconnect <ifname>
-    断开接口连接并阻止自动连接到网络
+    断开接口连接, 并阻止自动连接到网络
 
 
 delete <ifname>
     删除接口
-    只能删除bonds/bridges/teams等接口
+    只能删除bonds/bridges/teams等软设备接口, 硬件设备接口无法删除
 
 
 monitor [<ifname>]
-    监视接口
+    监视接口变化
 
 
 wifi [list [--rescan auto | no | yes] [ifname <ifname>] [bssid <bssid>]]
@@ -264,34 +261,39 @@ wifi [list [--rescan auto | no | yes] [ifname <ifname>] [bssid <bssid>]]
     通过bssid(mac地址)指定access point
 
 
-wifi connect {<ssid> | <bssid>} [password <passwd>] [wep-key-type {key | phrase}] [ifname
-<ifname>] [bssid <bssid>] [name <name>] [private {yes | no}] [hidden {yes |
+wifi connect {<ssid> | <bssid>} [password <passwd>] [wep-key-type {key | phrase}] [ifname <ifname>] [bssid <bssid>] [name <name>] [private {yes | no}] [hidden {yes |
 no}]
     通过热点名称(ssid)或AP mac地址(bssid)连接到wifi, 支持WEP/WPA类型wifi, 通过DHCP获取IP
     当该连接已连接过, 与以下指令同效果: nmcli connection up id <name>
     可选参数列表:
         password - wifi密码(WEP或WPA类型)
-        ifname - 指定用于连接wifi的接口
+        ifname - 指定用于连接的wlan接口
         bssid - 限定连接ap的mac地址
-        name - 指定连接的别名
+        name - 指定连接的名称, 默认为SSID
         private - 当设置为yes, 只有创建连接的用户可以查看. 默认为no
-        hidden - 是否连接到隐藏的wifi
+        hidden - 当连接到隐藏的ssid(不进行广播)时, 需配置为yes
 
 
-wifi hotsport [ifname <ifname>] [con-name <name>] [ssid <ssid>] [band {a |
+wifi hotspot [ifname <ifname>] [con-name <name>] [ssid <ssid>] [band {a |
 bg}] [channel <channel>] [password <passwd>]
     创建一个热点. 参数如下:
-        ifname - 创建热点的设备
+        ifname - 创建热点的wlan接口
         con-name - 创建热点的配置文件名称
         ssid - 热点名称
-        password - 热点密码
+        band - 热点使用的无线频率, a(5GHz)或bg(2.4GHz)
+        channel - 热点使用的channel
+        password - 热点密码. 未提供时nmcli会自动生成密码, 使用--show-secrets显示该密码
     可使用如下指令关闭热点:
         nmcli connection down [id | uuid]
         nmcli device disconnect <ifname>
 
 
+wifi rescan [ifname <ifname>] [ssid <ssid>...]
+    扫描可获得的wifi
+
+
 lldp [list [ifname <ifname>]]
-	显示邻居设备信息, 通过lldp协议
+    显示通过lldp协议获取的邻居设备信息
 
 
 
@@ -310,6 +312,18 @@ nmcli device wifi list --rescan yes
 
 示例5 - 连接到指定wifi
 nmcli device wifi connect <ssid> password <passwd>
+
+
+
+
+networkmanager
+  nmcli
+  nmcli-examples
+ip
+  man 8 ip
+  man 8 ip-route
+  http://linux-ip.net/gl/ip-cref/
+ethtool
 
 
 
