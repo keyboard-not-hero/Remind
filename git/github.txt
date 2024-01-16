@@ -25,3 +25,18 @@ github collaborator：仓库级权限，collaborator可web在线编辑你的仓�
 4.点击"add collaborator"
 
 github参考：https://help.github.com/en/github
+
+
+
+问题汇总:
+1.push超时, 并报出如下错误:
+ssh: connect to host github.com port 22: Connection timed out
+解决方案:
+vi ~/.ssh/config
+Host github.com  
+User git  
+Hostname ssh.github.com 
+PreferredAuthentications publickey  
+IdentityFile ~/.ssh/id_rsa 
+Port 443
+
