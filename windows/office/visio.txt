@@ -1,0 +1,24 @@
+一、思科ICON导入
+1.下载icon集
+下载地址(vss格式): https://www.cisco.com/c/en/us/about/brand-center/network-topology-icons.html
+
+2.打开解压缩文件
+1)打开模具
+More Shapes -- Open Stencil -- 选择3015VSS目录下的3015.vss
+
+2)添加到我的形状
+将3015.vss拷贝到以下目录, C:\用户\<用户名>\文档\我的形状
+之后可以从visio更多形状 -- 我的形状勾选模具 
+
+
+常用图标
+路由器          Router
+二层交换机   Workgroup switch
+三层交换机   Layer 3 switch 
+台式机          PC
+笔记本          Laptop
+
+
+
+二、网络设备连接线(serial line)
+More Shapes -- Visio Extras -- Connectors -- Comm-link 1

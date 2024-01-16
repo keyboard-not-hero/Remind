@@ -1,3 +1,4 @@
+```
 nmcli - 控制网络的指令行工具. NetworkManager的指令行客户端
 
 语法
@@ -158,6 +159,7 @@ modify [--temporary] [id | uuid | path] <id> {<option> <value> | [+-]<setting.pr
         -<property> <position>
         从value中移除指定position的值, position由0起始
         ** +-只作用于multi-value property, 如ipv4.dns/ipv4.addresses等
+    ** property参考nm-settings(5)
 
 
 add [save {yes | no}] {<option> <value> | [+-]<setting.property> <value>}...
@@ -313,26 +315,64 @@ nmcli device wifi list --rescan yes
 示例5 - 连接到指定wifi
 nmcli device wifi connect <ssid> password <passwd>
 
+示例6 - 添加ethernet连接, 并且手动配置IP
+nmcli connection add connection.id <con_name> connection.interface-name <interface_name> connection.type 802-3-ethernet ipv4.method manual ipv4.addresses 192.168.100.100/24 ipv4.gateway 192.168.100.1 ipv4.dns 114.114.114.114
+nmcli connection up <con_name>
 
+示例7 - 删除连接配置
+nmcli con delete <con_name>
 
+示例8 - 断开接口, 并且不自动连接
+nmcli device disconnect <interface_name>
 
-networkmanager
-  nmcli
-  nmcli-examples
-ip
-  man 8 ip
-  man 8 ip-route
-  http://linux-ip.net/gl/ip-cref/
-ethtool
+示例9 - 查看connection的详细信息
+nmcli connection show <con_name>
 
+示例10 - 查看连接的指定属性
+nmcli -g ipv4.address,ipv4.dns connection show <con_name>
 
+示例11 - 查看连接的ipv4相关属性
+nmcli -f ipv4 connection show <con_name>
+```
+<br>
+<br>
 
-引用:
-[1] man nmcli
-[2] man nm-settings
-[3] man nmcli-examples
+##### 常用属性列表
+
+|Key Name|Alias|Value Type|Default value|Description|
+|---|---|---|---|---|
+|connection.autoconnect|autoconnect|boolean|TRUE|当资源具备时, 是否进行自动连接|
+|connection.id|con-name|string||易读方式的唯一标识符|
+|connection.interface-name|ifname|string||如果为ethernet/wireless等类型, 指定使用的硬件网络接口; 如果为bridge/vpn等类型, 创建软件接口|
+|connection.type|type|string||指定连接类型, 如:802-3-ethernet/802-11-wireless/bluetooth/bridge/vpn等|
+|connection.uuid||string||连接的全局唯一标识符, 如: 2815492f-7e56-435e-b2e9-246bd7cdc664|
+|ipv4.addresses|ip4|array of array of uint32|[]|IPv4地址数组, 每一个IPv4地址由[\<address>, \<prefix>]组成|
+|ipv4.dns||array of uint32|[]|DNS IPv4地址数组|
+|ipv4.gateway|gw4|string||子网网关. 必须配置ipv4.addresses之后, 当前配置才有意义|
+|ipv4.method||string||通过DHCP(auto)或手动配置(manual)|
+|ipv4.routes||array of array of uint32|[]|IPv4路由数组, 每一个路由构成[\<subnet_id>, \<prefix>, \<next_hop>, \<metric>]|
+|802-3-ethernet.auto-negotiate||boolean|FALSE|是否开启duplex/speed协商, 该参数覆盖duplex/speed配置|
+|802-3-ethernet.duplex||string||设置half/full双工模式, 该设置被802-3-ethernet.auto-negotiate覆盖|
+|802-3-ethernet.speed||uint32|0|指定网络速度|
+|802-11-wireless.band||string||指定使用的无线频率, a(5GHz)/bg(2.4GHz)|
+|802-11-wireless.bssid||byte array||使用指定BSSID(mac-address)的ap|
+|802-11-wireless.channel||uint32|0|指定channel, 当AP的channel匹配时进行连接. 前提必须配置band|
+|802-11-wireless.hidden||boolean|FALSE|当设置为TRUE, 代表目标AP为非广播的隐藏SSID|
+|802-11-wireless.mac-address|mac|byte array||当本地wlan设备为指定mac-address时, 才使用该设备进行连接|
+|802-11-wireless.rate||uint32|0|指定数据传输速率, 单位为kb/s|
+|802-11-wireless.ssid|ssid|byte array||AP的name, 必须设置项|
+
+<br>
+<br>
+<br>
+
+引用:<br>
+[1] man 1 nmcli<br>
+[2] man 5 nm-settings<br>
+[3] man 7 nmcli-examples<br>
 [4] http://www.freedesktop.org/wiki/Software/polkit
+<br>
+<br>
 
-
-最后编辑于: 2023-07-12
+最后编辑于: 2024-01-15
 
