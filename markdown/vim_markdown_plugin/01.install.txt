@@ -23,3 +23,19 @@ Plugin 'iamcco/markdown-preview.nvim'
 
 " 停止预览
 :MarkdownPreviewStop
+
+
+4.其他配置选项
+vi /~/.vim/bundle/markdown-preview.nvim/plugin/mkdp.vim
+" 清空buffer时, 是否关闭preview
+" default: 1
+let g:mkdp_auto_close = 0
+
+" 是否与preview窗口绑定. 即当已有preview窗口时, 再次使用MarkdownPreview, 不打开新窗口
+" default: 0
+" 如果需要开启, mkdp_auto_close必须为0
+let g:mkdp_combine_preview = 1
+
+" buffer内容变动时, 绑定的preview窗口是否自动刷新
+" 如果需要开启, mkdp_combine_preview必须为1
+let g:mkdp_combine_preview_auto_refresh = 1
