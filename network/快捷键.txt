@@ -8,3 +8,4 @@ Ctrl+U                 删除光标之前的内容
 Ctrl+R                 重新显示一行
 Esc+B                  将光标后退一个单词
 Esc+F                  将光标前进一个单词
+ctrl+shift+6           中断指令
