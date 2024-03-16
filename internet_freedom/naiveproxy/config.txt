@@ -1,24 +1,39 @@
 服务器
 1.申请域名, 并将域名指向VPS的IP地址
 
+
 2.安装Go
-$ wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz
-$ tar -zxvf go1.20.4.linux-amd64.tar.gz -C /usr/local
+$ wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz
+$ tar -zxvf go1.22.1.linux-amd64.tar.gz -C /usr/local
 $ echo export PATH=$PATH:/usr/local/go/bin  >> /etc/profile
 $ source /etc/profile
 $ go version
+
 
 3.安装caddy(带forwardproxy和naive插件)
 $ go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 $ ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
 $ sudo setcap cap_net_bind_service=+ep ./caddy
+$ move caddy /usr/bin
 $ caddy list-modules | grep forward_proxy
+
 
 4.配置caddy
 $ mkdir /etc/caddy
 $ vi /etc/caddy/Caddyfile
-:443, example.com:443    # example.com为web域名, 443为https端口(可指定其他端口)
-tls me@example.com   # me@example.com为个人邮件, 用于接受Let's encrypt邮件
+{
+  admin off
+  log {
+      output file /var/log/caddy/access.log
+      level INFO
+  }
+  servers :443 {
+      protocols h1 h2 h3
+  }
+}
+
+:443, <example.com>:443    # example.com为web域名, 443为https端口(可指定其他端口)
+tls <me@example.com>   # me@example.com为个人邮件, 用于接受Let's encrypt邮件
 route {
   forward_proxy {
     basic_auth <user> <pass> # user为客户端登录用户名, pass为客户端登录用户密码
@@ -31,8 +46,37 @@ route {
   }
 }
 
-5.启动caddy
-`which caddy` start --config /etc/caddy/Caddyfile
+
+5.配置caddy service
+$ groupadd --system caddy
+$ useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy
+
+$ vi /etc/systemd/system/caddy.service
+[Unit]
+Description=Caddy
+Documentation=https://caddyserver.com/docs/
+After=network.target network-online.target
+Requires=network-online.target
+
+[Service]
+User=caddy
+Group=caddy
+ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+LimitNPROC=512
+PrivateTmp=true
+ProtectSystem=full
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+
+$ systemctl daemon-reload
+$ systemctl start caddy
+$ systemctl enable caddy
+
 
 
 Linux客户端
@@ -50,6 +94,7 @@ $ vi naiveproxy-v113.0.5672.62-2-linux-x64/config.json
 
 3.启动naive
 nohup ./naive &>/dev/null & 
+
 
 
 Windows客户端
@@ -77,12 +122,14 @@ socks端口: 1080
 系统桌面右下角, 右键点击v2rayN图标, 点击'自动配置系统代理'
 
 
+
 IOS客户端(shadowrocket)
 类型  HTTP2
 地址  example.com
 端口  443
 用户  <user>
 密码  <pass>
+
 
 
 Android客户端
@@ -101,4 +148,4 @@ https://github.com/SagerNet/SagerNet/releases
 密码        <pass>
 
 
-最后编辑于: 2024-01-05
+最后编辑于: 2024-03-16
