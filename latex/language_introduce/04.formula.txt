@@ -636,4 +636,12 @@ $\stretchint[4ex]{10ex}x^a\dif x$
 指定新格式\int的宽度为4ex, 高度为10ex
 
 
+十七、Demo(示例)17 - 化学公式
+\documentclass{article}
+\begin{document}
+$$Zn + H_2SO_4  =\!=\!= ZnSO_4 + H_2\uparrow$$
+$$2Cu + O_2 \stackrel{\Delta}{=\!=\!=} 2CuO$$
+\end{document}
+
+
 最后编辑于: 2020-12-22
