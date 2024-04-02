@@ -639,8 +639,8 @@ $\stretchint[4ex]{10ex}x^a\dif x$
 十七、Demo(示例)17 - 化学公式
 \documentclass{article}
 \begin{document}
-$$Zn + H_2SO_4  =\!=\!= ZnSO_4 + H_2\uparrow$$
-$$2Cu + O_2 \stackrel{\Delta}{=\!=\!=} 2CuO$$
+$$Zn + H_2SO_4  =\!= ZnSO_4 + H_2\uparrow$$
+$$2Cu + O_2 \stackrel{\Delta}{=\!=} 2CuO$$
 \end{document}
 
 
