@@ -221,3 +221,14 @@ https://www.baidu.com
 
 ##### 实例2 - 禁用自动超链接
 `https://www.baidu.com`
+
+<br>
+<br>
+<br>
+<br>
+
+
+#### 化学式
+$\ce{2KMnO_4 \stackrel{\Delta}{=\!=} K_2MnO_4 + MnO_2 + O_2\uparrow}$<br>
+$\ce{2H_2O_2 \stackrel{MnO_2}{=\!=\!=} 2H_2O + O_2}$<br>
+** $\Delta$代表加热
