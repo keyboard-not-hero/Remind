@@ -636,4 +636,29 @@ $\stretchint[4ex]{10ex}x^a\dif x$
 指定新格式\int的宽度为4ex, 高度为10ex
 
 
-最后编辑于: 2020-12-22
+十七、Demo(示例)17 - text format in formula
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$E=mc^2$\\
+$\mathrm{E=mc^2}$
+\end{document}
+
+
+十八、Demo(示例)18 - degrees celsius
+documentclass{article}
+\usepackage{siunitx}
+\setlength{\parindent}{0mm}
+\begin{document}
+\SI{30}{\degreeCelsius}
+\end{document}
+
+
+十九、Demo(示例)19 - chinese in formula
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+溶质的质量分数($\omega$)=$\frac{\mbox{溶质质量}}{\mbox{溶液质量}}\times 100\%$=$\frac{\mbox{溶质质量}}{\mbox{溶质质量+溶剂质量}}\times 100\%$\\
+溶质的质量分数($\omega$)=$\frac{\text{溶质质量}}{\text{溶液质量}}\times 100\%$=$\frac{\text{溶质质量}}{\text{溶质质量+溶剂质量}}\times 100\%$
+\end{document}
