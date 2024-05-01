@@ -46,22 +46,6 @@ PATH=$PATH:/usr/local/openssl/bin
 
 steven@steven:/tmp/openssl-3.x.x$ source ~/.bashrc
 
-# 创建libssl/libcrypto的动态链接缓存
-1)配置dynamic library查找位置
-steven@steven:/tmp/openssl-3.x.x$ sudo vi /etc/ld.so.conf.d/openssl.conf
-/usr/local/openssl/lib64
-
-2)更新dynamic library查找位置
-steven@steven:/tmp/openssl-3.x.x$ sudo ldconfig
-
-3)查看指令相关的dynamic library
-steven@steven:/tmp/openssl-3.x.x$ ldd `which openssl`
-	linux-vdso.so.1 (0x00007ffd56146000)
-	libssl.so.3 => /usr/local/openssl/lib64/libssl.so.3 (0x000072660b6d6000)
-	libcrypto.so.3 => /usr/local/openssl/lib64/libcrypto.so.3 (0x000072660b000000)
-	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000072660ac00000)
-	/lib64/ld-linux-x86-64.so.2 (0x000072660b902000)
-
 # 将openssl的pkgconfig内容复制到/usr/local/lib/pkgconfig
 steven@steven:~$ sudo cp /usr/local/openssl/lib64/pkgconfig/* /usr/local/lib/pkgconfig 
 
@@ -126,7 +110,11 @@ steven@steven:~/Downloads$ tar -Jxf Python-3.x.x.tar.xz -C /tmp
 # 试编译
 steven@steven:~/Downloads$ cd /tmp/Python3.x.x
 
-steven@steven:/tmp/Python3.x.x$ ./configure --prefix=/usr/local/python3
+steven@steven:/tmp/Python3.x.x$ export LDFLAGS="-L/usr/local/openssl/lib64"
+
+steven@steven:/tmp/Python3.x.x$ export CPPFLAGS="-I/usr/local/openssl/include"
+
+steven@steven:/tmp/Python3.x.x$ ./configure --prefix=/usr/local/python3 --with-openssl=/usr/local/openssl --with-openssl-rpath=/usr/local/openssl/lib64
 
 steven@steven:/tmp/Python3.x.x$ make -j16
 
@@ -138,6 +126,14 @@ steven@steven:~$ sudo ln -s /usr/local/python3/bin/python3 /usr/bin/python
 
 steven@steven:~$ sudo ln -s /usr/local/python3/bin/pip3 /usr/bin/pip
 ** warning: 使用python/pip指令名称，与系统自带python3版本区分
+
+# 测试openss和tk模块
+python
+>>> import ssl
+>>> ssl.OPENSSL_VERSION
+
+>>> import tkinter
+>>> tkinter.Tk()
 
 
 
