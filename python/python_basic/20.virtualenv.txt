@@ -1,24 +1,8 @@
-virtualenv -- 隔离的Python运行环境
-
-
-安装
-pip install virtualenv
-
-
-创建虚拟环境的阶段:
-1.发现python解释器
-
-2.在env中创建python副本, 用于env环境
-
-3.安装必要packgae, 例如: pip/setuptools/wheel
-
-4.安装激活env的脚本
-
-5.创建env环境的文件(目前只支持git)
+virtualenv
+隔离的Python运行环境
 
 
 
-virtualenv操作步骤:
 1.创建虚拟环境:
 virtualenv <env_name>
 
@@ -37,21 +21,30 @@ Windows
 
 4.删除虚拟环境：
 GNU/Linux
-> rm -r /PATH/TO/ENV_NAME
+> rm -r ~/<env_name>
 
 Windows
-> rmdir /S ENV_NAME
+> rmdir /S <env_name>
 
 
 
-实例1 - 指定导入的本地python目录
-virtualenv --python /usr/local/python/bin env
+报错集:
+1.ERROR: Could not install packages due to an EnvironmentError: Missing dependencies for SOCKS support.
+解决:
+退出venv
+(<venv_name>) steven@steven-IRH8:~$ deactivate
 
-实例2 - 指定创建virtual env的完整路径(默认在当前目录)
-sudo virtualenv /usr/local/virtual/env
+# python添加socks支持(先取消proxy)
+steven@steven-IRH8:~$ unset ALL_PROXY
+steven@steven-IRH8:~$ unset all_proxy
+
+# 重新进入venv, 安装pysocks
+steven@steven-IRH8:~$ source <venv_name>/bin/activate
+(<venv_name>) steven@steven-IRH8:~$ pip install pysocks
 
 
-最后编辑于: 2022-09-16
+
+最后编辑于: 2024-04-30
 
 
 引用:
