@@ -1,0 +1,107 @@
+动态库搜寻顺序:
+1. Using directories specified in DT_RPATH, unless DT_RUNPATH is also set.
+./configure -Wl,--disable-new-dtags,-rpath,/<dynamic_library_directory>
+变量DT_RPATH内容由Wl,--disable-new-dtags,-rpath生成
+  
+示例(编译openssl)
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ./Configure --prefix=/usr/local/openssl '-Wl,--disable-new-dtags,-rpath,/usr/local/openssl/lib64'
+steven@steven-IRH8:/tmp/openssl-3.3.0$ make -j16
+steven@steven-IRH8:/tmp/openssl-3.3.0$ sudo make install
+steven@steven-IRH8:/tmp/openssl-3.3.0$ readelf -d `which openssl` | grep 'R.*PATH'
+0x000000000000000f (RPATH)              Library rpath: [/usr/local/openssl/lib64]
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ldd `which openssl`
+	linux-vdso.so.1 (0x00007ffe91acd000)
+	libssl.so.3 => /usr/local/openssl/lib64/libssl.so.3 (0x00007287d441a000)
+	libcrypto.so.3 => /usr/local/openssl/lib64/libcrypto.so.3 (0x00007287d3e00000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007287d3a00000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007287d4632000)
+
+
+2. Using the environment variable LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=<dynamic_library_directory>
+./configure
+** 需要环境变量一直存在, 所在最好写进~/.bashrc
+
+示例(编译openssl)
+steven@steven-IRH8:/tmp/openssl-3.3.0$ export LD_LIBRARY_PATH=/usr/local/openssl/lib64
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ./Configure --prefix=/usr/local/openssl
+steven@steven-IRH8:/tmp/openssl-3.3.0$ make -j16
+steven@steven-IRH8:/tmp/openssl-3.3.0$ sudo make install
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ldd `which openssl`
+	linux-vdso.so.1 (0x00007ffde37eb000)
+	libssl.so.3 => /usr/local/openssl/lib64/libssl.so.3 (0x000076afdc590000)
+	libcrypto.so.3 => /usr/local/openssl/lib64/libcrypto.so.3 (0x000076afdc000000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000076afdbc00000)
+	/lib64/ld-linux-x86-64.so.2 (0x000076afdc7a8000)
+** Ubuntu 22.04中, 也会影响ssh的动态库查找, 导致openssl版本不匹配, 慎用
+
+
+3. Using directories specified in DT_RUNPATH.
+./configure -Wl,-rpath,/<dynamic_library_directory>
+变量DT_RPATH内容由Wl,-rpath生成
+** 虽然DT_RUNPATH比DT_RPATH优先级低, 但是DT_RUNPATH与DT_RPATH同时配置时, DT_RPATH的值将被忽略
+
+示例(编译openssl)
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ./Configure --prefix=/usr/local/openssl '-Wl,-rpath,/usr/local/openssl/lib64'
+steven@steven-IRH8:/tmp/openssl-3.3.0$ make -j16
+steven@steven-IRH8:/tmp/openssl-3.3.0$ sudo make install
+steven@steven-IRH8:/tmp/openssl-3.3.0$ readelf -d `which openssl` | grep 'R.*PATH'
+ 0x000000000000001d (RUNPATH)            Library runpath: [/usr/local/openssl/lib64]
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ldd `which openssl`
+	linux-vdso.so.1 (0x00007ffd30dad000)
+	libssl.so.3 => /usr/local/openssl/lib64/libssl.so.3 (0x0000790106ad8000)
+	libcrypto.so.3 => /usr/local/openssl/lib64/libcrypto.so.3 (0x0000790106400000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000790106000000)
+	/lib64/ld-linux-x86-64.so.2 (0x0000790106cf0000)
+
+
+4./etc/ld.so.conf或/etc/ld.so.conf.d/<file_name>.conf配置的缓存(/etc/ld.so.cache)
+    配置
+  vi /etc/ld.so.conf.d/<config_file>
+  sudo ldconfig
+    验证
+  ldd <cmd> 
+
+
+5.使用系统默认搜寻的动态库
+  /lib, /usr/lib等
+
+
+
+验证搜寻顺序:
+1.DT_RPATH优于环境变量LD_LIBRARY_PATH
+steven@steven-IRH8:/tmp/openssl-3.3.0$ export LD_LIBRARY_PATH=/usr/local/openssl/lib64
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ./Configure --prefix=/usr/local/openssl '-Wl,--disable-new-dtags,-rpath,/lib/x86_64-linux-gnu'
+steven@steven-IRH8:/tmp/openssl-3.3.0$ make -j16
+steven@steven-IRH8:/tmp/openssl-3.3.0$ sudo make install
+steven@steven-IRH8:/tmp/openssl-3.3.0$ readelf -d `which openssl` | grep 'R.*PATH'
+ 0x000000000000000f (RPATH)              Library rpath: [/lib/x86_64-linux-gnu]
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ldd `which openssl`
+	linux-vdso.so.1 (0x00007ffd22d3c000)
+	libssl.so.3 => /lib/x86_64-linux-gnu/libssl.so.3 (0x0000736f8655d000)
+	libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x0000736f86000000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x0000736f85c00000)
+	/lib64/ld-linux-x86-64.so.2 (0x0000736f86712000)
+
+
+2.环境变量LD_LIBRARY_PATH优于DT_RUNPATH
+steven@steven-IRH8:/tmp/openssl-3.3.0$ export LD_LIBRARY_PATH=/usr/local/openssl/lib64
+steven@steven-IRH8:/tmp/openssl-3.3.0$ ./Configure --prefix=/usr/local/openssl '-Wl,-rpath,/lib/x86_64-linux-gnu'
+steven@steven-IRH8:/tmp/openssl-3.3.0$ make -j16
+steven@steven-IRH8:/tmp/openssl-3.3.0$ sudo make install
+steven@steven-IRH8:/tmp/openssl-3.3.0$ readelf -d `which openssl` | grep 'R.*PATH'
+ 0x000000000000001d (RUNPATH)            Library runpath: [/lib/x86_64-linux-gnu]
+steven@steven-IRH8:/tmp/openssl-3.3.0$  ldd `which openssl`
+	linux-vdso.so.1 (0x00007fff0313c000)
+	libssl.so.3 => /usr/local/openssl/lib64/libssl.so.3 (0x00007226c15dd000)
+	libcrypto.so.3 => /usr/local/openssl/lib64/libcrypto.so.3 (0x00007226c1000000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007226c0c00000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007226c17f5000)
+
+
+
+Ubuntu 22.04默认libcrypto.so动态库的完整路径
+/lib/x86_64-linux-gnu/libcrypto.so.3
+
+手动安装libcrypto.so动态库的完整路径
+/usr/local/openssl/lib64/libcrypto.so.3
