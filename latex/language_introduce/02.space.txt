@@ -11,7 +11,7 @@
 内容讲解
 1.任意单个或多个组合(只能含单个<enter>/<return>), 都作为一个<space>进行对待
 
-2.\quad表示一个较大的空格, \qquad表示两个\quad距离
+2.\quad用于表示行内容之间(非行首)较大的空格, \qquad表示行内容之间的两个\quad距离
 
 3.\\[len]
     用于段落内换行
@@ -137,7 +137,108 @@ bank, and of having nothing to do
 
 
 
-六、Demo(示例)06 -- 破折号
+Demo_06 - 行首空白
+\documentclass{article}
+\begin{document}
+This is line one\\
+\hspace*{1cm}This is line two\\
+\end{document}
+
+内容讲解
+1.\hspace*{<length>}用于设置当前行行首的空白
+
+
+
+Demo_07 - 段落首行缩进
+\documentclass{article}
+\setlength{\parindent}{2cm}
+\begin{document}
+	\noindent this is disable paragraphy indent\\
+	\indent this is enable paragraphy indent\\
+	this is nature paragraphy indent
+	
+	\hangindent=1.5cm
+	this is hangindent set\\
+	configure start line
+	
+	hangindent cacel paragraph\\
+	right now
+\end{document}
+
+内容讲解
+1.\noindent在当前段落取消首行缩进
+
+2.\indent在当前段落启用首行缩进
+
+3.\parindent设置所有段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
+
+4.\hangindet设置当前段落内所有行(除首行)的缩进, 配置方法: \hangindent=1cm
+
+
+
+Demo_08 - 行之间的垂直距离
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+this is line one\\
+this is line two\vadjust{\vspace{8pt}}\\
+this is line three\\
+this is line four
+\end{document}
+
+documentclass{article}
+\setlength{\parindent}{0mm}
+\renewcommand{\baselinestretch}{1.3}
+\begin{document}
+this is line one\\
+this is line two\\
+this is line three\\
+this is line four
+\end{document}
+
+
+内容讲解
+先了解文字与行间距的关系谱:
+文字高度	英文行距	ctex行距
+x	        y=1.2x		z=1.3y=1.56x
+
+1.\vadjust{\vspace{<height>}}只增加当前行与下一行的距离, \vspace{<height>}在行距之间额外增加高度
+
+2.\baselinestretch调整所有行行距, 指定基础行距y, 再乘以一个系数, 基线距 = y * factor, 配置方法:
+\renewcommand{\baselinestretch}{<factor>}
+** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}
+
+
+
+Demo_09 - 段落之间的垂直距离
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+this is line one\\
+this is line two\\
+
+this is paragraphy 2\\
+this is line four
+\end{document}
+
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1cm}
+\begin{document}
+this is line one\\
+this is line two\\
+
+this is paragraphy 2\\
+this is line four
+\end{document}
+
+内容讲解
+1.\parskip用于调整段落之间的垂直距离, 默认段落之间的垂直距离为两个行距, 当配置parskip时为n时, result = 2 * 行距 + n, \parskip配置:
+\setlength{\parskip}{<value>}
+
+
+
+十、Demo(示例)10 -- 破折号
 \documentclass{article}
 \begin{document}
     An intra-word dash or hyphen, as in X-ray.
@@ -156,7 +257,7 @@ bank, and of having nothing to do
 
 
 
-七、Demo{示例}07 -- 句子结束相关的空格
+十一、Demo{示例}11 -- 句子结束相关的空格
 \documentclass{article}
 \begin{document}
 this is WWW. I don't think it's easy
@@ -183,7 +284,7 @@ this is tom.\ I think he is funny
 
 
 
-八、Demo(示例)08 -- quotation
+十二、Demo(示例)12 -- quotation
 \documentclass{article}
 \begin{document}
 	\noindent The following is an example of a short displayed quotation.
@@ -208,66 +309,12 @@ this is tom.\ I think he is funny
 
 
 
-九、Demo(示例)09 - indent
+Demo_13 - 保留与指定字符串等宽的空白
 \documentclass{article}
+\setlength{\parindent}{0mm}
 \begin{document}
-	\noindent this is disable paragraphy indent\\
-	\indent this is enable paragraphy
-\end{document}
-
-内容讲解
-1.\noindent取消当前段落内的首行缩进
-
-2.\indent开启当前段落内的首行缩进
-
-3.\parindent设置所有段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
-
-4.\hangindet设置当前段落内所有行(除首行)的缩进, 配置方法: \hangindent=1cm
-
-
-
-十、Demo(示例)10 - 行距/段落距/页面内容宽高
-\documentclass{article}
-\usepackage{parskip}
-\begin{document}
-    this is first paragraphy.
-
-    this is second paragraphy.
-
-    this is third paragraphy.\\
-just newline
-\end{document}
-
-内容讲解
-先了解文字与行间距的关系谱:
-	文字高度	英文行距	ctex行距
-	x			y=1.2x		1.3y=1.56x
-
-1.\baselineskip指定段落之内当前行内容基线与下一行内容基线的最小高度(y), 配置方法: \setlength{\baselineskip}{2ex}. 该长度会被LaTeX随时重置, 所以不通过设置该参数调整行间距
-
-2.\baselinestretch为对于y的系数, 基线距=baselinestretch * y, 配置方法:
-\renewcommand{\baselinestretch}{系数}. 调整行间距时使用\baselinestretch而不是\baselineskip
-
-3.\linespread{系数}与\baselinestretch的效果一致
-
-4.\parskip指定段落之间的除了行距之外, 额外的高度(默认0pt plus 1pt), 配置方法: \setlength{\parskip}{1cm}
-
-5.parskip宏包修改段落格式, 段落起始行不缩进, 段落之间扩大垂直距离. 默认为段落起始行缩进, 段落之间的距离与段落内垂直距离无差异. 可选参数列表如下:
-	skip=<dimension> - 指定段落之间的间隔高度
-	indent[=<dimension>] - 设定段落开头的缩进, 长度可选, 不带长度时使用系统默认缩进(大概两个字符). 当不带该参数时, 缩进为0
-
-6.\textwidth指定page body的宽度, 配置方法: \setlength{\textwidth}{1cm}
-
-7.\textheight指定page body的高度(不包含page head/page foot高度), 配置方法: \setlength{\textheight}{1cm}
-
-
-
-十一、Demo(示例)11 - character occupied
-\documentclass{article}
-\begin{document}
-	\phantom{i am a good man. }please don't hurt me.
-
-	i am a good man. please don't hurt me.
+    i am a good man. please don't hurt me.\\
+    \phantom{i am a good man. }please don't hurt me.
 \end{document}
 
 内容讲解
@@ -275,7 +322,7 @@ just newline
 
 
 
-十二、Demo(示例)12 - TeX family text
+Demo_14 - TeX family text
 \documentclass{article}
 \begin{document}
 Some people use plain \TeX, but I prefer \LaTeX.

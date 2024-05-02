@@ -218,4 +218,6 @@
 
 4)tabular不可内嵌float环境
 
+5)tabular可放置于float环境内(通常为table)
+
 

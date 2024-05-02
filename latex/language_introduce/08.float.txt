@@ -27,3 +27,11 @@
 4.\caption[toc_content]{content}用于设置浮动内容的标题, 内嵌于figure/table环境, toc_content为目录标题, content为浮动内容标题. 单个figure/table可同时容纳多个\caption. \label必须位于\caption之后
 
 5.\abovecaptionskip可用于设置caption与图片的垂直距离, 如: \setlength\abovecaptionskip{20pt}; \belowcaptionskip可用于设置caption与后续正文的垂直距离. 在preamble区使用
+
+6.\intextsep代表浮动体与上下文之间的垂直距离. 配置:
+\setlength{\intextsep}{<value>}
+** 英文应该配置为: 2 * 12pt = 24pt
+** 汉语应为配置为: 2 * 15.6 = 31pt
+
+
+最后编辑于: 2024-05-02
