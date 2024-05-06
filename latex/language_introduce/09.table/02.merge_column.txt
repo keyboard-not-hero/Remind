@@ -18,9 +18,9 @@
 1.\multicolumn{num}{align}{content}用于合并多列, 参数列表如下:
     num - 合并的列数
     align - 合并列的格式. 内容如下:
-        l - 当前列的每一行左对齐
-        c - 当前列的每一行居中对齐
-        r - 当前列的每一行右对齐
+        l - 左侧对齐
+        c - 居中对齐
+        r - 右侧对齐
         | - 左/右侧边线, 该垂直线占据整个深度
         || - 侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
         @{text} - 使用指定字符text作为左/右侧边线

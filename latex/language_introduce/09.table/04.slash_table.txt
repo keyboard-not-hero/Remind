@@ -40,4 +40,4 @@
 
 2.\diagbox{col_name}{content_name}{row_name}用于作单元格两条斜线
 
-3.\diagbox[dir=NW]{}{}用于指定斜线方向, 默认为西北到东南(NW), 可以指定为东北到西南(NE)
+3.\diagbox[dir=NW]{col_name}{row_name}用于指定斜线方向, 默认为西北到东南(NW), 可以指定为东北到西南(NE)
