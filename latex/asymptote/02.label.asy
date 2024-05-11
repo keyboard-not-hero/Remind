@@ -1,10 +1,46 @@
-asymptote画板层级
-1.picture
-2.frame
+// 1.asymptote画板层级
+//   1)picture
+//   2)frame
 
+
+
+// 2.语句相关符号
 // '//'之后为注释内容
 // ';'为语句结束字符
 
+
+
+// 3.asy文件前导
+// 导入settings模块
+// import settings;
+
+// 输出格式设置为pdf, 默认为Postscript格式(后缀为.eps)
+// outformat = "pdf";
+
+// 设置pdf预览工具
+// pdfviewer="evince";
+
+
+
+// 4.size
+// unitsize(picture pic=currentpicture, real x, real y=x)
+//     指定x/y轴的单元尺寸, 默认为1 bp, 等于0.353mm. 参数列表如下:
+//         x - 指定x轴方向的单元长度
+//         y - 指定y轴方向的单元长度
+
+// 例1
+unitsize(1cm);
+
+
+// size(picture pic=currentpicture, real x, real y=x, bool keepAspect=Aspect)
+//     指定x/y轴允许的最大长度. 参数列表如下:
+//         x - 指定x轴方向允许的最大长度, 为0时代表不进行限制
+//         y - 指定y轴方向允许的最大长度, 为0时代表不进行限制
+//         keepAspect - 如果值为Aspect或true, 必须严格遵守图案长宽比, 并且在该前提下, 使某条边达到最大长度; 如果值为IgnoreAspect或false, 不遵守图案长宽比, 图形>最终长宽为x和y
+
+
+
+// 5.label函数
 // void label(picture pic=currentpicture, Label L, pair position, align align=NoAlign, pen p=currentpen, filltype filltype=NoFill)
 //     在指定位置显示字符. 参数列表如下:
 //         pic - 默认为currentpicture
@@ -61,38 +97,35 @@ asymptote画板层级
 //                     drawpen - 边框的pen属性
 
 
-// 示例1 - position/p参数
+// 示例2 - position/p参数
 import settings;
 outformat="pdf";
 pdfviewer="evince";
+
 label("Hello World");
 label("Hello Kitty", position=(0, 1), p=fontsize(20pt)+red);
 
-// 示例2 - align参数
-label("o", (0, -1));
-label("o", (0, -1), align=2N, p=red);
-label("o", (0, -1), align=S, p=green);
-label("o", (0, -1), align=W, p=blue);
-label("o", (0, -1), align=E, p=purple);
 
-// 示例3 - filltype参数
+// 示例3 - align参数
+label("o", (2, 0));
+label("o", (2, 0), align=2N, p=red);
+
+
+// 示例4 - filltype参数
 unitsize(1cm);
-draw((-6,0) -- (-2,0), arrow=ArcArrow(SimpleHead));
-draw((0,-1) -- (0,1), arrow=ArcArrow(SimpleHead));
-label("Hello world", filltype=RadialShadeDraw(xmargin=1cm, penc=red, penr=RGB(204,255,255), drawpen=green));
+draw((3,0) -- (7,0), arrow=ArcArrow(SimpleHead));
+draw((5,-2) -- (5,2), arrow=ArcArrow(SimpleHead));
+label("Hello world", (5,0), filltype=RadialShadeDraw(xmargin=0.5cm, penc=red, penr=RGB(204,255,255), drawpen=green));
 
 
+
+// 6.Label函数
 // Label Label(string s="", pair position, align align=NoAlign, pen p=nullpen, embed embed=Rotate, filltype filltype=NoFill)
 //     构建一个Label对象. 参数列表如下:
 //         s - Label对象包含的字符串
 //         p - 字符串的字体属性
 //         position - 内容放置坐标(x, y). 采用xy坐标形式, 往右为x增长方向, 往上为y增长方向, 默认为(0,0)
 //         align - 内容向N/S/W/E方向进行偏移, 并且可以为组合模式, 如: 2N/NE
-//         embed - 对字符串进行的变形处理. 可先列表如下:
-//             Rotate(pair) - 字符串逆时针旋转角度, 如图atan_rotate.png. 包含如下情况:
-//                 1)x/y皆为正, 直接atan(y/x)
-//                 2)x为负, y为正, atan(y/x)+pi
-//                 3)x/y皆为负, atan(y/x)+pi
-//                 4)x为正, y为负, atan(y/x)+2*pi
-//         filltype - 填充类型, 参考label方法
+//         p - pen属性, 具体参考pen
+//         filltype - 填充类型, 参考label函数
 
