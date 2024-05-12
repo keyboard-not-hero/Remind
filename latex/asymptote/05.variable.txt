@@ -1,0 +1,19 @@
+asymptote是强类型变量语言
+常用变量类型:
+int 
+整数类型
+
+real
+实数类型. 类似于C语言的double类型
+
+pair
+实数对(x,y), 用于表示坐标轴上的点
+
+path
+路径, 格式为: 
+<pair> -- <pair>
+<pair> .. <pair>
+等
+
+arrowbar
+arrow和bar的统一类型

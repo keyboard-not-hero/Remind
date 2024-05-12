@@ -57,12 +57,11 @@
 
 // 例1
 import settings;
-import graph;
 outformat="pdf";
 pdfviewer="evince";
 unitsize(1cm);
 
-draw(L="0", (0,0) -- (2,0), align=SW, p=linewidth(2pt)+green, arrow=ArcArrow(SimpleHead), bar=BeginBar, margin=PenMargin(1,6));
+draw(L="0", (0,0) -- (2,0), align=SW, p=linewidth(0.8pt)+green, arrow=ArcArrow(SimpleHead), bar=BeginBar, margin=PenMargin(1,6));
 
 
 
@@ -76,7 +75,21 @@ draw(L="0", (0,0) -- (2,0), align=SW, p=linewidth(2pt)+green, arrow=ArcArrow(Sim
 // unitcircle - 单位圆
 
 
-// 2)椭圆
+// 2)圆弧
+// path arc(pair c, real r, real angle1, real angle2)
+//     圆心为c, 半径为r, 起始角度为angle1, 终止角度为angle2的一段圆弧
+
+// path arc(pair c, explicit pair z1, explicit pair z2, bool direction = CCW);
+//     圆心为c, (c -- z1)与(c -- z2)之间的弧, 方向由direction指定(clockwise/CW, counterclockwise/CCW)
+//     半径由(c -- z1)/(c -- z2)短的线段确定
+
+
+// 3)圆点
+// void dot(picture pic=currentpicture, pair z, pen p=currentpen, filltype filltype=dotfilltype);
+//     位置在z的圆点
+
+
+// 4)椭圆
 // path ellipse(pair c, real a, real b)
 //     椭圆函数, 参数如下:
 //         c - 圆心坐标
@@ -84,25 +97,27 @@ draw(L="0", (0,0) -- (2,0), align=SW, p=linewidth(2pt)+green, arrow=ArcArrow(Sim
 //         b - 垂直方向半径
 
 
-// 3)长方形
+// 5)长方形
 // path box(pair a, pair b)
 //     长方形函数, 参数如下:
 //         a - 顶点坐标
 //         b - 与a互为斜对角的顶点坐标
 
 
-// 4)多边形
+// 6)多边形
 // path polygon(int n)
 //     多边形函数, 参数如下:
 //         n - 多边形的边数
 
 
-// 例2 - 圆与椭圆
+// 例2 - 圆/圆弧/椭圆与圆点
 draw((3,0) -- (7,0), arrow=ArcArrow(SimpleHead));
 draw((5,-2) -- (5,2), arrow=ArcArrow(SimpleHead));
 draw(circle((5,0), 1.5), p=red);
 draw(shift(5,0)*unitcircle, p=green);
+draw(arc((5,0), 1.5, 20, 90), p=yellow);
 draw(ellipse((5,0), 1.5, 1), p=blue);
+dot((5,0));
 
 
 // 例3 - 长方形与多边形
@@ -154,7 +169,20 @@ draw((0,-18.4) -- (2,-18.4), p=linewidth(2pt)+opacity(0.5));
 
 
 
-// 4.filldraw函数
+// 4.fill函数
+// void fill(picture pic=currentpicture, path g, pen p=currentpen)
+//     填充闭合线条. 参数列表如下:
+//         g - 路径
+//         p - 填充pen属性
+
+
+// 例7
+draw((0,-22) -- (2,-22));
+draw((0,-22) -- (0,-20));
+fill(shift(0,-22)*box((0,0),(1,1)), p=gray(0.9));
+
+
+// 5.filldraw函数
 // void filldraw(picture pic=currentpicture, path g, pen fillpen=currentpen, pen drawpen=currentpen)
 //     画直线并且填充闭合线条. 参数列表如下:
 //         g - 路径, 包含两种类型线条, 列表如下:
@@ -164,10 +192,24 @@ draw((0,-18.4) -- (2,-18.4), p=linewidth(2pt)+opacity(0.5));
 //         drawpen - 边框pen的属性, 具体参考pen
 
 
-// 例7 - filldraw
-real dt=0.3;
-draw((0,-22) -- (4,-22));
-draw((2,-24-dt) -- (2,-20+dt));
-path p=(1,1) -- (1,-1) -- (-1,-1) -- (-1,1) -- cycle;
-filldraw(shift(2,-22)*p);
+// 例8 - filldraw
+draw((0,-25) -- (2,-25));
+draw((0,-25) -- (0,-23));
+path p=box((0,0),(1,1));
+filldraw(shift(0,-25)*p, fillpen=mediumgray, drawpen=green);
 
+
+
+// 6.clip函数
+// void clip(picture pic=currentpicture, path g, stroke=false, pen fillrule=currentpen)
+//     裁剪已存在内容的指定区域
+
+
+// 例9
+// clip会影响例1-例8
+path p1 = box((0,0), (2,2));
+path p2 = box((0,0), (-2,-2));
+filldraw(shift(0,-28)*p1, fillpen=gray(0.8), drawpen=green);
+filldraw(shift(0,-28)*p2, fillpen=gray(0.6), drawpen=red);
+path p3 = box((-1,-1), (1,1));
+clip(shift(0,-28)*p3);

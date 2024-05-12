@@ -5,6 +5,7 @@
 \end{asy}
 
 
+编译文件:
 latexmk -pdf <name>
 asy <name>-<seq>
 latexmk -pdf -pv <name>

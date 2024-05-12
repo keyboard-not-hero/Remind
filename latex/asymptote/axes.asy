@@ -1,8 +1,16 @@
 // 1.坐标轴
 // void xaxis(picture pic=currentpicture, Label L="", axis axis=YZero, real xmin=-infinity, real xmax=infinity, pen p=currentpen, ticks ticks=NoTicks, arrowbar arrow=None, bool above=false);
 //     作x轴, 参数列表如下:
-//         L - x轴的label
-//         axes - 
+//         L - Label格式, x轴的label
+//         axis - axis格式, 指定x轴在垂直方向的位置. 可选参数如下:
+//             YZero(bool extend=true): 位于y=0的位置
+//             YEquals(real Y, bool extend=true): 位于y=Y的位置
+//         xmin - real格式, x轴的起始位置
+//         xmax - real格式, x轴的终点位置
+//         p - pen属性, x轴的线条属性. 具体参考draw.asy的pen
+//         ticks - ticks格式, x轴的刻度线. 参考LeftTicks部分
+//         arrow - arrowbar格式, 坐标轴的箭头. 参考draw.asy的draw函数的arrow参数
+//         above - bool格式, 是否位于图层的上层. 默认位于底层
 
 
 // 例1

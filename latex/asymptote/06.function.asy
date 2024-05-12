@@ -31,13 +31,18 @@ pdfviewer="evince";
 
 
 // 预定义函数
+// real abs(real x)
+//     绝对值
+
 // real sqrt(real x)
-//     求x^2
+//     x^2
 
 // real hypot(real x, real y)
-//     对x^2+y^2求平方根
+//     x^2+y^2求平方根
 
 // real sin(real x)
+//     sin函数
 
 // real cos(real x)
+//     cos函数
 
