@@ -1,13 +1,28 @@
 asymptote是强类型变量语言
 常用变量类型:
+void
+空值, 常用语函数返回
+
+
 int 
 整数类型
+
 
 real
 实数类型. 类似于C语言的double类型
 
+
 pair
-实数对(x,y), 用于表示坐标轴上的点
+实数对(x,y), 用于表示平面坐标轴上的点
+
+
+triple
+使用三个实数组成(x,y,z), 表示三维空间上的点
+
+
+string
+字符串
+
 
 path
 路径, 格式为: 
@@ -17,3 +32,11 @@ path
 
 arrowbar
 arrow和bar的统一类型
+
+
+pen
+用于表示画笔的属性. 参考03.draw.asy的pen部分
+
+
+transform
+用于图形变形

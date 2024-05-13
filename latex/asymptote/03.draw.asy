@@ -1,11 +1,11 @@
 // 1.draw函数
 // void draw(picture pic=currentpicture, Label L="", path g, align align=NoAlign, pen p=currentpen, arrowbar arrow=None, arrowbar bar=None, margin margin=NoMargin, Label legend="", marker marker=nomarker)
 //     作路径g. 参数列表如下:
-//         L - 字符串
+//         L - 字符串或Label对象
 //         g - 路径, 包含两种类型线条, 列表如下:
 //             -- 直线
 //             .. 曲线
-//         align - Label相对于path的相对位置, 可以使用N/S/W/E或组合. Label默认位于水平线(x轴正向)的正下方path中间, 并且在象限绕360, 相对于path的位置不变
+//         align - Label相对于path的相对位置, 可以使用N/S/W/E或组合. 该参数可覆盖Label对象的align配置
 //         p - pen的属性, 具体参考pen
 //         arrow - 在路径上作箭头, 列表如下:
 //             None - 不作箭头
@@ -61,7 +61,12 @@ outformat="pdf";
 pdfviewer="evince";
 unitsize(1cm);
 
-draw(L="0", (0,0) -- (2,0), align=SW, p=linewidth(0.8pt)+green, arrow=ArcArrow(SimpleHead), bar=BeginBar, margin=PenMargin(1,6));
+path p = (0, 0) -- (2, 0);
+Label l1 = Label("$x$", position=Relative(0.8));
+Label l2 = Label("$0$", position=BeginPoint);
+draw(p, p=linewidth(0.5pt)+green, arrow=ArcArrow(SimpleHead), bar=BeginBar, margin=PenMargin(1,6));
+label(l1,p);
+label(l2,p);
 
 
 

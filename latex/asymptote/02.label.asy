@@ -95,6 +95,9 @@
 //                     penr - 辐射边缘的pen属性
 //                     drawpen - 边框的pen属性
 
+// void label(picture pic=currentpicture, Label L, path g, align align=NoAlign, pen p=currentpen, filltype filltype=NoFill)
+//     将Label对象添加到指定path中
+
 
 // 示例2 - position/p参数
 import settings;
@@ -124,7 +127,11 @@ label("Hello world", (5,0), filltype=RadialShadeDraw(xmargin=0.5cm, penc=red, pe
 //     构建一个Label对象. 参数列表如下:
 //         s - Label对象包含的字符串
 //         p - 字符串的字体属性
-//         position - 内容放置坐标(x, y). 采用xy坐标形式, 往右为x增长方向, 往上为y增长方向, 默认为(0,0)
+//         position - 内容放置坐标(x, y). 预定义位置:
+//             BeginPoint - 在path的起始处
+//             MidPoint - 在path的中间. 默认值
+//             EndPoint - 在path的结尾处
+//             Relative(real r) - 在path的指定位置, r的区间[0,1]
 //         align - 内容向N/S/W/E方向进行偏移, 并且可以为组合模式, 如: 2N/NE
 //         p - pen属性, 具体参考pen
 //         filltype - 填充类型, 参考label函数

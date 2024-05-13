@@ -58,12 +58,90 @@ dot(point2, p=green);
 //     点的顺序以p的0 --> 1为准
 
 
+// 例2
+real square(real x){
+    return x^2;
+}
+
+real linear(real x){
+    return x+1;
+}
+
+transform t = shift(0, -6);
+
+path xaxis = (-3,0) -- (3,0);
+path yaxis = (0,-2.1) -- (0,5);
+arrowbar arrow = ArcArrow(SimpleHead);
+draw(t*xaxis, arrow=arrow);
+draw(t*yaxis, arrow=arrow);
+
+path p1 = graph(square, -2, 2);
+path p2 = graph(linear, 2.5, -1.5);
+draw(t*p1);
+draw(t*p2);
+
+real[][] isect = intersections(t*p1, t*p2);
+draw(subpath(t*p1, isect[0][0], isect[1][0]), p=green, arrow=MidArcArrow());
+
+
 
 // 6.intersectionpoint函数
+// pair intersectionpoint(path p, path q, real fuzz=-1)
+//     返回路径p和q的其中一个相交点
 
 
 
 // 7.intersectionpoints函数
+// pair[] intersectionpoints(path p, path q, real fuzz=-1)
+//     返回路径p和q所有相交点的坐标, 数组顺序沿着p的方向
+
+
+// 例3
+real square(real x){
+    return x^2;
+}
+
+real linear(real x){
+    return x+1;
+}
+
+transform t = shift(0, -14);
+
+path xaxis = (-3,0) -- (3,0);
+path yaxis = (0,-2.1) -- (0,5);
+arrowbar arrow = ArcArrow(SimpleHead);
+draw(t*xaxis, arrow=arrow);
+draw(t*yaxis, arrow=arrow);
+
+path p1 = graph(square, -2, 2);
+path p2 = graph(linear, 2.5, -1.5);
+draw(t*p1);
+draw(t*p2);
+
+pair[] isect = intersectionpoints(t*p1, t*p2);
+dot(isect[0], green);
+dot(isect[1], red);
 
 
 
+// 8.dir函数
+// pair dir(path p, real t, bool normalize=true)
+//     路径p在位置点t的切线向量
+
+
+// 例4
+transform t = shift(0, -20);
+arrowbar arrow = ArcArrow(SimpleHead);
+path xaxis = (-1.5, 0) -- (1.5, 0);
+path yaxis = (0, -.5) -- (0, 3);
+path circle = shift(0,1)*unitcircle;
+
+draw(t*xaxis, arrow=arrow);
+draw(t*yaxis, arrow=arrow);
+draw(t*circle);
+
+real[] isect = times(t*circle, 0);
+pair tan1 = dir(t*circle, isect[0]);
+pair tan2 = dir(t*circle, isect[1]);
+draw(shift(point(t*circle,isect[0]))*((0,0) -- (tan1)), green);
+draw(shift(point(t*circle,isect[1]))*((0,0) -- (tan2)), red);
