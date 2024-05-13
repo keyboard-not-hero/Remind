@@ -1,16 +1,10 @@
-// 1.asymptote画板层级
-//   1)picture
-//   2)frame
-
-
-
-// 2.语句相关符号
+// 1.语句相关符号
 // '//'之后为注释内容
 // ';'为语句结束字符
 
 
 
-// 3.asy文件前导
+// 2.asy文件前导
 // 导入settings模块
 // import settings;
 
@@ -22,7 +16,7 @@
 
 
 
-// 4.size
+// 3.size
 // unitsize(picture pic=currentpicture, real x, real y=x)
 //     指定x/y轴的单元尺寸, 默认为1 bp, 等于0.353mm. 参数列表如下:
 //         x - 指定x轴方向的单元长度
@@ -39,7 +33,7 @@
 
 
 
-// 5.label函数
+// 4.label函数
 // void label(picture pic=currentpicture, Label L, pair position, align align=NoAlign, pen p=currentpen, filltype filltype=NoFill)
 //     在指定位置显示字符. 参数列表如下:
 //         pic - 默认为currentpicture
@@ -99,7 +93,7 @@
 //     将Label对象添加到指定path中
 
 
-// 示例2 - position/p参数
+// 例1 - position/p参数
 import settings;
 outformat="pdf";
 pdfviewer="evince";
@@ -109,12 +103,12 @@ label("Hello World");
 label("Hello Kitty", position=(0, 1), p=fontsize(20pt)+red);
 
 
-// 示例3 - align参数
+// 例2 - align参数
 label("o", (2, 0));
 label("o", (2, 0), align=2N, p=red);
 
 
-// 示例4 - filltype参数
+// 例3 - filltype参数
 unitsize(1cm);
 draw((3,0) -- (7,0), arrow=ArcArrow(SimpleHead));
 draw((5,-2) -- (5,2), arrow=ArcArrow(SimpleHead));
@@ -122,7 +116,7 @@ label("Hello world", (5,0), filltype=RadialShadeDraw(xmargin=0.5cm, penc=red, pe
 
 
 
-// 6.Label函数
+// 5.Label函数
 // Label Label(string s="", pair position, align align=NoAlign, pen p=nullpen, embed embed=Rotate, filltype filltype=NoFill)
 //     构建一个Label对象. 参数列表如下:
 //         s - Label对象包含的字符串

@@ -18,11 +18,12 @@ import settings;
 import graph;
 outformat="pdf";
 pdfviewer="evince";
-unitsize(1cm);
 
 // 坐标轴
-xaxis(L="$x$", xmin=-3, xmax=3, arrow=ArcArrow(SimpleHead));
-yaxis(L="$y$", ymin=-3, ymax=3, arrow=ArcArrow(SimpleHead));
+picture pic1;
+size(pic1, 5cm);
+xaxis(pic1, L="$x$", xmin=-3, xmax=3, arrow=ArcArrow(SimpleHead));
+yaxis(pic1, L="$y$", ymin=-3, ymax=3, arrow=ArcArrow(SimpleHead));
 
 
 
@@ -46,16 +47,11 @@ yaxis(L="$y$", ymin=-3, ymax=3, arrow=ArcArrow(SimpleHead));
 //         ptick - minor tick的pen
 
 
-// 例2
-import settings;
-import graph;
-outformat="pdf";
-pdfviewer="evince";
-unitsize(1cm);
-
-// 带tick的坐标轴
-xaxis(L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
-yaxis(L="$y$", ymin=-3, ymax=3, ticks=RightTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
+// 例2 - 带tick的坐标轴
+picture pic2;
+size(pic2, 5cm);
+xaxis(pic2, L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
+yaxis(pic2, L="$y$", ymin=-3, ymax=3, ticks=RightTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
 
 
 
@@ -74,17 +70,12 @@ yaxis(L="$y$", ymin=-3, ymax=3, ticks=RightTicks(beginlabel=false,endlabel=false
 //         ptick - minor tick的pen
 
 
-// 例3
-import settings;
-import graph;
-outformat="pdf";
-pdfviewer="evince";
-unitsize(1cm);
-
-// 使用real数组指定tick位置的坐标轴
-xaxis(L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), arrow=ArcArrow(SimpleHead));
-yaxis(L="$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), arrow=ArcArrow(SimpleHead));
-
+// 例3 - 使用real数组指定tick位置的坐标轴
+picture pic3;
+size(pic3, 5cm);
+xaxis(pic3, L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(Ticks=new real[]{-2,-1,1,2}), arrow=ArcArrow(SimpleHead));
+yaxis(pic3, L="$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), arrow=ArcArrow(SimpleHead));
+label(pic3, "0", (0,0), SW);
 
 
 // 4.legend函数
@@ -103,21 +94,29 @@ yaxis(L="$y$", ymin=-3, ymax=3, ticks=RightTicks(Ticks=new real[]{-2,-1,1,2}), a
 
 
 // 例4
-// 示例6 - legend
-unitsize(3cm);
-real dt=0.2;
-draw((-dt,-8) -- (4+dt,-8), arrow=ArcArrow(SimpleHead));
-draw((0,-9-dt) -- (0,-7+dt), arrow=ArcArrow(SimpleHead));
-real f1(real t){
-   return sin(pi*t);
-};
-real f2(real t){
-   return cos(pi*t);
-};
-path p1=graph(f1,0,4);
-path p2=graph(f2,0,4);
-draw(shift(0,-8)*p1, p=green, legend="$\sin(\pi x)$");
-draw(shift(0,-8)*p2, p=blue, legend="$\cos(\pi x)$");
-path pl=(4.5,0.8) -- (4.5,0.8);
-draw(shift(0,-8)*pl, p=linewidth(4pt)+red);
-add(src=legend(), position=shift(0,-8)*(4.5,0.8));
+// unitsize(3cm);
+// real dt=0.2;
+// draw((-dt,-8) -- (4+dt,-8), arrow=ArcArrow(SimpleHead));
+// draw((0,-9-dt) -- (0,-7+dt), arrow=ArcArrow(SimpleHead));
+// real f1(real t){
+//    return sin(pi*t);
+// };
+// real f2(real t){
+//    return cos(pi*t);
+// };
+// path p1=graph(f1,0,4);
+// path p2=graph(f2,0,4);
+// draw(shift(0,-8)*p1, p=green, legend="$\sin(\pi x)$");
+// draw(shift(0,-8)*p2, p=blue, legend="$\cos(\pi x)$");
+// path pl=(4.5,0.8) -- (4.5,0.8);
+// draw(shift(0,-8)*pl, p=linewidth(4pt)+red);
+// add(src=legend(), position=shift(0,-8)*(4.5,0.8));
+
+
+// picture排版(参考09.picture.md)
+picture pic4;
+add(pic4, pic1.fit(), (0,0), N);
+add(pic4, pic2.fit(), (0,0), 10S);
+
+add(pic4.fit(), (0,0), N);
+add(pic3.fit(), (0,0), 10S);
