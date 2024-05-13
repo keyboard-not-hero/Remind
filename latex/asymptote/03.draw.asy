@@ -212,4 +212,4 @@ path p2 = box((0,0), (-2,-2));
 filldraw(shift(0,-28)*p1, fillpen=gray(0.8), drawpen=green);
 filldraw(shift(0,-28)*p2, fillpen=gray(0.6), drawpen=red);
 path p3 = box((-1,-1), (1,1));
-clip(shift(0,-28)*p3);
+// clip(shift(0,-28)*p3);

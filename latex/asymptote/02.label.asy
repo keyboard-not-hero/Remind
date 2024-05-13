@@ -28,8 +28,7 @@
 //         x - 指定x轴方向的单元长度
 //         y - 指定y轴方向的单元长度
 
-// 例1
-unitsize(1cm);
+// unitsize(1cm);
 
 
 // size(picture pic=currentpicture, real x, real y=x, bool keepAspect=Aspect)
@@ -101,6 +100,7 @@ unitsize(1cm);
 import settings;
 outformat="pdf";
 pdfviewer="evince";
+unitsize(1cm);
 
 label("Hello World");
 label("Hello Kitty", position=(0, 1), p=fontsize(20pt)+red);
