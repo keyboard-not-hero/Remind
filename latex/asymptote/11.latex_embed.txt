@@ -5,7 +5,60 @@
 \end{asy}
 
 
+** 特别注意: \end{asy}必须单独占据一行
+
+
 编译文件:
 latexmk -pdf <name>
 asy <name>-<seq>
 latexmk -pdf -pv <name>
+
+
+例1
+编译latex源文件
+vi demo_01.tex
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{asymptote}
+\begin{document}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|}
+    \hline
+    \begin{asy}
+        import settings;
+        import graph;
+        outformat="pdf";
+        size(3cm);
+
+        real f(real x){
+            return x;
+        }
+        draw((-3, 0) -- (3, 0), arrow=ArcArrow(SimpleHead));
+        draw((0, -3) -- (0, 3), arrow=ArcArrow(SimpleHead));
+        draw(graph(f, -2, 2), green);
+    \end{asy}
+    & \begin{asy}
+        import settings;
+        import graph;
+        outformat="pdf";
+        size(3cm);
+
+        real f(real x){
+            return -x;
+        }
+        draw((-3, 0) -- (3, 0), arrow=ArcArrow(SimpleHead));
+        draw((0, -3) -- (0, 3), arrow=ArcArrow(SimpleHead));
+        draw(graph(f, -2, 2), green);
+    \end{asy}
+    \\
+    \hline
+\end{tabular}
+\end{table}
+\end{document}
+
+
+编译
+latexmk -xelatex demo_01.tex
+asy demo_01-1.asy
+asy demo_01-2.asy
+latexmk -xelatex -pv demo_01.tex

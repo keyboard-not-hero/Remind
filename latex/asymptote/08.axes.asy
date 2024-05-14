@@ -40,7 +40,8 @@ yaxis(pic1, L="$y$", ymin=-3, ymax=3, arrow=ArcArrow(SimpleHead));
 //         step - real格式, minor tick之间的间隔. n必须未指定
 //         begin - bool格式, 是否包含第一个major tick
 //         end - bool格式, 是否包含最后一个major tick
-//         modify - 自定义函数, 返回real[], 包含major/minor tick值
+//         modify - 自定义函数, 返回real[], 包含major/minor tick值. 可选列表:
+//             NoZero - 自动生成不包含0点的tick
 //         Size - real格式, major tick的大小
 //         size - real格式, minor tick的大小
 //         pTick - major tick的pen
@@ -50,8 +51,9 @@ yaxis(pic1, L="$y$", ymin=-3, ymax=3, arrow=ArcArrow(SimpleHead));
 // 例2 - 带tick的坐标轴
 picture pic2;
 size(pic2, 5cm);
-xaxis(pic2, L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
-yaxis(pic2, L="$y$", ymin=-3, ymax=3, ticks=RightTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2), arrow=ArcArrow(SimpleHead));
+xaxis(pic2, L="$x$", xmin=-3, xmax=3, ticks=LeftTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2, modify=NoZero), arrow=ArcArrow(SimpleHead));
+yaxis(pic2, L="$y$", ymin=-3, ymax=3, ticks=RightTicks(beginlabel=false,endlabel=false,begin=false,end=false,N=6,n=2, modify=NoZero), arrow=ArcArrow(SimpleHead));
+label(pic2, "$0$", (0, 0), SW);
 
 
 
@@ -94,29 +96,37 @@ label(pic3, "0", (0,0), SW);
 
 
 // 例4
-// unitsize(3cm);
-// real dt=0.2;
-// draw((-dt,-8) -- (4+dt,-8), arrow=ArcArrow(SimpleHead));
-// draw((0,-9-dt) -- (0,-7+dt), arrow=ArcArrow(SimpleHead));
-// real f1(real t){
-//    return sin(pi*t);
-// };
-// real f2(real t){
-//    return cos(pi*t);
-// };
-// path p1=graph(f1,0,4);
-// path p2=graph(f2,0,4);
-// draw(shift(0,-8)*p1, p=green, legend="$\sin(\pi x)$");
-// draw(shift(0,-8)*p2, p=blue, legend="$\cos(\pi x)$");
-// path pl=(4.5,0.8) -- (4.5,0.8);
-// draw(shift(0,-8)*pl, p=linewidth(4pt)+red);
-// add(src=legend(), position=shift(0,-8)*(4.5,0.8));
+picture pic4;
+size(pic4, 5cm);
+
+real dt=0.2;
+real f1(real t){
+   return sin(pi*t);
+};
+real f2(real t){
+   return cos(pi*t);
+};
+path p1=graph(f1, 0, 4);
+path p2=graph(f2, 0, 4);
+
+xaxis(pic4, "$x$", LeftTicks(endlabel=false, end=false, NoZero), arrow=ArcArrow(SimpleHead));
+yaxis(pic4, "$y$", RightTicks(beginlabel=false, endlabel=false, begin=false, end=false, NoZero), arrow=ArcArrow(SimpleHead));
+label(pic4, "$0$", (0,0), SW);
+draw(pic4, p1, green, "$\sin(\pi x)$");
+draw(pic4, p2, blue, "$\cos(\pi x)$");
+add(pic4, scale(0.3)*legend(), (4.2,0.8));
+
 
 
 // picture排版(参考09.picture.md)
-picture pic4;
-add(pic4, pic1.fit(), (0,0), N);
-add(pic4, pic2.fit(), (0,0), 10S);
+picture pic5;
+add(pic5, pic1.fit(), (0,0), N);
+add(pic5, pic2.fit(), (0,0), 10S);
 
-add(pic4.fit(), (0,0), N);
-add(pic3.fit(), (0,0), 10S);
+picture pic6;
+add(pic6, pic5.fit(), (0,0), N);
+add(pic6, pic3.fit(), (0,0), 10S);
+
+//legend在add框架中不显示
+add(pic6.fit(), (0,0), N);
+add(pic4.fit(), (0,0), 10S);
