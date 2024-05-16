@@ -1,0 +1,5 @@
+sudo apt-get install p7zip-full
+
+
+示例1 - 解压缩7z文件
+7z x <package>.7z

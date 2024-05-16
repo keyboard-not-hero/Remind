@@ -74,13 +74,24 @@ tar [option] [file]...
 示例1 - 打包并压缩文件(压缩使用gzip)
 tar -zcvf pack.tar.gz demo01.txt demo02.txt
 
+
 示例2 - 显示打包文件的文件列表
 tar -tvf pack.tar.gz
 
-示例3 - 解包并解压缩文件
-tar -zxvf pack.tar.gz
 
-示例4 - 对目录使用增量备份
+示例3 - 解包并解压缩gzip文件, 目标文件放置到/tmp目录
+tar -zxvf pack.tar.gz -C /tmp
+
+
+示例4 - 解包并解压缩bzip2文件, 目标文件放置到/tmp目录
+tar -jxvf pack.tar.bz2 -C /tmp
+
+
+示例5 - 解包并解压缩xz文件, 目标文件放置到/tmp目录
+tar -Jxvf pack.tar.xz2 -C /tmp
+
+
+示例6 - 对目录使用增量备份
 ** 第一步, 第一次进行全量备份(compress目录包含test01.txt/test02.txt)
 tar -g snapshot -zcf compress.tar.gz compress
 ** 第二步, 第二次根据snapshot进行增量备份(compress目录新增test03.txt)
