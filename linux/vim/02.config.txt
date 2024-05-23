@@ -203,7 +203,14 @@ set nocompatible
 set ruler
 set incsearch
 set showmode
+set backspace=indent,eol,start
 set autoindent
 set shiftwidth=4
 set softtabstop=4
 set indentkeys=0{,0},0),0],:,0#,!^F,o,O,e
+
+" 下列内容代表打开文件时, 返回上次关闭文件时cursor所处的位置
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
