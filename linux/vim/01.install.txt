@@ -1,0 +1,30 @@
+1.从apt容器安装(Ubuntu 22.04)
+steven@steven-IRH8:~$ sudo apt-get install vim 
+
+
+2.从源代码安装
+steven@steven-IRH8:~$ sudo apt install gcc libtool-bin vim-gtk xorg-dev xserver-xorg-dev
+
+steven@steven-IRH8:~$ git clone https://github.com/vim/vim.git
+
+steven@steven-IRH8:~$ cd vim/src
+
+steven@steven-IRH8:~/vim/src$ make distclean
+
+steven@steven-IRH8:~/vim/src$ ./configure --prefix=/usr/local/vim
+
+steven@steven-IRH8:~/vim/src$ make -j16
+
+steven@steven-IRH8:~/vim/src$ make test
+
+steven@steven-IRH8:~/vim/src$ sudo make install
+
+steven@steven-IRH8:~/vim/src$ vi ~/.bashrc
+Go
+export PATH=$PATH:/usr/local/vim/bin
+
+steven@steven-IRH8:~/vim/src$ source ~/.bashrc
+
+steven@steven-IRH8:~$ sudo cp -f /usr/local/vim/bin/vim /usr/bin/vim
+
+steven@steven-IRH8:~$ sudo cp /usr/local/vim/bin/vim /usr/bin/vi

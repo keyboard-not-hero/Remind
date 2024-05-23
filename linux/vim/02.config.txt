@@ -1,0 +1,209 @@
+全局配置文件:
+/etc/vim/vimrc
+
+用户级配置文件:
+~/.vimrc
+~/.vim/vimrc
+~/.config/vim/vimrc
+** 配置文件中, "之后的为注释内容
+
+
+
+配置方式:
+1.permanent
+在配置文件中配置:
+set <key>=<value>
+
+
+2.temporary
+在当前文件中配置:
+:set <key>=<value>
+
+
+
+查看当前选项的配置内容
+set <option_name>?
+
+
+
+选项恢复到默认值
+set <option_name>&
+
+
+
+选项配置列表:
+set arabic | noarabic
+    arabic代表文字从右向左
+
+
+set autoindent | noautoindent
+    在换行时, 是否根据上一行的缩进, 自动进行缩进
+
+
+set autowrite | noautowrite
+    是否自动保存修改
+
+
+set backspace=indent,eol,start
+    <backspace>允许删除的特殊字符
+    
+
+set backup | nobackup
+    是否提供备份文件
+
+
+set backupext=.bak
+    设置备份文件的后缀(默认为文件名后添加~)
+
+
+set cmdheight=<value>
+    指令行占用的函数
+    默认为1
+
+
+set compatible | nocompatible
+    是否设置为vi的兼容模式(必须关闭, 兼容模式功能太少)
+
+
+set directory+=<dir>
+    保存swap文件的位置
+
+
+set display=uhex
+    将文件内容以16进制格式显示
+    适用于binary文件
+    可使用:%!xxd将二进制文件转化为更易读的二进制格式, :%!xxd -r则将转化后的二进制格式转化回源格式
+
+
+set fileformats=unix,dos
+    End-of-Line(EOL)的格式, 参考列表如下:
+        unix - <LF>
+        mac - <CR>
+        dos - <CR><LF>
+
+
+set filetype={on | off | <filetype>}
+    开启自动检测文件类型, 而不是只根据文件后缀
+
+
+set history=<numer>
+    指定可以记录的指令个数(:和查找)
+
+
+set hlsearch | nohlsearch
+    是否高亮显示查找结果
+
+
+set ignorecase [smartcase]
+set noignorecase
+    查找是否在乎大小写
+    携带smartcase参数, 当查找字符串全部为lowercase时, 可匹配任意大小写混合字符串; 当查找字符串包含uppercase时, 只能精确匹配. 效果如下:
+	pattern			matches	
+	word			word, Word, WORD, WoRd, etc.
+	Word			Word
+	WORD			WORD
+	WoRd			WoRd
+
+
+set incsearch | noincsearch
+    当正在输入查找字符串时, 是否实时匹配查找
+
+
+set indentkeys=0{,0},0),0],:,0#,!^F,o,O,e
+    设置可触发缩进的字符
+
+
+set isfname+=<symbol>
+    指定normal模式下, gf文件跳转指令中, 将之视为文件组成的符号
+
+
+set key=
+    取消密码(密码置空)
+    仅适用于单个文件配置, 不适用于配置文件
+
+
+set linebreak | nolinebreak
+    适当插入换行符, 避免从单词中间换行
+
+
+set list | nolist
+    显示<tab>和行结束符
+
+
+set matchpairs=<value>
+    配对的字符
+    默认值: (:),{:},[:]
+
+
+set matchtime=<tenth of a seconf>
+    配置showmatch在匹配的对侧括号停留时间, 时间单位为0.1s
+    默认值为5, 即0.5秒
+
+
+set number | nonumber
+    在每一行的最前面显示行号
+
+
+set patchmode=<value>
+    设置备份最原始文件, 并指定后缀
+
+
+set path+=<absolute_path>
+    设置normal模式下, gf文件跳转指令的文件搜寻路径
+
+
+set ruler | noruler
+    在右下角显示当前所在行/列, 和所在行在文件所占百分比
+
+
+set shiftwidth=<space>
+    默认缩进的空格数
+
+
+set showmatch | noshowmatch
+    是否在输入中, 进入括号匹配
+    如: 当输入}时, 如果有匹配的{, 则跳转到{停留指定时间, 并返回}; 如果没有匹配的{, 则进行蜂鸣提示
+
+
+set showmode | noshowmode    
+    是否显示当前所处模式
+
+
+set softtabstop=<space>
+    设置<tab>键的空格数
+
+
+set syntax=on | off
+    是否开启编程语言的语法颜色
+
+
+set textwidth=72
+    设置文本宽度
+    当达到该宽度后, 自动添加换行符, 段落被分割成多个段落
+
+
+set wrap | nowrap
+    当遇到超过linewidth的行时, 是否进行换行(只是显示, 没有换行符)
+
+
+set wrapscan | nowrapscan
+    当查找到末尾时, 是否跳转到另一头, 重新查找
+
+
+
+
+查看option列表:
+:help option-summary
+
+
+
+
+DIY配置:
+set nocompatible
+set ruler
+set incsearch
+set showmode
+set autoindent
+set shiftwidth=4
+set softtabstop=4
+set indentkeys=0{,0},0),0],:,0#,!^F,o,O,e

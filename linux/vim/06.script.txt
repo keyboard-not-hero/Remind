@@ -1,0 +1,132 @@
+vi <name>.vim
+    脚本文件的后缀为.vim
+
+
+
+
+文件内容
+vim9script
+    表明当前文件为一个脚本文件, 放置于文件第一行
+
+
+
+# <description_string>
+    #符号之后的内容为注释内容
+
+
+
+var <var_name> = <value>
+    定义变量, 并赋予初始值. 赋予值可以为数字或字符串
+    变量的有效区域为当前脚本
+    定义所有脚本共享的全局变量g:<var_name>
+    删除全局变量unlet g:<var_name>
+
+
+
+整数类型
+十进制
+    纯数字. 如: 123, 222
+
+二进制
+    0b或0B开头. 如: 0b110
+
+八进制
+    0o或0O开头. 如: 0o265
+
+十六进制
+    0x或0X开头. 如: 0x1e
+
+
+echo <string>
+    打印字符串内容
+
+
+
+if选择语句
+if <condition>
+  <statements>
+endif
+
+if <condition>
+  <statements1>
+else
+  <statements2>
+endif
+
+if <condition1>
+  <statements1>
+elseif <condition2>
+  <statements2>
+else
+  <statements3>
+endif
+
+
+
+while循环
+while <condition>
+  <statements>
+endwhile
+
+
+
+for循环
+for <var> in <range>
+    <statements>
+endfor
+
+** continue和break可用于while和for循环
+
+
+示例1 - while循环打印1~4
+vim9script
+
+var i = 1
+while i < 5
+    echo "count is" i
+    i += 1
+endwhile
+
+:w
+:source %
+
+
+示例2 - for循环打印10以内的偶数
+vim9script
+
+for i in range(0, 10, 2)
+    echo i
+endfor
+
+:w
+:source %
+
+
+
+数字/字符串比较符号
+==
+    等于
+
+!=
+    不等于
+
+>
+    大于
+
+>=
+    大于等于
+
+<
+    小于
+
+<=
+    小于等于
+
+
+
+字符串匹配
+<str> =~ <pattern>
+    字符串匹配regular expression表示的pattern
+
+<str> !~ <pattern>
+    字符串不匹配regular expression表示的pattern

@@ -1,0 +1,119 @@
+i
+    在cursor位置之前插入, 进入insert模式
+
+I  
+    在cursor所在行行首位置插入, 进入insert模式
+    
+a
+    在cursor位置之后插入, 进入insert模式
+
+A
+    在cursor所在行的行末位置插入, 进入insert模式
+
+r
+    在cursor位置进入replace模式, 替换一个字符后返回normal模式
+
+R
+    在cursor位置进入replace模式
+
+o
+    在cursor所在行的下面新增一行, 进入insert模式
+
+O
+    在cursor所在行的上面新增一行, 进入insert模式
+    
+
+
+在编辑模式(非r/R进入的replace模式)下的快捷键
+ctrl-W
+    删除从当前所在单词的起始, 到cursor所在字符的前一个字符
+
+ctrl-U
+    删除从当前行的起始, 到cursor所在字符的前一个字符
+
+ctrl-<left>
+shift-<left>
+    后退到上一个'单词的起始字符'
+
+ctrl-<left>
+shift-<left>
+    前进到下一个'单词的起始字符'
+
+ctrl-A
+    重复上一次在insert模式输入的内容
+
+ctrl-@
+    重复上一次在insert模式输入的内容, 并且退出insert模式
+
+ctrl-Y
+    输入当前cursor上方的字符
+    必须上一行的cursor所在字符包含字符
+
+ctrl-E
+    输入当前cursor下方的字符
+    必须下一行的cursor所在字符包含字符
+
+ctrl-V <special_char>|<ASCII_code>
+    代表后面的特殊字符或ASCII编码对应的字符直接显示
+
+ctrl-K <cmd>
+    在insert模式下, 执行normal模式下的指令
+
+
+
+
+完善内容
+ctrl-X ctrl-F
+    完善单词
+    从当前目录下的文件名称中匹配
+    如果内容以/开始, 可以基于unix的根目录进行绝对路径查找
+
+ctrl-X ctrl-
+
+ctrl-P
+    完善单词
+    从前面已出现模式开始匹配, 并且全文wrap
+    也可以用于之前的模式进行反向查找
+
+ctrl-N
+    完善单词
+    从后面已出现模式开始匹配, 并且全文wrap
+    也可以用于之前的模式进行正向查找
+
+
+
+
+缩写
+:iabbrev <abbr_char> <full_char>
+    配置指定单词的缩写, 当在insert模式下输入单词内容为abbr_char时, 直接替换为完整字符串full_char
+
+:unabbreviate <abbr_char>
+    删除缩写形式
+
+:abbreviate
+    查看缩写内容
+
+
+
+
+示例1 - 单词匹配
+love
+level
+liveing
+like
+l <ctrl>-P/<ctrl>-N
+lily
+long
+lonely
+
+<ctrl>-P从like -->love --> lonely --> lily进行遍历
+<ctrl>-N从lily -->lonely --> love --> like进行遍历
+
+
+
+示例2 - ctrl-V的应用
+输入:
+see you ctrl-V <Esc>
+
+输出:
+see you ^[

@@ -136,3 +136,7 @@ quit
 
 相同效果:
 vim -s operation.vim demo.txt
+
+
+示例2 - 打开新文件时提示赋予密码
+vim -x <file>

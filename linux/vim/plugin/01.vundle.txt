@@ -1,0 +1,79 @@
+插件(plugin, 需要eval特性支持)
+插件类型:
+1.全局插件
+适用于所有文件类型的插件
+
+2.filetype插件
+只适用于特定文件类型的插件
+
+
+
+Vundle插件管理工具
+1.条件准备
+sudo apt-get install git curl
+
+
+2.安装vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+
+3.配置vimrc
+set nocompatible
+set filetype=off
+
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin()       " 开始指定Vundle管理的插件, required
+
+Plugin 'VundleVim/Vundle.vim'   " 让Vundle管理Vundle, required
+
+call vundle#end()            " 指定Vundle管理的插件结束, required
+filetype plugin indent on    " required
+
+
+
+
+" Plugin支持的URI
+" 1.user/repo格式代表从github安装. 如:
+"   Plugin 'VundleVim/Vundle.vim' => https://github.com/VundleVim/Vundle.vim
+" 2.repo格式代表从vim scripts获取. 如:
+"   Plugin 'ctrlp.vim' => https://github.com/vim-scripts/ctrlp.vim
+" 3.完整URL. 如:
+"   Plugin 'git://git.wincent.com/command-t.git'
+
+
+
+4.执行安装操作
+:PluginInstall
+
+
+
+
+其他插件信息:
+1.查看已配置插件
+:PluginList
+
+
+2.安装插件
+1)安装在vimrc配置的所有插件
+:PluginInstall
+
+2)安装指定插件
+:PluginInstall <plugin_name1> <plugin_name2>...
+
+
+3.更新插件
+1)更新在vimrc配置的所有插件
+:PluginInstall!
+:PluginUpdate
+
+2)更新指定插件
+:PluginUpdate <plugin_name1> <plugin_name2>...
+
+
+3.移除插件
+卸载在vimrc删除配置, 但是已安装的插件
+:PluginClean[!]
+
+
+4.vunle帮助
+:help vundle

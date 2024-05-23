@@ -1,0 +1,802 @@
+substitute指令
+:[<line_range>]s[ubstitute]/<regular_expression>/<string>/[<flags>]
+    将指定行line_range的原内容src_content替换成des_content
+    flags指定相关替换操作参数
+
+
+line_range参数
+<blank>
+.
+    当前所在行
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行
+
+
+regular_expression参数
+    使用Regular Expression进行匹配查找
+
+
+string参数
+    verbatim纯字符替换
+    可以使用\[1-9]使用RE匹配的分组
+
+
+
+flags参数
+c
+    confirm, 在每一次替换前进行询问. 提示下列内容:
+        replace with Teacher (y/n/a/q/l/^E/^Y)?
+        y - yes; 执行当前单次替换
+        n - no; 不执行当前单次替换
+        a - all; 执行当前单词替换和后续所有替换
+        q - quit; 不执行替换直接退出
+        l - last; 执行当前单词替换, 并退出
+        ctrl-E - 当前页面内容上移一行(可查看之前页面顶部的上一行)
+        ctrl-Y - 当前页面内容下移一行(可查看之前页面底部的下一行)
+
+e
+    error suppress, 当出现error, 部分error不进行提示
+
+g
+    global, 对行内的所有匹配项都执行替换
+    默认只对行内的第一个匹配项执行替换
+
+i
+    ignore case, RE匹配忽视大小写
+    不使用:set ignore和:set smartcase选项
+
+I
+    no ignore case, RE匹配不忽视大小写
+    不使用:set ignore和:set smartcase选项
+
+n
+    no substitute, 只报告匹配, 不执行替换
+    c flag被忽略
+
+p
+    print line, 显示最后一个替换项的行
+
+#
+    类似于p, 并且prepend一个行号
+
+l
+    类似于p, 并且显示换行符
+
+
+示例1 - 将当前所在章节所有the替换为that
+?Chapter?+1, /chapter/-1 s/the/that/g
+?Chapter?向后(后退)搜寻当前章节标题, ?Chapter?+1代表章节标题下一行(不修改章节标题内容)
+/Chapter/向前(前进)搜寻下一章节标题, /Chapter/-1代表章节标题上一行(不修改章节标题内容)
+
+
+
+
+:[<file_range>]argdo[!] <cmd>
+    对arg列表中的所有文件进行cmd指令操作
+    如果指定file_range, 则只对arg列表中的指定范围文件进行操作
+
+
+示例1 - 对指定文件进行内容替换
+:args *.c
+:argdo %s/text/test/ge | update
+
+args *.c - 将当前目录所有文件后缀为.c的文件打开(添加到arg列表)
+argdo %s/text/test/ge - 将arg打开的所有文件内, 所有行的所有text都替换为test, 并抑制错误输出
+update - 修改过的文件进行保存(没有修改的文件不进行操作)
+
+
+
+
+global指令
+:[<line_range>]g[lobal]/<regular_expression>/[<command>]
+    在指定范围范围行中, 进行re模式行匹配, 再对匹配结果执行指定的指令操作
+
+:[<line_range>]g[lobal]!/<regular_expression>/[<command>]
+:[<line_range>]v[global]/<regular_expression>/[<command>]
+    在指定范围范围行中, 进行re模式行匹配, 再对非匹配结果执行指定的指令操作
+
+
+line_range参数
+.
+    当前所在行
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行(默认值)
+
+
+/regular_expression/
+    对内容进行RE匹配. 还可以为以下格式:
+        /RE1/,/RE2/
+        匹配RE1到RE2范围的行
+
+
+command
+    ex操作指令(:模式下的指令). 默认为:p
+
+
+示例1 - 文件行进行逆序排列
+:global/^/move 0
+^ - 搜索每一行起始, 即逐行搜索
+move 0 - 每次将搜索到行依次放在想象中的第0行之后(即第一行)
+
+
+示例2 - 删除空行(为empty, 不包含空格)
+:global/./,/^$/join
+. - 匹配到包含字符的行
+,/^$/join - 从global匹配到的行(当前行)到下一个空行, 合并为一行
+
+
+示例3 - 删除空行(包含空格)
+:global/\S/,/^\s*$/join
+\S - 匹配到包含非空格字符的行
+,/^\s*$/join - 从global匹配到的行(当前行)到下一个空行, 合并为一行
+
+
+示例4 - 在匹配行执行normal模式下的指令
+操作前内容:
+like you
+Alice
+cip add 192.168.1.1 255.255.255.0
+catch
+
+:g/add/normal A subnet
+
+操作后内容:
+like you
+Alice
+cip add 192.168.1.1 255.255.255.0 subnet
+catch
+
+
+示例5 - 对匹配行进行排序
+排序前内容:
+arr1 = [
+  "i",
+  "g",
+  "e",
+  "c",
+  "a",
+  "h",
+  "b",
+  "f",
+  "d"
+]
+
+arr2 = [
+  "b",
+  "d",
+  "c",
+  "a",
+  "e"
+]
+
+:g/\[/+1,/\]/-1sort
+/\[/+1匹配带[的行的下一行
+/\]/-1匹配带]的行的上一行
+
+排序后内容:
+arr1 = [
+  "a",
+  "b",
+  "c",
+  "d"
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+]
+
+arr2 = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e"
+]
+
+
+
+
+normal指令
+:norm[al][!] <cmd>
+    执行normal模式下的指令
+    !代表不使用map
+
+
+
+
+sort指令
+:[<line_range>]sor[t][!] [i][n][f][x][o][b]
+    将指定行进行排序
+
+
+line_range参数
+.
+    当前所在行
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行(默认值)
+
+
+参数!
+    代表反序排列
+
+
+可选参数列表
+i
+    忽略大小写
+
+n
+    根据行内的第一个十进制数字大小, 进行排序
+
+
+
+
+print指令
+:[<line_range>]p[rint] [<flags>]
+    打印指定行
+
+
+line_range参数
+.
+    当前所在行(默认值)
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行
+
+
+flags参数
+l
+    显示换行符
+
+#
+    显示行号
+
+p
+    普通显示
+
+
+
+
+move指令
+:[<line_range>]m[ove] <line>
+    将指定的范围行, 移动到指定行line之下
+    当需要移动到第一行, line可以指定为0
+
+
+line_range参数
+.
+    当前所在行(默认值)
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行
+
+
+
+
+join指令
+:[<line_range>]join [<flags>]
+    将指定行与下一行合并为一行
+
+
+line_range参数
+.
+    当前所在行(默认值)
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行
+
+
+flags参数
+l
+    显示换行符
+
+#
+    显示行号
+
+p
+    普通显示
+
+
+
+
+:[<line_range>]d[elete] [<register_name>]
+    将指定行进行删除, 并可以放置到寄存器
+
+
+line_range参数
+.
+    当前所在行(默认值)
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行
+
+
+
+
+对齐指令
+:<line_range>left [<margin>]
+    将指定行进行左对齐
+    margin指定左侧统一缩进字符数, 默认为0
+
+:<line_range>center [<width>]
+    将指定行进行居中对齐
+    width代表字符宽度, 默认为textwidth值
+
+:<line_range>right [<width>]
+    将指定行进行右对齐
+    width代表字符宽度, 默认为textwidth值
+
+
+
+
+文件操作
+:w[rite]
+    将当前文件的buffer内容保存到当前文件
+
+:w[rite]!
+    强制将buffer的内容保存到当前文件
+
+:wa[ll]
+    在打开同时打开多文件的情况下, 将各自文件的buffer内容写入相应文件
+
+:wa[ll]!
+    在打开同时打开多文件的情况下, 强制将各自文件的buffer内容写入相应文件
+
+:[<range>]w[rite] <file>
+    将当前文件的指定行保存到指定文件
+    文件必须不存在并且新建
+
+:[<range>]w[rite]! <file>
+    将当前文件的指定行保存到指定文件
+    文件已存在则进行内容覆盖
+
+:[<range>]w[rite][!] >> <file>
+    将当前文件的指定行内容, append到指定已存在文件
+    !代表如果文件不存在, 则进行新建
+
+:[<range>]w[rite] !<cmd>
+    将当前文件的指定行内容, 作为指定系统指令cmd的参数
+
+
+range参数
+.
+    当前所在行
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行(默认值)
+
+
+
+:[range]up[date][!] [>>] [file]
+    类似于write, 但是只有buffer与文件内容不一致时才进行保存
+
+
+
+:q[uit]
+    退出当前文件, buffer内容必须与文件内容一致
+
+:q[uit]!
+    强制退出当前文件, 即使buffer内容与文件内容不一致
+
+:qa[ll][!]
+    当同时打开多文件时, 退出所有文件
+
+
+
+:wq
+    保存buffer内容到当前文件, 并且退出
+    ZZ也可达到相同效果
+
+:wq!
+    强制保存buffer内容到当前文件, 并且退出
+
+:[<range>]wq[!] <file>
+    保存指定行到指定文件, 并退出
+    
+
+range参数
+.
+    当前所在行
+
+<single_line>
+    指定某一行
+    1代表第一行
+    $代表最后一行
+    可使用mark进行定位行, 格式: `<letter>
+
+<start_line>, <end_line>
+    指定行范围[start, end]
+    1代表第一行
+    $代表最后一行
+    start_line/end_line可利用查找指令进行行定位
+    可使用mark进行定位行, 格式: `<letter>
+    可使用visual选择行后, 敲击':'自动显示选择的行, 显示如: :'<,'>
+
+%
+    文件内所有行(默认值)
+
+
+
+:e[dit]!
+    丢弃buffer内容, 重新打开当前文件
+
+:e[dit]! <file>
+    丢弃buffer内容, 打开指定文件
+
+
+
+:[<line_identifier>]read [<file>]
+    将指定文件的内容, 读取并放置到当前cursor所在行之下
+    当line_identifier指定时, 读取的指定文件内容, 插入到指定行之下
+    file未指定时, 为当前文件
+
+
+
+:find <file>
+    查找到指定文件, 并且执行:edit
+
+
+
+:sfind <file>
+    开启新分割窗口(:split)后, 再跳转到指定文件(:edit)
+
+
+
+
+执行系统的指令
+:!<cmd_under_system>
+
+
+
+
+字符串查找
+/<regular_expression>[/{<offset> | e[+-<char_num>] | b[+-<char_num>]}]
+    向前查找匹配内容, 默认cursor放置于匹配项第一个字符
+    offset参数, 可用于指定cursor在搜索结果的下方offset行(参数为负, 则为上方), 并且cursor位于行首
+    e参数, 用于指定cursor位于搜索结果的最后一个字符, 添加+char_num则代表位于最后一个字符的右侧char_num个字符(-char_num代表位于最后一个字符左侧)
+    b参数, 用于指定cursor位于搜索结果的第一个字符, 添加+char_num代表位于第一个字符的右侧char_num个字符(-char_num代表位于第一个字符左侧)
+    string以\c为前置, 当前查找忽略大小写
+    string以\C为前置, 当前查找大小写敏感
+
+?<regular_expression>
+    向后查找匹配内容, 默认cursor放置于匹配项第一个字符
+    其他参考/<regular_expression>
+
+n
+    反复多次查找, 沿着上次查找方向
+
+N
+    反复多次查找, 逆着上次查找方向
+    
+/{<up> | <down>}
+    使用查找的历史记录
+
+*
+    获取当前cursor所在单词, 并作为正向查找字符串
+    /\<string\>模式
+
+#
+    获取当前cursor所在单词, 并作为反向查找字符串
+    ?\<string\>模式
+
+g*
+    获取当前cursor所在单词, 并作为正向查找字符串
+    /string模式
+
+g#
+    获取当前cursor所在单词, 并作为反向查找字符串
+    ?string模式
+
+
+示例1 - 查找包含david或peter的行
+david 
+peter
+david peter
+
+/david\|peter
+n可遍历三行
+
+
+示例2 - 查找包含david和peter的行
+david 
+peter
+david peter
+
+/.*david\&.*peter
+只能匹配到第三行
+
+
+
+
+键位映射(map)
+:map <shortcut_verbatim> <step_verbatim>
+    可以在normal/visual/operator-pending模式下使用的映射
+    映射可以嵌套, 即step_verbatim可以包含其他映射名称shortcut_verbatim
+
+
+不同模式下的映射:
+:vmap
+    可以在visual模式下使用的映射
+
+:nmap
+    可以在normal模式下使用的映射
+
+:omap
+    可以在operator-pending模式下使用的映射
+    operator-pending即在normal模式下输入operator字符(如: d或y按键)后. 如: daw在operator-pending模式下的单词操作
+
+:map!
+    可以在insert/cmd模式下使用的映射
+
+:imap
+    可以在insert模式下使用的映射
+
+:cmap
+    可以在command模式下使用的映射
+
+** 不同映射定义, 不共享映射键, 即imap和cmap可以同时定义F2
+
+
+
+不嵌套使用其他映射:
+:noremap <shortcut> <step>
+    step即使包含其他映射键, 将其作为literal字符, 不将其进行映射
+
+
+其他模式的非嵌套映射:
+:[vnoic]noremap
+:noremap!
+
+
+查看映射:
+:map
+
+
+查看其他模式的映射:
+:[vnoic]map
+:map!
+
+
+
+删除映射
+:unmap <shortcut_vertibam>
+
+
+删除其他模式的映射:
+:[vnoic]unmap <shortcut_vertibam>
+:unmap! <shortcut_vertibam>
+
+
+
+清除所有映射
+:mapclear
+
+
+清除其他模式的映射:
+:[vnoic]mapclear
+:mapclear!
+
+
+
+vertibam键参考:
+<C-A> 
+    ctrl-A
+
+<CR>
+    unix换行符
+
+<Space>
+    空格
+
+<Bar>
+    '|'符号
+    映射中不能直接使用|符号, 因为它包含特殊含义: 分割两个指令
+
+<Bslash>
+    '\'符号
+
+
+
+示例1 - 给amount两侧添加{}, 成为{amount}
+:map <F5> /amount<CR>i{<Esc>ea}<Esc>
+" 上述皆为verbatim字符, 没有特殊键. 如: <F5>由四个字符组成, <Esc>由五个字符组成
+" 常用shortcut为F<n>单键, 或\<letter>组合键
+
+
+示例2 - 在文件末尾添加当前时间和日期
+:map <F2> GoDate:<Esc>:read !date<CR>kJ
+
+
+
+cmd模式的快捷键
+<left>
+    左移一个字符
+
+<right>
+    右移一个字符
+
+<ctrl>-<left>
+<shift>-<left>
+    左移一个单词
+
+<ctrl>-<right>
+<shift>-<right>
+    右移一个单词
+
+<ctrl>-B
+<Home>
+    移动到起始为止
+
+<ctrl>-E
+<End>
+    移动到结束为止
+
+<ctrl>-W
+    删除从当前所在单词起始字符, 到当前cursor位置之前的字符
+
+<ctrl>-U
+    删除从起始字符, 到当前cursor位置之前的字符
+
+<tab>
+    输入不完整指令后, <tab>可完善指令或args或文件名
+    当包含多个匹配时, 按<tab>进行遍历, 并且到结尾进行wrapper
+
+<ctrl>-D
+    当输入不完整的指令后, 显示可选列表
+
+<up>
+    查看前一条历史命令
+    :类指令共享历史记录库, /和?类查找共享历史记录库
+
+<down>
+    查看下一条历史命令
+
+:history
+    查看历史命令记录
+    :类与/?类一起显示
+
+q:
+    使用小窗口显示历史命令记录
+    位于历史记录, 按下<enter>, 可执行所在命令
+
+
+
+帮助文档
+:help ctrl-H
+    normal模式下的指令
+
+:help i_ctrl-H
+    insert模式下的指令
+
+:help c_ctrl-R
+    command模式下的指令
+    
+:help v_ctrl-A
+    visual模式下的指令
+
+:help e37
+    错误提示编码. 如:  E37: No write since last change (add ! to override)
+    
+:help helphelp
+    关于help的帮助文档
+
+
+
+
+
+
