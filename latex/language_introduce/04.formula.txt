@@ -650,8 +650,16 @@ documentclass{article}
 \usepackage{siunitx}
 \setlength{\parindent}{0mm}
 \begin{document}
+\ang{30}
 \SI{30}{\degreeCelsius}
 \end{document}
+
+内容讲解
+1.\ang{<degree>}用于显示指定的平面角度. 包含在siunitx宏包中
+
+2.\SI{<de_celsius>}{\degreeCelsius}用于显示指定的摄氏度温度. 包含在siunitx宏包中. \SI的符号一览:
+    \degreeCelsius - 摄氏度
+    \ohm - 电阻单位: 欧
 
 
 十九、Demo(示例)19 - chinese in formula
