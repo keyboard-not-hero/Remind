@@ -114,7 +114,7 @@ bank, and of having nothing to do
 
 
 
-五、Demo(示例)05 - vertical space
+Demo05 - vertical space
 \documentclass{article}
 \begin{document}
     this is first line\\
@@ -134,6 +134,10 @@ bank, and of having nothing to do
 4.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
 
 5.\vspace*{\fill}为\vfill的适用于页起始/结束版本
+
+6.\addvspace{length}用于指定长度的垂直空白, 但必须放置于新的段落起始位置
+
+7.\vspace与\addvspace的差别: 多个\vspace指令重叠时, 垂直距离叠加; 多个\addvspace指令重叠式, 只取垂直距离最大的那个addvspace指令的垂直距离
 
 
 
