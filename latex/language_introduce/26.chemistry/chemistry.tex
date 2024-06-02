@@ -1,22 +1,23 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{chemformula}
+\usepackage{extarrows}
 \begin{document}
 %1.化学式
 \ch{Fe3O4}$\qquad $\ch{AgCl2}\par
 
 %2.化学方程式
-\ch{Fe + CuSO4 -> Cu + FeSO4}\par
+\ch{Fe + CuSO4 $\xlongequal{\phantom{耐高温}}$ Cu + FeSO4}\par
 
 %3.上角标与下角标
-\ch{H+ + OH- -> H2O}\par
-\ch{Cu^2+ + SO4^2- -> CuSO4}\par
+\ch{H+ + OH- $\xlongequal{\phantom{耐高温}}$ H2O}\par
+\ch{Cu^2+ + SO4^2- $\xlongequal{\phantom{耐高温}}$ CuSO4}\par
 
 %4.气体与沉淀
-\ch{Zn + H2SO4  -> ZnSO4 + H2 v}\par
-\ch{Ba^2+ + SO4^2- -> BaSO4 ^}\par
+\ch{Zn + H2SO4  $\xlongequal{\phantom{耐高温}}$ ZnSO4 + H2 v}\par
+\ch{Ba^2+ + SO4^2- $\xlongequal{\phantom{耐高温}}$ BaSO4 ^}\par
 
 %5.反应条件
-\ch{2 Cu + O2 <=>[$\Delta$] 2 CuO}\par
-\ch{N2 + 3 H2 <=>[高温高压][Fe] 2 NH2}\par
+\ch{2 Cu + O2 $\xlongequal{\Delta}$ 2 CuO}\par
+\ch{N2 + 3 H2 $\xlongequal[\mathrm{Fe}]{\textrm{高温高压}}$ 2 NH2}\par
 \end{document}
 

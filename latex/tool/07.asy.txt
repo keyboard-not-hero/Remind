@@ -42,7 +42,7 @@ asy [option] [file...]
 
 示例:
 例1. 编译并预览输出
-asy -V demo.asy
+asy -V -o demo.pdf demo.asy
 
 例2. 编译所有目标文件
 asy *.asy
