@@ -1,0 +1,50 @@
+Demo_01 -- 下划线
+\documentclass{article}
+\usepackage{ulem}
+\setlength{\parindent}{0mm}
+\renewcommand{\ULthickness}{1pt}
+\setlength{\ULdepth}{10pt}
+\begin{document}
+This is line \underline{one}\\
+This is line two\\
+This is line \underline{\phantom{three}}\\
+This is line \uline{four}
+\end{document}
+
+
+内容讲解
+1.\underline{<content>}用于给指定文本增加下划线, 但内容进入左右模式, 不能换行. 适用于文本模式和数学模式
+
+2.\uline{<content>}用于给指定文本增加下划线, 并且内容可以换行, 可以修改下划线粗细和下划线距离文本的距离, 包含在宏包ulem中. 相关指令
+    \ULthickness - 用于设置下划线的粗细, 默认为0.4pt, 配置命令: \renewcommand{\ULthickness}{<length>}
+    \ULdepth - 设置下划线与文本的距离, 与文本尺寸相关, 配置命令: \setlength{\ULdepth}{<length>}
+
+
+
+Demo_02 -- TeX family text
+\documentclass{article}
+\begin{document}
+Some people use plain \TeX, but I prefer \LaTeX.
+\end{document}
+
+内容讲解
+1.\TeX生成TeX的logo标志, logo后空格必须使用\<space>指定, 其他TeX family logo详见symbol_summary
+
+
+
+Demo_03 -- 破折号
+\documentclass{article}
+\begin{document}
+    An intra-word dash or hyphen, as in X-ray.\\
+
+    A medium dash for number ranges, like 1--2.\\
+
+    A punctuation dash---like this.
+\end{document}
+
+内容讲解
+1.-用于表示连字符, 即连接字母
+
+2.--用于表示数字范围
+
+3.---用于主句与从句

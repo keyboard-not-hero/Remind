@@ -11,6 +11,20 @@
     steven & male & english & 59\\
     \hline
 \end{tabular}
+
+\begin{tabular}{|c|l|l|}
+\hline
+    选项 & \multicolumn{1}{|c|}{事实或结论} & \multicolumn{1}{|c|}{推理或推断}\\
+    \hline
+    A & 酸性溶液pH小于7 & pH小于7的溶液一定是酸性溶液\\
+    \hline
+    B & 碱能使无色酚酞溶液变红 & 能使无色酚酞变红的一定是碱\\
+    \hline
+    C & 酸与碱反应生成盐和水 & 生成盐和水的反应一定是酸和碱的反应\\
+    \hline
+    D & 氧化物中都有氧元素 & 含有氧元素的化合物都是氧化物\\
+    \hline
+\end{tabular}
 \end{document}
 
 
@@ -32,3 +46,8 @@
         >{} - 应用于后一列. 包含在array宏包中
         <{} - 应用于前一列. 包含在array宏包中
     content - 合并单元格的内容
+    
+
+2.\multicolumn也可用于指定单个cell的水平对齐方式. 如: \multicolumn{1}{{c|}{<content>}
+
+

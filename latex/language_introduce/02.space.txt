@@ -1,55 +1,279 @@
-一、Demo(示例)01 -- <space>/<tab>/<enter>/<return>组合
+Demo_01 -- <space>/<tab>/<enter>/<return>组合
 \documentclass{article}
+\setlength{\parindent}{0cm}
 \begin{document}
-	i love this    country\\
-	but you don't like		this\newline
-	he maybe like\linebreak
-	this is line one
-	this is line two
+catch cat\\
+  dirty cat\\
+smelly    cat\\
+lonly
+cat\\
 \end{document}
 
 内容讲解
-1.任意单个或多个组合(只能含单个<enter>/<return>), 都作为一个<space>进行对待
+1.行首空格被忽略
 
-2.\quad用于表示行内容之间(非行首)较大的空格, \qquad表示行内容之间的两个\quad距离
+2.连续多个空格(包括\t\n)视为一个空格
 
-3.\\[len]
-    用于段落内换行
-    可选参数用于在换行时添加指定的垂直距离
-
-\\*[len]
-    用于段落内换行, 并且不允许在当前行之后马上进行换页(可将当前也移动到下一页)
-    可选参数用于在换行时添加指定的垂直距离
-
-4.\newline用于段落内换行, 类似于\\
-
-5.\linebreak[number]也用于段落内换行, 但当前行内容填充满当前行, number代表换行的意愿, 范围为[0,4]依次增强. 例: 0代表允许, 4代表强制, 默认为4
-
-6.距离单位参考symbol_summary
+3.距离单位参考symbol_summary
 
 
 
-二、Demo(示例)02 -- paragraphy break
+Demo_02 -- 单个字符(汉字)之间的距离
 \documentclass{article}
+\setlength{\parindent}{0cm}
 \begin{document}
-this is paragraph one
+    I\!I\\
+    II\\
+    I\,I\\
+    I\:I\\
+    I\;I\\
+    I\enspace I\\
+    I\quad I\\
+    I\qquad I\\
 
-this is paragraph two\par
-this is paragraph three
+    this\hspace{1cm} is a big space\\
+    \hspace{5cm} this is no space
+
+    \hspace*{2cm} this is b \vspace{2cm}biger space\\
+    this is a long vertical space\\
+    
+    $\pi\approx 3.141\:592\:653\:589\:793$\\
+    26\:800\:kg
 \end{document}
 
 内容讲解
-1.空白行用于段落的结束
+1.'\!'缩进字符之间的间隔
 
-2.\par用于段落的结束
+2.水平距离排序如下:
+    \qquad > \quad > \enspace > \; > \: > \, > [normal] > \!
+
+3.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
+
+4.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
+
+5.以上内容也适用于math mode和中文模式
+
+6.根据GB\T1.1-2009, 所有数值(除年号外), 从小数点前/后三位, 每隔三位为一组, 组之间留大概1/4汉字(0.25em)间隔, \:约0.22em间隔, 适用于该规范(当前后有数字为1, 由于前后距离略大, 可以改为\,)
+
+7.除角度单位, 其他单位应该与数字间隔大约1/4汉字
 
 
 
-三、Demo(示例)03 -- new page
+Demo_03 -- 单词之间的距离
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is a long story\\
+\spaceskip=1cm
+This is a long story\\
+\end{document}
+
+内容讲解
+1.\spaceskip可用于导言, 设置全文单词之间的距离. 格式:
+    \setlength{\spaceskip}{5mm}
+
+2.也可用于正文, 这是之后内容的单词之间的距离. 格式:
+    \spaceskip=5mm
+    
+3.\spaceskip不适用于math mode和中文模式
+
+4.当单词包含斜体时，当前斜体单词与后面距离较近，使用\/进行词距补偿
+
+5.\<space>指定当前为单词结尾, 使用单词间距
+
+
+
+Demo_04 -- 句子之间的距离
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+I love you, do you love me? I believe i can fly.\\
+\xspaceskip=1cm
+I love you, do you love me? I believe i can fly.\\
+I love you, do you love me. I believe i can fly.\\
+I love you, do you love me! I believe i can fly.
+\end{document}
+
+内容讲解
+1.\xspaceskip可用于导言, 设置全文句子之间的距离. 以./!/?结尾, 并紧跟一个空格即为句子末尾. 格式:
+    \setlength{\xspaceskip}{5mm}
+
+2.也可用于正文, 这是之后内容的句子之间的距离. 格式:
+    \xspaceskip=5mm
+    
+3.\spaceskip不适用于math mode
+
+4.在中文模式中, 必须使用英文模式的./!/?紧跟空格, 才能生效
+
+
+
+Demo_05 -- 句子结尾的判定与手动辅助
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\setlength{\xspaceskip}{1cm}
+\begin{document}
+I love you, do you love me. I believe i can fly.\\
+
+I love you, do you love mE. I believe i can fly.\\
+I love you, do you love mE\@. I believe i can fly.\\
+
+Dr. Wang, how are you\\
+Dr.\ Wang, how are you
+\end{document}
+
+内容讲解
+1.当内容以小写字母结尾, 并跟随./?/!, 最后紧跟空格时, 判定为句子结尾
+
+2.当句子末尾为大写字母是, 需要在./?/!之前, 添加\@, 手动指定已经到达句子末尾
+
+3.当句子中间的单词尾部包含小写字母紧跟./?/!时, 会导致误判断句子尾部, 需要紧跟./?/!之后使用\<space>指定使用单词间距
+
+
+
+Demo_06 - 换行
+documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+Alice wanna go to school\\
+But she can't\linebreak
+She sister sorry about that
+\end{document}
+
+内容讲解
+1.\\用于换行, 并且允许在当前换行处进行换页(如果有需要)。支持math mode
+
+2.\\*用于换行, 并且不允许在当前换行处进行换页(会提前一行换页)。支持math mode
+
+3.\\[<height>]用于换行, 并且额外增加与下一行的垂直距离(如果在当前处换页, 则省略该垂直距离)。支持math mode
+
+4.\newline用于换行, 类似于\\, 但\newline不支持math mode
+
+5.\linebreak[<level>]建议在当前位置进行换行, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强。换行时, 当前行换行之前的位置会适当增大英文词距或中文字距, 以填充尾部空格
+
+6.\nolinebreak[<level>]建议在当前位置不要进行换行, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强
+
+
+
+Demo_07 - 行之间的垂直距离
+documentclass{article}
+\setlength{\parindent}{0mm}
+\linespread{1.3}
+\begin{document}
+this is line one\\
+this is line two\\
+this is line three\vadjust{\vspace{2pt}}\\
+this is line four
+\end{document}
+
+
+内容讲解
+先了解文字与行间距的关系谱:
+文字高度	英文行距	ctex行距
+x	        y=1.2x		z=1.3y=1.56x
+
+1.\linespread{factor}在导言部分使用, 表示对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
+
+2.\renewcommand{\baselinestretch}{factor}在导言部分使用, 用于对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
+** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}
+
+3.\baselineskip=<value>用于在正文部分, 直接将之后段落内容的行距指定具体值
+
+4.使用\baselinkskip时, 如果后续遇到字体设置指令, 字距会恢复默认值. 可使用\fontsize{<size>}{<line_distance>}\selectfont, 设置字体大小的同时, 同时指定字距。size和line_distance默认单位为pt
+
+5.\vadjust{\vspace{<height>}}在行距的基础上, 额外增加或减少当前行与下一行的垂直距离
+
+
+
+Demo_08 - 段落分隔符
 \documentclass{article}
 \begin{document}
-this is page one\newpage
-this is page two
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading
+
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid).\par
+There was nothing so VERY remarkable1 in that; nor did Alice think it so VERY much out of the way to hear the Rabbit say to itself, `Oh dear! Oh dear! I shall be late!'
+\end{document}
+
+内容讲解
+1.\par用于分隔段落
+
+2.空行也用于分隔段落
+
+
+
+Demo_09 - 段落垂直间距
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+this is number one\\
+this is number two\\
+
+this is paragraphy 2\\
+this is number three
+
+\parskip=3cm
+this is paragraphy 3\\
+this is number four
+\end{document}
+
+内容讲解
+1.\parskip用于在段落垂直间距上, 额外增加/减少垂直距离, 默认段落之间的垂直距离与行距相等, 当配置parskip时为n时, result = 行距 + n
+
+2.\parskip可在导言或正文配置, 导言:
+\setlength{\parskip}{<value>}
+正文:
+\parskip=<value>
+
+
+
+Demo_10 - 段落缩进
+\documentclass{article}
+\setlength{\parindent}{1cm}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading\\
+
+\parindent=0cm
+\hangindent=2cm
+\hangafter=2
+Curiouser and curiouser!' cried Alice (she was so much surprised, that for the moment she quite forgot how to speak good English); `now I'm opening out like the largest telescope that ever was! Good-bye, feet!' (for when she looked down at her feet, they seemed to be almost out of sight, they were getting so far off). `Oh, my poor little feet, I wonder who will put on your shoes and stockings for you now, dears? I'm sure I shan't be able! I shall be a great deal too far off to trouble myself about you: you must manage the best way you can; --but I must be kind to them,' thought Alice, `or perhaps they won't walk the way I want to go! Let me see: I'll give them a new pair of boots every Christmas.'\\
+
+\hangindent=2cm
+\hangafter=-2
+`You ought to be ashamed of yourself,' said Alice, `a great girl like you,' (she might well say this), `to go on crying in this way! Stop this moment, I tell you!' But she went on all the same, shedding gallons of tears, until there was a large pool all round her, about four inches deep and reaching half down the hall.
+After a time she heard a little pattering of feet in the distance, and she hastily dried her eyes to see what was coming. It was the White Rabbit returning, splendidly dressed, with a pair of white kid gloves in one hand and a large fan in the other: he came trotting1 along in a great hurry, muttering to himself as he came, `Oh! the Duchess, the Duchess! Oh! won't she be savage2 if I've kept her waiting!' Alice felt so desperate that she was ready to ask help of any one; so, when the Rabbit came near her, she began, in a low, timid voice, `If you please, sir--' The Rabbit started violently, dropped the white kid gloves and the fan, and skurried away into the darkness as hard as he could go.\\
+
+\parindent=1cm
+\leftskip=2cm
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid).\\
+
+\rightskip=2cm
+There was nothing so VERY remarkable1 in that; nor did Alice think it so VERY much out of the way to hear the Rabbit say to itself, `Oh dear! Oh dear! I shall be late!'\\
+
+In another moment down went Alice after it, never once considering how in the world she was to get out again.
+\end{document}
+
+内容讲解
+1.\indent和\noindent在段落开始使用, 表示启用/关闭当前段落头部缩进
+
+2.\CTEXindent和\CTEXnoindent为\indent指令的中文版, 缩进两个汉字
+
+3.\parindent用于段落的头部缩进. 可用于导言和正文. 默认值为15pt
+
+4.\hangindent与\hangafter用于段落的指定行缩进
+\hangindent中, 正值代表左侧缩进, 负值代表右侧缩进, 并且只作用于之后紧跟的一个段落
+\hangafter中, 正值代表前面的指定行不缩进, 段落后续所有行缩进; 负值代表前面的指定行缩进, 段落后续所有行不缩进
+
+5.\leftskip用于整个段落左侧的偏移, 正值代表向右偏移, 负值代表向左偏移, 作用于之后所有段落
+
+6.\rightskip用于整个段落右侧的偏移, 正值代表向左偏移, 负值代表向右偏移, 作用于之后所有段落
+
+
+
+Demo_11 -- new page
+\documentclass{article}
+\begin{document}
+This is page one\newpage
+This is page two\clearpage
+This is page three
 \end{document}
 
 内容讲解
@@ -60,61 +284,15 @@ this is page two
 3.\newpage与\clearpage的区别:
 (1)在twocolumn模式中(documentclass带twocolumn可选参数, 一页分为两大列), newpage跳过当前列, clearpage跳过当前页
 
+4.\pagebreak[<level>]建议在当前位置进行换页, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强。换页时, 当前页换页之前的位置会适当增大行距, 以填充尾部空格
 
+5.\nopagebreak[<level>]建议在当前位置不要进行换页, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强
 
-四、Demo04 -- horizontal space
-\documentclass{article}
-\begin{document}
-    \noindent xy\\
-    f\/i\\
-    x\,y\\
-    x\:y\\
-    x\;y\\
-    x\ y\\
-    x\quad y\\
-    x\qquad y\\
-
-    this\hspace{1cm} is a big space\\
-    \hspace{5cm} this is no space
-
-    \hspace*{2cm} this is b \vspace{2cm}biger space\\
-    this is a long vertical space
-
-    Alice was beginning to get very tired of sitting by her sister on the
-bank, and of having nothing to do.
-
-    Alice was beginning to get\hfill very tired of sitting by her sister on the
-bank, and of having nothing to do
-
-    Alice was beginning to get\hfill very tired\\ of sitting by her sister on the
-bank, and of having nothing to do
-\end{document}
-
-内容讲解
-1.'\ '用于使用一个较大水平距离分隔字母, 用于分隔英文单词之间的距离
-
-2.'\,'用于比'\ '更短的空格, 用于分隔'与"
-
-3.'\/'用于解决字母之间的连接过于紧密问题, 或者词距补偿(直立体之间插入斜体, 斜体左边比右边词距大, 在右边插入该符号), 空间小于'\,'. 如: f与i, --分离
-
-4.水平距离排序如下:
-    \/  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
-
-5.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
-
-6.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
-
-7.\hfill为\hspace{\fill}简写版本, 动态填充水平空白, 当前行内容被填满时, 留置一个略宽的空白; 当前行过早换行时, 将hfill左边内容对齐左边框, 右边对齐右边框, 剩余空白被hfill占据. 不适用于行/段落起始和行/段落结束
-
-8.\hspace*{\fill}为\hfill的适用于行/段落起始和行/段落结束版本
-
-9.\dotfill类似于hfill, 但使用'.'代替空白
-
-10.\hrulefill类似于hfill, 但是用下划线替代空白
+6.换页之后留置一个空白页的策略:\newpage\mbox{}\newpage
 
 
 
-Demo05 - vertical space
+Demo12 - 垂直距离
 \documentclass{article}
 \begin{document}
     this is first line\\
@@ -141,178 +319,6 @@ Demo05 - vertical space
 
 
 
-Demo_06 - 行首空白
-\documentclass{article}
-\begin{document}
-This is line one\\
-\hspace*{1cm}This is line two\\
-\end{document}
-
-内容讲解
-1.\hspace*{<length>}用于设置当前行行首的空白
-
-
-
-Demo_07 - 段落首行缩进
-\documentclass{article}
-\setlength{\parindent}{2cm}
-\begin{document}
-	\noindent this is disable paragraphy indent\\
-	\indent this is enable paragraphy indent\\
-	this is nature paragraphy indent
-	
-	\hangindent=1.5cm
-	this is hangindent set\\
-	configure start line
-	
-	hangindent cacel paragraph\\
-	right now
-\end{document}
-
-内容讲解
-1.\noindent在当前段落取消首行缩进
-
-2.\indent在当前段落启用首行缩进
-
-3.\parindent设置所有段落首行的缩进长度, 配置方法: \setlength{\parindent}{2mm}
-
-4.\hangindet设置当前段落内所有行(除首行)的缩进, 配置方法: \hangindent=1cm
-
-
-
-Demo_08 - 行之间的垂直距离
-\documentclass{article}
-\setlength{\parindent}{0mm}
-\begin{document}
-this is line one\\
-this is line two\vadjust{\vspace{8pt}}\\
-this is line three\\
-this is line four
-\end{document}
-
-documentclass{article}
-\setlength{\parindent}{0mm}
-\renewcommand{\baselinestretch}{1.3}
-\begin{document}
-this is line one\\
-this is line two\\
-this is line three\\
-this is line four
-\end{document}
-
-
-内容讲解
-先了解文字与行间距的关系谱:
-文字高度	英文行距	ctex行距
-x	        y=1.2x		z=1.3y=1.56x
-
-1.\vadjust{\vspace{<height>}}只增加当前行与下一行的距离, \vspace{<height>}在行距之间额外增加高度
-
-2.\baselinestretch调整所有行行距, 指定基础行距y, 再乘以一个系数, 基线距 = y * factor, 配置方法:
-\renewcommand{\baselinestretch}{<factor>}
-** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}
-
-
-
-Demo_09 - 段落之间的垂直距离
-\documentclass{article}
-\setlength{\parindent}{0mm}
-\begin{document}
-this is line one\\
-this is line two\\
-
-this is paragraphy 2\\
-this is line four
-\end{document}
-
-\documentclass{article}
-\setlength{\parindent}{0mm}
-\setlength{\parskip}{1cm}
-\begin{document}
-this is line one\\
-this is line two\\
-
-this is paragraphy 2\\
-this is line four
-\end{document}
-
-内容讲解
-1.\parskip用于调整段落之间的垂直距离, 默认段落之间的垂直距离为两个行距, 当配置parskip时为n时, result = 2 * 行距 + n, \parskip配置:
-\setlength{\parskip}{<value>}
-
-
-
-十、Demo(示例)10 -- 破折号
-\documentclass{article}
-\begin{document}
-    An intra-word dash or hyphen, as in X-ray.
-
-    A medium dash for number ranges, like 1--2.
-
-    A punctuation dash---like this.
-\end{document}
-
-内容讲解
-1.-用于表示连字符, 即连接字母
-
-2.--用于表示数字范围
-
-3.---用于主句与从句
-
-
-
-十一、Demo{示例}11 -- 句子结束相关的空格
-\documentclass{article}
-\begin{document}
-this is WWW. I don't think it's easy
-
-this is WWW\@. I don't think it's easy
-
-this is tom. I think he is funny
-
-this is tom.\ I think he is funny
-\end{document}
-
-内容讲解
-1.\<space>
-    用于'.'之后, 取消句子之后的多余空格
-
-2.\@
-    用于'.'之前, 保留句子之后的多余空格
-
-** 情景拓展:
-1)'.'之前为大写符号时, 不代表句子结束, '.'之后的间隔略小, 如果需要句子结束时的间隔, 使用\@
-2)'.'之前为非大写符号时, 代表句子结束, '.'之后的间隔为句子结束间隔, 如果不需要该间隔, 使用\<space>
-3)当'.'后紧跟以下符号, 句末间隔会放置到该符号之后. 列表:
-    )/'/?/!/:
-
-
-
-十二、Demo(示例)12 -- quotation
-\documentclass{article}
-\begin{document}
-	\noindent The following is an example of a short displayed quotation.
-	\begin{quote}
-		it's a good idea to make your input file\\
-		as easy to read as possible.
-	\end{quote}
-	It is indented at both margins.
-
-	\noindent Here is some advice to remember when you are using \LaTeX:
-	\begin{quotation}
-		Environments for making quotations can be used for other things as well.
-
-		Many problem can be solved by novel applications of  existing environments.
-	\end{quotation}
-\end{document}
-
-内容讲解
-1.\begin{quote} ... \end{quote}用于段首不缩进的短引用, 引用本身全体也缩进
-
-2.\begin{quotation} ... \end{quotation}用于段首缩进的多段落引用, 引用本身全体也缩进
-
-
-
 Demo_13 - 保留与指定字符串等宽的空白
 \documentclass{article}
 \setlength{\parindent}{0mm}
@@ -326,11 +332,12 @@ Demo_13 - 保留与指定字符串等宽的空白
 
 
 
-Demo_14 - TeX family text
-\documentclass{article}
-\begin{document}
-Some people use plain \TeX, but I prefer \LaTeX.
-\end{document}
 
-内容讲解
-1.\TeX生成TeX的logo标志, logo后空格必须使用\<space>指定, 其他TeX family logo详见symbol_summary
+
+
+
+
+
+
+
+
