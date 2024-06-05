@@ -95,7 +95,7 @@ I love you, do you love me! I believe i can fly.
 \end{document}
 
 内容讲解
-1.\xspaceskip可用于导言, 设置全文句子之间的距离. 以./!/?结尾, 并紧跟一个空格即为句子末尾. 格式:
+1.\xspaceskip可用于导言, 设置全文句子之间的距离. 以./!/?/:结尾, 并紧跟一个空格即为句子末尾. 格式:
     \setlength{\xspaceskip}{5mm}
 
 2.也可用于正文, 这是之后内容的句子之间的距离. 格式:
@@ -103,7 +103,7 @@ I love you, do you love me! I believe i can fly.
     
 3.\spaceskip不适用于math mode
 
-4.在中文模式中, 必须使用英文模式的./!/?紧跟空格, 才能生效
+4.在中文模式中, 必须使用英文模式的./!/?/:紧跟空格, 才能生效
 
 
 
@@ -122,15 +122,15 @@ Dr.\ Wang, how are you
 \end{document}
 
 内容讲解
-1.当内容以小写字母结尾, 并跟随./?/!, 最后紧跟空格时, 判定为句子结尾
+1.当内容以小写字母结尾, 并跟随./?/!/:, 最后紧跟空格时, 判定为句子结尾
 
-2.当句子末尾为大写字母是, 需要在./?/!之前, 添加\@, 手动指定已经到达句子末尾
+2.当句子末尾为大写字母是, 需要在./?/!/:之前, 添加\@, 手动指定已经到达句子末尾
 
-3.当句子中间的单词尾部包含小写字母紧跟./?/!时, 会导致误判断句子尾部, 需要紧跟./?/!之后使用\<space>指定使用单词间距
+3.当句子中间的单词尾部包含小写字母紧跟./?/!/:时, 会导致误判断句子尾部, 需要紧跟./?/!/:之后使用\<space>指定使用单词间距
 
 
 
-Demo_06 - 换行
+Demo_06 -- 换行
 documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -154,7 +154,7 @@ She sister sorry about that
 
 
 
-Demo_07 - 行之间的垂直距离
+Demo_07 -- 行之间的垂直距离
 documentclass{article}
 \setlength{\parindent}{0mm}
 \linespread{1.3}
@@ -184,7 +184,7 @@ x	        y=1.2x		z=1.3y=1.56x
 
 
 
-Demo_08 - 段落分隔符
+Demo_08 -- 段落分隔符
 \documentclass{article}
 \begin{document}
 Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading
@@ -200,7 +200,7 @@ There was nothing so VERY remarkable1 in that; nor did Alice think it so VERY mu
 
 
 
-Demo_09 - 段落垂直间距
+Demo_09 -- 段落垂直间距
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -225,7 +225,7 @@ this is number four
 
 
 
-Demo_10 - 段落缩进
+Demo_10 -- 段落缩进
 \documentclass{article}
 \setlength{\parindent}{1cm}
 \begin{document}
@@ -292,7 +292,7 @@ This is page three
 
 
 
-Demo12 - 垂直距离
+十二、Demo12 - 垂直距离
 \documentclass{article}
 \begin{document}
     this is first line\\
@@ -303,23 +303,21 @@ Demo12 - 垂直距离
 \end{document}
 
 内容讲解
-1.\bigskip用于增加段落与段落之间的行距离
+1.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
 
-2.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
+2.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
 
-3.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
+3.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
 
-4.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
+4.\vspace*{\fill}为\vfill的适用于页起始/结束版本
 
-5.\vspace*{\fill}为\vfill的适用于页起始/结束版本
+5.\addvspace{length}用于指定长度的垂直空白, 但必须放置于新的段落起始位置
 
-6.\addvspace{length}用于指定长度的垂直空白, 但必须放置于新的段落起始位置
-
-7.\vspace与\addvspace的差别: 多个\vspace指令重叠时, 垂直距离叠加; 多个\addvspace指令重叠式, 只取垂直距离最大的那个addvspace指令的垂直距离
+6.\vspace与\addvspace的差别: 多个\vspace指令重叠时, 垂直距离叠加; 多个\addvspace指令重叠式, 只取垂直距离最大的那个addvspace指令的垂直距离
 
 
 
-Demo_13 - 保留与指定字符串等宽的空白
+Demo_13 -- 保留与指定字符串等宽的空白
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -332,12 +330,27 @@ Demo_13 - 保留与指定字符串等宽的空白
 
 
 
+Demo_14 -- 引用
+\documentclass{article}
+\begin{document}
+Down, down, down. Would the fall NEVER come to an end! `I wonder how many miles I've fallen by this time?' she said aloud.
+\begin{quote}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do
 
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid)
 
+In another moment down went Alice after it, never once considering how in the world she was to get out again.
+\end{quote}
+\begin{quotation}
+However, this bottle was NOT marked `poison,' so Alice ventured to taste it, and finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart, custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very soon finished it off.
 
+`What a curious feeling!' said Alice; `I must be shutting up like a telescope.'
+\end{quotation}
+\end{document}
 
+内容讲解
+1.\begin{quote}...\end{quote}用于整体缩进的环境，但段落头部没有额外缩进，用于短引用
 
-
-
+2.\begin{quotation}...\end{quotation}用于整体缩进的环境，段落头部有额外缩进，用于长引用
 
 

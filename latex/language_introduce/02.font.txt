@@ -43,8 +43,27 @@ Demo_03 -- 破折号
 \end{document}
 
 内容讲解
-1.-用于表示连字符, 即连接字母
+1.-为最短的破折号，常用于连接字母
 
-2.--用于表示数字范围
+2.--为稍宽的破折号，用于表示数字范围
 
-3.---用于主句与从句
+3.---为最宽的破折号，用于主句与从句
+
+
+
+Demo_04 -- 放大/缩小pifont宏包字体
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{pifont}
+\let\oldding\ding
+\renewcommand{\ding}[2][1]{\scalebox{#1}{\oldding{#2}}}
+\begin{document}
+\ding{172}\qquad\ding[1.2]{172}\\
+\ding{192}\qquad\ding[1.2]{192}
+\end{document}
+
+内容讲解
+1.\oldding保存原\ding内容
+
+2.renewcommand{原命令}[参数数量][默认值]{定义内容}, #<n>代表引用使用命令时, 使用的第n个参数值
+\scalebox包含在graphicx宏包中  

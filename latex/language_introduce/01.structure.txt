@@ -1,73 +1,72 @@
-一、Demo(示例)01 -- 第一个示例
+Demo_01 -- 第一个示例
 \documentclass[11pt]{article}
-\usepackage{amsmath}
 \begin{document}
-	% this is comment
-	This is first demo!!
+    Hello \LaTeX
 \end{document}
 
 内容讲解
-1.\documentclass[arg1,arg2,...]{doc_class}指定文档类型, []为可选参数限定, {}为必选参数限定, 指定文档类型
-arg<N> - 对应文档类型的可选额外参数. 选项之间以','分隔, 不能包含任何空格, 列表:
-	10pt|11pt|12pt - 指定内容文字大小. 默认为10pt
+1.\documentclass[]{}为文档的第一个之类，指定文档类型。其中，参数可分为以下两种情况：
+    (1)代表必要参数的{}，该类参数必须进行指定，当有多个必要参数时，必须按顺序进行指定，不能调换顺序
+    (2)代表可选参数的[]，该类参数可以指定，也可以省略，当有多个可选参数时，必须按顺序进行指定(不能只省略序列靠前的可选参数，到导致乱序)；可选参数[]也可以由多个可选子参数构成[sub_arg1,sub_arg2...]，由半角逗号分隔，不能留空格, 顺序可以打乱
+
+2.\documentclass[arg1,arg2,...]{doc_class}指定文档类型. 参数列表:
+    arg<N> - 可选参数的子参数. 列表:
+	10pt | 11pt | 12pt - 指定内容文字大小. article/report/book/letter都默认为10pt. 不支持slides文档类型
 	
-	letterpaper|legalpaper|executivepaper|a4paper|a5paper|b5paper - 指定输出的页面大小, 默认为letterpaper. 参数列表如下:
-		letter		8.5in x 11in
-		legal		8.5in x 14in
-		executive	7.25in x 10.5in
-		a4			210mm x 297mm
-		a5			148mm x 210mm
-		b5			176mm x 250mm
+	letterpaper | legalpaper | executivepaper | a4paper | a5paper | b5paper - 指定输出的页面大小, 默认为letterpaper. 宽x高参数列表如下:
+	    letterpaper		8.5in x 11in, 216mm x 280mm
+	    legalpaper		8.5in x 14in, 216mm x 356mm
+	    executivepaper	7.25in x 10.5in, 184mm x 266mm
+	    a4paper 		210mm x 297mm
+	    a5paper 		148mm x 210mm
+	    b5paper	    	176mm x 250mm
 
-	landscape - 将页面宽和高交换, 即倒置放置
+	landscape - 将页面的宽和高的尺寸交换
 
-	final|draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记
+	final | draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表普通模式，超过宽度内容不进行标记. 默认为final
 
-	oneside|twoside - oneside代表所有页面统一对齐显示, article/report文档类型默认选项; twoside代表左右页面对称显示, 偶数页为左侧, 奇数页为右侧, book文档类型默认选项
+	oneside | twoside - oneside代表所有页面统一对齐显示, article/report文档类型默认选项; twoside代表奇数页偏左对齐, 偶数页偏右对齐(偏向书本中心), book文档类型默认选项. 不支持letter/slides文档类型
 
-	openright|openany - openright代表新chapter只从right-hand开启, book文档类的默认选项; openany代表新chapter可从两侧开启, report文档类默认选项
+	openright | openany - openany代表新chapter可从奇/偶数开启, report文档类默认选项; openright代表新chapter只从奇数页开启, book文档类的默认选项. 只支持report/book文档类型(因为article/letter/slides不支持章节)
 
-	onecolumn|twocolumn - 指定一页分为单列或双列显示, 默认选项为onecolumn. 
-		可在preamble区域使用\columnsep调整twocolumn的间隔宽度, 如: \setlength{\columnsep}{2pt}. 
-		可在preamble区域使用\columnseprule调整twocolumn的分割线宽度, 如: \setlength{\columnseprule}{2pt}. 默认为0pt
-		\twocolumn用于启动新页, 并在新页使用双列模式
-		\onecolumn用于启动新页, 并在新页使用单列模式
-		\columnsep用于设置twocolumn模式下, column之间的水平宽度. 如: \setlength{\columnsep}{2cm}
-		\columnseprule用于设置twocolumn模式下, column之间的垂直分割线宽度(默认为0pt不可见), 如: \setlength{\columnseprule}{2ex}
+	onecolumn | twocolumn - 页面分为一个块或左右两个块显示, 默认选项为onecolumn. 支持article/report/book文档类型
 
-	notitlepage|titlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表\maketitle生成单独标题页, \begin{abstract} ... \end{abstract}生成单独摘要页, report/book文档类默认选项
+	titlepage | notitlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表标题生成一个单独页, 摘要生成单独页, report/book/slides文档类默认选项。不支持letter文档类型
 
-	openbib - 参考文献entry的author/title都各占一行. slides/letter文档类型无法使用该参数
+	openbib - 参考文献entry的author/title都各占一行. 不支持slides/letter文档类型
 
 	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
 
 	fleqn - 行间公式左对齐, 包含统一缩进. 默认为居中对齐
-		默认行间公式还额外存在缩进, 可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
+	    默认行间公式还额外存在缩进, 可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
 
-doc_class - 类型列表: article/report/book/slides/letter
-	模板路径: /usr/local/texlive/2020/texmf-dist/tex/latex/base/*.cls
+    doc_class - 文档类型。类型列表: article/report/book/letter/slides
+	
 
 
 2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
-arg<N> - 可选参数列表
-pac_name<N> - 导入的包名, 文件后缀为.sty
-** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, 可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
+    arg<N> - 可选参数列表
+    pac_name<N> - 导入的包名, 文件后缀为.sty
+    ** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, 可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
 
 
-3.\begin{document}之前的部分为document preamble
+3.\begin{document}之前的部分为导言(preamble). 在该部分的命令，对正文的全文产生影响
 
 
-4.begin{document} ... \end{document}指定正文内容部分. \end{document}后的所有内容被忽略
+4.begin{document} ... \end{document}指定正文内容部分. 正文的命令，只对命令之后的内容产生影响
 
 
-5.%之后的当前行内容都是注释
+5.\end{document}后的所有内容被忽略
+
+
+6.%之后的当前行内容都是注释
 
 
 
-二、Demo(示例)02 -- 基础结构
+Demo_02 -- 基础结构
 \documentclass{article}
 \title{simple demo}
-\author{david \and peter}
+\author{steven thompson \and lucy}
 \date{\today}
 \begin{document}
 \maketitle
@@ -87,23 +86,21 @@ this is abstract information
 
 目录 - \tableofcontents \listoffigures \listoftables
 
+摘要 - \begin{abstract}...\end{abstract
+
 内容结构
 	article document class
 	\part(in article)             level0
-    \section                      level1
+        \section                      level1
 	\subsection                   level2
 	\subsubsection                level3
-	\paragraph                    level4
-	\subparagraph                 level5
 
 	report/book document class
 	\part(in report/book)         level-1
 	\chapter(only report/book)    level0
-    \section                      level1
+        \section                      level1
 	\subsection                   level2
 	\subsubsection                level3
-	\paragraph                    level4
-	\subparagraph                 level5
 
 document类别对应的层级序列:
 article - [part] -> section -> subsection...
@@ -127,17 +124,14 @@ report - [part] -> chapter -> section -> subsection...
 
 7.\listoffigures生成entry依据为\begin{figure}...\end{figure}中的\caption内容, \listoftables类似
 
-8.\addcontentsline{file_extend}{sec_unit}{entry}用于给toc/lof/lot文件添加entry, file_extend为添加的entry文件后缀, 列表: toc/lof/lot; sec_unit代表添加的单元, toc有part/section/subsection等, lof为figure, lot为table; entry为entry内容, 可以为heading或\protect\numberline{sec_num}{heading}进行手动编号. 在toc/lof/lot中的位置依据上下如\section位置顺序
+8.\begin{abstract} ... \end{abstract}为摘要信息环境
 
-9.\addtocontents{file_extend}{text}用于给toc/lof/lot文件添加文本(通常为垂直距离, 字符串文本无法添加), file_extend为添加的文本文件后缀; text为添加的文本内容, 如: \protect\addvspace{5ex}
+9.\section[toc_entry]{heading}用于设置节的目录名称(toc_entry)和节名称(heading), section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote. \section的fragile指令列表:
+    \(    \)    \begin    \end    \footnote
 
-10.\begin{abstract} ... \end{abstract}为摘要信息环境
+10.\section*{heading}为section的当前位置不参与编号版本, 并且不被目录toc收录
 
-11.\section[toc_entry]{heading}用于设置节的目录名称(toc_entry)和节名称(heading), section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote
-
-12.\section*{heading}为section的当前位置不参与编号版本, 并且不被目录toc收录
-
-13.fncychap宏包用于定制化chapter标题, 可选参数指定不同类型定制, 列表如下: Lenny/Sonny/Glenn/Conny/Rejne/Bjarne/Bjornstrup
+11.fncychap宏包用于定制化chapter标题, 可选参数指定不同类型定制, 列表如下: Lenny/Sonny/Glenn/Conny/Rejne/Bjarne/Bjornstrup
 
 
 

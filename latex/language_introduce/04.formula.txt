@@ -1,4 +1,4 @@
-一、Demo(示例)01 -- in-text formula
+Demo_01 -- 行内公式
 \documentclass{article}
 \usepackage{amssymb}
 \begin{document}
@@ -23,11 +23,13 @@
 
 5.'在公式中为求导符号
 
-6.数学公式中, \because和\therefore为几何的因为/所以符号, 在amssymb宏包中定义
+6.数学公式中, \because和\therefore为几何的因为/所以符号, 包含在amssymb宏包中
 
-7.\frac为分数的分子分母分割线
+7.\frac{分子}{分母}上下式分数
 
-8.\dfrac为displaystyle格式\frac, \tfrac为textstyle格式\frac, 在amsmath宏包中定义. displaystyle和textstyle格式参考Demo14
+8.\dfrac为displaystyle格式\frac, \tfrac为textstyle格式\frac, 在amsmath宏包中定义
+displaystyle格式代表行间公式大小
+textstyle格式代表行内公式大小
 
 9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
 
@@ -37,7 +39,7 @@
 
 
 
-二、Demo(示例)02 - one-line display formula
+二、Demo(示例)02 - 行间公式
 \documentclass{article}
 \begin{document}
 	\begin{displaymath}

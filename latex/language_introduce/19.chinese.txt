@@ -2,7 +2,7 @@
 一、Demo(示例)01 - basic demo
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
-	北京欢迎你!!
+LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaTeXe 将是标准的\LaTeX >版本
 \end{document}
 
 内容讲解
@@ -67,21 +67,23 @@
 
 
 
-五、Demo05 - space
+Demo05 -- space
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
+\setlength{\parindent}{0mm}
 \begin{document}
-我\/爱你\\
+我\!爱你\\
+我爱你\\
 我\,爱你\\
 我\:爱你\\
 我\;爱你\\
-我\ 爱你\\
+我\enspace 爱你\\
 我\quad 爱你\\
 我\qquad 爱你\\
 \end{document}
 
 内容讲解
 1.水平距离排序
-    \/  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
+    \qquad > \quad > \enspace > \; > \: > \, > [normal] > \!
 
-2.hspace{}
+2.\hspace{<length>}
     用于设置指定长度水平间隔

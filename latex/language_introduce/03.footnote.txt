@@ -1,4 +1,4 @@
-一、Demo(示例)01 -- basic footnote
+Demo_01 -- 基础脚注
 \documentclass{article}
 \begin{document}
 	Gnus\footnote{A gnu is a big animal} can be quite a gnusance
@@ -8,14 +8,6 @@
 1.\footnote[num]{fn_detail}用于给内容添加脚注, num为脚注编号; fn_detail为脚注内容
 
 2.\footnote只能用于paragraphy mode
-
-3.\footnotesep用于配置footnote entry之间的垂直距离. 语法: \setlength{\footnotesep}{2ex}
-
-4.\footnoterule用于配置footnote与正文之间的分割线. 语法: \renewcommand{\footnoterule}{\vspace*{0.3cm}\noindent\rule{2.5cm}{2ex}\vspace*{0.4cm}}, 解释如下:
-	\vspace*{0.3cm} - 正文与分割线的垂直距离
-	\noindent - 分割线不进行缩进处理
-	\rule{2.5cm}{2ex} - 分割线的水平宽度(2.5cm)和垂直高度(2ex)
-	\vspace*{0.4cm} - 分割线与第一个footnote的垂直距离
 
 
 

@@ -1,0 +1,84 @@
+Demo_01 -- 无序列表
+\documentclass{article}
+\usepackage{bbding}
+\renewcommand{\labelitemi}{\PencilRight}
+\begin{document}
+\begin{itemize}
+        \itemsep=5pt
+        \item[\PencilLeft] Each list item is marked with a label. The labels in this itemized list are bullets.
+        \item \LaTeX\ permits at least four levels of nested lists, which is more than enough.
+        \item Blank lines before an item have no effect.
+\end{itemize}
+\end{document}
+
+
+内容讲解:
+1.\begin{itemize} ... \end{itemize}用于非序号列表
+
+2.\item[seq_flag]为列表项内容, seq_flag为序列标记符. 列表如下:
+    \textbullet - 实心圆点, 第一层嵌套默认符号(最外层)
+    \normalfont\bf\textendash - 破折号, 第二层嵌套默认符号
+    \textasteriskcentered - 星号(*), 第三层嵌套默认符号
+    \textperiodcentered - 上下居中的句号, 第四层嵌套默认符号
+    其他特殊符号参考symbol_summary的表23
+
+3.修改不同层级嵌套的默认符号(列表最高四层嵌套), \renewcommand{\labelitemi}{\textbullet}. 层级列表如下:
+    \labelitemi - 第一层嵌套
+    \labelitemii - 第二层嵌套
+    \labelitemiii - 第三层嵌套
+    \labelitemiv - 第四层嵌套
+
+4.\itemsep用于指定item之间的距离, 通常在列表环境内使用. 默认为4pt plus 2pt minus 1pt
+
+
+
+Demo_02 -- 有序列表
+\documentclass{article}
+\usepackage{bbding}
+\renewcommand{\theenumi}{\Alph{enumi}}
+\renewcommand{\labelenumi}{\PencilRight\theenumi\PencilLeft}
+\begin{document}
+\begin{enumerate}
+        \itemsep=1cm
+        \item Each list item is marked with a label. The labels in this itemized list are bullets.
+        \item \LaTeX\ permits at least four levels of nested lists, which is more than enough.
+        \item Blank lines before an item have no effect.
+\end{enumerate}
+\end{document}
+
+内容讲解:
+1.\begin{enumerate} ... \end{enumerate}用于序号列表
+
+2.\item为列表项内容[seq_flag]为列表项内容, seq_flag为序列标记符. 列表如下:
+    \arabic - 数字, 第一层嵌套默认符号
+    \alph - 小写字母, 第二层嵌套默认符号
+    \roman - 小写罗马数字, 第三层嵌套默认符号
+    \Alph - 大小字母, 第四层嵌套默认符号
+
+3.修改不同层级的嵌套的默认数字(最高四层嵌套), \renewcommand{\theenumi}{\alph{enumi}}. 层级列表如下:
+    \theenumi - 第一层嵌套
+    \theenumii - 第二层嵌套
+    \theenumiii - 第三层嵌套
+    \theenumiv - 第四层嵌套
+
+4.修改不同层级的嵌套的额外符号, 层级如下:
+    \renewcommand{\labelenumi}{\theenumi.} - 第一层嵌套, 编号后跟.
+    \renewcommand{\labelenumii}{(\theenumii)} - 第二层嵌套, 编号外面套()
+    \renewcommand{\labelenumiii}{\theenumiii.} - 第三层嵌套, 编号后跟.
+    \renewcommand{\labelenumiv}{\theenumii.} - 第四层嵌套, 编号后跟.
+
+5.\itemsep用于指定item之间的距离, 通常在列表环境内使用. 默认为4pt plus 2pt minus 1pt
+
+
+
+Demo_03 -- description list
+\begin{description}
+	\item[gnat] A small animal, found in the North Woods, that causes no end of trouble.
+	\item[gnu] A large animal, found in crossword puzzles, that causes no end of trouble.
+	\item[armadillo] A medium-sized animal, named after a medium-sized Texas city.
+\end{description}\vspace{2ex}
+
+内容讲解
+1.\begin{description} ... \end{description}用于描述性列表
+
+2.\item[]为描述性列表项内容, []为列表项名称
