@@ -14,6 +14,7 @@
 \usepackage{texnames}
 \usepackage{pifont}
 \usepackage{longtable}
+\usepackage{bm}
 \let\mathdollar\undefined
 \renewcommand{\footnoterule}{\vspace*{-2mm}\rule{\textwidth}{0pt}}
 \renewcommand{\thempfootnote}{\arabic{mpfootnote}}
@@ -52,10 +53,10 @@
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	\'{o} & \textbackslash '\{o\} & \`{o} & \textbackslash `\{o\} & \^{o} & \textbackslash \^{}\{o\} & \"{o} & \textbackslash "\{o\}\\
-	\~{o} & \textbackslash \~{}\{o\} & \={o} & \textbackslash =\{o\} & \.{o} & \textbackslash .\{o\} & \u{o} & \textbackslash  u\{o\}\\
-	\v{o} & \textbackslash  v\{o\} & \H{o} & \textbackslash  H\{o\} & \t{oo} & \textbackslash  t\{oo\} & \c{o} & \textbackslash  c\{o\}\\
-	\d{o} & \textbackslash  d\{o\} & \b{o} & \textbackslash  b\{o\}\\
+	\'{o} & \verb+\'{o}+ & \`{o} & \verb+\`{o}+ & \^{o} & \verb+\^{o}+ & \"{o} & \verb+\"{o}+\\
+	\~{o} & \verb+\~{o}+ & \={o} & \verb+\={o}+ & \.{o} & \verb+\.{o}+ & \u{o} & \verb+\u{o}+\\
+	\v{o} & \verb+\v{o}+ & \H{o} & \verb+\H{o}+ & \t{oo} & \verb+\t{oo}+ & \c{o} & \verb+\c{o}+\\
+	\d{o} & \verb+\d{o}+ & \b{o} & \verb+\b{o}+\\
 	\hline
 \end{tabular}
 \caption{重音符}
@@ -83,10 +84,10 @@
 	\hline
 	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
 	\hline
-	\oe & \textbackslash  oe & \OE & \textbackslash  OE & \ae & \textbackslash  ae & \AE & \textbackslash  AE\\
-	\aa & \textbackslash  aa & \AA & \textbackslash  AA & \o & \textbackslash  o & \O & \textbackslash  O\\
-	\l & \textbackslash  l & \L & \textbackslash  L & \ss & \textbackslash  ss & ?` & ?\,`\\
-	!` & !\,`\\
+	\oe & \verb+\oe+ & \OE & \verb+\OE+ & \ae & \verb+\ae+ & \AE & \verb+\AE+\\
+	\aa & \verb+\aa+ & \AA & \verb+\AA+ & \o & \verb+\o+ & \O & \verb+\O+\\
+	\l & \verb+\l+ & \L & \verb+\L+ & \ss & \verb+\ss+ & ?` & \verb+?`+\\
+	!` & \verb+!`+\\
 	\hline
 \end{tabular}
 \caption{非英文标记符号}
@@ -102,6 +103,21 @@
 	\hline
 \end{tabular}
 \caption{适用于所有模式的符号}
+\end{table}
+
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{tabular}{l l l l l l l l}
+	\hline
+	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+	\hline
+	$\cdot$ & \verb+\cdot+ & $\ldots$ & \verb+\ldots+\footnotemark[1] & $\cdots$ & \verb+\cdots+ & $\vdots$ & \verb+\vdots+\footnotemark[1]\\
+	$\ddots$ & \verb+\ddots+\\
+	\hline
+\end{tabular}
+\footnotetext[1]{除标注外，其他只能用于math mode}
+\end{minipage}
+\caption{公式-省略号}
 \end{table}
 
 \begin{table}[H]
@@ -148,6 +164,26 @@
 \footnotetext[99]{\textbackslash var格式的代码由amsmath宏包提供}
 \end{minipage}
 \caption{公式-大写希腊字母}
+\end{table}
+
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{tabular}{l l l}
+	\hline
+	类别 & 字体命令 & 输出效果\\\hline
+	斜体 & \verb+\mathit+ & $\mathit{ABCHIJXYZabchijxyz12345}$\\
+	粗体 & \verb+\mathbf+ & $\mathbf{ABCHIJXYZabchijxyz12345}$\\
+	罗马体 & \verb+\ mathrm+ & $\mathrm{ABCHIJXYZabchijxyz12345}$\\
+	无衬线体 & \verb+\mathsf+ & $\mathsf{ABCHIJXYZabchijxyz12345}$\\
+	打字机体 & \verb+\mathtt+ & $\mathtt{ABCHIJXYZabchijxyz12345}$\\
+	手写体(花体)\footnotemark[1] & \verb+\mathcal+ & $\mathcal{ABCHIJXYZ}$\\
+	加粗斜体\footnotemark[2] & \verb+\bm+ & $\bm{ABCHIJXYZabchijxyz12345}$\\
+	\hline
+\end{tabular}
+\footnotetext[1]{\LaTeX{}默认只支持大写字母，使用专业字体包可支持小写字母}
+\footnotetext[2]{包含在bm宏包中}
+\end{minipage}
+\caption{数学字体类型}
 \end{table}
 
 \begin{table}[H]
@@ -350,24 +386,6 @@
 \end{table}
 
 \begin{table}[H]
-\begin{minipage}{\textwidth}
-\begin{tabular}{l l l l l l l l}
-	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
-	\hline
-	$\cdot$ & \textbackslash  cdot & $\ldots$ & \textbackslash  ldots\footnotemark[1] & $\cdots$ & \textbackslash  cdots & $\vdots$ & \textbackslash  vdots\footnotemark[1]\\
-	$\ddots$ & \textbackslash  ddots\footnotemark[1] & $\iddots$ & \textbackslash  iddots\footnotemark[2] & $\dotsc$ & \textbackslash  dotsc\footnotemark[3] & $\dotsb$ & \textbackslash  dotsb\footnotemark[3]\\
-	$\dotsm$ & \textbackslash  dotsm\footnotemark[3] & $\dotsi$ & \textbackslash  dotsi\footnotemark[3] & $\dotso$ & \textbackslash  dotso\footnotemark[3]\\
-	\hline
-\end{tabular}
-\footnotetext[1]{除标注外，其他只能用于math mode}
-\footnotetext[2]{包含在mathdots宏包中}
-\footnotetext[3]{包含在amsmath宏包中}
-\end{minipage}
-\caption{公式-省略号}
-\end{table}
-
-\begin{table}[H]
 \begin{tabular}{l l}
 	\hline
 	单位 & 说明\\
@@ -386,24 +404,6 @@
 	\hline
 \end{tabular}
 \caption{通用长度单位}
-\end{table}
-
-\begin{table}[H]
-\begin{minipage}{\textwidth}
-\begin{tabular}{l l l}
-	\hline
-	类别 & 字体命令 & 输出效果\\\hline
-	数学环境的默认字体 & \textbackslash  mathnormal & $\mathnormal{ABCHIJXYZabchijxyz12345}$\\
-	斜体 & \textbackslash  mathit & $\mathit{ABCHIJXYZabchijxyz12345}$\\
-	粗体 & \textbackslash  mathbf & $\mathbf{ABCHIJXYZabchijxyz12345}$\\
-	罗马体 & \textbackslash  mathrm & $\mathrm{ABCHIJXYZabchijxyz12345}$\\
-	无衬线体 & \textbackslash  mathsf & $\mathsf{ABCHIJXYZabchijxyz12345}$\\
-	打字机体 & \textbackslash  mathtt & $\mathtt{ABCHIJXYZabchijxyz12345}$\\
-	手写体(花体)\footnotemark[1] & \textbackslash mathcal & $\mathcal{ABCHIJXYZ}$\\\hline
-\end{tabular}
-\footnotetext[1]{\LaTeX{}默认只支持大写字母，使用专业字体包可支持小写字母}
-\end{minipage}
-\caption{LaTeX默认提供的数学字体}
 \end{table}
 
 \begin{table}[H]

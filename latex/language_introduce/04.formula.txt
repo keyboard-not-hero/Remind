@@ -1,21 +1,24 @@
 Demo_01 -- 行内公式
 \documentclass{article}
+\usepackage{amsmath}
 \usepackage{amssymb}
+\setlength{\parindent}{0mm}
 \begin{document}
-	The formula \( x-3y = 7 \) is easy to type.\\
-	$E = mc^2$\\
-	\begin{math}
-		x^2 = y^2 + z^2
-	\end{math}\\
-	\( a_1 > x^{2n}/y^{2n} \)\\
-	$\because y =\frac{x}{1}$, $\therefore y' = 1$\\
-	$\sqrt[3]{8}=2$
+$a^2+b^2=c^2$\\
+\(y=x^2 \Rightarrow y'=2x\)\\
+\begin{math}
+\because 1+1=2\\
+\therefore 2-1=1
+\end{math}\\
+$\frac{4}{2}=2$\\
+$\sqrt[3]{8}=2$\\
+$\binom{4}{3}$\\
 \end{document}
 
 内容讲解
-1.\( ... \)用于限定行内公式内容
+1.$ ... $用于限定行内公式内容
 
-2.$ ... $用于限定行内公式内容
+2.\( ... \)用于限定行内公式内容
 
 3.\begin{math} ... \end{math}用于限定行内公式内容
 
@@ -27,19 +30,13 @@ Demo_01 -- 行内公式
 
 7.\frac{分子}{分母}上下式分数
 
-8.\dfrac为displaystyle格式\frac, \tfrac为textstyle格式\frac, 在amsmath宏包中定义
-displaystyle格式代表行间公式大小
-textstyle格式代表行内公式大小
+8.\sqrt[root]{num}用于求数num的root次方根, root默认为2
 
-9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
-
-10.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
-
-11.\dbinom为displaystyle格式\binom，\tbinom为textstyle格式\binom
+9.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
 
 
 
-二、Demo(示例)02 - 行间公式
+Demo_02 -- 行间公式
 \documentclass{article}
 \begin{document}
 	\begin{displaymath}
@@ -52,9 +49,9 @@ textstyle格式代表行内公式大小
 \end{document}
 
 内容讲解
-1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 公式居中显示
+1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 没有公式序号，公式居中显示
 
-2.\[ ... \]用于行间公式环境, 公式居中显示
+2.\[ ... \]用于行间公式环境, 没有公式序号，公式居中显示
 
 3.\begin{equation} ... \end{equation}用于含编号的行间公式环境, 公式居中. \renewcommand{\theequation}{\alph{equation}}用于修改equation编号类型, 列表如下:
 	arabic - 数字
@@ -63,13 +60,130 @@ textstyle格式代表行内公式大小
 	roman - 小写罗马字母
 	Roman - 大写罗马字母
 
-4.\text用于在math mode中输入paragraph mode格式文字. 包含在amsmath宏包中
+4.\textrm用于在math mode中输入paragraph mode模式的罗马文字. 包含在amsmath宏包中
 
-5.\abovedisplayshortskip/\abovedisplayskip用于设置行间公式与之前正文的垂直距离, 如: \setlength\abovedisplayshortskip{10pt}; \belowdisplayshortskip/\belowdisplayskip用于设置行间公式与之后正文的垂直距离。建议在preamble区使用
+5.\abovedisplayshortskip/\abovedisplayskip用于设置行间公式与之前正文的垂直距离; \belowdisplayshortskip/\belowdisplayskip用于设置行间公式与之后正文的垂直距离. 建议在preamble区使用. 设置语法如下:
+\setlength{\abovedisplayshortskip}{10pt}
 
-6.行间公式默认包含额外的缩进, 使用\mathindent进行设置(需配合\documentclass的fleqn可选项). 如: \setlength{\mathindent}{0pt}
+6.行间公式左对齐模式(\documentclass的fleqn可选参数)默认包含额外的缩进, 使用\mathindent进行设置. 设置语法如下:
+\setlength{\mathindent}{0pt}
 
 7.本示例所有环境为单行行间公式环境
+
+
+
+Demo_03 -- 省略号
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$\cdot$\\
+a\ldots b\\
+a$\cdots$b\\
+\vdots\\
+$\ddots$\\
+\end{document}
+
+内容讲解
+1.所有省略号适用于math mode
+
+2.\ldost和\vdots也适用于paragraph mode和LR mode
+
+3.参考symbol_summary的表7
+
+
+Demo_04 -- 希腊字母
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$\alpha$\\
+$\beta$\\
+$\pi$\\
+$\Delta$\\
+$\Sigma$\\
+$\Pi$\\
+\end{document}
+
+内容讲解
+1.\alpha为小写希腊字母
+
+2.更多参考symbol_summary的表8. 只适用于math mode
+
+3.\Delta为大写希腊字母
+
+4.更多参考symbol_summary的表9. 只适用于math mode
+
+
+
+Demo_05 -- 字体类型
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$a^2+b^2=c^2$\\
+$\mathit{a^2+b^2=c^2}$\\
+$\mathrm{a^2+b^2=c^2}$\\
+$\mathtt{a^2+b^2=c^2}$\\
+$\mathcal{X+Y}$\\
+\end{document}
+
+内容讲解
+1.\mathrm等以math开头的为数学字体. 只能位于math mode环境中
+
+2.\math开头的指令无法获得嵌套效果. 如: \mathbf{\mathit{}}无法获得加粗斜体
+
+3.\bm{}可使大小写字母成为斜体并加粗. 包含在bm宏包中
+
+4.详细参考symbol_summary的表10
+
+
+
+Demo_06 -- 二元运算符
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$1+2-3*4\div 5$\\
+$1+2-3\ast 4\div 5$\\
+$1+2-3\times 4\div 5$\\
+\end{document}
+
+内容讲解
+1.\times和\div为数学的二元运算符, 只能用于math mode
+
+2.详情参考symbol_summary的表15
+
+
+
+Demo_07 -- 比较运算符
+\documentclass{article}
+\usepackage{amssymb}
+\setlength{\parindent}{0mm}
+\begin{document}
+$a\leq b$\\
+$a\leqslant b$\\
+\end{document}
+
+内容讲解
+1.\leq为小于等于比较符, 只能用于math mode
+
+2.详情参考symbol_summary的表16
+
+
+
+Demo_08 -- 箭头符号
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$a^2+b^2=c^2\quad\Longrightarrow\quad a^2=c^2-b^2$\\
+\end{document}
+
+内容讲解
+1.\Longrightarrow为向右的长箭头, 只能用于math mode
+
+2.详情参考symbol_summary的表17
+
+
+
+
+
 
 
 
@@ -143,50 +257,6 @@ textstyle格式代表行内公式大小
 3.\begin{gathered} ... \end{gathered}为放置于math mode环境的版本, 并且不带编号
 
 
-
-六、Demo(示例)06 - math font style
-\documentclass{article}
-\usepackage{amsmath}
-\usepackage{bm}
-\begin{document}
-\begin{gather}
-    \mathit{ABCDabcd1234}\\
-    \mathbf{ABCDabcd1234}\\
-    \mathrm{ABCDabcd1234}\\
-    \mathsf{ABCDabcd1234}\\
-    \mathtt{ABCDabcd1234}\\
-	\mathcal{ABCHIJ}
-	\bm{ABCDabcd1234}
-\end{gather}
-\end{document}
-
-内容讲解
-1.\begin{gather} ... \end{gather}用于含多行公式的行间公式环境, 包含在amsmath宏包中
-
-2.\mathit为斜体公式
-\mathbf为粗体公式
-\mathrm为roman体
-\mathsf为无衬线体
-\mathtt为打印机字体
-\mathcal位花式体
-详情参考symbol_summary
-
-3.\bm{}可使大小写字母成为斜体并加粗. 包含在bm宏包中. math字体不可嵌套
-
-
-
-七、Demo(示例)07 - binary operator
-\documentclass{article}
-\begin{document}
-	\mp\\
-	\ominus\\
-	\lhd
-\end{document}
-
-内容讲解
-1.\mp为二进制运算符. 详情参考symbol_summary
-
-2.\lhd包含在latexsym宏包中
 
 
 

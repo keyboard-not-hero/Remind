@@ -1,4 +1,78 @@
-Demo_01 -- 下划线
+Demo_01 -- 字体类型
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\setlength{\parindent}{0mm}
+\begin{document}
+\textnormal{范例文本, Demo text, 常规体, normal text}\\
+\textrm{范例文本, Demo text, 罗马体, roman family}\\
+\textmd{范例文本, Demo text, 中序体, medium series}\\
+\textup{范例文本, Demo text, 直立体, upright shape}\\
+\textsf{范例文本, Demo text, 等线体, sans serif family}\\
+\texttt{范例文本, Demo text, 等宽体, typewriter family}\\
+\textit{范例文本, Demo text, 斜体, italic shape}\\
+\textsl{范例文本, Demo text, 倾斜, slanted shape}\\
+\textbf{范例文本, Demo text, 加粗体, boldface seried}\\
+\textsc{范例文本, Demo text, 小型大写, small caps shape}\\
+\end{document}
+
+内容讲解
+1.\textrm{}为罗马字体
+\textnormal、\textmd、\textup效果与\textrm一致
+
+2.\textsf{}为等线体, 等线体字体线条一致, 没有衬线
+
+3.\texttt{}为等宽体, 在中文(或英文)中, 所有字体(或字符)的宽度一致, 适用于打印
+
+4.\textit{}为斜体
+
+5.\textsl{}为倾斜体, 字体倾斜, 类似于\textit, 但字体更为方正
+
+6.\textbf{}为加粗体
+
+7.\textsc{}为字体更小的大写字母
+
+8.\text开头的普通文本指令可位于任何环境中, paragraph/LR/math mode
+
+
+
+Demo_02 -- 音节重音
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\={o}u\\
+\'{o}u\\
+\v{o}u\\
+\'{o}u\\
+
+\b{i}u\\
+\b{\i}u\\
+\end{document}
+
+内容讲解
+1.\'{<letter>}用于在字符上进行注音
+
+2.i/j由于头顶本来有'.', 所以需要去除, 格式为\i、\j
+
+3.其他注音符号参考symbol_summary的表3. 适用于paragraph mode和LR mode
+
+
+
+Demo_03 -- 非英文符号
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\oe\\
+?`\\
+!`\\
+\end{document}
+
+内容讲解
+1.?`表示180旋转的问号
+
+2.其他非英文符号参考symbol_summary的表5. 适用于paragraph mode和LR mode
+
+
+
+Demo_04 -- 下划线
 \documentclass{article}
 \usepackage{ulem}
 \setlength{\parindent}{0mm}
@@ -11,7 +85,6 @@ This is line \underline{\phantom{three}}\\
 This is line \uline{four}
 \end{document}
 
-
 内容讲解
 1.\underline{<content>}用于给指定文本增加下划线, 但内容进入左右模式, 不能换行. 适用于文本模式和数学模式
 
@@ -21,7 +94,7 @@ This is line \uline{four}
 
 
 
-Demo_02 -- TeX family text
+Demo_05 -- TeX family text
 \documentclass{article}
 \begin{document}
 Some people use plain \TeX, but I prefer \LaTeX.
@@ -32,7 +105,7 @@ Some people use plain \TeX, but I prefer \LaTeX.
 
 
 
-Demo_03 -- 破折号
+Demo_06 -- 破折号
 \documentclass{article}
 \begin{document}
     An intra-word dash or hyphen, as in X-ray.\\
@@ -51,7 +124,7 @@ Demo_03 -- 破折号
 
 
 
-Demo_04 -- 放大/缩小pifont宏包字体
+Demo_07 -- 放大/缩小pifont宏包字体
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{pifont}

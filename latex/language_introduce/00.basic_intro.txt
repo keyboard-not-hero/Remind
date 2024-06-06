@@ -25,21 +25,6 @@ LaTeX 2e - 释出于1994年
 
 
 
-LaTeX继承自Tex的三种模式:
-1.paragraph mode - 默认的文字段落模式
-
-2.math mode - 数学公式模式, 忽略公式内的所有空格字符. 例: $$限定的内容
-	子类型如下:
-	text - in-text formula
-	display - displayed formula
-	script - subscript or supscript
-	scriptscript - further level script
-
-3.left-to-right mode - 类似于paragraph, 但不能进行换行, 全部文本内容只能在一行内. 例: \mbox{}限定的内容
-
-**模式可嵌套使用, 但内部模式不继承使用外部模式
-
-
 
 指令类型:
 1.command - 形如\textrm{}, 限定括号内的内容

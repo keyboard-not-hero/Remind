@@ -135,89 +135,52 @@ report - [part] -> chapter -> section -> subsection...
 
 
 
-三、Demo(示例)03 - split document of input
-% root file(root.tex):
-\documentclass{article}
+Demo_03 -- 文本模式
+\documentclass{report}
 \begin{document}
-	this is root file content\\
-	\input{aux}
+This is a paragraph mode text.\\
+$this is a math mode text. balabalabalabalabalabalasjdksajdlsjdslajdlsjdjsljkdlk catch end morning afternoon number\\ alphnumber$
+\mbox{This is a left-to right mode text. balabalabalahahahahahahahahahahahahahahahahahahahahahah\\ah end catch nice}\\
 \end{document}
 
-% auxiliary file(aux.tex):
-this is auxiliary file content
+内容讲解
+1.段落(paragraph)模式
+该模式为常规模式，单词之间可保留最多一个空格，可换行
 
-内容讲解:
-1.\input{file_name}用于导入其他文件的全部内容(类似于将辅助文件的内容全部粘贴到根文件), file_name为辅助文件的名称(不带文件后缀, 默认为.tex). aux文件特性:
-	(1)不能包含\documentclass{}、preamble区域内容、\begin{document}
-	(2)直接在当前页开始嵌入内容, 不适用新page
-	(3)可在辅助文件中再使用\input导入其他文件内容, 嵌套特性
+2.数学(math)模式
+常用于数学公式环境，忽略所有空格，可换行
 
-2.\input常用语定义新指令或配置长度的集合
-
+3.LF(left-to-right)模式
+类似于段落模式，但不可换行
 
 
-四、Demo(示例)04 - split document of include
-% root file
+
+Demo_04 -- 源文件与子文件
 \documentclass{article}
 \begin{document}
 this is first line
 \include{aux.tex}
 \end{document}
 
-% aux file
-this is second line
+内容讲解
+1.\include{file_name}用于源文件将子文件内容进行读取, 特性:
+	(1)子文件只能包含正文内容
+	(2)子文件开启新page
+	(3)不可在子文件中再使用\include导入其他文件, 即不可嵌套
+
+
+
+Demo_05 -- 正文的命令类型
+
 
 内容讲解
-1.\include{file_name}类似于input, 特性:
-	(1)不能包含\documentclass{}、preamble区域内容、\begin{document}
-	(2)开启新page - 在新的一页中, 进行内容导入
-	(3)不可在辅助文件中再使用\include导入其他文件, 但可以使用\input. 即不可嵌套
-	(4)联合includeonly - 联合\includeonly, 只有包含在\includeonly内的文件名, 能被导入
+1.声明形式
+作用于当前环境内, 后续所有内容. 格式: \bfseries
 
-2.\includeonly{file1,file2,...}用于限定能被\include导入的文件列表. 规则如下:
-	(1)没有该指令时, 所有文件可被\include导入;
-	(2)file列表为空时, 所有文件不可被\include导入
-	(3)在preamble区域使用
+2.参数形式
+作用于指定的参数内容. 格式: \mathrm{}
 
+3.环境形式
+作用于限定的环境内. 格式: \begin{bfseries} ... \end{bfseries}
 
-
-五、Demo(示例)05 - page style
-\documentclass{article}
-\begin{document}
-	\pagestyle{plain}
-	\pagenumbering{arabic}
-    Alice was beginning to get very tired of sitting by her sister on the
-bank, and of having nothing to do: once or twice she had peeped into
-the book her sister was reading, but it had no pictures or
-conversations in it, “and what is the use of a book,” thought Alice
-“without pictures or conversations?”
-
-So she was considering in her own mind (as well as she could, for the
-hot day made her feel very sleepy and stupid), whether the pleasure of
-making a daisy-chain would be worth the trouble of getting up and
-picking the daisies, when suddenly a White Rabbit with pink eyes ran
-close by her.
-\end{document}
-
-内容讲解
-1.\pagestyle{type}用于指定页面类型, 页面包含head/body/foot属性, type可选列表:
-	plain - head为空, foot包含页码. article/report文档类型的默认类型
-	empty - head和foot都为空
-	headings - head包含章/节信息(信息由文档类型决定)和页码, foot为空. 可使用如下两个指令替换章节信息:
-	myheadings - 类似于headings, 但可指定head显示的信息. 可使用如下两个指令添加head附加信息:
-		\markright{right_head} - 用于oneside文档, 指定right_hand附加内容信息
-		\markboth{left_head}{right_head} - 用于twoside文档, 指定left_hand和right_hand附加内容信息
-		其中, 两个指令处于LR mode
-
-2.\thispagestyle{type}语法与\pagestyle一致, 但只作用于当前页
-	
-3.\pagenumbering{num_style}用于指定页码从当前页从1起始, num_style指定格式, 列表如下:
-	arabic - 阿拉伯数字, 默认
-	roman - 小写罗马数字
-	Roman - 大写罗马数字
-	alph - 小写字母
-	Alph - 大写字母
-
-4.\flushbottom为declaration指令, 用于指定所有页面的高度一致, 当存在某页没有填充满时, 会造成其他页面出现过多垂直空白
-
-5.\raggedbottom为declaration指令, 用于指定所有页面不需要高度一致, 尽量填充满页面
+4.环境形式和声明形式的命令的名称大致相同
