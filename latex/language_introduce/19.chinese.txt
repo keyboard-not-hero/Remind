@@ -1,15 +1,19 @@
 !!warning: 中文强烈建议使用xelatex编译, 编译速度量级跨越
-一、Demo(示例)01 - basic demo
+Demo_01 -- basic demo
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
 LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaTeXe 将是标准的\LaTeX >版本
 \end{document}
 
 内容讲解
-1.\documentclass[UTF8,fontset]{ctexart}可选参数必须使用UTF8指定中文的编码规则, Linux必须指定特殊字符集ubuntu; 必选参数文档类型列表与源类型列表对照如下:
+1.\documentclass[UTF8,fontset]{ctexart}可选参数可以使用UTF8指定中文的编码规则, Linux可指定特殊字符集ubuntu; 必选参数文档类型列表与源类型列表对照如下:
 	ctexart - article
 	ctexrep - report
 	ctexbook - book
+
+2.\usepackage{ctex}指定使用中文包ctex
+
+3.\documentclass{ctexxxx}或\usepackage{ctex}为中文文档的两个可选项, 可二选其一
 
 
 

@@ -49,6 +49,10 @@ i hate you
 
 LaTeX不是WYSIWYG(what you see is what you get)工具
 
-reference:
-[1]A document preparation system, Leslie Lamport
-[2]The LaTeX Companion(Second Edition), Frank Mittelbach
+
+引用
+[1] A document preparation system, Leslie Lamport
+
+[2] The LaTeX Companion(Second Edition), Frank Mittelbach
+
+[3] LaTeX2e: https://ctan.org/tex-archive/info/latex2e-help-texinfo?lang=en

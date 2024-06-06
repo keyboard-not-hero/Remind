@@ -13,7 +13,7 @@ Demo_01 -- 第一个示例
     arg<N> - 可选参数的子参数. 列表:
 	10pt | 11pt | 12pt - 指定内容文字大小. article/report/book/letter都默认为10pt. 不支持slides文档类型
 	
-	letterpaper | legalpaper | executivepaper | a4paper | a5paper | b5paper - 指定输出的页面大小, 默认为letterpaper. 宽x高参数列表如下:
+	letterpaper | legalpaper | executivepaper | a4paper | a5paper | b5paper - 指定输出的页面大小, 默认为letterpaper(建议使用a4paper). 宽x高参数列表如下:
 	    letterpaper		8.5in x 11in, 216mm x 280mm
 	    legalpaper		8.5in x 14in, 216mm x 356mm
 	    executivepaper	7.25in x 10.5in, 184mm x 266mm
@@ -23,7 +23,7 @@ Demo_01 -- 第一个示例
 
 	landscape - 将页面的宽和高的尺寸交换
 
-	final | draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表普通模式，超过宽度内容不进行标记. 默认为final
+	final | draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表定稿模式，超过宽度内容不进行标记. 默认为final
 
 	oneside | twoside - oneside代表所有页面统一对齐显示, article/report文档类型默认选项; twoside代表奇数页偏左对齐, 偶数页偏右对齐(偏向书本中心), book文档类型默认选项. 不支持letter/slides文档类型
 
@@ -40,11 +40,11 @@ Demo_01 -- 第一个示例
 	fleqn - 行间公式左对齐, 包含统一缩进. 默认为居中对齐
 	    默认行间公式还额外存在缩进, 可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
 
-    doc_class - 文档类型。类型列表: article/report/book/letter/slides
+    doc_class - 文档类型, 文件名后缀.cls. 类型列表: article/report/book/letter/slides或机构自己的cls模板
 	
 
 
-2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 属于document preamble内容
+2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 包含相同可选参数(或不指定可选参数)的宏包可集中到一个\usepackage命令, 属于document preamble内容
     arg<N> - 可选参数列表
     pac_name<N> - 导入的包名, 文件后缀为.sty
     ** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, 可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
@@ -171,7 +171,13 @@ this is first line
 
 
 Demo_05 -- 正文的命令类型
-
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is {\bfseries line} one\\
+This is \textbf{line} two\\
+This is \begin{bfseries}line\end{bfseries} one\\
+\end{document}
 
 内容讲解
 1.声明形式
@@ -184,3 +190,50 @@ Demo_05 -- 正文的命令类型
 作用于限定的环境内. 格式: \begin{bfseries} ... \end{bfseries}
 
 4.环境形式和声明形式的命令的名称大致相同
+
+
+
+Demo_06 -- 新定义命令
+\documentclass{article}
+\usepackage{pifont}
+\usepackage{graphicx}
+\setlength{\parindent}{0mm}
+\newcommand{\wrap}[2][1.2]{\scalebox{#1}{\ding{#2}}}
+\begin{document}
+This is \wrap[1]{172}\\
+This is \wrap[1.1]{173}
+\end{document}
+
+内容讲解
+1.\newcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于定义新命令. 参数如下:
+    new_cmd - 新命令的名称, 不能以\end起始, 不能与已有命令重名
+    cmd_arg_number - 新命令的参数个数, 可选范围[0, 9]. 默认为0
+    option_arg_default_val - 新命令第一个参数的默认值. 如果指定默认值, 则第一个参数为可选参数, 并且只能一个参数为可选参数
+    cmd_action - 新命令的相关定义. 可使用#n引用新命令的第n个参数值
+
+2.\providecommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}作用与\newcommand类似, 但是当新命令与已有命令重名时, 不出现错误提示, 并且新命令暂时被忽略, 等待已有重名命令被移除时, 新命令可使用
+
+3.\xspace可自动生成空格, 除非后续为标点符号. 包含在xspace宏包中
+
+4.\ensuremath{<content>}确保content处于math mode, 如果命令已处于math mode, 则使用纯文本; 如果命令处于paragraph/LR mode, 则为$<content>$
+
+
+
+Demo_07 -- 重新定义命令
+\documentclass{article}
+\usepackage{pifont}
+\usepackage{graphicx}
+\let\oldding\ding
+\renewcommand{\ding}[2][1.1]{\scalebox{#1}{\oldding{#2}}}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is \ding[1]{172}\\
+This is \ding{173}
+\end{document}
+
+内容讲解
+1.\renewcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于对已有命令重新定义. 参数如下:
+    new_cmd - 命令的新名称, 不能以\end起始
+    cmd_arg_number - 命令的参数个数, 可选范围[0, 9]. 默认为0
+    option_arg_default_val - 命令第一个参数的默认值. 如果指定默认值, 则第一个参数为可选参数, 并且只能一个参数为可选参数
+    cmd_action - 命令的相关定义. 可使用#n引用命令的第n个参数值

@@ -140,3 +140,24 @@ Demo_07 -- 放大/缩小pifont宏包字体
 
 2.renewcommand{原命令}[参数数量][默认值]{定义内容}, #<n>代表引用使用命令时, 使用的第n个参数值
 \scalebox包含在graphicx宏包中  
+
+
+
+Demo_08 -- 单位符号
+\documentclass{article}
+\usepackage{siunitx}
+\setlength{\parindent}{0mm}
+\begin{document}
+\ang{30}\\
+\qty{30}{\degree}\\
+\qty{30}{\degreeCelsius}\\
+\qty{30}{\ohm}
+\end{document}
+
+内容讲解
+1.\ang{<degree>}用于显示指定的角度单位. 包含在siunitx宏包中
+
+2.\qty{<num>}{<symbol>}用于显示指定的符号. 包含在siunitx宏包中. 符号一览:
+    \degreeCelsius - 摄氏度
+    \ohm - 电阻单位: 欧
+    \degree - 角度单位
