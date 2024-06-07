@@ -7,53 +7,53 @@ Demo_01 -- 第一个示例
 内容讲解
 1.\documentclass[]{}为文档的第一个之类，指定文档类型。其中，参数可分为以下两种情况：
     (1)代表必要参数的{}，该类参数必须进行指定，当有多个必要参数时，必须按顺序进行指定，不能调换顺序
-    (2)代表可选参数的[]，该类参数可以指定，也可以省略，当有多个可选参数时，必须按顺序进行指定(不能只省略序列靠前的可选参数，到导致乱序)；可选参数[]也可以由多个可选子参数构成[sub_arg1,sub_arg2...]，由半角逗号分隔，不能留空格, 顺序可以打乱
+    (2)代表可选参数的[]，该类参数可以指定，也可以省略，当有多个可选参数时，必须按顺序进行指定(不能只省略序列靠前的可选参数，到导致乱序)；可选参数[]也可以由多个可选子参数构成[sub_arg1,sub_arg2...]，由半角逗号分隔，不能留空，顺序可以打乱
 
-2.\documentclass[arg1,arg2,...]{doc_class}指定文档类型. 参数列表:
-    arg<N> - 可选参数的子参数. 列表:
-	10pt | 11pt | 12pt - 指定内容文字大小. article/report/book/letter都默认为10pt. 不支持slides文档类型
+2.\documentclass[arg1,arg2,...]{doc_class}指定文档类。参数列表:
+    arg<N> - 可选参数的子参。列表:
+	10pt | 11pt | 12pt - 指定内容文字大。article/report/book/letter都默认为10p。不支持slides文档类型
 	
-	letterpaper | legalpaper | executivepaper | a4paper | a5paper | b5paper - 指定输出的页面大小, 默认为letterpaper(建议使用a4paper). 宽x高参数列表如下:
-	    letterpaper		8.5in x 11in, 216mm x 280mm
-	    legalpaper		8.5in x 14in, 216mm x 356mm
-	    executivepaper	7.25in x 10.5in, 184mm x 266mm
+	letterpaper | legalpaper | executivepaper | a4paper | a5paper | b5paper - 指定输出的页面大，默认为letterpaper(建议使用a4paper。宽x高参数列表如下:
+	    letterpaper		8.5in x 11i，216mm x 280mm
+	    legalpaper		8.5in x 14i，216mm x 356mm
+	    executivepaper	7.25in x 10.5i，184mm x 266mm
 	    a4paper 		210mm x 297mm
 	    a5paper 		148mm x 210mm
 	    b5paper	    	176mm x 250mm
 
 	landscape - 将页面的宽和高的尺寸交换
 
-	final | draft - draft代表草稿模式, 在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表定稿模式，超过宽度内容不进行标记. 默认为final
+	final | draft - draft代表草稿模，在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表定稿模式，超过宽度内容不进行标。默认为final
 
-	oneside | twoside - oneside代表所有页面统一对齐显示, article/report文档类型默认选项; twoside代表奇数页偏左对齐, 偶数页偏右对齐(偏向书本中心), book文档类型默认选项. 不支持letter/slides文档类型
+	oneside | twoside - oneside代表所有页面统一对齐显，article/report文档类型默认选项; twoside代表奇数页偏左对，偶数页偏右对齐(偏向书本中心，book文档类型默认选。不支持letter/slides文档类型
 
-	openright | openany - openany代表新chapter可从奇/偶数开启, report文档类默认选项; openright代表新chapter只从奇数页开启, book文档类的默认选项. 只支持report/book文档类型(因为article/letter/slides不支持章节)
+	openright | openany - openany代表新chapter可从奇/偶数开，report文档类默认选项; openright代表新chapter只从奇数页开，book文档类的默认选。只支持report/book文档类型(因为article/letter/slides不支持章节)
 
-	onecolumn | twocolumn - 页面分为一个块或左右两个块显示, 默认选项为onecolumn. 支持article/report/book文档类型
+	onecolumn | twocolumn - 页面分为一个块或左右两个块显，默认选项为onecolum。支持article/report/book文档类型
 
-	titlepage | notitlepage - notitlepage代表标题页和摘要页不另成一页, article文档类默认选项; titlepage代表标题生成一个单独页, 摘要生成单独页, report/book/slides文档类默认选项。不支持letter文档类型
+	titlepage | notitlepage - notitlepage代表标题页和摘要页不另成一，article文档类默认选项; titlepage代表标题生成一个单独，摘要生成单独，report/book/slides文档类默认选项。不支持letter文档类型
 
-	openbib - 参考文献entry的author/title都各占一行. 不支持slides/letter文档类型
+	openbib - 参考文献entry的author/title都各占一。不支持slides/letter文档类型
 
-	leqno - equation和eqnarray公式环境的公式编号出现在左侧. 默认为右侧
+	leqno - equation和eqnarray公式环境的公式编号出现在左。默认为右侧
 
-	fleqn - 行间公式左对齐, 包含统一缩进. 默认为居中对齐
-	    默认行间公式还额外存在缩进, 可在preamble区域使用\mathindent调整缩进, 如: \setlength{\mathindent}{2cm}
+	fleqn - 行间公式左对，包含统一缩。默认为居中对齐
+	    默认行间公式还额外存在缩，可在preamble区域使用\mathindent调整缩，如: \setlength{\mathindent}{2cm}
 
-    doc_class - 文档类型, 文件名后缀.cls. 类型列表: article/report/book/letter/slides或机构自己的cls模板
+    doc_class - 文档类，文件名后缀.cl。类型列表: article/report/book/letter/slides或机构自己的cls模板
 	
 
 
-2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的包, 包含相同可选参数(或不指定可选参数)的宏包可集中到一个\usepackage命令, 属于document preamble内容
+2.\usepackage[arg1,arg2,...]{pac_name1,pac_name2,...}指定包含额外指令的，包含相同可选参数(或不指定可选参数)的宏包可集中到一个\usepackage命，属于document preamble内容
     arg<N> - 可选参数列表
-    pac_name<N> - 导入的包名, 文件后缀为.sty
-    ** package冲突: 根据冲突package出现先后顺序, 后导入的包覆盖先导入的包. 当两个包都有同一个指令时, 出现command '<command>' already defined错误提示, 可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
+    pac_name<N> - 导入的包，文件后缀为.sty
+    ** package冲突: 根据冲突package出现先后顺，后导入的包覆盖先导入的。当两个包都有同一个指令，出现command '<command>' already defined错误提，可在preamble区使用\let\<command>\undefined取消该指令的定义; 先导入包独有的指令不可用
 
 
-3.\begin{document}之前的部分为导言(preamble). 在该部分的命令，对正文的全文产生影响
+3.\begin{document}之前的部分为导言(preamble。在该部分的命令，对正文的全文产生影响
 
 
-4.begin{document} ... \end{document}指定正文内容部分. 正文的命令，只对命令之后的内容产生影响
+4.begin{document} ... \end{document}指定正文内容部。正文的命令，只对命令之后的内容产生影响
 
 
 5.\end{document}后的所有内容被忽略
@@ -110,28 +110,28 @@ report - [part] -> chapter -> section -> subsection...
 内容讲解
 1.\title{}为标题内容
 
-2.\author{}为作者名字, 多个名字使用\and进行分隔
+2.\author{}为作者名字，多个名字使用\and进行分隔
 
-3.\date{}为日期(可选), 可使用\today生成当前日期
+3.\date{}为日期(可选)，可使用\today生成当前日期
 
 4.\thanks{}可用于给title/author/date内容作脚注
 
 5.\maketitle为生成标题的指令，位于正文部分
 
-6.\tableofcontents生成目录索引, 包含两个步骤:
+6.\tableofcontents生成目录索引，包含两个步骤:
 	i. 生成.toc文件
 	ii.生成目标文件
 
-7.\listoffigures生成entry依据为\begin{figure}...\end{figure}中的\caption内容, \listoftables类似
+7.\listoffigures生成entry依据为\begin{figure}...\end{figure}中的\caption内容，\listoftables类似
 
-8.\begin{abstract} ... \end{abstract}为摘要信息环境
+8.\begin{abstract}...\end{abstract}为摘要信息环境
 
-9.\section[toc_entry]{heading}用于设置节的目录名称(toc_entry)和节名称(heading), section相关指令中不能包含脆弱(fragile)指令, 如\footnote, 需要使用\protect指令进行保护, 即\protect\footnote. \section的fragile指令列表:
+9.\section[toc_entry]{heading}用于设置节的目录名称(toc_entry)和节名称(heading)，section相关指令中不能包含脆弱(fragile)指令，如\footnote，需要使用\protect指令进行保护，即\protect\footnote. \section的fragile指令列表:
     \(    \)    \begin    \end    \footnote
 
-10.\section*{heading}为section的当前位置不参与编号版本, 并且不被目录toc收录
+10.\section*{heading}为section的当前位置不参与编号版本，并且不被目录toc收录
 
-11.fncychap宏包用于定制化chapter标题, 可选参数指定不同类型定制, 列表如下: Lenny/Sonny/Glenn/Conny/Rejne/Bjarne/Bjornstrup
+11.fncychap宏包用于定制化chapter标题，可选参数指定不同类型定制，列表如下: Lenny/Sonny/Glenn/Conny/Rejne/Bjarne/Bjornstrup
 
 
 
@@ -163,10 +163,10 @@ this is first line
 \end{document}
 
 内容讲解
-1.\include{file_name}用于源文件将子文件内容进行读取, 特性:
+1.\include{file_name}用于源文件将子文件内容进行读取，特性:
 	(1)子文件只能包含正文内容
 	(2)子文件开启新page
-	(3)不可在子文件中再使用\include导入其他文件, 即不可嵌套
+	(3)不可在子文件中再使用\include导入其他文件，即不可嵌套
 
 
 
@@ -181,13 +181,13 @@ This is \begin{bfseries}line\end{bfseries} one\\
 
 内容讲解
 1.声明形式
-作用于当前环境内, 后续所有内容. 格式: \bfseries
+作用于当前环境内，后续所有内容。格式：\bfseries
 
 2.参数形式
-作用于指定的参数内容. 格式: \mathrm{}
+作用于指定的参数内容。格式：\mathrm{}
 
 3.环境形式
-作用于限定的环境内. 格式: \begin{bfseries} ... \end{bfseries}
+作用于限定的环境内。格式：\begin{bfseries} ... \end{bfseries}
 
 4.环境形式和声明形式的命令的名称大致相同
 
@@ -205,17 +205,17 @@ This is \wrap[1.1]{173}
 \end{document}
 
 内容讲解
-1.\newcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于定义新命令. 参数如下:
-    new_cmd - 新命令的名称, 不能以\end起始, 不能与已有命令重名
-    cmd_arg_number - 新命令的参数个数, 可选范围[0, 9]. 默认为0
-    option_arg_default_val - 新命令第一个参数的默认值. 如果指定默认值, 则第一个参数为可选参数, 并且只能一个参数为可选参数
-    cmd_action - 新命令的相关定义. 可使用#n引用新命令的第n个参数值
+1.\newcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于定义新命令。参数如下:
+    new_cmd - 新命令的名称，不能以\end起始，不能与已有命令重名
+    cmd_arg_number - 新命令的参数个数，可选范围[0，9]。默认为0
+    option_arg_default_val - 新命令第一个参数的默认值。如果指定默认值，则第一个参数为可选参数，并且只能一个参数为可选参数
+    cmd_action - 新命令的相关定义。可使用#n引用新命令的第n个参数值
 
-2.\providecommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}作用与\newcommand类似, 但是当新命令与已有命令重名时, 不出现错误提示, 并且新命令暂时被忽略, 等待已有重名命令被移除时, 新命令可使用
+2.\providecommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}作用与\newcommand类似，但是当新命令与已有命令重名时，不出现错误提示，并且新命令暂时被忽略，等待已有重名命令被移除时，新命令可使用
 
-3.\xspace可自动生成空格, 除非后续为标点符号. 包含在xspace宏包中
+3.\xspace可自动生成空格，除非后续为标点符号。包含在xspace宏包中
 
-4.\ensuremath{<content>}确保content处于math mode, 如果命令已处于math mode, 则使用纯文本; 如果命令处于paragraph/LR mode, 则为$<content>$
+4.\ensuremath{<content>}确保content处于math mode，如果命令已处于math mode，则使用纯文本; 如果命令处于paragraph/LR mode，则为$<content>$
 
 
 
@@ -232,8 +232,37 @@ This is \ding{173}
 \end{document}
 
 内容讲解
-1.\renewcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于对已有命令重新定义. 参数如下:
-    new_cmd - 命令的新名称, 不能以\end起始
-    cmd_arg_number - 命令的参数个数, 可选范围[0, 9]. 默认为0
-    option_arg_default_val - 命令第一个参数的默认值. 如果指定默认值, 则第一个参数为可选参数, 并且只能一个参数为可选参数
-    cmd_action - 命令的相关定义. 可使用#n引用命令的第n个参数值
+1.\renewcommand{<new_cmd>}[<cmd_arg_number>][<option_arg_default_val>]{<cmd_action>}用于对已有命令重新定义。参数如下:
+    new_cmd - 命令的新名称，不能以\end起始
+    cmd_arg_number - 命令的参数个数，可选范围[0，9]。默认为0
+    option_arg_default_val - 命令第一个参数的默认值。如果指定默认值，则第一个参数为可选参数，并且只能一个参数为可选参数
+    cmd_action - 命令的相关定义。可使用#n引用命令的第n个参数值
+
+
+
+Demo_08 -- 长度设置命令
+\documentclass{article}
+\usepackage{calc}
+\newlength{\micro}
+\setlength{\micro}{15pt}
+\addtolength{\parindent}{\micro}
+%\settowidth{\parindent}{I hate you}
+\begin{document}
+I love you\\
+I hate youI love you
+\end{document}
+
+内容讲解
+1.\newlength{<new_cmd>}配置一个新的长度命令, 并且长度为0
+
+2.\setlength{<cmd>}{<length>}对长度命令赋予一个指定长度。对应的简化命令：
+<cmd>=<length>
+如果长度以加减法计算获得，则不能使用简化形式
+
+3.\addtolength{<cmd>}{<length>}在长度命令原有的长度基础上，增加一个指定长度
+
+4.\settowidth{<cmd>}{<str>}将指定字符串的长度，赋予长度命令
+
+5.长度length可以使用弹性长度。如：5pt plus 1pt minus 1pt代表弹性长度范围[4,6]
+
+6.\the<cmd>可显示出当前长度命令的值。如：\the\parindent可指出当前\parindent的值

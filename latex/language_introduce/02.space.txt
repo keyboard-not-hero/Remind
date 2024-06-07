@@ -22,21 +22,24 @@ Demo_02 -- 单个字符(汉字)之间的距离
 \documentclass{article}
 \setlength{\parindent}{0cm}
 \begin{document}
-    I\!I\\
-    II\\
-    I\,I\\
-    I\:I\\
-    I\;I\\
-    I\enspace I\\
-    I\quad I\\
-    I\qquad I\\
+    I\negthickspace love you\qquad \verb+\negthickspace+\\
+    I\negmedspace love you\qquad \verb+\negmedspace+\\
+    I\negthinspace love you\qquad \verb+\negthinspace+\\
+    I\!love you\qquad \verb+\!+\\
+    Ilove you\qquad \verb+normal+\\
+    I\thinspace love you\qquad \verb+\thinspace+\\
+    I\,love you\qquad \verb+\,+\\
+    I\medspace love you\qquad \verb+\medspace+\\
+    I\:love you\qquad \verb+\:+\\
+    I\thickspace love you\qquad \verb+\thickspace+\\
+    I\;love you\qquad \verb+\;+\\
+    I\enskip love you\qquad \verb+\enskip+\\
+    I\enspace love you\qquad \verb+\enspace+\\
+    I\quad love you\qquad \verb+\quad+\\
+    I\qquad love you\qquad \verb+\qquad+\\
+    I\hfil love you\qquad \verb+\hfil+\\
+    I\hfill love you\qquad \verb+\hfill+\\
 
-    this\hspace{1cm} is a big space\\
-    \hspace{5cm} this is no space
-
-    \hspace*{2cm} this is b \vspace{2cm}biger space\\
-    this is a long vertical space\\
-    
     $\pi\approx 3.141\:592\:653\:589\:793$\\
     26\:800\:kg
 \end{document}
@@ -44,18 +47,26 @@ Demo_02 -- 单个字符(汉字)之间的距离
 内容讲解
 1.'\!'缩进字符之间的间隔
 
-2.水平距离排序如下:
-    \qquad > \quad > \enspace > \; > \: > \, > [normal] > \!
+2.水平距离命令列表如下(由小到大):
+    \negthickspace - 为-0.277 7em的水平空白
+    \negmedspace   - 为-0.222 2em的水平空白
+    \negthinspace  - 为-0.166 67em的水平空白，也可以表示为\!
+    <normal>       - 普通相邻字符距离
+    \thinspace     - 为0.166 67em的水平空白，也可以表示为\,
+    \medspace      - 为0.222 2em的水平空白，也可以表示为\:
+    \thickspace    - 为0.277 7em的水平空白，也可以表示为\;
+    \enskip        - 为0.5em的水平空白
+    \enspace       - 为0.5em的水平空白
+    \quad          - 为1em的水平空白
+    \qquad         - 为2em的水平空白
+    \vfil          - 如果当前行尾部有剩余空间, 空白尽量使内容填满当前行(尾部还是会剩余部分空间)
+    \vfill         - 如果当前行尾部有剩余空间, 空白必定使内容填满当前行
 
-3.\hspace{length}用于留置指定长度的水平方向空白. 不适用于行起始和行结束, 可适用于段落起始和段落结束
+3.以上内容也适用于math mode和中文模式
 
-4.\hspace*{length}用于指定长度的水平空白, 并且可用于行起始和行结束
+4.根据GB\T1.1-2009, 所有数值(除年号外), 从小数点前/后三位, 每隔三位为一组, 组之间留大概1/4汉字(0.25em)间隔, \:约0.22em间隔, 适用于该规范(当前后有数字为1, 由于前后距离略大, 可以改为\,)
 
-5.以上内容也适用于math mode和中文模式
-
-6.根据GB\T1.1-2009, 所有数值(除年号外), 从小数点前/后三位, 每隔三位为一组, 组之间留大概1/4汉字(0.25em)间隔, \:约0.22em间隔, 适用于该规范(当前后有数字为1, 由于前后距离略大, 可以改为\,)
-
-7.除角度单位, 其他单位应该与数字间隔大约1/4汉字
+5.除角度单位, 其他单位应该与数字间隔大约1/4汉字
 
 
 
@@ -254,17 +265,15 @@ In another moment down went Alice after it, never once considering how in the wo
 内容讲解
 1.\indent和\noindent在段落开始使用, 表示启用/关闭当前段落头部缩进
 
-2.\CTEXindent和\CTEXnoindent为\indent指令的中文版, 缩进两个汉字
+2.\parindent用于段落的头部缩进. 可用于导言和正文. 默认值为15pt
 
-3.\parindent用于段落的头部缩进. 可用于导言和正文. 默认值为15pt
-
-4.\hangindent与\hangafter用于段落的指定行缩进
+3.\hangindent与\hangafter用于段落的指定行缩进
 \hangindent中, 正值代表左侧缩进, 负值代表右侧缩进, 并且只作用于之后紧跟的一个段落
 \hangafter中, 正值代表前面的指定行不缩进, 段落后续所有行缩进; 负值代表前面的指定行缩进, 段落后续所有行不缩进
 
-5.\leftskip用于整个段落左侧的偏移, 正值代表向右偏移, 负值代表向左偏移, 作用于之后所有段落
+4.\leftskip用于整个段落左侧的偏移, 正值代表向右偏移, 负值代表向左偏移, 作用于之后所有段落
 
-6.\rightskip用于整个段落右侧的偏移, 正值代表向左偏移, 负值代表向右偏移, 作用于之后所有段落
+5.\rightskip用于整个段落右侧的偏移, 正值代表向左偏移, 负值代表向右偏移, 作用于之后所有段落
 
 
 
@@ -292,45 +301,75 @@ This is page three
 
 
 
-十二、Demo12 - 垂直距离
+Demo_12 -- 水平空间
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is a long \hspace{4cm} line\\
+\hspace{4cm} This is a short line\\
+
+This is a long \hspace*{4cm} line\\
+\hspace*{4cm} This is a short line\\
+\end{document}
+
+内容讲解
+1.\hspace{<length>}生成一段高度为0，宽度为指定长度的水平空白。不支持在行首和行尾保留水平空白
+
+2.\hspace*{<length>}生成一段高度为0，宽度为指定长度的水平空白。支持在行首和行尾保留水平空白
+
+
+
+Demo_13 -- 垂直空间
 \documentclass{article}
 \begin{document}
     this is first line\\
-    this is second line
+    this is second\vspace{2cm} line
 
-    \bigskip
     this is third line
 \end{document}
 
 内容讲解
-1.\vspace{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 不适用于page起始和结束, 且仅适用于paragraph mode内部
+1.\vspace{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白。位于段落起始时，表示当前段落与上一个段落的额外垂直空白；位于段落中部时，表示与下一行的额外垂直空白；位于段落尾部时，表示与下一段落的额外垂直空白。 不适用于page起始和结束位置
 
-2.\vspace*{length}用于指定长度的垂直空白, 作用于使用处所在行与下一行. 并且适用于page起始和结束
+2.\vspace*{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白. 适用于page起始和结束位置
 
-3.\vfill为\hspace{\fill}简写版本, 动态填充垂直空白, 当前页内容被填满时, 留置一个略高的空白; 当前页过早换页时, 将vfill上面内容向上对齐, 下面内容向下对齐, 剩余垂直高度被vfill占据. 不适用于页起始/结束
+3.\vfil为当页面尾部包含空白时，使用空白填充当前行与下一行位置，尽量使填满页面尾部空间(还是会包含部分尾部空白)
 
-4.\vspace*{\fill}为\vfill的适用于页起始/结束版本
+4.\vfill为当页面尾部包含空白时，使用空白填充当前行与下一行位置，必须使填满页面尾部空间，拓展能力大于\vfil。等效于\vspace{\fill}
 
-5.\addvspace{length}用于指定长度的垂直空白, 但必须放置于新的段落起始位置
+5.\addvspace{<length>}类似于\vspace，但只能位于段落头部，表示与上一段落的额外垂直距离
 
 6.\vspace与\addvspace的差别: 多个\vspace指令重叠时, 垂直距离叠加; 多个\addvspace指令重叠式, 只取垂直距离最大的那个addvspace指令的垂直距离
 
 
 
-Demo_13 -- 保留与指定字符串等宽的空白
+Demo_14 -- 保留与指定字符串等宽的空白
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
-    i am a good man. please don't hurt me.\\
-    \phantom{i am a good man. }please don't hurt me.
+X\\
+x+y \hphantom{$\displaystyle\frac{\frac{1}{x^2}}{\frac{x+1}{x^2}}$} =z\\
+Y\\
+
+X\\
+x+y \vphantom{$\displaystyle\frac{\frac{1}{x^2}}{\frac{x+1}{x^2}}$} =z\\
+Y\\
+
+X\\
+x+y \phantom{$\displaystyle\frac{\frac{1}{x^2}}{\frac{x+1}{x^2}}$} =z\\
+Y
 \end{document}
 
 内容讲解
-1.\phantom{content}用于留置与内容content等宽的空格, 可用于paragraph mode或math mode
+1.\hphantom{<str>}生成一段高度为0，宽度等于指定内容的水平空白。可用于paragraph mode或math mode
+
+2.\vphantom{<str>}生成一段高度等于指定内容，宽度为0的垂直空白。可用于paragraph mode或math mode
+
+3.\phantom{<str>}生成一段高度等于指定内容，宽度等于指定内容的空白。可用于paragraph mode或math mode
 
 
 
-Demo_14 -- 引用
+Demo_15 -- 引用
 \documentclass{article}
 \begin{document}
 Down, down, down. Would the fall NEVER come to an end! `I wonder how many miles I've fallen by this time?' she said aloud.
