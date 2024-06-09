@@ -5,9 +5,10 @@ Demo_01 -- 基础脚注
 \end{document}
 
 内容讲解
-1.\footnote[num]{fn_detail}用于给内容添加脚注, num为脚注编号; fn_detail为脚注内容
+1.\footnote[num]{fn_detail}用于给内容添加脚注, num为脚注编号; fn_detail为脚注内容。fn_detail不能包含抄录相关命令，除非使用\cprotect(包含在cprotect宏包中)，如下：
+    \cprotect\footnote{}
 
-2.\footnote只能用于paragraphy mode
+2.\footnote适用于paragraphy mode和math mode，不适用于LR mode
 
 
 

@@ -247,7 +247,7 @@ print('结果为 {0} 和 {1}'.format(sol1,sol2))
 3.\verb<separator>...<separator>为参数形式抄录命令，但内容分隔符可以为任意(不能是*和空格)，只需要前后分隔符匹配。内容处于LR mode
 
 4.抄录环境和命令，可以位于其他环境中，但不能位于参数形式命令中，也不能位于包含声明形式命令的环境中。若想要在参数形式命令中使用抄录命令，可以在参数命令之前提供如下命令：
-    \cprotext
+    \cprotext(包含在cprotect宏包中)
     如：\cprotect\footnote{\verb+footnote+}
 
 5.默认抄录字体为等宽体，字体尺寸为\normalsize。可使用以下指令修改：
