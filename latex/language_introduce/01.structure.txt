@@ -257,7 +257,7 @@ I hate youI love you
 
 2.\setlength{<cmd>}{<length>}对长度命令赋予一个指定长度。对应的简化命令：
 <cmd>=<length>
-如果长度以加减法计算获得，则不能使用简化形式
+length必须为固定数组，不能为四则运算。如果length需要通过四则运算计算得到结果，需要调用calc宏包。简化命令不支持length使用四则运算
 
 3.\addtolength{<cmd>}{<length>}在长度命令原有的长度基础上，增加一个指定长度
 

@@ -32,8 +32,13 @@ regular_expression参数
 
 
 string参数
-    verbatim纯字符替换
-    可以使用\[1-9]使用RE匹配的分组
+    常规下为逐字符纯字符替换. 除了以下情况:
+        \0 - 引用regular_expression匹配的所有内容
+	\1 - 引用regular_expression匹配的第1个\(\)限定内容
+	...
+	\9 - 引用regular_expression匹配的第9个\(\)限定内容
+	\r - 换行符
+        \= - 必须为起始内容, 则后续内容为表达式, 可以调用函数, 可以将后续内容进行四则运算, 但不可以使用\<n>引用分组, 需要使用submatch(n)引用分组
 
 
 

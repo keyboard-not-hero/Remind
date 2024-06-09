@@ -1,0 +1,384 @@
+Demo_01 -- 字体属性1
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\setlength{\parindent}{0mm}
+\begin{document}
+\textnormal{范例文本, Demo text, 常规体, normal text}\\
+\textrm{范例文本, Demo text, 罗马体, roman family}\\
+\textsf{范例文本, Demo text, 等线体, sans serif family}\\
+\texttt{范例文本, Demo text, 等宽体, typewriter family}\\
+\textmd{范例文本, Demo text, 中序体, medium series}\\
+\textbf{范例文本, Demo text, 加粗体, boldface series}\\
+\textup{范例文本, Demo text, 直立体, upright shape}\\
+\textit{范例文本, Demo text, 斜体, italic shape}\\
+\textsl{范例文本, Demo text, 倾斜, slanted shape}\\
+\textsc{范例文本, Demo text, 小型大写, small caps shape}\\
+\end{document}
+
+内容讲解
+1.字体的五个属性。列表如下：
+    encoding - 字体的编码，LaTeX文本类型使用的编码列表如下：
+        OT1 - 文本字体
+	T1  - 文本字体
+	OML - 数学字体，包括英文字母、数字、希腊字母
+	OMS - 数学符号，包括关系符、运算符、箭头等
+	OMX - 数学大符号，包括求和、积分、定界符等
+	U   - 未知
+    family - 字体的字族，列表如下：
+        cmr  - 罗马体
+	cmss - 等线体
+	cmtt - 等宽体
+	cmm  - 数学斜体
+	cmsy - 数学符号
+	cmex - 数学扩充
+    series - 字体的序列，列表如下：
+        m  - 常规
+	bx - 粗宽
+    shape - 字体的形状，列表如下：
+        n  - 直立
+	it - 斜体
+	sl - 倾斜
+	sc - 小型大写
+    size - 字体的尺寸
+
+2.LaTeX各种类型字体的默认值。普通文本：
+    encoding - OT1
+    family   - cmr
+    series   - m
+    shape    - n
+    size     - 10pt(article/report/book类文档)
+详情参考symbol_summary的表
+
+3.\textnormal为LaTeX普通文本默认字体
+\textrm为roman family字体，series/shape使用默认选项
+\textmd为mediym series字体，family/shape使用默认选项
+\textup为upright shape字体，family/series使用默认选项
+综合，\textnormal、\textrm、\textmd、\textup效果一致
+
+3.\textsf{}为等线体, 等线体字体线条一致, 没有衬线。字体参数如下：
+    family - cmss
+    series - m
+    shape  - n
+
+4.\texttt{}为等宽体, 在中文(或英文)中, 所有字体(或字符)的宽度一致, 适用于打印。字体参数如下：
+    family - cmtt
+    series - m
+    shape  - n
+
+5.\textbf{}为加粗体。字体参数如下：
+    family - cmr
+    series - bx
+    shape  - n
+
+6.\textit{}为斜体。字体参数如下：
+    family - cmr
+    series - m
+    shape  - it
+
+7.\textsl{}为倾斜体。字体参数如下：
+    family - cmr
+    series - m
+    shape  - sl
+
+8.\textsc{}为字体更小的大写字母。字体参数如下：
+    family - cmr
+    series - m
+    shape  - sc
+
+9.\text开头的普通文本指令可位于任何环境中, paragraph/LR/math mode
+
+10.字体建议：正文使用罗马字族，代码或专有名词使用等宽体字族，章节名称使用等线体字族
+
+11.详情查看symbol_summary的表2
+
+
+
+Demo_02 -- 字体属性2
+\documentclass{article}
+\DeclareFixedFont{\myself}{OT1}{cmr}{m}{sl}{12pt}
+\setlength{\parindent}{0mm}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+
+\fontencoding{OT1}\fontshape{it}\selectfont
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+
+\usefont{OT1}{cmr}{bx}{n}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+
+\myself
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
+\end{document}
+
+内容讲解
+1.\font<attribute>类声明类型指令，可修改后续文本的单一属性，并且可以组合多个属性，\selectfont使指令生效。属性指令列表如下：
+    \fontencoding{<encoding>} - 设置字符编码
+    \fontfamily{<family>}     - 设置字符族
+    \fontseries{<series>}     - 设置字符序列
+    \fontshape{<shape>}       - 设置字符形状
+    \fontsize{<size>}{<line_distance>}
+                              - 设置字符大小和行距
+    \selectfont               - 非属性设置，使设置生效的指令，必须在设置后紧紧跟随
+
+2.\usefont{<encoding>}{<familt>}{<series>}{<shape>}设置字符属性的声明类型指令
+
+3.\DeclareFixedFont{<cmd_name>}{<encoding>}{<series>}{<shape>}{<size>}用于定义新字符类指令，该指令指定字符属性
+
+
+
+Demo_03 -- 字体属性3
+\documentclass{article}
+\renewcommand{\seriesdefault}{\bfdefault}
+\renewcommand{\shapedefault}{\itdefault}
+\setlength{\parindent}{0mm}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+\end{document}
+
+内容讲解
+1.\renewcommand{\<attr>default}{\<attr_val>default}用于修改字体的默认属性
+
+2.LaTeX系统默认属性配置如下：
+    usefont{\encodingdefault}{\familydefault}{\seriesdefault}{\shapedefault}
+
+    \newcommand{\encodingdefault}{OT1}
+    \newcommand{\familydefault}{\rmdefault}
+    \newcommand{\seriesdefault}{\mddefault}
+    \newcommand{\shapedefault}{\updefault}
+
+    \newcommand{\rmdefault}{cmr}
+    \newcommand{\sfdefault}{cmss}
+    \newcommand{\sfdefault}{cmtt}
+
+
+
+Demo_04 -- 字体大小
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\tiny I love you\\
+\normalsize I love you\\
+\huge I love you
+\end{document}
+
+内容讲解
+1.可以使用声明形式指定后续字体的大小
+
+2.详情参考symbol_summary的表3
+
+
+
+Demo_05 -- 特殊字符
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+special character:\\
+\& \verb+\+
+\end{document}
+
+内容讲解
+1.LaTeX系统包含10个可打印字符的特殊字符
+
+2.详情参考symbol_summary的表4
+
+
+
+Demo_06 -- 对齐方式
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is flushleft text
+\begin{center}
+This is center text
+\end{center}
+\begin{flushright}
+This is flushright text
+\end{flushright}
+\end{document}
+
+内容讲解
+1.\begin{flushleft}...\end{flushleft}为左对齐环境，为系统默认对齐方式。对应声明形式和参数形式：
+    \raggedright
+    \leftline{}
+
+2.begin{center}...\end{center}为居中对齐环境。对应声明形式和参数形式：
+    \centering
+    \centerline{}
+
+3.begin{flushright}...\end{flushright}为右对齐环境。对应声明形式和参数形式：
+    \raggedleft
+    \rightline{}
+
+
+
+Demo_07 -- 字符抄录(逐字符)
+\documentclass{article}
+\usepackage{ctex}
+\setlength{\parindent}{0mm}
+\begin{document}
+\begin{verbatim}
+# 二次方程式 ax**2 + bx + c = 0
+# a、b、c 用户提供，为实数，a ≠ 0
+ 
+# 导入 cmath(复杂数学运算) 模块
+import cmath
+ 
+a = float(input('输入 a: '))
+b = float(input('输入 b: '))
+c = float(input('输入 c: '))
+ 
+# 计算
+d = (b**2) - (4*a*c)
+ 
+# 两种求解方式
+sol1 = (-b-cmath.sqrt(d))/(2*a)
+sol2 = (-b+cmath.sqrt(d))/(2*a)
+
+print('结果为 {0} 和 {1}'.format(sol1,sol2))
+\end{verbatim}\vspace{2cm}
+
+\verb+\n mean linefeed+
+\end{document}
+
+内容讲解
+1.\begin{verbatim}...\end{verbatim}为抄录(逐字符输出)环境，环境内字符不作特殊对待，空格全部保留。内容处于paragraph mode，但不能自动换行，需要手动换行
+
+2.\begin{verbatim*}...\end{verbatim*}类似于\begin{verbatim}...\end{verbatim}，但使用特殊字符显示空格
+
+3.\verb<separator>...<separator>为参数形式抄录命令，但内容分隔符可以为任意(不能是*和空格)，只需要前后分隔符匹配。内容处于LR mode
+
+4.抄录环境和命令，可以位于其他环境中，但不能位于参数形式命令中，也不能位于包含声明形式命令的环境中。若想要在参数形式命令中使用抄录命令，可以在参数命令之前提供如下命令：
+    \cprotext
+    如：\cprotect\footnote{\verb+footnote+}
+
+5.默认抄录字体为等宽体，字体尺寸为\normalsize。可使用以下指令修改：
+    \makeatletter \renewcommand{\verbatim@font}{\bfseries\huge} \makeatother
+
+
+
+Demo_08 -- 音节重音
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\={o}u\\
+\'{o}u\\
+\v{o}u\\
+\'{o}u\\
+
+\b{i}u\\
+\b{\i}u\\
+\end{document}
+
+内容讲解
+1.\'{<letter>}用于在字符上进行注音
+
+2.i/j由于头顶本来有'.', 所以需要去除, 格式为\i、\j
+
+3.其他注音符号参考symbol_summary的表6. 适用于paragraph mode和LR mode
+
+
+
+Demo_09 -- 非英文符号
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\oe\\
+?`\\
+!`\\
+\end{document}
+
+内容讲解
+1.?`表示180旋转的问号
+
+2.其他非英文符号参考symbol_summary的表8. 适用于paragraph mode和LR mode
+
+
+
+Demo_10 -- 下划线
+\documentclass{article}
+\usepackage{ulem}
+\setlength{\parindent}{0mm}
+\renewcommand{\ULthickness}{1pt}
+\setlength{\ULdepth}{10pt}
+\begin{document}
+This is line \underline{one}\\
+This is line two\\
+This is line \underline{\phantom{three}}\\
+This is line \uline{four}
+\end{document}
+
+内容讲解
+1.\underline{<content>}用于给指定文本增加下划线, 但内容进入左右模式, 不能换行. 适用于文本模式和数学模式
+
+2.\uline{<content>}用于给指定文本增加下划线, 并且内容可以换行, 可以修改下划线粗细和下划线距离文本的距离, 包含在宏包ulem中. 相关指令
+    \ULthickness - 用于设置下划线的粗细, 默认为0.4pt, 配置命令: \renewcommand{\ULthickness}{<length>}
+    \ULdepth - 设置下划线与文本的距离, 与文本尺寸相关, 配置命令: \setlength{\ULdepth}{<length>}
+
+
+
+Demo_11 -- TeX family text
+\documentclass{article}
+\begin{document}
+Some people use plain \TeX, but I prefer \LaTeX.
+\end{document}
+
+内容讲解
+1.\TeX生成TeX的logo标志, logo后空格必须使用\<space>指定, 其他TeX family logo详见symbol_summary的表23
+
+
+
+Demo_12 -- 破折号
+\documentclass{article}
+\begin{document}
+    An intra-word dash or hyphen, as in X-ray.\\
+
+    A medium dash for number ranges, like 1--2.\\
+
+    A punctuation dash---like this.
+\end{document}
+
+内容讲解
+1.-为最短的破折号，常用于连接字母
+
+2.--为稍宽的破折号，用于表示数字范围
+
+3.--可以无限连接，但必须满足3n+2或3n，3n+1时，最后一个破折号会出现明显断层
+
+
+
+Demo_13 -- 放大/缩小pifont宏包字体
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{pifont}
+\let\oldding\ding
+\renewcommand{\ding}[2][1]{\scalebox{#1}{\oldding{#2}}}
+\begin{document}
+\ding{172}\qquad\ding[1.2]{172}\\
+\ding{192}\qquad\ding[1.2]{192}
+\end{document}
+
+内容讲解
+1.\oldding保存原\ding内容
+
+2.renewcommand{原命令}[参数数量][默认值]{定义内容}, #<n>代表引用使用命令时, 使用的第n个参数值
+\scalebox包含在graphicx宏包中  
+
+
+
+Demo_14 -- 单位符号
+\documentclass{article}
+\usepackage{siunitx}
+\setlength{\parindent}{0mm}
+\begin{document}
+\ang{30}\\
+\qty{30}{\degree}\\
+\qty{30}{\degreeCelsius}\\
+\qty{30}{\ohm}
+\end{document}
+
+内容讲解
+1.\ang{<degree>}用于显示指定的角度单位. 包含在siunitx宏包中
+
+2.\qty{<num>}{<symbol>}用于显示指定的符号. 包含在siunitx宏包中. 符号一览:
+    \degreeCelsius - 摄氏度
+    \ohm - 电阻单位: 欧
+    \degree - 角度单位

@@ -14,7 +14,7 @@ cat\\
 
 2.连续多个空格(包括\t\n)视为一个空格
 
-3.距离单位参考symbol_summary
+3.距离单位参考symbol_summary的表1
 
 
 

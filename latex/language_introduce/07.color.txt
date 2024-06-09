@@ -1,0 +1,93 @@
+Demo_01 -- 指定文本颜色
+\documentclass{article}
+\usepackage{xcolor}
+\setlength{\parindent}{0mm}
+\begin{document}
+\color[gray]{0.1} This is gray text\\
+\color[rgb]{1,0,0} This is red text\\
+\color[RGB]{0,255,0} This is green text\\
+\color[cmyk]{0,1,0,0} This is magenta text\\
+\textcolor[RGB]{171,235,198}{This is light green text}
+\end{document}
+
+内容讲解
+1.本文档需xcolor宏包支持，xcolor宏包支持的颜色模式：
+    gray - 灰度模式。范围[0,1]，0代表黑色，1代表白色
+    rgb - red/green/blue三原色模式。每个基色的取值范围[0,1]
+    RGB - red/green/blue三原色模式。每个基色的取值范围[0,255]
+    cmyk - cyan/magenta/yellow/black四分色模式。每个基色的取值范围[0,1]
+
+2.\color[<color_model>]{<base_color_val>}为颜色的声明格式命令，可指定后续文本颜色。参数列表如下：
+    color_model - 使用的颜色模式
+    base_color_val - 指定颜色模式下，基色的取值
+
+3.\textcolor[<color_model>]{<base_color_val>}{<text>}为颜色的参数格式命令，可指定参数文本的颜色。参数列表如下：
+    color_model - 使用的颜色模式
+    base_color_val - 指定颜色模式下，基色的取值
+
+
+
+Demo_02 -- 指定文本背景色
+\documentclass{article}
+\usepackage{xcolor}
+\setlength{\parindent}{0mm}
+\begin{document}
+\colorbox[RGB]{0,255,0}{This is green background text}\\
+\fcolorbox[RGB]{100,0,0}{171,235,198}{This is light green background text}
+\end{document}
+
+内容讲解
+1.\colorbox[<color_model>]{<base_color_val>}{<content>}为颜色的参数格式命令，可指定后续内容的背景色。参数列表如下：
+    color_model - 使用的颜色模式
+    base_color_val - 指定颜色模式下，基色的取值
+
+2.\fcolorbox[<color_model>]{<frame_base_color_val>}{<bg_base_color_val>}{<content>}为颜色的参数格式命令，可指定后续内容的背景色和边框颜色。参数列表如下：
+    color_model - 使用的颜色模式
+    frame_base_color_val - 边框在指定颜色模式下，基色的取值
+    frame_base_color_val - 背景在指定颜色模式下，基色的取值
+
+
+
+Demo_03 -- 指定页面背景色
+\documentclass{article}
+\usepackage{xcolor}
+\setlength{\parindent}{0mm}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\newpage
+
+\pagecolor[RGB]{128,0,128}
+So she set to work, and very soon finished off the cake.
+\end{document}
+
+内容讲解
+1.\pagecolor[<color_model>]{<base_color_val>}为颜色的声明格式命令，可指定后续page的背景色。参数列表如下：
+    color_model - 使用的颜色模式
+    base_color_val - 指定颜色模式下，基色的取值
+
+
+
+Demo_04 -- 定义新颜色
+\documentclass{article}
+\usepackage{xcolor}
+\definecolor{own}{RGB}{128,0,128}
+\setlength{\parindent}{0mm}
+\begin{document}
+\textcolor{own}{This is purple text}\\
+\end{document}
+
+内容讲解
+1.\definecolor{<name>}{<color_model>}{<base_color_val>}
+    定义颜色. 参数列表如下:
+        name - 自定义颜色的名称
+	color_model - 使用的颜色模式
+	base_color_val - 指定颜色模式下，基色的取值
+
+2.\color{<color_name>}为指定文本颜色的声明格式命令
+
+3.\textcolor{<color_name>}{<text>}为指定文本颜色的参数格式命令
+
+4.\colorbox{<color_name>}{<text>}为指定文本背景色的参数格式命令
+
+5.\fcolorbox{<frame_color_name>}{<bg_color_name>}{<text>}为指定文本背景色和边框颜色的参数格式命令
+
+6.\pagecolor{<color_name>}为颜色的声明格式命令，可指定后续page的背景色

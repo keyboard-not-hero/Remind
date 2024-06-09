@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bbding}
+\usepackage{array}
 \usepackage{bbm}
 \usepackage{float}
 \usepackage{graphicx}
@@ -19,6 +20,67 @@
 \renewcommand{\footnoterule}{\vspace*{-2mm}\rule{\textwidth}{0pt}}
 \renewcommand{\thempfootnote}{\arabic{mpfootnote}}
 \begin{document}
+\begin{table}[H]
+\begin{tabular}{l l}
+	\hline
+	单位 & 说明\\
+	\hline
+	sp & 65536 sp=1 pt\\
+	pt & 1 pt=0.351 mm\\
+	bp & 1 bp=0.353 mm$\approx$ 1 pt\\
+	dd & 1 dd=0.376 mm=1.07 pt\\
+	mm & 1 mm=2.845 pt\\
+	ex & 1 ex=当前字体中x的高度\\
+	em & 1 em=当前字体尺寸$\approx$ M的宽度\\
+	pc & 1 pc=4.218 mm=12 pt\\
+	cc & 1 cc =4.513 mm=12 dd=12.84 pt\\
+	cm & 1 cm=10 mm=28.453 pt\\
+	in & 1 in=25.4 mm=72.27 pt\\
+	\hline
+\end{tabular}
+\caption{通用长度单位}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{*{5}{l}}
+\hline
+    参数形式 & 声明形式 & 简化形式 & 文本效果 & 类型说明\\
+    \hline
+    \verb+\textnormal{}+ & \verb+\normalfont+ & & \textnormal{Demo text} & 常规字体\\
+    \verb+\textrm{}+ & \verb+\rmfamily+ & \verb+\rm+ & \textrm{Demo text} & 罗马体族\\
+    \verb+\textsf{}+ & \verb+\sffamily+ & \verb+\sf+ & \textsf{Demo text} & 等线体族\\
+    \verb+\texttt{}+ & \verb+\ttfamily+ & \verb+\tt+ & \texttt{Demo text} & 等宽体族(打印字体)\\
+    \verb+\textmd{}+ & \verb+\mdseries+ & & \textmd{Demo text} & 常规序列\\
+    \verb+\textbf{}+ & \verb+\bfseries+ & \verb+\bf+ & \textbf{Demo text} & 粗宽序列\\
+    \verb+\textup{}+ & \verb+\upshape+ & & \textup{Demo text} & 直立形状\\
+    \verb+\textit{}+ & \verb+\itshape+ & \verb+\it+ & \textit{Demo text} & 斜体形状\\
+    \verb+\textsl{}+ & \verb+\slshape+ & \verb+\sl+ & \textsl{Demo text} & 倾斜形状\\
+    \verb+\textsc{}+ & \verb+\scshape+ & \verb+\sc+ & \textsc{Demo text} & 小型大写形状\\
+    \hline
+\end{tabular}
+\caption{普通模式字体类型}
+\end{table}
+
+\begin{table}
+    \begin{tabular}{>{\raggedright\arraybackslash}m{0.2\textwidth}*{3}{m{0.25\textwidth}<{\raggedleft\arraybackslash}}}
+	\hline
+	字体尺寸命令 & 10pt\makebox[0mm][l]{(default)} & 11pt & 12pt\\
+	\hline
+	\verb+\tiny+ & 5pt & 6pt & 6pt\\
+	\verb+\scriptsize+ & 7pt & 8pt & 8pt\\
+	\verb+\footnotesize+ & 8pt & 9pt & 10pt\\
+	\verb+\small+ & 9pt & 10pt & 10.95pt\\
+	\verb+\normalsize+ & 10pt & 10.95pt & 12pt\\
+	\verb+\large+ & 12pt & 12pt & 14.4pt\\
+	\verb+\Large+ & 14.4pt & 14.4pt & 17.28pt\\
+	\verb+\LARGE+ & 17.28pt & 17.28pt & 20.74pt\\
+	\verb+\huge+ & 20.74pt & 20.74pt & 24.88pt\\
+	\verb+\Huge+ & 24.88pt & 24.88pt & 24.88pt\\
+	\hline
+    \end{tabular}
+    \caption{普通模式字体大小}
+\end{table}
+
 \begin{table}[H]
 \begin{minipage}{\textwidth}
 \begin{tabular}{c c c c c c c c}
@@ -383,27 +445,6 @@
 \footnotetext[99]{也可手动调节大小,位置:\textbackslash  big \textbackslash  bigl \textbackslash  bigm \textbackslash  bigr,规格:\textbackslash  big \textbackslash  Big \textbackslash  bigg \textbackslash  Bigg}
 \end{minipage}
 \caption{公式-括号限定符}
-\end{table}
-
-\begin{table}[H]
-\begin{tabular}{l l}
-	\hline
-	单位 & 说明\\
-	\hline
-	sp & 65536 sp=1 pt\\
-	pt & 1 pt=0.351 mm\\
-	bp & 1 bp=0.353 mm$\approx$ 1 pt\\
-	dd & 1 dd=0.376 mm=1.07 pt\\
-	mm & 1 mm=2.845 pt\\
-	ex & 1 ex=当前字体中x的高度\\
-	em & 1 em=当前字体尺寸$\approx$ M的宽度\\
-	pc & 1 pc=4.218 mm=12 pt\\
-	cc & 1 cc =4.513 mm=12 dd=12.84 pt\\
-	cm & 1 cm=10 mm=28.453 pt\\
-	in & 1 in=25.4 mm=72.27 pt\\
-	\hline
-\end{tabular}
-\caption{通用长度单位}
 \end{table}
 
 \begin{table}[H]

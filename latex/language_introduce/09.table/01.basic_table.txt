@@ -172,7 +172,7 @@
             ** p/b/m需要某个单元格内容居中, 可以使用\centering指令
             >{} - 应用于后一列, 即l/c/r/p/m/b之前. 包含在array宏包中
             <{} - 应用于前一列, 即l/c/r/p/n/b之后. 包含在array宏包中
-        ** 由于\centering等对齐指令会影响表格环境对换行指令\\的处理, 所以需要在>{}内使用\arraybackslash(放在centering/raggedright/raggedleft之后)
+        ** 由于\centering等水平对齐指令会影响表格环境对换行指令\\的处理, 所以需要在>{}内使用\arraybackslash(放在centering/raggedright/raggedleft之后)
 
 2.&代表列与列之间的正文分隔
 

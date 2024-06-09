@@ -1,4 +1,4 @@
-!!warning: 中文强烈建议使用xelatex编译, 编译速度量级跨越
+% warning: 中文强烈建议使用xelatex编译, 使用编码为UTF-8; pdflatex编译时, 使用编码GBK
 Demo_01 -- basic demo
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}

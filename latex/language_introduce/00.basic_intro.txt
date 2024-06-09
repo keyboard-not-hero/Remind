@@ -25,22 +25,6 @@ LaTeX 2e - 释出于1994年
 
 
 
-
-指令类型:
-1.command - 形如\textrm{}, 限定括号内的内容
-
-2.declaration - 形如\rmfamily, 限定指令所处环境内(指令之后第一个\end或}之前的环境)该指令后的内容. 如:
-\begin{document}
-i love you
-\rmfamily
-i hate you
-\end{document}
-限定内容为i hate you
-
-3.enviroment - 形如\begin{document} ... \end{document}, 限定\begin与\end之间的内容
-
-
-
 编译器选择建议:
 英文文档 - pdflatex
 中文文档 - xelatex
