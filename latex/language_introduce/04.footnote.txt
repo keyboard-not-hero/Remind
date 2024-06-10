@@ -12,6 +12,45 @@ Demo_01 -- 基础脚注
 
 
 
+Demo_02 -- LaTeX版式
+\documentclass[twoside]{report}
+\pagestyle{headings}
+\begin{document}
+\chapter{chapter one}
+\section{section one}
+First line\\
+\newpage
+Second line\\
+\newpage
+\section{section two}
+Third line\\
+\newpage
+Fourth line\\
+\chapter{chapter two}
+\section{section one}
+Fifth line\\
+\newpage
+Sixth line\\
+\newpage
+\section{section two}
+Seventh line\\
+\newpage
+Eighth line\\
+\end{document}
+
+内容讲解
+1.\pagestyle{<style>}使用指定版式，使页眉/页脚填充内容, 可用于导言和正文. 列表如下:
+    empty - 页眉和页脚都空置
+    plain - 页眉空置，页脚居中位置显示页码，无页脚线. article/report类型文档默认版式
+    headings - 如果为单页排版，则所有页的页眉左侧放置章标题(如果有)和右侧放置页码; 如果为双页排版，则单数页页眉左侧放置节标题(如果有)和右侧放置页码，双数页页眉左侧放置页码和右侧放置章标题(如果有). 新章节另起一页，并且该页为plain. book类型文档默认版式
+    myheadings - 类似于headings，但是headings放置章(节)标题的位置，必须手动内容，配置指令:
+        \markright{<odd_page_left_content>}
+	\markboth{<even_page_right_content>}{<odd_page_left_content>}
+
+2.\thispagestyle{<style>}只作用于当前页，在正文配置
+
+
+
 二、Demo(示例02) -- footnotemark and footnotetext
 \documentclass{article}
 \begin{document}
