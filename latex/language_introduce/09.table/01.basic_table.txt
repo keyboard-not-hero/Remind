@@ -1,186 +1,76 @@
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
+Demo_01 -- 基础表格
+\documentclass{article}
 \usepackage{array}
+\setlength{\parindent}{0pt}
 \begin{document}
-\begin{table}
-\centering
-\begin{tabular}{|l|c|r||c|}
+Hello \begin{tabular}[t]{|l|l|}
     \hline
-    name & sex & item & score\\
+    1 & 2\\
     \hline
-    peter & male & math & 99\\
+    3 & 4\\
     \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{列对齐方式与基础分隔符}
-\end{table}
+\end{tabular} World\\
 
-\begin{table}
-\centering
-\begin{tabular}{|@{i}c|!{i}c|@{\hspace{2pt}}c|!{\hspace{2pt}}c|}
+Hello \begin{tabular}[b]{|l@{}l|l|}
     \hline
-    name & sex & item & score\\
+    1 & 2 & 3\\
     \hline
-    peter & male & math & 99\\
+    4 & 5 & 6\\
     \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
+\end{tabular} World\\
 
-\begin{tabular}[t]{|@{\extracolsep{1cm}}c|c|!{\extracolsep{1cm}}c|c|}
+Hello \begin{tabular}{|l@{ii\hspace{2cm}ii}l|l|}
     \hline
-    name & sex & item & score\\
+    1 & 2 & 3\\
     \hline
-    peter & male & math & 99\\
+    4 & 5 & 6\\
     \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{在表格中填充额外内容}
-\end{table}
+\end{tabular} World\\
 
-\begin{table}
-\setlength{\tabcolsep}{1cm}
-\centering
-\begin{tabular}{|*{4}{c|}}
+Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
     \hline
-    name & sex & item & score\\
+    1 & 2 & 3\\
     \hline
-    peter & male & math & 99\\
+    4 & 5 & 6\\
     \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{格式重复的列与分隔符}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|p{1.2cm}|m{2cm}|b{2cm}|c|}
-    \hline
-    channel id & frequency (center)& Frequency range (MHz) & Frequency range (MHz)\\
-    \hline
-    1 & 2412 & 2401–2423 & 2402–2422\\
-    \hline
-    2 & 2417 & 2406–2428 & 2407–2427\\
-    \hline
-    3 & 2422 & 2411–2433 & 2412–2432\\
-    \hline
-\end{tabular}
-\caption{指定列宽度, 并自动换行}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|>{\centering\arraybackslash}m{2cm}|m{2cm}|m{2cm}|m{2cm}<{\raggedleft\arraybackslash}|}
-    \hline
-    channel id & frequency (center)& Frequency range (MHz) & Frequency range (MHz)\\
-    \hline
-    1 & 2412 & 2401–2423 & 2402–2422\\
-    \hline
-    2 & 2417 & 2406–2428 & 2407–2427\\
-    \hline
-    3 & 2422 & 2411–2433 & 2412–2432\\
-    \hline
-\end{tabular}
-\caption{使用指定列宽后, 修改列内容水平对齐方向}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-    Hello World
-    \begin{tabular}[c]{|c|c|}
-    \hline
-        A & B\\
-        \hline
-        C & D\\
-    \hline
-    \end{tabular} &
-    Hello World
-    \begin{tabular}[t]{|c|c|}
-    \hline
-        A & B\\
-    \hline
-        C & D\\
-    \hline
-    \end{tabular} &
-        Hello World
-    \begin{tabular}[b]{|c|c|}
-    \hline
-        A & B\\
-    \hline
-        C & D\\
-    \hline
-    \end{tabular}\\
-\hline
-     &
-    Hello World
-    \begin{tabular}[t]{|c|c|}
-    \firsthline
-        A & B\\
-    \hline
-        C & D\\
-    \lasthline
-    \end{tabular} &
-        Hello World
-    \begin{tabular}[b]{|c|c|}
-    \hline
-        A & B\\
-    \hline
-        C & D\\
-    \lasthline
-    \end{tabular}\\
-\hline
-\end{tabular}
-\caption{列表与外部行的垂直对齐方式}
-\end{table}
+\end{tabular} World\\
 \end{document}
 
 
 内容讲解
-1.\begin{tabular}[vertical_align]{column_format} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). 参数列表如下:
+1.\begin{tabular}[<vertical_align>]{<column_format>} ... \end{tabular}限定表格的环境, 该环境可用于任何模式(paragraph/LR/math mode). 参数列表如下:
     vertical_align
-        表格与外部内容的垂直对齐方式, 参考7. 可选列表: t/c(默认)/b
+        表格与外部内容的垂直对齐方式. 可选列表: 
+	    t - 表格的顶部与外部文本行的基线对齐
+	    c - 表格的中线与外部文本行的基线对齐. 默认值
+	    b - 表格的底部与外部文本行的基线对齐
     column_format
         表格内每一列内容和列之间分隔符的格式. 内容如下:
             l - 当前列左对齐
             c - 当前列居中对齐
             r - 当前列右对齐
-            | - 列之间的分隔线或左/右侧边线, 该垂直线占据整个深度
-	    || - 列之间的或侧边线使用两条分隔线, 可使用\doublerulesep设置两条分割线距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
-            @{text} - 在列内容和分隔符之间填充指定内容(该内容取代\tabcolsep指定的列内容与分隔符的水平间隔), text可选列表如下:
-                text为\hspace{width}时, 填充指定长度空白
-                text为<null>时, 不填充任何内容
-                text为\extracolsep{width}, 使用指定长度空白作为之后所有'前分隔符与列内容位置'的填充, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
-	    !{text} - 类似于@{text}, 但不删除原有的分隔空间(\tabcopsep指定间隔). 包含在array宏包中
-            ** \extracolsep只作用于第二列与前分隔符, 以及之后的该位置
-            ** \extracolsep不建议放置在列内容与后分隔符之间, 会导致\tabcolsep指定位置被取代
-            *{num}{cols} - 指定num个连续列都采用cols格式指定. 如: *{3}{|c}代表|c|c|c
-            p{width} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向top对齐. 首行缩进为0pt, 可使用>{\parindent=10pt}p{width}指定首行缩进
-            m{width} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直居中对齐. 包含在array宏包中
-            b{width} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向bottom对齐. 包含在array宏包中
-            ** p/b/m需要某个单元格内容居中, 可以使用\centering指令
-            >{} - 应用于后一列, 即l/c/r/p/m/b之前. 包含在array宏包中
-            <{} - 应用于前一列, 即l/c/r/p/n/b之后. 包含在array宏包中
-        ** 由于\centering等水平对齐指令会影响表格环境对换行指令\\的处理, 所以需要在>{}内使用\arraybackslash(放在centering/raggedright/raggedleft之后)
+            | - 作一条长度等于表格总高度的垂直线
+	    || - 作两条长度等于表格高度的垂直线, 可使用\doublerulesep设置两条垂直线的距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
+	    *{n}{<column_format>} - 后续n个列使用相同的列格式指定. 如: *{3}{|c}|与|c|c|c|效果一致
+            @{<statement>} - 在列之间替换为指定内容, statement可选列表如下:
+                <null> - 列内容之间无空白, 两列紧紧相依
+                <string> - 填充字符串
+                \extracolsep{<width>} - 使用指定长度空白作为之后所有'前分隔符与列内容位置'的填充, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+	    !{<statement>} - 类似于@{<statement>}, 但不删除原有的分隔空间(\tabcopsep指定间隔)
+            p{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向top对齐, 首行缩进为0pt. 相当于\parbox[t]{<width>}{...}
+            m{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直居中对齐, 首行缩进为0pt. 相当于\parbox{<width>}{...}
+            b{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向bottom对齐, 首行缩进为0pt. 相当于\parbox[b]{<width>}{...}
+            >{} - 应用于后一列, 即l/c/r/p/m/b之前设置
+            <{} - 应用于前一列, 即l/c/r/p/n/b之后设置
+        ** 如果需要对p/m/b的水平对齐方式设置, 可通过>{\centering\arraybackslash}配置水平居中对齐, 其他水平方向为:raggedright(左对齐)/raggedleft(右对齐). 由于\centering等水平对齐指令会影响表格环境对换行指令\\的处理, 所以需要在对齐声明后使用\arraybackslash
 
-2.&代表列与列之间的正文分隔
+2.表格正文符号. 列表如下:
+    &           - 代表列与列之间的分割符号
+    \\          - 换行符号
+    \hline      - 长度与表格总宽度相等的水平线
+    \cline{i-j} - 表示从第i列的左侧到第j列的右侧的水平线
 
-3.\\代表换行
-
-4.\hline用于作水平宽度为所有列宽度之和的水平线, 必须位于表格第一行或紧跟在\\后
-
-5.设定表格属性
+3.设定表格属性
 1)\arrayrulewidth
     配置数组边框宽度. 格式: \setlength{\arrayrulewidth}{2pt}. 默认为0.4pt
 
@@ -191,33 +81,118 @@
     配置表格上下单元的距离系数. 格式: \renewcommand{\arraystretch}{1.3}. 默认为1
 
 4)\extrarowheight
-    对表格单元额外增加的高度(即cell内容与顶部分隔线的距离), 深度不变(cell内容与底部分隔线的距离). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt. 包含在array宏包中
+    表格行的额外附加高度. 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
 
 5)\tabcolsep
-    文字边缘与单元垂直分隔符的距离. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
+    列与列空白宽度的一般. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
-6.newcolumntype{name}[args_num]{column_format}
-    定义新的列格式. 列表如下:
-        name - 列格式的名称, 该名称只能为一个字母
-	args_num - 新名称可以使用的参数数量. 默认为0
-	column_format - 列格式, 参考tabular环境的column_format参数. #1代表名称第一个参数的值, #2代表第二个, 以此类推
-    例: \newcolumntype{A}{>{\centering\arraybackslash}p{2cm}}
+4.\begin{tabular*}{<width>}[<vertical_align>]{<format>}...\end{tabular*}为tabular的指定表格宽的版本
 
-7.默认边框顶部/中部/底部与外部文字的基准线进行垂直方向对齐, 该效果并非想要的效果
-. 可使用以下辅助方案:
-    1)使用\firsthline替代第一行的\hline, 并且ver_align使用t, 可使表格第一行内容与外部内容对齐
-    2)使用\lasthline替代最后一行的\hline, 并且ver_align使用b, 可使表格最后一行内容与外部内容对齐
-    ** \firsthline与\lasthline包含在array宏包中
-
-8.tabular特性
+5.tabular特性
 1)tabular作为字符盒子, 不可跨页
 
 2)tabular适用于math mode/paragraph mode/LR mode所有模式
 
 3)tabular可嵌套
 
-4)tabular不可内嵌float环境
-
-5)tabular可放置于float环境内(通常为table)
+4)tabular可放置于表格浮动环境内(table), 根据需要略微调整位置
 
 
+
+Demo_02 -- 合并列
+\documentclass{article}
+\begin{document}
+\begin{tabular}{l|l|l|l}
+    \hline
+    name & sex & item & score\\
+    \hline
+    peter & \multicolumn{2}{c|}{null} & 99\\
+    \hline
+    david & male & english & 76\\
+    \hline
+    steven & male & english & 59\\
+    \hline
+\end{tabular}
+
+\begin{tabular}{|c|l|l|}
+\hline
+    选项 & \multicolumn{1}{|c|}{事实或结论} & \multicolumn{1}{|c|}{推理或推断}\\
+    \hline
+    A & 酸性溶液pH小于7 & pH小于7的溶液一定是酸性溶液\\
+    \hline
+    B & 碱能使无色酚酞溶液变红 & 能使无色酚酞变红的一定是碱\\
+    \hline
+    C & 酸与碱反应生成盐和水 & 生成盐和水的反应一定是酸和碱的反应\\
+    \hline
+    D & 氧化物中都有氧元素 & 含有氧元素的化合物都是氧化物\\
+    \hline
+\end{tabular}
+\end{document}
+
+
+内容讲解
+1.\multicolumn{<num>}{<format>}{content}用于合并多列, 参数列表如下:
+    num - 合并的列数
+    format - 合并列的格式. 内容如下:
+        l - 当前列左对齐
+        c - 当前列居中对齐
+        r - 当前列右对齐
+        | - 作一条长度等于表格总高度的垂直线
+        || - 作两条长度等于表格高度的垂直线, 可使用\doublerulesep设置两条垂直线的距离, 如: \setlength{\doublerulesep}{6pt}, 默认为2pt
+        @{<statement>} - 在列之间替换为指定内容, statement可选列表如下:
+            <null> - 列内容之间无空白, 两列紧紧相依
+            <string> - 填充字符串
+            \extracolsep{<width>} - 使用指定长度空白作为之后所有'前分隔符与列内容位置'的填充, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+        !{<statement>} - 类似于@{<statement>}, 但不删除原有的分隔空间(\tabcopsep指定间隔)
+        p{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向top对齐, 首行缩进为0pt. 相当于\parbox[t]{<width>}{...}
+        m{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直居中对齐, 首行缩进为0pt. 相当于\parbox{<width>}{...}
+        b{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向bottom对齐, 首行缩进为0pt. 相当于\parbox[b]{<width>}{...}
+        >{} - 应用于后一列, 即l/c/r/p/m/b之前设置
+        <{} - 应用于前一列, 即l/c/r/p/n/b之后设置
+    ** 如果需要对p/m/b的水平对齐方式设置, 可通过>{\centering\arraybackslash}配置水平居中对齐, 其他水平方向为:raggedright(左对齐)/raggedleft(右对齐). 由于\centering等水平对齐指令会影响表格环境对换行指令\\的处理, 所以需要在对齐声明后使用\arraybackslash
+    content - 合并单元格的内容
+
+2.\multicolumn可以指定合并单列, 用于指定表格单元的水平对齐方式
+
+
+
+Demo_03 -- 浮动环境
+\documentclass{article}
+\usepackage{array,float}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
+\begin{table}[h]
+    \caption{example}
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
+\end{table}
+So she set to work, and very soon finished off the cake.
+\end{document}
+
+
+内容讲解
+1.\begin{table}[<args>] <tabular_env> \end{table}环境中, table的参数列表如下:
+    h - 就地放置浮动体
+    t - 将浮动体放置在当前页或下一页的页面顶部
+    b - 将浮动体放置在当前页或下一页的页面底部
+    p - 将浮动体放置到之后的单独一页, 该也全部为浮动体, 成为浮动体页
+    ** 默认按t -> b -> p的顺序依次尝试; 如果指定h, 则按h -> t -> b -> p的顺序尝试
+    ! - 配合h/t/b/p, 强制按指定方法安置浮动体
+
+2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参数列表如下:
+    toc_title - 在目录中显示的标题. 默认为title内容
+    title - 在当前表格处的标题
+
+3.\abovecaptionskip为标题与上方内容的距离, 默认为10pt. 上方内容定义如下:
+    1)当标题位于表格上方, 上方为浮动体外内容
+    2)当标题位于表格下方, 上方为浮动体内表格
+
+4.\belowcaptionskip为标题与下方内容的距离, 默认为0pt. 下方内容定义如下:
+    1)当标题位于表格上方, 下方为浮动体内表格
+    2)当标题位于表格下方, 下方为浮动体外内容

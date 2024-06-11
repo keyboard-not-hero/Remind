@@ -82,7 +82,7 @@
 
 
 内容讲解
-1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
+1.\multirow{<row_number>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
     upos - 内容在多行块中的垂直位置(将表格的每一行视为不换行的单行). 可选列表: t/c(默认)/b
     nrows - 需要合并的行数. 如果为正数, 合并当前行和之后的行; 如果为负数, 合并当前行和之前的行
     bigstruts - 配合\bigstrut指令使用, 代表增加行高或/和行深后的合并文字归位. \bigstrut包含在bigstrut宏包中, 列表如下:
