@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{ctex,multirow,bigstrut}
+\begin{document}
+\begin{tabular}{|c|c|}
+    \hline
+    \multirow{4}[6]*{宇宙中的力} & 万有引力\bigstrut\\
+    \cline{2-2}
+    & 电磁力\bigstrut\\
+    \cline{2-2}
+    & 弱相互作用力\bigstrut\\
+    \cline{2-2}
+    & 强相互作用力\bigstrut\\
+    \hline
+\end{tabular}
+\end{document}
+
+
+内容讲解
+1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
+    upos - 内容在多行块中的垂直位置(将表格的每一行视为不换行的单行). 可选列表: t/c(默认)/b
+    nrows - 需要合并的行数. 如果为正数, 合并当前行和之后的行; 如果为负数, 合并当前行和之前的行
+    bigstruts - 当在指定上使用\bigstrut(bigstrut宏包)时, 包含以下格式:
+        \bigstrut - 包含两个单位, 增加当前行行高和行深
+        \bigstrut[t] - 包含一个单位, 增加当前行行高
+        \bigstrut[b] - 包含一个单位, 增加当前行行深
+	** bigstruts参数为偏移的行深/行高总个数. 如: 合并3行, 每行都使用\bigstrut, 则bigstruts=(3-1)*2
+    width - 指定合并行的宽度. 可选格式:
+        <N> - 直接使用数字和单位指定宽度, 此时正文处于段落模式(可换行)
+        * - 根据文字长度自动确定宽度, 此时正文处于左右模式(不可换行)
+        = - 使用合并前该列的宽度, 此时正文处于段落模式(可换行)
+    vmove - 垂直移动合并文字. 正数代表向上移, 负数代表向下移
+    text - 合并行的正文内容
+    ** 合并行数原理: 保留一行数据, 该列的其他行内容留空
+
+
+2.\multirowsetup为合并行的内容, 在水平方向上的对齐方式. 默认为左对齐, 配置语句:
+    \renewcommand{\multirowsetup}{\centering}. 对齐方式列表:
+        raggedright - 左对齐
+	centering   - 居中对齐
+	raggedleft  - 右对齐
+
+3.\multicolumn{\multirow}
+    当合并行与合并列进行嵌套时, 必须为\multirow放置在\multicolumn内

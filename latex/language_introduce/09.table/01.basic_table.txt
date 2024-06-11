@@ -64,11 +64,13 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
             <{} - 应用于前一列, 即l/c/r/p/n/b之后设置
         ** 如果需要对p/m/b的水平对齐方式设置, 可通过>{\centering\arraybackslash}配置水平居中对齐, 其他水平方向为:raggedright(左对齐)/raggedleft(右对齐). 由于\centering等水平对齐指令会影响表格环境对换行指令\\的处理, 所以需要在对齐声明后使用\arraybackslash
 
+
 2.表格正文符号. 列表如下:
     &           - 代表列与列之间的分割符号
     \\          - 换行符号
     \hline      - 长度与表格总宽度相等的水平线
     \cline{i-j} - 表示从第i列的左侧到第j列的右侧的水平线
+
 
 3.设定表格属性
 1)\arrayrulewidth
@@ -86,7 +88,9 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
 5)\tabcolsep
     列与列空白宽度的一般. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
+
 4.\begin{tabular*}{<width>}[<vertical_align>]{<format>}...\end{tabular*}为tabular的指定表格宽的版本
+
 
 5.tabular特性
 1)tabular作为字符盒子, 不可跨页
@@ -96,6 +100,9 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
 3)tabular可嵌套
 
 4)tabular可放置于表格浮动环境内(table), 根据需要略微调整位置
+
+
+5.\begin{array}...\end{array}与tabular参数完全一致, 但是array只能在math mode环境中使用
 
 
 

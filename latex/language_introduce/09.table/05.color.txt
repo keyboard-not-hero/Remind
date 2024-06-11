@@ -1,6 +1,5 @@
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{color}
-\usepackage{colortbl}
+\documentclass{ctexart}
+\usepackage{ctex,colortbl}
 \begin{document}
 \begin{table}
 \centering
