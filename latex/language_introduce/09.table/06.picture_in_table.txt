@@ -1,8 +1,5 @@
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{multirow}
-\usepackage{makecell}
-\usepackage{float}
-\usepackage{adjustbox}
+\documentclass{article}
+\usepackage{ctex,float,adjustbox}
 \begin{document}
 \begin{table}[H]
     \begin{centering}
@@ -17,3 +14,20 @@
     \end{centering}
 \end{table}
 \end{document}
+
+
+内容讲解
+1.\adjincludegraphics[args]{<pic_name>}用于插入图片, 并对图片进行更深的操作. 该指令包含在adjustbox宏包中
+可选参数列表:
+raise=<measure> 
+将图片向上平移指定尺寸, 类似于raisebox
+
+margin=<all_direction_margin>
+margin=<left/right> <top/bottom>
+margin=<left> <bottom> <right> <top>
+指定图片在各个方向的padding
+
+scale=<factor>
+图片的缩放/放大系数
+
+

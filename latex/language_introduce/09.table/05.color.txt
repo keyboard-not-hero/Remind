@@ -116,11 +116,9 @@
 
 3.\cellcolor[color_mode]{color_val}用于指定单元格的背景色. 包含在colortbl宏包中
 
-4.colortbl宏包依赖于color宏包
+4.\cellcolor覆盖\rowcolor, \rowcolor覆盖\columncolor
 
-5.\cellcolor覆盖\rowcolor, \rowcolor覆盖\columncolor
-
-6.\rowcolors[command]{row}{odd_row_color}{even_row_color}用于指定每两行切换背景色, 参数列表如下:
+5.\rowcolors[command]{row}{odd_row_color}{even_row_color}用于指定每两行切换背景色, 参数列表如下:
     command - 用于指定额外参数, 如\hline可以自带水平分割线
     row - 从指定行开始背景色, 行号由1起始
     odd_row_color - 奇数行的背景色
@@ -128,10 +126,13 @@
     配合\showrowcolors和\hiderowcolors指令可以指定后续行是否显示背景色
     指令包含在colortbl宏包中
 
-7.\arrayrulecolor{color}用于指定分隔符颜色
+6.\arrayrulecolor{color}用于指定分隔符颜色
 
-8.\doublerulesepcolor{color}用于指定分隔符||之间的填充色
+7.\doublerulesepcolor{color}用于指定分隔符||之间的填充色
 
-9.\color[color_mod]{color_val}可以给文字上色. 包含在color宏包中. 示例:
+8.\color[color_mod]{color_val}可以给文字上色. 包含在xcolor宏包中. 示例:
     \color[gray]{0.8}使用color_val的值范围[0,1]
     \color[rgb]{0.2,0.3,0.4}使用color_val为r,g,b组合, 每个元素的值范围[0,1]
+
+9.colortbl宏包依赖于color宏包
+

@@ -1,4 +1,4 @@
-\documentclass{ctexart}
+\documentclass{article}
 \usepackage{ctex,makecell,multirow}
 \begin{document}
 \begin{table}

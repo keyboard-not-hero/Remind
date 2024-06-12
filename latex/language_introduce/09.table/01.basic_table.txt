@@ -191,6 +191,7 @@ So she set to work, and very soon finished off the cake.
     p - 将浮动体放置到之后的单独一页, 该也全部为浮动体, 成为浮动体页
     ** 默认按t -> b -> p的顺序依次尝试; 如果指定h, 则按h -> t -> b -> p的顺序尝试
     ! - 配合h/t/b/p, 强制按指定方法安置浮动体
+    H - 相当于h!, 强制就地放置浮动体. 包含在float宏包中
 
 2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参数列表如下:
     toc_title - 在目录中显示的标题. 默认为title内容

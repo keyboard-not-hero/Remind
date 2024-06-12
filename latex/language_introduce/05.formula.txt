@@ -1,4 +1,4 @@
-Demo_01 -- 行内公式
+Demo_01 -- 行内/行间公式
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -13,62 +13,103 @@ $a^2+b^2=c^2$\\
 $\frac{4}{2}=2$\\
 $\sqrt[3]{8}=2$\\
 $\binom{4}{3}$\\
+
+\abovedisplayshortskip=6pt
+\belowdisplayshortskip=20pt
+\abovedisplayskip=20pt
+\belowdisplayskip=20pt
+短公式
+\begin{displaymath}
+    f(x)=2\sin(\alpha x+\beta)-3\cos(\alpha x+\beta)
+\end{displaymath}
+以下内容, 可以简单的判定为长公式, 因为上一行文本超过公式左端
+\begin{displaymath}
+    f(x)=2\sin(\alpha x+\beta)-3\cos(\alpha x+\beta)
+\end{displaymath}
+该行内容用于判定公式与公式下文本的距离
 \end{document}
 
 内容讲解
-1.$ ... $用于限定行内公式内容
-
-2.\( ... \)用于限定行内公式内容
-
-3.\begin{math} ... \end{math}用于限定行内公式内容
-
-4._用于指定公式的subscript, ^用于指定公式的supscript
-
-5.'在公式中为求导符号
-
-6.数学公式中, \because和\therefore为几何的因为/所以符号, 包含在amssymb宏包中
-
-7.\frac{分子}{分母}上下式分数
-
-8.\sqrt[root]{num}用于求数num的root次方根, root默认为2
-
-9.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
+1.行内公式: 将数学式插入文本行之内, 使数学式与文本融为一体
+$ ... $
+\( ... \)
+\begin{math} ... \end{math}
+都用于限定行内公式内容, 行内公式特点:
+1)可以处于paragraph/LR mode下
+2)可以在二元运算符处自动换行
+3)可以使用\\手动换行
 
 
+2.行间公式: 数学式插入文本行之间, 自成一个段落, 与上下文附件一段垂直距离, 突出数学式
+$$ ... $$
+\[ ... \]
+\begin{displaymath} ... \end{displaymath}
+都用于限定行间公式内容, 行间公式特点:
+1)只能处于paragraph mode下
+2)公式内容为单行, 不能换行
+3)切换段落会导致出错
 
-Demo_02 -- 行间公式
+
+3.\begin{equation} ... \end{equation}为编号版本的单行行间公式
+
+
+4.\begin{eqnarray} ... \end{eqnarray}为编号版本的多行行间公式
+
+
+5._用于指定公式的subscript, ^用于指定公式的supscript
+
+
+6.'在公式中为求导符号
+
+
+7.数学公式中, \because和\therefore为几何的因为/所以符号, 包含在amssymb宏包中
+
+
+8.\frac{分子}{分母}上下式分数
+\sfrac{分子}{分母}斜分数, 包含在xfrac宏包中
+
+
+9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
+可选参数内, 可使用\leftroot{}指定次方根值向左移动指定个单位
+\uproot{}指定次方根值向上移动指定个单位
+\leftroot和\uproot包含在amsmath宏包中
+
+
+10.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
+
+
+11.数学公式下的字符尺寸列表(从大到小):
+    \displaystyle - 行间公式默认采用该尺寸
+    \textstyle - 行内公式默认采用该尺寸
+    \scriptstyle - textstyle格式文本的上下标采用该尺寸
+    \scriptscriptstyle - scriptstyle格式文本的上下标采用该尺寸
+
+
+12.行间公式与上下文距离类型:
+    1)当行间公式的左端位于上方文本末端的右侧, 则该公式称为短公式
+    2)当行间公式的左端位于上方文本末端的左侧, 则该公式称为长公式
+    \abovedisplayshortskip为短公式与上方文本之间的额外距离, 默认为0pt plus 3pt
+    \belowdisplayshortskip为短公式与下方文本之间的额外距离, 默认为6.5pt plus 3.5pt minus 3pt
+    \abovedisplayskip为长公式与上方文本之间的额外距离, 默认为11pt plus 3pt minus 6pt
+    \belowdisplayskip为长公式与下方文本之间的额外距离, 默认为11pt plus 3pt minus 6pt
+    以上4条命令只能用于文档正文, 不能用于导言区
+
+
+
+Demo_02 -- 上/下标注符
 \documentclass{article}
+\usepackage{ctex,amsmath}
 \begin{document}
-	\begin{displaymath}
-		x'+y^2=z_i^2
-	\end{displaymath}
-	\begin{equation}
-		x'+y^2=z_i^2
-	\end{equation}
-	\[x'+y^2=z_i^2 \text{this is formula}\]
+\begin{displaymath}
+    A=\overbrace{(a+b+c)+\underbrace{(d+e+f)i}_{\text{虚数}}}^{\text{复数}}
+\end{displaymath}
 \end{document}
 
+
 内容讲解
-1.\begin{displaymath} ... \end{displaymath}用于行间公式环境, 没有公式序号，公式居中显示
+1.\overbrace{}用于水平上括号, 并可对指令使用^{}添加备注
 
-2.\[ ... \]用于行间公式环境, 没有公式序号，公式居中显示
-
-3.\begin{equation} ... \end{equation}用于含编号的行间公式环境, 公式居中. \renewcommand{\theequation}{\alph{equation}}用于修改equation编号类型, 列表如下:
-	arabic - 数字
-	alph - 小写英文字母
-	Alph - 大写英文字母
-	roman - 小写罗马字母
-	Roman - 大写罗马字母
-
-4.\textrm用于在math mode中输入paragraph mode模式的罗马文字. 包含在amsmath宏包中
-
-5.\abovedisplayshortskip/\abovedisplayskip用于设置行间公式与之前正文的垂直距离; \belowdisplayshortskip/\belowdisplayskip用于设置行间公式与之后正文的垂直距离. 建议在preamble区使用. 设置语法如下:
-\setlength{\abovedisplayshortskip}{10pt}
-
-6.行间公式左对齐模式(\documentclass的fleqn可选参数)默认包含额外的缩进, 使用\mathindent进行设置. 设置语法如下:
-\setlength{\mathindent}{0pt}
-
-7.本示例所有环境为单行行间公式环境
+2.\underbrace{}用于水平下括号, 并可对指令使用_{}添加备注
 
 
 
@@ -88,7 +129,8 @@ $\ddots$\\
 
 2.\ldost和\vdots也适用于paragraph mode和LR mode
 
-3.参考symbol_summary的表7
+3.参考symbol_summary的表10
+
 
 
 Demo_04 -- 希腊字母
@@ -106,33 +148,25 @@ $\Pi$\\
 内容讲解
 1.\alpha为小写希腊字母
 
-2.更多参考symbol_summary的表8. 只适用于math mode
+2.更多参考symbol_summary的表11. 只适用于math mode
 
 3.\Delta为大写希腊字母
 
-4.更多参考symbol_summary的表9. 只适用于math mode
+4.更多参考symbol_summary的表12. 只适用于math mode
 
 
 
 Demo_05 -- 字体类型
 \documentclass{article}
+\usepackage{bm}
 \setlength{\parindent}{0mm}
 \begin{document}
 $a^2+b^2=c^2$\\
-$\mathit{a^2+b^2=c^2}$\\
-$\mathrm{a^2+b^2=c^2}$\\
-$\mathtt{a^2+b^2=c^2}$\\
-$\mathcal{X+Y}$\\
+$\bm{a^2+b^2=c^2}$\\
 \end{document}
 
 内容讲解
-1.\mathrm等以math开头的为数学字体. 只能位于math mode环境中
-
-2.\math开头的指令无法获得嵌套效果. 如: \mathbf{\mathit{}}无法获得加粗斜体
-
-3.\bm{}可使大小写字母成为斜体并加粗. 包含在bm宏包中
-
-4.详细参考symbol_summary的表10
+1.\bm{}加粗数学字体, 包含在bm宏包中
 
 
 
@@ -148,23 +182,28 @@ $1+2-3\times 4\div 5$\\
 内容讲解
 1.\times和\div为数学的二元运算符, 只能用于math mode
 
-2.详情参考symbol_summary的表15
+2.详情参考symbol_summary的表18
 
 
 
 Demo_07 -- 比较运算符
 \documentclass{article}
 \usepackage{amssymb}
+\newcommand{\backcong}{\mathrel{\reflectbox{$\cong$}}}
 \setlength{\parindent}{0mm}
 \begin{document}
-$a\leq b$\\
 $a\leqslant b$\\
+$\triangle ABC\backcong\triangle DEF$
 \end{document}
 
 内容讲解
-1.\leq为小于等于比较符, 只能用于math mode
+1.\leqslant为小于等于比较符, 只能用于math mode
 
-2.详情参考symbol_summary的表16
+2.\newcommand{\backcong}{\mathrel{\reflectbox{$\cong$}}}定义全等符号
+其中, \mathrel{}将参数视为关系运算符, 在符号两边留一定空白
+\reflectbox{}为graphicx宏包内的命令, 将参数进行轴对称变换
+
+3.详情参考symbol_summary的表18
 
 
 
@@ -182,137 +221,15 @@ $a^2+b^2=c^2\quad\Longrightarrow\quad a^2=c^2-b^2$\\
 
 
 
-
-
-
-
-
-三、Demo(示例)03 - eqnarray
-\documentclass{article}
-\begin{document}
-\begin{eqnarray}
-    a & b & g\\
-    c & d & i\\
-    e & f & k
-\end{eqnarray}
-\begin{eqnarray}
-    \lefteqn{\sum_{i=0}^n a_i=} & \\
-    & a_1+a_2+\ldots+a_n
-\end{eqnarray}
-\end{document}
-
-内容讲解
-1.\begin{eqnarray} ... \end{eqnarray}用于限定多行多列公式环境, 列之间使用'&'分隔, 行之间使用'\\'分隔, 最多支持3列, 第一列右对齐, 第二列居中对齐, 第三列左对齐
-
-2.每行自动进行公式编号, 使用\nonumber可不参与编号
-
-3.\begin{eqnarray*} ... \end{eqnarray*}为不编号版本
-
-4.第一列和第三列使用display formula格式, 第二列使用in-text formula格式
-
-5.\lefteqn{}用于配置列的宽度为0. 常用于eqnarray环境中
-
-6.\begin{eqnarray*} ... \end{eqnarray*}为不带编号版本
-
-
-
-四、Demo(示例)04 - align
+Demo_09 -- 数学模式的重音符
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
-\begin{align}
-    x+y+z & c+d & e\\
-    f*g & h & i+j*k
-\end{align}
-\end{document}
-
-内容讲解
-1.\begin{align} ... \end{align}为多行多列公式环境, \\分隔行, &分隔列, 每行各包含一个编号, 奇数列右对齐, 偶数列左对齐. 包含在amsmath宏包中
-
-2.\begin{align*} ... \end{align*}为不带编号版本
-
-3.\begin{aligned} ... \end{aligned}为放置于math mode中的版本, 并且不带编号
-
-4.\begin{flalign} ... \end{flalign}为align的水平空间尽量拉伸版本, \begin{flalign*} ... \end{flalign*}为flalign无编号版本
-
-5.\begin{alignat} ... \end{alignat}为align的水平空间列之间无间隙版本, \begin{alignat*} ... \end{alignat*}为alignat无编号版本
-
-
-
-五、Demo(示例)05 - gather
-\documentclass{article}
-\usepackage{amsmath}
-\begin{document}
-\begin{gather}
-    x+y+z\\
-    f*g
-\end{gather}
-\end{document}
-
-内容讲解
-1.\begin{gather} ... \end{gather}为多行单列公式环境, \\分隔行, 每行各包含一个编号. 包含在amsmath宏包中
-
-2.\begin{gather*} ... \end{gather*}为不带编号的版本
-
-3.\begin{gathered} ... \end{gathered}为放置于math mode环境的版本, 并且不带编号
-
-
-
-
-
-八、Demo(示例)08 - array
-\documentclass{article}
-\begin{document}
-\begin{displaymath}
-\begin{array}{l l l l}
-    a+b & \begin{array}[t]{c}
-    a\\b
-    \end{array}\\
-    c+d & \begin{array}{c}
-    c\\d
-    \end{array}
-\end{array}
-\end{displaymath}
-\end{document}
-
-内容讲解
-1.\begin{array}[vertical_align]{column_format} ... \end{array}用于math mode
-
-2.array环境与tabular环境完全一致, 除了tabular可用于段落/数学/左右等各种模式. 参考09.table.txt的Demo01
-
-
-
-九、Demo(示例)09 - Overlining and Underlining
-\documentclass{article}
-\begin{document}
-	$\overline{x+y}$\\
-	\underline{x+y}\\
-	$\overbrace{x+y}$\\
-	$\underbrace{x+y}$
-\end{document}
-
-内容讲解
-1.\overline{}用于上划线
-
-2.\underline{}用于下划线, 并且可用于paragraph mode和LR mode
-
-3.\overbrace{}用于水平上括号, 并可对指令使用^{}添加备注
-
-4.\underbrace{}用于水平下括号, 并可对指令使用_{}添加备注
-
-5.\cancel{}用于斜线方向删除线, \bcancel{}用于反斜线方向删除线. 包含在cancel宏包中
-
-
-
-十、Demo(示例)10 - math accent
-\documentclass{article}
-\usepackage{amsmath}
-\begin{document}
-	\begin{gather}
-		\hat{a}\\
-		\widehat{aa}\\
-		\breve{\imath}
-	\end{gather}
+    \begin{gather}
+	\hat{a}\\
+	\widehat{aa}\\
+	\breve{\imath}
+    \end{gather}
 \end{document}
 
 内容讲解
@@ -322,387 +239,40 @@ $a^2+b^2=c^2\quad\Longrightarrow\quad a^2=c^2-b^2$\\
 
 3.\breve{\imath}用于对字符进行重音配置, i或j进行重音时, 需要先消除头部'.', 使用指令\imath或\jmath
 
-4.详情参考symbol_summary
+4.详情参考symbol_summary的表7
 
 
 
-十一、Demo(示例)11 - stacking symbols
+Demo_10 -- 符号重叠
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
-\begin{gather}
-	A \stackrel{a'}{\rightarrow} B \stackrel{b'}{\rightarrow} C
-\end{gather}
+\begin{displaymath}
+    A \stackrel{a'}{\rightarrow} B \stackrel{b'}{\rightarrow} C
+\end{displaymath}
 \end{document}
 
 内容讲解
-\stackrel{up}{down}表示进行内容堆叠, down是下方的内容, up是上方的内容
+1.\stackrel{up}{down}表示进行内容堆叠, down是下方的内容, up是上方的内容
 
 
 
-十二、Demo(示例)12 - space
+Demo_11 -- 定界符
 \documentclass{article}
+\usepackage{ctex,amssymb}
+\setlength{\parindent}{0mm}
 \begin{document}
-\noindent$\sqrt{2}\!x$\\
-$\sqrt{2}x$\\
-$\sqrt{2}\,x$\\
-$\sqrt{2}\:x$\\
-$\sqrt{2}\;x$\\
-$\sqrt{2}\ x$
+函数曲线情况:\\
+\begin{displaymath}
+    f(x)=\left\{\begin{array}{l c}
+    x^2 & x>2\\
+    0 & -2\geqslant x\leqslant 2\\
+    -x^2 & x<-2\\
+    \end{array}\right.
+\end{displaymath}
 \end{document}
 
 内容讲解
-1.math mode环境中, 忽视所有空格符号
+1.定界符的使用, \left与\right需要配对, 如果另一次不需要显示定界符, 则使用.代替. 如: \left\{ ... \right.
 
-2.间距列表(由小到大):
-    \! - 减少指定间隔
-    \, - 增加指定间隔, 该距离与\!距离一直
-    排序汇总:
-    \!  <  \,  <  \:  <  \;  <  \<space>  <  \quad  <  \qquad
-
-3.\hspace{}用于指定水平空格距离
-\hspace*{}用于指定水平空格距离, 并且当其位于行首或行尾时, 也不移除该水平空格
-
-4.\vspace{}用于段落之间的垂直距离
-\vspace*{}用于段落之间的垂直距离, 并且当其位于页首或页尾时, 也不移除该垂直距离
-
-
-
-十三、Demo(示例)13 - theorem
-示例i - newtheorem
-\documentclass{article}
-\newtheorem{guess}{definition}[section]
-\begin{document}
-\section{one}
-\begin{guess}
-$3^2+4^2=5^2$
-\end{guess}
-\section{two}
-\begin{guess}
-$e=mc^2$
-\end{guess}
-\end{document}\
-
-示例ii - amsthm
-\documentclass{article}
-\usepackage{amsthm}
-\newtheoremstyle{note}
-{0.5\topsep}
-{0.5\topsep}
-{\normalfont}
-{}
-{\itshape}
-{.}
-{\newline}
-{\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
-\theoremstyle{note}
-\newtheorem{boy}{lucy boyz}
-\begin{document}
-\begin{boy}
-\leavevmode \vspace{-\baselineskip}
-\begin{enumerate}
-    \item The item labels in an enumerated list are numerals or letters.
-    \item A list should have at least two items.
-\end{enumerate}
-\end{boy}
-\end{document}
-
-示例iii - mdframed
-documentclass{article}
-\usepackage{amsthm}
-\usepackage{mdframed}
-\usepackage{xcolor}
-\newmdtheoremenv[
-skipabove = 20pt,
-leftmargin      = 20,
-rightmargin     = 10,
-innerleftmargin = 20pt,
-backgroundcolor = yellow!100,
-innertopmargin  = 20pt,
-innerbottommargin  = 20pt,
-linewidth = 0.4pt,
-linecolor = red,
-fontcolor = blue,
-shadow = true,
-shadowsize = 4pt,
-shadowcolor = black!20,
-]{theorem}{Theorem}
-\begin{document}
-\begin{theorem}[Pythagorean theorem]
-In any right triangle, the area
-of the square whose side is the hypotenuse is equal to the sum of the areas
-of the squares whose sides are the two legs.
-\[a^2+b^2=c^2\]
-\end{theorem}
-\end{document}
-
-内容讲解
-1.\newtheorem{env_name1}[env_name2]{theorem_label}[section]
-    新建定理环境, 参数列表如下:
-        env_name1 - 当前定理环境名称
-	env_name2 - 使用相同定理编号计数器的其他定理环境
-	theorem_label - 定理显示的主标签名称
-	section - 以section为单位区分定理计数器, 也可以为其他chapter/subsection等
-    指令通常放置于preamble区
-
-2.\begin{env_name}[aux_label]...\end{env_name}
-    限定定理环境, 使用\newtheorem指定的标题, 并可以指定副标题aux_label
-
-** 后续内容包含在amsthm宏包中
-3.newtheoremstyle{name}
-{/topsep} 
-    % 定理环境与之前内容的垂直距离
-{/topsep} 
-    % 定理环境与之后内容的垂直距离
-{\itshape} 
-    % 定理环境正文内容的文字格式
-{2pt} 
-    % 定理header的缩进. 特殊值列表如下:
-        {} - 没有缩进
-	\parindent - 正常段落的缩进
-{\bfseries} 
-    % 定理header的文字格式
-{.} 
-    % header之后的符号
-{5pt plus 1pt minus 1pt} 
-    % header之后保留的空白. 特殊值列表如下:
-        { } - 普通单词间的空白
-	\newline - 换行, 正文内容与header在不同行
-{\thmname{#1}\thenumber{ #2}\thmnote{ (#3)}} 
-    % header的详细格式
-
-4.\theoremstyle{style}
-    设定定理格式风格. style可选列表如下:
-	plain - 默认格式, 配置如下:
-	    \newtheoremstyle{plain}
-	    {\topsep}
-            {\topsep}
-            {\itshape}
-            {}
-            {\bfseries}
-            {.}
-            {5pt plus 1pt minus 1pt}
-            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
-	    
-	definition - 配置如下:
-	    \newtheoremstyle{definition}
-	    {\topsep}
-            {\topsep}
-            {\normalfont}
-            {}
-            {\bfseries}
-            {.}
-            {5pt plus 1pt minus 1pt}
-            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
-
-	remark
-	    \newtheoremstyle{remark}
-	    {0.5\topsep}
-            {0.5\topsep}
-            {\normalfont}
-            {}
-            {\itshape}
-            {.}
-            {5pt plus 1pt minus 1pt}
-            {\thmname{#1}\thmnumber{ #2}\thmnote{ {\fontseries\mddefault\upshape(#3)}}}
-
-5.\newtheorem*{env_name1}[env_name2]{theorem_label}[section]
-    \newtheorem的不编号格式
-
-6.\swapnumbers
-    交换定理与定理编号的位置. 可多次嵌套
-
-7.\leavevmode
-    与header后换行的\newline配合, 用于正文为列表的情况, 只使用\newline无法使列表正文换行. 参考示例ii
-
-8.\qedsymbol
-    设置放置于正文内容最后的符号. 格式: \renewcommand{\qedsymbol}{\openbox}
-    \qed - 用于在正文指定位置放置该符号
-    \qedhere - 用于预定义proof环境中放置该符号
-
-9.mdframed宏包
-mdframed特性:
-1)mdframed必须在amsthm之后导入
-2)当需要使用xcolor, 建议mdframed在xcolor之后导入
-3)mdframed提供跨页功能
-
-\newmdtheoremenv[frame_options]{env_name1}[env_name2]{theorem_label}[section]
-    带边框的定理环境. 参数如下:
-        frame_option - 边框选项. 详情参考frame_options列表
-        env_name1 - 当前定理环境名称
-        env_name2 - 使用相同定理编号计数器的其他定理环境
-        theorem_label - 定理显示的主标签名称
-        section - 以section为单位区分定理计数器, 也可以为其他chapter/subsection>等
-
-frame_options列表:
-skipabove
-    边框顶部距离外部内容的垂直距离
-
-leftmargin
-    边框左侧距离页面左边缘的距离
-
-rightmargin
-    边框右侧距离页面右边缘的距离
-
-innerleftmargin
-    内容距离边框左侧的距离
-
-innerrightmargin
-    内容距离边框右侧的距离
-
-innertopmargin
-    内容距离边框顶部的距离
-
-innerbottommargin
-    内容距离边框底部的距离
-
-linewidth
-    边框的宽度
-
-linecolor
-    边框的颜色
-
-backgroundcolor
-    背景颜色
-
-fontcolor
-    字体颜色
-
-shadow
-    是否开启阴影
-
-shadowsize
-    阴影大小
-
-shadowcolor
-    阴影颜色
-
-topline/bottomline
-    是否显示顶/底部边框线
-
-leftline/rightline
-    是否显示左/右侧边框线
-
-hidealllines
-    是否隐藏所有边框线
-
-默认值:
-skipabove = 0pt
-skipbelow = 0pt
-leftmargin = 0pt
-rightmargin = 0pt
-innerleftmargin = 10pt
-innerrightmargin = 10pt
-innertopmargin = 5pt
-innerbottommargin = 5pt
-linewidth = 0.4pt
-linecolor = black
-fontcolor = black
-backgroundcolor = white
-shadow = false
-shadowsize = 8pt
-shadowcolor = black!50
-topline/bottomline/leftline/rightline = true
-hidealllines = false
-
-
-
-十四、Demo(示例)14 - switch math style
-\documentclass{article}
-\begin{document}
-	$\sum$\\
-	$\displaystyle\sum$\\
-	\[\sum\]\\
-	\[\textstyle\sum\]\\
-	$a_i$\\
-	$a_{\textstyle i}$\\
-	$a_{i^j}$\\
-	$a_{i^{\scriptstyle j}}$
-\end{document}
-
-内容讲解
-1.\displaystyle将后续内容指定为display formula格式
-
-2.\textstyle将后续内容指定为in-text formula格式
-
-3.\scriptstyle将后续内容指定为script formula格式
-
-4.\scriptscriptstyle将后续内容指定为scriptscript formula格式
-
-
-
-十五、Demo(示例)15 - normal symbol
-\documentclass{article}
-\begin{document}
-    $\frac{3}{2}$\\
-    $\sqrt{2}\\
-    $a_{2}^{3}$\\
-	$\sum_{\substack{i\geqslant 0\\j\geqslant 0}}^{n}P(i,j)$
-	$\sum\limits_2$
-\end{document}
-
-内容讲解
-1.\frac{numerator}{denominator}为分数形式, numerator为分子, denominator为分母
-
-2.\cfrac[分子位置]{分子}{分母}为可指定分子位置的分数, 指令包含在amsmath宏包中. 分子位置的可选值列表:
-	l - 与分数线左侧对齐
-	c - 与分数线中间对齐, 默认值
-	r - 与分数线右侧对齐
-
-3.\sfrac{分子}{分母}用于斜分数, 包含在xfrac宏包中
-
-4.\sqrt[n]{number}为求次方根, n为所求次方根, number为求次方根的数字
-
-5._为下角标, ^为上脚标
-
-6.\substack{}用于提供多行格式的superscript/subscript, 包含在amsmath宏包中
-
-7.\limits可以指定上/下标位于内容正上/下方, 但对象必须为数学操作符
-
-8.\nolimits可以指定上/下标位于右上/下方, 但对象必须为数学操作符
-
-9.\underset{under}{content}可以使under直接位于content下方
-
-
-
-十六、Demo(示例)16 - differential and integral
-\documentclass{article}
-\usepackage[compat1]{wasysym}
-\usepackage{scalerel}
-\def\stretchint[#1]#2{\vcenter{\hbox{\scaleto[#1]{\displaystyle\int}{#2}}}}
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-\begin{document}
-$\frac{dy}{dx}=x$
-
-$\frac{\dif y}{\dif x}=x$
-
-$\displaystyle\int x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
-
-$\displaystyle\varint x^a\dif x=\dfrac{x^{a+1}}{a+1}+C(a\neq -1)$
-
-$\stretchint[4ex]{10ex}x^a\dif x$
-\end{document}
-
-内容讲解
-1.\newcommand*{\dif}{\mathop{}\!\mathrm{d}} 定义一个新指令\dif, 指令解释如下:
-	\mathop{} - 将括号内解释为一个数学操作符整体, 因此可在正上/下方添加supscript/subscript
-	\! - 代表math mode下的negative thin space
-	\mathrm{} - 指定math mode内容为罗马直立字体
-
-
-2.普通数学模式的微分算式符号为斜体, 但标准应该为直立体, 所以需要借助步骤1来进行定义新指令
-
-
-3.\int为自带积分符号, 为倾斜风格
-
-
-4.stix宏包为积分符号包, \intsl为倾斜风格, \intup为直立风格
-
-
-5.\def\stretchint[#1]#2{\vcenter{\hbox{\scaleto[#1]{\displaystyle\int}{#2}}}}
-定义新指令\stretchint, 指令包含一个可选参数和一个必选参数, 指令内容如下:
-	\vcenter - 内容垂直居中
-	\scaleto[max_width]{object}{height} - 将内容伸缩到指定宽度和高度, max_width为最大宽度; object为内容区域, 默认处于math mode模式; height为内容的高度. 包含在scalerel宏包中
-
-$\stretchint[4ex]{10ex}x^a\dif x$
-指定新格式\int的宽度为4ex, 高度为10ex
+2.定界符列表, 参考symbol_summary的表20
