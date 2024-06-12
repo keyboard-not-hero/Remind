@@ -1,53 +1,84 @@
-一、Demo(示例)01 - graphics transform
+Demo_01 -- 导入图片
 \documentclass{article}
 \usepackage{graphicx}
 \begin{document}
-\scalebox{2}[0.9]{Hello World}
-
-Hello World
-
-\scalebox{0.5}{Hello World}
-
-\resizebox{5cm}{4cm}{Hello World}
-
-\resizebox{5cm}{!}{Hello World}
-
-\rotatebox{30}{Hello World}
-
-\reflectbox{Hello World}
+\includegraphics[scale=0.5,draft=true]{picture/math_01.pdf}
 \end{document}
 
 内容讲解
-1.\usepackage{graphicx}使用graphicx宏包, 图像转化操作包含在该宏包中
+1.\usepackage{graphicx}使用graphicx宏包
+
+2.\includegraphics[<args>]{pic_name}用于导入指定名称图片, 并执行转化操作. args列表为一系列可选参数, pic_name为指定图片, 可以使用绝对路径和相对路径. args列表如下:
+    width - 图片的宽度, 当height未提供, 成比例拉伸高度
+    height - 图片的高度, 当width未提供, 成比例拉伸宽度
+    totalheight - 图片的总高度(高度+深度)
+    scale - 图片的缩放系数
+    angle - 图片角度的旋转角度, 正值表示逆时针旋转
+    origin - 设置插图旋转点位置, 默认为基准点. 可选如下:
+        lt - 顶部左侧
+	ct - 顶部水平居中点
+	rt - 顶部右侧
+	lc - 垂直居中左侧
+	c  - 垂直居中和水平居中点
+	rc - 垂直居中右侧
+	lB - 基准点(基线左侧)
+	cB - 基线水平居中点
+	rB - 基线右侧
+	lb - 底部左侧
+	cb - 底部水平居中点
+	rb - 底部右侧
+    viewport - 指定插图的可显示区域, 由四个值组成, 前两个值为左下角坐标, 后两个值为右上角坐标, 单位为bp. 坐标以图片左下角为起始
+    trim - 不同方向的裁剪尺寸, 由四个值组成, 分别表示左、下、右、上的裁剪尺寸, 单位为bp
+    keepaspectratio - boolean值, 是否将图片严格按照比例伸缩, 并且任意满足任意一边的长度不超过指定长度
+    clip - boolean值, 是否展示显示区域外的内容, true为不展示
+    draft - boolean值, 如果为true, 则不显示实际图片, 使用与图片尺寸相同的方框代替
+
+3.\graphicspath{{<path_01>}{<path_02>}...}指定插图的查找路径
+
+
+
+Demo_02 -- 内容变形
+i\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\rotatebox[units=6.283185]{1}{I love you}
+\end{document}
+
+内容讲解
+1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定角度逆时针旋转, 在args为默认值的情况下, angle为旋转角度. args列表如下:
+    origin - 设置旋转点, 参考\includegraphics的origin
+    x,y - 以基准点为原点, 以指定坐标为旋转点
+    units - angle的单位, 默认为逆时针旋转角度; 如果设置为-360, 则为顺时针旋转角度; 如果为6.283185, 则为逆时针旋转弧度
 
 2.\scalebox{horizontal_factor}[vertical_factor]{content}将内容按系数进行拉伸/缩小, horizontal_factor为水平拉伸系数; vertical_factor为垂直拉伸系数, 未提供时参考horizontal_factor值
 
 3.\resizebox{horizontal_size}{vertical_size}{content}将内容按指定长度进行拉伸/缩小, horizontal_size为水平拉伸尺寸; vertical_size为垂直拉伸尺寸. horizontal_size或vertical_size为!时, 根据另一个拉伸尺寸进行成比例拉伸
 
-4.\scalebox与\resizebox处于LR mode, 并且前后的reference point自始至终没有改变
-
-5.\rotatebox{angle}{content}将内容按指定角度逆时针旋转, 旋转过程引用点(基准线与左侧相交点)高度不变, angle为旋转角度. 该盒子处于LR mode
-
-6.\reflectbox{content}为内容的垂直镜像, 即以y轴为对称的镜像
+4.\reflectbox{content}为内容的垂直镜像, 即以穿过中心的垂直线条为对称轴的镜像
 
 
 
-二、Demo(示例)02 - import graphics
+Demo_03 -- 浮动体
 \documentclass{article}
 \usepackage{graphicx}
-\graphicspath{{./pic/}}
 \begin{document}
-\includegraphics[scale=0.5, angle=45]{demo01.jpg}
+\begin{figure}
+\rotatebox[units=6.283185]{1}{I love you}
+\caption{rotete font}
+\end{figure}
 \end{document}
 
 内容讲解
-1.\usepackage[draft]{graphicx}导入graphicx宏包, draft代表包含图片名称的图片占位, 并不实际加载图片, 节约加载时间, 与之相对的为final(默认)
+1.\begin{figure}[<args>]...\end{figure}用于放置图片的浮动环境. args参数列表如下:
+    h - 就地放置浮动体
+    t - 将浮动体放置在当前页或下一页的页面顶部
+    b - 将浮动体放置在当前页或下一页的页面底部
+    p - 将浮动体放置到之后的单独一页, 该也全部为浮动体, 成为浮动体页
+    ** 默认按t -> b -> p的顺序依次尝试; 如果指定h, 则按h -> t -> b -> p的顺序尝>试
+    ! - 配合h/t/b/p, 强制按指定方法安置浮动体
+    H - 相当于h!, 强制就地放置浮动体. 包含在float宏包中
 
-2.\graphicspath{{./pic/}}指定图片在当前目录的pic子目录下
-
-3.\includegraphics[transform_navigate]{pic_name}用于导入指定名称图片, 并执行转化操作. transform_navigate为对图片的转化, 列表如下:
-	width - 图片的宽度, 当height未提供, 成比例拉伸高度
-	height - 图片的高度, 当width未提供, 成比例拉伸宽度
-	totalheight - 图片的总高度(高度+深度)
-	scale - 比例化拉伸图片
-	angle - 逆时针旋转图片角度
+2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参
+数列表如下:
+    toc_title - 在目录中显示的标题. 默认为title内容
+    title - 在当前表格处的标题

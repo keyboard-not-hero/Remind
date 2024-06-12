@@ -1,7 +1,7 @@
 Demo_01 -- 基础脚注
 \documentclass{article}
 \begin{document}
-	Gnus\footnote{A gnu is a big animal} can be quite a gnusance
+    Gnus\footnote{A gnu is a big animal} can be quite a gnusance
 \end{document}
 
 内容讲解
@@ -9,6 +9,17 @@ Demo_01 -- 基础脚注
     \cprotect\footnote{}
 
 2.\footnote适用于paragraphy mode和math mode，不适用于LR mode
+
+3.\renewcommand{\thefootnote}{\alph{footnote}}可修改计数器形式为小写字母. 计数形式列表:
+    \alph - 小写字母
+    \Alph - 大写字母
+    \arabic - 阿拉伯数字
+    \roman - 小写罗马数字
+    \Roman - 大写罗马数字
+
+4.\renewcommand{\footnotesize}{\small\sf\}修改脚注字体
+
+5.脚注位于版心底部
 
 
 
@@ -28,7 +39,7 @@ I hate\footnote{negative} you
 
 
 
-二、Demo(示例02) -- footnotemark and footnotetext
+Demo_03 -- 脚注标记和脚注文本命令
 \documentclass{article}
 \begin{document}
 $a^2+b^2=c^2$\footnotemark[9]
@@ -36,31 +47,14 @@ $a^2+b^2=c^2$\footnotemark[9]
 \end{document}
 
 内容讲解
-1.\footnotemark[num]用于给内容添加脚注标号
+1.由于\footnote指令无法在表格/浮动环境/小页环境中使用, 因此使用脚注标记\footnotemark和脚注文本\footnotetext来分别完成脚注的标记和文本内容
 
-2.\footnotetext[num]{content}用于给对应脚注标号配置脚注内容, num为脚注标号; content为脚注内容
+2.\footnotemark[num]用于给内容添加脚注标号
 
-3.\footnotetext可位于\footnotemark后的任意位置, 并且脚注内容位于上下文内容页的左下角
+3.\footnotetext[num]{content}用于给对应脚注标号配置脚注内容, num为脚注标号; content为脚注内容
 
-4.\footnotemark和\footnotetext可用于paragraphy mode/LR mode/math mode任意模式
+4.\footnotetext可位于\footnotemark后的任意位置, 并且脚注内容位于上下文内容页的左下角
 
-5.\footnotesep用于配置footnote entry之间的垂直距离. 语法: \setlength{\footnotesep}{2ex}
+5.\footnotemark和\footnotetext可用于paragraphy mode/LR mode/math mode任意模式
 
-6.\footnoterule用于配置footnote与正文之间的分割线. 语法: \renewcommand{\footnoterule}{\vspace*{0.3cm}\noindent\rule{2.5cm}{2ex}\vspace*{0.4cm}}, 解释如下:
-	\vspace*{0.3cm} - 正文与分割线的垂直距离
-	\noindent - 分割线不进行缩进处理
-	\rule{2.5cm}{2ex} - 分割线的水平宽度(2.5cm)和垂直高度(2ex)
-	\vspace*{0.4cm} - 分割线与第一个footnote的垂直距离
-
-
-
-三、Demo(示例)03 -- marginal note
-\documentclass{article}
-\begin{document}
-    sometimes you need to look back, otherwise you will never\marginpar[$\Rightarrow$]{$\Leftarrow$} know what you have lost in the way of forever searching.
-\end{document}
-
-内容讲解
-1.\marginpar{note_content}用于配置边缘注解. 在单页模式中, 注解在右侧; 在双页模式中(文档可选参数为twoside), 注解在外侧; 在双列模式中(文档可选参数为towcolumn), 注解在内侧
-
-2.\marginpar[left_note]{right_note}中, 可选参数代表注解位于左侧时的内容, 必选参数代表注解位于右侧时的内容
+6.\footnotetext中不能携带verb相关逐字环境, 可以使用bigfoot宏包, 该宏包同样适用于\footnote命令
