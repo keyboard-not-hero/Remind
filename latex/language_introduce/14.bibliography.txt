@@ -1,116 +1,48 @@
-一、Demo(示例)01 - bibliography with LaTeX
+Demo_01 -- 文章内文献列表和引用
 \documentclass{article}
 \begin{document}
-    How to read a book was first published in the early months of 1940.\cite{how}
-\begin{thebibliography}{99}
-    \bibitem[1]{how}Dr.david How to read a book
-    \bibitem[2]{dream}Martin Luther King,Jr I have a dream
+    How to read a book\cite{bib:how} was first published in the early months of 1940.
+\begin{thebibliography}{(Adler \& Doren, 1972)}
+    \bibitem[(Adler \& Doren, 1972)]{bib:how}Adler, M. J. \& Doren, C. V. (1972). How to read a book
 \end{thebibliography}
 \end{document}
 
-内容讲解
-1.\begin{thebibliography}{len_of_content} ... \end{thebibliography}限定文献引用的具体内容环境, len_of_content用于指定文献引用编号的长度(取该字符串的长度, 如: 99为两个字符长度)
-
-2.\bibitem[num]{label}用于定义文献引用的具体内容, num代表指定引用文献的排列编号; label代表引用文献的标签，用于正文引用; 后接文献引用的正文(author/title/year etc.)
-
-3.\cite[extra_info]{label}用于在正文中引用文献, 并且显示在引用文献列表中, extra_info为引用文献的额外备注信息; label为文献内容item的标签, 并且可同时引用多个, 多个使用','分隔
-
-
-
-二、Demo(示例)02 - bibliography with BibTex
-\documentclass{article}
-\begin{document}
-    How to read a book was first\nocite{dream} published in the early months of 1940.\cite{how}
-\bibliographystyle{plain}
-\bibliography{sample}
-\end{document}
 
 内容讲解
-1.\bibliographystyle{plain}指定文献引用条目的显示内容, plain为其中一个类型, 列表如下:
-	plain - 文献引用列表根据title内容字母排序, 并使用数字编号
-	unsrt - 文献引用列表根据正文引用顺序排序, 并使用数字编号
-	alpha - 文献引用列表根据title内容字母排序, 并使用author(lastname首字母组合)+year(后两位)组合方式进行编号
-	abbrv - 类似于plain, 但first name/month/journal为缩写形式
+1.\begin{thebibliography}{<templete_of_len_num>}
+\bibitem[<num>]{<label>} <conntent>
+\bibitem[<num>]{<label>} <content>
+...
+\end{thebibliography}
+限定文献引用条目的环境. 参数templete_of_len_num用于指定编号的统一缩进模板, 如: 99代表编号统一在两位数空间内, 右对齐
 
 
-2.\bibliography{sample} - 导入数据库条目文件, 文件名称为sample, 该文件后缀必须为.bib, 并且可指定多个文件, 文件之间使用','分隔
+2.\bibitem[<display>]{<label>}用于定义文献环境内的条目, 类似于列表内的\item. 
+label格式:
+<类型>/<冒号>/<名称>, 如: bib:how
+
+display格式规范:
+1)英文文献 
+(<author_last_name>, <year>), 如: (Thompson, 1999)
+2)中文文献
+（<作者姓名>，<出版年>）, 如:（朱晓明，1968）
+
+英文文献多作者使用&分隔, 如: David & Peter
+中文文献多作者使用、分隔, 如: 小明、小红
+
+label格式规范:
+1)英文文献
+<author_last_name>, <first_name_abbre>. <middle_name_abbr>. (<year>). <bib_name>, <publish_add>: <publisher>.
+** bib_name首字母大写
+2)中文文献
+作者姓名（出版年）.《文献名称》.出版地址：出版社.
+
+英文文献多作者使用&分隔, 如: David, T. & Peter, S.
+中文文献多作者使用、分隔, 如: 小明、小红
 
 
-3.\nocite{label}在引用文献列表中显示, 但正文引用处不显示编号; 当label为'*'时, 文献列表中显示文献数据库中的所有item
+3.\cite{<label_01>,<label_02>...}用于在正文中引用文献
 
 
-4.编译步骤: .tex --> .bbl --> .tex --> .tex
+4.\bibitem与\cite类似于交叉引用中的\label与\ref
 
-
-database file(sample.bib)内容
-@BOOK{how,
-    AUTHOR = "David R. Anderson and Dennis J. Sweeney and Thomas A. Williams",
-    TITLE = "How to Read a Book",
-    PUBLISHER = "Simon Schuster",
-    YEAR = "1940"
-}
-
-@BOOK{dream,
-    AUTHOR = "Mortimer J.Adler and Charles Van Doren",
-    TITLE = "Statitics for Business and Economics",
-    PUBLISHER = "South-Western College Pub",
-    YEAR = "2010",
-    EDITION = "11"
-}
-
-
-database内容剖析
-1.ARTICLE代表文献类型, 类型列表如下:
-	article - 杂志/文刊内的文章, 引用类型列表:
-		required - author/title/journal/year
-		optional - volume/number/pages/month/note
-	book - 出版图书
-		required - {author|editor}/title/publisher/year
-		optional - {volume|number}/series/address/edition/month/note
-	booklet - 内部不公开文档
-		required - title
-		optional - author/howpublished/address/month/year/note
-	inbook - book的其中一个章节或指定范围页
-		required - {author|editor}/title/{chapter|pages}/publisher/year
-		optional - {volume|number}/series/type/address/edition/month/note
-	manual - 技术文档
-		required - title
-		optional - author/organization/address/edition/month/year/note	
-
-2.how代表引用标签, 用于在正文引用当前文献item
-
-3.key = value代表文献具体引用内容, 并使用','分隔entry.
-	entry类型如下:
-	required - 必须提供的key, 根据文献类型不同而不同
-	optional - 可选的key, 根据文献类型不同而不同
-	ignored - 未知的被忽略key, 根据文献类型不同而不同
-
-	key列表如下:
-	ADDRESS - 出版社或机构地址
-	AUTHOR - 作者
-	CHAPTER - 章节号
-	EDITION - 版本号
-	EDITOR - 编辑者, 格式类似于AUTHOR
-	HOWPUBLISHED - 发表过程
-	INSTITUTION - 主办/赞助机构名称
-	JOURNAL - 期刊名称
-	MONTH - 出版物发行月份或非出版物完成月份, 使用abbreviation格式
-	NOTE - 帮助理解的备注内容
-	NUMBER - 杂志/期刊/技术报告的当前号码数
-	PAGES - 内容所在的页数范围, 格式为7或9--11类似
-	PUBLISHER - 出版社名称
-	SERIES - 系列书籍的编号
-	TITLE - 标题
-	VOLUME - 杂志或书籍卷数号码
-	YEAR - 出版物发行年份或非出版物完成年份
-
-	value类型列表如下:
-		name - {first_name last_name}或{last_name, first_name}, 多个作者使用and分隔
-		title - 标题首字母/':'符号后字母需大写, {}限定的字母大小写固定
-		abbreviation - 引用已有的缩写组合, 该形式以字母为起始的字符串, 并且不包含空格或以下10个符号:
-			" # % ' ( ) , = { }
-			自定义缩写组合:
-				@string{jgg1="Journal of Gnats and Gnus, Series~1"}
-			** 自定义可以放置在任何位置, 但需要在引用位置之前
-
-4.文献类型/引用名/entry key不在意大小写, 但引用名与\cite引用的需一致

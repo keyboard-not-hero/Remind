@@ -1,0 +1,51 @@
+Demo_01 -- 背景图片
+\documentclass{report}
+\usepackage{wallpaper}
+\TileSquareWallPaper{8}{images.png}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
+\end{document}
+
+内容讲解
+1.当前示例所有命令包含在wallpaper宏包内
+
+2.\TileSquareWallPaper{<tile_number>}{<pic_name>}将图片按水平线上平铺指定数量, 图片根据平铺数量进行等比例伸缩
+
+3.\TileWallPaper{<pic_width>}{<pic_height>}{<pic_name>}指定图片的高和宽, 然后平铺
+
+4.\CenterWallPaper{<scale_factor>}{<pic_name>}指定图片缩放系数, 并将图片放置到版面中心为止
+
+5.\ULCornerWallPaper{<scale_factor>}{<pic_name>}指定图片缩放系数, 并将图片放置到左上角
+
+6.\URCornerWallPaper{<scale_factor>}{<pic_name>}指定图片缩放系数, 并将图片放置到右上角
+
+7.\LLCornerWallPaper{<scale_factor>}{<pic_name>}指定图片缩放系数, 并将图片放置到左下角
+
+8.\LRCornerWallPaper{<scale_factor>}{<pic_name>}指定图片缩放系数, 并将图片放置到右下角
+
+
+
+Demo_02 -- 草稿文字背景
+\documentclass[english]{report}
+\usepackage[color={[gray]{0.6}},scale=5]{draftwatermark}
+\begin{document}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
+\end{document}
+
+
+内容讲解
+1.当前示例内容命令包含在draftwatermark宏包中
+
+2.\usepackage[<args>]{draftwatermark}导入宏包, 可选参数列表如下:
+    firstpageonly - bool值, 是否只在第一次显示水印
+    stamp - bool值, 是否显示水印
+    angle - 水印的旋转角度, 默认为45
+    scale - 水印的缩放比例, 默认为1
+    fontsize - 水印的字体大小, 默认为0.25\paperwidth
+    text - 水印文本, 默认为DRAFT
+    hpos - 水印中心位置在水平方向的定位, 左边为起点, 默认为0.5\paperwidth
+    vpos - 水印中心位置在垂直方向的定位, 顶部为起点, 默认为0.5\paperheight
+    pos - 水印中心位置的坐标{<horizontal>,<vertical>}(以页面左上角为起点), 默认为{hpos,vpos}
+    colormodel - 颜色模式, 默认为gray
+    colorspec - 颜色模式对应的值, 默认为gray的0.8
+    color - 颜色, 为{[<color_model>]{<color_spec>}}

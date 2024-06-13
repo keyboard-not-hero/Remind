@@ -1,0 +1,54 @@
+Demo_01 -- 标题序号/页数引用
+\documentclass{article}
+\begin{document}
+\section{Down the Rabbit-Hole}
+    Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do: once or twice she had peeped into
+the book her sister was reading, but it had no pictures or
+conversations in it, “and what is the use of a book,” thought Alice
+“without pictures or conversations?”
+\section{The Pool of Tears\label{sec:two}}
+    Just then her head struck against the roof of the hall: in fact she was
+now more than nine feet high, and she at once took up the little golden
+key and hurried off to the garden door.
+
+please see section \ref{sec:two} in page \pageref{sec:two}, you can find something
+\end{document}
+
+内容讲解
+1.\label{label_name}紧跟在\section之后, 对section做标记
+
+2.\ref{label_name}引用section编号
+
+3.\pageref{label_name}使用label的页码
+
+4.标签名称通常由标签类型/冒号(:)/名称组成. 类型列表参考如下:
+    cha  - 章书签, \label放置在chapter参数内
+    sec  - 节书签, 同chapter
+    fig  - 插图书签, \label放置在caption参数内
+    tab  - 表格书签, 同fig
+    equ  - 公式书签
+    text - 文本书签
+    exe  - 示例书签
+    def  - 定理书签
+
+
+
+Demo_02 - 标题名称引用
+\documentclass{report}
+\usepackage{ctex,graphicx,nameref}
+\renewcommand{\Nameref}[1]{\textbf{图\ref{#1}~\nameref{#1}}}
+\begin{document}
+\begin{figure}
+    \reflectbox{I love you}
+    \caption{镜像图\label{fig:reflectbox}}
+\end{figure}
+参考第\pageref{fig:reflectbox}页的\nameref{fig:reflectbox}\\
+参考第\pageref{fig:reflectbox}页的\Nameref{fig:reflectbox}
+\end{document}
+
+
+内容讲解
+1.\nameref{label_name}引用标题的名称. 包含在宏包nameref中
+
+2.\renewcommand{\Nameref}[1]{\textbf{图\ref{#1}~\nameref{#1}}}定义命令\Nameref, 引用书签的序号和标题
