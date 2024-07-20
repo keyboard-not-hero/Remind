@@ -1,0 +1,50 @@
+ufw - Ubuntu系列防火墙
+ufw enable
+启动防火墙
+开机启动防火墙
+
+
+ufw disable
+关闭防火墙
+开启不启动防火墙
+
+
+ufw status
+查看防火墙状态(active/inactive)
+
+
+ufw allow [in | out] {<port>[/<tcp_or_udp>] | <service_name>}
+代表允许本地指定端口或地址的出向/入向流量
+默认为in
+
+示例1 - 允许其他设备访问本机UDP 53号端口
+ufw allow 53/udp
+
+实例2 - 允许本机TCP 80/81/82/83端口往其他设备的流量
+ufw allow out 80:83/tcp
+
+示例3 - 查找/etc/services，找出smtp对应25/tcp，即允许其他设备访问本机TCP 25号端口
+ufw allow smtp
+
+示例4 - 允许IP范围为192.168.10.0/24的设备访问
+ufw allow from 192.168.10.0/24
+
+示例5 - 拒绝指定设备(1.2.3.4)访问本地的514端口(本地所有接口)
+ufw deny proto udp from 1.2.3.4 to any port 514
+
+
+ufw delete <rule>
+删除指定配置规则
+
+示例3 - 删除允许其他设备访问本机UDP 53端口
+ufw delete allow 53/udp
+
+
+ufw default {allow | deny | reject} {incoming | outgoing | routed}
+配置出向/入向的默认规则(routed代表转发). 默认列表如下:
+ufw default allow outgoing
+ufw default deny incoming
+ufw default deny routed
+
+
+最后编辑于: 2024-07-20

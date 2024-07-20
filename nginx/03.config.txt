@@ -1,0 +1,31 @@
+基础nginx配置
+http {
+    server {
+        # 监听IPv4和IPv6的80端口
+        listen  80;
+        listen  [::]:80;
+        
+        # 页面文件所在的根目录
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+        }
+    }
+}
+
+
+
+
+代理配置(client -- proxy server -- target server)
+http {
+    server {
+        # 监听IPv4和IPv6的80端口
+        listen  80;
+        listen  [::]:80;
+        
+        location / {
+            代理服务器指向的web_server地址和端口
+            proxy_pass http://<target_server_addr>:<port>;
+        }
+    }
+}

@@ -1,6 +1,8 @@
 下载package安装
 1.CentOS系统
 1)添加nginx仓库源
+[root@vultr ~]# sudo yum install yum-utils
+
 [root@vultr ~]# vi /etc/yum.repos.d/nginx.repo
 [nginx-stable]
 name=nginx stable repo
@@ -10,13 +12,25 @@ enabled=1
 gpgkey=https://nginx.org/keys/nginx_signing.key
 module_hotfixes=true
 
+[nginx-mainline]
+name=nginx mainline repo
+baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+
+[root@vultr ~]# sudo yum-config-manager --enable nginx-mainline
+
 2)安装nginx
-[root@vultr ~]# yum makecache
 [root@vultr ~]# yum install nginx
 
 3)启动nginx
 [root@vultr ~]# systemctl start nginx
+
 [root@vultr ~]# systemctl enable nginx
+
+[root@vultr ~]# firewall-cmd --add-port=80/tcp
 
 4)测试nginx
 [root@vultr ~]# curl -I 127.0.0.1
@@ -25,22 +39,28 @@ Server: nginx/1.22.0
 
 
 2.Ubuntu
-1)添加PPA源
-root@steven:~# sudo apt-get install software-properties-common
+1)安装nginx
+root@steven:~# sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring -y
 
-root@steven:~# sudo add-apt-repository ppa:ondrej/nginx
+root@steven:~# curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+    | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
 
-** PPA源查找: https://launchpad.net/~ondrej
+root@steven:~# echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+    http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+    | sudo tee /etc/apt/sources.list.d/nginx.list
 
-2)安装nginx
-root@steven:~# sudo apt-get update
+root@steven:~# sudo apt update
+
+root@steven:~# sudo apt install nginx
 
 root@steven:~# sudo apt-get install nginx
 
-3)启动nginx
+2)启动nginx
 root@steven:~# sudo systemctl start nginx
 
 root@steven:~# sudo systemctl enable nginx
+
+root@steven:~# sudo ufw allow 80/tcp
 
 4)测试nginx
 root@steven:~# sudo curl -I 127.0.0.1
@@ -54,15 +74,15 @@ root@steven:~# sudo curl -I 127.0.0.1
 
 2)下载source code
 下载地址
-[root@vultr ~]# curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+[root@vultr ~]# curl -O https://nginx.org/download/nginx-1.26.1.tar.gz
 ** 下载列表参考: https://nginx.org/en/download.html
 
 3)编译安装
-[root@vultr ~]# tar -zxvf nginx-1.22.0.tar.gz -C /tmp
+[root@vultr ~]# tar -zxvf nginx-1.26.1.tar.gz -C /tmp
 
-[root@vultr ~]# cd /tmp/nginx-1.22.0
+[root@vultr ~]# cd /tmp/nginx-1.26.1
 
-[root@vultr ~]# ./configure --with-http_ssl_module
+[root@vultr ~]# ./configure --prefix=/usr/local/nginx --with-http_ssl_module
 
 [root@vultr ~]# make
 
@@ -73,10 +93,12 @@ root@steven:~# sudo curl -I 127.0.0.1
 
 [root@vultr ~]# nginx
 
+[root@vultr ~]# sudo firewall-cmd --add-port=80/tcp
+
 5)测试nginx
 [root@vultr ~]# curl -I 127.0.0.1
 HTTP/1.1 200 OK
-Server: nginx/1.22.0
+Server: nginx/1.26.1
 
 
 2.Ubuntu
@@ -85,15 +107,15 @@ steven@steven-MSI:~$ sudo apt install zlib1g-dev libpcre3-dev libssl-dev curl gc
 
 2)下载source code
 下载地址
-steven@steven-MSI:~$ curl -O https://nginx.org/download/nginx-1.22.0.tar.gz
+steven@steven-MSI:~$ curl -O https://nginx.org/download/nginx-1.26.1.tar.gz
 ** 下载列表参考: https://nginx.org/en/download.html
 
 3)编译安装
-steven@steven-MSI:~$ tar -zxvf nginx-1.22.0.tar.gz -C /tmp
+steven@steven-MSI:~$ tar -zxvf nginx-1.26.1.tar.gz -C /tmp
 
-steven@steven-MSI:~$ cd /tmp/nginx-1.22.0
+steven@steven-MSI:~$ cd /tmp/nginx-1.26.1
 
-steven@steven-MSI:~$ ./configure --with-http_ssl_module
+steven@steven-MSI:~$ ./configure --prefix=/usr/local/nginx --with-http_ssl_module
 
 steven@steven-MSI:~$ make
 
@@ -104,10 +126,12 @@ steven@steven-MSI:~$ sudo ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
 steven@steven-MSI:~$ sudo nginx
 
+steven@steven-MSI:~$ sudo ufw allow 80/tcp
+
 5)测试nginx
 steven@steven-MSI:~$ curl -I 127.0.0.1
 HTTP/1.1 200 OK
-Server: nginx/1.22.0
+Server: nginx/1.26.1
 
 
-最后更新于: 2022-08-21
+最后更新于: 2024-07-20
