@@ -20,24 +20,31 @@
 <br>
 <br>
 
-4.数字签名<br>
-发送方使用私钥加密hash值<br>
+4.数字信封<br>
+发送方使用公钥加密对称密钥<br>
 如图4<br>
+![image_not_found](pic/digital_envelope.png)
+<br>
+<br>
+
+5.数字签名<br>
+发送方对内容进行hash求值，然后使用私钥加密hash值<br>
+如图5<br>
 ![image_not_found](pic/digital_signature.png)
 <br>
 <br>
 
-5.数字证书<br>
+6.数字证书<br>
 CA机构使用私钥，对服务器的公钥和主体信息进行签名<br>
-如图5<br>
+如图6<br>
 ![image_not_found](pic/digital_certificate.png)
 <br>
 <br>
 
 数字签名与数字证书的综合案例<br>
-如图6<br>
+如图7<br>
 ![image_not_found](pic/digital_signature_and_certificate.png)
 <br>
 <br>
 
-最后编辑于: 2024-08-14
+最后编辑于: 2024-08-15
