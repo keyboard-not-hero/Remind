@@ -276,3 +276,14 @@ Demo_11 -- 定界符
 1.定界符的使用, \left与\right需要配对, 如果另一次不需要显示定界符, 则使用.代替. 如: \left\{ ... \right.
 
 2.定界符列表, 参考symbol_summary的表20
+
+
+
+Demo_12 -- 全等符号
+\documentclass{article}
+usepackage{siunitx}
+\usepackage{tikz}
+\newcommand*\zhcong{\mathrel{\text{\tikz\draw[baseline] (-.2em,1.35ex) .. controls (-.46em,1.6ex) and (-.54em,.65ex) .. (-.25em,.65ex) .. controls (-.06em,.65ex) and (.06em,1.35ex) .. (.25em,1.35ex) .. controls (.54em,1.35ex) and (.46em,.4ex) .. (.2em,.65ex) (-.46em,.4ex) -- (.46em,.4ex) (-.46em,0ex) -- (.46em,0ex);}}}
+\begin{document}
+$\triangle ABC\zhcong\triangle DEF$
+\end{document}
