@@ -20,9 +20,9 @@ Demo_01 -- 字体属性1
         OT1 - 文本字体
 	T1  - 文本字体
 	OML - 数学字体，包括英文字母、数字、希腊字母
-	OMS - 数学符号，包括关系符、运算符、箭头等
-	OMX - 数学大符号，包括求和、积分、定界符等
-	U   - 未知
+	OMS - 常规数学符号，包括关系符、运算符、箭头等
+	OMX - 大型数学符号，包括求和、积分、定界符等
+	U   - 未知编码字符
     family - 字体的字族，列表如下：
         cmr  - 罗马体
 	cmss - 等线体
@@ -39,20 +39,23 @@ Demo_01 -- 字体属性1
 	sl - 倾斜
 	sc - 小型大写
     size - 字体的尺寸
+        \<font_size>, 声明形式，可指定当前环境后续所有字体的大小， 列表:
+            tiny/scriptsize/footnotesize/small/normalsize/large/Large/LARGE/huge/Huge
+        详情参考symbol_summary的表3
 
 2.LaTeX各种类型字体的默认值。普通文本：
     encoding - OT1
     family   - cmr
     series   - m
     shape    - n
-    size     - 10pt(article/report/book类文档)
+    size     - normalsize, 10pt(article/report/book类文档)
 详情参考symbol_summary的表
 
 3.\textnormal为LaTeX普通文本默认字体
 \textrm为roman family字体，series/shape使用默认选项
 \textmd为mediym series字体，family/shape使用默认选项
 \textup为upright shape字体，family/series使用默认选项
-综合，\textnormal、\textrm、\textmd、\textup效果一致
+综合，使用\textnormal、\textrm、\textmd、\textup效果一致
 
 3.\textsf{}为等线体, 等线体字体线条一致, 没有衬线。字体参数如下：
     family - cmss
@@ -88,7 +91,10 @@ Demo_01 -- 字体属性1
 
 10.字体建议：正文使用罗马字族，代码或专有名词使用等宽体字族，章节名称使用等线体字族
 
-11.详情查看symbol_summary的表2
+11.字体加粗并倾斜，即嵌套:
+\textbf{\textit{<content>}}
+
+12.详情查看symbol_summary的表2
 
 
 
@@ -99,75 +105,20 @@ Demo_02 -- 字体属性2
 \begin{document}
 Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
 
-\fontencoding{OT1}\fontshape{it}\selectfont
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
-
-\usefont{OT1}{cmr}{bx}{n}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
-
-\myself
+{\myself chapter 5}
 Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
 \end{document}
 
 内容讲解
-1.\font<attribute>类声明类型指令，可修改后续文本的单一属性，并且可以组合多个属性，\selectfont使指令生效。属性指令列表如下：
-    \fontencoding{<encoding>} - 设置字符编码
-    \fontfamily{<family>}     - 设置字符族
-    \fontseries{<series>}     - 设置字符序列
-    \fontshape{<shape>}       - 设置字符形状
-    \fontsize{<size>}{<line_distance>}
-                              - 设置字符大小和行距
-    \selectfont               - 非属性设置，使设置生效的指令，必须在设置后紧紧跟随
+1.\DeclareFixedFont{<cmd_name>}{<encoding>}{<series>}{<shape>}{<size>}用于定义新字符类指令，该指令指定字符属性
 
-2.\usefont{<encoding>}{<familt>}{<series>}{<shape>}设置字符属性的声明类型指令
+2.\<cmd_name>使用定义新字符类指令，用于指定当前环境后续字体
 
-3.\DeclareFixedFont{<cmd_name>}{<encoding>}{<series>}{<shape>}{<size>}用于定义新字符类指令，该指令指定字符属性
+3.只适用于英文
 
 
 
-Demo_03 -- 字体属性3
-\documentclass{article}
-\renewcommand{\seriesdefault}{\bfdefault}
-\renewcommand{\shapedefault}{\itdefault}
-\setlength{\parindent}{0mm}
-\begin{document}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
-\end{document}
-
-内容讲解
-1.\renewcommand{\<attr>default}{\<attr_val>default}用于修改字体的默认属性
-
-2.LaTeX系统默认属性配置如下：
-    usefont{\encodingdefault}{\familydefault}{\seriesdefault}{\shapedefault}
-
-    \newcommand{\encodingdefault}{OT1}
-    \newcommand{\familydefault}{\rmdefault}
-    \newcommand{\seriesdefault}{\mddefault}
-    \newcommand{\shapedefault}{\updefault}
-
-    \newcommand{\rmdefault}{cmr}
-    \newcommand{\sfdefault}{cmss}
-    \newcommand{\sfdefault}{cmtt}
-
-
-
-Demo_04 -- 字体大小
-\documentclass{article}
-\setlength{\parindent}{0mm}
-\begin{document}
-\tiny I love you\\
-\normalsize I love you\\
-\huge I love you
-\end{document}
-
-内容讲解
-1.可以使用声明形式指定后续字体的大小
-
-2.详情参考symbol_summary的表3
-
-
-
-Demo_05 -- 特殊字符
+Demo_03 -- 特殊字符
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -182,7 +133,7 @@ special character:\\
 
 
 
-Demo_06 -- 对齐方式
+Demo_04 -- 对齐方式
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -210,7 +161,7 @@ This is flushright text
 
 
 
-Demo_07 -- 字符抄录(逐字符)
+Demo_05 -- 字符抄录(逐字符)
 \documentclass{article}
 \usepackage{ctex}
 \setlength{\parindent}{0mm}
@@ -255,7 +206,7 @@ print('结果为 {0} 和 {1}'.format(sol1,sol2))
 
 
 
-Demo_08 -- 音节重音
+Demo_06 -- 音节重音
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -277,7 +228,7 @@ Demo_08 -- 音节重音
 
 
 
-Demo_09 -- 非英文符号
+Demo_07 -- 非英文符号
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -293,7 +244,7 @@ Demo_09 -- 非英文符号
 
 
 
-Demo_10 -- 下划线
+Demo_08 -- 下划线
 \documentclass{article}
 \usepackage{ulem}
 \setlength{\parindent}{0mm}
@@ -315,7 +266,7 @@ This is line \uline{four}
 
 
 
-Demo_11 -- TeX family text
+Demo_09 -- TeX family text
 \documentclass{article}
 \begin{document}
 Some people use plain \TeX, but I prefer \LaTeX.
@@ -326,7 +277,7 @@ Some people use plain \TeX, but I prefer \LaTeX.
 
 
 
-Demo_12 -- 破折号
+Demo_10 -- 破折号
 \documentclass{article}
 \begin{document}
     An intra-word dash or hyphen, as in X-ray.\\
@@ -345,7 +296,7 @@ Demo_12 -- 破折号
 
 
 
-Demo_13 -- 放大/缩小pifont宏包字体
+Demo_11 -- 放大/缩小pifont宏包字体
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{pifont}
@@ -364,15 +315,20 @@ Demo_13 -- 放大/缩小pifont宏包字体
 
 
 
-Demo_14 -- 单位符号
+Demo_12 -- 单位符号
 \documentclass{article}
 \usepackage{siunitx}
 \setlength{\parindent}{0mm}
 \begin{document}
 \ang{30}\\
-\qty{30}{\degree}\\
+20\unit{\degree}\\
+\qty{20}{\degree}\\
+30\unit{\degreeCelsius}
 \qty{30}{\degreeCelsius}\\
-\qty{30}{\ohm}
+\qty[per-mode=symbol]{4.2e3}{\newtom\per\kilogram}
+\qty[per-mode=symbol]{2}{\kilogram\per\square\metre}
+\qty[per-mode=symbol]{2}{\kilogram\per\cubic\metre}
+\qty[per-mode=symbol,inter-unit-product=\ensuremath{{}\cdot{}}]{4.2e3}{\joule\per\kilogram\per\degreeCelsius}
 \end{document}
 
 内容讲解
@@ -382,3 +338,5 @@ Demo_14 -- 单位符号
     \degreeCelsius - 摄氏度
     \ohm - 电阻单位: 欧
     \degree - 角度单位
+    \newtom - 牛
+    \kilogram - 千米
