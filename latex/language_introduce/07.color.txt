@@ -91,3 +91,25 @@ Demo_04 -- 定义新颜色
 5.\fcolorbox{<frame_color_name>}{<bg_color_name>}{<text>}为指定文本背景色和边框颜色的参数格式命令
 
 6.\pagecolor{<color_name>}为颜色的声明格式命令，可指定后续page的背景色
+
+
+
+Demo_05 -- 颜色表达式
+\documentclass{article}
+\usepackage{xcolor}
+\begin{document}
+\color{red!40!green}
+\color{red!50!green!40!blue}
+\color{red!50!green!60}
+\end{document}
+
+内容讲解
+1.red!40!green代表取60%的绿色(0.6 * 255)和40%的红色(0.4 * 255)
+
+2.red!50!green!50!blue代表取60%(1-40%)的蓝色(0.5 * 255)，剩余40%分配给绿色和红色; 在绿色和红色中，50%(1-50%)分配给绿色，50%分配给红色
+
+3.red!50!green!60代表取40%(1-60%)的白色(以数字结尾时，默认后续为white)，剩余60%分配给绿色和红色; 在红色和绿色中，1-50%分配给绿色，50%分配给红色
+40%白色=0.4*255(红)+0.4*255(绿)+0.4*255(蓝)
+
+4.颜色列表:
+red!50!green!60
