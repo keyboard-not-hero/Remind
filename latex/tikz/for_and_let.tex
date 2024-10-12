@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\begin{document}
+% for循环与let语句
+\begin{tikzpicture}
+    % for循环参考section 88，第1001页
+    % for循环格式: 
+    % \foreach \<var_name> [<options>] in {<list>} {<cmd>}
+    % 或
+    % \forwach <var_name> [<options>] in {<list>} <cmd>;
+    % list格式:
+    %   1.<num_1>,<num_2>,<num_3>  完整列出列表
+    %   2.<num_1>,<num_2>,...,<num_n>  以num_2-num_1为步进, 补足列表中间的数
+    %   3.<num_1>,...,<num_n>  以步进为1(num_n > num_1)或-1(num_n < num_1)
+    \foreach \x in {1,2,...,5} \draw (\x,0) circle [radius=2pt];
+
+    % 多层for循环嵌套
+    \begin{scope}[yshift=-4cm]
+	\foreach \x in {0,1,2,3}
+	  \foreach \y in {0,1,2,3}
+	    {
+	      \filldraw[color=green,fill=red] (\x,\y) circle [radius=1mm];
+	    }
+    \end{scope}
+
+    % for循环的多个变量
+    % \foreach \<var_01>/\<var_02> in {<num_01_1>/<num_02_1>,<num_01_2>/<num_02_2>,<num_01_3>}
+    % 多个变量名称使用/分隔, 每一组变量值中, 使用/分隔分配给不同变量的值; 如果组内后续变量值没有赋予, 则沿用前面变量的值(如num_02_3 = num_01_3)
+    \begin{scope}[yshift=-5cm]
+	\draw[->] (0,0) -- (2.5,0);
+	\foreach \x/\y in {0,0.5/\frac{1}{2}, 1, 1.5/\frac{3}{2},2}
+	{
+	    \draw (\x,-1pt) node[below]{$\y$} -- (\x,1pt);
+	};
+    \end{scope}
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % foreach的可选参数
+    % 1.evaluate=<variable> as <macro> using <formula>
+    % 没有指定as <macro>时，评估计算结果存放在原变量名variable中; using formula使用指定计算方式计算结果
+    \foreach \x in {2^0,2^...,2^5}{$\x,$}
+    \foreach \x [evaluate=\x as \xeval] in {2^0,2^...,2^5}{$\x=\xeval,$}
+    % 2.remember=<variable> as <macro> (initially <value>)
+    % 将当前循环的变量值，保留到下一次循环的宏macro，并且赋予宏一个初始值
+    \foreach \x [remember=\x as \lastx (initially A)] in {B,...,F}{$\overrightarrow{\lastx\x},$}
+\end{tikzpicture}
+
+% \breakforeach, 不管该指令在其他语句之前或之后，都会执行完当前循环才跳出循环，所以效果等同于放在所有语句的最后
+
+\begin{tikzpicture}
+    % let <assign_state> in <statement>;
+    % 在assign_state中对变量进行赋值，多个赋值使用','分隔，变量类型列表： \p<num>代表坐标点，\x<num>代表对应坐标点的x值，\y<num>代表对应坐标点的y值，\n<num>代表纯数字；然后，将赋值变量在statement语句中进行应用. 需要使用calc库
+    \draw[->] (-4,0) -- (4,0) node[right]{$x$};
+    \draw[->] (0,-4) -- (0,4) node[above]{$y$};
+    \draw (-3,-3) grid[step=1cm] (3,3);
+    \draw
+      let
+        \p1  = (1,1),
+	\p2  = (3,3)
+      in
+        (\p1) circle [radius=2pt]
+	(\p2) circle [radius=2pt]
+	(\x1,\y2) circle [radius=2pt];
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 时钟
+    % 时钟外框
+    \filldraw[line width=2pt,fill=yellow!85!black] (0,0) circle [radius=2cm];
+
+    % 最小刻度
+    \foreach \angle in {0,6,...,359}
+    {
+	\draw[line width=0.6pt] (\angle:1.9cm) -- (\angle:2cm);
+    }
+
+    % 每小时刻度
+    \foreach \angle/\label in
+    {0/3, 30/2, 60/1, 90/12, 120/11, 150/10, 180/9, 210/8, 240/7, 270/6,
+    300/5, 330/4}
+    {
+	\draw[line width=1pt] (\angle:1.8cm) -- (\angle:2cm);
+	\node at (\angle:1.4cm) {\label};
+    }
+
+    % 1/4刻度
+    \foreach \angle in {0,90,180,270}
+    {
+	\draw[line width=1.5pt] (\angle:1.6cm) -- (\angle:2cm);
+    }
+
+    % 时针和分针
+    \draw[line width=1.5pt] (0,0) -- (145:0.8cm);
+    \draw[line width=1pt] (0,0) -- (30:1.2cm);
+\end{tikzpicture}
+\end{document}

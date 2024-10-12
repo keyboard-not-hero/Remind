@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+% 画直线、圆、椭圆、长方形、圆弧
+\begin{tikzpicture}
+    % 直线，两个点
+    \draw (0,0) -- (2,0);
+    % 圆，圆心和半径
+    \draw (0,-2) circle [radius=1];
+    % 椭圆，圆心和x/y半径
+    \draw (0,-4) ellipse [x radius=1, y radius=.8];
+    % 长方形，两个对角线上的顶点
+    \draw (0,-10) rectangle (2,-8);
+
+    % 圆弧，起始点、起始/结束角度和半径
+    \draw[->] (-1.5,-15) -- (1.5,-15);
+    \draw[->] (0,-16.5) -- (0,-13.5);
+    \draw (0,-15) circle [radius=1];
+    \draw (.5,-15) arc [start angle=0, end angle=120, radius=.5];
+    
+    % 椭圆弧，起始点、起始/结束角度和x/y半径
+    \draw[->] (-2,-20) -- (2,-20);
+    \draw[->] (0,-21.5) -- (0,-18.5);
+    \draw (0,-20) ellipse [x radius=1.6, y radius=.8];
+    \draw (.8,-20) arc [start angle=0, end angle=90, x radius=.8, y radius=.4];
+\end{tikzpicture}
+\end{document}

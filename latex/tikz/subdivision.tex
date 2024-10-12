@@ -1,0 +1,43 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{tikz}
+\begin{document}
+% 分支结构
+\begin{tikzpicture}
+    [level distance=25mm,
+     every node/.style={fill=red!8!green!40},
+     level 1/.style={sibling distance=24mm,nodes={fill=red!35}},
+     level 2/.style={sibling distance=6mm,nodes={fill=red!20}}]
+    \node {开始}[grow'=right]
+        child {node {A}
+          child {node {B}}
+          child {node {C}}
+          child {node {D}}
+        }
+        child {node {B}
+          child {node {A}}
+          child {node {C}}
+          child {node {D}}
+        }
+        child {node {C}
+          child {node {A}}
+          child {node {B}}
+          child {node {D}}
+        }
+        child {node {D}
+          child {node {A}}
+          child {node {B}}
+          child {node {C}}
+        };
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    [level distance=25mm,
+     every node/.style={fill=red!8!green!40},
+     level 1/.style={sibling distance=36mm,nodes={fill=red!45}},
+     level 2/.style={sibling distance=6mm,nodes={fill=red!30}}]
+    \node {开始}[grow'=right]
+      child foreach \x in {1,2,3,4,5,6} {node {\x}
+	child foreach \y in {1,2,3,4,5,6} {node {\y}}
+      };
+\end{tikzpicture}
+\end{document}

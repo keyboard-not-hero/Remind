@@ -1,0 +1,16 @@
+Demo_01 - 非页面顶/底部浮动体与上下文之间的垂直距离
+\documentclass{artical}
+% \intextsep, 非页面顶/底部浮动体(使用H固定)与上下文之间的垂直距离
+\usepackage{float}
+\usepackage{graphicx}
+\setleng{\intextsep}{2cm}
+\begin{document}
+\begin{figure}[H]
+\includegraphics[scale=0.4]{picture/wolf.jpg}
+\end{figure}
+This is separate line
+\begin{figure}[H]
+\includegraphics[scale=0.4]{picture/snuggle}
+\end{figure
+\end{document}
+

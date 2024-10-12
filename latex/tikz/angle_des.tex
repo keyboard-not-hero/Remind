@@ -1,0 +1,30 @@
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+% 标记角度
+\usetikzlibrary{angles,quotes}
+\begin{tikzpicture}
+    % AB和BC交于点B, 标记由AB到BC的夹角，需要使用angles库
+    % 参考section 41，第568页
+    \coordinate (A) at (3,0);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (30:3);
+
+    \draw[->] (-6,0) -- (6,0) node[right] {$x$};
+    \draw[->] (0,-6) -- (0,6) node[above] {$y$};
+    \draw (A) -- (B) -- (C);
+    % angle radius为标记与夹角形成圆弧的半径，A/B/C必须为node或coordinate类型，不能直接代入坐标点
+    \draw pic[draw=green!50,fill=green!20,angle radius=9mm,"$\alpha$"] {angle=A--B--C};
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 标记直角
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4,0);
+    \coordinate (C) at (0,4);
+
+    \draw (A) -- (B);
+    \draw (A) -- (C);
+    \draw pic[draw,angle radius=4mm]{right angle=B--A--C};
+\end{tikzpicture}
+\end{document}

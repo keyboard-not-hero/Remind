@@ -81,4 +81,4 @@ Demo_03 -- 浮动体
 2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参
 数列表如下:
     toc_title - 在目录中显示的标题. 默认为title内容
-    title - 在当前表格处的标题
+    title - 在当前图片处的标题

@@ -1,0 +1,64 @@
+\documentclass[dvisvgm]{beamer}
+\usepackage{tikz}
+\usepackage{animate}
+\usepackage{ifthen}
+\definecolor{darkgreen}{RGB}{10,90,10}
+\begin{document}
+% 制作animate，需要满足以下条件:
+% 1.使用beamer类的documentclass，并且携带dvisvgm参数
+% 备注: 如果想生成pdf文档片段，使用standalone类的documentclass，并且携带export参数，切记不能包含在frame环境内
+% 2.使用animate包
+% 3.使用texlive编译命令: latexmk -pdflatex -dvi <tex_file>
+% 4.dvi文件转化为svg命令: dvisvgm <dvi_file>
+    \begin{frame}
+% 示例参考: https://tex.stackexchange.com/questions/558850/how-can-i-animate-a-tikz-drawing-in-beamer
+% animateinline格式: \begin{animateinline}[<options>]{<frame_per_second>}...\end{animateinline}
+% options为可选参数. 列表如下:
+%   1)loop - 动画结束后进行循环
+%   2)poster - 使用第几帧作为默认显示帧. 可选列表:
+%     [1]first - 第一帧，默认值
+%     [2]<num> - 第num帧，从0计数
+%     [3]last - 最后一帧
+%     [4]none - 没有帧作为默认显示
+%   3)every - 每第n帧显示，其他帧不显示
+%   4)autopause - 关闭页面时，暂停而非返回默认帧
+%   5)autoplay - 打开页面时，自动开始动画(从上次暂停页面)
+%   6)autoresume - 打开页面时，停留在上次暂停页面
+%   7)palindrome - 动画结束后，向前或向后继续运行
+%   8)step - 每点击一次，动画过一帧，该配置使frame_per_second被忽略
+%   9)scale - 对动画组件进行放大/缩小
+%   10)controls - 控制按钮的显示. 列表如下:
+%     [1]all/true/on - 显示所有按钮
+%     [2]none/false/off - 不显示按钮
+%     [3]play/step/stop/speed - 分别显示播放/单步/停止/速度按钮，可同时指定该组内多个，使用','分隔
+%   11)buttonsize - 指定按钮大小，必须为TeX单位，默认为1.44em
+%   12)nomouse - 动画不响应鼠标操作
+% frame_per_second代表动画中，每秒的帧数
+	\begin{animateinline}[controls,loop]{50}
+    % \multiframe用于指定连续帧，格式为:\multiframe{<count_of_frame>}{[<variable>]}{...}
+    % count_of_frame代表连续帧的迭代次数
+    % variable为可选变量，格式为<variable_name>=<init_val>+<increment>，每一次迭代变量值的增量为increment，定义变量名称不带\符号(引用时需要带\符号). 变量类型有三种, 由第一个字母确定, 列表如下:
+    %   1)i/I - 整数
+    %   2)n/N/r/R - 实数
+    %   3)d/D - 带LaTeX长度单位的值
+	    \multiframe{180}{rt=-45+1}{%
+		\begin{tikzpicture}
+		\ifthenelse{\rt < 45}
+		{
+		    \draw[rounded corners,fill=cyan,rotate around={180-\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
+		    \draw [fill=white] (2,0.2) circle (1mm);
+		    \draw [fill=darkgreen] (2,0.2) circle (0.5mm);
+		}
+		{
+		    \draw[rounded corners,fill=darkgreen,rotate around={90+\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
+		    \draw [fill=white] (2,0.2) circle (1mm);
+		    \draw [fill=cyan] (2,0.2) circle (0.5mm);
+		};
+		\draw [>=stealth,->,very thick] ([shift=(175:2.15)]2,0.2) arc (175:135:2.15) node[xshift=-5pt,left] {$+45^\circ$};
+		\draw [>=stealth,->,very thick] ([shift=(185:2.15)]2,0.2) arc (185:225:2.15) node[xshift=-5pt,left] {$-45^\circ$};
+		\node at (4.0,4.0) {}; %phantom node
+		\node at (-4.0,-4.0) {}; %phantom node
+		\end{tikzpicture}}%
+	\end{animateinline}
+    \end{frame}
+\end{document}
