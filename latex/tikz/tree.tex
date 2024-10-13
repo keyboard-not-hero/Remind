@@ -1,0 +1,75 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{tikz}
+\begin{document}
+% 树形结构
+% \path ... child [<options>] <for_state> {<child_path>}
+% options为可选参数. 列表如下:
+%   1.grow - 将child按逆时针方向排列，可选参数列表:
+%     [1]down/up/left/right - 分别为向下/上/左/右方向延伸
+%     [2]north/south/west/east/north west/north east/south west/south east - 分别为北/南/西/东/西北/东北/西南/东南方向延伸
+%     [3]角度值 - 向指定角度方向延伸. x轴正向为0度
+%   2.grow' - 类似于grow，将child按顺时针方向排列
+%   3.<color> - 给连线配置颜色
+%   4.missing - 当前child被编号，但是内容被忽略(包含子节点)
+\begin{tikzpicture}
+    \coordinate
+      child {}
+      child {
+        child {}
+	child {}
+      };
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    \node {begin}[grow=12]
+      child[red] {node {1}}
+      child {node {2}
+	child {node {1}}
+	child {node {2}}
+      };
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 配置全局属性
+    %   1.level distance - 父节点与子节点之间的距离
+    %   2.sibling distance - 兄弟节点之间的距离. 通常在不同等级节点上分别配置
+    %   3.every node/.style - 配置所有node的属性
+    %   4.level <num>/.style - 配置指定等级子节点的属性
+    [level distance=25mm,
+     every node/.style={fill=red!20!green!40},
+     level 1/.style={sibling distance=24mm,nodes={fill=red!35}},
+     level 2/.style={sibling distance=6mm,nodes={fill=red!20}}]
+    \node {开始}[grow=100]
+        child {node {A}
+          child {node {B}}
+          child {node {C}}
+          child {node {D}}
+        }
+	child {node {B}
+          child {node {A}}
+          child {node {C}}
+          child {node {D}}
+        }
+        child {node {C}
+          child {node {A}}
+          child {node {B}}
+          child {node {D}}
+        }
+        child {node {D}
+          child {node {A}}
+          child {node {B}}
+          child {node {C}}
+        };
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    [level distance=25mm,
+     every node/.style={fill=red!8!green!40},
+     level 1/.style={sibling distance=36mm,nodes={fill=red!45}},
+     level 2/.style={sibling distance=6mm,nodes={fill=red!30}}]
+    \node {开始}[grow'=north east]
+      child foreach \x in {1,2,3,4,5,6} {node {\x}
+	child foreach \y in {1,2,3,4,5,6} {node {\y}}
+      };
+\end{tikzpicture}
+\end{document}
