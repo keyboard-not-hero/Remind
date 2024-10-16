@@ -1,17 +1,32 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{tikz}
 \usetikzlibrary{datavisualization.formats.functions}
-% 1.datavisualization
-% axes坐标轴，参考section 82，第872页
+% 1.datavisualization，参考section 82，第872页. 需要使用datavisualization库
 \begin{document}
 \begin{tikzpicture}
+    % 使用坐标点作图
+    \datavisualization [school book axes,visualize as smooth line]
+    data {
+      x,y
+      -1.5,2.25
+      -1,1
+      -0.5,0.25
+      0,0
+      0.5,0.25
+      1,1
+      1.5,2.25
+    };
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
   \datavisualization [
-    % 1.scientific axes，需要使用datavisualization库
+    % 使用函数方式作图，需要使用datavisualization.formats.functions库
+    % 1.scientific axes
     % 科学坐标轴，值格式: {<key>=<value>}可指定以下值:
     %   1)outer ticks - 刻度放置在外部
     %   2)inner ticks - 刻度放置在内部
     %   3)clean - 不在原边框画刻度，分别在左侧和下侧建立坐标轴
-    %   standard labels/upright labels/end labels - 坐标标签的放置方式. 放置方式如下:
+    %   4)standard labels/upright labels/end labels - 坐标标签的放置方式. 放置方式如下:
     %     [1]standard labels - x轴标签在轴中间下方；y轴标签在轴中间左侧，文字从下到上
     %     [2]upright labels - x轴标签在轴中间在下方；y轴标签在周中间左侧，文字从左到右
     %     [3]end labels - x轴标签在轴末端右侧；y轴标签在轴末端上侧，文字从左到右
@@ -35,7 +50,7 @@
     %     [6]minor at - 详细指定小刻度的所在值, 值格式: {<list>}
     %     [7]subminor at - 详细指定更小刻度的所在值, 值格式: {<list>}
     %     [8]major/minor/subminor also at - 额外附加的刻度值
-    %     [9style - 对刻度线和刻度值进行配置
+    %     [9]style - 对刻度线和刻度值进行配置
     %     [10]node style - 对刻度值进行配置，值格式: {<key>=<value>}. 值可以为: rotate/color等
     %     [11]tick prefix - 在刻度值前面添加的内容
     %     [12]tick suffix - 在刻度值后面添加的内容
@@ -48,7 +63,21 @@
     %   1)visualize as line - 直线
     %   2)visualize as smooth line - 曲线
     %   3)visualize as scatter - 描点
+    % 可在线条类型中，指定使用该线条类型的线条，如果有多个线条，可以使用如下格式指定:
+    %   visualize as line/.list={<line_name_01>,<line_name_02>,...}
     visualize as smooth line]
+    % format - 提供坐标点的方式. 可选列表如下:
+    %   1)table - 第一行为表头，后续行为内容；列之间的分隔符默认为','. 默认格式，使用如下参数修改子参数:
+    %     [1]separator - 指定列之间的分隔符
+    %     [2]headline - 指定表头名称，此时内容第一行为实际值
+    %   2)named - 使用<var>=<val>的方式分别指定内容；列之间分隔符默认为','
+    %   3)function - 使用函数表达内容，使用使用datavisualization.formats.functions库. 格式如下:
+    %     [1]var <var> : interval[<low>:<high>] samples <num>
+    %     samples为样本数，可省略，默认为25
+    %     [2]var <var> : interval[<low>:<high>] step <step>
+    %     [3]var <var> : {<values>}
+    %     [4]func <var> = <expression>
+    %     引用变量值: \value{<var>}
     data [format=function] {
       var x : interval [-3:3];
       func y = \value x*\value x*\value x;
@@ -62,11 +91,8 @@
     visualize as smooth line,
     x axis={label=$x$},
     y axis={label=$f(x)$}]
-    % format=function代表使用函数，可以使用区间指定x值，需要使用datavisualization.formats.functions库
     data [format=function] {
-      % x变量的取值区间
       var x : interval [-1.3:1.3];
-      % y关于x的函数
       func y = \value x*\value x*\value x;
     };
 \end{tikzpicture}\\\vspace{1cm}
@@ -83,19 +109,63 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
-    % 作一个正弦曲线
-    \def\mytypesetter#1{%
-      \pgfmathparse{#1/pi}%
-      \pgfmathprintnumber{\pgfmathresult}$\pi$%
-    }
+    % legend应用
     \datavisualization [
     school book axes,
-    x axis={ticks={step=(0.5*pi),tick typesetter/.code=\mytypesetter{##1}}},
-    visualize as smooth line]
-    data [format=function]{
+    % legend - 配置legend相关属性. 列表如下:
+    %   1)above - legend在坐标轴外部的位置. 可选列表如下:
+    %     [1]east outside/right - 在右侧
+    %     [2]north east outside - 在右侧，并且顶端与可视表的顶端对齐
+    %     [3]south east outside - 在右侧，并且底端与可视表的底端对齐
+    %     [4]west outside/left - 在左侧
+    %     [5]north west outside - 在左侧，并且顶端与可视表的顶端对齐
+    %     [6]south west outside - 在左侧，并且底端与可视表的底端对齐
+    %     [7]north outside/above - 在顶侧
+    %     [8]south outside/below - 在底侧
+    %   2)matrix node style - legend矩阵的属性. 如: fill=black!50
+    %   3)down then right - legend的内容，排序方式. 列表如下:
+    %     [1]down then right - 先从上到下，再从左到右. 默认选项
+    %     [2]down then left - legend的内容，先从上到下，再从右到左
+    %     [3]up then right - legend的内容，先从下到上，再从左到右
+    %     [4]up then left - legend的内容，先从下到上，再从右到左
+    %     [5]left then up - legend的内容，先从右到左，再从下到上
+    %     [6]left then down - legend的内容，先从右到左，再从上到下
+    %     [7]right then up - legend的内容，先从左到右，再从下到上
+    %     [8]right then down - legend的内容，先从左到右，再从上到下
+    %   4)rows - legend的行数
+    %   5)columns - legend的列数
+    legend=below,
+    visualize as smooth line/.list={sin,cos},
+    % 对应线条的属性. 列表如下:
+    %   1)label in legend - legend中该线条注释文字的属性. 列表如下:
+    %     [1]text - 注释文字内容
+    %   2)style - 线条在坐标轴中的属性. 列表如下:
+    %     [1]<color> - 指定线条颜色
+    %     [2]mark - 指定标记点的形状
+    sin={label in legend={text=$\sin x$}},
+    cos={label in legend={text=$\cos x$}},
+    % style sheet指定不同线条的区分方式. 列表如下:
+    %   1)vary dashing - 通过线条dash模式来区别线条
+    %   2)vary thickness - 通过线条粗细来区别线条
+    %   3)vary thickness and dashing - 通过线条粗细和dash模式来区别线条
+    %   4)cross marks - 使用不同的标记来区别线条或scatter
+    %   5)strong colors - 使用不同主色来区别线条
+    %   6)vary hue - 使用不同颜色来区别线条
+    %   7)shades of blue - 使用不同深浅的蓝色来区别线条
+    %   8)shades of red - 使用不同深浅的红色来区别线条
+    %   9)gray scale - 使用不同灰度来区别线条
+    style sheet=strong colors
+    ]
+    % set参数，指定该数据集用于指定线条
+    data [set=sin,format=function]{
       var x : interval [0:2*pi];
       % r用于将弧度制x转化为角度制
       func y = sin(\value x r);
+    }
+    data [set=cos,format=function]{
+      var x : interval [0:2*pi];
+      % r用于将弧度制x转化为角度制
+      func y = cos(\value x r);
     };
 \end{tikzpicture}\\\vspace{2cm}
 

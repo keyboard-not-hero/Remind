@@ -275,7 +275,19 @@ Demo_11 -- 定界符
 内容讲解
 1.定界符的使用, \left与\right需要配对, 如果另一次不需要显示定界符, 则使用.代替. 如: \left\{ ... \right.
 
-2.定界符列表, 参考symbol_summary的表20
+2.配置更大的括号
+\makeatletter
+\newcommand{\biggg}{\bBigg@\thr@@}
+\newcommand{\Biggg}{\bBigg@{3.5}}
+\def\bigggl{\mathopen\biggg}
+\def\bigggm{\mathrel\biggg}
+\def\bigggr{\mathclose\biggg}
+\def\Bigggl{\mathopen\Biggg}
+\def\Bigggm{\mathrel\Biggg}
+\def\Bigggr{\mathclose\Biggg}
+\makeatother
+
+3.定界符列表, 参考symbol_summary的表20
 
 
 

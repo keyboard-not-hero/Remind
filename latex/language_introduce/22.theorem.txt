@@ -1,0 +1,99 @@
+Demo_01 -- theorem
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{amsmath,framed,pstricks}
+\usepackage[framed]{ntheorem}
+\def\theoremframecommand{\psshadowbox[linecolor=black]}
+\theoremstyle{empty}
+\theoremheaderfont{\bfseries}
+\theorembodyfont{\normalfont}
+\newshadedtheorem{theorem}{定理}
+\begin{document}
+\begin{theorem}
+\centering\textbf{有理数加法法则}\\
+\raggedright\parindent=22pt
+同号两数相加，取相同的符号，并把绝对值相加。\\
+异号两数相加，绝对值相等时和为0；绝对值不等时，取绝对值较大的数的符号，并用较大>的绝对值减较小的绝对值。\\
+一个数同0相加，结果不变
+\end{theorem}
+\end{document}
+
+
+ 内容讲解
+1.\theoremstyle{<style>}
+配置定理的显示风格，后续内容均需要使用ntheorem宏包. 风格列表如下:
+plain
+标题 序号 正文
+
+break
+标题 序号
+正文
+
+change
+序号 标题 正文
+
+changebreak
+序号 标题
+正文
+
+margin
+序号 标题 正文
+序号凸出
+
+marginbreak
+序号 标题
+正文
+序号凸出
+
+nonumberplain
+标题 内容
+
+nonumberbreak
+标题
+内容
+
+empty
+内容
+
+
+2.\theoremheaderfont{<font>}
+设置标题内容的字体
+
+
+3.\theorembodyfont{<font>}
+设置正文内容的字体
+
+
+4.\theoremseparator{<symbol>}
+标题与正文之间的分隔符号，默认为空格
+
+
+5.\theoremindent<dimension>
+标题与正文内容的统一缩进
+
+
+6.\newtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
+定义新环境名. 参数列表如下:
+  env_name - 新环境的名称
+  counter_name - 不同环境名称使用不同计数器，当前环境名如果想与已定义环境合并计数器，则指定已定义环境名称
+  title - 显示的正文标题
+  sort - 排序重置标准，如: chapter代表在每章节开头重置排序数字
+
+
+7.\newframedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
+定义带边框的环境名. 参数与newtheorem一致
+需要调用framed宏包，并且ntheorem宏包需要带framed可选参数
+
+
+8.\newshadedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
+定义带边框阴影的环境名. 参数与newtheorem一致
+需要调用framed和pstricks宏包，并且ntheorem宏包需要带framed可选参数
+
+\def\theoremframecommand{\psshadowbox[linecolor=black]}
+设置阴影部分
+
+
+
+9.\begin{<env_name>}
+...
+\end{<env_name>}
+使用定义的环境，并输入正文内容
