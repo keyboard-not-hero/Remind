@@ -109,21 +109,104 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
+    % 在线条处插入标注
+    \datavisualization [
+    school book axes,
+    visualize as smooth line/.list={sin,cos},
+    % 对应线条的属性. 列表如下:
+    %   1)label in data - 该线条注释文字的属性. 列表如下:
+    %     [1]text - 注释文字内容, 位于线条右侧
+    %     [2]text' - 注释文字内容, 位于线条左侧
+    %     [3]when - 注释文字的放置点. 如: when=x is 2或when=y is 3
+    %     [4]index - 注释文字位于数据集第num个点
+    %     [5]pos - 注释文字在线条的百分比位置
+    %     [6]node style - 配置标签属性. 如: node style={circle,draw=red}
+    %     [7]text colored - 配置标签的颜色与线条一致
+    sin={label in data={text=$\sin x$,node style={draw=blue},pos=0.5}},
+    cos={label in data={text=$\cos x$,pos=0.25}},
+    style sheet=vary dashing
+    ]
+    % set参数，指定该数据集用于指定线条
+    data [set=sin,format=function]{
+      var x : interval [0:2*pi];
+      % r用于将弧度制x转化为角度制
+      func y = sin(\value x r);
+    }
+    data [set=cos,format=function]{
+      var x : interval [0:2*pi];
+      % r用于将弧度制x转化为角度制
+      func y = cos(\value x r);
+    };
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 在线条处插入标注，并连接
+    \datavisualization [
+    school book axes,
+    visualize as smooth line/.list={sin,cos},
+    % 对应线条的属性. 列表如下:
+    %   1)pin in data - 该线条注释文字的属性. 列表如下:
+    %     [1]text - 注释文字内容, 位于线条右侧
+    %     [2]text' - 注释文字内容, 位于线条左侧
+    %     [3]when - 注释文字的放置点. 如: when=x is 2或when=y is 3
+    %     [4]index - 注释文字位于数据集第num个点
+    %     [5]pos - 注释文字在线条的百分比位置
+    %     [6]node style - 配置标签属性. 如: node style={circle,draw=red}
+    %     [7]text colored - 配置标签的颜色与线条一致
+    %     [8]pin angle - pin的角度
+    %     [9]pin length - pin的长度
+    sin={pin in data={text=$\sin x$,node style={draw=blue},pos=0.5}},
+    cos={pin in data={text=$\cos x$,pos=0.25,pin length=2cm}},
+    style sheet=vary hue
+    ]
+    % set参数，指定该数据集用于指定线条
+    data [set=sin,format=function]{
+      var x : interval [0:2*pi];
+      % r用于将弧度制x转化为角度制
+      func y = sin(\value x r);
+    }
+    data [set=cos,format=function]{
+      var x : interval [0:2*pi];
+      % r用于将弧度制x转化为角度制
+      func y = cos(\value x r);
+    };
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
     % legend应用
     \datavisualization [
     school book axes,
     % legend - 配置legend相关属性. 列表如下:
     %   1)above - legend在坐标轴外部的位置. 可选列表如下:
     %     [1]east outside/right - 在右侧
-    %     [2]north east outside - 在右侧，并且顶端与可视表的顶端对齐
-    %     [3]south east outside - 在右侧，并且底端与可视表的底端对齐
+    %     [2]north east outside - 在右上侧，并且顶端与可视表的顶端对齐
+    %     [3]south east outside - 在右下侧，并且底端与可视表的底端对齐
     %     [4]west outside/left - 在左侧
-    %     [5]north west outside - 在左侧，并且顶端与可视表的顶端对齐
-    %     [6]south west outside - 在左侧，并且底端与可视表的底端对齐
+    %     [5]north west outside - 在左上侧，并且顶端与可视表的顶端对齐
+    %     [6]south west outside - 在左下侧，并且底端与可视表的底端对齐
     %     [7]north outside/above - 在顶侧
     %     [8]south outside/below - 在底侧
-    %   2)matrix node style - legend矩阵的属性. 如: fill=black!50
-    %   3)down then right - legend的内容，排序方式. 列表如下:
+    %   2)east inside - legend在坐标轴内部的相对位置. 可选列表如下:
+    %     [1]east inside - 内部右侧
+    %     [2]north east inside - 内部右上侧
+    %     [3]south east inside - 内部右下侧
+    %     [4]west inside - 内部左侧
+    %     [5]north west inside - 内部左上侧
+    %     [6]south west inside - 内部左下侧
+    %     [7]north inside - 内部上侧
+    %     [8]south inside - 内部下侧
+    %   3)at values - legend在坐标轴内部的坐标点位置. 可选列表如下:
+    %     [1]at values - legend的中心的坐标点. 格式: at values={x=<val>,y=<val>}
+    %     [2]right of - legend的中心在坐标点的右侧
+    %     [3]above right of - legend的中心在坐标点的右上侧
+    %     [4]above of - legend的中心在坐标点的上侧
+    %     [5]above left of - legend的中心在坐标点的左上侧
+    %     [6]left of - legend的中心在坐标点的左侧
+    %     [7]below left of - legend的中心在坐标点的左下侧
+    %     [8]below of - legend的中心在坐标点的下侧
+    %     [9]below right of - legend的中心在坐标点的右下侧
+    %   4)matrix node style - legend矩阵的属性. 如: fill=black!50
+    %   5)down then right - legend的内容，排序方式. 列表如下:
     %     [1]down then right - 先从上到下，再从左到右. 默认选项
     %     [2]down then left - legend的内容，先从上到下，再从右到左
     %     [3]up then right - legend的内容，先从下到上，再从左到右
@@ -132,17 +215,25 @@
     %     [6]left then down - legend的内容，先从右到左，再从上到下
     %     [7]right then up - legend的内容，先从左到右，再从下到上
     %     [8]right then down - legend的内容，先从左到右，再从上到下
-    %   4)rows - legend的行数
-    %   5)columns - legend的列数
-    legend=below,
+    %   6)rows - legend的行数
+    %   7)columns - legend的列数
+    %   8)label style - 配置legend标签的属性. 列表如下:
+    %     [1]node style - 配置标签属性. 如: node style={circle,draw=red}
+    %     [2]text colored - 配置标签的颜色与线条一致
+    %     [3]text right - 标签放置在线条的相对位置. 列表如下:
+    %       1]text right - 标签放在线条右侧. 默认配置
+    %       2]text left - 标签放在线条左侧
+    %       3]text only - 只有标签, 没有线条
+    legend={below,label style={node style={draw=red,circle}}},
     visualize as smooth line/.list={sin,cos},
     % 对应线条的属性. 列表如下:
     %   1)label in legend - legend中该线条注释文字的属性. 列表如下:
     %     [1]text - 注释文字内容
+    %     [2]node style - 线条在legend的标签属性. 如: node style={circle,draw=blue}
     %   2)style - 线条在坐标轴中的属性. 列表如下:
     %     [1]<color> - 指定线条颜色
     %     [2]mark - 指定标记点的形状
-    sin={label in legend={text=$\sin x$}},
+    sin={label in legend={text=$\sin x$,node style={draw=blue}}},
     cos={label in legend={text=$\cos x$}},
     % style sheet指定不同线条的区分方式. 列表如下:
     %   1)vary dashing - 通过线条dash模式来区别线条
