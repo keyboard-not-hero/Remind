@@ -96,20 +96,30 @@ $$ ... $$
 
 
 
-Demo_02 -- 上/下标注符
+Demo_02 -- 上/下标注符及删除符
 \documentclass{article}
 \usepackage{ctex,amsmath}
+\usepackage{cancel}
 \begin{document}
 \begin{displaymath}
-    A=\overbrace{(a+b+c)+\underbrace{(d+e+f)i}_{\text{虚数}}}^{\text{复数}}
+    A=\overbrace{(a+b+c)+\underbrace{(d+e+f)i}_{\text{虚数}}}^{\text{复数}}\\
+    \bcancel{This is backslash delete}\\
+    \cancel{This is slash delete}\\
+    \xcancel{This is cross delete}
 \end{displaymath}
 \end{document}
 
 
 内容讲解
-1.\overbrace{}用于水平上括号, 并可对指令使用^{}添加备注
+1.\overbrace{}用于内容上方的大括号, 并可对指令使用^{}添加备注
 
-2.\underbrace{}用于水平下括号, 并可对指令使用_{}添加备注
+2.\underbrace{}用于内容下方的大括号, 并可对指令使用_{}添加备注
+
+3.\cancel{}为删除符号，需要cancel宏包
+
+4.\bcancel{}为反斜杠删除符号，需要cancel宏包
+
+5.\xcancel{}为交叉删除符号，需要cancel宏包
 
 
 
@@ -243,17 +253,20 @@ Demo_09 -- 数学模式的重音符
 
 
 
-Demo_10 -- 符号重叠
+Demo_10 -- 符号堆叠
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
 \begin{displaymath}
-    A \stackrel{a'}{\rightarrow} B \stackrel{b'}{\rightarrow} C
+    b\overset{F}{\longrightarrow}c\\
+    b\underset{F}{\longrightarrow}c
 \end{displaymath}
 \end{document}
 
 内容讲解
-1.\stackrel{up}{down}表示进行内容堆叠, down是下方的内容, up是上方的内容
+1.\overset{<above>}{<content>}表示在内容上堆叠字体略小的内容
+
+2.\underset{<below>}{<content>}表示在内容下堆叠字体略小的内容
 
 
 
