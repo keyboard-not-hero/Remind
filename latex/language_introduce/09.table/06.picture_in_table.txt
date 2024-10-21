@@ -17,17 +17,55 @@
 
 
 内容讲解
-1.\adjincludegraphics[args]{<pic_name>}用于插入图片, 并对图片进行更深的操作. 该指令包含在adjustbox宏包中
-可选参数列表:
-raise=<measure> 
-将图片向上平移指定尺寸, 类似于raisebox
+1.\adjustbox{<options>}{<content>}用于对内容(包括tikz环境内容)进行强制操作. 该指令包含在adjustbox宏包中. 参数列表:
+    frame
+        给内容添加边框。详细格式如下：
+        frame
+            只给一个边框 
+        frame=<rule_width>
+            指定边框的线条宽度
+        frame=<rule_width> <sep>
+            指定边框的线条宽度和内部空白填充
+        frame=<rule_width> <sep> <margin>
+            指定边框的线条宽度、内部空白填充和外部空白填充
+    vspace
+        在内容的之前和之后添加垂直空白。详细格式如下：
+        vspac=<above/below>
+            一个参数指定之前和之后的垂直空白
+        vspace=<above> <below>
+            两个参数分别指定之前和之后的垂直空白
+    margin
+        该参数在frame参数之前，指定盒子内的内容与边框的空白
+        该参数在frame参数之后，指定边框与盒子外内容的空白
+        与参数padding效果一致。详细格式如下：
+        margin=<all_direction_margin>
+            一个参数值指定四个方向的填充值
+        margin=<left/right> <top/bottom>
+            第一个参数指定左右填充值，第二个参数指定上下填充值
+        margin=<left> <bottom> <right> <top>
+            四个参数分别为左/右/上/下填充值
+    raise 
+        将图片向上平移指定尺寸。详细格式如下:
+        raise=<amount>
+            垂直向上移动指定尺寸
+        raise={<amount>}{<height>}
+            垂直向上移动指定尺寸，并设置字体高度
+        raise={<amount>}{<height>}{<depth>}
+            垂直向上移动指定尺寸，并设置字体高度和深度
+    scale
+        内容的伸缩系数。详细格式如下：
+        scale=<factor>
+            一个参数指定水平和垂直伸缩系数
+        scale={<h-factor>}{<v-factor>}
+            两个参数分别指定水平和垂直伸缩系数
+    reflect
+        内容关于过中心点的垂直直线，成镜像
 
-margin=<all_direction_margin>
-margin=<left/right> <top/bottom>
-margin=<left> <bottom> <right> <top>
-指定图片在各个方向的padding
+2.\adjincludegraphics[<options>]{<pic_name>}用于插入图片, 并对图片进行更深的操作. 该指令包含在adjustbox宏包中
 
-scale=<factor>
-图片的缩放/放大系数
+
+
+
+
 
 
