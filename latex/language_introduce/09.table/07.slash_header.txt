@@ -1,0 +1,35 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{diagbox}
+\begin{document}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \diagbox{姓名}{科目} & 语文 & 数学\\
+    \hline
+    李雷 & 78 & 93\\
+    \hline
+    韩梅梅 & 89 & 76\\
+    \hline
+\end{tabular}
+\begin{tabular}{|l|ccc|}
+    \hline
+    \diagbox{Time}{Room}{Day} & Mon & Tue & Wed\\
+    \hline
+    Morning & used & used & unused\\
+    \hline
+    Afternoon & unused & used & used\\
+    \hline
+\end{tabular}
+\end{document}
+
+内容讲解
+1.\diagbox[<options>]{<content_1>}{<content_2>}...用于指定斜线表头，content_1/content_2/...代表斜线表头单元内容，有几个代表被斜线分为几个小单元。可选参数列表如下:
+    width - 指定单元的宽度。不指明则代表自动计算宽度
+    height - 指定单元的高度。不知名则代表自动计算高度
+    dir - 指定斜线表头的斜线向指定方向发散。列表如下：
+        NW - 自东南角往西北发散
+	NE - 自西南角往东北发散
+	SW - 自东北角往西南发散
+	SE - 自西北角往东南发散
+	** 在只有一条斜线的单元中，NW和SE效果一致，NE和SW效果一致
+    linewidth - 设置斜线宽度
+    line color - 设置斜线颜色
