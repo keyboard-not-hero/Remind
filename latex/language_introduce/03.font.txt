@@ -332,7 +332,8 @@ Demo_12 -- 单位符号
 \end{document}
 
 内容讲解
-1.\ang{<degree>}用于显示指定的角度单位. 包含在siunitx宏包中
+1.\ang{<degree>}用于显示指定的角度单位. 包含在siunitx宏包中. 格式如下:
+    \ang{<degree>;<minute>;<second>} - degree为度数，minute为分，second为秒，它们的进制为60
 
 2.\qty{<num>}{<symbol>}用于显示指定的符号. 包含在siunitx宏包中. 符号一览:
     \degreeCelsius - 摄氏度

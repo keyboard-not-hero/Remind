@@ -334,3 +334,35 @@ $\param ABCD$\\
 $AB\zhparallel CD$\\
 $AB\paraleq CD$
 \end{document}
+
+
+
+Demo_14 -- over arc
+\documentclass{ctexart}
+\usepackage{ctex,amsmath}
+\usepackage{xwatermark}
+\usepackage{arcs}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand\@gobblethree[3]{}
+\patchcmd{\over@under@arc}
+ {\@gobbletwo}
+ {\@gobblethree}
+ {}{}
+\makeatother
+\begin{document}
+$\overarc{AB}$\\
+\end{document}
+
+内容讲解
+1.以下内容用于生成头部圆弧:
+\usepackage{xwatermark}
+\usepackage{arcs}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand\@gobblethree[3]{}
+\patchcmd{\over@under@arc}
+ {\@gobbletwo}
+ {\@gobblethree}
+ {}{}
+\makeatother
