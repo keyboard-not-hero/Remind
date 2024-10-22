@@ -3,15 +3,21 @@
 \usepackage{animate}
 \usepackage{ifthen}
 \definecolor{darkgreen}{RGB}{10,90,10}
-\begin{document}
-% 制作animate，需要满足以下条件:
+% 制作svg格式animate，需要满足以下条件:
 % 1.使用beamer类的documentclass，并且携带dvisvgm参数
-% 备注: 如果想生成pdf文档片段，使用standalone类的documentclass，并且携带export参数，切记不能包含在frame环境内
 % 2.使用animate包
 % 3.使用texlive编译命令: latexmk -pdflatex -dvi <tex_file>
 % 4.dvi文件转化为svg命令: dvisvgm <dvi_file>
-    \begin{frame}
+% 5.ubuntu下需要使用浏览器查看svg格式图片
+
+% 制作pdf格式animate连续片段，需要满足一下条件:
+% 1.使用用standalone类的documentclass，并且携带export参数，切记不能包含在frame环境内(begin{frame} ... \end{frame})
+% 2.使用animate包
+% 3.使用texlive编译命令: latexmk -pdflatex -pv <tex_file>
+% 4.可使用以下站点进行pdf到gif的转化: https://ezgif.com/pdf-to-gif
 % 示例参考: https://tex.stackexchange.com/questions/558850/how-can-i-animate-a-tikz-drawing-in-beamer
+\begin{document}
+    \begin{frame}
 % animateinline格式: \begin{animateinline}[<options>]{<frame_per_second>}...\end{animateinline}
 % options为可选参数. 列表如下:
 %   1)loop - 动画结束后进行循环
