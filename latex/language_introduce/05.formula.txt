@@ -115,11 +115,15 @@ Demo_02 -- 上/下标注符及删除符
 
 2.\underbrace{}用于内容下方的大括号, 并可对指令使用_{}添加备注
 
-3.\cancel{}为删除符号，需要cancel宏包
+3.\overbrace和\underbrace的括号会略大，使用\overbrace{\!<content>\!}减小内容额外空白，使括号自适应尺寸合适
 
-4.\bcancel{}为反斜杠删除符号，需要cancel宏包
+4.\overbrace和\underbrace与内容的空白过小时，使用\vphantom{\bigl\{}可填充撑起空白空间
 
-5.\xcancel{}为交叉删除符号，需要cancel宏包
+5.\cancel{}为删除符号，需要cancel宏包
+
+6.\bcancel{}为反斜杠删除符号，需要cancel宏包
+
+7.\xcancel{}为交叉删除符号，需要cancel宏包
 
 
 
@@ -366,3 +370,22 @@ $\overarc{AB}$\\
  {\@gobblethree}
  {}{}
 \makeatother
+
+
+
+Demo_15 -- 数学符号加粗
+\documentclass{ctexart}
+\usepackage{amsmath}
+\newcommand{\bigcdot}{\boldsymbol{\cdot}}
+\begin{document}
+$$\begin{array}{r c l}
+    a^m\bigcdot a^n & = & \underbrace{(a\bigcdot a\bigcdot\:\cdots\:\bigcdot a)}_{m\textrm{个}a}\bigcdot\underbrace{(a\bigcdot a\bigcdot\:\cdots\:\bigcdot a)}_{n\textrm{个}a}\\[1mm]
+    & = & \underbrace{a\bigcdot a\bigcdot\:\cdots\:\bigcdot a}_{(m+n)\textrm{个}a}\\[2mm]
+    & = & a^{m+n}
+\end{array}$$\\[2cm]
+\end{document}
+
+内容讲解
+1.\boldsymbol{}用于将数学符号进行加粗，包含在amsmath宏包中
+
+2.\mathbf{}只能将拉丁字母进行加粗

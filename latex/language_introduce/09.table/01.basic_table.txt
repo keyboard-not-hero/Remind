@@ -149,7 +149,7 @@ Demo_02 -- 合并列
         @{<statement>} - 在列之间替换为指定内容, statement可选列表如下:
             <null> - 列内容之间无空白, 两列紧紧相依
             <string> - 填充字符串
-            \extracolsep{<width>} - 使用指定长度空白作为之后所有'前分隔符与列内容位置'的填充, 直到再次遇到其他\extracolsep{width}, 被新值覆盖
+            \extracolsep{<width>} - 使用指定长度空白作为分隔符与列内容的空白填充
         !{<statement>} - 类似于@{<statement>}, 但不删除原有的分隔空间(\tabcopsep指定间隔)
         p{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直方向top对齐, 首行缩进为0pt. 相当于\parbox[t]{<width>}{...}
         m{<width>} - 设置列为指定宽度, 达到指定宽度后自动换行. 内容水平方向左对齐, 垂直居中对齐, 首行缩进为0pt. 相当于\parbox{<width>}{...}
