@@ -86,7 +86,7 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
     表格行的额外附加高度. 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
 
 5)\tabcolsep
-    列与列空白宽度的一般. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
+    列与列空白宽度的一半. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
 
 
 4.\begin{tabular*}{<width>}[<vertical_align>]{<format>}...\end{tabular*}为tabular的指定表格宽的版本
@@ -107,7 +107,7 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
 
 
 Demo_02 -- 合并列
-\documentclass{article}
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
 \begin{tabular}{l|l|l|l}
     \hline

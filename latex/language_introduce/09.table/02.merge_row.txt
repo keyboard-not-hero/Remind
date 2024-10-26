@@ -33,7 +33,7 @@
     ** 合并行数原理: 保留一行数据, 该列的其他行内容留空
 
 
-2.\multirowsetup为合并行的内容, 在水平方向上的对齐方式. 默认为左对齐, 配置语句:
+2.\multirowsetup为合并行的内部内容, 在水平方向上的对齐方式. 默认为左对齐, 配置语句:
     \renewcommand{\multirowsetup}{\centering}. 对齐方式列表:
         raggedright - 左对齐
 	centering   - 居中对齐
