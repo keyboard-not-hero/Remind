@@ -1,6 +1,15 @@
+float2nr()
+    将浮点数的小数部分截取，转化为整数
+
+str2float()
+    将字母串转化为浮点数
+
 submatch({nr} [, {list}])
     只能用于:substitute cmd, 用于匹配前面第<nr>个分组, 如果nr为0，代表pattern的完整内容
-    如果submatch结果参与到四则运算, 则解释为数字. 如果分组内容为数字, 则直接取该数字; 如果分组内容不为数组, 则取0
+    如果submatch结果参与到四则运算, 则解释为数字. 分为以下三种情况:
+        1.如果分组内容为纯数字, 则直接取该数字; 
+	2.如果分组内容有数字和字符，则只取第一个数字部分;
+	3.如果分组内容没有数字部分, 则取0
 
 
 
@@ -11,7 +20,10 @@ submatch({nr} [, {list}])
 03
 04
 
+
+修改命令:
 :%s/^\([0-9][0-9]\)/\=printf("%02d",submatch(1)+3)/
+
 
 修改后内容:
 04
@@ -22,13 +34,18 @@ submatch({nr} [, {list}])
 
 
 示例2 -- 将每行的序号，加上一个数字，指定位数，不足数字前面填充空格
+修改前内容:
 7 see
 8 you
 9 see
 10 me
 
+
+修改命令:
 :%s/\(\d\{1,2}\)\(\s\w\+\)/\=printf("%2d%s",submatch(1)+2,submatch(2))/
 
+
+修改后内容:
  9 see
 10 you
 11 see
@@ -37,13 +54,18 @@ submatch({nr} [, {list}])
 
 
 示例3 -- 将每行的序号，加上一个数字，不指定位数
+修改前内容:
 7 see
 8 you
 9 see
 10 me
 
+
+修改命令:
 :%s/\(\d\{1,2}\)\(\s\w\+\)/\=printf("%2d%s",submatch(1)+2,submatch(2))/
 
+
+修改后内容:
 9 see
 10 you
 11 see
@@ -58,10 +80,36 @@ Demo_02
 Demo_03
 Demo_04
 
+
+修改命令:
 :%s/\(Demo_\)\(\d\+\)/\=printf("%s%02d",submatch(1),submatch(2)+2)/
+
 
 修改后内容:
 Demo_03
 Demo_04
 Demo_05
 Demo_06
+
+
+
+示例5 -- 将坐标点内的数字*2，格式为(<x>,<y>)
+修改前内容:
+122     \draw (0,0) to[battery1] (3,0) to[normal open switch,invert,mirror,name=swi] (3,2) to[lamp] (1.5,2) to[lamp] (0,2) -- (0,0);
+123     \draw (1.5,2) to[short,*-] (1.5,3) -- (0,3) to[short,-*] (0,2);
+124     \filldraw[fill=white] (swi.left) circle [radius=2pt];
+
+
+修改命令:
+修改(<x>部分
+:122,124s/\((\)\(\d\+\(\.\d\+\)\?\)/\=printf("%s%d",submatch(1),float2nr(str2float(submatch(2))*2))/g
+
+修改<y>)部分
+:122,124s/\(\d\+\(\.\d\+\)\?\)\()\)/\=printf("%d%s",float2nr(str2float(submatch(1))*2),submatch(3))/g
+
+
+修改后内容:
+122     \draw (0,0) to[battery1] (6,0) to[normal open switch,invert,mirror,name=swi] (6,4) to[lamp] (3,4) to[lamp] (0,4) -- (0,0);
+123     \draw (3,4) to[short,*-] (3,6) -- (0,6) to[short,-*] (0,4);
+124     \filldraw[fill=white] (swi.left) circle [radius=2pt];
+
