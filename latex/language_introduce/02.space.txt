@@ -18,7 +18,7 @@ cat\\
 
 
 
-Demo_02 -- 单个字符(汉字)之间的距离
+Demo_02 -- 字距(单个字符/汉字之间的距离)
 \documentclass{article}
 \setlength{\parindent}{0cm}
 \begin{document}
@@ -45,9 +45,7 @@ Demo_02 -- 单个字符(汉字)之间的距离
 \end{document}
 
 内容讲解
-1.'\!'缩进字符之间的间隔
-
-2.水平距离命令列表如下(由小到大):
+1.水平距离命令列表如下(由小到大):
     \negthickspace - 为-0.277 7em的水平空白
     \negmedspace   - 为-0.222 2em的水平空白
     \negthinspace  - 为-0.166 67em的水平空白，也可以表示为\!
@@ -62,15 +60,15 @@ Demo_02 -- 单个字符(汉字)之间的距离
     \vfil          - 如果当前行尾部有剩余空间, 空白尽量使内容填满当前行(尾部还是会剩余部分空间)
     \vfill         - 如果当前行尾部有剩余空间, 空白必定使内容填满当前行
 
-3.以上内容也适用于math mode和中文模式
+2.以上内容也适用于math mode和中文模式
 
-4.根据GB\T1.1-2009, 所有数值(除年号外), 从小数点前/后三位, 每隔三位为一组, 组之间留大概1/4汉字(0.25em)间隔, \:约0.22em间隔, 适用于该规范(当前后有数字为1, 由于前后距离略大, 可以改为\,)
+3.根据GB\T1.1-2009, 所有数值(除年号外), 从小数点前/后三位, 每隔三位为一组, 组之间留大概1/4汉字(0.25em)间隔, \:约0.22em间隔, 适用于该规范(当前后有数字为1, 由于前后距离略大, 可以改为\,)
 
-5.除角度单位, 其他单位应该与数字间隔大约1/4汉字, 即\:
+4.除角度单位, 其他单位应该与数字间隔大约1/4汉字, 即\:
 
 
 
-Demo_03 -- 单词之间的距离
+Demo_03 -- 词距(单词之间的距离)
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -80,17 +78,13 @@ This is a long story\\
 \end{document}
 
 内容讲解
-1.\spaceskip可用于导言, 设置全文单词之间的距离. 格式:
-    \setlength{\spaceskip}{5mm}
-
-2.也可用于正文, 这是之后内容的单词之间的距离. 格式:
-    \spaceskip=5mm
+1.\spaceskip代表单词之间的距离. 可在导言使用, 作用于全文；也可在正文使用，作用于之后的内容
+    格式:
+        \setlength{\spaceskip}{5mm}
     
-3.\spaceskip不适用于math mode和中文模式
+2.\spaceskip不适用于math mode和中文模式
 
-4.当单词包含斜体时，当前斜体单词与后面距离较近，使用\/进行词距补偿
-
-5.\<space>指定当前为单词结尾, 使用单词间距
+3.当单词包含斜体时，当前斜体单词与后面距离较近，使用\/进行词距补偿
 
 
 
@@ -106,15 +100,11 @@ I love you, do you love me! I believe i can fly.
 \end{document}
 
 内容讲解
-1.\xspaceskip可用于导言, 设置全文句子之间的距离. 以./!/?/:结尾, 并紧跟一个空格即为句子末尾. 格式:
-    \setlength{\xspaceskip}{5mm}
-
-2.也可用于正文, 这是之后内容的句子之间的距离. 格式:
-    \xspaceskip=5mm
+1.\xspaceskip表示句子之间的距离. 以./!/?/:结尾, 并紧跟一个空格即为句子末尾. 可以在导言或正文中指定
     
-3.\spaceskip不适用于math mode
+2.\spaceskip不适用于math mode
 
-4.在中文模式中, 必须使用英文模式的./!/?/:紧跟空格, 才能生效
+3.在中文模式中, 必须使用英文模式的./!/?/:紧跟空格, 才能生效
 
 
 
@@ -135,9 +125,9 @@ Dr.\ Wang, how are you
 内容讲解
 1.当内容以小写字母结尾, 并跟随./?/!/:, 最后紧跟空格时, 判定为句子结尾
 
-2.当句子末尾为大写字母是, 需要在./?/!/:之前, 添加\@, 手动指定已经到达句子末尾
+2.当句子末尾为大写字母, 并跟随./?/!/:, 后续即便紧跟空格，也不视为句子结尾. 需要在大写字母和./?/!/:之间添加\@, 手动指定已经到达句子末尾
 
-3.当句子中间的单词尾部包含小写字母紧跟./?/!/:时, 会导致误判断句子尾部, 需要紧跟./?/!/:之后使用\<space>指定使用单词间距
+3.当非单词尾部包含小写字母紧跟./?/!/:时, 会导致误判为句子尾部, 需要紧跟./?/!/:之后使用\<space>指定使用单词间距
 
 
 
@@ -151,21 +141,21 @@ She sister sorry about that
 \end{document}
 
 内容讲解
-1.\\用于换行, 并且允许在当前换行处进行换页(如果有需要)。支持math mode
+1.\\用于换行, 并且允许在当前换行处进行换页(如果有需要). 支持math mode
 
-2.\\*用于换行, 并且不允许在当前换行处进行换页(会提前一行换页)。支持math mode
+2.\\*用于换行, 并且不允许在当前换行处进行换页(会提前一行换页). 支持math mode
 
-3.\\[<height>]用于换行, 并且额外增加与下一行的垂直距离(如果在当前处换页, 则省略该垂直距离)。支持math mode
+3.\\[<height>]用于换行, 并且额外增加与下一行的垂直距离(如果在当前处换页, 则省略该垂直距离). 支持math mode
 
 4.\newline用于换行, 类似于\\, 但\newline不支持math mode
 
-5.\linebreak[<level>]建议在当前位置进行换行, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强。换行时, 当前行换行之前的位置会适当增大英文词距或中文字距, 以填充尾部空格
+5.\linebreak[<level>]建议在当前位置进行换行, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强. 换行时, 当前行换行之前的位置会适当增大英文词距或中文字距, 以填充尾部空格
 
 6.\nolinebreak[<level>]建议在当前位置不要进行换行, level等级范围为[0, 4], 默认为4, 值越高, 代表建议的强制性越强
 
 
 
-Demo_07 -- 行之间的垂直距离
+Demo_07 -- 行距(行与行之间的垂直距离)
 documentclass{article}
 \setlength{\parindent}{0mm}
 \linespread{1.3}
@@ -182,14 +172,22 @@ this is line four
 文字高度	英文行距	ctex行距
 x	        y=1.2x		z=1.3y=1.56x
 
-1.\linespread{factor}在导言部分使用, 表示对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
+1.\linespread{factor}表示对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
+    在导言部分使用格式:
+    \linespread{}
+    在正文使用格式:
+    \linespread{}\selectfont
+    
+2.\renewcommand{\baselinestretch}{factor}用于对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
+    在导言部分使用格式:
+    \renewcommand{\baselinestretch}{factor}
+    在正文使用格式:
+    \renewcommand{\baselinestretch}{factor}\normalsize，\normalsize可换成其它指定字体尺寸的指令
+** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}，所以需要在ctex宏包之后使用
 
-2.\renewcommand{\baselinestretch}{factor}在导言部分使用, 用于对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
-** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}
+3.\baselineskip=<value>直接将之后段落内容的行距指定具体值. 只能在正文使用(无法在导言使用)
 
-3.\baselineskip=<value>用于在正文部分, 直接将之后段落内容的行距指定具体值
-
-4.使用\baselinkskip时, 如果后续遇到字体设置指令, 字距会恢复默认值. 可使用\fontsize{<size>}{<line_distance>}\selectfont, 设置字体大小的同时, 同时指定字距。size和line_distance默认单位为pt
+4.使用\baselinkskip时, 如果后续遇到字体设置指令, 字距会恢复默认值. 可使用\fontsize{<size>}{<space_between_line>}\selectfont, 设置字体大小的同时, 同时指定字距。size和line_distance默认单位为pt
 
 5.\vadjust{\vspace{<height>}}在行距的基础上, 额外增加或减少当前行与下一行的垂直距离
 
@@ -229,10 +227,11 @@ this is number four
 内容讲解
 1.\parskip用于在段落垂直间距上, 额外增加/减少垂直距离, 默认段落之间的垂直距离与行距相等, 当配置parskip时为n时, result = 行距 + n
 
-2.\parskip可在导言或正文配置, 导言:
-\setlength{\parskip}{<value>}
-正文:
-\parskip=<value>
+2.\parskip可在导言或正文配置
+导言格式:
+    \setlength{\parskip}{<value>}
+正文格式:
+    \parskip=<value>
 
 
 
@@ -265,7 +264,7 @@ In another moment down went Alice after it, never once considering how in the wo
 内容讲解
 1.\indent和\noindent在段落开始使用, 表示启用/关闭当前段落头部缩进
 
-2.\parindent用于段落的头部缩进. 可用于导言和正文. 默认值为15pt
+2.\parindent用于段落的头部缩进. 可在导言和正文进行配置. 默认值为15pt
 
 3.\hangindent与\hangafter用于段落的指定行缩进
 \hangindent中, 正值代表左侧缩进, 负值代表右侧缩进, 并且只作用于之后紧跟的一个段落
