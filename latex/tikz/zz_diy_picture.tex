@@ -1,0 +1,27 @@
+\documentclass{ctexart}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections}
+\definecolor{star}{RGB}{13,171,160}
+\begin{document}
+\begin{tikzpicture}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (0,2);
+    \coordinate (B) at ($(O)!1!72:(A)$);
+    \coordinate (C) at ($(O)!1!72:(B)$);
+    \coordinate (D) at ($(O)!1!72:(C)$);
+    \coordinate (E) at ($(O)!1!72:(D)$);
+    \path[name path=AC](A) -- (C);
+    \path[name path=AD](A) -- (D);
+    \path[name path=BD](B) -- (D);
+    \path[name path=BE](B) -- (E);
+    \path[name path=CE](C) -- (E);
+
+    \path[name intersections={of=AC and BE,by=F}];
+    \path[name intersections={of=AC and BD,by=G}];
+    \path[name intersections={of=BD and CE,by=H}];
+    \path[name intersections={of=AD and CE,by=I}];
+    \path[name intersections={of=AD and BE,by=J}];
+    \fill[color=star] (A) -- (F) -- (B) -- (G) -- (C) -- (H) -- (D) -- (I) -- (E) -- (J) -- cycle;
+\end{tikzpicture}
+\end{document}
+
