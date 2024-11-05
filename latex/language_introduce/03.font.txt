@@ -296,22 +296,21 @@ Demo_10 -- 破折号
 
 
 
-Demo_11 -- 放大/缩小pifont宏包字体
+Demo_11 -- 圆圈内字体
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{pifont}
 \let\oldding\ding
-\renewcommand{\ding}[2][1]{\scalebox{#1}{\oldding{#2}}}
+\renewcommand{\ding}[2][1.2]{\raisebox{-1pt}{\scalebox{#1}{\oldding{#2}}}\:}
 \begin{document}
-\ding{172}\qquad\ding[1.2]{172}\\
-\ding{192}\qquad\ding[1.2]{192}
+\oldding{172}\qquad\ding{172}\\
+\oldding{192}\qquad\ding{192}
 \end{document}
 
 内容讲解
-1.\oldding保存原\ding内容
+1.\let\oldding\ding保存原\ding内容
 
-2.renewcommand{原命令}[参数数量][默认值]{定义内容}, #<n>代表引用使用命令时, 使用的第n个参数值
-\scalebox包含在graphicx宏包中  
+2.renewcommand{原命令}[参数数量][第一个参数默认值]{定义内容}，#<n>代表引用使用命令时，使用的第n个参数值，\scalebox包含在graphicx宏包中  
 
 
 

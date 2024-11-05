@@ -65,7 +65,7 @@ $$ ... $$
 7.数学公式中, \because和\therefore为几何的因为/所以符号, 包含在amssymb宏包中
 
 
-8.\frac{分子}{分母}上下式分数
+8.\frac{分子}{分母}上下式分数，根据所处上下文决定是textstyle或displaystyle格式；\dfrac{}{}代表displaystyle格式分数；\tfrac{}{}代表textstyle格式分数
 \sfrac{分子}{分母}斜分数, 包含在xfrac宏包中
 
 

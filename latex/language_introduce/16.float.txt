@@ -1,16 +1,71 @@
-Demo_01 - 非页面顶/底部浮动体与上下文之间的垂直距离
+Demo_01 - 浮动体与上下文之间的垂直距离
 \documentclass{artical}
-% \intextsep, 非页面顶/底部浮动体(使用H固定)与上下文之间的垂直距离
 \usepackage{float}
 \usepackage{graphicx}
 \setleng{\intextsep}{2cm}
 \begin{document}
+This is begin line
 \begin{figure}[H]
 \includegraphics[scale=0.4]{picture/wolf.jpg}
 \end{figure}
 This is separate line
 \begin{figure}[H]
 \includegraphics[scale=0.4]{picture/snuggle}
-\end{figure
+\end{figure}
+This is end line
 \end{document}
 
+内容解释
+1.\intextsep表示处于非页面顶/底部的浮动体，与浮动体外部上下文之间的垂直距离
+
+
+
+Demo_02 - 浮动体标题设置
+\documentclass{ctexart}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{graphicx}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is begin line
+\begin{figure}[H]
+\centering
+\captionsetup{labelformat=empty,skip=2pt,font=small}
+\includegraphics[scale=0.4]{pic/wolf.jpg}
+    \caption{第1题}
+\end{figure}
+This is separate line
+\begin{figure}[H]
+    \centering
+    \captionsetup{labelformat=empty}
+    \includegraphics[scale=0.4]{pic/snuggle.jpg}
+    \caption{第2题}
+\end{figure}
+This is end line
+\end{document}
+
+内容解释
+1.\captionsetup{<options>}对标题进行配置，包含在caption宏包中. 在preamble中配置，影响所有浮动体；在浮动体内部配置（在caption指令之前），则只影响当前浮动体. 配置参数列表:
+    labelformat - 指定标题序号格式. 可选内容如下:
+        original(default) - 默认格式，类似于simple值，name + number
+        empty - 留空，没有标题
+        brace - name + number)
+        simple - name + number
+        parens - name + (number)
+    labelsep - 指定标题序号与内容的分隔符. 可选内容如下:
+        none - 没有分隔
+        colon - 以冒号+空格(:<space>)分隔
+        period - 以句号(半角)+空格(.<space>)分隔
+        space - 以空格(<space>)分隔
+        quad - 以\quad分隔
+        newline - 以换行符分隔，并非适用于所有情景
+        endash - 以破折号(<space>--<space>)分隔
+    font/labelfont/textfont - 指定标题序号和内容/序号/内容的字体. 可选内容如下:
+        scriptsize/footnotesize/small/normalsize/large/Large - 字体大小
+        rm/sf/tt - 字族
+	bf - 加粗
+	it - 斜体
+	color - 字体颜色
+    parskip - 标题内容为多段落时，段落之间的额外垂直距离
+    skip - 标题与figure/table的垂直距离. 默认为10pt        
+        
