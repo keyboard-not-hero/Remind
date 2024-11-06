@@ -34,6 +34,14 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
+    % 将计算结果应用于坐标点
+    \coordinate (A) at (0,{sqrt(3)});
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (1,0);
+    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below right]{$C$} -- cycle;
+\end{tikzpicture}
+
+\begin{tikzpicture}
     % p |- q，取p坐标的x值，取q坐标的y值
     % p -| q，取p坐标的y值，取q坐标的x值
     \draw (-2.5,0) -- (2.5,0) coordinate(x axis);
@@ -44,14 +52,25 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
-    % 直接对坐标点进行移动
+    % 直接对坐标点进行移动_1
     \coordinate (A) at (0,0);
     \coordinate (B) at (3,0);
     \coordinate (C) at ([shift=(B)]A);
     \coordinate (D) at ([shift={(3,0)}]A);
-
     \draw (A) -- (C);
 \end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 直接对坐标点进行移动_2
+    \draw[-stealth] (-2,0) -- (2,0) node[pos=1,below]{$x$};
+    \draw[-stealth] (0,-2) -- (0,2) node[pos=1,right]{$y$};
+    \foreach \x in {-1.5,-1,-0.5,0.5,1,1.5}
+        \draw (\x,0) -- (\x,2pt);
+    \foreach \y in {-1.5,-1,-0.5,0.5,1,1.5}
+        \draw (0,\y) -- (2pt,\y);
+    \filldraw (0,0) circle [radius=1.2pt];
+    \filldraw ([rotate around={-90:(0.5,0)}]1,0) circle [radius=1.2pt];
+\end{tikzpicture}
 
 \begin{tikzpicture}
     % 在指定线段上取一个点. 需要使用calc库
