@@ -62,7 +62,7 @@ submatch({nr} [, {list}])
 
 
 修改命令:
-:%s/\(\d\{1,2}\)\(\s\w\+\)/\=printf("%2d%s",submatch(1)+2,submatch(2))/
+:%s/\(\d\{1,2}\)\(\s\w\+\)/\=printf("%d%s",submatch(1)+2,submatch(2))/
 
 
 修改后内容:

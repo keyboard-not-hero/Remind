@@ -67,5 +67,158 @@ This is end line
 	it - 斜体
 	color - 字体颜色
     parskip - 标题内容为多段落时，段落之间的额外垂直距离
-    skip - 标题与figure/table的垂直距离. 默认为10pt        
-        
+    skip - 标题与figure/table的垂直距离. 默认为10pt
+
+
+
+Demo_03 - 多图并排
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{calc,intersections,angles}
+\captionsetup{labelformat=empty}
+\begin{document}
+\begin{figure}[H]
+\begin{minipage}[b]{0.3\linewidth}
+\begin{tikzpicture}[scale=0.8,font=\small]
+    \coordinate (A) at (60:2);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (3,0);
+    \coordinate (D) at ([shift={(3,0)}]A);
+    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
+    \path[draw,name path=AC] (A) -- (C);
+    \path[draw,name path=BD] (B) -- (D);
+    \path[name intersections={of=AC and BD,by=O}];
+    \node[below] at (O){$O$};
+\end{tikzpicture}
+\caption{第1题}
+\end{minipage}
+    \begin{minipage}[b]{0.3\linewidth}
+\begin{tikzpicture}[font=\small]
+    \coordinate (A) at (2,0);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (70:1.36);
+    \coordinate (D) at ($(A)!1.36/2!-110:(B)$);
+    \coordinate (O) at ($(B)!(A)!(D)$);
+    \coordinate (E) at ($(A)!2!(O)$);
+    \path[name path=CD] (C) -- (D);
+    \path[name path=BE] (B) -- (E);
+    \path[name intersections={of=CD and BE,by=F}];
+    \draw (B) node[below left=-2pt]{$B$} -- (E) node[above=-2pt]{$E$} -- (D) node[right=-2pt]{$D$} -- (B) -- (C) node[above left=-2pt]{$C$} -- (F);
+    \draw[dashed] (F) -- (D) -- (A) node[below right=-2pt]{$A$} -- (B);
+    \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=1]{angle=C--F--B};
+    \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=2]{angle=B--D--A};
+\end{tikzpicture}
+\caption{第2题}
+\end{minipage}
+    \begin{minipage}[b]{0.3\linewidth}
+\begin{tikzpicture}[scale=0.8,font=\small]
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (4.272,0);
+    \path[name path=BA] (1.5,0) arc [start angle=0,end angle=70,radius=1.5];
+    \path[name path=CA] (0.272,0) arc [start angle=180,end angle=159,radius=4];
+    \path[name intersections={of=BA and CA,by=A}];
+    \coordinate (D) at ([shift={(4.272,0)}]A);
+    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
+    \path[draw,name path=BD] (B) -- (D);
+    \path[draw,name path=AC] (A) -- (C);
+    \path[name intersections={of=BD and AC,by=O}];
+    \node[below] at (O){$O$};
+    \draw pic[draw,angle radius=6pt]{right angle=B--A--C};
+\end{tikzpicture}
+\caption{第3题}
+\end{minipage}
+\end{figure}
+\end{document}
+
+内容解释
+1.在多图并排情况下，需要借助minipage环境，对当前图片所占宽度、垂直对齐方式和图标题进度配置
+
+
+
+Demo_04 - 图文绕排
+\documentclass{ctexart}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usetikzlibrary{calc,intersections,angles}
+\newcommand*\param{\mathord{\text{\tikz[baseline,line join=round]\draw (0,.1ex) -- (.8em,.1ex) -- (1em,1.4ex) -- (.2em,1.4ex) -- cycle;}}}
+\newcommand*\zhparallel{\mathrel{\text{\tikz[baseline,line cap=round] \draw (0em,-0.3ex) -- (.4em,1.7ex) (.2em,-0.3ex) -- (.6em,1.7ex);}}}
+\setlength{\parindent}{0mm}
+\captionsetup{labelformat=empty}
+\setlength{\intextsep}{0mm}
+\begin{document}
+\begin{wrapfigure}[3]{r}{0pt}
+    \centering
+    \begin{tikzpicture}[scale=0.68,font=\small]
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (1.5,0);
+        \coordinate (F) at (-1.5,0);
+        \coordinate (E) at ($(A)!1!110:(B)$);
+        \coordinate (D) at ($(A)!2!(E)$);
+        \coordinate (C) at ($(F)!2!(E)$);
+        \draw (A) node[below=-2pt]{$A$} -- (B) node[below right=-2pt]{$B$} -- (C) node[above right=-2pt]{$C$} -- (D) node[above left=-2pt]{$D$} --cycle;
+        \draw (A) -- (F) node[below left=-2pt]{$F$} -- (C);
+        \draw (B) -- (E) node[left=-1pt]{$E$};
+    \end{tikzpicture}
+\end{wrapfigure}
+11.如图，在$\param ABCD$中，$E$为$AD$的中点，$CE$的延长线交$BA$的延长线于点$F$，若$BC=2AB$，$\angle FBC=\ang{70}$，求$\angle EBC$的度数.\\[2cm]
+
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \begin{tikzpicture}[scale=0.56,font=\small]
+        \def\gou{3}
+        \def\gu{4}
+        \def\xian{5}
+        \coordinate (B) at (0,0);
+        \coordinate (C) at (0.5*\xian,0);
+        \coordinate (F) at (\xian,0);
+        \path[name path=gu] (\gu,0) arc [start angle=0,end angle=37,radius=4];
+        \path[name path=gou] (\xian-\gou,0) arc [start angle=180,end angle=126,radius=3];
+        \path[name intersections={of=gou and gu,by=A}];
+
+        \coordinate (D) at ([shift={(0.5*\xian,0)}]A);
+        \draw (A) node[above left=-2pt]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above right=-2pt]{$D$} -- cycle;
+        \draw (A) -- (F) node[below]{$F$} -- (C);
+        \coordinate (E) at ($(A)!0.5!(F)$);
+        \path node[left=2pt] at (E){$E$};
+    \end{tikzpicture}
+\end{wrapfigure}
+12.如图，$E$是$\param ABCD$的边$CD$的中点，延长$AE$交$BC$的延长线于点$F$，若$\angle BAF=\ang{90}$，$BC=5$，$\text{EF}=3$，求CD的长.\\[2cm]
+
+\begin{wrapfigure}{r}{0pt}
+    \begin{tikzpicture}[scale=0.8,font=\small]
+        \coordinate (A) at (120:2);
+        \coordinate (B) at (0,0);
+        \coordinate (C) at (3,0);
+        \coordinate (D) at ([shift={(3,0)}]A);
+
+        \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
+        \path[draw,name path=BD] (B) -- (D);
+
+        \coordinate (G) at ($ (A)!1!-30:(D) $);
+        \path[name path=AG] (A) -- (G);
+        \path[name intersections={of=AG and BD,by=E}];
+        \draw (A) -- (E) node[below]{$E$};
+
+        \coordinate (H) at ($ (C)!1!-30:(B) $);
+        \path[name path=CH] (C) -- (H);
+        \path[name intersections={of=CH and BD,by=F}];
+        \draw (C) -- (F) node[above]{$F$};
+    \end{tikzpicture}
+\end{wrapfigure}
+13.如图，BD是$\param\text{ABCD}$的对角线，$\angle\text{BAD}$的平分线交BD于点E，$\angle\text{BCD}$的平分线交BD于点F. 求证:\:$\text{AE}\zhparallel\text{CF}$\\[2cm]
+\end{document}
+
+内容解释
+1.\begin{wrapfigure}[<row_of_pic>]{<horizontal_pos>}[<overhang>]{<figure_width>} ... \end{wrapfigure}用于指定绕排环境，图放置在环境中，上下文紧跟在环境后. 该环境指令包含在wrapfig宏包中. 参数列表如下:
+    row_of_pic - 图片绕排行数. 当文本内容过少时，该参数需正确指定，否则下个绕排内容会被影响
+    horizontal_pos - 图片位于文本内容的水平位置，列表如下:
+        l - 图片位于文本左侧
+        r - 图片位于文本右侧
+        i - 图片位于双页模式内侧
+        o - 图片位于双页模式外侧
+    overhang - 图片悬挂在外侧的长度，该参数可以使用\width指定图片的宽度，乘以一个系数代表图片宽度的百分比
+    figure_width - 图片的宽度，指定为0可自动根据图片宽度适配
