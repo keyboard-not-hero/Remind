@@ -3,6 +3,7 @@
 \begin{document}
 % 坐标变换. Tikz的图形变化，核心在于坐标的变化，路径的变化也是基于路径上每个点的坐标变化
 % 如果需要对tikzpicture环境进行变化，在变化操作后，使用transform shape. 如: \begin{tikzpicture}[scale=0.5,transform shape] ... \end{tikzpicture}
+% transform无法作用于coordinate，必须手动指定坐标
 \begin{tikzpicture}
     % shift - 偏移的位置(x,y). 格式: {<coordinate>}
     % xshift - 在x轴上偏移的位置
