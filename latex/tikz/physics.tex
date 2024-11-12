@@ -9,14 +9,14 @@
 \begin{tikzpicture}[european]
     % 元器件列表:
     %   1.battery1 - 电源，方向不对，需要使用invert反转方向(或使用voltage dir=RP)
-    %   2.R - 电阻
+    %   2.resistor(R) - 电阻
     %   3.pR - 滑动变阻器
-    %   4.D - 二极管
+    %   4.diode(D) - 二极管
     %   5.leD - 发光二极管
     %   6.rmeter,t=A - 电流表
     %   7.rmeter,t=V - 电压表
     %   8.rmeter,t=M - 电动机
-    %   9.C - 电容
+    %   9.capacitor(C) - 电容
     %   10.normal open switch(nos) - 断开开关, 需要在left处画fill为white的圆
     %     normal closed siwtch(ncs) - 闭合开关
     %   11.L - 电感器
@@ -30,6 +30,21 @@
     \draw (0,0) to[battery1,invert] (4,0) -- (4,3) to[R=$R_1$] (0,3) -- (0,0);
     \draw (4,3) -- (4,5) to[R=$R_2$] (0,5) -- (0,3);
 \end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}[european]
+    % 类的元器件属性修改
+    \ctikzset{
+	resistors/scale=0.2,      % 修改电阻大小(系数)
+	capacitors/thickness=1,   % 修改电容线条粗细
+	resistors/width=2         % 修改电阻长度(系数)
+    }
+    \draw (0,0) to[R] (2,0);
+\end{tikzpicture}
+
+% 新定义命令，适用于特定组件的属性
+\begin{tikzpicture}[european,bigR/.style={R,resistors/scale=2}]
+    \draw (0,0) to[bigR] (2,0);
+\end{tikzpicture}
 
 % 滑动变阻器
 \begin{tikzpicture}[european]
