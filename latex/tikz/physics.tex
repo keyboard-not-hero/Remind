@@ -8,19 +8,22 @@
 %   2)american - 美国电路符号
 \begin{tikzpicture}[european]
     % 元器件列表:
-    %   1.battery1 - 电源，方向不对，需要使用invert反转方向(或使用voltage dir=RP)
-    %   2.resistor(R) - 电阻
-    %   3.pR - 滑动变阻器
-    %   4.diode(D) - 二极管
-    %   5.leD - 发光二极管
+    %   1.battery1 - 电源，方向不对，需要使用invert反转方向(或使用voltage dir=RP)，属于batteries类
+    %   ** battery表示两节电池串联
+    %   2.R - 电阻，属于resistors类
+    %   3.pR - 滑动变阻器，属于resistors类
+    %   4.D - 二极管，属于diodes类
+    %   5.leD - 发光二极管，属于diodes类
     %   6.rmeter,t=A - 电流表
     %   7.rmeter,t=V - 电压表
     %   8.rmeter,t=M - 电动机
-    %   9.capacitor(C) - 电容
-    %   10.normal open switch(nos) - 断开开关, 需要在left处画fill为white的圆
-    %     normal closed siwtch(ncs) - 闭合开关
-    %   11.L - 电感器
-    %   12.lamp - 电灯泡
+    %   ** rmeter属于instruments类
+    %   9.C - 电容，属于capacitors类
+    %   10.L - 电感器，属于inductors类
+    %   11.lamp - 电灯泡，属于misc类
+    %   12.normal open switch(nos) - 断开开关, 需要在left处画fill为white的圆
+    %   13.normal closed siwtch(ncs) - 闭合开关
+    %   ** 开关属于switches类
     % 需要配合元器件使用的符号(可以前置short，代表不显示的元器件)
     %   1.-* - 在线条末尾画一个实心圆点
     %   2.o- - 在线条开始画一个空心圆
@@ -34,8 +37,8 @@
 \begin{tikzpicture}[european]
     % 类的元器件属性修改
     \ctikzset{
-	resistors/scale=0.2,      % 修改电阻大小(系数)
-	capacitors/thickness=1,   % 修改电容线条粗细
+	resistors/scale=0.2,      % 修改电阻和滑动变阻器大小(系数)
+	capacitors/thickness=1,   % 修改电容线条粗细. 默认为2
 	resistors/width=2         % 修改电阻长度(系数)
     }
     \draw (0,0) to[R] (2,0);
