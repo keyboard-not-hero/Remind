@@ -17,7 +17,7 @@
     %   6.rmeter,t=A - 电流表
     %   7.rmeter,t=V - 电压表
     %   8.rmeter,t=M - 电动机
-    %   ** rmeter属于instruments类
+    %   ** rmeter属于instruments类，指定字体大小方式(t=\large A)
     %   9.C - 电容，属于capacitors类
     %   10.L - 电感器，属于inductors类
     %   11.lamp - 电灯泡，属于misc类
@@ -38,7 +38,8 @@
     % 类的元器件属性修改
     \ctikzset{
 	resistors/scale=0.2,      % 修改电阻和滑动变阻器大小(系数)
-	capacitors/thickness=1,   % 修改电容线条粗细. 默认为2
+	capacitors/thickness=1,   % 修改电容线条粗细(相对于电路基本线条宽度的系数). 默认为2
+	resistors/fill=blue       % 填充颜色
 	resistors/width=2         % 修改电阻长度(系数)
     }
     \draw (0,0) to[R] (2,0);
