@@ -21,8 +21,10 @@
     %   9.C - 电容，属于capacitors类
     %   10.L - 电感器，属于inductors类
     %   11.lamp - 电灯泡，属于misc类
-    %   12.normal open switch(nos) - 断开开关, 需要在left处画fill为white的圆
-    %   13.normal closed siwtch(ncs) - 闭合开关
+    %   12.buzzer - 蜂鸣器，属于misc类
+    %   13.rbuzzer - 反向蜂鸣器，属于misc类
+    %   14.normal open switch(nos) - 断开开关, 需要在left处画fill为white的圆
+    %   15.normal closed siwtch(ncs) - 闭合开关
     %   ** 开关属于switches类
     % 需要配合元器件使用的符号(可以前置short，代表不显示的元器件)
     %   1.-* - 在线条末尾画一个实心圆点
@@ -41,6 +43,7 @@
 	capacitors/thickness=1,   % 修改电容线条粗细(相对于电路基本线条宽度的系数). 默认为2
 	resistors/fill=blue       % 填充颜色
 	resistors/width=2         % 修改电阻长度(系数)
+	resistors/zigs=6          % 电阻的完整段数
     }
     \draw (0,0) to[R] (2,0);
 \end{tikzpicture}
