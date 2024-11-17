@@ -84,6 +84,8 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
 
 4)\extrarowheight
     表格行的额外附加高度(内容距离表格单元上边框). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
+    在preamble设置时，作用于所有表格；在正文设置，作用于当前环境内的后续所有表格
+    如何只增加一行的高度 - 在上面新增一行，尾部减少行距离. 如: & \\[-4mm]
 
 5)\tabcolsep
     列与列空白宽度的一半. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
