@@ -8,7 +8,7 @@
 %   2)american - 美国电路符号
 \begin{tikzpicture}[european]
     % 元器件列表:
-    %   1.battery1 - 电源，方向不对，需要使用invert反转方向(或使用voltage dir=RP)，属于batteries类
+    %   1.battery1 - 电源，方向不对，需要使用组件的invert选项反转方向(或使用circuitikz环境的选项voltage dir=RP)，属于batteries类
     %   ** battery表示两节电池串联
     %   2.R - 电阻，属于resistors类
     %   3.pR - 滑动变阻器，属于resistors类
@@ -44,6 +44,7 @@
 	resistors/fill=blue       % 填充颜色
 	resistors/width=2         % 修改电阻长度(系数)
 	resistors/zigs=6          % 电阻的完整段数
+	resistors/modifier thickness=2   % 滑动变阻器滑片粗细
     }
     \draw (0,0) to[R] (2,0);
 \end{tikzpicture}
@@ -69,22 +70,29 @@
 %   4.currents - 电流
 %   5.flows - 电路外指示电流
 \begin{tikzpicture}[european]
-    % label与annotation
+    % label(标签)与annotation(注释)
     \draw (0,0) to[battery1,invert,l=$V_0$] (4,0) -- (4,3) to[R,l=$R_1$,a=\SI{2}{\ohm}] (0,3) -- (0,0);
 
     % 在从左到右的电路图中，默认label在元器件上方，annotation在元器件下方
     % 使用以下符号修改label和annotation上下方位置:
-    %   1)_ - 将相关内容放置到元器件下方(从左到右)
-    %   2)^ - 将相关内容放置到元器件上方(从左到右)
+    %   1) [l|a]_= - 将相关内容放置到元器件下方(从左到右)
+    %   2) [l|a]^= - 将相关内容放置到元器件上方(从左到右)
     \draw[yshift=-5cm] (0,0) to[battery1,invert,l=$V_0$] (4,0) -- (4,3) to[R,l_=$R_1$,a^=\SI{2}{\ohm}] (0,3) -- (0,0);
 
     % 使用以下修改label和annotation距离元器件的距离:
-    %   1)label distance - label与元器件的距离
-    %   2)annotation distance - annotation与元器件的距离
+    %   1) label distance - label与元器件的距离
+    %   2) annotation distance - annotation与元器件的距离
     \draw[yshift=-10cm] (0,0) to[battery1,invert,l=$V_0$] (4,0) -- (4,3) to[R,l=$R_1$,a=\SI{2}{\ohm},label distance=2cm,annotation distance=1cm] (0,3) -- (0,0);
 
     % 当label和annotation内包含'='和','时，会出现错误，需要使用{}限定
     \draw[yshift=-15cm] (0,0) to[battery1,invert,l=$V_0$] (4,0) -- (4,3) to[R,l={$R_1=\SI{2}{\ohm}$}] (0,3) -- (0,0);
+    
+    % 配置label和annotation的内容方向. 可选列表: 
+    % 1) straight - 水平方向
+    % 2) rotate - 随着线路图方向
+    % 3) smart - 智能选择方向. 默认项
+    \ctikzset{label/align=rotate}
+    \draw (0,0) to[R,l=$R_1$] (1,1) to[R,l=$R_2$,a=\SI{1}{\ohm}] (2,2) to[R,l=$R_3$] (3,3);
 \end{tikzpicture}\\\vspace{1cm}
 
 % voltage dir=RP可以使用正确电源元器件正负极方向，正确电流方向
@@ -93,17 +101,25 @@
     \draw (0,0) to[battery1,l=$V_0$,i=$I_0$] (4,0) -- (4,3) to[R,l=$R_1$,i=$i_1$] (0,3) -- (0,0);
 
     % 电流标记的方向(标签上下方按照从左到右的方向). 列表如下:
-    %   1)^> - 先显示元器件，再显示正向箭头，箭头在标签的上方. 默认
-    %   2)^< - 先显示元器件，再显示反向箭头，箭头在标签的上方
-    %   3)_> - 先显示元器件，再显示正向箭头，箭头在标签的下方
-    %   4)_< - 先显示元器件，再显示反向箭头，箭头在标签的下方
-    %   5)>^ - 先显示正向箭头，再显示元器件，箭头在标签的上方
-    %   6)>_ - 先显示正向箭头，再显示元器件，箭头在标签的下方
-    %   7)<^ - 先显示反向箭头，再显示元器件，箭头在标签的上方
-    %   6)<_ - 先显示反向箭头，再显示元器件，箭头在标签的下方
+    %   1)^> - 先显示元器件，再显示正向箭头，标签在线路上方. 默认
+    %   2)^< - 先显示元器件，再显示反向箭头，标签在线路上方
+    %   3)_> - 先显示元器件，再显示正向箭头，标签在线路下方
+    %   4)_< - 先显示元器件，再显示反向箭头，标签在线路下方
+    %   5)>^ - 先显示正向箭头，再显示元器件，标签在线路上方
+    %   6)<^ - 先显示反向箭头，再显示元器件，标签在线路上方
+    %   7)>_ - 先显示正向箭头，再显示元器件，标签在线路下方
+    %   8)<_ - 先显示反向箭头，再显示元器件，标签在线路下方
     \draw[yshift=-5cm] (0,0) to[battery1,l=$V_0$,i=$I_0$] (4,0) -- (4,3) to[R,l=$R_1$,i>^=$i_1$] (0,3) -- (0,0);
 
     % flows标记与电流标记类似
+    %   1)^> - 先显示元器件，再显示正向箭头，箭头在线路上方，标签在箭头上方. 默认
+    %   2)^< - 先显示元器件，再显示反向箭头，箭头在线路上方，标签在箭头上方
+    %   3)_> - 先显示元器件，再显示正向箭头，箭头在线路下方，标签在箭头下方
+    %   4)_< - 先显示元器件，再显示反向箭头，箭头在线路下方，标签在箭头下方
+    %   5)>^ - 先显示正向箭头，再显示元器件，箭头在线路上方，标签在箭头上方
+    %   6)<^ - 先显示反向箭头，再显示元器件，箭头在线路上方，标签在箭头上方
+    %   7)>_ - 先显示正向箭头，再显示元器件，箭头在线路下方，标签在箭头下方
+    %   8)<_ - 先显示反向箭头，再显示元器件，箭头在线路下方，标签在箭头下方
     \draw[yshift=-10cm] (0,0) to[battery1,l=$V_0$,i=$I_0$] (4,0) -- (4,3) to[R,l=$R_1$,f>^=$i_1$] (0,3) -- (0,0);
 \end{tikzpicture}\\\vspace{1cm}
 
