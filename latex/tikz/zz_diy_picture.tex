@@ -123,7 +123,21 @@
     }
     \draw (1.8,0.3) .. controls (1.85,0.5) and (1.95,0.5) .. (2,0.3);
     \draw (2,0.3) -- (2,-0.5);
-\end{tikzpicture}
+\end{tikzpicture}\vspace{2cm}
 
+\begin{tikzpicture}[line width=0.6pt]
+    % 圆时钟
+    \draw (0,0) circle [radius=2cm];
+    \foreach \r in {0,6,...,354}{
+        \draw[line width=0.3pt] (\r:1.9) -- (\r:2);
+    }
+    \foreach \r/\n in {0/3,30/2,60/1,90/12,120/11,150/10,180/9,210/8,240/7,270/6,300/5,330/4}{
+        \draw (\r:1.8) -- (\r:2);
+        \node at (\r:1.6){\n};
+    }
+    \filldraw (0,0) circle [radius=2pt];
+    \draw[line width=0.25pt] (0,0) -- (270:1.28);
+    \draw[line width=0.5pt] (0,0) -- (195:1);
+\end{tikzpicture}
 \end{document}
 
