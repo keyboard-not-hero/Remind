@@ -12,6 +12,7 @@
 \usepackage{longtable}
 \usepackage{mathdots}
 \usepackage{mathrsfs}
+\usepackage{mathtools}
 \usepackage{metalogo}
 \usepackage{mflogo}
 \usepackage{pifont}
@@ -380,28 +381,30 @@
 \end{table}
 
 \begin{longtable}{p{8mm}@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l@{\hspace{1ex}}l}
-	\caption{\LaTeX{}箭头符号}\\
-	\hline
-	符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
-	\hline
-	$\leftarrow$ & \textbackslash  leftarrow & $\longleftarrow$ & \textbackslash  longleftarrow & $\uparrow$ & \textbackslash  uparrow\\
-	$\Leftarrow$ & \textbackslash  Leftarrow & $\Longleftarrow$ & \textbackslash  Longleftarrow & $\Uparrow$ & \textbackslash  Uparrow\\
-	$\rightarrow$ & \textbackslash  rightarrow & $\longrightarrow$ & \textbackslash  longrightarrow & $\downarrow$ & \textbackslash  downarrow\\
-	$\Rightarrow$ & \textbackslash  Rightarrow & $\Longrightarrow$ & \textbackslash  Longrightarrow & $\Downarrow$ & \textbackslash  Downarrow\\
-	$\leftrightarrow$ & \textbackslash  leftrightarrow & $\longleftrightarrow$ & \textbackslash  longleftrightarrow & $\updownarrow$ & \textbackslash  updownarrow\\
-	$\Leftrightarrow$ & \textbackslash  Leftrightarrow & $\Longleftrightarrow$ & \textbackslash  Longleftrightarrow & $\Updownarrow$ & \textbackslash  Updownarrow\\
-	$\mapsto$ & \textbackslash  mapsto & $\longmapsto$ & \textbackslash  longmapsto & $\nearrow$ & \textbackslash  nearrow\\
-	$\hookleftarrow$ & \textbackslash  hookleftarrow & $\hookrightarrow$ & \textbackslash  hookrightarrow & $\searrow$ & \textbackslash  searrow\\
-	$\leftharpoonup$ & \textbackslash  leftharpoonup & $\rightharpoonup$ & \textbackslash  rightharpoonup & $\swarrow$ & \textbackslash  swarrow\\
-	$\leftharpoondown$ & \textbackslash  leftharpoondown & $\rightharpoondown$ & \textbackslash  rightharpoondown & $\nwarrow$ & \textbackslash  nwarrow\\
-	$\rightleftharpoons$ & \textbackslash  rightleftharpoons & $\leadsto$ & \textbackslash  leadsto\footnotemark[1]\\
-	\multicolumn{3}{l}{$\xleftarrow{\hspace*{2cm}}$} & \multicolumn{3}{l}{\textbackslash xleftarrow[<downscript>]\{<upscript>\}}\footnotemark[2]\\
-	\multicolumn{3}{l}{$\xrightarrow{\hspace*{2cm}}$} & \multicolumn{3}{l}{\textbackslash xrightarrow[<downscript>]\{<upscript>\}}\footnotemark[2]\\
+    \caption{\LaTeX{}箭头符号}\\
     \hline
-\begin{minipage}{\textwidth}
-\footnotetext[1]{包含在latexsym宏包中}
-\footnotetext[2]{包含在amsmath宏包中}
-\end{minipage}
+    符号 & 代码 & 符号 & 代码 & 符号 & 代码\\
+    \hline
+    $\leftarrow$ & \textbackslash  leftarrow & $\longleftarrow$ & \textbackslash  longleftarrow & $\uparrow$ & \textbackslash  uparrow\\
+    $\Leftarrow$ & \textbackslash  Leftarrow & $\Longleftarrow$ & \textbackslash  Longleftarrow & $\Uparrow$ & \textbackslash  Uparrow\\
+    $\rightarrow$ & \textbackslash  rightarrow & $\longrightarrow$ & \textbackslash  longrightarrow & $\downarrow$ & \textbackslash  downarrow\\
+    $\Rightarrow$ & \textbackslash  Rightarrow & $\Longrightarrow$ & \textbackslash  Longrightarrow & $\Downarrow$ & \textbackslash  Downarrow\\
+    $\leftrightarrow$ & \textbackslash  leftrightarrow & $\longleftrightarrow$ & \textbackslash  longleftrightarrow & $\updownarrow$ & \textbackslash  updownarrow\\
+    $\Leftrightarrow$ & \textbackslash  Leftrightarrow & $\Longleftrightarrow$ & \textbackslash  Longleftrightarrow & $\Updownarrow$ & \textbackslash  Updownarrow\\
+    $\mapsto$ & \textbackslash  mapsto & $\longmapsto$ & \textbackslash  longmapsto & $\nearrow$ & \textbackslash  nearrow\\
+    $\hookleftarrow$ & \textbackslash  hookleftarrow & $\hookrightarrow$ & \textbackslash  hookrightarrow & $\searrow$ & \textbackslash  searrow\\
+    $\leftharpoonup$ & \textbackslash  leftharpoonup & $\rightharpoonup$ & \textbackslash  rightharpoonup & $\swarrow$ & \textbackslash  swarrow\\
+    $\leftharpoondown$ & \textbackslash  leftharpoondown & $\rightharpoondown$ & \textbackslash  rightharpoondown & $\nwarrow$ & \textbackslash  nwarrow\\
+    $\rightleftharpoons$ & \textbackslash  rightleftharpoons & $\leadsto$ & \textbackslash  leadsto\footnotemark[1]\\
+    \multicolumn{3}{l}{$\xleftarrow{\hspace*{2cm}}$} & \multicolumn{3}{l}{\textbackslash xleftarrow[<downscript>]\{<upscript>\}}\footnotemark[2]\\
+    \multicolumn{3}{l}{$\xrightarrow{\hspace*{2cm}}$} & \multicolumn{3}{l}{\textbackslash xrightarrow[<downscript>]\{<upscript>\}}\footnotemark[2]\\
+    \multicolumn{3}{l}{$\xrightleftharpoons{\hspace*{2cm}}$} & \multicolumn{3}{l}{\textbackslash xrightleftharpoons[<downscript>]\{<upscript>\}}\footnotemark[3]\\
+    \hline
+    \begin{minipage}{\textwidth}
+        \footnotetext[1]{包含在latexsym宏包中}
+        \footnotetext[2]{包含在amsmath宏包中}
+        \footnotetext[3]{包含在mathtools宏包中}
+    \end{minipage}
 \end{longtable}
 
 \begin{table}[H]
