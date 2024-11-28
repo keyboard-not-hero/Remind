@@ -51,7 +51,11 @@
     %     [7]subminor at - 详细指定更小刻度的所在值, 值格式: {<list>}
     %     [8]major/minor/subminor also at - 额外附加的刻度值
     %     [9]style - 对刻度线和刻度值进行配置
-    %     [10]node style - 对刻度值进行配置，值格式: {<key>=<value>}. 值可以为: shift/rotate/above/color等
+    %     [10]node style - 对刻度值进行配置，值格式: {<key>=<value>}. 如: 
+    %         color=blue - 刻度值为蓝色
+    %         yshift=2pt - 刻度值向上移动2pt
+    %         rotate=90 - 刻度值旋转90度
+    %         above/below/left/right - 刻度值相对于刻度的位置
     %     [11]tick prefix - 在刻度值前面添加的内容
     %     [12]tick suffix - 在刻度值后面添加的内容
     %     [13]tick unit - 刻度值的单位. 类似于tick suffix={$\,\rm<text>$}
