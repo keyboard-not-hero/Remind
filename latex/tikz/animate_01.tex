@@ -17,7 +17,7 @@
 % 4.可使用以下站点进行pdf到gif的转化: https://ezgif.com/pdf-to-gif
 % 示例参考: https://tex.stackexchange.com/questions/558850/how-can-i-animate-a-tikz-drawing-in-beamer
 \begin{document}
-    \begin{frame}
+\begin{frame}
 % animateinline格式: \begin{animateinline}[<options>]{<frame_per_second>}...\end{animateinline}
 % options为可选参数. 列表如下:
 %   1)loop - 动画结束后进行循环
@@ -40,31 +40,69 @@
 %   11)buttonsize - 指定按钮大小，必须为TeX单位，默认为1.44em
 %   12)nomouse - 动画不响应鼠标操作
 % frame_per_second代表动画中，每秒的帧数
-	\begin{animateinline}[controls,loop]{50}
+    \begin{animateinline}[controls,loop]{50}
     % \multiframe用于指定连续帧，格式为:\multiframe{<count_of_frame>}{[<variable>]}{...}
     % count_of_frame代表连续帧的迭代次数
     % variable为可选变量，格式为<variable_name>=<init_val>+<increment>，每一次迭代变量值的增量为increment，定义变量名称不带\符号(引用时需要带\符号). 变量类型有三种, 由第一个字母确定, 列表如下:
     %   1)i/I - 整数
     %   2)n/N/r/R - 实数
     %   3)d/D - 带LaTeX长度单位的值
-	    \multiframe{180}{rt=-45+1}{%
-		\begin{tikzpicture}
-		\ifthenelse{\rt < 45}
-		{
-		    \draw[rounded corners,fill=cyan,rotate around={180-\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
-		    \draw [fill=white] (2,0.2) circle (1mm);
-		    \draw [fill=darkgreen] (2,0.2) circle (0.5mm);
-		}
-		{
-		    \draw[rounded corners,fill=darkgreen,rotate around={90+\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
-		    \draw [fill=white] (2,0.2) circle (1mm);
-		    \draw [fill=cyan] (2,0.2) circle (0.5mm);
-		};
-		\draw [>=stealth,->,very thick] ([shift=(175:2.15)]2,0.2) arc (175:135:2.15) node[xshift=-5pt,left] {$+45^\circ$};
-		\draw [>=stealth,->,very thick] ([shift=(185:2.15)]2,0.2) arc (185:225:2.15) node[xshift=-5pt,left] {$-45^\circ$};
-		\node at (4.0,4.0) {}; %phantom node
-		\node at (-4.0,-4.0) {}; %phantom node
-		\end{tikzpicture}}%
-	\end{animateinline}
-    \end{frame}
+	\multiframe{180}{rt=-45+1}{%
+	    \begin{tikzpicture}
+	    \ifthenelse{\rt < 45}
+	    {
+		\draw[rounded corners,fill=cyan,rotate around={180-\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
+		\draw [fill=white] (2,0.2) circle (1mm);
+		\draw [fill=darkgreen] (2,0.2) circle (0.5mm);
+	    }
+	    {
+		\draw[rounded corners,fill=darkgreen,rotate around={90+\rt:(2,0.2)}] (0,0) rectangle (4,0.4);
+		\draw [fill=white] (2,0.2) circle (1mm);
+		\draw [fill=cyan] (2,0.2) circle (0.5mm);
+	    };
+	    \draw [>=stealth,->,very thick] ([shift=(175:2.15)]2,0.2) arc (175:135:2.15) node[xshift=-5pt,left] {$+45^\circ$};
+	    \draw [>=stealth,->,very thick] ([shift=(185:2.15)]2,0.2) arc (185:225:2.15) node[xshift=-5pt,left] {$-45^\circ$};
+	    \node at (4.0,4.0) {}; %phantom node
+	    \node at (-4.0,-4.0) {}; %phantom node
+	    \end{tikzpicture}}%
+    \end{animateinline}
+\end{frame}
 \end{document}
+
+% 拼接两段动画，第一段动画结束后，点击界面，再开始第二段动画
+\begin{frame}
+    \begin{animateinline}{50}
+        \multiframe{101}{rt=0+1.732/100}{
+            \begin{tikzpicture}
+                \draw (0,0) -- (2,0);
+                \draw (0,0) -- (60:2);
+                \draw[red] (0,0) -- (30:\rt);
+            \end{tikzpicture}}
+        % 插入一个帧，需要点击界面才能跳过该帧
+        \newframe*
+        \multiframe{101}{rt=0+-1/100,rq=0+1.732/100}{
+            \begin{tikzpicture}
+                \draw (0,0) -- (2,0);
+                \draw (0,0) -- (60:2);
+                \draw[red] (0,0) -- (30:1.732);
+                \draw[blue] (2,0) -- ++(\rt,\rq);
+            \end{tikzpicture}}
+    \end{animateinline}
+\end{frame}
+
+
+% 将.png格式帧导入pdf文件(可以由pdf格式动画帧，转化为png图片. 转化地址： https://ezgif.com/pdf-to-gif)
+%   1.使用article等常规文档类型
+%   2.使用animate和graphicx宏包
+%   3.编译指令: latexmk -xelatex <tex_fil>
+%   4.使用Okular PDF软件
+\documentclass{ctexart}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{animate}
+\usepackage{graphicx}
+\setlength{\parindent}{0mm}
+\begin{document}
+    \animategraphics[autoplay]{90}{picture/circle/circle-}{001}{362}
+\end{document}
+

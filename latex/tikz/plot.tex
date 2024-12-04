@@ -266,6 +266,21 @@
     };
 \end{tikzpicture}\\\vspace{2cm}
 
+% 修改默认箭头>为latex模式
+\begin{tikzpicture}[>=latex]
+    \datavisualization[
+        xy Cartesian,
+        visualize as smooth line
+    ]
+    data [format=function]{
+        var x : interval[-0.3:2.3];
+        func y = 2*(\value x-1)*(\value x-1);
+    };
+    \draw[->] (-1,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,5);
+    \fill (1,0) -- (0,0) -- (0,2);
+\end{tikzpicture}\\\vspace{4mm}
+
 
 % 2.plot
 \begin{tikzpicture}
@@ -273,4 +288,15 @@
     % 使用一系列坐标，进行连接作图
     \draw plot coordinates {(0,0) (1,1) (2,0)};
 \end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % \draw plot[<options>] (\x,{<y expression>});
+    % 使用函数作图. 参数列表:
+    %     variable - 指定自变量. 默认为\x
+    %     samples - 样本量. 默认为25
+    %     domain - 样本区间，格式为<start_val>:<end_val>. 默认为-5:5
+    \draw[-latex] (-1,0) -- (3,0);
+    \draw[-latex] (0,-3) -- (0,4);
+    \draw[smooth,fill=black!20] plot[samples=100,domain=0:1] (\x,{2*(\x-1)*(\x-1)}) -- (0,0) -- cycle;
+\end{tikzpicture}
 \end{document}

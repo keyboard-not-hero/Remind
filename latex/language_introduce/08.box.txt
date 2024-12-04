@@ -1,0 +1,155 @@
+1.盒子类型列表:
+    1)左右盒子
+        内容在盒子内不可以换行，超过行宽部分凸出右侧
+    2)段落盒子
+        内容可以在盒子内换行，形成段落
+    3)线段盒子
+        生成指定长和宽度的线条盒子
+
+2.左右盒子中不能出现\verb或\begin{verbatim}...\end{verbatim}
+
+3.由于盒子被视为一个整体，所以除非特别注明，常规下盒子不能跨页
+
+
+
+一、左右盒子
+Demo_01 -- mbox/makebox
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\mbox{This is a very long story, it is about a man meet a woman in a game,they meet,they know,they together,they split,they together again.}
+\makebox[2cm][l]{This is a short line}
+\end{document}
+
+内容讲解
+1.\mbox{<content>}用于创建一个无边框左右盒子
+
+2.\makebox[<width>][<position>]{<content>}创建一个无边框左右盒子. 参数列表如下:
+    width - 指定盒子的宽度，内容可超出指定盒子宽度
+    position - 内容在盒子中的放置方式. 列表如下:
+        l - 内容与盒子左侧进行左对齐. 如果内容超出盒子宽度，则往右侧凸出
+        c - 内容和盒子水平中间进行居中对齐(默认). 如果内容超出盒子宽度，则往两侧凸出
+        r - 内容与盒子右侧进行右对齐. 如果内容超出盒子宽度，则往左侧凸出
+        s - 内容均匀铺满整个盒子. 内容不足盒子宽度，利用增大单词之间的间隔；内容超出盒子宽度，往右侧凸出
+        ** 利用盒子的该特性，可以利用0pt盒子，使用右对齐，可在页面左侧显示内容
+        ** 利用盒子的该特性，可以利用0pt盒子，使用左对齐，使内容与后续内容重叠
+
+
+
+Demo_02 -- fbox/framebox
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\fbox{This is a very long story, it is about a man meet a woman in a game,they meet,they know,they together,they split,they together again.}
+\framebox[2cm][r]{This is a short line}
+\end{document}
+
+内容讲解
+1.\fbox{<content>}创建一个带边框的左右盒子
+
+2.相较于\mbox，\fbox比它高2*0.4+2*3=6.8pt，比他宽2*0.4+2*3=6.8pt
+
+3.\framebox[<width>][<position>]{<content>}创建一个带边框左右盒子. 参数列表如下:
+    width - 指定盒子的宽度，内容可超出指定盒子宽度
+    position - 内容在盒子中的放置方式. 列表如下:
+        l - 内容与盒子左侧进行左对齐. 如果内容超出盒子宽度，则往右侧凸出
+        c - 内容和盒子水平中间进行居中对齐(默认). 如果内容超出盒子宽度，则往两侧凸出
+        r - 内容与盒子右侧进行右对齐. 如果内容超出盒子宽度，则往左侧凸出
+        s - 内容均匀铺满整个盒子. 内容不足盒子宽度，利用增大单词之间的间隔；内容超出盒子宽度，往右侧凸出
+
+4.\fboxrule设置边框的线条宽度，默认为0.4pt. 语法：
+    \setlength{\fboxrule}{2pt}
+
+5.\fboxsep设置边框与内容的距离，默认为3pt. 语法：
+    \setlength{\fboxsep}{5pt}
+
+
+
+Demo_03 -- raisebox
+\documentclass{article}
+\begin{document}
+This is \raisebox{1cm}{\bfseries a very long} line
+\end{document}
+
+内容讲解
+1.\raisebox{<vertical_offset>}[<height>][<depth>]{<content>}创建一个可上下偏移的无边框左右盒子. 参数列表如下：
+    vertical_offset - 在垂直方向上的偏移尺寸. 正数为向上偏移，负数为向下偏移
+    height - 盒子的高度
+    depth - 盒子的深度
+
+
+
+二、段落盒子
+Demo_01 -- minipage
+\documentclass{article}
+\begin{document}
+I see
+\begin{minipage}[b]{10cm}
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.
+\end{minipage}
+\end{document}
+
+内容讲解
+1.\begin{minipage}[<outer_vertical_align>][<height>][<inner_vertical_align>]{<width>} ... \end{minipage}创建一个无边框段落盒子环境。选项列表如下：
+    out_vertical_align - 盒子与外部文本在垂直方向的对齐方式. 列表如下：
+        c - 盒子的垂直中部与外部文本行对齐. 默认值
+        t - 盒子的头部与外部文本行对齐
+        b - 盒子的底部最后一行与外部文本行对齐
+    height - 盒子的高度
+    in_vertical_align - 内部内容与盒子的垂直对齐方式。列表如下：
+        c - 内容与盒子居中对齐
+        t - 内容与盒子顶部对齐
+        b - 内容与盒子底部对齐
+        s - 内容从顶部到底部伸展平铺. 行距必须手动配置为弹性长度。如：\baselineskip=12pt plus 2pt
+    width - 设定盒子的宽度
+
+
+
+Demo_02 -- parbox
+\documentclass{article}
+\begin{document}
+I see
+\parbox[b]{10cm}{
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.}
+\end{document}
+
+内容讲解
+1.\parbox[<out_vertical_align>][<height>][<in_vertical_align>]{<width>}{<content>}创建一个无边框段落盒子环境. 选项列表如下：
+    out_vertical_align - 盒子与外部文本在垂直方向的对齐方式. 列表如下：
+        c - 盒子的垂直中部与外部文本行对齐. 默认值
+        t - 盒子的头部与外部文本行对齐
+        b - 盒子的底部最后一行与外部文本行对齐
+    height - 盒子的高度
+    in_vertical_align - 内部内容与盒子的垂直对齐方式。列表如下：
+        c - 内容与盒子居中对齐
+        t - 内容与盒子顶部对齐
+        b - 内容与盒子底部对齐
+        s - 内容从顶部到底部伸展平铺. 行距必须手动配置为弹性长度。如：\baselineskip=12pt plus 2pt
+    width - 设定盒子的宽度
+
+2.不能在内部使用\verb或\begin{verbatim}...\end{verbatim}
+
+3.不能在内部使用脚注相关命令
+
+
+
+三、线段盒子
+Demo_01 -- rule
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+This is \parbox[t]{3cm}{very important!\par\rule[5mm]{3cm}{1pt}}so,carefully
+\end{document}
+
+内容讲解
+1.\rule[<offset>]{<length>}{<width>}创建一个线段盒子. 参数列表如下：
+    vertical_offset - 在垂直方向上的偏移. 正数为向上偏移，负数为向下偏移
+    length - 线段在水平方向上的长度
+    width - 线段在垂直方向上的宽度
+    ** 可以使用零宽度的线段，提供指定高度支撑
+    ** 可以使用零高度的线段，提供指定宽度支撑
+
+
+最后编辑于: 2024-11-29
