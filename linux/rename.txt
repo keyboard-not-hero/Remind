@@ -15,3 +15,7 @@ rename [option] [files]
 -e <perl_pat>    重命名规则，为perl RE格式。默认选项，可重复使用
 
 -E <perl_pat>    类似于-e，但被';'中断
+
+
+示例1 - 将文件名为check-***的文件批量修改为catch-***
+rename 's/check/catch/' *
