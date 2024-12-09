@@ -50,8 +50,12 @@
 % \breakforeach, 不管该指令在其他语句之前或之后，都会执行完当前循环才跳出循环，所以效果等同于放在所有语句的最后
 
 \begin{tikzpicture}
-    % let <assign_state> in <statement>;
-    % 在assign_state中对变量进行赋值，多个赋值使用','分隔，变量类型列表： \p<num>代表坐标点，\x<num>代表对应坐标点的x值，\y<num>代表对应坐标点的y值，\n<num>代表纯数字；然后，将赋值变量在statement语句中进行应用. 需要使用calc库
+    % \path let <assign_state> in <statement>;
+    % 在assign_state中对变量进行赋值，多个赋值使用','分隔，需要使用calc库. 变量类型列表： 
+    %     \p<registor_name> - 坐标点
+    %     \x<registor_name> - 坐标点的x值
+    %     \y<registor_name> - 坐标点的y值
+    %     \n<registor_name> - 代表纯数字，或带长度单位的数字
     \draw[->] (-4,0) -- (4,0) node[right]{$x$};
     \draw[->] (0,-4) -- (0,4) node[above]{$y$};
     \draw (-3,-3) grid[step=1cm] (3,3);
@@ -66,33 +70,16 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
-    % 时钟
-    % 时钟外框
-    \filldraw[line width=2pt,fill=yellow!85!black] (0,0) circle [radius=2cm];
-
-    % 最小刻度
-    \foreach \angle in {0,6,...,359}
-    {
-	\draw[line width=0.6pt] (\angle:1.9cm) -- (\angle:2cm);
-    }
-
-    % 每小时刻度
-    \foreach \angle/\label in
-    {0/3, 30/2, 60/1, 90/12, 120/11, 150/10, 180/9, 210/8, 240/7, 270/6,
-    300/5, 330/4}
-    {
-	\draw[line width=1pt] (\angle:1.8cm) -- (\angle:2cm);
-	\node at (\angle:1.4cm) {\label};
-    }
-
-    % 1/4刻度
-    \foreach \angle in {0,90,180,270}
-    {
-	\draw[line width=1.5pt] (\angle:1.6cm) -- (\angle:2cm);
-    }
-
-    % 时针和分针
-    \draw[line width=1.5pt] (0,0) -- (145:0.8cm);
-    \draw[line width=1pt] (0,0) -- (30:1.2cm);
+    % let命令，以指定长度为圆半径
+    \coordinate (A) at (1,0);
+    \coordinate (B) at (4,4);
+    \filldraw (A) circle [radius=1.2pt];
+    \filldraw (B) circle [radius=1.2pt];
+    \draw
+      let
+        \p1=(A),\p2=(B),
+        \n1={veclen(\x2-\x1,\y2)}
+      in
+        (A) circle [radius=\n1];
 \end{tikzpicture}
 \end{document}
