@@ -52,10 +52,10 @@
 \begin{tikzpicture}
     % \path let <assign_state> in <statement>;
     % 在assign_state中对变量进行赋值，多个赋值使用','分隔，需要使用calc库. 变量类型列表： 
-    %     \p<registor_name> - 坐标点
-    %     \x<registor_name> - 坐标点的x值
-    %     \y<registor_name> - 坐标点的y值
-    %     \n<registor_name> - 代表纯数字，或带长度单位的数字
+    %     \p{<registor_name>}=<coordinate> - 坐标点，未指定长度单位时，默认为pt；指定其他长度单位时，底层转化为pt单位对应长度
+    %     \x{<registor_name>}=<val>|<dimension> - 坐标点的x值，未指定长度单位时，默认为pt；指定其他长度单位时，底层转化为pt单位对应长度
+    %     \y{<registor_name>}=<val>|<dimension> - 坐标点的y值，未指定长度单位时，默认为pt；指定其他长度单位时，底层转化为pt单位对应长度
+    %     \n{<registor_name>}={<formula>} - 代表纯数字，或长度值(底层转化为pt). 只要公式中携带长度单位，则n为长度值
     \draw[->] (-4,0) -- (4,0) node[right]{$x$};
     \draw[->] (0,-4) -- (0,4) node[above]{$y$};
     \draw (-3,-3) grid[step=1cm] (3,3);
@@ -81,5 +81,20 @@
         \n1={veclen(\x2-\x1,\y2)}
       in
         (A) circle [radius=\n1];
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    % \pgfextra{\pgfmathsetmacro{\mylen}{\n}}将长度值提取非单位数值
+    \path[draw,name path=circle] (0,0) circle [radius=2];
+    \filldraw (0,0) circle [radius=1.2pt];
+    \node[left] at (0,0){$O$};
+    \path 
+      let 
+        \p1 = (0,0),\p2 = (4,0),
+        \n1 = {2cm},\n2 = {veclen(\x2-\x1,\y2-\y1)},
+        \n3 = {asin(\n1/\n2)},
+      in  
+        \pgfextra{\pgfmathsetmacro{\mylen}{\n3}}
+        [draw,name path=AB,rotate around={-\mylen:(\p2)}] (\p2) -- (\p1);
 \end{tikzpicture}
 \end{document}
