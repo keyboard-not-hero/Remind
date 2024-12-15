@@ -42,11 +42,11 @@
 % frame_per_second代表动画中，每秒的帧数
     \begin{animateinline}[controls,loop]{50}
     % \multiframe用于指定连续帧，格式为:\multiframe{<count_of_frame>}{[<variable>]}{...}
-    % count_of_frame代表连续帧的迭代次数
-    % variable为可选变量，格式为<variable_name>=<init_val>+<increment>，每一次迭代变量值的增量为increment，定义变量名称不带\符号(引用时需要带\符号). 变量类型有三种, 由第一个字母确定, 列表如下:
-    %   1)i/I - 整数
-    %   2)n/N/r/R - 实数
-    %   3)d/D - 带LaTeX长度单位的值
+    %     count_of_frame代表连续帧的迭代次数
+    %     variable为可选变量，格式为<variable_name>=<init_val>+<increment>，每一次迭代变量值的增量为increment，定义变量名称不带\符号(引用时需要带\符号)，多个变量使用','分隔. 变量类型有三种, 由第一个字母确定, 列表如下:
+    %       1)i/I - 整数
+    %       2)n/N/r/R - 实数
+    %       3)d/D - 带LaTeX长度单位的值
 	\multiframe{180}{rt=-45+1}{%
 	    \begin{tikzpicture}
 	    \ifthenelse{\rt < 45}

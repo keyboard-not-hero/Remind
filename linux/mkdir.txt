@@ -1,0 +1,42 @@
+mkdir - 创建目录
+
+
+语法
+mkdir [option] <dir>
+
+
+option参数
+-m, --mode=<mode>
+    指定目录的用户权限
+    默认为a=rwx - umask
+
+-p, --parents
+    当目标的父目录不存在时, 进行递归创建
+
+-v, --verbose
+    详细信息
+
+-Z
+    根据所在目录创建默认的SELinux
+
+--context=[=ctx]
+    类似于-Z, 可将SELinux设置为指定内容ctx
+
+--help
+    帮助信息
+
+--version
+    版本信息
+
+
+
+示例1 - 忽略umask, 创建目录时设定指定权限
+sudo mkdir -m 644 demo_dir
+
+
+示例2 - 创建目标目录的父目录
+sudo mkdir -p ~/demo/dir1/dir2
+
+
+
+最后编辑于: 2024-12-13

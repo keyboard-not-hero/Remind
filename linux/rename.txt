@@ -4,18 +4,42 @@ rename - 批量重命名文件
 rename [option] [files]
 
 参数释义
--v, --verbose    显示所有成功重命名的文件
+-v, --verbose
+    详细模式，所有成功重命名文件的列表
 
--n, --nono    显示所有成功匹配的文件，但不重命名
+-n, --nono
+    所有可以成功重命名文件的列表，但不实际执行重命名操作
 
--f, --force    允许名称已存在的文件被覆盖内容
+-f, --force
+    如果重命名后的文件名已存在，直接进行覆盖
+    默认当重命名后的文件名已存在，目标文件不进行重命名操作
 
--m, --man    显示相关手册页
+-h, --help
+    帮助信息
 
--e <perl_pat>    重命名规则，为perl RE格式。默认选项，可重复使用
+-m, --man
+    manual的源格式文档
 
--E <perl_pat>    类似于-e，但被';'中断
+-V, --version
+    版本信息
+
+-u, --unicode <encoding>
+    文件名encode/decode使用指定编码
+    默认使用unicode(perl)
+
 
 
 示例1 - 将文件名为check-***的文件批量修改为catch-***
 rename 's/check/catch/' *
+
+
+示例2 - 将文件名[circle-001,circle-362]的文件名，批量修改为[circle-101,circle-462]
+** 由于直接修改，会造成[circle-101,circle-362]的文件名已存在，按一下步骤操作
+1.[001,362] --> [1001,1362]
+2.[1001,1362] --> [101,462]
+
+rename 's/(\d+)/sprintf "%d",$1+1000/e' *
+rename 's/(\d+)/sprintf "%d",$1-900/e' *
+
+
+最后编辑于: 2024-12-13

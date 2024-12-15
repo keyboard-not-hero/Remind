@@ -1,4 +1,4 @@
-touch - 修改文件时间戳. 将access/modification/status时间修改到当前时间
+touch - 修改文件时间戳. 将access/modification time修改到当前时间
 
 语法
 touch [option] <file>
@@ -11,7 +11,7 @@ touch [option] <file>
     当目标文件不存在时, 不创建文件
 
 -d, --date=<str>
-    指定日期, 替换默认的当前时间
+    使用指定时间, 替换默认的当前时间
 
 -h, --no-dereference
     当目标为软链接文件时, 作用于软链接文件本身
@@ -37,12 +37,9 @@ touch [option] <file>
     版本信息
 
 
-**时间戳分类:
-    atime - access time, 访问文件时改变
-    ctime - status time, 
-    mtime - modification time, 修改文件内容时改变. ls默认显示该时间戳
 
-** 未指定时间戳类型时, 默认修改atime/mtime/ctime, atime/ctime可指定, ctime在每次touch操作时都改变为当前最新时间
+注意事项:
+** ctime会跟随mtime变化而变化
 
 ** 当目标不存在时, 默认会进行创建
 
@@ -51,8 +48,14 @@ Sun, 29 Feb 2004 16:21:42
 2004-02-29 16:21:42
 
 
-示例1 - 创建文件, atime/ctime/mtime生成(当文件已存在, 刷新atime/ctime/mtime)
+
+示例1 - 创建文件, atime/ctime/mtime生成(当文件已存在, 刷新atime/mtime)
 touch demo.txt
+
 
 示例2 - 修改文件的atime(更新ctime)
 touch -a -d '2020-10-01' demo.txt
+
+
+
+最后编辑于: 2024-12-13

@@ -472,20 +472,6 @@ printf [-v var] format [arg...]
 
 
 
-pwd - 打印当前工作目录的绝对路径
-
-语法
-pwd [option]
-
-参数释义
--L
-	打印当前工作目录, 可包含symbolic link(默认)
-
--P
-	打印当前工作目录, 不包含symbolic link
-
-
-
 read - 从输入行读取内容, 并将内容分割赋予多个变量
 
 语法：
@@ -696,7 +682,7 @@ shopt - 修改bash选项
 语法
 shopt [option] [optname...]
 
-参数释义(option)
+option参数
 -o
 	限制optname为可通过set -o获取的值
 

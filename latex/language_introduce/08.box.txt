@@ -144,7 +144,7 @@ This is \parbox[t]{3cm}{very important!\par\rule[5mm]{3cm}{1pt}}so,carefully
 \end{document}
 
 内容讲解
-1.\rule[<offset>]{<length>}{<width>}创建一个线段盒子. 参数列表如下：
+1.\rule[<vertical_offset>]{<length>}{<width>}创建一个线段盒子. 参数列表如下：
     vertical_offset - 在垂直方向上的偏移. 正数为向上偏移，负数为向下偏移
     length - 线段在水平方向上的长度
     width - 线段在垂直方向上的宽度

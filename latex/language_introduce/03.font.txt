@@ -320,19 +320,14 @@ Demo_12 -- 单位符号
 \setlength{\parindent}{0mm}
 \begin{document}
 \ang{30}\\
-20\unit{\degree}\\
+$n^\circ$\\
 \qty{20}{\degree}\\
-30\unit{\degreeCelsius}
-\qty{30}{\degreeCelsius}\\
-\qty[per-mode=symbol]{4.2e3}{\newtom\per\kilogram}
-\qty[per-mode=symbol]{2}{\kilogram\per\square\metre}
-\qty[per-mode=symbol]{2}{\kilogram\per\cubic\metre}
-\qty[per-mode=symbol,inter-unit-product=\ensuremath{{}\cdot{}}]{4.2e3}{\joule\per\kilogram\per\degreeCelsius}
 \end{document}
 
 内容讲解
 1.\ang{<degree>}用于显示指定的角度单位. 包含在siunitx宏包中. 格式如下:
     \ang{<degree>;<minute>;<second>} - degree为度数，minute为分，second为秒，它们的进制为60
+    指定特殊度数时，使用^\circ. 如: n^\circ
 
 2.\qty{<num>}{<symbol>}用于显示指定的符号. 包含在siunitx宏包中. 符号一览:
     \degreeCelsius - 摄氏度

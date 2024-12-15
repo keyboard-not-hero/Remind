@@ -42,5 +42,13 @@
     }
     \draw (1.8,0.3) .. controls (1.85,0.5) and (1.95,0.5) .. (2,0.3);
     \draw (2,-0.3) -- (2,-0.5);
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
+    % <point> parabola <point> 给出抛物线的两个点，沿该方向呈现单一递增/递减趋势
+    % bend <point> 用于指定两个点之间的拐点(即抛物线顶点)
+    \draw[->] (-5,0) -- (1,0);
+    \draw[->] (0,-1) -- (0,9);
+    \draw (-4,8) parabola bend (-2,4) (0,8);
 \end{tikzpicture}
 \end{document}
