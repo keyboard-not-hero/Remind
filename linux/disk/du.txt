@@ -1,16 +1,18 @@
 du - 评估文件的空间使用情况
 
+
 语法
 du [option]... [file]...
 
+
 参数释义
 -0, --null
-	每一条结果使用NUL('')分隔
-	默认使用'\n'分隔
+    每一条结果使用NUL('')分隔
+    默认使用'\n'分隔
 
 -a, --all
-	增加显示文件的空间使用情况
-	默认只显示目录及子目录的空间使用情况
+    评估文件和目录的空间使用情况
+    默认只评估目录及子目录的空间使用情况
 
 --apparent-size
 	更精确的空间使用情况, 包括0 block文件/间接block等
@@ -42,9 +44,6 @@ du [option]... [file]...
 
 -h, --human-readable
 	显示空间使用情况时, 使用方便读取的单位
-
---help
-	帮助文档
 
 --inodes
 	显示inode的使用情况
@@ -86,15 +85,19 @@ du [option]... [file]...
 	指定显示的时间格式. 格式列表: full-iso/long-iso/iso/+<format>
 	format格式参考date指令
 
---version
-	版本信息
-
 -X, --exclude-from=<file>
 	根据文件file内的pattern内容, 不统计匹配pattern的文件
 	pattern为shell通配符模式
 
 -x, --one-file-system
 	不统计其他文件系统的空间使用情况
+
+
+--help
+    帮助文档
+
+--version
+    版本信息
 
 
 示例1 - 统计指定目录(含子目录)下的空间使用情况

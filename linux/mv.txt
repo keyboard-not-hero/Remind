@@ -1,0 +1,67 @@
+mv - 移动/重命名文件
+
+
+语法
+mv [option] <source> <dest>
+
+
+option参数
+--backup[=<control>]
+    当目标文件存在时, 对目标文件进行备份. control列表如下:
+	none/off - 不进行备份
+	simple/never - 备份, 尾部添加~
+	existing/nil - 备份, 当存在numbered格式备份时, 进行numbered备份; 否则进行simple备份
+	numbered/t - 备份, 尾部添加.~<num>~
+
+-b
+    类似于--backup, 但不额外接受参数
+
+-f, --force
+    当目标文件存在时, 直接覆盖目标文件
+
+-i, --interactive
+    当目标文件存在时, 提示是否进行覆盖
+
+-n, --no-clobber
+    当目标文件存在时, 不覆盖已存在文件
+
+-S, --suffix=<suffix>
+    指定备份文件的后缀，配合--backip选项
+
+--strip-trailing-slashes
+    移除源文件尾部的'/'
+
+-t, --target-directory=<directory>
+    将源文件移动到指定目录下，此时dest参数被忽略
+
+-T, --no-target-directory
+    dest必须为目标文件名，不能为目录
+
+-u, --update
+    只有当源文件比新文件时间戳新, 才覆盖目标文件
+    或者当目标文件不存在时, 重命名文件
+
+-v, --verbose
+    verbose模式
+
+-Z
+    设置目标文件的SELinux上下文，为目录下的默认值
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+
+
+示例1 - 移动文件，如果目标文件存在，直接覆盖
+mv -f test.txt demo.txt
+
+
+示例2 - 移动文件，如果目标文件存在，不进行覆盖
+mv -n test.txt demo.txt
+
+
+
+最后编辑于: 2024-12-17

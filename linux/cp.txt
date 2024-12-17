@@ -100,7 +100,7 @@ option参数
     将源文件复制到指定目录下, 此时dest参数被忽略
 
 -T, --no-target-directory
-    dest参数必须为目录
+    dest必须为目标文件名，不能为目录
 
 -u, --update
     当目标文件已存在时, 只有原文件比目标文件时间戳新时才覆盖
