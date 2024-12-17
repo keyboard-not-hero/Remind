@@ -1,12 +1,14 @@
 CentOS 7.9更新源(腾讯源)
 sudo cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
-wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.tencent.com/repo/centos7_base.repo
+sudo wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.tencent.com/repo/centos7_base.repo
+sudo yum makecache
 
 Rocky 8/9替换为上海交大源
 sed -e 's|^mirrorlist=|#mirrorlist=|g' \
     -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.sjtug.sjtu.edu.cn/rocky|g' \
     -i.bak \
     /etc/yum.repos.d/[Rr]ocky*.repo
+sudo yum makecache
 ** Rocky 8为Rocky*.repo，Rocky 9为rocky*.repo
 
 

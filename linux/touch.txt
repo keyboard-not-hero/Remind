@@ -20,7 +20,7 @@ touch [option] <file>
     修改modification时间
 
 -r, --reference=<file>
-    使用指定文件的时间戳属性
+    引用指定文件的时间
 
 -t <stamp>
     将文件的时间戳修改为指定内容. 格式为: [[CC]YY]MMDDhhmm[.ss]

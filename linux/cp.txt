@@ -1,0 +1,186 @@
+cp - 复制文件和目录
+
+
+语法
+cp [option] src dest
+
+
+option参数
+-a, --archive
+    保留symbolic link属性，并保留其他所有属性
+    如果为目录，则进行递归复制
+    类似于-dR --preserve=all
+
+--attributes-only
+    不复制文件数据, 只复制文件属性
+
+--backup=[=<control>]
+    当目标文件已存在时, 是否进行备份. control列表如下:
+	none/off - 不进行备份
+	simple/never - 备份, 尾部添加~. 默认值
+	existing/nil - 备份, 当存在numbered格式备份时, 进行numbered备份; 否则进行simple备份
+	numbered/t - 备份, 尾部添加.~<num>~
+** ~为--suffix选项默认值，可指定
+
+-b
+    类似于--backup, 但不接受额外参数
+
+-d
+    保留symbolic link属性
+    类似于--no-dereference --preserve=links
+
+-f, --force
+    当目标文件已存在且不能打开时, 删除已存在的目标文件后继续操作
+    当-n同时存在时, 忽略该参数
+
+-H
+    当复制文件为symbolic link时, 复制链接实际指向的文件
+
+-i, --interactive
+    当目标文件存在时, 进行提示
+    覆盖之前的-n选项
+
+-l, --link
+    进行hard link, 而非复制
+
+-L, --dereference
+    当复制文件为symbolic link时, 复制链接实际指向的文件
+
+-n, --no-clobber
+    当目标文件已存在时, 不进行覆盖
+    覆盖之前的-i选项
+
+-p
+    保留源文件的权限/ownership/时间戳
+    类似于--preserve=mode,ownership,timestamps
+
+-P, --no-dereference
+    当复制文件为symbolic link时, 复制该link本身
+
+--parents
+    将源文件的绝对路径放置到目标目录下
+
+--preserve[=<attr_list>]
+    保留源文件的指定属性(默认为mode,ownership,timestamps), 其他可选属性: context, links, xattr, all. 列表如下:
+        mode - 权限
+	ownership - owner和group
+	timestamps - 时间戳
+	context - SELinux安全上下文
+	links - 当两个源文件为link关系(symbolic link或hard link)时，两个目标两文件保持hard link关系(参开示例4)
+	xattr - 
+
+--no-preserve=<attr_list>
+    不保留源文件的指定属性
+    没有指定的属性使用默认操作
+
+** 当不使用--preserve和--no-preserve时，会修改权限/ownership/时间戳/context/links
+
+-R, -r, --recursive
+    将源目标为目录时，对子目录和文件内容进行递归复制
+
+--remove-destination
+    当目标文件已存在时，先移除存在的目标文件
+
+--strip-trailing-slashes
+    移除源文件参数的尾部'/'
+
+-s, --symbolic-link
+    进行symbolic link, 而非复制
+
+-S, --suffix=<suffix>
+    指定备份文件的后缀，配合--backup选项使用
+
+--sparse=<when>
+    目标文件是否为sparse文件. when列表如下:
+        auto - 如果源文件为sparse，则目标文件为sparse
+	always - 不论源文件是否为sparse，目标文件都为sparse
+	never - 目标文件不为sparse
+
+-t, --target-directory=<directory>
+    将源文件复制到指定目录下, 此时dest参数被忽略
+
+-T, --no-target-directory
+    dest参数必须为目录
+
+-u, --update
+    当目标文件已存在时, 只有原文件比目标文件时间戳新时才覆盖
+    或者当目标文件不存在时, 创建目标文件
+
+-v, --verbose
+    verbose模式
+
+-Z
+    设置目标文件的SELinux为该目录下的默认值
+
+--context[=<ctx>]
+    设置目标SELinux为ctx
+    未指定ctx时, 设置为默认, 类似于-Z
+
+--help
+    帮助文档
+
+--version
+    版本信息
+	
+
+
+示例1 - 复制symbolic链接本身
+cp -P src.txt dest.txt
+
+
+示例2 - 当目标文件存在时, 进行提示性覆盖
+cp -i src.txt dest.txt
+
+
+示例3 - 保留源文件的metadata属性
+cp --preserve=all src.txt dest.txt
+
+
+示例4 - 当两个源文件为link关系(symbolic link或hard link)时，两个目标两文件保持hard link关系
+[steven@localhost ~]$ ll -i alice.txt alice_bak.txt
+34481056 -rw-rw-r--. 2 steven steven 10305 12月 16 16:36 alice_bak.txt
+34481056 -rw-rw-r--. 2 steven steven 10305 12月 16 16:36 alice.txt
+[steven@localhost ~]$ sudo cp alice.txt alice_bak.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html
+total 24
+67446838 -rw-r--r--. 1 root root 10305 12月 16 18:03 alice_bak.txt
+67446830 -rw-r--r--. 1 root root 10305 12月 16 18:03 alice.txt
+[steven@localhost ~]$ sudo rm /usr/share/nginx/html/alice.txt /usr/share/nginx/html/alice_bak.txt
+[steven@localhost ~]$ sudo cp --preserve=links alice.txt alice_bak.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html
+total 24
+67446830 -rw-r--r--. 2 root root 10305 12月 16 18:05 alice_bak.txt
+67446830 -rw-r--r--. 2 root root 10305 12月 16 18:05 alice.txt
+
+[steven@localhost ~]$ ll alice.txt alice_bak.txt
+lrwxrwxrwx. 1 root   root       9 12月 16 18:08 alice_bak.txt -> alice.txt
+-rw-rw-r--. 1 steven steven 10305 12月 16 16:36 alice.txt
+[steven@localhost ~]$ sudo cp alice.txt alice_bak.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html
+total 24
+67445732 -rw-r--r--. 1 root root 10305 12月 16 18:12 alice_bak.txt
+67445731 -rw-r--r--. 1 root root 10305 12月 16 18:12 alice.txt
+[steven@localhost ~]$ sudo rm /usr/share/nginx/html/alice.txt /usr/share/nginx/html/alice_bak.txt
+[steven@localhost ~]$ sudo cp --preserve=links alice.txt alice_bak.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html
+total 24
+67445731 -rw-r--r--. 2 root root 10305 12月 16 18:13 alice_bak.txt
+67445731 -rw-r--r--. 2 root root 10305 12月 16 18:13 alice.txt
+
+[steven@localhost ~]$ ll -i alice.txt little_prince.txt
+34481056 -rw-rw-r--. 1 steven steven 10305 12月 16 16:36 alice.txt
+33609883 -rw-rw-r--. 1 steven steven  2890 12月 16 19:31 little_prince.txt
+[steven@localhost ~]$ sudo cp alice.txt little_prince.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html/
+total 16
+67446697 -rw-r--r--. 1 root root 10305 12月 16 19:32 alice.txt
+67445732 -rw-r--r--. 1 root root  2890 12月 16 19:32 little_prince.txt
+[steven@localhost ~]$ sudo rm /usr/share/nginx/html/alice.txt /usr/share/nginx/html/little_prince.txt
+[steven@localhost ~]$ sudo cp --preserve=links alice.txt little_prince.txt /usr/share/nginx/html/
+[steven@localhost ~]$ ll -i /usr/share/nginx/html
+total 16
+67445732 -rw-r--r--. 1 root root 10305 12月 16 19:33 alice.txt
+67445733 -rw-r--r--. 1 root root  2890 12月 16 19:33 little_prince.txt
+
+
+最后编辑于: 2024-12-17

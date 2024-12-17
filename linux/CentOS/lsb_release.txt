@@ -1,0 +1,8 @@
+安装软件
+sudo yum install redhat-lsb
+
+查看release
+lsb_release -a
+
+
+最后编辑于: 2024-12-17

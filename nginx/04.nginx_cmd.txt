@@ -3,48 +3,49 @@ nginx [option]
 
 参数释义
 <null>
-  启动nginx
+    启动nginx
 
 -?, -h
-  帮助信息
+    帮助信息
 
 -c <filename>
-  指定配置文件的读取位置
-  默认为<prefix>/conf/nginx.conf
+    指定配置文件的读取位置
+    默认为<prefix>/conf/nginx.conf
 
 -e <filename>
-  指定error log信息的存放位置
-  默认为<prefix>/logs/error.log
+    指定error log信息的存放位置
+    默认为<prefix>/logs/error.log
 
 -g <directive>
-  在配置文件之外配置全局directive
+    在配置文件之外配置全局directive
 
 -p <prefix>
-  指定prefix目录的读取位置
-  默认为/usr/local/nginx
+    指定prefix目录的读取位置
+    默认为/usr/local/nginx
 
 -q
-  在测试config文件时, 不输出non-error信息
+    在测试config文件时, 不输出non-error信息
 
 -s <signal>
-  发送给master process的信号. 信号列表如下:
-    stop - 直接关闭进程
-    quit - graceful关闭进程
-    reload - 重新加载配置文件. 
-    ** master process读取配置文件, 配置文件语法正确时, 启动新worker process, 并将旧worker process进行graceful关闭; 配置文件语法错误时, 使用旧配置
-    reopen - 重新打开新log文件, 用于log文件的rotate
+    发送给master process的信号. 信号列表如下:
+        stop - 直接关闭进程
+        quit - graceful关闭进程
+        reload - 重新加载配置文件. 
+        ** master process读取配置文件, 配置文件语法正确时, 启动新worker process, 并将旧worker process进行graceful关闭; 配置文件语法错误时, 使用旧配置
+        reopen - 重新打开新log文件, 用于log文件的rotate
 
 -t
-  测试config文件语法
+    测试config文件语法
 
 -T
-  测试config文件语法, 并将配置信息输出到stdout
+    测试config文件语法, 并将配置信息输出到stdout
 
 -v
-  nginx版本信息
+    nginx版本信息
 
 -V
-  nginx版本, build版本信息和configure编译参数
+    nginx版本, build版本信息和configure编译参数
+
 
 
 示例1 - 启动nginx

@@ -1,17 +1,54 @@
-seq - 打印数字序列
+seq - 打印连续数字
+
 
 语法：
-seq [option] {[<first> [step]] <last>}
+seq [option] <last>
+seq [option] <first> <last>
+seq [option] <first> <increment> <last>
+
 
 参数释义：
--f, --format=<format>    打印格式
+-f, --format=<format>
+    设置浮点数打印格式，与printf的格式一致
 
--s, --separator=<sep>    分隔符号，默认为\n
+-s, --separator=<sep>
+    指定数字的分隔符号，默认为\n
 
--w, --equal-width    是否使用前置0，使数字等宽
+-w, --equal-width
+    使用前置0，使数字等宽
 
---help    帮助信息文档
+--help    
+    帮助信息文档
 
---version    版本信息
+--version    
+    版本信息
+** -f与-w不能同时使用
 
-**如果first和step省略，则默认为1
+
+
+示例1 - 打印1~10之间的数字
+[steven@localhost ~]$ seq 1 10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+
+示例2 - 打印1~10之间的数字，并指定浮点格式和分隔符
+[steven@localhost ~]$ seq -s'  ' --format='%3.2f'  1 10
+1.00  2.00  3.00  4.00  5.00  6.00  7.00  8.00  9.00  10.00
+
+
+示例3 - 打印1~10之间的数字，并且内容等宽
+[steven@localhost ~]$ seq -w -s'  ' 1 10
+01  02  03  04  05  06  07  08  09  10
+
+
+
+最后编辑于: 2024-12-17

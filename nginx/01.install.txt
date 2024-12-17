@@ -38,6 +38,7 @@ HTTP/1.1 200 OK
 Server: nginx/1.22.0
 
 
+
 2.Ubuntu
 1)安装nginx
 root@steven:~# sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring -y
@@ -53,8 +54,6 @@ root@steven:~# sudo apt update
 
 root@steven:~# sudo apt install nginx
 
-root@steven:~# sudo apt-get install nginx
-
 2)启动nginx
 root@steven:~# sudo systemctl start nginx
 
@@ -63,7 +62,7 @@ root@steven:~# sudo systemctl enable nginx
 root@steven:~# sudo ufw allow 80/tcp
 
 4)测试nginx
-root@steven:~# sudo curl -I 127.0.0.1
+root@steven:~# curl -I 127.0.0.1
 
 
 
@@ -99,6 +98,7 @@ root@steven:~# sudo curl -I 127.0.0.1
 [root@vultr ~]# curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.26.1
+
 
 
 2.Ubuntu

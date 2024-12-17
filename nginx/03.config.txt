@@ -1,3 +1,23 @@
+CentOS/Ubuntu package安装
+配置文件:
+/etc/nginx/nginx.conf
+/etc/nginx/conf.d/*
+
+HTML文档目录:
+/usr/share/nginx/html/
+
+
+
+source code安装
+配置文件:
+<prefix>/conf/nginx.conf
+
+HTML文档目录:
+<prefix>/html/
+
+
+
+
 基础nginx配置
 http {
     server {
