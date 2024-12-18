@@ -1,0 +1,391 @@
+find - 在层级目录中查找文件
+
+
+语法
+find [option] [path] [expression]
+
+
+option参数
+-P
+    当文件为symbolic link时，直接对该link进行动作
+
+-L
+    当文件为symbolic link时，对实际指向的文件进行动作
+
+-H
+    当文件为symbolic link，并且在cmd中指定，则对实际指向的文件进行动作
+
+
+
+path参数
+    从指定路径开始往下查找
+    默认为当前所在路径
+
+
+
+expression参数
+[option] [test] [action]
+
+option列表:
+-daystart
+    以每一天的0时作为天数计算，默认为24小时内为一天
+    作用于-atime/-ctime/-mtime
+
+-depth
+    先作用于目录内的内容，再作用于目录
+
+-maxdepth <level>
+    向下深入子目录层级
+
+-mindepth <level>
+    只作用于指定子目录层级之上
+
+-regextype <type>
+    指定-regex或-iregex使用的正则表达式标准. 可选列表:
+        emacs(默认)
+	posix-awk
+	posix-basic
+	posix-egrep
+	posix-extended
+
+-warn, -nowarn
+    打开/关闭warning消息
+
+-xdev
+    当子目录为其他文件系统时，不再深入该子目录
+
+-help, --help
+    帮助信息
+
+-version, --version
+    版本信息
+
+
+
+test列表:
+-amin -n/n/+n
+    -n代表在过去第[0,n]分钟数访问过
+    n代表在过去第[n-1,n]分钟数访问过
+    +n代表在过去第(n,]分钟数访问过
+
+-anewer <file>
+    atime比指定文件新的文件
+
+-atime -n/n/+n
+    -n代表在过去第[0,n]天访问过
+    n代表在过去第[n,n+1]天访问过
+    +n代表在过去第(n+1,]天访问过
+
+-cmin -n/n/+n
+    -n代表在过去第[0,n]分钟数状态修改过
+    n代表在过去第[n-1,n]分钟数状态修改过
+    +n代表在过去第(n,]分钟数状态修改过
+
+-cnewer <file>
+    ctime比指定文件新的文件
+
+-ctime -n/n/+n
+    -n代表在过去第[0,n]天访问过
+    n代表在过去第[n,n+1]天访问过
+    +n代表在过去第(n+1,]天访问过
+
+-empty
+    内容为空的文件或目录
+
+-executable
+    当前用户对应的executable bit置1
+
+-fstype <type>
+    文件位于指定类型的文件系统
+
+-gid <n>
+    gid为指定值的文件/目录
+
+-group <gname>
+    group name为指定值的文件/目录
+
+-ilname '<pattern>'
+    文件为symbolic link，根据pattern进行匹配，并且pattern不区分大小写
+
+-iname '<pattern>'
+    根据pattern进行匹配，并且只匹配basename(pattern中不包含/)，并且pattern不区分大小写
+
+-inum <n>
+    匹配指定inode number
+
+-ipath '<pattern>'
+    根据pattern进行匹配，并且pattern不区分大小写
+
+-iregex '<regular_expression>'
+    根据正则表达式进行匹配，并且patter不区分大小写
+
+-iwholename '<pattern>'
+    根据pattern进行匹配，并且pattern不区分大小写
+    类似于-ipath，但可移植性小于-ipath
+
+-links <n>
+    inode链接数为指定数量
+
+-lname '<pattern>'
+    文件为symbolic link，根据pattern进行匹配，pattern区分大小写
+
+-mmin -n/n/+n
+    -n代表在过去第[0,n]分钟数修改过
+    n代表在过去第[n-1,n]分钟数修改过
+    +n代表在过去第(n,]分钟数修改过
+
+-mtime -n/n/+n
+    -n代表在过去第[0,n]天修改过
+    n代表在过去第[n,n+1]天修改过
+    +n代表在过去第(n+1,]天修改过
+    
+-name '<pattern>'
+    根据pattern进行匹配，并且只匹配basename(pattern中不包含/)，pattern区分大小写
+
+-newer <file>
+    mtime比指定文件新的文件
+
+-newXY '<reference>'
+    指定组合time比指定文件新的文件. X/Y组合列表如下:
+        a - access time
+	B - birth time
+	c - status time
+	m - modification time
+	t - reference指定为指定的具体时间
+
+-nogroup
+    group ID无法找到对应group name
+
+-nouser
+    user ID无法找到对应user name
+
+-path '<pattern>'
+    根据pattern进行匹配，pattern区分大小写
+
+-perm <mode>
+    具有精确指定权限的文件
+
+-perm -<mode>
+    至少具有指定权限的文件
+
+-perm /<mode>
+    符合权限位中的任何一个权限
+
+-readable
+    当前用户可读
+
+-regex '<regular_expression>'
+    根据正则表达式进行匹配，patter区分大小写
+
+-samefile <file>
+    与指定文件指向相同inode
+
+-size n[cwbkMG]
+    指定目标大小
+    范围列表:
+        -n - 小于指定大小
+	n - 精确指定大小
+	+n - 大于指定大小
+    单位列表:
+        c - bytes
+	w - 2 bytes字
+	b - 512 bytes块
+	k - Kilobytes
+	M - Megabytes
+	G - Gigabytes
+
+-type <type>
+    指定文件类型. 列表如下:
+	b - 块设备文件
+	c - 字符文件
+	d - 目录
+	p - pipe文件
+	f - 标准文件，如: 图像/影像等
+	l - symbolic link
+	s - socket文件
+	D - door(Solaris)
+
+-uid <n>
+    指定user ID. 列表如下:
+        -n - user ID小于指定值
+	n - 精确匹配user ID
+	+n - user ID大于指定值
+
+-user <name>
+    指定所属用户名
+
+-wholename '<pattern>'
+    根据pattern进行匹配，pattern区分大小写
+    类似于-path，但可移植性小于-path
+
+-writable
+    当前用户可写
+
+-xtype <type>
+    指定文件类型. 列表如下:
+	b - 块设备文件
+	c - 字符文件
+	d - 目录
+	p - pipe文件
+	f - 标准文件，如: 图像/影像等
+	l - symbolic link
+	s - socket文件
+	D - door(Solaris)
+    ** 如果-H或-P指定，type指定为实际指向的文件类型；如果-L指定，type指定为link文件类型(即l)
+
+-context '<pattern>'
+    SELinux安全上下文需要匹配pattern
+
+
+
+action列表(默认为print):
+-delete
+    删除文件
+
+-exec <command> ;
+    对符合要求的文件执行command操作
+    {}为-exec之前的结果文件列表
+
+-fls <file>
+    将符合要求的文件列表放进指定文件，以ls -dils格式
+    当文件存在时，进行覆盖；当文件不存在时，进行创建
+
+-fprint <file>
+    将符合要求的文件列表放进指定文件，以换行符分隔
+    当文件存在时，进行覆盖；当文件不存在时，进行创建
+
+-fprint0 <file>
+    将符合要求的文件列表放进指定文件，以null('')分隔
+    当文件存在时，进行覆盖；当文件不存在时，进行创建
+
+-fprintf <file> <format>
+    将符合要求的文件列表放进指定文件，自定义格式
+    当文件存在时，进行覆盖；当文件不存在时，进行创建
+
+-ls
+    显示符合要求的文件，以ls -dils格式，默认为1K块为单位
+
+-ok <command> ;
+    对符合要求的文件执行command操作，对每一个结果文件进行操作时，进行询问
+    {}为-exec之前的结果文件列表
+
+-print
+    显示符合要求的文件，以换行符分隔
+
+-print0
+    显示符合要求的文件，以null('')分隔
+
+-printf <format>
+    显示符合要求的文件，自定义格式
+
+-prune
+    当path参数为目录，截止到当前目录block，不再向下一级inode搜寻
+
+
+
+逻辑操作符
+! <exp>
+    求反操作符
+
+<exp1> -a <exp2>
+<exp1> -and <exp2>
+    与操作符
+
+<exp1> -o <exp2>
+<exp1> -or <exp2>
+    或操作符
+
+<exp1>, <exp2>
+    顺序操作符
+
+
+
+示例1 -显示比指定文件atime新的内容
+[steven@localhost demo]$ ll --time=atime --time-style=full-iso -t
+total 10260
+-rw-rw-r--. 1 steven steven   10305 2024-12-17 20:36:14.564578797 -0800 alice.txt
+-rw-rw-r--. 1 steven steven 6291456 2024-12-17 18:01:53.375053045 -0800 demo_02.txt
+-rw-rw-r--. 1 steven steven 4194304 2024-12-17 18:01:46.593134828 -0800 demo_01.txt
+lrwxrwxrwx. 1 steven steven       9 2024-12-17 17:57:23.625305991 -0800 alice_bak.txt -> alice.txt
+-rw-rw-r--. 1 steven steven    3558 2024-12-16 20:49:29.836022518 -0800 tale.txt
+-rw-rw-r--. 1 steven steven    2890 2024-12-16 19:32:26.083661350 -0800 little_prince.txt
+
+[steven@localhost demo]$ find . -anewer demo_02.txt
+.
+./alice.txt
+
+
+示例2 - 对目标文件查看文件类型
+[steven@localhost demo]$ find . -name 'alice*' -exec file {} \;
+./alice_bak.txt: symbolic link to `alice.txt'
+./alice_hard.txt: ASCII text, with very long lines
+./alice.txt: ASCII text, with very long lines
+
+
+
+示例3 - 权限为644的文件
+[steven@localhost demo]$ ll
+total 10272
+lrwxrwxrwx. 1 steven steven       9 12月 17 12:36 alice_bak.txt -> alice.txt
+-rw-rw-r--. 1 steven steven   10305 12月 17 08:36 alice_hard.txt
+-rw-r--r--. 1 root   root     10305 12月 18 19:25 alice.txt
+-rw-rw-r--. 1 steven steven 4194304 12月 18 10:01 demo_01.txt
+-rw-rw-r--. 1 root   root   6291456 12月 18 10:01 demo_02.txt
+-rwxrwxr-x. 1 steven steven       0 12月 18 13:41 demo_03.txt
+drwxrwxr-x. 2 steven steven      28 12月 18 20:18 example
+-rw-rw-r--. 1 steven steven    2890 12月 17 11:31 little_prince.txt
+-rw-rw-r--. 1 steven steven    3558 12月 17 22:00 tale.txt
+
+[steven@localhost demo]$ find . -perm 644
+./alice.txt
+
+
+示例4 - 权限至少为644的文件(rw-r--r--, -可以为1，也可以为0)
+[steven@localhost demo]$ ll
+total 10272
+lrwxrwxrwx. 1 steven steven       9 12月 17 12:36 alice_bak.txt -> alice.txt
+-rw-rw-r--. 1 steven steven   10305 12月 17 08:36 alice_hard.txt
+-rw-r--r--. 1 root   root     10305 12月 18 19:25 alice.txt
+-rw-rw-r--. 1 steven steven 4194304 12月 18 10:01 demo_01.txt
+-rw-rw-r--. 1 root   root   6291456 12月 18 10:01 demo_02.txt
+-rwxrwxr-x. 1 steven steven       0 12月 18 13:41 demo_03.txt
+drwxrwxr-x. 2 steven steven      28 12月 18 20:18 example
+-rw-rw-r--. 1 steven steven    2890 12月 17 11:31 little_prince.txt
+-rw-rw-r--. 1 steven steven    3558 12月 17 22:00 tale.txt
+
+[steven@localhost demo]$ find . -perm -644
+.
+./alice_bak.txt
+./little_prince.txt
+./tale.txt
+./demo_01.txt
+./demo_02.txt
+./demo_03.txt
+./alice_hard.txt
+./alice.txt
+./example
+./example/example_01.txt
+
+
+示例5 - owner/group/other任意一个有可执行权限即可
+[steven@localhost demo]$ ll
+total 10272
+lrwxrwxrwx. 1 steven steven       9 12月 17 12:36 alice_bak.txt -> alice.txt
+-rw-rw-r--. 1 steven steven   10305 12月 17 08:36 alice_hard.txt
+-rw-r--r--. 1 root   root     10305 12月 18 19:25 alice.txt
+-rw-rw-r--. 1 steven steven 4194304 12月 18 10:01 demo_01.txt
+-rw-rw-r--. 1 root   root   6291456 12月 18 10:01 demo_02.txt
+-rw-rw-r-x. 1 steven steven       0 12月 18 13:41 demo_03.txt
+drwxrwxr-x. 2 steven steven      28 12月 18 20:18 example
+-rw-rw-r--. 1 steven steven    2890 12月 17 11:31 little_prince.txt
+-rw-rw-r--. 1 steven steven    3558 12月 17 22:00 tale.txt
+
+[steven@localhost demo]$ find . -perm /111
+.
+./alice_bak.txt
+./demo_03.txt
+./example
+
+
+
+最后编辑于: 2024-12-18

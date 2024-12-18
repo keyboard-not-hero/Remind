@@ -54,7 +54,7 @@ touch demo.txt
 
 
 示例2 - 修改文件的atime(更新ctime)
-touch -a -d '2020-10-01' demo.txt
+touch -a -d '2020-10-01 23:30:20' demo.txt
 
 
 

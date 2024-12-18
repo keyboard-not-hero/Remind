@@ -1,0 +1,165 @@
+du - 评估文件的空间使用情况
+
+
+语法
+du [option]... [file]...
+
+
+参数释义
+-0, --null
+    每一条结果使用NUL('')分隔
+    默认使用'\n'分隔
+
+-a, --all
+    评估文件和目录的空间使用情况
+    默认只评估目录及子目录的空间使用情况
+
+--apparent-size
+    真实占用空间
+    默认使用block情况表示占用空间
+
+-B, --block-size=<size>
+    使用指定单位显示空间大小(默认为K). 可选列表: 
+        1 - 代表使用bytes单位
+	1024进制 - K/M/G/T/P/E/Z/Y
+	1000进制 - KB/MB/GB/TB/PB/EB/ZB/YB
+
+-b, --bytes
+    使用bytes为单位，表示真实占用空间
+    类似于--apparent-size --block-size=1
+
+-c, --total
+    显示总计栏
+
+-D, --dereference-args
+    当指令行指定的目录为symbolic link时, 查看link实际指向文件的空间使用情况
+
+-d, --max-depth=<n>
+    指定查询子目录的深度. 如:
+        0 - 指定目录的占用空间，不统计子目录
+        1 - 指定目录和下一层子目录的占用空间
+
+-H
+    当指令行指定的目录为symbolic link时, 查看link实际指向文件的空间使用情况
+    类似于--dereference-args
+
+-h, --human-readable
+    显示占用空间情况时, 使用方便读取的单位
+
+--inodes
+    显示inode的使用情况
+    默认为block的使用情况
+
+-k
+    使用K作为统计单位
+    类似于--block-size=1K
+
+-L, --dereference
+    当包含symbolic link文件时，统计实际指向的文件
+
+-l, --count-links
+    如果存在hard link, 根据link次数进行多次计算
+
+-m
+    使用M作为统计单位
+    类似于--block-size=1M
+
+-P, --no-dereference
+    当包含symbolic link文件时, 统计link的空间使用情况
+    默认选项
+
+-S, --separate-dirs
+    统计目录的占用空间情况时, 不包含目录下子目录的占用空间情况
+    默认包含子目录的占用空间
+
+-s, --summarize
+    只统计指定目录空间占用情况, 不对子目录进行统计
+
+--si
+    使用易于读取的单位
+    类似于-h, 但进制为1000
+
+-t, --threshold=<size>
+    指定阈值，低于阈值大小的文件不予显示
+
+--time
+    增加显示modification time
+
+--time=<word>
+    指定显示时间列类型. 列表: atime/ctime
+
+--time-style=<style>
+    指定显示的时间格式. 格式列表:
+	full-iso - YYYY-MM-DD hh:mm:ss.<ms> <timezone>格式
+	long-iso - YYYY-MM-DD hh:mm格式
+	iso - MM-DD hh:mm格式
+	+<format> - 自定义时间格式. 参考man 1 date
+
+-X, --exclude-from=<file>
+    根据文件file内的pattern内容, 不统计匹配pattern的文件
+    pattern为shell通配符模式
+
+-x, --one-file-system
+    不统计其他文件系统的空间使用情况
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+** symbolic link和目录的block没有计入
+
+
+
+示例1 - 统计指定目录(含子目录)的空间使用情况
+[steven@localhost demo]$ du ~/demo
+6291456	/home/steven/demo/test/example
+7343124	/home/steven/demo/test
+7353384	/home/steven/demo
+
+
+示例2 - 统计指定目录(不含子目录)的空间使用情况
+[steven@localhost demo]$ du -s ~/demo
+7353384	/home/steven/demo
+
+
+示例3 - 统计指定目录(含子目录和文件)的空间使用情况
+[steven@localhost demo]$ du -a ~/demo
+0	/home/steven/demo/alice_bak.txt
+12	/home/steven/demo/alice.txt
+4	/home/steven/demo/little_prince.txt
+4	/home/steven/demo/tale.txt
+20	/home/steven/demo/test/test_01.txt
+3072	/home/steven/demo/test/test_02.txt
+1048576	/home/steven/demo/test/test_03.txt
+6291456	/home/steven/demo/test/example/example_01.txt
+6291456	/home/steven/demo/test/example
+7343124	/home/steven/demo/test
+4096	/home/steven/demo/demo_01.txt
+6144	/home/steven/demo/demo_02.txt
+7353384	/home/steven/demo
+
+
+示例4 - 统计指定目录(含子目录)的空间使用情况，并且目录不包含子目录容量
+[steven@localhost demo]$ du -S ~/demo
+6291456	/home/steven/demo/test/example
+1051668	/home/steven/demo/test
+10260	/home/steven/demo
+
+
+示例5 - 统计指定目录(只包含下一层子目录)的空间使用情况
+[steven@localhost demo]$ du --max-depth=1 ~/demo
+7343124	/home/steven/demo/test
+7353384	/home/steven/demo
+
+
+示例6 - 统计inode使用情况
+[steven@localhost demo]$ du --inodes
+2	./test/example
+6	./test
+13	.
+
+
+
+最后编辑于: 2024-12-18
