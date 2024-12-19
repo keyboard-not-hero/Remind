@@ -1,0 +1,67 @@
+文件
+r - 对文件内容的读取权限
+w - 对文件内容的添加/删除/修改权限
+x - 文件的可执行权限
+
+目录
+r - 读取目录内文件列表权限
+w - 对目录下文件的添加/删除/移动/重命名权限
+x - 进入目录的权限
+
+
+
+默认文件权限
+666 - umask
+
+默认目录权限
+777 - umask
+
+
+
+Set UID(SUID)
+-rws------
+对文件
+1.适用于二进制可执行程序
+2.执行者需要对二进制程序有可执行权限
+3.执行者在执行程序期间，获得owner的权限
+
+示例
+在使用/usr/bin/passwd修改密码过程中，密码需要写入/etc/shadow文件
+1./usr/bin/passwd为二进制可执行程序
+2.普通用户对/usr/bin/passwd有可执行权限
+3.在执行/usr/bin/passwd期间，普通用户暂时获得root权限，可将修改的密码写入/etc/shadow
+[steven@localhost demo]$ ll /usr/bin/passwd /etc/shadow
+----------. 1 root root  1205 12月 19 19:46 /etc/shadow
+-rwsr-xr-x. 1 root root 27856 4月   1 2020 /usr/bin/passwd
+
+
+Set GID(SGID)
+----rws---
+对文件
+1.适用于二进制可执行程序
+2.执行者需要对二进制程序有可执行权限
+3.执行者在执行程序期间，获得所属群组支持
+
+示例
+在使用/usr/bin/locate过程中，需要调用/var/lib/mlocate/mlocate.db文件的内容
+1./usr/bin/locate为二进制可执行程序
+2.普通用户对/usr/bin/locate有可执行权限
+3.在执行/usr/bin/locate期间，普通用户暂时获得slocate群组支持，可访问/var/lib/mlocate/mlocate.db
+[steven@localhost etc]$ sudo ls -l /usr/bin/locate /var/lib/mlocate/mlocate.db
+-rwx--s--x. 1 root slocate   40520 4月  11 2018 /usr/bin/locate
+-rw-r-----. 1 root slocate 3459266 12月 19 19:24 /var/lib/mlocate/mlocate.db
+
+
+对目录
+1.对目录有写入权限
+2.使用者在该目录下的有效群组，为该目录的所属群组(即使用户没有加入该群组)
+** 有效群组: 创建文件的所属组为有效群组
+
+
+Sticky Bit(SBIT)
+-------rwt
+对目录
+1.用户对目录有写入权限
+2.用户在该目录下创建文件时，只有自己和root能删除
+[steven@localhost example]$ ll -d /tmp
+drwxrwxrwt. 17 root root 4096 12月 19 20:09 /tmp

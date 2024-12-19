@@ -1,0 +1,60 @@
+chgrp -- 更改所属群组
+
+
+语法
+chgrp [option] <group> <file>
+chgrp [option] --reference=<refer_file> <file>
+
+
+option参数
+-c, --changes
+    当发生change时，详细输出信息
+
+-f, --silent, --quiet
+    quiet模式，抑制错误消息输出
+
+-v, --verbose
+    verbose模式
+
+--dereference
+    解引用, 修改symbolic link实际指向的文件, 而非symbolic link本身
+
+-h, --no-dereference
+    修改symbolic link文件本身
+
+--reference=<refer_file>
+    引用其他文件的所属群组
+
+-R, --recursive
+    对目录及其内文件(子目录)递归修改
+
+** 以下参数为-R指定的前提下使用
+
+-H
+    如果cmd中指定的file为目录的symbolic link，则解引用
+
+-L
+    所有symbolic link进行解引用
+
+-P
+    不对symbolic link解引用
+    默认值
+
+--help
+    帮助文档
+
+--version
+    版本信息	
+
+
+
+示例1 - 修改文件所属群组, 显示修改结果
+[steven@DESKTOP-BLOMH0Q demo]$ sudo chgrp -v steven /tmp/demo.txt
+
+
+示例2 - 递归修改目录及子目录下文件
+[steven@DESKTOP-BLOMH0Q demo]$ sudo chgrp -R steven /tmp/demo
+
+
+
+最后编辑于: 2024-12-19

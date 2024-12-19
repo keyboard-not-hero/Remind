@@ -1,0 +1,68 @@
+chown - 修改文件所属个人/群组
+
+
+语法
+chown [option] [owner][:[group]] file
+chown [option] --reference=<refer_file> file
+
+
+参数释义
+-c, --changes
+    当有change发生时，详细输出信息
+
+-f, --silent, --quiet
+    quiet模式，抑制错误信息输出
+
+-v, --verbose
+    verbose模式
+
+--dereference
+    解引用, 修改symbolic link实际指向的文件, 而非symbolic link文件本身
+    默认值
+
+-h, --no-dereference
+    修改symbolic link文件本身
+
+--from=<cur_owner>:<cur_group>
+    只有当前文件owner/group为指定值时, 才改变属性
+
+--reference=<refer_file>
+    引用其他文件的ower/group
+
+-R, --recursive
+    对目录及其内文件(子目录)递归修改
+
+** 以下参数为-R指定的前提下使用
+
+-H
+    如果cmd中指定的file为目录的symbolic link，则解引用
+
+-L
+    所有symbolic link进行解引用
+
+-P
+    不对symbolic link解引用
+    默认值
+
+--help
+    帮助文档
+
+--version
+    版本信息	
+
+
+
+示例1 - 修改文件的owner/group
+chown steven:steven demo.txt
+
+
+示例2 - 修改文件的owner/group，如果为symbolic link，则解引用
+chown --dereference steven:steven demo.txt
+
+
+示例3 - 修改文件的owner/group，owner/group引用自其他文件
+chown --reference=example.txt demo.txt
+
+
+
+最后编辑于: 2024-12-19

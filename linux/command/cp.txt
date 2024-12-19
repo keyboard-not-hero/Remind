@@ -30,7 +30,7 @@ option参数
     类似于--no-dereference --preserve=links
 
 -f, --force
-    当目标文件已存在且不能打开时, 删除已存在的目标文件后继续操作
+    当目标文件已存在时, 覆盖目标文件
     当-n同时存在时, 忽略该参数
 
 -H
@@ -67,7 +67,6 @@ option参数
 	timestamps - 时间戳
 	context - SELinux安全上下文
 	links - 当两个源文件为link关系(symbolic link或hard link)时，两个目标两文件保持hard link关系(参开示例4)
-	xattr - 
 
 --no-preserve=<attr_list>
     不保留源文件的指定属性

@@ -1,0 +1,41 @@
+配置文件
+/etc/sudoers
+
+指令
+visudo
+
+** 建议使用visudo指令，而非直接编辑/etc/sudoers配置文件
+** 指定用户可以使用sudo命令
+
+
+用户授权
+<user_name>  <host>=(<run_as_user>:<run_as_group>)  <absolute_path_cmd>
+
+user_name
+    指定授权的用户名
+
+host
+    允许操作的主机
+
+run_as_user
+    以指定用户身份操作
+
+run_as_group
+    以指定用户组身份操作
+
+absolute_path_cmd
+    可操作命令的完整路径
+
+例:
+root  ALL=(ALL:ALL)  ALL
+代表root可以在任何主机，以任何用户和组的身份操作任何指令
+
+
+
+组授权
+%<group_name>  <host>=(<run_as_user>:<run_as_group>)  <absolute_path_cmd>
+
+
+
+注释
+# <content>

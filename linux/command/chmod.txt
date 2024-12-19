@@ -1,0 +1,83 @@
+chmod - 修改文件的权限
+
+
+语法
+chmod [option] <mode>[,<mode>] file
+chmod [option] --reference=<refer_file> <file>
+
+
+参数释义
+-c, --changes
+    当有change发生时，详细输出信息
+
+-f, --silent, --quiet
+    quiet模式，抑制错误信息输出
+
+-v, --verbose
+    verbose模式
+
+--reference=<refer_file>
+    引用其他文件的权限
+
+-R, --recursive
+    对目录及目录内文件(子目录)递归修改权限
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+
+
+mode格式
+1.[ugoa][+-=]<perm1>[,<perm2>...]
+ugoa字段:
+    u - 文件所属用户
+    g - 文件所属用户组
+    o - 其他用户
+    a - 所有用户
+
++-=字段:
+    + - 为指定用户在原来的基础上添加权限
+    - - 为指定用户在原来的基础上删减权限
+    = - 忽视用户原来权限, 直接赋予用户指定权限
+
+perm字段:
+    r - 文件的读权限(文件夹的文件/子目录列表)
+    w - 文件的写权限(文件夹内文件/子目录添加或删除或重命名)
+    x - 文件的可执行权限(文件夹是否可进入)
+    X - 当u/g/o其中一个的x位置1时，应用x配置
+    s - 文件的SUID或SGID
+    t - 文件的SBIT
+
+
+2.[0-7]<0-7><0-7><0-7>
+第一个字段:
+4 - SUID
+2 - SGID
+1 - SBIT
+
+第二个字段:
+4 - owner的读权限
+2 - owner的写权限
+1 - owner的可执行权限
+
+第三个字段:
+4 - group的读权限
+2 - group的写权限
+1 - group的可执行权限
+
+最后一个字段:
+4 - others的读权限
+2 - others的写权限
+1 - others的可执行权限
+
+
+
+示例1 - 给文件的owner增加可执行权限
+chmod u+x demo_01.txt
+
+
+
+最后编辑于: 2024-12-19
