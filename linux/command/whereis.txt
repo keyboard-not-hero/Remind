@@ -1,0 +1,54 @@
+whereis - 定位指令、source和manual文档
+
+
+语法
+whereis [option] name
+
+
+option参数
+-b
+    只查找指令
+
+-m
+    只查找manual文档
+
+-s
+    只查找source文件
+
+-u
+    只列出unusual的结果
+    如: whereis -m -u，当没有manual或有两个及以上匹配时，输出结果
+
+-B <list>
+    限定搜索指令的路径, 多个路径使用空格分隔
+    必须配合-f使用
+
+-M <list>
+    限定搜索manual的路径, 多个路径使用空格分隔
+    必须配合-f使用
+
+-S <list>
+    限定搜索source文件的路径, 多个路径使用空格分隔
+    必须配合-f使用
+
+-f
+    结束指定的目录列表, 开始文件名指定
+    配合-B/-M/-S使用	
+
+-l
+    显示查找路径的列表
+
+
+
+示例1 - 查找ls指令/source/manual
+[steven@localhost ~]$ whereis ls
+ls: /usr/bin/ls /usr/share/man/man1p/ls.1p.gz /usr/share/man/man1/ls.1.gz
+
+
+示例2 - 从/usr/bin查找chattr指令
+[steven@localhost ~]$ whereis -b -B /usr/bin -f chattr
+chattr: /usr/bin/chattr
+
+
+
+最后编辑于: 2024-12-20

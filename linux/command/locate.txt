@@ -1,0 +1,101 @@
+locate - 从名称查找文件
+
+
+语法
+locate [option] pattern...
+
+
+option参数
+-A, --all
+    需要匹配所有patterns
+    默认匹配其中一个pattern即可
+
+-b, --basename
+    文件的basename匹配pattern
+
+-c, --count
+    只显示符合匹配的计数
+
+-d, --database <dbpath>
+    指定读取的数据库路径
+    多个数据库使用:分隔
+    如果指定多个-d参数, 结果会进行叠加
+
+-e, --existing
+    只显示locate运行时，依然存在的文件
+
+-L, --follow
+    当文件存在时，对symbolic link进行解引用，需配合-e使用
+
+-h, --help
+    帮助信息
+
+-i, --ignore-case
+    匹配pattern时, 忽略大小写
+
+-l, --limit, -n <limit>
+    当查找到指定数量的结果时，立即退出查找
+    如果配合--count使用，最多只输出limit值
+
+-m, --mmap
+    用于兼容BSD与GNU版本
+
+-P, --nofollow, -H
+    当文件存在时，不对symbolic link进行解引用，需配合-e使用
+
+-0, --null
+    使用NUL('')分隔内容
+    默认为换行符分隔
+
+-S, --statistics
+    统计查找的数据库，而非查找匹配文件
+
+-q, --quiet
+    quiet模式
+
+-r, --regexp <regexp>
+    使用basic RE进行匹配
+    此时无法使用pattern
+
+--regex
+    将pattern进行extend RE匹配
+    pattern默认为通配符模式
+
+-s, --stdio
+    与BSD和GNU版本进行兼容
+
+-V, --version
+    版本信息
+
+-w, --wholename
+    pattern对全路径文件名进行匹配
+    默认选项
+
+
+
+原理:
+由updatedb更新数据库，locate从数据库中查找符合的文件
+默认使用的数据库为/var/lib/mlocate/mlocate.db，由updatedb指定数据库
+
+
+更新数据库指令
+updatedb
+
+
+默认读取数据库
+/var/lib/mlocate/mlocate.db
+
+
+
+示例1 - 查找nginx.conf名称的文件
+[steven@localhost ~]$ locate nginx.conf
+/etc/nginx/nginx.conf
+
+
+示例2 - 只显示匹配数量，不显示实际匹配内容
+[steven@localhost ~]$ locate -c nginx
+57
+
+
+
+最后编辑于: 2024-12-20

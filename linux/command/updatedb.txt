@@ -1,0 +1,46 @@
+updatedb - 更新mlocate数据库
+** mlocate数据库为locate命令读取的数据库
+
+
+格式
+updatedb [option]
+
+
+option参数
+-U, --database-root <path>
+    只更新文件系统下的指定目录下的内容，到mlocate
+
+-h, --help
+    帮助信息
+
+-o, --output <file>
+    将更新内容输出到指定文件，而非默认数据库文件
+
+-l, --require-visibility <flag>
+    是否允许文件父目录权限用户读取数据库内对应项. flag列表如下:
+        0/no - 允许文件父目录无权限用户，读取数据库对应文件
+	1/yes - 必须为文件父目录权限用户，才能读取数据库对应文件
+
+-v, --verbose
+    verbose模式
+
+-V, --version
+    版本信息
+
+
+
+默认数据库文件:
+/var/lib/mlocate/mlocate.db
+
+
+
+示例1 - 更新默认mlocate数据库
+[steven@localhost ~]$ sudo updatedb
+
+
+示例2 - 将指定目录的文件列表更新到指定数据库
+[steven@localhost ~]$ sudo updatedb -o ~/mydate.db -U /usr/local/bin
+
+
+
+最后编辑于: 2024-12-21

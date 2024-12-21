@@ -1,0 +1,51 @@
+chattr - 修改文件的隐藏属性
+
+
+语法
+chattr [option] [mode] file...
+
+
+option参数
+-R
+    递归修改目录下文件(子目录)的隐藏属性
+
+-V
+    verbose模式，并显示版本号
+
+-f
+    quiet模式
+
+-v <version>
+    设置文件的版本号
+
+
+
+mode列表:
+[+-=][aAcCdDeijsStTu]
+
+符号列表
++
+    在原来的基础上，额外添加隐藏属性
+
+-
+    从原来的基础上，删除隐藏属性
+
+=
+    直接配置指定的隐藏属性
+
+属性信息列表
+a
+    只能添加内容到文件尾部. 不能修改文件原内容, 不能删除文件, 不能创建hard link(可以symbolic link), 不能重命名. 只有root用户有权限设置
+    echo '<str>' >> <file>格式，不能进入文件编辑，并保存修改
+
+i
+    不能修改文件内容, 不能删除文件, 不能创建hard link(可以symbolic link), 不能重命名. 只有root用户有权限设置
+
+
+
+示例1 - 给文件添加隐藏属性i
+sudo chattr +a demo.txt
+
+
+
+最后编辑于: 2024-12-20

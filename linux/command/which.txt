@@ -1,0 +1,55 @@
+which - 显示指令的完整路径
+
+
+语法
+which [option] <program_name>
+
+
+option参数
+-a, --all
+    显示所有符合的指令，而非找到的第一个指令
+
+-i, --read-alias
+    允许从alias列表中读取符合的指令
+    默认选项
+
+--skip-alias
+    不允许从alias列表中读取符合的指令
+
+--read-functions
+    允许从自定义function列表中读取符合的指令
+
+--skip-functions
+    不允许从自定义function列表中读取符合的指令
+
+--skip-dot
+    跳过PATH中以'.'开头的目录
+
+--skip-tilde
+    跳过PATH中以'~'开头的目录
+
+--show-dot
+    允许PATH中以'.'开头的目录
+
+--show-tilde
+    允许PATH中以'~'开头的目录
+
+--tty-only
+    只允许在tty中使用option
+
+-v, -V, --version
+    版本信息
+
+-help
+    帮助文档
+
+
+
+示例1 - 查看ls指令位置
+[steven@localhost ~]$ which ls
+alias ls='ls --color=auto'
+	/usr/bin/ls
+
+
+
+最后编辑于: 2024-12-20
