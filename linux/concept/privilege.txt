@@ -65,3 +65,7 @@ Sticky Bit(SBIT)
 2.用户在该目录下创建文件时，只有自己和root能删除
 [steven@localhost example]$ ll -d /tmp
 drwxrwxrwt. 17 root root 4096 12月 19 20:09 /tmp
+
+
+
+最后编辑于: 2024-12-23

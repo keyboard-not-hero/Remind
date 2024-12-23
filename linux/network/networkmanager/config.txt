@@ -1,3 +1,0 @@
-启动NetworkManager:
-systemctl start NetworkManager
-** 由CentOS 6起, 使用NetworkManager取代Network Administration Tool

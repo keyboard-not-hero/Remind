@@ -1,19 +1,22 @@
-```
 nmcli - 控制网络的指令行工具. NetworkManager的指令行客户端
 
-语法
-nmcli [option] <action>
 
-参数释义
+语法
+nmcli [option] <action> {<command> | help}
+
+
+option参数
 -a, --ask
-    用于交互式目标, 提示需要使用的参数
+    当需要提供必要的参数时，进行提示
+    不适用于script
 
 -c, --colors {yes | no | auto}
     输出是否采用彩色模式
     默认为auto
 
 --complete-args
-    为缩写形式的action, 补全为完整名称
+    显示最后一个缩写参数补全后的列表
+    默认为自动补全
 
 -e, --escape {yes | no}
     是否在terse模式中, 使用前置'\'符号, 对':'和'\'字符进行escape
@@ -54,21 +57,21 @@ nmcli [option] <action>
     nmcli的版本信息
 
 -w, --wait <seconds>
-    等待指令完成的时间
+    nmcli等待NetworkManager完成的超时时间
 
 
 
-
-action说明
-nmcli general {status | hostname | permissions | logging}
+action列表
+1.general action
+nmcli general {status | hostname | permissions | logging} [<argument>]
 
 status	
-    显示总体网络状态. 默认action
+    显示总体网络状态. 默认command
     结果字段解释:
         STATE -- NetworkManager的状态
         CONNECTIVITY -- STATE字段对应的连接状态
         WIFI-HW -- 代表硬件(hardware)层面的wifi是否开启
-        WIFI -- 代表软件层面的wifi是否开启(手动)
+        WIFI -- 代表软件层面的wifi是否开启
 
 
 hostname [<hostname>]
@@ -84,7 +87,8 @@ logging [level <level>] [domains <domain>...]
 
 
 
-nmcli networking [on | off | connectivity]
+2.networking action
+nmcli networking {on | off | connectivity} [<argument>]
 
 on | off
     使用NetworkManager启动/关闭所有网络接口
@@ -93,14 +97,15 @@ on | off
 connectivity
     查询NetworkManager的网络连接状态. 结果列表如下:
         none - 没有连接任何网络
-        portal - 无法建立完整网络连接
+        portal - 需要通过门户站点，才能获得网络访问权限
         limited - 已连接到网络, 但无法访问Internet
         full - 已连接网络并且可以访问internet
         unknown - 无法获取网络连接状态
 
 
 
-nmcli radio {all | wifi | wwan}
+3.radio action
+nmcli radio {all | wifi | wwan} [<argument>]
 
 wifi [on | off]
     使用NetworkManager启动/关闭wifi
@@ -115,9 +120,10 @@ all [on | off]
 
 
 
-nmcli connection {show | up | down | modify | add | edit | clone | delete |
-monitor | reload | load | import | export}
-    每一个ethernet网络配置或wifi ssid即为一个connection, 并且每个时间点只能有一个connection为active状态
+4.connection action
+nmcli connection {show | up | down | modify | add | edit | clone | delete | monitor | reload | load | import | export} [<argument>]
+    每一个ethernet网络配置或wifi ssid即为一个connection
+    可能有多个connection应用于一个硬件设备(device)，但是每个时间点该device只能有一个connection为active状态
 
 show [--active] [--order [+-]<category_01>:<category_02>...]
     显示已配置的连接. 默认action
@@ -146,18 +152,19 @@ up [id | uuid | path] <id> [ifname <ifname>] [ap <ssid>] [passwd-file <file>]
 
 down [id | uuid | path | apath] <id>
     停用指定的连接, 但不阻止connection的自动激活
+    一般情况下，使用device disconnect
 
 
 modify [--temporary] [id | uuid | path] <id> {<option> <value> | [+-]<setting.property> <value>}...
-    添加/修改/删除connection的propertys. 形式如下:
+    添加/修改/删除connection的properties. 形式如下:
         <property> <value>
-        直接修改property值, value为""时, 移除property值
-        +<property> <item>
-        append指定item值到property
-        -<property> <item>
-        从property中移除指定item值
+	    直接修改property值, value为""时, 移除property值
+        +<property> <value>
+	    append指定值到property
+        -<property> <value>
+	    从property中移除指定值
         -<property> <position>
-        从value中移除指定position的值, position由0起始
+	    从value中移除指定position的值, position由0起始
         ** +-只作用于multi-value property, 如ipv4.dns/ipv4.addresses等
     ** property参考nm-settings(5)
 
@@ -177,7 +184,7 @@ add [save {yes | no}] {<option> <value> | [+-]<setting.property> <value>}...
 edit {[id | uuid | path] <id> | [type <type>] [con-name <name>]}
     使用交互式编辑器, 编辑已存在的connection或创建新connection. 列表如下:
         id - 用于编辑已存在connection
-        type - 指定新connection的connection.type property
+        type - 指定新connection的connection.type property. 参考nmcli connection add
         con-name - 指定新connection的connection.id property
 
 
@@ -214,12 +221,12 @@ export [id | uuid | path] <id> [<file>]
 
 
 
-nmcli device {status | show | set | connect | reapply | modify | disconnect |
-delete | monitor | wifi | lldp}
+5.device action
+nmcli device {status | show | set | connect | reapply | modify | disconnect | delete | monitor | wifi | lldp} [<argument>]
     显示和管理网络接口设备
 
 status
-    显示接口设备状态, 默认action
+    显示接口设备状态, 默认command
 
 
 show [<ifname>]
@@ -249,6 +256,10 @@ delete <ifname>
     只能删除bonds/bridges/teams等软设备接口, 硬件设备接口无法删除
 
 
+modify <ifname> {<option> <value> | [+-]<setting.property> <value>}
+    临时修改当前active接口设备的属性值
+
+
 monitor [<ifname>]
     监视接口变化
 
@@ -256,7 +267,7 @@ monitor [<ifname>]
 wifi [list [--rescan auto | no | yes] [ifname <ifname>] [bssid <bssid>]]
     显示可获得的wifi列表, 从缓存读取
     --rescan代表是否重新扫描AP. 参数如下: 
-        auto - 每30s更新缓存. 不指定--rescan参数时的默认值
+        auto - 每30s更新缓存，或时间内进行必要更新. 不指定--rescan参数时的默认值
         no - 不更新缓存
         yes - 强制更新缓存
     通过ifname指定本地无线接口
@@ -269,11 +280,12 @@ no}]
     当该连接已连接过, 与以下指令同效果: nmcli connection up id <name>
     可选参数列表:
         password - wifi密码(WEP或WPA类型)
+	wep-key-type - WEP类型wifide密码类型，key(ASCII/HEX)或phrase(passphrase)
         ifname - 指定用于连接的wlan接口
         bssid - 限定连接ap的mac地址
         name - 指定连接的名称, 默认为SSID
         private - 当设置为yes, 只有创建连接的用户可以查看. 默认为no
-        hidden - 当连接到隐藏的ssid(不进行广播)时, 需配置为yes
+        hidden - 当连接到隐藏的wifi时, 需配置为yes
 
 
 wifi hotspot [ifname <ifname>] [con-name <name>] [ssid <ssid>] [band {a |
@@ -291,7 +303,7 @@ bg}] [channel <channel>] [password <passwd>]
 
 
 wifi rescan [ifname <ifname>] [ssid <ssid>...]
-    扫描可获得的wifi
+    重新扫描可获得的wifi列表
 
 
 lldp [list [ifname <ifname>]]
@@ -299,80 +311,44 @@ lldp [list [ifname <ifname>]]
 
 
 
+示例1 - 配置ethernet连接(手动配置地址)
+nmcli connection add connection.id ether1 connection.interface-name ens33 connection.type 802-3-ethernet ipv4.method manual ipv4.addresses 192.168.0.56/24 ipv4.gateway 192.168.0.1 ipv4.dns 223.5.5.5
+nmcli connection up ether1
 
-示例1- 硬件接口的详情状态
-nmcli device
 
-示例2 - 软件层面网络是否启动
-nmcli networking
+示例2 - 配置ethernet连接(自动分配地址)
+nmcli connection add connection.id ether2 connection.interface-name ens33 connection.type 802-3-ethernet ipv4.method auto
+nmcli connection up ether2
 
-示例3 - wifi是否启动
-nmcli radio wifi
 
-示例4 - 实时可获得的wifi
-nmcli device wifi list --rescan yes
+示例3 - 查看networkmanager启动情况
+nmcli general
 
-示例5 - 连接到指定wifi
-nmcli device wifi connect <ssid> password <passwd>
 
-示例6 - 添加ethernet连接, 并且手动配置IP
-nmcli connection add connection.id <con_name> connection.interface-name <interface_name> connection.type 802-3-ethernet ipv4.method manual ipv4.addresses 192.168.100.100/24 ipv4.gateway 192.168.100.1 ipv4.dns 114.114.114.114
-nmcli connection up <con_name>
+示例4 - 确保wifi在软件层面启动
+nmcli radio wifi on
 
-示例7 - 删除连接配置
-nmcli con delete <con_name>
 
-示例8 - 断开接口, 并且不自动连接
+示例5 - 查看wifi列表
+nmcli device wifi list
+
+
+示例6 - 连接指定wifi
+nmcli device wifi connect <wifi_name> password <passwd>
+
+
+示例7 - 使用过的连接
+nmcli con show
+
+
+示例8 - 启动已配置连接
+nmcli con up id <con_name>
+
+
+示例9 - 关闭指定连接
 nmcli device disconnect <interface_name>
 
-示例9 - 查看connection的详细信息
-nmcli connection show <con_name>
 
-示例10 - 查看连接的指定属性
-nmcli -g ipv4.address,ipv4.dns connection show <con_name>
 
-示例11 - 查看连接的ipv4相关属性
-nmcli -f ipv4 connection show <con_name>
-```
-<br>
-<br>
-
-##### 常用属性列表
-
-|Key Name|Alias|Value Type|Default value|Description|
-|---|---|---|---|---|
-|connection.autoconnect|autoconnect|boolean|TRUE|当资源具备时, 是否进行自动连接|
-|connection.id|con-name|string||易读方式的唯一标识符|
-|connection.interface-name|ifname|string||如果为ethernet/wireless等类型, 指定使用的硬件网络接口; 如果为bridge/vpn等类型, 创建软件接口|
-|connection.type|type|string||指定连接类型, 如:802-3-ethernet/802-11-wireless/bluetooth/bridge/vpn等|
-|connection.uuid||string||连接的全局唯一标识符, 如: 2815492f-7e56-435e-b2e9-246bd7cdc664|
-|ipv4.addresses|ip4|array of array of uint32|[]|IPv4地址数组, 每一个IPv4地址由[\<address>, \<prefix>]组成|
-|ipv4.dns||array of uint32|[]|DNS IPv4地址数组|
-|ipv4.gateway|gw4|string||子网网关. 必须配置ipv4.addresses之后, 当前配置才有意义|
-|ipv4.method||string||通过DHCP(auto)或手动配置(manual)|
-|ipv4.routes||array of array of uint32|[]|IPv4路由数组, 每一个路由构成[\<subnet_id>, \<prefix>, \<next_hop>, \<metric>]|
-|802-3-ethernet.auto-negotiate||boolean|FALSE|是否开启duplex/speed协商, 该参数覆盖duplex/speed配置|
-|802-3-ethernet.duplex||string||设置half/full双工模式, 该设置被802-3-ethernet.auto-negotiate覆盖|
-|802-3-ethernet.speed||uint32|0|指定网络速度|
-|802-11-wireless.band||string||指定使用的无线频率, a(5GHz)/bg(2.4GHz)|
-|802-11-wireless.bssid||byte array||使用指定BSSID(mac-address)的ap|
-|802-11-wireless.channel||uint32|0|指定channel, 当AP的channel匹配时进行连接. 前提必须配置band|
-|802-11-wireless.hidden||boolean|FALSE|当设置为TRUE, 代表目标AP为非广播的隐藏SSID|
-|802-11-wireless.mac-address|mac|byte array||当本地wlan设备为指定mac-address时, 才使用该设备进行连接|
-|802-11-wireless.rate||uint32|0|指定数据传输速率, 单位为kb/s|
-|802-11-wireless.ssid|ssid|byte array||AP的name, 必须设置项|
-
-<br>
-<br>
-<br>
-
-引用:<br>
-[1] man 1 nmcli<br>
-[2] man 5 nm-settings<br>
-[3] man 7 nmcli-examples<br>
-[4] http://www.freedesktop.org/wiki/Software/polkit
-<br>
-<br>
-
-最后编辑于: 2024-01-15
+最后编辑于: 2024-12-23
 

@@ -1,0 +1,116 @@
+ip - 显示/操作IP地址和路由的工具
+
+
+语法
+ip [<options>] <object> {<command> | help}
+ip [-force] -batch <filename>
+
+
+options列表
+-0
+    -family link的快捷方式
+
+-4
+    -family inet的快捷方式
+
+-6
+    -family inet6的快捷方式
+
+-a, -all
+    将command作用于所有objects
+
+-b, -batch <file>
+    从指定的文件(或stdin)中读取指令
+    当执行文件中的指令，第一次出现错误时，中断执行
+
+-B
+    -family bridge的快捷方式
+
+-c, -color
+    使用彩色输出
+
+-d, -details
+    输出更详细的信息
+
+-D
+    -family decnet的快捷方式
+
+-f, -family <family>
+    指定协议簇. 列表如下:
+        inet/inet6/bridge/ipx/dnet/mpls/link
+
+-force
+    当出现错误时，不中断执行，配合-b参数
+
+-h, -human, -human-readable
+    以易读的方式输出统计内容，并加上适当的单位后缀
+
+-I
+    -family ipx的快捷方式
+
+-M
+    -family mpls的快捷方式
+
+-o, -oneline
+    一条记录只占据一行, 换行符使用'\'代替
+
+-r, -resolve
+    利用系统的name resolver, 使用name代替ip地址
+
+-s, -stats, -statistics
+    输出更为详细的信息
+    可叠加使用多次, 获得更详细的信息
+
+-t, -timestamp
+    在monitor object下, 显示当前时间
+
+-ts, -tshort
+    类似于-timestamp, 但时间格式使用短格式
+
+-V, -Version
+    版本信息
+
+
+
+oeject列表
+address
+    IPv4/IPv6地址. command列表如下:
+        ip address show [dev <interface_name>] [to <prefix>]
+	** to <prefix> 代表匹配指定掩码长度
+        ip address {add | change | replace} <address>[/<prefix>] dev <interface_name>
+        ip address del <address>[/<prefix>] dev <interface_name>
+
+neighbour
+    管理ARP(IPv4)/NDISC(IPv6)缓存项. command列表如下:
+        ip neighbour show [dev <interface_name>]
+
+route
+    路由信息. command列表如下:
+        ip route show [dev <interface_name>]
+        ip route {add | del | change | replace} <des_subnet_id>/<prefix> via <next_hop> dev <interface_name>
+
+
+
+示例1 - 查看IP地址
+ip address show
+
+
+示例2 - 给指定接口配置IP地址
+ip address add 192.168.1.10/24 dev <interface_name>
+
+
+示例3 - 查看路由表
+ip route
+
+
+示例4 - 添加路由项
+ip route add 192.168.10.0/24 via 192.168.1.1 dev <interface_name>
+ip route add default via 192.168.1.1 dev <interface_name>
+
+
+示例5 - 查看ARP邻居
+ip neighbour show
+
+
+
+最后编辑于: 2024-12-23

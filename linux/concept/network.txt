@@ -1,0 +1,90 @@
+RHEL 6以及之前版本
+/etc/sysconfig/network-scripts/ifcfg-<interface_name>
+
+RHEL 7以及之后版本
+/etc/NetworkManager/NetworkManager.conf
+
+
+
+/etc/sysconfig/network-scripts/ifcfg-<interface_name>配置参数列表
+BOOTPROTO=<value>
+    是否使用自动获取IP协议. 列表如下:
+        none - 无协议
+        bootp - 使用BOOTP协议
+        dhcp - 使用DHCP协议
+
+DEVICE=<value>
+    网络物理接口设备名称
+
+DHCP_HOSTNAME=<value>
+    发送给DHCP服务器的主机名
+
+DNS{1,2}=<value>
+    指定DNS地址
+
+GATEWAY=<value>
+    配置默认网关地址
+
+IPADDR[<n>]=<value>
+    手动配置IP地址
+    用于手动配置IP
+    当给一个接口配置多个地址时，需要指定n，n从0起始
+
+NETMASK[<n>]=<value>
+    给对应IP地址子网掩码
+    用于手动配置IP
+
+NM_CONTROLLED=<value>
+    是否能被NetworkManager控制接口. 列表如下:
+        yes - 能被NetworkManager控制接口
+        no - 不能被NetworkManager控制接口
+
+ONBOOT=<value>
+    网络接口设备是否开机启动. 列表如下:
+        yes - 接口开机启动
+        no - 接口不开机启动
+
+USERCTL=<value>
+    非root用户是否可以控制接口. 列表如下:
+        yes - 非root用户可以控制该接口
+        no - 非root用户不可以控制该接口
+
+
+示例1 - 配置接口静态配置IP
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=none
+IPADDR=192.168.0.10
+NETMASK=255.255.255.0
+USERCTL=no
+DNS1=223.5.5.5
+GATEWAY=192.168.0.1
+
+ifdown eth0
+ifup eth0
+
+
+
+示例2 - 配置接口通过DHCP动态配置IP
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=dhcp
+USERCTL=no
+
+ifdown eth0
+ifup eth0
+
+
+
+/etc/sysconfig/network-scripts/route-<interface_name>配置静态路由
+<network>/<prefix> via <next_hop> dev <interface_name>
+
+
+示例1 - 配置静态路由
+172.16.0.0/16 via 192.168.0.1 dev eth0
+
+
+
+最后编辑于: 2024-12-23

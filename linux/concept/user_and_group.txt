@@ -1,0 +1,18 @@
+用户列表文件
+/etc/passwd
+
+
+用户密码文件
+/etc/shadow
+
+
+组列表文件
+/etc/group
+
+
+组密码文件
+/etc/gshadow
+
+
+
+最后编辑于: 2024-12-23
