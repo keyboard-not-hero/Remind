@@ -69,7 +69,12 @@ status
     显示总体网络状态. 默认command
     结果字段解释:
         STATE -- NetworkManager的状态
-        CONNECTIVITY -- STATE字段对应的连接状态
+        CONNECTIVITY -- STATE字段对应的连接状态. 列表如下
+            none - 没有连接任何网络
+            portal - 已连接到网络，但是需要网页登录才能获得网络访问权限
+            limited - 已连接到网络, 但无法访问Internet
+            full - 已连接网络并且可以访问internet
+            unknown - 无法获取网络连接状态
         WIFI-HW -- 代表硬件(hardware)层面的wifi是否开启
         WIFI -- 代表软件层面的wifi是否开启
 
@@ -97,7 +102,7 @@ on | off
 connectivity
     查询NetworkManager的网络连接状态. 结果列表如下:
         none - 没有连接任何网络
-        portal - 需要通过门户站点，才能获得网络访问权限
+        portal - 已连接到网络，但是需要网页登录才能获得网络访问权限
         limited - 已连接到网络, 但无法访问Internet
         full - 已连接网络并且可以访问internet
         unknown - 无法获取网络连接状态
@@ -321,31 +326,35 @@ nmcli connection add connection.id ether2 connection.interface-name ens33 connec
 nmcli connection up ether2
 
 
-示例3 - 查看networkmanager启动情况
+示例3 - 修改connection配置
+nmcli connection modify ether2 ipv4.method manual ipv4.addresses=192.168.0.10 ipv4.gateway 192.168.0.1 ipv4.dns=114.114.114.114
+
+
+示例4 - 查看networkmanager启动情况
 nmcli general
 
 
-示例4 - 确保wifi在软件层面启动
+示例5 - 确保wifi在软件层面启动
 nmcli radio wifi on
 
 
-示例5 - 查看wifi列表
+示例6 - 查看wifi列表
 nmcli device wifi list
 
 
-示例6 - 连接指定wifi
+示例7 - 连接指定wifi
 nmcli device wifi connect <wifi_name> password <passwd>
 
 
-示例7 - 使用过的连接
+示例8 - 使用过的连接
 nmcli con show
 
 
-示例8 - 启动已配置连接
+示例9 - 启动已配置连接
 nmcli con up id <con_name>
 
 
-示例9 - 关闭指定连接
+示例10 - 关闭指定连接
 nmcli device disconnect <interface_name>
 
 

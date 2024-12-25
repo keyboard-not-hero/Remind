@@ -1,0 +1,53 @@
+wc - 显示文件行数、单词数和字符数
+
+
+语法
+wc [option] [file]...
+wc [OPTION] --files0-from=<file>
+
+
+option参数
+-c, --bytes    
+    字节数
+
+--files0-from=<file>
+    从指定文件中，读取需要统计的文件名列表
+    列表之间使用nul('')分隔
+
+-l, --lines    
+    行数
+
+-L, --max-line-length    
+    最长的行的长度
+
+-m, --chars    
+    字符数
+
+-w, --words    
+    单词数
+
+--help
+    帮助信息
+
+--version
+    版本信息
+
+
+
+示例1 - 查看文件的行数、单词书、字符数
+[steven@localhost demo]$ wc -l -w -m demo_01.txt
+ 7  8 40 demo_01.txt</pre>
+
+
+示例2 - 通过stdin读取统计的文件
+[steven@localhost demo]$ find . -name &apos;demo*&apos; -print0
+./demo_02.txt./demo_01.txt
+
+[steven@localhost demo]$ find . -name 'demo*' -print0 | wc --files0-from=-
+1 2 12 ./demo_02.txt
+7 8 40 ./demo_01.txt
+8 10 52 total
+
+
+
+最后编辑于: 2024-12-25

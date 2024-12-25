@@ -1,0 +1,52 @@
+cat - 堆叠文件内容并打印到stdout
+
+
+语法
+cat [option] file...
+
+
+参数释义
+-A, --show-all
+    显示所有字符，包括行尾和非打印字符
+    等价于-vET
+
+-b, --number-nonblank
+    给非空行编号. 覆盖-n参数
+
+-e
+    显示大部分字符，包括行尾和非打印字符
+    等价于-vE
+
+-E, --show-ends
+    在行尾添加'$'符号
+
+-n, --number
+    给所有行编号
+
+-s, --squeeze-blank
+    将连续的多个空白行替换为单个空白行
+
+-t
+    显示大部分字符，包括制表符和非打印字符
+    等价于-vT
+
+-T, --show-tabs
+    使用'^I'符号显示<tab>
+
+-v, --show-nonprinting
+    显示非打印字符
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+
+
+示例1 - 显示文件内容
+cat demo.txt
+
+
+
+最后编辑于: 2024-12-25

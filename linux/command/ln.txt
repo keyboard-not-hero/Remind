@@ -1,0 +1,83 @@
+ln - 创建hard/symbolic link
+
+
+语法
+ln [option] <target> <link_name>
+
+
+option参数
+--backup[=<control>]
+    当link_name存在时, 是否对目标文件进行备份. control列表如下:
+	none/off - 不进行备份
+	simple/never - 备份, 尾部添加~. 默认值
+	existing/nil - 备份, 当存在numbered格式备份时, 进行numbered备份; 否则进行simple备份
+	numbered/t - 备份, 尾部添加.~<num>~
+** ~为--suffix选项默认值，可指定
+
+-b
+    类似于--backup, 但不接受额外参数
+
+-d, -F, --directory
+    允许root创建目录的hard link
+
+-f, --force
+    当link_name文件存在时, 直接覆盖已存在文件
+
+-i, --interactive
+    当link_name文件存在时, 提示是否进行覆盖
+
+-L, --logical
+    当target为symbolic link时, 对target实际指向的文件进行操作
+
+-n, --no-dereference
+    当target为目录的symbolic link时, 将target视为普通文件
+
+-P, --physical
+    当target为symbolic link时, 对target本身进行hard link
+
+-r, --relative
+    当target为symbolic link时, 对target实际指向的文件进行symbolic link
+
+-s, --symbolic
+    创建symbolic link
+    默认创建hard link
+
+-S, --suffix=<suffix>
+    指定备份文件的后缀
+
+-t, --target-directory=<directory>
+    指定link文件的放置目录
+
+-T, --no-target-directory
+    将link_name视为普通文件
+
+-v, --verbose
+    verbose模式
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+
+
+示例1 - 创建目标文件的hard link
+[steven@localhost demo]$ ln demo_01.txt demo_01.txt.bak
+[steven@localhost demo]$ ll -i
+total 20
+2097288 -rw-rw-r--. 2 steven steven    40 12月 25 23:54 demo_01.txt
+2097288 -rw-rw-r--. 2 steven steven    40 12月 25 23:54 demo_01.txt.bak
+
+
+示例2 - 创建目标文件的symbolic link
+[steven@localhost demo]$ ln -s demo_01.txt demo_01.txt.sym
+[steven@localhost demo]$ ll -i
+total 20
+2097288 -rw-rw-r--. 2 steven steven    40 12月 25 23:54 demo_01.txt
+2097288 -rw-rw-r--. 2 steven steven    40 12月 25 23:54 demo_01.txt.bak
+2097331 lrwxrwxrwx. 1 steven steven    11 12月 26 04:44 demo_01.txt.sym -> demo_01.txt
+
+
+
+最后编辑于: 2024-12-25

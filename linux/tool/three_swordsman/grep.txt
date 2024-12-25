@@ -1,11 +1,33 @@
-grep -- 显示匹配模式的内容
+grep -- 显示匹配pattern模式的内容
 
 
-语法:
-grep [options] <pattern> [files]
+语法
+grep [options] <pattern> [file]
 
 
-参数释义:
+option参数
+-E, --extended-regexp
+    将pattern解释为extended regular expression(ERE)
+
+-F, --fixed-strings
+    将pattern解释为逐字符的字符串
+
+-G, --basic-regexp
+    将pattern解释为basic regular expression(BRE)
+    默认选项
+
+-P, --perl-regexp
+    将pattern解释为perl模式regular expression
+
+-V, --version
+    版本信息
+
+--help
+    帮助信息
+
+
+
+
 -A <num>, --after-context=<num>
 	显示匹配行后num行非匹配上下文
 
@@ -42,9 +64,6 @@ grep [options] <pattern> [files]
 		skip - 跳过目录
 		recurse - 递归读取目录下的文件(只有symbolic link出现在cmd上才读取其指向的文件)
 
--E, --extended-regexp
-	将pattern解释为extended regular expression(ERE)
-
 -e <pattern>, --regexp=<pattern>
 	匹配的pattern
 	可同时指定多次
@@ -59,15 +78,8 @@ grep [options] <pattern> [files]
 --exclude-from=<file>
 	跳过从指定文件中读取, 匹配glob的文件名称
 
--F, --fixed-strings
-	将pattern解释为固定长度字符串
-
 -f <file>, --file=<file>
 	从文件中读取pattern, 每行为一个pattern
-
--G, --basic-regexp
-	将pattern解释为basic regular expression(BRE)
-	默认选项
 
 --group-separator=<sep>
 	使用指定分隔符作为组分隔
@@ -80,9 +92,6 @@ grep [options] <pattern> [files]
 -h, --no-filename
 	不打印匹配行对应的文件名
 	单文件匹配时, 默认选项
-
---help
-	帮助信息
 
 -I
 	将二进制文件视为没有匹配内容
@@ -117,9 +126,6 @@ grep [options] <pattern> [files]
 -o, --only-matching
 	只显示行内匹配部分内容
 
--P, --perl-regexp
-	将pattern解释为perl兼容模式regular expression
-
 -q, --quiet, --silent
 	quiet模式
 
@@ -147,9 +153,6 @@ grep [options] <pattern> [files]
 	将文件视为Unix文件格式
 	该选项只作用于Windows下, 删除CR符号
 
--V, --version
-	版本信息
-
 -v, --invert-match
 	反向匹配, 匹配pattern不包括的行
 
@@ -161,6 +164,7 @@ grep [options] <pattern> [files]
 
 -Z, --null
 	使用NUL替代文件名后的分隔符
+
 
 
 
