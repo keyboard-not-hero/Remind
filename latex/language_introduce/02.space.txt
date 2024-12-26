@@ -302,6 +302,7 @@ This is page three
 
 Demo_12 -- 水平空间
 \documentclass{article}
+\usepackage[showframe=true]{geometry}
 \setlength{\parindent}{0mm}
 \begin{document}
 This is a long \hspace{4cm} line\\
@@ -309,12 +310,18 @@ This is a long \hspace{4cm} line\\
 
 This is a long \hspace*{4cm} line\\
 \hspace*{4cm} This is a short line\\
+
+\hspace*{-2cm}Hello World\\
+Hello World\\
 \end{document}
 
 内容讲解
 1.\hspace{<length>}生成一段高度为0，宽度为指定长度的水平空白。不支持在行首和行尾保留水平空白
 
 2.\hspace*{<length>}生成一段高度为0，宽度为指定长度的水平空白。支持在行首和行尾保留水平空白
+** \hspace*{-2cm}用于行首时，可将内容凸出左边界
+
+3.\usepackage[showframe=true]{geometry}可用于显示页面边界
 
 
 
