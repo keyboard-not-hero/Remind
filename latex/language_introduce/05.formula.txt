@@ -341,7 +341,20 @@ $AB\paraleq CD$
 
 
 
-Demo_14 -- over arc
+Demo_15 -- 圆
+\documentclass{ctexart}
+\usepackage{amsmath}
+\usepackage{xspace}
+\newcommand{\circled}{\raisebox{1pt}{$\odot$\xspace}}
+\setlength{\parindent}{0mm}
+\begin{document}
+$\odot O$\\
+$\circled O$\\
+\end{document}
+
+
+
+Demo_15 -- 圆弧
 \documentclass{ctexart}
 \usepackage{ctex,amsmath}
 \usepackage{xwatermark}
@@ -373,7 +386,7 @@ $\overarc{AB}$\\
 
 
 
-Demo_15 -- 数学符号加粗
+Demo_16 -- 数学符号加粗
 \documentclass{ctexart}
 \usepackage{amsmath}
 \newcommand{\bigcdot}{\boldsymbol{\cdot}}

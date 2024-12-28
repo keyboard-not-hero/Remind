@@ -20,7 +20,7 @@
 	content - 指令代表的内容, 可使用#1,#2...引用新建指令传递的参数, 并建议$N使用{}包裹, 限定declaration指令的区域. 
 	** 该指令位于preamble区时, 新建指令可作用于正文所有区域; 位于正文时, 新建指令只作用于该指令之后. 建议放置在preamble区域
 
-2.\newcommand*{\cmd}[num][default_val]{content}为\newcommand的带'*'模式, 即新建指令参数中不能包含换段落指令(\par或者空行)
+2.\newcommand*{cmd}[num][default_val]{content}为\newcommand的带'*'模式, 即新建指令参数中不能包含换段落指令(\par或者空行)
 
 3.使用\newcommand定义的指令时, 所有后续空格被忽略, 需使用\<space>注明断词
 
