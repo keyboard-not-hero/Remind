@@ -1,45 +1,28 @@
 rename - 批量重命名文件
 
+
 语法
-rename [option] [files]
+rename [option] [expression] [replement] [files]
+
 
 参数释义
 -v, --verbose
     详细模式，所有成功重命名文件的列表
 
--n, --nono
-    所有可以成功重命名文件的列表，但不实际执行重命名操作
-
--f, --force
-    如果重命名后的文件名已存在，直接进行覆盖
-    默认当重命名后的文件名已存在，目标文件不进行重命名操作
+-s, -- symlink
+    直接对symbolic link进行重命名
 
 -h, --help
     帮助信息
 
--m, --man
-    manual的源格式文档
-
 -V, --version
     版本信息
-
--u, --unicode <encoding>
-    文件名encode/decode使用指定编码
-    默认使用unicode(perl)
 
 
 
 示例1 - 将文件名为check-***的文件批量修改为catch-***
-rename 's/check/catch/' *
+rename check catch *
 
-
-示例2 - 将文件名[circle-001,circle-362]的文件名，批量修改为[circle-101,circle-462]
-** 由于直接修改，会造成[circle-101,circle-362]的文件名已存在，按一下步骤操作
-1.[001,362] --> [1001,1362]
-2.[1001,1362] --> [101,462]
-
-rename 's/(\d+)/sprintf "%d",$1+1000/e' *
-rename 's/(\d+)/sprintf "%d",$1-900/e' *
 
 
 最后编辑于: 2024-12-13

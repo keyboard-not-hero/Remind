@@ -6,6 +6,7 @@ grep [options] <pattern> [file]
 
 
 option参数
+匹配模式:
 -E, --extended-regexp
     将pattern解释为extended regular expression(ERE)
 
@@ -18,6 +19,42 @@ option参数
 
 -P, --perl-regexp
     将pattern解释为perl模式regular expression
+
+
+匹配控制
+-e <pattern>, --regexp=<pattern>
+    匹配的pattern
+    可同时指定多次, 多次指定之间的关系为or, 即满足其中一个-e即可
+
+-f <file>, --file=<file>
+    从文件中读取pattern, 每行为一个pattern
+
+-i, --ignore-case
+    匹配时忽略大小写
+
+-v, --invert-match
+    反向匹配, 匹配pattern没有包含的行
+
+-w, --word-regexp
+    只有pattern能匹配完整单词时，匹配命中
+
+-x, --line-regexp
+    只有pattern能匹配完整行时，匹配命中
+
+-y
+    废弃参数，与-i一致
+
+
+通用输出控制:
+-c, --count
+    不输出匹配结果，只输出匹配的行计数
+
+--color[=<when>], --colour[=<when>]
+    是否使用特殊颜色显示匹配内容, when可选列表: 
+	always/never/auto
+
+
+
 
 -V, --version
     版本信息
@@ -47,12 +84,6 @@ option参数
 -C <num>, --context=<num>
 	显示匹配行前后的num行非匹配上下文
 
--c, --count
-	只打印匹配的累计行数, 不打印匹配内容
-
---color[=<when>], --colour[=<when>]
-	是否突出显示匹配字元, when可选列表: never/always/auto
-
 -D <action>, --devices=<action>
 	将device/FIFO/socket文件进行action操作. action可选列表:
 		read - 将文件视为普通文件进行读取. 默认选项
@@ -64,10 +95,6 @@ option参数
 		skip - 跳过目录
 		recurse - 递归读取目录下的文件(只有symbolic link出现在cmd上才读取其指向的文件)
 
--e <pattern>, --regexp=<pattern>
-	匹配的pattern
-	可同时指定多次
-
 --exclude=<glob>
 	跳过匹配glob的文件
 	glob为wildward match
@@ -77,9 +104,6 @@ option参数
 
 --exclude-from=<file>
 	跳过从指定文件中读取, 匹配glob的文件名称
-
--f <file>, --file=<file>
-	从文件中读取pattern, 每行为一个pattern
 
 --group-separator=<sep>
 	使用指定分隔符作为组分隔
@@ -96,9 +120,6 @@ option参数
 -I
 	将二进制文件视为没有匹配内容
 	类似于--binary-files=without-match
-
--i, --ignore-case
-	忽略大小写匹配
 
 --include=<glob>
 	只查找匹配glob模式的文件
@@ -152,15 +173,6 @@ option参数
 -u, --unix-byte-offsets
 	将文件视为Unix文件格式
 	该选项只作用于Windows下, 删除CR符号
-
--v, --invert-match
-	反向匹配, 匹配pattern不包括的行
-
--w, --word-regexp
-	完整单词匹配
-
--x, --line-regexp
-	完整行匹配
 
 -Z, --null
 	使用NUL替代文件名后的分隔符
