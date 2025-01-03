@@ -1,2 +1,9 @@
 1.y7000p IRH8(2023)安装Windows 10后, 触控板无法使用
 安装'串行总线接口'驱动
+
+2.安装Windows时，无法读取到硬盘
+(1)硬盘条没有插好
+(2)缺少驱动
+在U盘中创建一个driver文件夹，将下载的驱动解压缩放到该文件夹下
+驱动下载地址:
+https://dlcdnets.asus.com/pub/ASUS/GamingNB/FX507ZE/RST_V19.1.0.1001_PV.zip

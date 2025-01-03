@@ -1,0 +1,77 @@
+od - 将文件转储为进制表示法
+
+
+语法
+od [option] file...
+
+
+参数释义
+-A, --address-radix=<radix>
+    地址偏移使用指定进制表示(第一列), 可选参数列表:
+	d - 十进制
+	o - 八进制, 默认值
+	x - 十六进制
+	n - 不显示地址偏移
+
+-j, --skip-bytes=<bytes>
+    从文件指定字节开始读取
+
+-N, --read-bytes=<bytes>
+    只读取文件前指定字节
+
+-S <bytes>, --strings[=<bytes>]
+    显示连续指定个可打印字符的字符串
+    bytes默认为3
+
+-t, --format=<type>
+    指定正文输出格式. type列表如下:
+	a - 字符名称, 忽略字节最高位(即编码范围0~127)
+	c - 字符内容
+	dC - char长度(8 bits)的符号整数
+	dS - short int长度(16 bits)的符号整数
+	dI - int长度(32 bits)的符号整数
+	dL - long int(64 bits)长度的符号整数
+	fF - float长度(32 bits)的浮点数
+	fD - double长度(64 bits)的浮点数
+	fL - long double长度(128 bits)的浮点数
+	x[<size>] - 指定类型长度(char/short/int/long, 参考d)的十六进制数
+	o[<size>] - 指定类型长度(char/short/int/long, 参考d)的八进制数
+	u[<size>] - 指定类型长度(char/short/int/long, 参考d)的无符号整数
+    ** 在type添加后缀z，可在格式内容后，统一输出对应的可打印字符
+
+-v, --output-duplicates
+    不使用*代替隐藏的行
+
+-w[<bytes>], --width[=<bytes>]
+    指定一行的字节数
+    未指定bytes时, 默认为32
+    未指定该参数时, 默认为16
+
+--help
+    帮助文档
+
+--version
+    版本信息
+
+
+
+八进制内容
+00 | 00000000 | 00000000
+      高字节     低字节
+
+
+
+示例1 - 第一列的地址偏移量使用十进制
+od -A d /usr/bin/cat
+
+
+示例2 - 只显示偏移量为64之后的两个字符
+od -j 64 -N 2 /usr/bin/cat
+
+
+示例3 - 使用编码号格式显示内容
+od -t uC /usr/bin/cat
+
+
+
+最后编辑于: 2024-12-30

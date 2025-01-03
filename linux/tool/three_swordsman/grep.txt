@@ -1,4 +1,4 @@
-grep -- 显示匹配pattern模式的内容
+grep - 显示匹配pattern模式的内容
 
 
 语法
@@ -51,11 +51,128 @@ option参数
 
 --color[=<when>], --colour[=<when>]
     是否使用特殊颜色显示匹配内容, when可选列表: 
-	always/never/auto
+	always - 一直使用颜色显示
+	never - 不使用颜色显示
+	auto - 根据终端自动确定是否使用颜色显示
+
+-L, --files-without-match
+    指定file时，不显示匹配结果，显示无匹配项的文件名称
+
+-l, --files-with-matches
+    指定file时，不显示匹配结果，显示有匹配项的文件名称
+
+-m <num>, --max-count=<num>
+    匹配pattern内容num次后, 停止查找
+
+-o, --only-matching
+    只显示匹配部分内容
+
+-q, --quiet, --silent
+    quiet模式
 
 
+输出行前缀控制
+-b, --byte-offset
+    匹配行起始位置相对于原内容起始位置的字节偏移, 该偏移基于0
+    配合-o使用时，匹配部分的起始位置相对于原内容起始位置的字节偏移
+
+-h, --no-filename
+    指定file时，在匹配结果前不显示文件名
+    单文件匹配时, 默认选项
+
+-H, --with-filename
+    指定file时，在匹配结果前显示文件名
+    多文件匹配时, 默认选项
+
+--label=<name>
+    将从standard input读入的内容，视为从名称为name的文件中读取
+
+-n, --line-number
+    输出匹配行在原始内容的编号, 基于1起始
+
+-T, --initial-tab
+    当匹配项前面有前缀时(如-H/-n/-b)，确保匹配项内容的起始字符在tab对齐位置
+
+-u, --unix-byte-offsets
+    以unix文件(以LF换行)格式计算字符偏移
+    必须和-b一起使用
+    只有在Windows文件格式下有用，将换行符(以CR LF换行)的CR进行删除
+
+-Z, --null
+    使用NUL('')替代文件名后的分隔符
 
 
+上下文控制:
+-A <num>, --after-context=<num>
+    显示匹配行+匹配行后num行非匹配上下文, 将其视为一组，组与组之间使用分隔符
+    与-o一起使用时无效
+
+-B <num>, --before-context=<num>
+    显示匹配行+匹配行前num行非匹配上下文, 将其视为一组，组与组之间使用分隔符
+    与-o一起使用时无效
+
+-C <num>, --context=<num>
+    显示匹配行+匹配行前num行+匹配行后num行非匹配上下文, 将其视为一组，组与组之间使用分隔符
+    与-o一起使用时无效
+
+--group-separator=<sep>
+    使用指定分隔符
+    默认为'--'
+
+--no-group-separator
+    不使用组分隔符
+
+
+文件和目录选择:
+-a, --text
+    将二进制文件作为普通文本文件处理
+
+--binary-files=<type>
+    将二进制文件视为指定格式文件处理. type可选列表:
+        text - 将二进制文件视为普通文件
+	without-match - 不对二进制文件内容进行匹配
+
+-d <action>, --directories=<action>
+    将目录进行action操作. action可选列表:
+	read - 将目录视为普通文件进行读取. 默认选项
+	skip - 跳过目录
+	recurse - 递归读取目录下的文件(只有symbolic link出现在cmd上才读取其指向的文件)
+
+-D <action>, --devices=<action>
+    将device/FIFO/socket文件进行action操作. action可选列表:
+	read - 将文件视为普通文件进行读取. 默认选项
+	skip - 跳过该文件
+
+--exclude=<glob>
+    当basename匹配glob时, 跳过匹配的文件
+    glob为wildcard match
+
+--exclude-from=<file>
+    从file中读取glob, 当文件的basename匹配glob时, 跳过匹配的文件
+    glob为wildcard match
+
+--exclude-dir=<dir>
+    跳过匹配dir的目录, 包括递归查找的目录
+
+-I
+    不对二进制文件视进行匹配
+    类似于--binary-files=without-match
+
+--include=<glob>
+    只查找匹配glob模式的文件
+    glob为wildcard match
+
+-r, --recursive
+    递归读取目录下的文件
+    只有当symbolic link在command line中, 才读取其指向的文件
+    类似于-d recurse
+
+-R, --dereference-recursive
+    递归读取目录下的文件
+    读取所有symbolic link指向的实际文件
+
+
+通用信息:
 -V, --version
     版本信息
 
@@ -64,132 +181,21 @@ option参数
 
 
 
-
--A <num>, --after-context=<num>
-	显示匹配行后num行非匹配上下文
-
--a, --text
-	将匹配的binary文件作为ASCII文件处理
-
--B <num>, --before-context=<num>
-	显示匹配行前的num行非匹配上下文
-
--b, --byte-offset
-	匹配行起始位置相对于文件起始的字节偏移, 该偏移基于0
-	配合-o使用时, 匹配部分起始位置相对于文件起始的字节偏移
-
---binary-files=<type>
-	将二进制文件视为指定格式文件进行匹配
-
--C <num>, --context=<num>
-	显示匹配行前后的num行非匹配上下文
-
--D <action>, --devices=<action>
-	将device/FIFO/socket文件进行action操作. action可选列表:
-		read - 将文件视为普通文件进行读取. 默认选项
-		skip - 跳过该文件
-
--d <action>, --directories=<action>
-	将目录进行action操作. action可选列表:
-		read - 将目录视为普通文件进行读取. 默认选项
-		skip - 跳过目录
-		recurse - 递归读取目录下的文件(只有symbolic link出现在cmd上才读取其指向的文件)
-
---exclude=<glob>
-	跳过匹配glob的文件
-	glob为wildward match
-
---exclude-dir=<dir>
-	跳过从指定目录下的文件递归匹配
-
---exclude-from=<file>
-	跳过从指定文件中读取, 匹配glob的文件名称
-
---group-separator=<sep>
-	使用指定分隔符作为组分隔
-	配合-A/-B/-C使用
-
--H, --with-filename
-	打印匹配行对应的文件名
-	多文件匹配时, 默认选项
-
--h, --no-filename
-	不打印匹配行对应的文件名
-	单文件匹配时, 默认选项
-
--I
-	将二进制文件视为没有匹配内容
-	类似于--binary-files=without-match
-
---include=<glob>
-	只查找匹配glob模式的文件
-	glob为wildcard match
-
--L, --files-without-match
-	只打印未出现pattern内容的文件名(用于多文件)
-
--l, --files-with-matches
-	只打印出现pattern内容的文件名(用于多文件)
-
---label=<label>
-	配合-H使用, 当grep从stdin中读取数据时, 使用label作为文件名
-
--m <num>, --max-count=<num>
-	匹配pattern内容num次后, 停止查找
-
--n, --line-number
-	输出匹配行在文件中的行号, 基于1起始
-
---no-group-separator
-	使用空字符串作为组分隔
-	配合-A/-B/-C使用
-
--o, --only-matching
-	只显示行内匹配部分内容
-
--q, --quiet, --silent
-	quiet模式
-
--R, --dereference-recursive
-	递归读取目录下的文件
-	读取所有symbolic link指向的实际文件
-
--r, --recursive
-	递归读取目录下的文件
-	只有当symbolic link在command line中, 才读取其指向的文件
-	类似于-d recurse
-
--s, --no-messages
-	不输出任何错误信息
-
--T, --initial-tab
-	输出字段在tab对齐位置
-	适用于配合-H/-n/-b选项使用
-
--U, --binary
-	将文件视为二进制文件, 内容进行逐字符解读
-	只在DOS/Windows下有效果
-
--u, --unix-byte-offsets
-	将文件视为Unix文件格式
-	该选项只作用于Windows下, 删除CR符号
-
--Z, --null
-	使用NUL替代文件名后的分隔符
-
-
-
-
 示例1 - 使用BRE查找内容
 grep -G 'g.\{2\}gle' demo01.txt
-或
-grep 'g.\{2\}gle' demo01.txt
+
 
 示例2 - 使用ERE查找内容
 grep -E 'g.{2}gle' demo01.txt
 
+
 示例3 - 不包含注解行(以#开头)和空行的内容
 grep -v '^$' demo01.txt | grep -v '^#'
 
+
 示例4 - 显示指定目录下包含指定文本内容的文件列表
 grep -r -l 'g[op]\{2\}gle' /home
+
+
+
+最后编辑于: 2024-12-30

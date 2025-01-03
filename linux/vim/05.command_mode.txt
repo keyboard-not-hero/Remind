@@ -26,6 +26,12 @@ line_range参数
 %
     文件内所有行
 
+/<regular_expression>/
+    使用正则表达式匹配行, 只作用于第一个匹配项
+
+g/<regular_expression>/
+    使用正则表达式匹配行，作用于所有匹配项
+
 
 regular_expression参数
     使用Regular Expression进行匹配查找

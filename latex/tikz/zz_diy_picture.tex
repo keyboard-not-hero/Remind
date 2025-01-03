@@ -26,7 +26,7 @@
     \fill[color=star] (A) -- (F) -- (B) -- (G) -- (C) -- (H) -- (D) -- (I) -- (E) -- (J) -- cycle;
 \end{tikzpicture}\vspace{2cm}
 
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=1,transform shape,line width=0.6]
     % 家用机械电能表
     % 外框
     \filldraw[fill=black!20,rounded corners=2pt] (-1.5cm-8pt,-1.8cm-8pt) rectangle (1.5cm+8pt,1.8cm+8pt);
@@ -37,23 +37,29 @@
         \draw (-1.25+0.5*\delta,0.3) rectangle (-0.75+0.5*\delta,0.9);
     }
     \draw (0.8,0.35) rectangle (1.2,.85);
-    \node at (-1,0.6){2};
-    \node at (-0.5,0.6){8};
-    \node at (0,0.6){1};
-    \node at (0.5,0.6){8};
-    \node at (1,0.6){6};
+    \node at (-1,0.6){0};
+    \node at (-0.5,0.6){6};
+    \node at (0,0.6){3};
+    \node at (0.5,0.6){3};
+    \node at (1,0.6){5};
+
+    % 机械轮
+    % 主线条
+    \draw[-{Stealth[scale=0.88]},line width=0.6pt] (-1,-0.3) -- (1,-0.3);
+    % 尾部
+    \filldraw (-1,-0.35) arc [start angle=-90,end angle=90,x radius=0.2,y radius=0.05];
+    \filldraw[fill=white,color=white] (-1.06,-0.368) arc [start angle=-90,end angle=90,x radius=0.136,y radius=0.068];
+    % 转动轮外框
+    \filldraw[fill=white,rounded corners=2pt] (-0.6,-0.4) rectangle (0.6,-0.2);
     % 转动轮
-    \draw[-stealth,line width=0.6pt] (-1,-0.3) -- (1,-0.3);
-    \filldraw[rounded corners=2pt] (-1.2,-0.35) rectangle (-0.8,-0.25);
-    \filldraw[fill=white,color=white,rounded corners=2pt] (-1.22,-0.36) rectangle (-0.9,-0.24);
-    \filldraw[fill=white,rounded corners=2.5pt] (-0.6,-0.4) rectangle (0.6,-0.2);
     \draw[line width=1.2pt,rounded corners=.6pt] (-0.5,-0.3) -- (0.5,-0.3);
+
     % 规格
     \node at (0,-1){\scriptsize 220V\; 10A(20A)\; 50Hz};
-    \node at (0,-1.4){\scriptsize 1\:200\:revs/(kW\:$\boldsymbol{\cdot}$\:h)};
+    \node at (0,-1.4){\scriptsize 3\:000\:revs/(kW\:$\boldsymbol{\cdot}$\:h)};
 \end{tikzpicture}\vspace{2cm}
 
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=1,transform shape]
     % 家用电子电能表
     % 外框
     \filldraw[fill=black!20,rounded corners=2pt] (-1.5cm-8pt,-1.8cm-8pt) rectangle (1.5cm+8pt,1.8cm+8pt);

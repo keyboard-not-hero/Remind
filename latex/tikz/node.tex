@@ -86,7 +86,7 @@
     % 3.name - node名称，便于后续引用
     % 4.at (<coordinate>) - node默认取用该关键字之前的最后一个坐标, 如果使用at (<coordinate>)，则使用该坐标. 需要使用animations库
     % 5.:<animation_attribute>={<options>} - 配置关键帧属性，形成动画. 参考animate
-    % 6.node_content - 文字实际内容
+    % 6.node_content - 文字实际内容，可以使用\includegraphics插入图片
     % 备注: \node为\path node的缩写形式
     \path node foreach \x in {1,2,3} at (\x,0) {\x};
     \path node (A) [color=green] at (1,1) {$A$};

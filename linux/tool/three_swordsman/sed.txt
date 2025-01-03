@@ -1,4 +1,4 @@
-sed - 流编辑器, 即对输入进行文本转化
+sed - 对文本进行过滤和转换的流编辑器
 
 
 描述
@@ -13,11 +13,41 @@ sed主要用于针对多个文件进行相同的修改操作
 4.循环1/2/3步骤
 
 
+   file                   sed                  standard output  
+   ***************   1    *************        ***************
+   * first line  * -----> *  script1  *        * first line  *
+   * second line * -----> *     |     *   9    * second line *
+   * third line  *   3    *     |2    * -----> * third line  *
+   * fourth line *        *     v     *        * fourth line *
+   * ...         *        *  script2  *        * ...         *
+   ***************        *************        ***************     
+
+
 语法
 sed [option] [<script>] [<input_file> ...]
 
 
-参数释义
+option参数
+-e <script>, --expression=<script>
+    指定操作指令
+    当有多个指令时，每个指令必须搭配-e参数
+
+-f <script_file>, --file=<script_file>
+    从指定文件中读取操作指令
+
+-n, --quiet, --silent
+    不显示所有内容
+    默认显示所有内容
+
+--help
+    帮助信息
+
+--version
+    版本信息
+
+
+
+
 -b, --binary
 	以二进制格式读取文本内容
 	用于Windows/DOS/Cygwin类以\r\n为行结束的系统, 因为sed不能识别carriage return符号
@@ -29,17 +59,8 @@ sed [option] [<script>] [<input_file> ...]
 	使用Extend Regular Expression(ERE)
 	默认使用Basic Regular Expression(BRE)
 
--e <script>, --expression=<script>
-	指定操作指令
-
--f <script_file>, --file=<script_file>
-	从指定文件中读取操作指令
-
 --follow-symlinks
 	必须配合-i使用, 当目标文件为symlink时, 指向实际内容文件
-
---help
-	帮助信息
 
 -i[suffix], --in-place[=suffix]
 	文本操作直接作用在文件内(in-place)
@@ -50,9 +71,6 @@ sed [option] [<script>] [<input_file> ...]
 	默认为70
 	指定为0时表示不限定长行
 
--n, --quiet, --silent
-	只打印通过p指令指定的内容
-	默认打印每次循环的pattern space内容
 
 --posix
 	限定使用posix sed特性, 不使用GNU sed的额外拓展特性
@@ -67,9 +85,6 @@ sed [option] [<script>] [<input_file> ...]
 -u, --unbuffered
 	使用尽可能小的buffer
 
---version
-	版本信息
-
 -z, --null-data, --zero-terminated
 	将输入视为行集合, 并且行之间使用null符号分隔
 
@@ -81,16 +96,24 @@ script
 script语法:
 <mode>[!]<process>
 
-mode - 指定操作的行. 当结尾为!, 代表取相反的行. 具体格式: [address1[,address2]], 默认为所有行1,$
-address列表如下:
+mode - 指定操作的行. 默认为所有行, 对应格式: 1,$
+    格式1: address - 指定单行
+    格式2: address1,address2 - 指定行范围
+    格式3: address,+N - address到address+N行: 
+    address列表如下:
 	<number> - 直接指定行号
 	$ - 最后一行
-	<first>~<step> - 在first+n*step行执行操作, n为非负数
 	/<re>/ - 使用正则表达式匹配行. 默认使用Basic Regular Expression(BRE). //代表上次使用的正则匹配表达式
 	\%<re>% - 与/<re>/相同, 并且%可替换为其他符号
-	addr1,+N - addr1到addr1+N行
-	addr1,~N - addr1到最小的N的倍数
 	** /<re>/I和\%<re>%I代表忽略大小写的匹配
+	** /<re>/,/<no_match>/和/<re>/,//都会持续到最后一行
+	** /<outer_re>/{/<nest_re>/}, 地址嵌套, 需要outer_re和nest_re同时满足
+
+
+! - 对mode取反
+
+
+
 
 
 process - 对指定行的具体操作. 列表如下:
@@ -331,13 +354,131 @@ z
 	参考指令b
 
 
-input_file:
-输入内容文件, 当省略该文件时, 代表从standard input读取
+
+示例1 - 替换指定字符串
+[steven@localhost demo]$ cat list
+John Daggett, 341 King Road, Plymouth MA
+Alice Ford, 22 East Broadway, Richmond VA
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury MA
+Hubert Sims, 328A Brook Road, Roanoke VA
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston MA
+
+[steven@localhost demo]$ sed 's/MA/Massachusetts/' list
+John Daggett, 341 King Road, Plymouth Massachusetts
+Alice Ford, 22 East Broadway, Richmond VA
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury Massachusetts
+Hubert Sims, 328A Brook Road, Roanoke VA
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston Massachusetts
 
 
+示例2 - 替换多组字符串，执行多次操作
+1)使用';'
+[steven@localhost demo]$ sed 's/MA/Massachusetts/;s/VA/Vissa/' list
+John Daggett, 341 King Road, Plymouth Massachusetts
+Alice Ford, 22 East Broadway, Richmond Vissa
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury Massachusetts
+Hubert Sims, 328A Brook Road, Roanoke Vissa
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston Massachusetts
 
-sed结果默认输出到standard output
+2)使用换行符
+[steven@localhost demo]$ sed 's/MA/Massachusetts/
+> s/VA/Vissa/' list
+John Daggett, 341 King Road, Plymouth Massachusetts
+Alice Ford, 22 East Broadway, Richmond Vissa
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury Massachusetts
+Hubert Sims, 328A Brook Road, Roanoke Vissa
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston Massachusetts
+
+3)使用-e参数
+[steven@localhost demo]$ sed -e 's/MA/Massachusetts/' -e 's/VA/Vissa/' list
+John Daggett, 341 King Road, Plymouth Massachusetts
+Alice Ford, 22 East Broadway, Richmond Vissa
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury Massachusetts
+Hubert Sims, 328A Brook Road, Roanoke Vissa
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston Massachusetts
 
 
-引用:
-[1]GNU Sed Manual: https://www.gnu.org/software/sed/manual/sed.html
+示例3 - 使用脚本文件进行操作
+[steven@localhost demo]$ cat list
+John Daggett, 341 King Road, Plymouth MA
+Alice Ford, 22 East Broadway, Richmond VA
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury MA
+Hubert Sims, 328A Brook Road, Roanoke VA
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston MA
+
+[steven@localhost demo]$ cat sedscript
+s/ PA/, Pennsylvania/
+s/ OK/, Oklahoma/
+
+[steven@localhost demo]$ sed -f sedscript list
+John Daggett, 341 King Road, Plymouth MA
+Alice Ford, 22 East Broadway, Richmond VA
+Orville Thomas, 11345 Oak Bridge Road, Tulsa, Oklahoma
+Terry Kalkas, 402 Lans Road, Beaver Falls, Pennsylvania
+Eric Adams, 20 Post Road, Sudbury MA
+Hubert Sims, 328A Brook Road, Roanoke VA
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston MA
+
+
+示例4 - 不显示所有行，只显示被操作的行
+[steven@localhost demo]$ sed -n -e 's/MA/Massachusetts/p' list
+John Daggett, 341 King Road, Plymouth Massachusetts
+Eric Adams, 20 Post Road, Sudbury Massachusetts
+Sal Carpenter, 73 6th Street, Boston Massachusetts
+
+
+示例5 - 删除空白行(包括只有空格和制表符的行)
+[steven@localhost demo]$ cat -A delete_blank
+first line$
+$
+second line$
+   $
+third line$
+^I$
+fourth line$
+  ^I$
+fifth line$
+
+[steven@localhost demo]$ sed '/^[ \t]*$/d' delete_blank
+first line
+second line
+third line
+fourth line
+fifth line
+
+
+示例6 - 对同时包含#/beautiful/love的行进行删除
+[steven@localhost demo]$ cat group_script
+/#/{ /beautiful/ {/love/d} }
+
+[steven@localhost demo]$ cat group_add
+# beautiful love
+# beautiful like
+beautiful
+# wonderful
+wonderful
+
+[steven@localhost demo]$ sed -f group_script group_add
+# beautiful like
+beautiful
+# wonderful
+wonderful

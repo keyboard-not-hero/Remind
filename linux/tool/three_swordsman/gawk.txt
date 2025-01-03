@@ -12,10 +12,17 @@ awk [option] [script] [<file> ...]
 运行流程:
 1.读入文件内容
 2.利用行分隔符(RS), 将内容分解为record
-3.利用字段分隔符(FS), 将record分解为field
+3.利用字段分隔符(FS), 将record分解为field. 其中$0代表整行, $1/$2...代表第1/2...个field
 
 
-参数释义
+option参数
+-F <field_separator>, --field-separator <field_separator>
+    指定字段分隔符
+    默认为空格/<tab>
+
+
+
+
 -b, --characters-as-bytes
 	将输入视为单字节字符, 并且将print/printf输出的内容也作为单字节字符输出
 		
@@ -45,10 +52,6 @@ awk [option] [script] [<file> ...]
 	使用文件中的操作指令
 	'-'代表从standard input读取指令
 	
--F <field_separator>, --field-separator <field_separator>
-	指定字段分隔符
-	默认为空格
-
 -h, --help
 	帮助信息
 	
@@ -369,6 +372,24 @@ awk数组:
 
 mail-list与inventory-shipped文件目录:
 /usr/share/doc/gawk/examples/data
+
+
+
+示例1 - 以','作为字段分隔符，打印匹配行的第一个字段
+[steven@localhost demo]$ cat list
+John Daggett, 341 King Road, Plymouth MA
+Alice Ford, 22 East Broadway, Richmond VA
+Orville Thomas, 11345 Oak Bridge Road, Tulsa OK
+Terry Kalkas, 402 Lans Road, Beaver Falls PA
+Eric Adams, 20 Post Road, Sudbury MA
+Hubert Sims, 328A Brook Road, Roanoke VA
+Amy Wilde, 334 Bayshore Pkwy, Mountain View CA
+Sal Carpenter, 73 6th Street, Boston MA
+
+[steven@localhost demo]$ awk -F, '/MA/{print $1}' list
+John Daggett
+Eric Adams
+Sal Carpenter
 
 
 示例1 - 在正文内容前后添加内容
