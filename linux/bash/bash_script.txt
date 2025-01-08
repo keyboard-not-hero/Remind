@@ -1,32 +1,60 @@
 script通则: 
-1.指令从上而下执行
+1.#!/bin/bash为bash script声明
 
-2.遇到Line Feed则执行指令
+2.指令从上而下执行
 
-3.可使用\<Enter>将内容延伸至下一行
+3.遇到Line Feed则执行指令
 
-4.#为单行注释限定
+4.可使用\<Enter>将内容延伸至下一行
 
-5.<<COMMENT ... COMMENT为多行注释限定
+5.#为单行注释限定
 
-6.#!/bin/bash为bash script声明
+6.<<COMMENT ... COMMENT为多行注释限定
 
 
 
 算数运算:
 1.整数运算
-1) $((statement))
-	echo $((2+3))
+1) $((<operation>))
 
-2) $[statement]
-	echo $[2*3]
+2) $[<operation>]
 
-3)let statement
-	let x=20/2
+3) let <operation>
+
+4) declare -i <operation>
 
 2.小数运算
-bc的非交互模式. 例:
-	echo 'scale=2;1/2' | bc
+将算式交给bc
+
+
+示例1 - 整数运算
+[steven@localhost bash]$ vi demo_01.sh
+#!/bin/bash
+
+echo $((2+3))
+echo $[2*3]
+let x=6/3
+echo $x
+declare -i sum=9+6
+echo $sum
+
+[steven@localhost bash]$ bash demo_01.sh
+5
+6
+2
+15
+
+
+示例2 - 小数运算
+[steven@localhost bash]$ vi demo_01.sh
+#!/bin/bash
+
+echo 'scale=1;1/4'|bc
+echo 'scale=2;1/4'|bc
+
+[steven@localhost bash]$ bash demo_01.sh
+.2
+.25
 
 
 
@@ -41,22 +69,42 @@ script执行方式:
 
 
 
-参数变量引用: 
-示例
-steven@www ~$ ./demo.sh arg1 arg2 arg3
-变量释义
+脚本中的变量
 $#    脚本名称后的参数个数(3个)
 
 $0    脚本名称(demo.sh)
 
-$<number>    对应的参数($1为arg1...$3为arg3, 当数字为两位或以上时, 使用{}限定)。参数以IFS变量(默认为space)作为分割符
+$<number>    对应的参数($1为arg1...$3为arg3, 当number为两位或以上时, 使用{}限定). 参数以IFS变量(默认为<space>)作为分割符
 
 "$@"    所有参数的字符串序列"$1" "$2" "$3" ...
 
 "$*"    所有参数组合的字符串"$1 $2 $3 ..."; 默认以空白键分隔参数
 
 参数引用偏移: 
-shift [number]    将参数引用向右偏移number位(如: 使用shift后, $1为arg2, $2为arg3), 左边的参数省略, number默认为1
+shift [number]    将参数引用向右偏移number位(如: 使用shift 1后, $1为arg2, $2为arg3). number参数省略时, 默认为1. 多次shift操作会进行叠加
+
+示例
+[steven@localhost bash]$ vi demo.sh
+#!/bin/bash
+
+echo "$#"
+echo "$0"
+echo "$1 $2"
+echo "$@"
+echo "$*"
+shift
+echo "$2"
+shift 1
+echo "$2"
+
+[steven@localhost bash]$ bash demo_01.sh 10 9 8 7 6
+5
+demo_01.sh
+10 9
+10 9 8 7 6
+10 9 8 7 6
+8
+7
 
 
 
@@ -65,26 +113,30 @@ function FUN_NAME(){
     STATEMENT
     return STATUS_CODE
 }
+
 方法/函数调用: 
 FUN_NAME arg1 arg2...
 
 **方法/函数补充: 
 1.方法内部有自己的变量体系, 如下: 
-	$0    脚本名称
-	$<number>    调用函数时, 函数的实参(arg1, arg2 ...)
-	$#    方法参数个数
-	$FUNCNAME    方法名称
-	$FUNCNEST    方法嵌套层级
+    $0    脚本名称
+    $<number>    调用函数时, 函数的实参(arg1, arg2 ...)
+    $#    方法参数个数
+    $FUNCNAME    方法名称
+    $FUNCNEST    方法嵌套层级
+
 2.函数return的为状态码, 返回的值并不能用于赋值给变量
+
 
 示例1 - 不带参数的函数
 #定义函数
 function printit(){
-	echo "Hello World"
+    echo "Hello World"
 }
 
 #调用函数
 printit
+
 
 示例2 - 带参数的函数
 max_diy(){
@@ -98,3 +150,6 @@ max_diy(){
 
 max_diy 5 4
 
+
+
+最后编辑于: 2025-01-07

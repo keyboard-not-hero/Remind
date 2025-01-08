@@ -1,89 +1,161 @@
 1.if条件判断
 1)单语句
-if CONDITION
+if <condition>
 then
-	STATEMENT
+    <statement>
 fi
 
 cmd模式:
-if CONDITION; then STATEMENT; fi
+if <condition>; then <statement>; fi
+
 
 2)双语句
-if CONDITION
+if <condition>
 then
-	STATEMENT1
+    <statement_1>
 else
-	STATEMENT2
+    <statement_2>
 fi
 
 cmd模式:
-if CONDITION; then STATEMENT1; else STATEMENT2; fi
+if <condition>; then <statement_1>; else <statement_2>; fi
+
 
 3)多语句
-if CONDITION1
+if <condition_1>
 then
-    STATEMENT1
-elif CONDITION2
+    <statement_1>
+elif <condition_2>
 then
-    STATEMENT2
+    <statement_2>
 else
-    STATEMENT3
+    <statement_3>
 fi
 
 cmd模式:
-if CONDITION1; then STATEMENT1; elif CONDITION2; then STATEMENT2; else
-STATEMENT3; fi
+if <condition_1>; then <statament_1>; elif <condition_2>; then <statement_2>; else <statement_3>; fi
 
 
-示例
+示例 - if测试
+[steven@localhost bash]$ vi demo_01.sh
 #!/bin/bash
-x=1
-if [ $x -eq 0 ]
+
+x=2
+y=3
+z=4
+
+if [ $x -eq 2 ]
 then
-    echo "x is number zero"
-elif [ $x -eq 1 ]
-then
-    echo "x is number one"
-else
-    echo "x is other number"
+    echo "I'm variable x, equal two"
 fi
 
+if [ $y -eq 2 ]
+then
+    echo "I'm variable y, equal two"
+else
+    echo "I'm variable y, not equal two"
+fi
+
+if [ $z -eq 2 ]
+then
+    echo "I'm variable z, equal two"
+elif [ $z -eq 3 ]
+then
+    echo "I'm variable z, equal three"
+elif [ $z -eq 4 ]
+then
+    echo "I'm variable z, equal four"
+else
+    echo "I'm variable z, random number"
+fi
+
+[steven@localhost bash]$ bash demo_01.sh
+I'm variable x, equal two
+I'm variable y, not equal two
+I'm variable z, equal four
 
 
-2)case分支 
-case $VAR_NAME in
-	VALUE1)
-		STATEMENT1
-		;;
-	VALUE2)
-		STATEMENT2
-		;;
-	*)
-  		STATEMENT3
-		;;
+
+2.case分支 
+case $<var_name> in
+    <value_1>)
+	<statement_1>
+	;;
+    <value_2>)
+	<statement_2>
+	;;
+    *)
+  	<statement_3>
+	;;
 esac
 
-** 1.';;'相当于C语言switch中的break, 代表当前匹配成功前提下, 不继续向下匹配
+** 1)';;'相当于C语言switch中的break, 当前匹配成功前提下, 不继续向下匹配; 当前匹配不成功，继续向下匹配
 
-** 2.使用';&'代替';;', 在当前匹配成功前提下, 不执行下一个匹配, 而直接执行下一个STATEMENT
+** 2)使用';&'代替';;', 如果当前匹配成功, 不执行下一个匹配, 而直接执行下一个statement; 如果当前匹配不成功, 视为';;', 继续执行下一个匹配
 
-** 3.使用';;&'代替';;', 在当前匹配成功前提下, 继续执行下一个匹配
-
-** 4.如果没有case成功匹配, status code为0；否则为最后一个STATEMENT返回status code
+** 3)使用';;&'代替';;', 无论当前匹配成功与否, 继续执行下一个匹配
 
 
+示例 - case测试
+[steven@localhost bash]$ vi demo_01.sh
+#!/bin/bash
 
-while循环: 
-while CONDITION
+x=2
+y=3
+z=4
+
+case $x in
+    2)
+        echo "This is statement one for x";;
+    3)
+        echo "This is statement two for x";;
+    *)
+        echo "This is statement last for x";;
+esac
+
+case $y in
+    2)
+        echo "This is statement one for y";&
+    4)
+        echo "This is statement two for y";&
+    *)
+        echo "This is statement last for y";;
+esac
+
+case $z in
+    3)
+        echo "This is statement one for z";;&
+    4)
+        echo "This is statement two for z";;&
+    4)
+        echo "This is statement three for z";;&
+    5)
+        echo "This is statement four for z";;&
+    *)
+        echo "This is statement last for z";;
+esac
+
+
+[steven@localhost bash]$ bash demo_01.sh
+This is statement one for x
+This is statement last for y
+This is statement two for z
+This is statement three for z
+This is statement last for z
+
+
+
+3.while循环: 
+while <condition>
 do
-    STATEMENT
+    <statement>
 done
 
 ** 当condition满足时, 执行循环
 
 
 
-util循环: 
+4.util循环: 
 util CONDITION
 do
     STATEMENT
@@ -93,7 +165,7 @@ done
 
 
 
-for循环: 
+5.for循环: 
 for VAR [in VALUE_LIST]
 do
     STATEMENT

@@ -54,27 +54,29 @@ bash设定档加载规则：
 
 
 配置变量(未配置变量, 初始使用默认为"")
-VAR=value
+<var_name>=<var_value>
 read VAR
-VAR=`command args` | VAR=$(command args)
+VAR=`<command>`
+VAR=$(<command>)
 
-查看变量值
-echo $PATH 或 echo ${PATH}
+引用变量值
+echo $<var_name>
+echo ${<var_name>}
 
 引用数组变量(索引由0起始)
 echo ${arr[index]}
 
 变量值拓展
-PATH=${PATH}:/usr/local/bin
+<var_name>=${<var_name>}:/usr/local/bin
 
-转化为全局变量(可用于子shell)
-export VAR
+转化为全局变量(可用于子bash)
+export <var_name>
 
 转化为只读变量
-readonly VAR
+readonly <var_name>
 
 取消变量
-unset VAR
+unset <var_name>
 
 查看只读变量
 readonly

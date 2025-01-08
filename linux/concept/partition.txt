@@ -1,0 +1,26 @@
+1.查看分区表类型
+steven@steven-IRH8:~/git/Remind/linux/disk$ sudo fdisk -l|sed -n '/Disk model/p;/Disklabel type/p'
+
+
+2.分区
+1)MBR类型分区表
+fdisk /dev/sda
+
+2)GPT类型分区表
+gdisk /dev/sda
+
+
+3.更新分区表
+partprobe -s
+
+
+4.分区格式化
+mkfs.xfs /dev/sda1
+
+
+5.挂载
+mount /dev/sda1 /home
+
+
+*6.开机挂载文件
+/etc/fstab
