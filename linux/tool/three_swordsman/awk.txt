@@ -1,8 +1,9 @@
-gawk - 根据模式扫描和执行文本的语言
+awk - 根据模式扫描和执行文本的语言
 
 
 语法
-awk [option] [script] [<file> ...]
+awk [option] [--] [<script>] [<file>]
+awk [option] -f [<script_file>] [<file>]
 
 
 描述
@@ -13,91 +14,86 @@ awk [option] [script] [<file> ...]
 1.读入文件内容
 2.利用行分隔符(RS), 将内容分解为record
 3.利用字段分隔符(FS), 将record分解为field. 其中$0代表整行, $1/$2...代表第1/2...个field
+** 当前行字段数量为NF, 所以最后一个字段使用$NF引用
+
+
+1.#之后的内容为注释内容
 
 
 option参数
+-b, --characters-as-bytes
+    将输入视为单字节字符
+    将print/printf等命令输出的内容也作为单字节字符输出
+
+-c, --traditional
+    使用POSIX版本特性, 关闭GNU awk拓展特性
+	
+-C, --copyright
+    显示copyright信息
+	
+-d[<file>], --dump-variables[=<file>]
+    保存当前使用变量值到指定文件(已排序)
+    文件默认名称为awkvars.out
+	
+-e <program_text>, --source <program_text>
+    操作指令
+    可同时指定多个指令
+	
+-E <script>, --exec file
+    类似于-f, 但有以下两点不同:
+	1.停止读取后续option
+	2.-v option失效
+    常用于可执行脚本(#!指定)
+	
+-f <script>, --file <script>
+    使用文件中的操作指令
+
 -F <field_separator>, --field-separator <field_separator>
     指定字段分隔符
     默认为空格/<tab>
+    不能指定newline, 因为会与行分割符冲突. 指定字段分隔符为newline方式: 'BEGIN{RS="",FS="\n"}'
 
-
-
-
--b, --characters-as-bytes
-	将输入视为单字节字符, 并且将print/printf输出的内容也作为单字节字符输出
-		
--c, --traditional
-	使用POSIX版本awk, 关闭GNU awk拓展特性
-	
--C, --copyright
-	显示GPL信息
-	
--d[<file>], --dump-variables[=<file>]
-	保存已排序变量值到指定文件
-	文件默认名称为awkvars.out
-	
--D[<file>], --debug[=<file>]
-	进入debug模式, 需配合-f参数使用
-
--e <program_text>, --source <program_text>
-	操作指令
-	
--E <script>, --exec file
-	类似于-f, 但有以下两点不同:
-		1.中断该参数之后的参数选项
-		2.不允许-v参数使用
-	常用于可执行脚本(#!指定)
-	
--f <script>, --file <script>
-	使用文件中的操作指令
-	'-'代表从standard input读取指令
-	
--h, --help
-	帮助信息
-	
 -i <source_file>, --include <source_file>
-	导入库文件
-	awk文件的导入格式为@include "<file>"
-	与-f的差异:
-		1.-f为program, 可以不需要额外指定-e; -i为导入库, 需要额外指定-f或-e
-		2.-f可重复多次指定某文件; -i重复指定文件时, 自动取消重复内容
+    导入库文件
+    与-f的差异:
+	1.-f为program, 可以不需要额外指定-e; -i为导入库, 需要额外指定-f或-e
+	2.-f可重复多次指定某文件; -i重复指定文件时, 自动取消重复内容
 
 -P, --posix
-	使用POSIX模式, disable GNU awk拓展特征
-	
--v <variable>=<value>, --assign <variable>=<value>
-	设置变量variable的值为value
-	该参数只能设置一个变量, 但可多次指定该参数以设置多个变量
-	该赋值操作在BEGIN pattern之前
+    使用POSIX模式, disable GNU awk拓展特征
 
--V, --version
-	版本信息
+-v <variable>=<value>, --assign <variable>=<value>
+    设置变量variable的值为value
+    该参数只能设置一个变量, 但可多次指定该参数以设置多个变量
+    该赋值操作类似于在BEGIN中的操作
 
 --
-	参数选项结束符号, 代表后续内容为非参数(即使以-开头)
+    参数选项结束符号, 代表后续内容为非参数(即使以-开头)
 
+-h, --help
+    帮助信息
+	
+-V, --version
+    版本信息
 
 
 
 script
 script包含格式如下:
-<pattern><action>
+<pattern>{<action>}
 
 
-pattern - 匹配符合要求的行. 格式类型如下: 具体格式:
-	[<exp>~]/<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular
-Expression(ERE). exp默认为$0
-	<expression> - expression为非0数字或非空字符串则执行后续action
-	<begin>,<end> - 指定起始行和结束行(包含). 如: NR==1,NR==2
-	BEGIN - 读取内容之前执行的操作. 必须配置action
-	END - 读取所有内容之后执行的操作. 必须配置action
-	<empty> - 不指定, 代表所有行
-	** 可使用"$<shell_var>"引用shell变量
+pattern - 匹配符合要求的行. 默认为所有行. 格式类型如下:
+    BEGIN - 读取内容之前执行的操作. 必须配置action
+    END - 读取所有内容之后执行的操作. 必须配置action
+    <expression> - expression为非0数字或非空字符串则执行后续action
+    /<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE)
+    <begin>,<end> - 指定起始行和结束行(包含)
 
 
-action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类型如下:
-	1.表达式
-		调用函数和变量赋值
+action - 对匹配行的操作. 默认为print $0. 语句类型如下:
+    1.表达式
+	调用函数或对变量赋值
 
 	2.控制语句
 		类似于C语言的控制语句, 如if/for/while等. 具体如下:
@@ -307,9 +303,11 @@ action - 对匹配行的操作, 使用'{}'限定. 默认为{print $0}. 语句类
 ** pattern和action可省略其一, 但不可同时省略
 
 pattern/action可用变量列表:
-	$0 - 代表当前record内容
-	$1/$2... - 代表第N个字段内容, N不局限于1位数
-	** 当对$1/$2...赋值时, $0会移除首尾空格
+    $0 - 代表当前行内容
+    $1/$2... - 代表第N个字段内容, N不局限于1位数
+    NR - 当前加载的行数
+	
+
 	ARGC - 指令行的参数个数
 	ARGIND - 当前文件所在的ARGV索引号
 	ARGV - 数组, 包含指令行的指令和文件名称(不包含参数和指令), 数组索引由0起始
@@ -328,7 +326,6 @@ pattern/action可用变量列表:
 		"" - 将record的每一个字符都划分为一个field
 	IGNORECASE - 用于字段或字段分隔符的regular expression模式匹配. 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
 	NF - 当前行的field数量(field numbers of record)
-	NR - 文件内容的记录数(record number of files), 用于所有文件
 	OFMT - CONVFMT早期变量形式
 	OFS - 输出显示的字段分隔符. 默认为" "
 	ORS - 输出显示的record分隔符. 默认为"\n"
@@ -390,6 +387,33 @@ Sal Carpenter, 73 6th Street, Boston MA
 John Daggett
 Eric Adams
 Sal Carpenter
+
+
+示例2 - 将字段分隔符设置为newline
+[steven@localhost ~]$ seq 6|awk 'BEGIN{RS="";FS="\n"};{print $2,$3,$4}'
+2 3 4
+
+
+示例3 - 指定分隔符
+[steven@localhost bash]$ cat score-table
+name,math,english,chinese
+david,96,60,80
+lily,79,89,92
+peter,86,79,90
+
+[steven@localhost bash]$ awk -F , '{print $2}' score-table
+math
+96
+79
+86
+
+[steven@localhost bash]$ awk -v FS=, '{print $2}' score-table
+math
+96
+79
+86
+
+
 
 
 示例1 - 在正文内容前后添加内容
