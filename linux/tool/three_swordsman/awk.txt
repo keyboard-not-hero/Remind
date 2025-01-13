@@ -17,7 +17,10 @@ awk [option] -f [<script_file>] [<file>]
 ** 当前行字段数量为NF, 所以最后一个字段使用$NF引用
 
 
+注意事项:
 1.#之后的内容为注释内容
+2.AWKPATH变量, 用于-f和-i参数查找文件路径, 默认为".:/usr/local/share/awk"
+3.AWKLIBPATH变量, 用于-l参数查找文件路径, 默认为"/usr/local/lib/gawk"
 
 
 option参数
@@ -51,13 +54,15 @@ option参数
 -F <field_separator>, --field-separator <field_separator>
     指定字段分隔符
     默认为空格/<tab>
-    不能指定newline, 因为会与行分割符冲突. 指定字段分隔符为newline方式: 'BEGIN{RS="",FS="\n"}'
 
 -i <source_file>, --include <source_file>
     导入库文件
     与-f的差异:
 	1.-f为program, 可以不需要额外指定-e; -i为导入库, 需要额外指定-f或-e
 	2.-f可重复多次指定某文件; -i重复指定文件时, 自动取消重复内容
+
+-l <name>, --load <name>
+    加载动态库
 
 -P, --posix
     使用POSIX模式, disable GNU awk拓展特征
@@ -84,26 +89,24 @@ script包含格式如下:
 
 
 pattern - 匹配符合要求的行. 默认为所有行. 格式类型如下:
+    /<re>/ - 对record($0)内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE)
+    <expression> - expression结果为true(非0数字或非空字符串), 则执行后续action. 如: $1 ~ /re/
+    <begin>,<end> - 指定起始行和结束行(包含)
     BEGIN - 读取内容之前执行的操作. 必须配置action
     END - 读取所有内容之后执行的操作. 必须配置action
-    <expression> - expression为非0数字或非空字符串则执行后续action
-    /<re>/ - 对指定内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE)
-    <begin>,<end> - 指定起始行和结束行(包含)
+    <null> - 匹配所有record
 
 
-action - 对匹配行的操作. 默认为print $0. 语句类型如下:
-    1.表达式
-	调用函数或对变量赋值
-
-	2.控制语句
-		类似于C语言的控制语句, 如if/for/while等. 具体如下:
-			1)if语句
-				if(condition)
-					statement1
-				else
-					statement2
-				或
-				if(condition) statement1;else statement2
+action - 对匹配行的操作. 默认为print $0. 语句包含内容类型如下:
+    1.控制语句
+        类似于C语言的控制语句, 如if/for/while等. 具体如下:
+	    1)if语句
+	    if(condition)
+	        statement1
+	    else
+		statement2
+	    或
+	    if(condition) statement1;else statement2
 			2)while语句
 				while(condition)
 					statement
@@ -145,91 +148,171 @@ action - 对匹配行的操作. 默认为print $0. 语句类型如下:
 				exit [exit_code]
 					马上执行END pattern的action, 并退出awk
 
-	3.符合语句
-		混合多个语句
 
-	4.输入语句
+	2.输入语句
 		getline指令或next语句
 
-	5.输出指令
-		print语句
-			1)print - 代表print $0
-			2)print $1,$2,... - 以','分隔打印项, 代表使用OFS指定符号分隔内容项(默认为" ")
-			3)print $1 $2 ... - 以' '分隔打印项, 代表内容项紧邻
-		printf语句
-			printf fmt,item1,item2,... - 完整指定打印格式, item<N>用于替换fmt中的占位符内容. 占位符列表如下:
-			%c - 字符
-			%d, %i - 十进制数字. 如: %4d, 4代表占4个字符位置
-			%e, %E - 科学计数法. 如: %4.2e
-			%f, %F - 浮点数. 如: %4.3f
-			%g, %G - 科学计数法或浮点数
-			%o - 无符号八进制数字
-			%s - 字符串
-			%u - 无符号十进制数字
-			%x, %X - 无符号十六进制数字
-			占位符更细节的格式控制符号(添加在%与字符之间):
-				N$ - 代表指定引用item<N>的值. 如: %2$s代表引用item2的值, 作为字符串输出
-				- - 左对齐内容. 如: %-4s代表将字符串内容占用四个字符位置, 并且靠左对齐. 默认右对齐
-				+ - 给数字添加正负符号. 如: %+4d在正数前添加'+', 负数前添加'-'
-				# - 用于八进制/十六进制数字时, 添加0/0x/0X前缀. 如: %#x
-				0 - 用于数字格式, 在数字前的多余空间添加'0'
-				' - 使用千分位符号进行每三位使用','分隔数字(只适用于指定locale)
-				<width> - 最小占据的字符宽度. 如: %4d
-				.<prec> - 对于不同类型数据, 表示不同意义. 如下:
-					1)用于%d,%i,%o,%u,%x,%X时, 表示输出的最小数字数量
-					2)用于%e,%E,%f,%F时, 表示小数位数
-					3)用于%g,%G时, 表示最长的有效位数
-					4)用于%s时, 表示最多字符数量
-				** 可使用%*.*s, width, prec, item1格式额外指定width和precise
 
-	6.删除语句
-		delete arr[index]
-			从数组中删除元素
+    3.输出指令
+	print语句
+	    1)print <str>或print(<str>)格式
+	        将内容转化为字符串, 再进行打印输出
+	        将数字转化为字符串指定, 可以使用OFMT指定数字格式. 默认为%.6g
+	    2)print <str> > <file>格式
+	        将输出重定向到文件
+		文件不存在进行创建; 文件已存时, 在第一次使用print/printf打开时进行覆盖, 后续打开时进行append
+	    3)print <str> >> <file>格式
+	        将输出重定向到文件
+		文件不存在进行创建; 文件已存在则进行append
+	    4)print <str> | <shell_cmd>
+	        将结果传递给shell cmd
+	    ** <file>和<shell_cmd>指针会一直打开, 直到awk退出, 建议使用close(<file>|<shell_cmd>)手动退出
+	    str格式如下:
+	        print <str1><str2>
+	            多个字符串紧邻
+	        print <str1>,<str2>
+	            多个字符串使用OFS作为分隔符
+	        print <str1>\n<str2>
+	            多个字符串使用换行符作为分隔符
+	        ** 多个print之间使用ORS作为分隔符
+	
+	printf语句
+	    1)printf <format>,<str>或printf(<format>,<str>)格式
+	    2)printf(<format>,<str>) > <file>
+	        将输出重定向到文件
+		文件不存在进行创建; 文件已存时, 在第一次使用print/printf打开时进行覆盖, 后续打开时进行append
+	    3)printf(<format>,<str>) >> <file>
+	        将输出重定向到文件
+		文件不存在进行创建; 文件已存在则进行append
+	    4)printf <format>,<str> | <shell_cmd>
+	        将结果传递给shell cmd
+	    ** <file>和<shell_cmd>指针会一直打开, 直到awk退出, 建议使用close(<file>|<shell_cmd>)手动退出
+	    格式指定标识符如下:
+		%c - 字符串的第一个字符或数字对应编码的字符
+		%d, %i - 十进制数字
+		%e, %E - 科学计数法
+		%f, %F - 浮点数. 如: %4.3f
+		%g, %G - 科学计数法或浮点数, 选择使用字符较少的方式
+		%o - 无符号八进制数字
+		%s - 字符串
+		%u - 无符号十进制数字
+		%x, %X - 无符号十六进制数字
+		%% - 打印字符'%', 不消耗后续str占位
+		    格式更细节的格式控制符号(添加在%与字符之间):
+			N$ - 代表指定引用<strN>的值. 如: %2$s代表引用str2的值, 作为字符串输出
+			- - 左对齐内容
+			" " - 在正数前面添加空格, 在负数前面添加'-'
+			+ - 给数字添加正负符号. 如: %+4d在正数前添加'+', 负数前添加'-'
+			# - 给不同格式内容添加指定标记. 详细如下:
+			    1) %e - 无论如何, 都会包含小数点
+			    2) %f - 无论如何, 都会包含小数点
+			    3) %g - 保留小数点后的0
+			    4) %o - 添加0前缀
+			    5) %x - 添加0x前缀
+			0 - 用于数字格式, 右对齐, 空白部分填充'0'
+			' - 使用千分位符号进行每三位使用','分隔数字(只适用于指定locale)
+			<width> - 最小字符宽度. 如: %4d
+			.<prec> - 对于不同类型数据, 表示不同意义. 如下:
+			    1)用于%d,%i,%o,%u,%x,%X时, 表示输出的最小数字数量
+			    2)用于%e,%E,%f,%F时, 表示小数位数
+			    3)用于%g,%G时, 表示最长的有效位数
+			    4)用于%s时, 表示最大字符数量
+			    ** 可使用printf(%*.*s, width, prec, str1)格式读取width和precise
 
-	特殊字符:
-		\47 - '符号
-		\42 - "符号
 
-	算术运算符:
-		x^y
-		x**y
-			求幂运算符
-		-x
-			对数取反
-		x*y
-			乘法
-		x/y
-			除法. 结果为浮点数
-		x%y
-			求余数
-		x+y
-			加法
-		x-y
-			减法
-		++x
-			自增运算符(pre-increment)
-		x++
-			自增运算符(post-increment)
-		--x
-			自减运算符(pre-decrement)
-		x--
-			自减运算符(post-decrement)
+    4.特殊字符:
+        \47 - '符号
+	\42 - "符号
 
-	布尔运算符:
-		true(布尔变量)
-			非0数字或非空字符串
-		false(布尔变量)
-			数字0或空字符串
-		||
-			短路或
-		&&
-			短路与
-		!
-			非
-	条件表达式
-		<condition>?<true_exp>:<false_exp>
-			当condition为真时, 取结果true_exp; 当condition为假时, 取结果false_exp
-	built-in函数
+
+    5.算术运算符:
+        x^y
+	x**y
+	    求幂运算符
+	
+	-x
+	    对数取反
+
+        x*y
+	    乘法
+
+	x/y
+	    除法. 结果为浮点数
+
+	x%y
+	    求余数
+
+	x+y
+	    加法
+	
+	x-y
+	    减法
+	
+	++i
+	    将变量值+1, 然后将结果运用于表达式
+
+        i++
+	    将i原来的值运用于表达式, 然后将变量值+1
+
+	--i
+	    将变量值-1, 然后将结果运用于表达式
+
+        i--
+	    将i原来的值运用于表达式, 然后将变量值-1
+
+
+    6.逻辑运算符
+        x < y
+	    小于符号
+	
+	x <= y
+	    小于等于符号
+	
+	x > y
+	    大于符号
+	
+	x >= y
+	    大于等于符号
+
+	x == y
+	    等于
+
+	x != y
+	    不等于
+	
+	x ~ y
+	    字符串x匹配正则表达式y
+	
+	x !~ y
+	    字符串x不匹配正则表达式y
+	
+	<subscript> in <array>
+	    数组array中是否有索引为subscript的元素
+
+	||
+	    短路或
+		
+	&&
+	    短路与
+	
+	!
+	    非
+	
+	<condition>?<true_exp>:<false_exp>
+	    条件表达式. 当condition为真时, 取结果true_exp; 当condition为假时, 取结果false_exp
+   
+   
+    7.built-in函数
+	sub(regexp, replacement[, target])
+	    使用字符串replacement替换record中regexp第一个匹配到的内容
+	    gensub(regexp, replacement, 1[, target])版本
+
+	tolower(str)
+	    将内容转化为小写
+
+	toupper(str)
+	    将内容转化为大写
+
 		gensub(regexp, replacement, how[, target])
 			从target中查找匹配regexp正则模式的内容, 并使用replacement替换
 			target默认为$0
@@ -254,8 +337,6 @@ action - 对匹配行的操作. 默认为print $0. 语句类型如下:
 			类似于printf, 但不打印结果, 返回结果
 		sqrt(number)
 			求number的平方根
-		sub(regexp, replacement[, target])
-			gensub(regexp, replacement, 1[, target])版本
 		substr(string, start[, length])
 			从字符串string中截取长度为length的子字符串, 该字符串由start位置开始截取
 		typeof(variable)
@@ -271,72 +352,92 @@ action - 对匹配行的操作. 默认为print $0. 语句类型如下:
 					字符串
 				strnum
 					纯数字字符串
-	运算符优先级(由高到低)
-		()
-			分组
-		$
-			field引用
-		++ --
-			自增/自减
-		^ **
-			求幂
-		+ - !
-			正/负/逻辑非
-		* / %
-			乘法/除法/求余
-		+ -
-			加法/减法
-		<null>
-			字符串连接符号, 无具体符号, 字符串紧密相连
-		< <= == != > >= >> | |&
-			比较符号和重定向符号
-		~ !~
-			匹配/不匹配
-		in
-			数组成员
-		&&
-			逻辑与
-		||
-			逻辑或
-		?:
-			条件表达式
+
+
+    8.运算符优先级(由高到低)
+	()
+	    分组
+	
+	$
+	    field引用
+	
+	++ --
+	    自增/自减
+	
+	^ **
+	    求幂
+	
+	+ - !
+	    正/负/逻辑非
+	
+	* / %
+	    乘法/除法/求余
+	
+	+ -
+	    加法/减法
+	
+	<null>
+	    字符串连接符号, 无具体符号, 字符串紧密相连
+	
+	< <= == != > >= >> | |&
+	    比较符号和重定向符号
+	
+	~ !~
+	    匹配/不匹配
+	
+	in
+	    数组成员
+	
+	&&
+	    逻辑与
+	
+	||
+	    逻辑或
+	
+	?:
+	    条件表达式
+
+        = += -= *= /= %= ^= **=
+	    赋值运算符
+
 ** pattern和action可省略其一, 但不可同时省略
 
+
 pattern/action可用变量列表:
-    $0 - 代表当前行内容
+    $0 - 代表当前record内容
     $1/$2... - 代表第N个字段内容, N不局限于1位数
-    NR - 当前加载的行数
+    IGNORECASE - 用于字段或字段分隔符的regular expression模式匹配. 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
+    FILENAME - 当前record所在文件名称
+    FNR - 当前所在record编号, 多文件之间重置
+    NR - 当前所在record编号, 多文件之间共享
+    RS - 记录分隔符(record separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
+        "\n" - 换行符, 默认值
+        "" - 一个或多个空行(即段落, 移除段落前和段落后的空行)
+        "\n\n+" - 一个或多个空行(即段落, 不移除段落前和段落后的空行)
+    RT - 当RS包含一个字符时, 该值与RS一致; 当RS多于一个字符时(即RE), 该值为与RE匹配的字符串内容
+    ORS - 输出显示的record分隔符. 默认为"\n"
+    FS - 字段分隔符(field separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
+	" " - 单个或多个spaces/tables/newlines(移除record首尾空格), 默认选项
+	"[ ]" - 使用单个空格符作为字段分隔符
+	"[ \t\n]+" - 单个或多个spaces/tables/newlines(不移除record首尾空格)
+	"" - 将record的每一个字符都划分为一个field
+    OFS - 输出的字段分隔符. 默认为" "
+    FIELDWIDTHS - 指定各个列的固定宽度. 格式: FIELDWIDTHS="<col1_wid> <col2_wid> ...". 
+	自version 4.2起, 新增以下两个特性:
+	    1)格式: FIELDWIDTHS= "<col1_wid> [<skip_col>:]<col2_wid> ..."
+	    2)最后一个列宽可指定为'*', 代表不固定长度
+    FPAT(Field Pattern) - 使用regular expression模式指定field
+    NF - 当前record的field数量
+    CONVFMT - 指定数字转化为字符串的格式. 默认为%.6g
+    OFMT - CONVFMT向后兼容变量
 	
 
 	ARGC - 指令行的参数个数
 	ARGIND - 当前文件所在的ARGV索引号
 	ARGV - 数组, 包含指令行的指令和文件名称(不包含参数和指令), 数组索引由0起始
-	CONVFMT - 指定数字转化为字符串的格式
-	FIELDWIDTHS - 指定各个列的固定宽度. 格式: FIELDWIDTHS="<col1_wid> <col2_wid> ...". 
-		自version 4.2起, 新增以下两个特性:
-			1)格式: FIELDWIDTHS= "<col1_wid> [<skip_col>:]<col2_wid> ..."
-			2)最后一个列宽可指定为'*', 代表不固定长度
-	FILENAME - 当前所在文件名称
-	FNR - 当前文件的所在记录(record number of current file)
-	FPAT - 使用regular expression模式指定field
-	FS - 字段分隔符(field separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
-		" " - 单个或多个spaces/tables/newlines(移除record首尾空格), 默认选项
-		"[ \t\n]" - 单个或多个spaces/tables/newlines(不移除record首尾空格)
-		"[ ]" - 使用单个空格符作为字段分隔符
-		"" - 将record的每一个字符都划分为一个field
-	IGNORECASE - 用于字段或字段分隔符的regular expression模式匹配. 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
-	NF - 当前行的field数量(field numbers of record)
-	OFMT - CONVFMT早期变量形式
-	OFS - 输出显示的字段分隔符. 默认为" "
-	ORS - 输出显示的record分隔符. 默认为"\n"
 	PREC - 浮点数的精度. 默认为53
 	RLENGTH - math()返回的匹配子字符串长度, 无匹配时返回-1
 	RSTART - math()返回的子字符串在字符串中的起始定位, 无匹配时返回0
-	RS - 记录分隔符(record separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
-		"\n" - 换行符, 默认值
-		"" - 一个或多个空行(即段落, 移除段落前和段落后的空行)
-		"\n\n+" - 一个或多个空行(即段落, 不移除段落前和段落后的空行)
-	RT - 记录中断符, 当RS包含一个字符时, 该值与RS一致; 当RS多余一个字符时(即RE), 该值为与RE匹配的内容
 	** 当输入内容不以RS匹配的内容结尾时, RT为null字符串
 	SUBSEP - 角标分隔符, 用于分隔多维数组的不同维度subscript. 默认为'\034'
 
@@ -360,11 +461,6 @@ awk数组:
 当没有提供输入文件时, 从stdandard input读取输入
 ** 可在指定文件之前对变量临时进行赋值, 该赋值只影响赋值操作之后指定的文件
 
-
-
-相关环境变量:
-1.AWKPATH - 用于-f和-i参数查找文件路径
-2.AWKLIBPATH - 用于-l参数查找文件路径
 
 
 mail-list与inventory-shipped文件目录:
@@ -412,6 +508,364 @@ math
 96
 79
 86
+
+
+示例4 - 使用指定字符串替换匹配内容
+[steven@localhost bash]$ cat mail-list
+Amelia       555-5553     amelia.zodiacusque@gmail.com    F
+Anthony      555-3412     anthony.asserturo@hotmail.com   A
+Becky        555-7685     becky.algebrarum@gmail.com      A
+Bill         555-1675     bill.drowning@hotmail.com       A
+Broderick    555-0542     broderick.aliquotiens@yahoo.com R
+Camilla      555-2912     camilla.infusarum@skynet.be     R
+Fabius       555-1234     fabius.undevicesimus@ucb.edu    F
+Julie        555-6699     julie.perscrutabor@skeeve.com   F
+Martin       555-6480     martin.codicibus@hotmail.com    A
+Samuel       555-3430     samuel.lanceolis@shu.edu        A
+Jean-Paul    555-2127     jeanpaul.campanorum@nyu.edu     R
+
+[steven@localhost bash]$ awk '{sub(/gmail/, "qq") ; print}' mail-list
+Amelia       555-5553     amelia.zodiacusque@qq.com    F
+Anthony      555-3412     anthony.asserturo@hotmail.com   A
+Becky        555-7685     becky.algebrarum@qq.com      A
+Bill         555-1675     bill.drowning@hotmail.com       A
+Broderick    555-0542     broderick.aliquotiens@yahoo.com R
+Camilla      555-2912     camilla.infusarum@skynet.be     R
+Fabius       555-1234     fabius.undevicesimus@ucb.edu    F
+Julie        555-6699     julie.perscrutabor@skeeve.com   F
+Martin       555-6480     martin.codicibus@hotmail.com    A
+Samuel       555-3430     samuel.lanceolis@shu.edu        A
+Jean-Paul    555-2127     jeanpaul.campanorum@nyu.edu     R
+
+
+示例5 - 大小写不敏感匹配
+1)使用toupper或tolower函数
+[steven@localhost bash]$ cat inventory-shipped
+Jan  13  25  15 115
+Feb  15  32  24 226
+Mar  15  24  34 228
+Apr  31  52  63 420
+May  16  34  29 208
+Jun  31  42  75 492
+Jul  24  34  67 436
+Aug  15  34  47 316
+Sep  13  55  37 277
+Oct  29  54  68 525
+Nov  20  87  82 577
+Dec  17  35  61 401
+
+Jan  21  36  64 620
+Feb  26  58  80 652
+Mar  24  75  70 495
+Apr  21  70  74 514
+
+[steven@localhost bash]$ awk '$1~/jan/' inventory-shipped
+
+[steven@localhost bash]$ awk 'tolower($1)~/jan/' inventory-shipped
+Jan  13  25  15 115
+Jan  21  36  64 620
+
+2)配置IGNORECASE变量为非0值
+[steven@localhost bash]$ cat inventory-shipped
+Jan  13  25  15 115
+Feb  15  32  24 226
+Mar  15  24  34 228
+Apr  31  52  63 420
+May  16  34  29 208
+Jun  31  42  75 492
+Jul  24  34  67 436
+Aug  15  34  47 316
+Sep  13  55  37 277
+Oct  29  54  68 525
+Nov  20  87  82 577
+Dec  17  35  61 401
+
+Jan  21  36  64 620
+Feb  26  58  80 652
+Mar  24  75  70 495
+Apr  21  70  74 514
+
+[steven@localhost bash]$ awk '$1~/jan/' inventory-shipped
+
+[steven@localhost bash]$ awk 'BEGIN{IGNORECASE=1};$1~/jan/' inventory-shipped 
+Jan  13  25  15 115
+Jan  21  36  64 620
+
+
+示例6 - 指定字段为固定长度
+[steven@localhost bash]$ cat demo_01.txt
+ 10:06pm  up 21 days, 14:04,  23 users
+User     tty       login  idle   JCPU   PCPU  what
+hzuo     ttyV0     8:58pm            9      5  vi p24.tex
+hzang    ttyV3     6:37pm    50                -csh
+eklye    ttyV5     9:53pm            7      1  em thes.tex
+dportein ttyV6     8:17pm  1:47                -csh
+gierd    ttyD3    10:00pm     1                elm
+dave     ttyD4     9:47pm            4      4  w
+brent    ttyp0    26Jun91  4:46  26:46   4:41  bash
+dave     ttyq4    26Jun9115days     46     46  wnewmail
+
+[steven@localhost bash]$ cat example_01.txt
+BEGIN{FIELDWIDTHS="9 6 10 6 7 7 35"}
+NR>2{
+    idle=$4
+    sub(/^ +/,"",idle)
+    if(idle=="")
+        idle=0
+    if(idle~/:/){
+        split(idle,t,":")
+        idle=t[1]*60+t[2]
+    }
+    if(idle~/days/)
+        idle=idle*24*3600
+
+    print $1,$2,idle
+}
+
+[steven@localhost bash]$ awk -f example_01.txt demo_01.txt
+hzuo      ttyV0  0
+hzang     ttyV3  50
+eklye     ttyV5  0
+dportein  ttyV6  107
+gierd     ttyD3  1
+dave      ttyD4  0
+brent     ttyp0  286
+dave      ttyq4  1296000
+
+
+示例7 - 提取IP地址
+[steven@192 ~]$ ip add | awk 'NR==9{split($2,f,"/");printf("ip address: %s\n",f[1])}'
+ip address: 192.168.0.103
+
+
+示例8 - 对列进行正则匹配
+[steven@192 bash]$ cat demo_02.txt
+Robbins Arnold "1234 A Pretty Street  NE" MyTown MyState 12345-6789 USA
+
+[steven@192 bash]$ awk 'BEGIN{FPAT="([^ \t\n]+)|(\"[^\"]+\")"};{printf("NF= ",NF);for(i=1;i<=NF;i++){printf("$%d=<%s>\n",i,$i)}}' demo_02.txt
+NF= $1=<Robbins>
+$2=<Arnold>
+$3=<"1234 A Pretty Street  NE">
+$4=<MyTown>
+$5=<MyState>
+$6=<12345-6789>
+$7=<USA>
+
+
+示例9 - printf的使用
+[steven@localhost bash]$ awk 'BEGIN{printf "%2$s %1$s\n", "panic", "don\47t"}'
+don't panic
+
+[steven@localhost bash]$ seq 0 10|awk '{printf("%-4d\n",$0)}'|cat -A
+0   $
+1   $
+2   $
+3   $
+4   $
+5   $
+6   $
+7   $
+8   $
+9   $
+10  $
+
+[steven@localhost bash]$ seq -2 10|awk '{printf("% d\n",$0)}'
+-2
+-1
+ 0
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+
+[steven@localhost bash]$ seq -2 10|awk '{printf("%+d\n",$0)}'
+-2
+-1
++0
++1
++2
++3
++4
++5
++6
++7
++8
++9
++10
+
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%.0e\n",$0)}'
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+1e+03
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%#.0e\n",$0)}'
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+1.e+03
+
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%.0f\n",$0)}'
+1000
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+1010
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%#.0f\n",$0)}'
+1000.
+1001.
+1002.
+1003.
+1004.
+1005.
+1006.
+1007.
+1008.
+1009.
+1010.
+
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%g\n",$0)}'
+1000
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+1010
+[steven@localhost bash]$ seq 1000 1010|awk '{printf("%#g\n",$0)}'
+1000.00
+1001.00
+1002.00
+1003.00
+1004.00
+1005.00
+1006.00
+1007.00
+1008.00
+1009.00
+1010.00
+
+[steven@localhost bash]$ seq 1 10|awk '{printf("%o\n",$0)}'
+1
+2
+3
+4
+5
+6
+7
+10
+11
+12
+[steven@localhost bash]$ seq 1 10|awk '{printf("%#o\n",$0)}'
+01
+02
+03
+04
+05
+06
+07
+010
+011
+012
+
+[steven@localhost bash]$ seq 1 10|awk '{printf("%x\n",$0)}'
+1
+2
+3
+4
+5
+6
+7
+8
+9
+a
+[steven@localhost bash]$ seq 1 10|awk '{printf("%#x\n",$0)}'
+0x1
+0x2
+0x3
+0x4
+0x5
+0x6
+0x7
+0x8
+0x9
+0xa
+
+[steven@localhost bash]$ LC_ALL=C awk 'BEGIN { printf "%\47d\n", 1234567 }'
+1234567
+[steven@localhost bash]$ LC_ALL=en_US.UTF-8 awk 'BEGIN { printf "%\47d\n", 1234567 }'
+1,234,567
+[steven@localhost bash]$ LC_ALL=zh_CN.UTF-8 awk 'BEGIN { printf "%\47d\n", 1234567 }'
+1,234,567
+
+
+示例10 - 将print结果传递给shell命令
+[steven@localhost bash]$ cat mail-list
+Amelia       555-5553     amelia.zodiacusque@gmail.com    F
+Anthony      555-3412     anthony.asserturo@hotmail.com   A
+Becky        555-7685     becky.algebrarum@gmail.com      A
+Bill         555-1675     bill.drowning@hotmail.com       A
+Broderick    555-0542     broderick.aliquotiens@yahoo.com R
+Camilla      555-2912     camilla.infusarum@skynet.be     R
+Fabius       555-1234     fabius.undevicesimus@ucb.edu    F
+Julie        555-6699     julie.perscrutabor@skeeve.com   F
+Martin       555-6480     martin.codicibus@hotmail.com    A
+Samuel       555-3430     samuel.lanceolis@shu.edu        A
+Jean-Paul    555-2127     jeanpaul.campanorum@nyu.edu     R
+
+[steven@localhost bash]$ awk 'BEGIN{sort="sort -r"};{print $1 | "sort -r"};END{close(sort)}' mail-list
+Samuel
+Martin
+Julie
+Jean-Paul
+Fabius
+Camilla
+Broderick
+Bill
+Becky
+Anthony
+Amelia
+
+
+示例11 - 将文件名修改为小写
+[steven@localhost bash]$ ls
+AWKVARS.OUT  DEMO_01.SH  DEMO_01.TXT  DEMO_02.TXT  DEMO_03.TXT  EXAMPLE_01.TXT  INVENTORY-SHIPPED  MAIL-LIST  SCORE-TABLE
+
+[steven@localhost bash]$ ls -1|awk 'BEGIN{bash="bash"};{printf("mv %s %s\n",$0,tolower($0)) | bash};END{close(bash)}'
+
+[steven@localhost bash]$ ls
+awkvars.out  demo_01.sh  demo_01.txt  demo_02.txt  demo_03.txt  example_01.txt  inventory-shipped  mail-list  score-table
+
+
 
 
 

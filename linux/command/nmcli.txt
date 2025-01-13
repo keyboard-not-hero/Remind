@@ -178,19 +178,43 @@ add [save {yes | no}] {<option> <value> | [+-]<setting.property> <value>}...
     使用指定propertys创建新connection. 列表如下:
         save - 是否将配置保存到磁盘. 默认为yes
         setting.property配置规则参考nmcli connection modidy
-    构造connection必须包含connection.type. type列表如下:
-        ethernet/wifi/wimax/pppoe/gsm
-        cdma/infiniband/bluetooth/vlan/bond
-        bond-slave/team/team-slave/bridge/bridge-slave
-        vpn/olpc-mesh/adsl/tun/ip-tunnel
-        macvlan/vxlan/dummy
+    构造connection必须包含connection.type. type值与对应简写列表如下:
+        ethernet - 802-3-ethernet
+	wifi - 802-11-wireless
+	wimax
+	pppoe
+	gsm
+	cdma
+	bluetooth
+	vlan
+	bridge
+        vpn
+	adsl
+	tun
+	ip-tunnel
+        macvlan
+	vxlan
+	dummy
+	** 简写只能用于简写type, 全名称可用于connection.type和type
+    常用属性名称的简称
+        con-name - connection.id
+	ifname - connection.interface-name
+	type - connection.type
+	ip4 - ipv4.addresses和ipv4.method=manual的结合体
+	gw4 - ipv4.gateway
+	ip6 - ipv6.addresses和ipv6.method=manual的结合体
+	gw6 - ipv6.gateway
+	ssid - wireless.ssid
+	mode - wireless.mode
+	mtu - wireless.mtu
+	mac - wireless.mac-address
 
 
 edit {[id | uuid | path] <id> | [type <type>] [con-name <name>]}
     使用交互式编辑器, 编辑已存在的connection或创建新connection. 列表如下:
         id - 用于编辑已存在connection
         type - 指定新connection的connection.type property. 参考nmcli connection add
-        con-name - 指定新connection的connection.id property
+        con-name - 指定新connection的connection.id property. 参考nmcli connection add
 
 
 clone [--temporary] [id | uuid | path] <id> <new_name>
