@@ -724,5 +724,26 @@ _______
 2_____
 
 
+示例21 - 将stdin的内容添加到指定行之后
+[steven@localhost bash]$ cat demo_05.txt
+This is first line
+This is second line
+This is third line
+This is fourth line
+This is fifth line
+
+[steven@localhost bash]$ sed '2r /dev/stdin' demo_05.txt << EOF > demo_06.txt
+> Love is best
+> EOF
+
+[steven@localhost bash]$ cat demo_06.txt
+This is first line
+This is second line
+Love is best
+This is third line
+This is fourth line
+This is fifth line
+
+
 
 最后编辑于: 2025-01-08

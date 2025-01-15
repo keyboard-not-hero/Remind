@@ -21,7 +21,8 @@ script通则:
 
 3) let <operation>
 
-4) declare -i <operation>
+4) declare -i <var>
+<operation>
 
 2.小数运算
 将算式交给bc
@@ -66,45 +67,6 @@ script执行方式:
 3.使用source执行脚本
 
 ** 1/2在子bash中执行指令, 3在当前bash中执行指令
-
-
-
-脚本中的变量
-$#    脚本名称后的参数个数(3个)
-
-$0    脚本名称(demo.sh)
-
-$<number>    对应的参数($1为arg1...$3为arg3, 当number为两位或以上时, 使用{}限定). 参数以IFS变量(默认为<space>)作为分割符
-
-"$@"    所有参数的字符串序列"$1" "$2" "$3" ...
-
-"$*"    所有参数组合的字符串"$1 $2 $3 ..."; 默认以空白键分隔参数
-
-参数引用偏移: 
-shift [number]    将参数引用向右偏移number位(如: 使用shift 1后, $1为arg2, $2为arg3). number参数省略时, 默认为1. 多次shift操作会进行叠加
-
-示例
-[steven@localhost bash]$ vi demo.sh
-#!/bin/bash
-
-echo "$#"
-echo "$0"
-echo "$1 $2"
-echo "$@"
-echo "$*"
-shift
-echo "$2"
-shift 1
-echo "$2"
-
-[steven@localhost bash]$ bash demo_01.sh 10 9 8 7 6
-5
-demo_01.sh
-10 9
-10 9 8 7 6
-10 9 8 7 6
-8
-7
 
 
 
