@@ -221,7 +221,6 @@ format
 	    4)用于%s时, 表示最大字符数量
 
 
-
 pwd - 打印当前工作目录(Print current Working Directory)
 
 语法
@@ -233,54 +232,6 @@ pwd [-LP]
 
 -P
     显示symbolic link实际指向的目录
-
-
-
-read - 从shell读取单行内容, 并将内容分割赋予多个变量
-
-语法
-read [option] [<var>...]
-
-参数列表
--a <arr_name>
-    将每个单词赋予给数组元素, 使用IFS变量的值作为单词分隔符
-    数组索引由0起始
-
--d <delim>
-    使用delim的第一个字符中断输入行, 并且将整行赋值给一个变量
-    默认为换行符
-
--e
-    使用Readline获取输入行
-
--i <text>
-    如果已使用Readline获取输入行, 在输入前, 放入字符串text
-    必须配合-e使用
-
--n <n_chars>
-    读取指定字符后, 停止输入
-    默认行中断依然生效, 如换行符
-
--N <n_chars>
-    读取指定字符后, 停止输入
-    默认行中断不生效
-
--p <prompt>
-    显示提示字符串prompt, 并且尾部不含换行符
-
--r
-    将'\'视为普通打印字符, 而不是跳脱字符
-
--s
-    silent模式, 输入内容不显示
-
--t <timeout>
-    等待输入超时时间
-
--u <fd>
-    使用指定file description读取输入
-
-** 当单词少于变量, 多余变量赋值""; 当单词多于变量, 剩余单词全部赋予最后一个变量
 
 
 
@@ -297,17 +248,6 @@ option参数
 
 -p
     以umask <digital>格式显示新建文件(目录的权限)
-
-
-
-unalias - 取消别名
-
-语法
-unalias [-a] [<name>...]
-
-参数
--a
-    取消所有的别名
 
 
 
@@ -341,6 +281,138 @@ unset [option] [name...]
 
 
 
+
+bg - 将background suspend工作开始执行
+
+语法
+bg [jobspec]
+
+参数释义
+jobspec
+	以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
+
+
+
+break - 从循环(for/while/until/select)中彻底退出
+
+语法
+break [n]
+
+参数释义
+n
+	代表从内而外的n层循环中退出. n>=1
+
+
+
+continue - 从循环(for/while/until/select)中退出当前循环, 继续下一次循环
+
+语法
+break [n]
+
+参数释义
+n
+	代表从内而外的n层循环中退出当前循环, 继续下一次循环. n>=1
+
+
+
+declare - 对变量赋予类型
+typeset - 同declare
+
+语法
+declare [option] [name[=value]]
+
+参数释义
+定义参数
+-A
+	指定为关联式数组(数组/字符串为索引, 类似于dict)
+
+-a
+	指定为索引式数组(数字为索引)
+
+-F
+	指定为函数名称
+
+-f
+	指定为函数
+
+-g
+	作用与函数中时, 创建全局变量
+
+-i
+	指定为整数类型
+
+-l
+	定义为小写字符, 赋予的所有大写字母自动转化为小写
+
+-n
+	变量作为其他变量的引用
+
+-p
+	显示变量的值
+	当提供name时, 除了-f与-F, 其他参数被忽略
+	不提供name时, 显示对应类型所有变量的值
+
+-r
+	定义为只读模式
+
+-t
+	定义name为trace属性, 适用于function继承DEBUG和RETURN traps
+
+-u
+	定义为大写字符, 赋予的所有小写字母自动转化为大写
+
+-x
+	将name设置为环境变量
+
+**使用'+'代替'-'可关闭特性, 不适用于a/A/r
+**当未提供name部分时, 为查看该类型变量列表
+
+
+
+enable - 控制built-in指令开关
+
+语法：
+enable [option] [built-in]
+
+参数释义
+
+	使built-in可用
+
+-a
+	打印所有built-in列表(enable/disable)
+
+-d
+	删除built-in的上一个-f配置
+
+-f filename
+	指定built-in从filename路径读取
+
+-n
+	使built-in不可用
+
+-p
+	打印built-in enable列表, 配合-n打印disable列表
+
+-s
+	限制使用POISX built-in
+
+
+
+eval - 将多个参数组合成一条command内容
+
+语法
+eval [arg1 ...]
+
+
+
+fg - 将job在foreground恢复运行
+
+语法
+fg [jobspec]
+
+参数释义
+jobspec
+	以%开头, 后面跟随整数, 用以指代job号码. 默认为当前工作(jobs序号中附带'+'标记)
 
 
 
@@ -477,6 +549,130 @@ history-事件_调节器
 
 
 
+jobs - 对bg/fg的程序进行查看
+
+语法
+jobs [option] [jobspec]
+
+参数释义
+-l
+	罗列job信息, 其中包括PID
+
+-n
+	在上次查看后, 经过状态变化的job
+
+-p
+	只罗列job的PID
+
+-r
+	只罗列running状态的job
+
+-s
+	只罗列stopped状态的job
+
+-x command [arg...]   将command或arg中的jobspec替换成PID, 并执行command
+
+
+
+let - 数学运算指令
+
+语法
+let arg [arg...]
+
+参数释义
+arg
+	数学运算表达式. 当最后一个运算为0时, 返回1；否则返回0
+
+
+
+printf - 指定格式打印内容
+
+语法
+printf [-v var] format [arg...]
+
+参数释义
+
+	将格式化字符串打印到stdout
+
+-v
+	将格式化字符串赋予变量var, 替代打印到stdout
+
+
+
+read - 从输入行读取内容, 并将内容分割赋予多个变量
+
+语法：
+read [OPTION] [VAR...]
+
+参数释义：
+-a <arr_name>
+	以单词分隔符(空格)分割单词, 并将每个单词赋予指定数组
+	数组索引由0起始
+
+-d <delim>
+	使用delim的第一个字符中断输入行
+	默认为换行符
+
+-n <n_chars>
+	指定读取多少个字符后停止
+	当-d指定截止字符时, 截取的字符数量小于该值, 则遵守-d规则
+
+-N <n_chars>
+	指定读取多少个字符后停止
+	-d选项的字符不视为特殊符号
+
+-p <prompt>
+	显示提示字符串prompt, 并且尾部不含换行符
+
+-r
+	将'\'视为普通打印字符, 而不是跳脱字符
+
+-s
+	silent模式, 输入内容不显示
+
+-t <timeout>
+	等待输入超时时间
+
+-u <fd>
+	使用fd文件描述符来注明输入方式. 如: 0对应stdin, 也可使用exec 3< <file>来重定向
+
+** 当未特殊说明, 输入被IFS变量内容分割为单词
+** 当单词少于变量, 多余变量赋值""; 当单词多余变量, 剩余单词全部赋予最后一个变量
+** 当未提供VAR时, 将值赋予变量REPLY
+
+
+
+readonly - 修改变量权限为只读
+
+语法
+readonly [option] [name[=value]...]
+
+参数释义
+-a
+	作用于索引数组
+
+-A
+	作用于关联数组. 类似于python的dict
+
+-f
+	作用于function
+
+-p
+	打印只读变量列表
+
+
+
+return - function返回给调用者的status code
+
+语法
+return [n]
+
+参数释义
+n
+	指定function返回给调用者的stat code. 默认为$?, 即方法内最后执行的结果stat code
+
+
+
 set - 配置bash各选项
 
 语法
@@ -597,6 +793,17 @@ set [option] [arg...]
 
 
 
+shift - 平行移动命令行参数内容
+
+语法
+shift [n]
+
+参数释义
+n
+	将$1 $2 ...向做平移n位, 最左边n位被移除, 剩余后续$#-n位. 当n<0或n>$#时, shift操作无效
+
+
+
 shopt - 修改bash选项
 
 语法
@@ -604,19 +811,19 @@ shopt [option] [optname...]
 
 option参数
 -o
-    限制optname为可通过set -o获取的值
+	限制optname为可通过set -o获取的值
 
 -p
-    打印bash选项已配置列表
+	打印bash选项已配置列表
 
 -q
-    quiet模式, 不打印一般信息
+	quiet模式, 不打印一般信息
 
 -s
-    set(enable)相关选项
+	set(enable)相关选项
 
 -u
-    unset(disable)相关选项
+	unset(disable)相关选项
 
 ** 当提供多个optname时, 所有操作生效才返回status code=0
 
@@ -728,3 +935,139 @@ sourpath
 
 
 
+trap - 配置signal及对应指令操作
+
+语法
+trap [option] [[arg] sigspec...]
+
+参数释义
+-p
+	打印sigspec及对应的command列表
+
+-l
+	打印signum和对应sigspec列表
+
+** arg代表对应sigspec的comand执行操作
+** 当arg未提供或者为'-', 则恢复该sigspec默认操作
+** 当arg为"", 则忽略sigspec对应的操作
+
+
+
+type - 判断文件类型
+
+语法
+type [option] <name>...
+
+参数释义
+-a
+	
+	打印所有包含可执行的name位置
+
+-f
+	打印name可执行位置, 并且不查询function类型. 只显示第一个匹配项
+
+-p
+	只有当-t为file时, 返回文件
+
+-P
+	类似于-p, 但不论类型强制搜索PATH路径
+
+-t	
+	打印name的类型, 只显示第一个匹配项. 类型列表如下:
+
+		alias - alias简称
+
+		keyword - shell保留字
+
+		function - 方法function
+
+		builtin - built-in指令
+
+		file - 普通文件(根据PATH搜索指令)
+
+
+
+ulimit - 限制文件系统可获得文件大小
+
+语法
+ulimit [option] [limit]
+
+参数释义
+-H
+	对文件进行硬性大小限制, 不可超过
+
+-S
+	对文件进行软性大小限制, 可超过, 超过后提示
+
+-a
+	显示当前空间限制详情
+
+-b
+	socket buffer容量大小
+
+-c
+	限制核心文件大小
+
+-d
+	限制数据帧大小
+
+-e
+	限制调度优先级(nice)
+
+-f
+	限制当前shell和子shell创建的文件大小
+
+-l
+	限制可锁定的内存容量
+
+-n
+	限制可同时开启的文件数量
+
+-t
+	限制CPU使用时间
+
+-u
+	限制单个用户可创建的进程数
+
+-T
+	限制创建的thread数量
+
+**当limit未提供时, 打印对应类型的限制容量
+
+
+
+umask - 文件创建的初始mask
+
+语法
+umask [option] [mode]
+
+参数释义
+-p
+	显示mask, 可重用的数字格式mask
+
+-S
+	显示初始权限, u/g/o结合权限位rwx标注的mask
+
+**mode可使用数字mask格式和字母初始权限格式
+
+
+
+unalias - 移除alias配置
+
+语法
+unalias [-a] [name...]
+
+参数释义
+-a
+	移除所有alias设定
+
+
+
+wait - 等待其他进程执行
+
+语法
+wait [-n] [PID|jobspec]
+
+参数释义
+-n
+	等待所有正在执行的进程完毕
