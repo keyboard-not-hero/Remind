@@ -253,4 +253,64 @@ arr[4] is: 5
 
 
 
+6.break
+break [n]
+    在for/while/until中使用, 跳出多层循环
+    默认n=1, 即跳出最内层循环
+
+示例 - break跳出双层循环
+[steven@localhost bash]$ cat demo_05.sh
+#!/bin/bash
+
+for i in $(seq 1 5)
+do
+    for j in $(seq 1 5)
+    do
+        echo "This is $i$j"
+	if [ $j == 2 ]
+	then
+            break 2
+        fi
+    done
+done
+[steven@localhost bash]$ ./demo_05.sh
+This is 11
+This is 12
+
+
+
+7.continue
+continue [n]
+    在for/while/until中使用, 直接开启多层循环的下一次循环
+    默认n=1, 即在最内层循环中, 开启下一次循环
+
+示例 - continue直接开启二层循环的下一次循环
+[steven@localhost bash]$ cat demo_06.sh
+#!/bin/bash
+
+for i in $(seq 1 5)
+do
+    for j in $(seq 1 5)
+    do
+        echo "This is $i$j"
+	if [ $j == 2 ]
+	then
+            continue 2
+        fi
+    done
+done
+[steven@localhost bash]$ ./demo_06.sh
+This is 11
+This is 12
+This is 21
+This is 22
+This is 31
+This is 32
+This is 41
+This is 42
+This is 51
+This is 52
+
+
+
 最后编辑于: 2025-01-14

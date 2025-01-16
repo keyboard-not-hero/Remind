@@ -1,145 +1,174 @@
-test - 检查文件类型和字符串/数字比较
+test - 评估条件表达式, 返回0(true)或1(false)
+** 每一个operator和operand之间, 都必须使用分隔符
 
 
-语法：
+语法
 test <expression>
-
 [ <expression> ]
 
 
 expression语法：
 文件类型
--b file
-	文件是否存在并且为块设备(硬盘)
+-a <file>
+-e <file>
+    文件存在
 
--c file
-	文件是否存在并且为字符设备(键盘)
+-b <file>
+    文件存在并且为块设备. 如: 硬盘
 
--d file
-	文件是否存在并且为目录
+-c <file>
+    文件存在并且为字符设备. 如: 键盘
 
--f file
-	文件是否存在并且为标准文件
+-d <file>
+    文件存在并且为目录
 
--h file	
--L file
-	文件是否存在并且为符号链接(symbolic link)
+-f <file>
+    文件存在并且为regular文件
 
--p file
-	文件是否存在并且为pipe(FIFO)文件
+-g <file>
+    文件存在, 并且为SGID文件
 
--S file
-	文件是否存在并且为socket文件
+-h <file>	
+-L <file>
+    文件存在, 并且为symbolic link
 
--t FD
-	FD是否为文件描述符(file descriptor)
+-k <file>
+    文件存在, 并且为SBIT文件
+
+-p <file>
+    文件存在, 并且为pipe(FIFO)文件
+
+-r <file>
+    文件是否存在并且为可读
+
+-s <file>
+    文件存在, 并且文件大小大于0 byte
+
+-t fd
+    文件描述符fd打开, 并且指向终端
+
+-u <file>
+    文件存在, 并且为SUID文件
+
+-w <file>
+    文件存在, 并且为可写
+
+-x <file>
+    文件存在, 并且为可执行(目录为可进入)
+
+-G <file>
+    文件存在, 并且所属组为当前登录用户有效组
+
+-N <file>
+    文件存在, 并且自上一次访问(access time)之后文件有变动(status time)
+
+-O <file>
+    文件存在, 并且所属用户为当前登录用户
+
+-S <file>
+    文件存在, 并且为socket文件
+
+<file1> -ef <file2>
+    file1和file2位于相同device, 并最终指向同一个inode number
+    symbolic link和hard link都符合
+
+<file1> -nt <file2>
+    file1新于file2(根据modify time)
+    file1存在而file2不存在
+
+<file1> -ot <file2>
+    file1旧于file2(根据modify time) 
+    file2存在而file1不存在
 
 
-访问权限
--g file
-	文件是否存在并且为SGID文件
 
--k file
-	文件是否存在并且为SBIT文件
+变量与参数
+-o <opt_name>
+    shell option开启
+    可通过set -o查看option列表
 
--r file
-	文件是否存在并且为可读
+-v <var_name>
+    变量已配置
 
--u file
-	文件是否存在并且为SUID文件
+-R <var_name>
+    变量已配置, 并且为name reference
 
--w file
-	文件是否存在并且为可写
-
--x file
-	文件是否存在并且为可执行(目录为可进入)
-
--O file
-	文件是否存在并且所属用户为当前登录用户
-
--G file
-	文件是否存在并且所属组为当前登录用户有效组
-
-
-文件特征
--e file
-	文件是否存在
-
--s file
-	文件是否存在并且文件大小大于0 byte
-
-file1 -nt file2
-	file1新于file2(根据mtime), 或者file1存在而file2不存在
-
-file1 -ot file2
-	file1旧于file2(根据mtime), 或者file2存在而file1不存在
-
-file1 -ef file2
-	file1和file2位于相同文件系统并拥有相同inode number
 
 
 字符串
--z str
-	str的长度为0
+-z <str>
+    str的长度为0
 
--n str
-str
-	str的长度不为0
+-n <str>
+<str>
+    str的长度不为0
 
-str1 =[=] str2
-	str1与str2相等
+<str1> == <str2>
+<str1> = <str2>
+    str1与str2相等
 
-str1 != str2
-	str1与str2不相等
+<str1> != <str2>
+    str1与str2不相等
+
+<str1> < <str2>
+    str1在str2之前, 按字符逐个比较(根据ASCII顺序)
+
+<str1> > <str2>
+    str1在str2之后, 按字符逐个比较(根据ASCII顺序)
+
 
 
 数字
-int1 -eq int2
-	int1与int2相等
+<int1> -eq <int2>
+    int1与int2相等
 
 int1 -ne int2
-	int1与int2不相等
+    int1与int2不相等
 
 int1 -lt int2
-	int1小于int2
+    int1小于int2
 
 int1 -le int2
-	int1小于或等于int2
+    int1小于或等于int2
 
 int1 -gt int2
-	int1大于int2
+    int1大于int2
 
 int1 -ge int2
-	int1大于或等于int2
+    int1大于或等于int2
+
 
 
 连接符
 !exp
-	对exp取反
+    对exp取反
 
-exp1 -a exp2
-	exp1和exp2的逻辑与操作
+exp1 && exp2
+    exp1和exp2的逻辑与操作
 
-exp1 -o exp2
+exp1 || exp2
 	exp1和exp2的逻辑或操作
 
 
 
-exit status:
+status code:
 0 - expression为true
 
 1 - expression为false
 
-2 - 出现错误
+2 - error
 
 
 
 补充：
-1.可以使用[ expression ]代替test expression, 但方括号与内容必须保留空格. 如:
-[-e demo.txt]错误, [ -e demo.txt ]正确
+1.使用[ expression ]时, 方括号与内容必须保留空格
+[-e demo.txt]      x
+[ -e demo.txt ]    √
 
-2.字符串参数尽量使用""来限定, 如：arg字符串标准写法为"arg"
+2.字符串参数尽量使用""来限定
 
 3.数字测试仅用于整数, 不支持浮点数比较
 
-4.-a和-o不常用, 偏向于在外部使用&&和||
+
+
+最后编辑于: 2025-01-16

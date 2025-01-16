@@ -5,11 +5,147 @@ command执行进程
 
 
 . filename
-source filename - 在当前bash中读取和执行filename文件中的指令
-注意事项：
-1.filename不需要executable权限
-2.sourcepath选项开启时(shopt指令), 才从PATH路径查找
-3.文件查找顺序：PATH路径；当前路径
+    在当前bash中读取和执行filename文件中的指令
+    注意事项:
+	1.filename不需要executable权限
+	2.文件查找顺序: 1)PATH路径; 2)当前路径
+
+
+
+declare - 定义变量, 并且赋值
+
+语法
+declare [-aAfFgiIlnrtux] [-p] [name[=value] ...]
+
+参数列表
+-a
+    定义索引数组
+
+-A
+    定义联结数组
+
+-f
+    定义function
+    配合-p使用时, 只显示function列表
+
+-F
+    只显示function列表, 并且显示function名称, 但不显示定义
+    配合-p使用
+
+-g
+    变量定义为全局变量
+
+-i
+    定义数字变量
+
+-l
+    当给变量赋值时, 所有大写字符转化为小写
+
+-p
+    以定义的形式显示变量列表
+
+-r
+    变量为只读
+
+-u
+    当给变量赋值时, 所有小写字符转化为大写
+
+-x
+    将变量导出, 可在子进程使用
+
+
+
+exec - 新指令进程替换当前bash进程, 从而不产生新进程
+
+语法
+exec [-cl] [-a name] [command [arguments]]
+
+参数列表
+-c
+    在empty environment执行命令
+
+
+
+exit [n]
+    退出当前shell, 并且返回exit status code为20
+
+
+
+export - 将变量配置为全局, 可以在子进程中使用
+
+语法
+export [-fn] [-p] [name[=value]]
+
+参数列表
+-f
+    导出函数
+
+-n
+    将变量从全局变为局部, 只能在当前进程使用
+
+-p
+    以特殊格式显示结果
+
+
+
+pwd - 打印当前工作目录(Print current Working Directory)
+
+语法
+pwd [-LP]
+
+参数列表
+-L
+    显示symbolic link目录
+
+-P
+    显示symbolic link实际指向的目录
+
+
+
+umask - 新建文件/目录时，在默认权限上减掉的权限
+
+格式
+umask [option] [<mode>]
+
+
+option参数
+-S
+    以符号格式显示新建文件(目录)的权限
+    默认为数字格式显示
+
+-p
+    以umask <digital>格式显示新建文件(目录的权限)
+
+
+
+unset - 在当前环境中移除变量/方法
+
+语法
+unset [option] [name...]
+
+参数释义
+-f
+    移除function
+
+-n
+    移除nameref引用, 实际指向的变量无变化
+
+-v
+    移除变量. 用于nameref时, 当前变量和被引用的变量同时被移除
+
+**readonly类型变量无法移除
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -219,62 +355,6 @@ eval - 将多个参数组合成一条command内容
 
 语法
 eval [arg1 ...]
-
-
-
-exec - 使用子进程替换父进程(父进程销毁, 子进程拥有父进程PID), 并在执行指令后退出新进程
-
-语法
-exec [option] [command [argument]]
-
-参数释义
-
-**当command未提供时, exec用于重导向, 并且不创建子进程, 以后该bash所有指令结果皆使用该重导向, 所有指令结果视为一个stream(即>file操作不会被当前bash后续指令结果覆盖)
-例1：
-steven@www:~/demo$ bash
-steven@www:~/demo$ exec > exec.file
-steven@www:~/demo$ date
-steven@www:~/demo$ echo this is second line
-steven@www:~/demo$ exit
-steven@www:~/demo$ cat exec.file
-Thu Dec 19 18:24:00 CST  2019
-this is second line
-
-例2:
-steven@www:~/demo$ exec 4< in_rederc.txt
-steven@www:~/demo$ cat <&4
-**文件每次打开都是重新读取, 但是fd号码作为一个流, 每次读取都会产生损耗
-
-
-
-exit - 退出当前进程
-
-语法
-exit [n]
-
-参数释义
-n
-	代表退出的status code, 未指定则为上一次执行command结果status code, 可通过$?查看
-
-
-
-export - 配置/取消变量为全局变量
-
-语法
-export [option] [name[=value]]
-
-参数释义
-
-	配置变量为全局变量
-
--f
-	用于指代function
-
--p
-	打印所有全局变量
-
--n
-	取消变量的全局性, 使其只在当前bash有效
 
 
 
@@ -933,28 +1013,6 @@ unalias [-a] [name...]
 参数释义
 -a
 	移除所有alias设定
-
-
-
-unset - 在当前环境中移除变量/方法
-
-语法
-unset [option] [name...]
-
-参数释义
-
-	移除变量或function
-
--f
-	移除function
-
--n
-	移除nameref变量, 被引用的变量无变化
-
--v
-	移除变量. 用于nameref时, 当前变量和被引用的变量同时被移除
-
-**readonly类型变量无法移除
 
 
 

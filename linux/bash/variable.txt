@@ -4,136 +4,6 @@ bash设定档:
 
 
 
-在bash script中, #之后的内容为注释内容
-
-
-
-示例 - 确认bash script是否在子bash中执行
-[steven@localhost bash]$ cat demo_01.sh
-#!/bin/bash
-
-echo "The subshell PID: $$"
-[steven@localhost bash]$ echo $$
-2695
-[steven@localhost bash]$ ./demo_01.sh
-The subshell PID: 4581
-
-
-
-重定向符号：
-[n]< file
-    从指定文件读取内容, 建立为/dev/fd/<n>为描述符
-    默认描述符为0, 即stdin
-
-[n]> file
-    将结果内容输出到指定文件
-    文件不存在时, 进行创建; 文件存在时, 将结果overwrite到文件
-    默认描述符为1, 即stdout
-
-[n]>> file
-    将结果内容输出到指定文件
-    文件不存在时, 进行创建; 文件存在时, 将结果append到文件
-    默认描述符为1, 即stdout
-
-&> file
->& file
->file 2>&1
-    将stdout和stderr内容输出到指定文件
-    文件不存在时, 进行创建; 文件存在时, 将结果overwrite到文件
-
-&>> file
->> file 2>&1
-    将stdout和stderr内容输出到指定文件
-    文件不存在时, 进行创建; 文件存在时, 将结果append到文件
-
-
-
-
-<< delimiter
-    从shell读取键盘输入, 作为指令input内容, 并在末行单独使用delimiter标记结束输入
-
-<<< string
-    将string字符串作为stdin读入
-
-<&N
-    将文件fd(N)的内容重导向到stdin. 可结合exec builtin指令使用
-
->&N
-    将stdout的内容重导向文件fd(N)
-
-<&N-
-    将文件fd(N)的内容移动到stdin
-
-
-文件描述符列表：
-/dev/fd/<file_description>    
-    文件描述符
-
-/dev/stdin
-    标准输入
-    对应/dev/fd/0
-
-/dev/stdout
-    标准输出
-    对应/dev/fd/1
-
-/dev/stderr
-    错误输出
-    对应/dev/fd/2
-
-/dev/udp/<host>/<port>
-    host为主机名或IP, port为端口号或service名称, 合并称为udp socket
-
-/dev/tcp/<host>/<port>
-    host为主机名或IP, port为端口号或service名称, 合并为称为tcp socket
-
-
-
-管道(pipeline):
-<command1> | <command2>    
-	将command1的stdout作为command2的stdin, command1的stderr不改变
-
-<command1> |& <command2>    
-	将command1的stderr输出到stdout, command1的stdout作为command2的stdin. 等价于<command1> 2>&1 | <command2>
-	类似于<command1> 2>&1 | <command2>
-
-示例1 - 验证|&与2>&1 |的等同关系
-[steven@localhost bash]$ sudo find / -name nginx.conf | awk 'BEGIN{FS=":"};{print $2}'
-find: ‘/run/user/1000/gvfs’: Permission denied
-
-[steven@localhost bash]$ sudo find / -name nginx.conf 2>&1 | awk 'BEGIN{FS=":"};{print $2}'
- ‘/run/user/1000/gvfs’
-
-[steven@localhost bash]$ sudo find / -name nginx.conf |& awk 'BEGIN{FS=":"};{print $2}'
- ‘/run/user/1000/gvfs’
-
-
-
-指令列表：
-<command1> ; <command2>    
-	执行command1完毕后, 再执行command2. 最终status code为最后一个command返回结果
-
-<command> &    
-	将command放到background执行, 并且所处shell为当前bash子进程
-
-<command1> && <command2>    
-	短路与, 只有当command1返回status code为0时, 执行command2. 最后返回status code为最后一个执行的command结果
-
-<command1> || <command2>    
-	短路或, 只有当command1返回status code为非0时, 执行command2. 最后返回status code为最后一个执行command结果
-
-示例1 - 按顺序指令命令
-[steven@localhost bash]$ echo $?;echo $$
-0
-2695
-
-示例2 - 验证background执行是否开启subshell
-[steven@localhost bash]$ echo $$ &
-[1] 4824
-2695
-
-
-
 限定符号：
 \
     跳脱字符, 使后续单个字符在特殊字符和普通字符之间转换 
@@ -227,9 +97,43 @@ BASH
 BASHOPTS
     启动的BASH特性列表, 使用':'作为分隔符
 
+HOME
+    用户的家目录
+
 IFS
     将其内容中的每一个字符视为field分隔符. 默认为[ \t\n]
 
+MAIL
+    用户邮件存放位置(/var/spool/mail/<user>)
+
+OLDPWD
+    当前工作目录的上一次切换目录
+
+PATH
+    command查找路径
+
+PPID
+    当前shell的父进程ID
+
+PWD
+    当前工作目录
+
+RANDOM
+    产生0~32767之间的随机数
+
+SHELL
+    用户使用的shell的二进制文件路径
+
+SSH_CLIENT
+    通过SSH远程连接的客户端信息
+    格式: client_ip client_port server_port
+
+SSH_CONNECTION
+    通过SSH远程连接的连接信息
+    格式: client_ip client_port server_ip server_port
+
+SSH_TTY
+    通过SSH远程连接使用的终端
 
 
 
@@ -243,10 +147,7 @@ HISTSIZE    历史指令保存条数. 为0时不保存；小于0时保存所有�
 
 HISTTIMEFORMAT    历史命令保存时间戳. 如:"%T %F "；详细格式参考strftime(3)
 
-HOME    用户的家目录, ~就是参考该变量
-
 HOSTFILE    类似于/etc/hosts内容格式, 读取主机名和IP映射. 当HOSTFILE为""或者指定文件不可读时, 使用/etc/hosts
-
 
 LANG    语言编码
 
@@ -254,17 +155,7 @@ LC_ALL    配置bash所有相关语言(参考locale指令)
 
 LINENO    当前行号
 
-MAIL    用户邮件存放位置(/var/spool/mail/<user>)
-
-OLDPWD    上一个工作目录, -参考该变量值
-
-PATH    指令查找路径(使用':'分隔路径, '.'或者''都代表当前目录)
-** sudo的PATH由/etc/sudoers的secure_path确定, 修改方法:
-**     sudo EDITOR=vim visudo
-
 POSIXLY_CORRECT    shell是否处于posix兼容模式. 当该值为'y'时, 代表处于posix模式(set -o posix)
-
-PPID    当前进程的父进程ID
 
 PROMPT_COMMAND    在PS提示前执行的指令. 如：PROMPT_COMMAND="ls", 每次PS1提示前, 显示ls指令结果
 
@@ -276,15 +167,9 @@ PS3    作为select选单提示
 
 PS4    用于set -x的展开调试
 
-PWD    当前工作目录
-
-RANDOM    产生0~32767之间的随机数
-
 REPLY    当指令read没有指定变量时, 默认赋值给该变量
 
 SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh). 赋值为0后, 从0开始从新计时
-
-SHELL    用户使用的shell
 
 UID    当前登录用户ID
 

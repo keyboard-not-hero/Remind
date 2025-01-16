@@ -61,33 +61,220 @@ echo 'scale=2;1/4'|bc
 
 script执行方式:
 1.直接执行带x权限的script
+./<script>
 
 2.使用bash执行脚本
+bash <script>
 
-3.使用source执行脚本
+3.使用source/.执行脚本
+source <script>
+. <script>
 
 ** 1/2在子bash中执行指令, 3在当前bash中执行指令
 
 
+示例 - 确认bash script是否在子bash中执行
+[steven@localhost bash]$ cat demo_01.sh
+#!/bin/bash
 
-方法/函数定义: 
-function FUN_NAME(){
-    STATEMENT
-    return STATUS_CODE
+echo "The subshell PID: $$"
+
+[steven@localhost bash]$ echo $$
+2695
+
+[steven@localhost bash]$ ./demo_01.sh
+The subshell PID: 4581
+
+[steven@localhost bash]$ bash demo_01.sh
+The subshell PID: 4582
+
+[steven@localhost bash]$ source demo_01.sh
+The subshell PID: 2695
+
+
+
+重定向符号：
+[n]< file
+    从指定文件读取内容, 建立为/dev/fd/<n>为描述符
+    默认描述符为0, 即stdin
+
+[n]> file
+    将结果内容输出到指定文件
+    文件不存在时, 进行创建; 文件存在时, 将结果overwrite到文件
+    默认描述符为1, 即stdout
+
+[n]>> file
+    将结果内容输出到指定文件
+    文件不存在时, 进行创建; 文件存在时, 将结果append到文件
+    默认描述符为1, 即stdout
+
+&> file
+>& file
+>file 2>&1
+    将stdout和stderr内容输出到指定文件
+    文件不存在时, 进行创建; 文件存在时, 将结果overwrite到文件
+
+&>> file
+>> file 2>&1
+    将stdout和stderr内容输出到指定文件
+    文件不存在时, 进行创建; 文件存在时, 将结果append到文件
+
+[n]<< delimiter
+<content>
+delimiter
+    从shell读取键盘输入, 通过/dev/fd/n读取, 并在末行单独使用delimiter标记结束输入
+
+[n]<<< string
+    将string字符串通过/dev/fd/n读取
+
+[n]<&N
+    将input文件fd(N)的内容复制到fd(n)
+
+[n]>&N
+    将output文件fd(n)的内容复制到fd(N)
+
+[n]<&N-
+    将input文件fd(N)的内容移动到fd(n)
+
+[n]>&N-
+    将output文件fd(n)的内容移动到fd(N)
+
+[n]<> file
+    将文件通过fd(n)进行可读写
+
+
+文件描述符列表：
+/dev/fd/<file_description>    
+    文件描述符
+
+/dev/stdin
+    标准输入
+    对应/dev/fd/0
+
+/dev/stdout
+    标准输出
+    对应/dev/fd/1
+
+/dev/stderr
+    错误输出
+    对应/dev/fd/2
+
+/dev/udp/<host>/<port>
+    host为主机名或IP, port为端口号或service名称, 合并称为udp socket
+
+/dev/tcp/<host>/<port>
+    host为主机名或IP, port为端口号或service名称, 合并为称为tcp socket
+
+示例1 - stdout和stderr统一输出到一个文件
+[steven@localhost bash]$ ls /demo/demo.txt ./demo_07.txt
+ls: cannot access /demo/demo.txt: No such file or directory
+./demo_07.txt
+
+[steven@localhost bash]$ ls /demo/demo.txt ./demo_07.txt > demo_09.txt 2>&1
+[steven@localhost bash]$ cat demo_09.txt
+ls: cannot access /demo/demo.txt: No such file or directory
+./demo_07.txt
+
+[steven@localhost bash]$ ls /demo/demo.txt ./demo_07.txt 2>&1 > demo_09.txt
+ls: cannot access /demo/demo.txt: No such file or directory
+[steven@localhost bash]$ cat demo_09.txt
+./demo_07.txt
+
+示例2 - 从shell读取内容
+[steven@localhost bash]$ cat << EOF
+> This is first line
+> This is second line
+> EOF
+This is first line
+This is second line
+
+
+
+管道(pipeline):
+<command1> | <command2>    
+	将command1的stdout作为command2的stdin, command1的stderr不改变
+
+<command1> |& <command2>    
+	将command1的stderr输出到stdout, command1的stdout作为command2的stdin. 等价于<command1> 2>&1 | <command2>
+	类似于<command1> 2>&1 | <command2>
+
+示例1 - 验证|&与2>&1 |的等同关系
+[steven@localhost bash]$ sudo find / -name nginx.conf | awk 'BEGIN{FS=":"};{print $2}'
+find: ‘/run/user/1000/gvfs’: Permission denied
+
+[steven@localhost bash]$ sudo find / -name nginx.conf 2>&1 | awk 'BEGIN{FS=":"};{print $2}'
+ ‘/run/user/1000/gvfs’
+
+[steven@localhost bash]$ sudo find / -name nginx.conf |& awk 'BEGIN{FS=":"};{print $2}'
+ ‘/run/user/1000/gvfs’
+
+
+
+指令列表：
+<command1> ; <command2>    
+	执行command1完毕后, 再执行command2. 最终status code为最后一个command返回结果
+
+<command> &    
+	将command放到background执行, 并且所处shell为当前bash子进程
+
+<command1> && <command2>    
+	短路与, 只有当command1返回status code为0时, 执行command2. 最后返回status code为最后一个执行的command结果
+
+<command1> || <command2>    
+	短路或, 只有当command1返回status code为非0时, 执行command2. 最后返回status code为最后一个执行command结果
+
+示例1 - 按顺序指令命令
+[steven@localhost bash]$ echo $?;echo $$
+0
+2695
+
+示例2 - 验证background执行是否开启subshell
+[steven@localhost bash]$ echo $$ &
+[1] 4824
+2695
+
+
+
+command查找顺序:
+1.function
+
+2.builtin command
+
+3.search in $PATH
+
+
+
+函数
+在Linux/GNU中, 函数(function)用于多个命令的集合
+
+函数定义: 
+function <function_name>(){
+    <statement>
+    return <status_code>
 }
 
-方法/函数调用: 
-FUN_NAME arg1 arg2...
+函数调用: 
+<function_name> arg1 arg2...
 
-**方法/函数补充: 
-1.方法内部有自己的变量体系, 如下: 
-    $0    脚本名称
+函数删除:
+unset -f <function_name>
+
+**函数补充: 
+1.函数内部有自己的变量体系, 如下: 
+    $0           脚本名称
     $<number>    调用函数时, 函数的实参(arg1, arg2 ...)
-    $#    方法参数个数
-    $FUNCNAME    方法名称
-    $FUNCNEST    方法嵌套层级
+    $#           函数参数个数
+    $FUNCNAME    函数名称
+    $FUNCNEST    函数的最大嵌套层级
 
-2.函数return的为状态码, 返回的值并不能用于赋值给变量
+2.函数的变量类型:
+1)局部变量
+local <var_name> = <value>
+
+2)全局变量
+<var_name> = <value>
+
+3.函数return的为状态码, 返回的值并不能用于赋值给变量
 
 
 示例1 - 不带参数的函数
