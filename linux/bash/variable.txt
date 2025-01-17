@@ -97,11 +97,57 @@ BASH
 BASHOPTS
     启动的BASH特性列表, 使用':'作为分隔符
 
+CDPATH
+    cd命令参考的目录路径. 参考顺序:
+        1.CDPATH值
+	2.当前目录
+
+HISTCMD
+    当前命令在历史命令中的编号
+
+HISTFILE
+    注销时, 历史命令保存位置
+    默认为~/.bash_history
+
+HISTFILESIZE
+    历史命令保存文件容纳指令条数
+
+HISTSIZE
+    历史命令缓存条数
+
+HISTTIMEFORMAT
+    历史命令时间戳. 如:"%T %F "
+    详细格式参考strftime(3)
+
 HOME
-    用户的家目录
+    当前用户的家目录
+    cd默认使用的目录
+
+HOSTFILE    
+    类似于/etc/hosts内容格式, 读取主机名和IP映射
+
+HOSTNAME
+    当前主机名
 
 IFS
-    将其内容中的每一个字符视为field分隔符. 默认为[ \t\n]
+    将其内容中的每一个字符视为field分隔符
+    默认为[ \t\n]
+
+LANG
+    当前使用的语言编码
+
+LC_ALL
+    配置bash所有相关语言
+    覆盖LANG和其他LC_变量值
+
+LC_COLLATE
+    用于排序的编码
+
+LC_NUMERIC
+    用于确定数字格式
+
+LC_TIME
+    用于确定时间和日期格式
 
 MAIL
     用户邮件存放位置(/var/spool/mail/<user>)
@@ -115,11 +161,26 @@ PATH
 PPID
     当前shell的父进程ID
 
+PS1
+    指令行首行提示
+
+PS2
+    指令行次要行提示
+
+PS3
+    作为select选单提示
+
+PS4
+    用于set -x的展开调试
+
 PWD
     当前工作目录
 
 RANDOM
     产生0~32767之间的随机数
+
+SECONDS
+    当前SHELL启动的秒数
 
 SHELL
     用户使用的shell的二进制文件路径
@@ -135,61 +196,33 @@ SSH_CONNECTION
 SSH_TTY
     通过SSH远程连接使用的终端
 
+UID
+    当前登录用户ID
 
+** ${!<variable>}用于嵌套变量引用
 
-
-
-HISTFILE    历史指令保存位置. 默认为~/.bash_history
-
-HISTFILESIZE    历史指令保存文件容纳指令条数. 当指令超出时, 按队列形式进行先入先出. 该选项为0时, 不保存历史指令. 默认值参考HISTSIZE
-
-HISTSIZE    历史指令保存条数. 为0时不保存；小于0时保存所有指令. 默认为500
-
-HISTTIMEFORMAT    历史命令保存时间戳. 如:"%T %F "；详细格式参考strftime(3)
-
-HOSTFILE    类似于/etc/hosts内容格式, 读取主机名和IP映射. 当HOSTFILE为""或者指定文件不可读时, 使用/etc/hosts
-
-LANG    语言编码
-
-LC_ALL    配置bash所有相关语言(参考locale指令)
-
-LINENO    当前行号
-
-POSIXLY_CORRECT    shell是否处于posix兼容模式. 当该值为'y'时, 代表处于posix模式(set -o posix)
-
-PROMPT_COMMAND    在PS提示前执行的指令. 如：PROMPT_COMMAND="ls", 每次PS1提示前, 显示ls指令结果
-
-PS1    指令行首行提示
-
-PS2    指令行次要行提示
-
-PS3    作为select选单提示
-
-PS4    用于set -x的展开调试
-
-REPLY    当指令read没有指定变量时, 默认赋值给该变量
-
-SECONDS    bash启动后经历的时间(command line)或脚本运行时间(.sh). 赋值为0后, 从0开始从新计时
-
-UID    当前登录用户ID
+示例 - 变量的嵌套引用
+[steven@localhost bash]$ foo=line;moon=foo
+[steven@localhost bash]$ echo ${!moon}
+line
 
 
 PS1:主要指令行提示
 语法：
 \a    
-	ASCII 007, 响铃
+    响铃
 
 \d    
-	日期, 格式"weekday month day"
+    日期, 格式"weekday month day"
 
-\D{format}    
-	日期, 将format传给strftime(3)进行转化. 当format未指定时, 打印'\D'
+\D{<format>}    
+    日期, 将format传给strftime(3)进行转化. 当format未指定时, 打印'\D'
     format格式：
     %a    weekday缩写
     %A    weekday全称
     %b    month缩写
     %B    month全称
-    %c    默认日期和时间格式
+    %c    默认日期、时间和时区格式
     %C    世纪格式(year/100)
     %d    day of month
     %D    日期, %m/%d/%y格式
@@ -203,14 +236,14 @@ PS1:主要指令行提示
     %j    day of year
     %k    24小时制的hour, 单字符前置一个空格
     %l    12小时制的hour, 单字符前置一个空格
-    %m    月份数
-    %M    分钟数
+    %m    月份, 两个数字表示
+    %M    分钟, 两个数字表示
     %n    换行符
     %p    AM/PM
     %P    am/pm
     %r    12小时制时间, %I:%M:%S %p
     %R    24小时制时间, %H:%M
-    %s    Unix时间戳秒数
+    %s    Unix Epoch时间戳秒数
     %S    秒数
     %t    制表符
     %T    24小时制时间, %H:%M:%S
@@ -229,145 +262,106 @@ PS1:主要指令行提示
     %%    %字符
 
 \e    
-	ASCII 033, 跳脱字符
+    跳脱后续的一个字符
 
 \h    
-	主机名, 遇到.截止
+    主机名, 遇到第一个.截止
 
 \H    
-	主机名
+    完整主机名
 
 \j    
-	当前shell管理的jobs数量
+    当前shell管理的jobs数量
 
 \l    
-	终端号码(由0起始)
+    终端basename, 即终端号码(由0起始). 如: pts/0, 则为0
 
 \n    
-	换行
+    换行符
 
 \r    
-	回车
+    回车符(carriage return) 
 
 \s    
-	shell名称
+    当前shell名称
 
 \t    
-	当前时间, 24小时时间制, HH:MM:SS格式
+    当前时间, 24小时时间制, HH:MM:SS格式
 
 \T    
-	当前时间, 12小时时间制, HH:MM:SS格式
+    当前时间, 12小时时间制, HH:MM:SS格式
 
 \@    
-	当前时间, 12小时时间制, HH:MM am/pm格式
+    当前时间, 12小时时间制, HH:MM am/pm格式
 
 \A    
-	当前时间, 24小时时间制, HH:MM格式
+    当前时间, 24小时时间制, HH:MM格式
 
 \u    
-	用户名
+    当前用户名
 
 \v    
-	bash版本
+    bash版本, <major_ver>.<minor_ver>
 
 \V   
-	bash详细版本(version+release)
+    bash详细版本, <major_ver>.<minor_ver>.<release>
 
 \w    
-	当前工作目录
+    当前工作目录
 
 \W    
-	当前工作目录的basename
+    当前工作目录的basename
 
 \!    
-	历史记录保存数量
+    历史记录数量
 
 \#    
-	下一条指令为当前终端的第N条指令
+    下一条指令为当前终端的第N条指令
 
 \$    
-	当UID为0时, 提示符为"#"；其他UID为"$"
+    当UID为0时, 提示符为"#"
+    其他UID, 提示符为"$"
 
 \nnn    
-	对应的ASCII字符(八进制)
+    对应的ASCII字符(8进制)
 
 \\    
-	反斜杠(\)
+    反斜杠'\'
 
 \[    
-	开始非打印字符序列
+    开始非打印字符序列
 
 \]    
-	结束非打印字符序列
+    结束非打印字符序列
 
-\e
 \033
-    设置终端字体属性. 格式: \033[<num>m或\e[<num>m
+    设置终端字体属性. 格式: \033[<num>m
     可同时指定多个num, 多个num使用';'分隔. 如: num1;num2;num3...
-    num列表如下[1]:
-        0 - 普通模式
-        1 - 加粗
-        2 - 字体颜色变淡
-        3 - 斜体
-        4 - 下划线
-        5 - 慢闪烁
-        6 - 快闪烁, 少有支持
-        7 - 交换字体和背景颜色
-        8 - 隐藏字体
-        9 - 删除线
+    num列表如下:
+        00 - 普通模式
+        01 - 加粗
+        02 - 字体颜色变淡
+        03 - 斜体
+        04 - 下划线
+        05 - 慢闪烁
+        06 - 快闪烁, 少有支持
+        07 - 交换字体和背景颜色
+        08 - 隐藏字体
+        09 - 删除线
         10 - 默认字体
         20 - 花体字(罕见支持)
         21 - 双下划线
         30~37 - 依次为black/red/green/yellow/blue/magenta/cyan/white颜色字体
         40~47 - 依次为black/red/green/yellow/blue/magenta/cyan/white颜色背景
         53 - 上划线
-        90~97 -
-依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色字体
-        100~107 -
-依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色背景
+        90~97 - 依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色字体
+        100~107 - 依次为更明亮的black/red/green/yellow/blue/magenta/cyan/white颜色背景
 
-例：\[\033[01;34m\]代表后续字符为亮蓝色
-例：
-export PS1='\[\033[01;32m\]\u@\h:\[\033[01;34m\]\W\[\033[00m\]\$ '
+示例1 - 配置特殊格式(strftime)
+PS1="\D{%a}"
 
-参考:bash(1)手册PROMPTING部分
-
-
-
-运算符(优先级降序)：
-1.++,--    自增, 自减
-
-2.-,+    一元正负号
-
-3.!,~    逻辑或位求反
-
-4.**    求幂
-
-5.*,/,%    乘, 除, 求余
-
-6.+.-    二元加减
-
-7.<<,>>    向左位移, 向右位移
-
-8.<=,>=,<,>    比较运算符
-
-9.==,!=    相等, 不等
-
-10.&    位与
-
-11.^    位异或
-
-12.|    位或
-
-13.&&    逻辑与(短路与)
-
-14.||    逻辑或(短路或)
-
-15.condition?true_exp:false_exp    条件操作符
-
-16.=    赋值运算符
-
-17.exp1,exp2    逗号运算符
+示例2 - 将字体设置为加粗蓝色
+\[\033[01;34m\]
 
 
 
@@ -538,3 +532,64 @@ $((<expression>))
 
 []
     多个字符集合中, 匹配任意一个字符
+
+
+
+运算符(优先级降序)：
+1.n++, n--        
+    后置自增/自减
+
+2.++n, --n
+    后置自增/自减
+
+3.-, +            
+    一元正负号
+
+4.!, ~            
+    逻辑求反, 位求反
+
+5.**              
+    求幂
+
+6.*, /, %         
+    乘, 除, 求余
+
+7.+, -            
+    二元加减
+
+8.<<, >>          
+    向左位移, 向右位移
+
+9.<=, >=, <, >    
+    比较运算符
+
+10.==, !=         
+    相等, 不等
+
+11.&              
+    位与
+
+12.^              
+    位异或
+
+13.|              
+    位或
+
+14.&&             
+    逻辑与(短路与)
+
+15.||             
+    逻辑或(短路或)
+
+16.con_exp ? true_exp : false_exp    
+    条件操作符
+
+17.=, *=, /=, %=, +=, -=, <<=, >>=, &=, ^=, |= 
+    赋值运算符
+
+18.exp1, exp2
+    逗号运算符
+
+
+
+最后编辑于: 2025-01-17

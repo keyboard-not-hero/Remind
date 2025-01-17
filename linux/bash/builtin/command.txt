@@ -30,6 +30,34 @@ value
 
 
 
+cd - 改变shell工作目录
+
+语法
+cd [option] [dir]
+
+option参数
+-L
+    使用符号链接
+    默认选项
+
+-P
+    使用符号链接指向的真实目录
+
+-e
+    跟随-P之后使用, 如果无法确定当前工作目录, 返回非零返回值
+
+-@
+    在支持拓展属性的系统上, 将一个有这些属性的文件当作有文件属性的目录
+
+dir参数
+    指定切换的目录. 类型如下:
+	.     当前目录
+	..    当前目录的父目录
+	~     用户的家目录. 默认值
+	-     跳转到当前目录，之前的目录
+
+
+
 declare - 定义变量, 并且赋值
 
 语法
@@ -173,6 +201,29 @@ export [-fn] [-p] [name[=value]]
 
 
 
+hash - 控制指令路径缓存信息表
+
+语法
+hash [option] [name]
+
+参数释义
+-d
+    删除指定name的缓存
+
+-l
+    以可重用格式打印所有缓存信息, 即与-p配置格式一致
+
+-p filename
+    配置指令查找位置
+
+-r
+    清空所有指令路径缓存
+
+-t
+    显示指定name的缓存
+
+
+
 let - 对表达式进行算数计算
 
 语法
@@ -284,6 +335,316 @@ read [option] [<var>...]
 
 
 
+set - 配置bash各选项, 或打印当前环境下的变量
+
+语法
+set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [argument ...]
+set [+abefhkmnptuvxBCEHPT] [+o option-name] [--] [-] [argument ...]
+
+参数列表
+-a
+    后续创建的variable或function, 直接被export  
+
+-b
+    background job被结束后马上打印状态
+    默认为在下一个primary prompt之前打印状态
+
+-e
+    当返回status code不为0时, 退出当前bash
+
+-f
+    关闭filename expansion(文件名无法使用通配符进行匹配)
+
+-h
+    使用hash表进行指令路径缓存
+
+-k
+    所有出现在参数位置的赋值语句都作用于bash环境, 而不只是作用于当前command
+
+-m
+    启用job control
+
+-n
+    读取command但不执行
+    用于script语法检查, 在交互式shell中无效
+
+-o [opt_name]
+    指定详细的名称来指定option. 当没有指定opt_name时, 打印opt_name列表和相应启动状态
+    opt_name列表：
+        allexport
+	    后续创建的变量和函数, 直接被export
+	    与-a类似
+
+        braceexpand
+	    启用brace expansion
+	    与-B类似
+
+        emacs
+	    emacs风格的指令接口, 为交互式shell默认选项
+	    bash --noediting可解除该默认选项
+
+        errexit
+	    返回非0状态码, 退出当前bash
+	    与-e类似
+
+        functrace
+	    与-T类似
+ 
+        hashall
+            使用hash表进行指令路径缓存
+	    与-h类似
+
+        histexpand
+            启用! style的history替换
+            默认在interactive shell中启用
+	    与-H类似
+
+        history
+	    启动history记录
+	    interactive shell默认选项
+
+        ignoreeof
+	    interactive shell遇到EOF时, 不退出
+
+        keyword
+            所有出现在参数位置的赋值语句都作用于bash环境, 而不只是作用于当前command
+	    与-k类似
+
+        monitor
+            启用job control
+	    与-m类似
+
+        noclobber
+            不允许输出重定向使用>/>&/<>符号, 覆盖已存在文件内容
+	    与-C类似
+
+        nonexec
+            读取command但不执行
+            用于script语法检查, 在交互式shell中无效
+	    与-n类似
+
+        noglob
+	    与-f类似
+
+        notify
+	    与-b类似
+
+        nounset
+	    与-u类似
+
+        onecmd
+	    与-t类似
+
+        physical
+	    与-P类似
+
+        pipefail
+	    在所有pipeline指令中, 当所有指令成功时, 则返回0; 否则返回最后一个指令的非0状态码
+
+        posix
+	    posix兼容模式
+
+        privileged
+	    与-p类似
+
+        verbose
+	    与-v类似
+
+        vi
+	    使用vi风格指令接口
+
+        xtrace
+	    与-x类似
+
+-p
+    打开privileged模式
+    当该模式关闭时, 将有效user ID和group ID直接设置为当前user ID和group ID
+
+-r
+    开启restricted shell mode
+
+-t
+    执行command后退出当前bash
+
+-u
+    在non-interactive中, 如果使用的变量未定义, 则输出错误信息, 并退出
+
+-v
+    打印bash读取的内容
+
+-x
+    打印出每一条指令的完整展开内容, 格式为$PS4 <expand_exp>
+    用于for/case等内容展开详情
+
+-B
+    bash启用brace expansion
+    默认启用
+
+-C
+    不允许输出重定向使用>/>&/<>符号, 覆盖已存在文件内容
+
+-H
+    启用! style的history替换
+    默认在interactive shell中启用
+
+-P
+    当cd切换到symbolic link目录时, 对symbolic link解引用
+
+--
+    position parameter被取消
+
+-
+    代表option字段的结束, 开始position parameter
+
+** 使用'+'代替'-'可关闭set各选项
+
+
+
+shopt - 修改bash相关选项
+
+语法
+shopt [-pqsu] [-o] [optname ...]
+
+参数列表
+-o
+    限制optname为可通过set -o获取的值
+
+-p
+    打印bash选项已配置列表
+
+-q
+    quiet模式, 不打印一般信息
+
+-s
+    enable相关选项
+
+-u
+    disable相关选项
+
+** 当提供多个optname时, 所有操作生效才返回status code=0
+
+
+optname列表:
+autocd
+    当command为一个目录时, 自动将其作为cd指令的参数目录
+    只作用于interactive shell
+
+cdable_vars
+    当cd指令的参数不是一个目录时, 将其视为包含目录值的变量
+
+cdspell
+    针对cd指令的参数修正, 当与匹配目录含一个字符差异(或两个字符错位)时, 修正为正确目录
+
+checkhash
+    在执行path搜寻前, 先匹配hash表内容
+
+checkwinsize
+    在执行command后, 检查窗口大小, 必要时调节LINES和COLUMNS值
+    默认启用
+
+cmdhist
+    将多行指令保存为一条历史记录
+
+compat31
+compat32
+compat40
+compat41
+compat42
+compat43
+compat44
+    shell的兼容模式
+
+direxpand
+    将目录内容进行展开
+
+dirspell
+    当目录内容有一个字符差异时, 修正为正确目录
+
+dotglob
+    在文件名filename expansion(通配符)匹配中, 包含以'.'开头的文件
+    必须显示指定.或..字符
+
+execfail
+    在non-interactive中, 如果exec指令的参数无法执行, 不退出当前环境
+
+expand_aliases
+    开启alias展开功能
+
+extglob
+    启动filename expansion功能
+
+extquote
+    $'string'和$"string"视为${string}
+    默认启用
+
+failglob
+    当filename expansion失败时, 返回expansion err错误
+
+globstar
+    在filename expansion中, '**'匹配所有文件、目录、递归子目录
+
+gnu_errfmt
+    err信息全部为GNU标准err信息格式
+
+histappend
+    当退出bash时, 将history列表的内容append到HISTFILE定义的文件, 而非覆盖
+
+histreedit
+    当使用readline时, 可获得机会重写失败的hitory替换
+
+hostcomplete
+    当使用readline时, 在@后面可自动补足主机名
+    默认开启
+
+huponexit
+    当login bash退出时, 向所有job发送SIGHUP信号
+
+interactive_comments
+    在bash中, #后续的字符视为注释
+    默认开启
+
+lithist
+    当cmdhist开启, 在history记录中, 使用内嵌<newline>代替';'
+
+login_shell
+    当shell为login shell时, 该选项自动配置. 不可手动修改
+
+mailwarn
+    当bash检查的mail文件已经被访问过, 出现提示
+
+no_empty_cmd_completion
+    当使用readline时, 如果bash试图在空指令行上补全指令, 不会搜索PATH
+
+nocaseglob
+    使用filename expansion时, 不在乎大小写
+
+nullglob
+    当filename expansion匹配不到任何文件时, 将内容置换为空字符串进行匹配
+
+progcomp
+    开启programmable completion
+    默认开启
+
+promptvars
+    prompt可经过parameter expansion/command substitution/arithmetic expansion
+    默认开启
+
+shift_verbose
+    使用shift时, 当超过位置参数时, 显示警告信息
+
+sourpath
+    使用source(.)时, 参考PATH变量内容查找文件所在
+
+syslog_history
+    命令历史记录到syslog
+
+xpg_echo
+    echo命令默认展开'\'
+
+** glob代表使用通配符进行匹配
+
+
+
 umask - 新建文件/目录时，在默认权限上减掉的权限
 
 格式
@@ -330,401 +691,4 @@ unset [option] [name...]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-hash - 控制指令路径缓存信息表
-
-语法
-hash [option] [name]
-
-参数释义
-
-	显示所有已缓存信息
-
--d
-	删除指定name的缓存
-
--l
-	以可重用格式打印所有缓存信息, 即与-p配置格式一致
-
--p filename
-	配置指令查找位置
-
--r
-	清空所有指令路径缓存
-
--t
-	显示指定name的缓存
-
-
-
-history - 历史命令
-
-语法：
-history [option] [filename]
-
-参数释义：
-
-	罗列已记录的历史命令, 使用号码进行标记. 当HISTTIMEFORMAT变量存在, 则历史命令保存时间予以记录. 条数限制于HISTSIZE
-
-n
-	罗列最后n条历史命令
-
--a
-	将当前历史命令列表append到历史命令文件中. 默认为退出bash时保存
-
--c
-	清除历史命令记录
-
--d <offset>
-	删除具体号码对应的历史命令记录
-
--r
-	读取历史命令文件内容, 将其写入到当前历史命令列表
-
--w
-	将当前历史命令列表覆盖写入到历史命令文件中
-
--s arg...
-	将arg作为保存到历史命令列表    
-
-**filename为历史命令文件名, 默认为~/.bash_history
-
-history-快捷键
-ctrl+p
-	上一条history指令
-ctrl+n
-	下一条history指令
-esc+<
-	第一条history指令(已保存最旧)
-esc+>
-	最新history指令. 通常为最新输入未记录指令
-ctrl+r
-	进入指令提示, 输入指令, 从新到旧匹配与输入相关指令. 下一次补全指令必定旧于上一次补全(number更小), 使用history指令可重置
-ctrl+s
-	进入指令提示, 输入指令, 从旧到新匹配与输入指令相关(需要使用trap关闭ctrl+s的锁定bash功能)
-
-history-相关事件
-!<number>
-	利用历史命令对应number来执行指令 
-!-<number>
-	当前指令(未保存)-number, 引用该结果号码对应的历史指令
-!!
-	执行上一个历史指令, 类似于'!-1'
-!<str>
-	最新以str开头的历史指令并引用
-!?<str>[?]
-	最新含str的历史指令并引用
-^str1^str2^
-	取出上一条历史指令, 并将该指令str1内容替换成str2内容, 然后执行替换后指令内容. 类似于'!!:s/str1/str2/'
-
-history-事件_单词指示
-:0
-	第0个单词, 即shell上的command
-:<n>
-	第n个单词, 为非0时即command的参数
-:^
-	第2个单词, 即第一个参数
-:$
-	最后一个单词, 也是最后一个参数. 当shell只有一个单词时, 即command
-:%
-	最近使用!<str>匹配到的str部分, 并将其作为command. 该操作忽略事件
-:x-y
-	单词范围. -y为0-y的缩略
-:*
-	类似于1-$. 当指令不含参数时, 返回""
-:x*
-	类似于x-$
-:x-
-	类似于x-$, 但忽略最后一个单词, 即x-($-1). 
-
-history-事件_调节器
-:h
-	删除最后一个/及后面的内容, 保留目录路径(类似于dirname结果)
-:t
-	删除最后一个/及前面的内容, 保留文件名称(类似于basename结果)
-:r
-	删除行内后缀(.及其后内容)
-:e
-	删除指令内容, 除行内后缀(.及其后内容)
-:p
-	只打印指令, 不执行该指令
-:q
-	将结果限定在''中
-:x
-	将结果使用blank进行单词分割, 然后将单词使用''限定
-:s/old/new/
-	匹配第一个old字符串, 并使用new字符串替换. 当new中包含'&'字符时, 指代old字符串内容
-:&
-	重复上一个s/old/new/操作, 当上一个s操作与g/G搭配使用时, 只提取s操作
-:g
-	配合s/old/new/(gs/old/new)使用, 将替换作用于所有匹配old字符串
-:G
-	配合s/old/new/(Gs/old/new)使用, 将替换作用于事件中的每一个单词, 一个单词最多替换一次. 并且, old不能位于单词开头
-**可叠加使用, 每个叠加需前置:符号
-
-
-
-set - 配置bash各选项
-
-语法
-set [option] [arg...]
-
-参数释义
--a
-	当前的所有变量和方法修改为全局变量
-
--b
-	background job被结束后马上打印状态
-
--e
-	当返回status code不为0时, 退出当前bash
-
--f
-	关闭pathname expansion(文件名无法使用通配符进行匹配)
-
--h
-	使用hash表进行指令路径缓存
-
--k
-	所有出现在参数位置的赋值语句都作用于bash环境, 而不只是默认的command前赋值语句
-
--m
-	监视模式. 当后台running job完成, 立即打印该job信息
-
--n
-	读取command但不执行. 用于script语法检查, 在交互式shell中无效
-
--o [opt_name]
-	指定详细的名称来指定option. 当没有指定opt_name时, 打印opt_name列表和相应启动状态
-  opt_name列表：
-  allexport - 同-a
-  
-  braceexpand - 同-B
-
-  emacs - emacs风格的指令接口, 为交互式shell默认选项. bash --noediting可解除该默认选项
-
-  errexit - 同-e
-
-  errtrace - 同-E
-
-  functrace - 同-T
- 
-  hashall - 同-h
-
-  histexpand - 同-H
-
-  history - 启动history记录. 交互式shell默认选项
-
-  ignoreeof - 类似于IGNOREEOF=10, 参考变量IGNOREEOF
-
-  keyword - 同-k
-
-  monitor - 同-m
-
-  noclobber - 同-C
-
-  nonexec - 同-n
-
-  noglob - 同-f
-
-  notify - 同-b
-
-  nounset - 同-u
-
-  onecmd - 同-t
-
-  physical - 同-P
-
-  pipefail - 在所有pipeline指令中, 当所有指令成功时, 则返回0；否则返回最后一个指令的非0状态码
-
-  posix - posix兼容模式
-
-  privileged - 同-p
-
-  verbose - 同-v
-
-  vi - 使用vi风格指令接口
-
-  xtrace - 同-x
-
--p
-	打开privileged模式. 不读取$ENV和$BASH_ENV内容, 不从环境读取function；当启动bash的有效user(group)与真实user(group)不相同时, 不作处理
-
--t
-	执行command后退出bash
-
--u
-	当使用$N引用指令行参数时, 如果该参数未指定, 则打印错误信息
-
--v
-	打印bash读取的内容
-
--x
-	打印出每一条指令的完整展开内容, 格式为$PS4 <expand_exp>. 用于for/case/$(())等内容展开详情；适用于调试脚本
-
--B
-	bash执行{}拓展. 如:{alice,peter,david}包含三个名称
-
--C
-	不允许文件内容被覆盖
-
--H
-	打开历史命令的!格式替换
-
--P
-	当cd切换到symbolic link目录时, 使用physical目录
-
---
-	代表option字段的结束, 开始position parameter字段(使用$N引用)
-
--
-	代表option字段的结束, 开始position parameter
-
-** 使用'+'代替'-'可关闭set各选项
-
-
-
-shopt - 修改bash选项
-
-语法
-shopt [option] [optname...]
-
-option参数
--o
-    限制optname为可通过set -o获取的值
-
--p
-    打印bash选项已配置列表
-
--q
-    quiet模式, 不打印一般信息
-
--s
-    set(enable)相关选项
-
--u
-    unset(disable)相关选项
-
-** 当提供多个optname时, 所有操作生效才返回status code=0
-
-
-optname列表:
-autocd
-    当command为一个目录时, 自动将其作为cd指令的参数目录
-
-cdable_vars
-    当cd指令的参数不是一个目录时, 将其视为包含目录值的变量
-
-cdspell
-    针对cd指令的参数修正, 当与匹配目录含一个字符差异时, 显示正确目录并切换
-
-checkhash
-    在执行path搜寻前, 先匹配hash表内容
-
-checkwinsize
-    在执行command后, 检查窗口大小, 并调节LINES和COLUMNS值
-
-cmdhist
-    将占有多行的同一个指令保存为一条历史记录
-
-compat31
-    bash 3.1兼容版本
-
-compat32
-    类似于compat31
-
-compat40
-    类似于compat31
-
-compat41
-    类似于compat31
-
-compat42
-    类似于compat31
-
-compat43
-    类似于compat31
-
-dotglob
-    在文件名pathname expansion(通配符)匹配中, 包含以'.'开头的文件
-
-expand_aliases
-    开启alias展开功能
-
-extglob
-    启动拓展pathname expansion功能
-
-extquote
-    $'string'和$"string"视为${string}
-
-failglob
-    当pathname expansion失败时, 返回expansion err错误
-
-globstar
-    在pathname expansion中, '**'匹配所有文件、目录、递归子目录
-
-gnu_errfmt
-    err信息全部为GNU标准err信息格式
-
-histappend
-    当退出bash时, 将history列表的内容append到HISTFILE定义的文件, 而非覆盖
-
-histreedit
-    当使用readline时, 可获得机会重写失败的hitory替换
-
-hostcomplete
-    当使用readline时, 在@后面可自动补足主机名
-
-huponexit
-    当login bash退出时, 向所有job发送SIGHUP信号
-
-interactive_comments
-    在bash中, #后续的字符视为注释
-
-lithist
-    当cmdhist开启, 在history记录中, 使用内嵌<newline>代替';'
-
-login_shell
-    当shell为login shell时, 该选项自动配置. 不可手动修改
-
-mailwarn
-    当bash检查的mail文件已经被访问过, 出现提示
-
-no_empty_cmd_completion
-    当使用readline时, 如果bash试图在空指令行上补全指令, 不会搜索PATH
-
-nocaseglob
-    使用pathname expansion时, 不在乎大小写
-
-nullglob
-    当pathname expansion匹配不到任何文件时, 将内容置换为空字符串进行匹配
-
-progcomp
-    开启programmable completion
-
-promptvars
-    prompt可经过parameter expansion/command substitution/arithmetic expansion
-
-shift_verbose
-    使用shift时, 当n>$#, 显示警告信息
-
-sourpath
-    使用source(.)时, 使用PATH变量内容查找文件所在
-
-** glob代表使用通配符进行匹配
-
-
-
+最后编辑于: 2025-01-17

@@ -95,6 +95,8 @@ esac
 
 ** 3)使用';;&'代替';;', 无论当前匹配成功与否, 继续执行下一个匹配
 
+** 4)value_N可以使用通配符进行匹配
+
 
 示例 - case测试
 [steven@localhost bash]$ vi demo_01.sh
