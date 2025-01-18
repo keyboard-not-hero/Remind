@@ -1,8 +1,74 @@
-bash记录保存文件
-~/.bash_history
+相关变量:
+HISTFILE
+    历史命令记录保存位置, 默认为~/.bash_history
 
-该记录文件保存上次登出之前的cmd记录
+HISTFILESIZE
+    历史命令记录保存文件的容量
+
+HISTSIZE
+    历史命令记录缓存容量
+
+HISTTIMEFORMAT
+    指定历史命令记录的时间戳格式. 参考man 3 strftime
+
+
+history - 显示历史命令记录
+
+语法
+history [n]
+history -c
+history -d offset
+history -d start-end
+history -anrw [filename]
+history -p arg [arg ...]
+history -s arg [arg ...]
+
+参数列表
+-c
+    清空历史命令记录列表
+
+-d <offset>
+    移除指定编号的记录
+    如果offset为负, 则由最后一个记录反向计数
+
+-d <start>-<end>
+    移除指定编号区间[start,end]的记录
+
+-a
+    把当前shell中的新记录, append到记录文件
+
+-n
+    将记录文件中的新纪录, 读取到当前shell
+
+-r
+    读取记录文件内容, append到当前shell记录
+
+-w
+    将当前shell的记录, 覆盖记录文件
+
+-p <arg>
+    指定内容arg使用history格式打印, 不计入history记录
+
+-s <arg>
+    指定内容arg计入history记录, 并且在此之前, 移除当前操作记录(history -s arg)
 
 
 
-最后编辑于: 2025-01-07
+ctrl+R
+    进入历史记录匹配
+
+ctrl+J
+<ESC>
+    退出历史记录匹配
+
+ctrl+P
+    向后回溯历史记录
+
+ctrl+N
+    向前回溯历史记录
+
+alt+<
+    历史记录的首条命令
+
+alt+>
+    历史记录的最后一条命令, 即当前输入

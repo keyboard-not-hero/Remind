@@ -1,55 +1,92 @@
 快捷键: 
-ctrl+F    将光标前移一个字符
+ctrl+F    
+    将光标前移一个字符
 
-ctrl+B    将光标后移一个字符
+ctrl+B    
+    将光标后移一个字符
 
-esc+F     移动到下一个单词末尾(单词由字母和数字组成)
+alt+F
+    移动到下一个单词末尾(单词由字母和数字组成)
 
-esc+B     移动到上一个单词开头(单词由字母和数字组成)
+alt+B
+    移动到上一个单词开头(单词由字母和数字组成)
 
-ctrl+A    移动到行首
+ctrl+A    
+    移动到行首
 
-ctrl+E    移动到行尾
+ctrl+E    
+    移动到行尾
 
-ctrl+K    删除光标到行尾字符
+ctrl+L
+    清屏
 
-ctrl+U    删除光标到行首字符
+<Backspace>
+    删除光标左侧字符
 
-<tab><tab>    命令或文档补齐
+<delete>
+ctrl+D
+    删除光标所在字符
 
-shift+PgUp    向上翻页
+alt+D
+    删除光标所在字符到单词结尾
 
-shift+PgDn    向下翻页
+ctrl+W
+    删除之前字符到单词起始
 
-ctrl+P    后向查找历史指令
+ctrl+K    
+    删除光标到行尾字符
 
-ctrl+N    前向查找历史指令
+ctrl+U    
+    删除光标到行首字符
 
-ctrl+R    按输入字符匹配历史指令
+ctrl+Y
+    粘贴剪切板到当前位置
 
-ctrl+C    终止执行
+ctrl+T
+    交换光标所在字符和前一个字符
 
-ctrl+L    清屏
+alt+T
+    交换光标所在单词和前一个单词
 
-ctrl+C    中断指令
+alt+U
+    将光标所在字符到单词结尾字符, 转化为大写
 
-ctrl+D    删除当前字符. 当cursor位于行首并且该行无字符时, 相当于EOF(end of file)
+alt+L
+    将光标所在字符到单词结尾字符, 转化为小写
 
-ctrl+Z    当前process丢到background执行    
+alt+C
+    在光标所在字符到单词结尾, 第一个字符转化为大写, 其他全部转化为小写
 
-ctrl+shift+c    复制文本
+alt+Y
+    反向追溯剪切板内容, 粘贴到当前位置
+    必须要以ctrl+Y开启剪切板
 
-ctrl+shift+V    粘贴文本
+ctrl+_
+    undo上一次编辑操作
 
-ctrl+s    锁定bash
+<tab><tab>    
+    命令或文档补齐
 
-ctrl+q    解锁bash
+shift+PgUp
+    向上翻页
 
-ctrl -		缩小字体
+shift+PgDn    
+    向下翻页
 
-ctrl +		增大字体
+ctrl+-
+    缩小BASH字体
 
-ctrl 0		字体恢复正常
+ctrl++
+    增大BASH字体
+
+ctrl+0
+    BASH字体恢复默认
+
+ctrl+S
+    锁定bash
+
+ctrl+Q
+    解锁bash
 
 
 

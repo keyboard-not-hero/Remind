@@ -1,0 +1,49 @@
+bg [<job_spec>]
+    将job放到后台继续执行
+
+
+fg [<job_spec>]
+    将job放到前台继续执行
+
+
+ctrl+Z
+    将job放到后台暂停
+
+
+job_spec列表
+%<number>
+    用于对job进行引用
+
+%%
+%+
+%
+    最近操作的job
+    列表之后携带'+'
+
+%-
+    最近操作的上一次操作job
+    列表之后携带'-'
+    列表之后携带'+'
+
+
+jobs - 查看当前shell的job列表
+
+语法
+jobs [-lnprs] [<job_spec>]
+jobs -x command [arguments]
+
+参数列表
+-l
+    额外显示process ID
+
+-n
+    只显示上次输出状态后, 更改状态的job
+
+-p
+    只显示process ID
+
+-r
+    只显示Running状态的job
+
+-s
+    只显示Stopped状态的job
