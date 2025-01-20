@@ -1,11 +1,13 @@
-sort - 对文件的文本行进行排序
+sort - 对文本行进行排序
+
 
 语法
 sort [option] [file]...
 
+
 参数释义
 -b, --ignore-leading-blanks
-	忽略行首的空格
+    忽略行首的空格
 
 -d, --dictionary-order
 	只比较空格和字母数字

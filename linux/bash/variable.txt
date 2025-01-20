@@ -1,6 +1,24 @@
-bash设定档:
-全局配置: /etc/bashrc
-用户级配置: $HOME/.bashrc
+登录shell类型
+1.login shell
+1)通过tty1-tty6登录进入
+2)通过ssh/telnet登录
+3)通过su - <user>切换用户
+
+2.non-login shell
+1)通过GUI打开pts终端
+2)通过su <user>切换用户
+
+
+bash读取设定档
+1.login shell
+/etc/profile
+/etc/bashrc
+~/.bashrc
+~/.bash_profile
+
+2.non-login shell
+/etc/bashrc
+~/.bashrc
 
 
 

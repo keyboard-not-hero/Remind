@@ -6,6 +6,10 @@ fg [<job_spec>]
     将job放到前台继续执行
 
 
+<command> &
+    将命令放到后台执行
+
+
 ctrl+Z
     将job放到后台暂停
 
@@ -47,3 +51,7 @@ jobs -x command [arguments]
 
 -s
     只显示Stopped状态的job
+
+
+
+最后编辑于: 2025-01-19

@@ -90,67 +90,91 @@ script包含格式如下:
 
 pattern - 匹配符合要求的行. 默认为所有行. 格式类型如下:
     /<re>/ - 对record($0)内容使用正则表达式进行匹配. 默认使用Extend Regular Expression(ERE)
+    /<re1>/,/<re2>/ - 使用正则表达式匹配起始行和结束行(包含)
     <expression> - expression结果为true(非0数字或非空字符串), 则执行后续action. 如: $1 ~ /re/
-    <begin>,<end> - 指定起始行和结束行(包含)
+    <exp1>,<exp2> - 使用exp匹配起始行和结束行
+    BEGINFILE - 读取当前文件内容之前执行的操作
+    ENDFILE - 读取当前文件所有内容之后执行的操作
     BEGIN - 读取内容之前执行的操作. 必须配置action
     END - 读取所有内容之后执行的操作. 必须配置action
     <null> - 匹配所有record
+    ** !表示对以上内容取反
+    ** 执行顺序: BEGIN --> BEGINFILE --> <normal_action> --> ENDFILE --> BEGINFILE --> <normal_action> --> ENDFILE --> END
 
 
 action - 对匹配行的操作. 默认为print $0. 语句包含内容类型如下:
     1.控制语句
         类似于C语言的控制语句, 如if/for/while等. 具体如下:
-	    1)if语句
-	    if(condition)
-	        statement1
+	1)if语句
+	    if(<condition>)
+	        <statement1>
 	    else
-		statement2
+		<statement2>
 	    或
-	    if(condition) statement1;else statement2
-			2)while语句
-				while(condition)
-					statement
-				或
-				while(condition) statement
-			3)do语句
-				do
-					statement
-				while(condition)
-				或
-				do statement; while(condition)
-			4)for语句
-				for(init; condition; increment)
-					statement
+	    if(<condition>) <statement1>; else <statement2>
+			
+	2)while语句
+	    while(<condition>)
+		<statement>
+	    或
+	    while(<condition>) <statement>
+			
+	3)do语句
+	    do
+	        <statement>
+	    while(<condition>)
+	    或
+	    do <statement>; while(<condition>)
+			
+	4)for语句
+	    for(<init>; <condition>; <increment>)
+	        <statement>
+	    ** 不支持多变量
 				
-				for(i in arr)
-					statement
-			5)switch语句
-				switch(exp){
-				case val1:
-					statement1
-					break
-				case2 val2:
-					statement2
-					break
-				default:
-					statement3
-					break
-				}
-				或
-				switch(exp){case val1: {statement1; break};case val2: {statement2; break};default: {statement3; break}}
-			6)break语句
-				退出最内层循环或switch
-			7)continue语句
-				跳过剩下语句, 直接进入下一次循环
-			8)next语句
-				马上进入下一条record
-			9)exit语句
-				exit [exit_code]
-					马上执行END pattern的action, 并退出awk
+	    for(i in <array>)
+		<statement>
+			
+	5)switch语句
+	    switch(<exp>){
+	    case <val1_or_re1>:
+	        <statement1>
+	        break
+	    case <val2_or_re2>:
+	        <statement2>
+	        break
+	    default:
+	        <statement3>
+	        break
+	    }
+	    或
+	    switch(<exp>){case <val1>: {<statement1>; break};case <val2>: {<statement2>; break};default: {<statement3>; break}}
+			
+	    6)break语句
+		退出for/while/do while循环, 或switch
+			
+	    7)continue语句
+		跳过剩下语句, 直接进入下一次循环
+			
+	    8)exit语句
+		exit <exit_code>
+		    直接执行END, 退出awk
 
+            
 
-	2.输入语句
-		getline指令或next语句
+    2.输入语句
+	1)getline语句
+	    马上读取下一条record
+	    与其他命令执行的逻辑:
+	    <other_cmd> get_next_line
+	    <getline> get_next_line
+	    <other_cmd> get_next_line
+	    <getline> get_next_line
+
+	2)next语句
+	    马上进入下一条record, 不执行后续指令
+		
+	3)nextfile语句
+	    马上读取下一个文件, 不执行后续指令
 
 
     3.输出指令
@@ -406,56 +430,70 @@ action - 对匹配行的操作. 默认为print $0. 语句包含内容类型如�
 pattern/action可用变量列表:
     $0 - 代表当前record内容
     $1/$2... - 代表第N个字段内容, N不局限于1位数
-    IGNORECASE - 用于字段或字段分隔符的regular expression模式匹配. 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
+    ARGC - 指令行的参数个数
+    ARGIND - 当前文件所在的ARGV索引号. 即FILENAME=ARGV[ARGIND]
+    ARGV - 指令行的参数, 使用数组保存, 数组索引由0起始
+    CONVFMT - 指定数字转化为字符串的格式. 默认为%.6g
+    ENVIRON - 环境变量的联结数组. 如: ENVIRON["HOME"]为HOME变量值
+    FIELDWIDTHS - 指定各个列的固定宽度. 格式: FIELDWIDTHS="<col1_wid> <col2_wid> ...". 
+	自version 4.2起, 新增以下两个特性:
+	    1)格式: FIELDWIDTHS= "<col1_wid> [<skip_col>:]<col2_wid> ...", skip_col代表跳过指定列数后, 再开始指定下一个field长度
+	    2)最后一个列宽可指定为'*', 代表不固定长度
     FILENAME - 当前record所在文件名称
     FNR - 当前所在record编号, 多文件之间重置
-    NR - 当前所在record编号, 多文件之间共享
-    RS - 记录分隔符(record separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
-        "\n" - 换行符, 默认值
-        "" - 一个或多个空行(即段落, 移除段落前和段落后的空行)
-        "\n\n+" - 一个或多个空行(即段落, 不移除段落前和段落后的空行)
-    RT - 当RS包含一个字符时, 该值与RS一致; 当RS多于一个字符时(即RE), 该值为与RE匹配的字符串内容
-    ORS - 输出显示的record分隔符. 默认为"\n"
+    FPAT(Field Pattern) - 使用regular expression模式指定field
     FS - 字段分隔符(field separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
 	" " - 单个或多个spaces/tables/newlines(移除record首尾空格), 默认选项
 	"[ ]" - 使用单个空格符作为字段分隔符
 	"[ \t\n]+" - 单个或多个spaces/tables/newlines(不移除record首尾空格)
 	"" - 将record的每一个字符都划分为一个field
-    OFS - 输出的字段分隔符. 默认为" "
-    FIELDWIDTHS - 指定各个列的固定宽度. 格式: FIELDWIDTHS="<col1_wid> <col2_wid> ...". 
-	自version 4.2起, 新增以下两个特性:
-	    1)格式: FIELDWIDTHS= "<col1_wid> [<skip_col>:]<col2_wid> ..."
-	    2)最后一个列宽可指定为'*', 代表不固定长度
-    FPAT(Field Pattern) - 使用regular expression模式指定field
+    IGNORECASE - 当赋值为数字0或空字符串时, 匹配在乎大小写; 当赋值为非0数字或非空字符串时, 匹配忽略大小写 
     NF - 当前record的field数量
-    CONVFMT - 指定数字转化为字符串的格式. 默认为%.6g
-    OFMT - CONVFMT向后兼容变量
-	
+    NR - 当前所在record编号, 多文件之间共享
+        "\n" - 换行符, 默认值
+        "" - 一个或多个空行(即段落, 移除段落前和段落后的空行)
+        "\n\n+" - 一个或多个空行(即段落, 不移除段落前和段落后的空行)
+    OFMT - CONVFMT的旧版本兼容变量
+    OFS - 输出的字段分隔符. 默认为" "
+    ORS - 输出显示的record分隔符. 默认为"\n"
+    RLENGTH - match()返回的匹配子字符串长度, 无匹配时返回-1
+    RSTART - math()返回的子字符串在字符串中的起始定位, 无匹配时返回0
+    RS - 记录分隔符(record separator). 值包含一个字符时, 进行字符串精确匹配; 当值包含多余一个字符时, 视为regular expression. 常用类别:
+    RT - 当RS包含一个字符时, 该值与RS一致; 当RS多于一个字符时(即RE), 该值为与RE匹配的字符串内容
+    SUBSEP - 角标分隔符, 用于分隔多维数组的不同维度subscript. 默认为'\034'
+    ** 可引用shell变量	
 
-	ARGC - 指令行的参数个数
-	ARGIND - 当前文件所在的ARGV索引号
-	ARGV - 数组, 包含指令行的指令和文件名称(不包含参数和指令), 数组索引由0起始
-	PREC - 浮点数的精度. 默认为53
-	RLENGTH - math()返回的匹配子字符串长度, 无匹配时返回-1
-	RSTART - math()返回的子字符串在字符串中的起始定位, 无匹配时返回0
-	** 当输入内容不以RS匹配的内容结尾时, RT为null字符串
-	SUBSEP - 角标分隔符, 用于分隔多维数组的不同维度subscript. 默认为'\034'
 
 
 将record分割为field的方式:
 1)使用FPAT指定field区域
+
 2)使用FIELDWIDTHS指定每个field的长度
+
 3)使用FS指定分割field的符号
 
 
+
 awk数组:
-1)数组为dict映射, 索引可以为不连续数字
-2)数组的索引始终为字符串(如果为数字, 自动转化为字符串)
-3)检测数组元素是否存在方式: if(index in arr)
-4)遍历数组元素: for(index_var in arr)
-5)删除数组元素: delete arr[index]
-6)删除整个数组: delete arr
-7)多维数组的两种形式: arr[in1,in2], arr["in1\034in2"]
+1)不用指定数组长度
+2)数组为dict映射, 索引可以为不连续数字
+3)数组的索引始终为字符串(如果为数字, 自动转化为字符串)
+4)元素赋值: arr[index]=value
+5)引用数组元素: arr[index]
+6)检测索引是否存在: if(index in arr)
+7)遍历数组元素: for(var in arr)
+8)删除数组元素: delete arr[index]
+9)删除整个数组: delete arr
+
+
+伪多维数组
+1)伪多维数组: arr[in1,in2], 底层转化为arr["in1\034in2"], \034为SUBSEP默认值
+2)检测索引是否存在: if((in1,in2) in arr)
+
+
+多维数组
+1)多维数组: arr[in1][in2]
+
 
 
 当没有提供输入文件时, 从stdandard input读取输入
@@ -866,24 +904,149 @@ AWKVARS.OUT  DEMO_01.SH  DEMO_01.TXT  DEMO_02.TXT  DEMO_03.TXT  EXAMPLE_01.TXT  
 awkvars.out  demo_01.sh  demo_01.txt  demo_02.txt  demo_03.txt  example_01.txt  inventory-shipped  mail-list  score-table
 
 
+示例12 - 获取登录用户记录(第一行至倒数第三行的第一列)
+[steven@www bash]$ last|awk 'BEGIN{FS=" +"};{line[NR]=$1};END{for(i=1;i<=NR-2;i++)print line[i]}'
 
 
-
-
-示例1 - 在正文内容前后添加内容
-seq 3|awk 'BEGIN{print "it\47s begin"};{print};END{print "it\47s ending"}'
-it's begin
-1
-2
-3
-it's ending
-
-示例2 - ps结果最后一列以[开头的行
-ps aux|awk 'BEGIN{a=0};$11~/^\[/{a++};END{print a}'
-239
-
-示例3 - 合并所有非空行
+示例13 - 合并所有非空行
 awk '/^.+$/{if(NR==1) {printf $0} else {printf ","$0}}' <file>
+
+
+示例14 - 跳过匹配行
+[steven@www bash]$ cat mail-list
+Amelia       555-5553     amelia.zodiacusque@gmail.com    F
+Anthony      555-3412     anthony.asserturo@hotmail.com   A
+Becky        555-7685     becky.algebrarum@gmail.com      A
+Bill         555-1675     bill.drowning@hotmail.com       A
+Broderick    555-0542     broderick.aliquotiens@yahoo.com R
+Camilla      555-2912     camilla.infusarum@skynet.be     R
+Fabius       555-1234     fabius.undevicesimus@ucb.edu    F
+Julie        555-6699     julie.perscrutabor@skeeve.com   F
+Martin       555-6480     martin.codicibus@hotmail.com    A
+Samuel       555-3430     samuel.lanceolis@shu.edu        A
+Jean-Paul    555-2127     jeanpaul.campanorum@nyu.edu     R
+
+[steven@www bash]$ awk '/ali.*yahoo/{next};{print}' mail-list
+Amelia       555-5553     amelia.zodiacusque@gmail.com    F
+Anthony      555-3412     anthony.asserturo@hotmail.com   A
+Becky        555-7685     becky.algebrarum@gmail.com      A
+Bill         555-1675     bill.drowning@hotmail.com       A
+Camilla      555-2912     camilla.infusarum@skynet.be     R
+Fabius       555-1234     fabius.undevicesimus@ucb.edu    F
+Julie        555-6699     julie.perscrutabor@skeeve.com   F
+Martin       555-6480     martin.codicibus@hotmail.com    A
+Samuel       555-3430     samuel.lanceolis@shu.edu        A
+Jean-Paul    555-2127     jeanpaul.campanorum@nyu.edu     R
+
+
+示例15 - 只读取文件的前两行
+steven@steven-IRH8:~/demo/bash$ cat demo_01.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ cat demo_02.txt
+This is demo_02.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ cat demo_03.txt
+This is demo_03.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ awk '{if(FNR==3)nextfile;else print $0}' demo_01.txt demo_02.txt demo_03.txt
+This is demo_01.txt
+number 1
+This is demo_02.txt
+number 1
+This is demo_03.txt
+number 1
+
+
+示例16 - for循环
+steven@steven-IRH8:~/demo/bash$ cat demo_01.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ cat demo_02.txt
+This is demo_02.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ cat demo_03.txt
+This is demo_03.txt
+number 1
+number 2
+number 3
+
+steven@steven-IRH8:~/demo/bash$ awk '{for(i=1;i<8;i++){if(NR==i)print $0}}' demo_01.txt demo_02.txt demo_03.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+This is demo_02.txt
+number 1
+number 2
+
+
+示例17 - switch语句
+[steven@www bash]$ cat demo_01.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+
+[steven@www bash]$ awk '{switch(NR){case 1: {print "This is line one"; break}; case 2: {print "This is line two"; break}; default: {print "This is additional line"; break}}}' demo_01.txt
+This is line one
+This is line two
+This is additional line
+This is additional line
+
+
+示例18 - getline和next的差别
+[steven@www bash]$ cat demo_01.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+
+[steven@www bash]$ awk '{getline};{print $0}' demo_01.txt
+number 1
+number 3
+
+[steven@www bash]$ awk '{next};{print $0}' demo_01.txt
+
+[steven@www bash]$ awk '{print $0};{next}' demo_01.txt
+This is demo_01.txt
+number 1
+number 2
+number 3
+
+[steven@www bash]$ awk '{print $0};{getline}' demo_01.txt
+This is demo_01.txt
+number 2
+
+
+示例19 - cmd参数引用
+[steven@www bash]$ awk 'BEGIN{for(i=0;i<ARGC;i++)print ARGV[i]}' inventory-shipped mail-list
+awk
+inventory-shipped
+mail-list
+
+
+示例20 - 多维数组
+[steven@www bash]$ awk 'BEGIN{for(i=0;i<3;i++){for(j=0;j<4;j++)a[i][j]=i}; for(i=0;i<length(a);i++){for(j=0;j<length(a[i]);j++){printf a[i][j];printf " "};printf "\n"}}'
+0 0 0 0
+1 1 1 1
+2 2 2 2
+
 
 
 引用:
