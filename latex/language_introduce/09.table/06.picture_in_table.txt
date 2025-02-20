@@ -1,8 +1,17 @@
 \documentclass{article}
 \usepackage{ctex,float,adjustbox}
 \begin{document}
-BookTextComputer\\
-\adjustbox{margin=0pt,frame}{Book\adjustbox{padding=9pt,frame,margin=0pt 4pt 6pt 8pt}{Text}Computer}
+\begin{table}[H]
+    \begin{tabular}{|>{\centering\arraybackslash}l|>{\centering\arraybackslash}c|}
+        \hline
+        \raisebox{2.8cm}{文字} & \adjustbox{margin=10pt}{\begin{tikzpicture}[>=Stealth]
+            \draw[->] (-0.5,0) -- (5,0) node[below]{$x$};
+            \draw[->] (0,-0.5) -- (0,5) node[left]{$y$};
+            \draw (0,0) -- (4,4);
+        \end{tikzpicture}}\\
+        \hline
+    \end{tabular}
+\end{table}
 \end{document}
 
 

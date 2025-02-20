@@ -92,7 +92,7 @@
       let 
         \p1 = (0,0),\p2 = (4,0),
         \n1 = {2cm},\n2 = {veclen(\x2-\x1,\y2-\y1)},
-        \n3 = {asin(\n1/\n2)},
+        \n3 = {asin(\n1/\n2)}
       in  
         \pgfextra{\pgfmathsetmacro{\mylen}{\n3}}
         [draw,name path=AB,rotate around={-\mylen:(\p2)}] (\p2) -- (\p1);

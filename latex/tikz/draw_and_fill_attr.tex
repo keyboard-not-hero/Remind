@@ -13,7 +13,7 @@
     \draw[thick] (-2,-1.5) -- (2,-1.5);
     \draw[very thick] (-2,-2) -- (2,-2);
     \draw[ultra thick] (-2,-2.5) -- (2,-2.5);
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 线条类型: tikz的线条主要由虚线来实现
@@ -37,7 +37,7 @@
     \draw[loosely dotted] (-2,-2.5) -- (2,-2.5);
     \draw[dotted] (-2,-3) -- (2,-3);
     \draw[densely dotted] (-2,-3.5) -- (2,-3.5);
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 填充颜色: 自定义颜色和颜色表达式，参考latex的xcolor宏包
@@ -47,12 +47,12 @@
     \fill[color=red!50!green!60] (0,0) rectangle (1,1);
     % filldraw命令中，color指定填充和边框颜色，fill指定填充颜色，draw指定边框颜色
     \filldraw[color=blue!50,fill=red!20] (0,-3) ellipse [x radius=3cm,y radius=2cm];
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 边角弧度
     \draw[rounded corners=2pt] (-1.5,-2) rectangle (1.5,2); 
-\end{tikzpicture}\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 透明度，范围[0,1]，0代表完全透明，1代表完全不透明
@@ -63,7 +63,7 @@
     \fill[color=red!40!green,opacity=0.2] (-1,-1) rectangle (1,1);
     % filldraw中，fill opacity指定填充透明度，draw opacity指定边框透明度，opacity指定填充和边框透明度
     \filldraw[line width=2pt,draw=red,fill=blue,fill opacity=0.2] (0,-5) ellipse [x radius=3cm,y radius=2cm];
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 单线与双线
@@ -72,14 +72,36 @@
     \draw (0,1) -- (2,1);
     \draw[double] (0,0) -- (2,0);
     \draw[double,red,double=green,double distance=3pt] (0,-1) -- (2,-1);
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 使用预定义图形进行填充, 需要使用patterns库
     % pattern指定填充图形，pattern color指定填充图形的颜色
-    \filldraw[pattern=dots,pattern color=green!50] (0,0) circle [radius=1cm];
-    \filldraw[pattern=fivepointed stars,pattern color=blue!30] (1,-0.5) rectangle (3,0.5);
-\end{tikzpicture}\\\vspace{1cm}
+    \draw[pattern=horizontal lines] (0,0) circle [radius=1cm];
+    \node at (0,0){1};
+    \draw[pattern=vertical lines,xshift=3cm] (0,0) circle [radius=1cm];
+    \node[xshift=3cm] at (0,0){2};
+    \draw[pattern=north east lines,xshift=6cm] (0,0) circle [radius=1cm];
+    \node[xshift=6cm] at (0,0){3};
+    \draw[pattern=north west lines,yshift=-3cm] (0,0) circle [radius=1cm];
+    \node[yshift=-3cm] at (0,0){4};
+    \draw[pattern=grid,shift={(3cm,-3cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-3cm)}] at (0,0){5};
+    \draw[pattern=crosshatch,shift={(6cm,-3cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-3cm)}] at (0,0){6};
+    \draw[pattern=dots,yshift=-6cm] (0,0) circle [radius=1cm];
+    \node[yshift=-6cm] at (0,0){7};
+    \draw[pattern=crosshatch dots,shift={(3cm,-6cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-6cm)}] at (0,0){8};
+    \draw[pattern=fivepointed stars,shift={(6cm,-6cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-6cm)}] at (0,0){9};
+    \draw[pattern=sixpointed stars,yshift=-9cm] (0,0) circle [radius=1cm];
+    \node[yshift=-9cm] at (0,0){10};
+    \draw[pattern=bricks,shift={(3cm,-9cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-9cm)}] at (0,0){11};
+    \draw[pattern=checkerboard,shift={(6cm,-9cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-9cm)}] at (0,0){12};
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 图形重叠部分的填充方式
@@ -128,39 +150,42 @@
 	\draw[->] (0,0) -- (0.5,0);
 	\draw[->] (0.5,1.5) -- (1,1.5);
     \end{scope}
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % shade，填充颜色从一个颜色平滑过渡到另一个颜色，需使用shadings库
     % 1.axis模式, 从左到右或从上到下的线性颜色变化. 默认模式
     % 使用shading=axis指定模式，该模式默认为从上到下，由灰色过渡到白色
-    % 可使用如下参数: top color/middle color/bottom color/left color/right color
+    % 可使用如下参数: top color/bottom color/left color/right color/middle color
+    % middle color可结合top color/bottom color, 成为垂直中间颜色; middle color也可结合left color/right color, 称为水平中间颜色. middle color必须在top/bottom/left/right color之后使用
     \shade (0,0) rectangle (2,2);
     \shade[xshift=3cm,left color=blue!60] (0,0) rectangle (2,2);
+    \shade[xshift=6cm,top color=blue!60,bottom color=green!60,middle color=purple!60] (0,0) rectangle (2,2);
+    \shade[xshift=9cm,left color=blue!60,right color=green!60,middle color=red!60] (0,0) rectangle (2,2);
 
     % 2.ball模式, 球体光影变化
     % 使用shading=ball指定模式，默认为蓝色
     % 可使用ball color指定颜色
-    \shade[xshift=7cm,shading=ball] (0,1) circle [radius=1cm];
+    \shade[yshift=-3cm,shading=ball] (0,1) circle [radius=1cm];
 
     % 3.bilinear interpolation模式，双线性
     % 使用shading=bilinear interpolation指定模式
     % 可使用以下关键字指定左上/右上/左下/右下颜色: upper left/upper right/lower left/lower right，默认都为白色
-    \shade[xshift=9cm,shading=bilinear interpolation,upper right=green!30,lower left=blue!30] (0,0) rectangle (2,2);
+    \shade[yshift=-6cm,shading=bilinear interpolation,upper right=green!30,lower left=blue!30] (0,0) rectangle (2,2);
 
     % 4.color wheel模式，车轮式颜色轮替
     % 使用shading=color wheel指定模式
-    \shade[yshift=-3cm,shading=color wheel] (0,0) rectangle (2,2);
+    \shade[yshift=-9cm,shading=color wheel] (0,0) rectangle (2,2);
 
     % 5.color wheel black center模式，车轮式颜色轮替，中心为黑色
     % 使用shading=color wheel black center指定模式
-    \shade[shift={(3cm,-3cm)},shading=color wheel black center] (0,0) rectangle (2,2);
+    \shade[yshift=-12cm,shading=color wheel black center] (0,0) rectangle (2,2);
 
     % 6.radial模式，由一点以半径向外扩散转化颜色
     % 使用shading=radial指定模式
     % 使用inner color指定中心颜色，outer color指定边缘颜色. 默认圆心为灰色，边缘颜色为白色
-    \shade[shift={(6cm,-3cm)},shading=radial,inner color=red,outer color=purple!10] (0,0) rectangle (2,2);
-\end{tikzpicture}\\\vspace{1cm}
+    \shade[yshift=-15cm,shading=radial,inner color=red,outer color=purple!10] (0,0) rectangle (2,2);
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % clip，针对该指令之后的内容，只保留该指令限定区域部分；指令之前的内容，不作区域限制
@@ -173,7 +198,7 @@
     \draw (0,0) -- (60:4cm);
     \draw (0,0) -- (75:4cm);
     \draw (0,0) -- (90:4cm);
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % preaction(pre-action)参数，先进行preaction的操作，再使用指定参数作图后
