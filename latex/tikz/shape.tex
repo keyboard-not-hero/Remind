@@ -45,10 +45,49 @@
 \end{tikzpicture}\vspace{1cm}
 
 \begin{tikzpicture}
-    % <point> parabola <point> 给出抛物线的两个点，沿该方向呈现单一递增/递减趋势
-    % bend <point> 用于指定两个点之间的拐点(即抛物线顶点)
-    \draw[->] (-5,0) -- (1,0);
-    \draw[->] (0,-1) -- (0,9);
-    \draw (-4,8) parabola bend (-2,4) (0,8);
+    % <point1> parabola <point2> 给出抛物线的两个点，默认以point1为顶点
+    % parabola[bend at end]以point2为顶点
+    \draw[dash pattern=on 2pt off 2pt] (0,0) rectangle (1,1);
+    \draw (0,0) parabola (1,1);
+    \draw[dash pattern=on 2pt off 2pt,xshift=2cm] (0,0) rectangle (1,2);
+    \draw[xshift=2cm] (0,0) parabola (1,2);
+
+    \draw[dash pattern=on 2pt off 2pt,xshift=4cm] (0,1) rectangle (1,0);
+    \draw[xshift=4cm] (0,1) parabola (1,0);
+    \draw[dash pattern=on 2pt off 2pt,xshift=6cm] (0,2) rectangle (1,0);
+    \draw[xshift=6cm] (0,2) parabola (1,0);
+
+    \draw[dash pattern=on 2pt off 2pt,yshift=-4cm] (0,0) rectangle (1,1);
+    \draw[yshift=-4cm] (0,0) parabola[bend at end] (1,1);
+    \draw[dash pattern=on 2pt off 2pt,shift={(2cm,-4cm)}] (0,0) rectangle (1,2);
+    \draw[shift={(2cm,-4cm)}] (0,0) parabola[bend at end] (1,2);
+
+    \draw[dash pattern=on 2pt off 2pt,shift={(4cm,-4cm)}] (0,1) rectangle (1,0);
+    \draw[shift={(4cm,-4cm)}] (0,1) parabola[bend at end] (1,0);
+    \draw[dash pattern=on 2pt off 2pt,shift={(6cm,-4cm)}] (0,2) rectangle (1,0);
+    \draw[shift={(6cm,-4cm)}] (0,2) parabola[bend at end] (1,0);
+
+    % <point1> parabola bend <point3> <point2>
+    % 类似于<point2> parabola <point1>    +    <point2> parabola <point3>
+    \draw[yshift=-8cm] (-1,1) parabola bend(0,0) (2,2);  
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
+    % <point1> to[out] <point2>
+    %   在point1到point2的路径中，point1切线的倾斜角
+    % <point1> to[in] <point2>
+    %   在point1到point2的路径中，point2切线的倾斜角
+    % <point1> to[out,relative] <point2>
+    %   在point1到point2的路径中，point1切线的倾斜角相对于point1和point2连线的角度
+    \draw (0,0) to[out=45,in=135] (1,0);
+    \draw (2,0) to[out=45,in=135] (2,1);
+    \draw (4,0) to[relative,out=45,in=135] (4,1);
+
+    % <point1> to[bend left=<angle>] <point2>
+    %    相当于out=<angle>,in=180-<angle>,relative
+    % <point1> to[bend right=<angle>] <point2>
+    %    相当于out=-<angle>,in=180+<angle>,relative
+    \draw (6,0) to[bend left=30] (6,1);
+    \draw (8,0) to[bend right=30] (8,1);
 \end{tikzpicture}
 \end{document}

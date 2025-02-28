@@ -50,8 +50,14 @@
 \end{tikzpicture}\newpage
 
 \begin{tikzpicture}
-    % 边角弧度
-    \draw[rounded corners=2pt] (-1.5,-2) rectangle (1.5,2); 
+    % rounded corners=<dimension>
+    %   圆滑的边角弧度
+    % sharp corners
+    %   尖锐的边角弧度
+    % 可以在路径中使用，影响后续顶点弧度
+    \draw (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
+    \draw[xshift=4cm,rounded corners=5pt] (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
+    \draw[yshift=-2cm] (0,0) -- (2,0) -- (2,1) [rounded corners=5pt] -- (0,1) -- cycle;
 \end{tikzpicture}\newpage
 
 \begin{tikzpicture}

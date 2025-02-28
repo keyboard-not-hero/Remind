@@ -4,6 +4,17 @@
 \usepackage{siunitx}
 \usetikzlibrary{calc,intersections,arrows.meta}
 \definecolor{star}{RGB}{13,171,160}
+\definecolor{sorange}{RGB}{250,140,53}
+\definecolor{eblue}{RGB}{40,85,135}
+\definecolor{mgray}{RGB}{190,180,170}
+\definecolor{light}{RGB}{179,231,251}
+\definecolor{dark}{RGB}{9,148,221}
+\definecolor{lightline}{RGB}{236,0,140}
+\definecolor{color1}{RGB}{204,180,133}
+\definecolor{color2}{RGB}{84,84,84}
+\definecolor{color3}{RGB}{234,161,31}
+\definecolor{color4}{RGB}{142,142,142}
+\definecolor{color5}{RGB}{255,156,192}
 \begin{document}
 \begin{tikzpicture}
     % 五星
@@ -312,7 +323,7 @@
     \node[below] at (2.6,0){$C'$};
 \end{tikzpicture}\vspace{2cm}
 
-\begin{tikzpicture}[scale=0.8,transform shape]
+\begin{tikzpicture}[font=\small]
     % 凹透镜
     % 镜面
     \path[name path=c1] ([xshift=-2.9cm]-22:2.8) arc [start angle=-22,end angle=22,radius=2.8];
@@ -340,6 +351,39 @@
     \node[below] at (-2.9,0){$C$};
     \fill (2.9,0) circle [radius=2pt];
     \node[below] at (2.9,0){$C'$};
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}[scale=0.5]
+    % 铅笔
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-104.5:2.8);
+    \coordinate (C) at (-75.5:2.8);
+    \coordinate (D) at (-104.5:1.5);
+    \coordinate (E) at (-75.5:1.5);
+    \coordinate (F) at ([shift={(0.46,-0.1)}]B);
+    \coordinate (G) at ([shift={(-0.46,-0.1)}]C);
+    \coordinate (H) at ([yshift=-8cm]B);
+    \coordinate (I) at ([yshift=-8cm]C);
+    % 铅笔头
+    \filldraw[fill=color1] (A) -- (B) to[bend right=70] (F) to[bend right=70] (G) to[bend right=70] (C) -- cycle;
+    \filldraw[fill=color2] (A) -- (D) arc [start angle=-104.5,end angle=-75.5,radius=1.5] -- cycle;
+    % 笔身
+    \filldraw[fill=color3] (B) to[bend right=70] (F) to[bend right=70] (G) to[bend right=70] (C) -- (I) to[bend left=15] (H) -- cycle;
+    \path[name path=l1] (H) to[bend right=15] (I);
+    \path[name path=l2] (F) -- ([yshift=-9cm]F);
+    \path[name path=l3] (G) -- ([yshift=-9cm]G);
+    \path[name intersections={of=l1 and l2,by=J}];
+    \path[name intersections={of=l1 and l3,by=K}];
+    \draw (F) -- (J);
+    \draw (G) -- (K);
+    % 橡皮擦箍
+    \coordinate (L) at ([yshift=-1cm]H);
+    \coordinate (M) at ([yshift=-1cm]I);
+    \filldraw[fill=color4] (H) to[bend right=15] (I) -- (M) to[bend left=15] (L) -- cycle;
+    % 橡皮擦
+    \coordinate (P) at ([yshift=-1cm]L);
+    \coordinate (Q) at ([yshift=-1cm]M);
+    \filldraw[fill=color5] (L) to[bend right=15] (M) [rounded corners=5pt] -- (Q) -- (P) [sharp corners] -- cycle;
 \end{tikzpicture}
 \end{document}
 
