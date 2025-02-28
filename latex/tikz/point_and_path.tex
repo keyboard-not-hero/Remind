@@ -34,12 +34,31 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
-    % 将计算结果应用于坐标点
-    \coordinate (A) at (0,{sqrt(3)});
-    \coordinate (B) at (0,0);
-    \coordinate (C) at (1,0);
-    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below right]{$C$} -- cycle;
-\end{tikzpicture}
+    % 复杂计算
+    \draw (0,0) circle [radius=2];
+    % \pgfmathparse{<complex_calculate>}
+    %   复杂计算(包含函数等)，结果不包含单位
+    %   其他简单计算会全部转化为pt单位
+    % \pgfmathresult
+    %   将上一次\pgfmathparse计算结果进行引用
+    \filldraw (1,\pgfmathparse{sqrt(3)}\pgfmathresult) circle [radius=2pt];
+    \draw (0,0) circle [radius=3];
+    \fill[green] (1,\pgfmathparse{2*sqrt(2)}\pgfmathresult) circle [radius=2pt];
+    
+    % 常用函数
+    % sqrt(<num>)
+    %   求平方根
+    % sin(<degree>)
+    %   求正弦值
+    %   参数为角度格式，可使用<radian> r将弧度转化为角度
+    % asin(<val>)
+    %   求反正弦值, 值域[-90,90]
+    %   返回值为角度值  
+    % atan(<val>)
+    %    求反正切值
+    % atan2(y,x)
+    %    求y/x的反正切值
+\end{tikzpicture}\vspace{1cm}
 
 \begin{tikzpicture}
     % p |- q，取p坐标的x值，取q坐标的y值
@@ -109,9 +128,5 @@
     % 交点引用格式: <name>-<num>
     \path [name intersections={of=x axis and y axis,by=G}];
     \fill (G) circle(2pt);
-
-    % 在坐标点上添加注释. 可选参数label的值格式为<relative_position>:<content>
-    % relative_position可以为below/above/left/right, 或相对角度(x轴正向为0度, 逆时针旋转增加, 但最终结果不是部分精确)
-    \node[label=110:$0$] at (G){};
 \end{tikzpicture}
 \end{document}

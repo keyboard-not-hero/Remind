@@ -285,6 +285,61 @@
     \node[below=-2pt] at (7.8,-0.06){\qty{}{\degreeCelsius}};
     % 水银
     \fill (-2,-0.06) rectangle (1.5,0.06);
+\end{tikzpicture}\vspace{2cm}
+
+\begin{tikzpicture}[font=\small]
+    % 凸透镜
+    % 镜面
+    \path[name path=c1] ([xshift=-2.6cm]-22:2.8) arc [start angle=-22,end angle=22,radius=2.8];
+    \path[name path=c2] ([xshift=2.6cm]158:2.8) arc [start angle=158,end angle=202,radius=2.8];
+    \path[name intersections={of=c1 and c2,by={A,B}}];
+    \path
+      let
+        \p1=(A),\p2=(B),
+        \n1={2.6cm}
+      in
+        [draw=dark,fill=light] (\p2) arc [start angle={atan2(\y2,\n1)},end angle={atan2(\y1,\n1)},radius=2.8] -- (\p1) arc [start angle={180-atan2(\y1,\n1)},end angle={180-atan2(\y2,\n1)},radius=2.8];
+    % 主光轴
+    \draw[dash pattern=on 2pt off 2pt] (-2.6,0) -- (2.6,0) node[above=-1pt,pos=0.2]{主光轴};
+    % 光心
+    \draw[line width=0.2pt] (0,0) -- (0.5,-0.3) node[pos=1,below=-2pt]{光心};
+    \fill[red] (0,0) circle [radius=2pt];
+    \node at (12pt,6pt){$O$};
+    % 球心
+    \fill (-2.6,0) circle [radius=2pt];
+    \node[below] at (-2.6,0){$C$};
+    \fill (2.6,0) circle [radius=2pt];
+    \node[below] at (2.6,0){$C'$};
+\end{tikzpicture}\vspace{2cm}
+
+\begin{tikzpicture}[scale=0.8,transform shape]
+    % 凹透镜
+    % 镜面
+    \path[name path=c1] ([xshift=-2.9cm]-22:2.8) arc [start angle=-22,end angle=22,radius=2.8];
+    \path[name path=c2] ([xshift=2.9cm]158:2.8) arc [start angle=158,end angle=202,radius=2.8];
+    \path[name path=l1] (-0.5,-1.04) -- (0.5,-1.04);
+    \path[name path=l2] (-0.5,1.04) -- (0.5,1.04);
+    \path[name intersections={of=c1 and l1,by=A}];
+    \path[name intersections={of=c1 and l2,by=B}];
+    \path[name intersections={of=c2 and l1,by=C}];
+    \path[name intersections={of=c2 and l2,by=D}];
+    \path
+      let
+        \p1=(A),\p2=(B),\p3=(C),\p4=(D),
+        \n1={2.6cm}
+      in
+        [draw=dark,fill=light] (\p1) arc [start angle={atan2(\y1,\n1)},end angle={atan2(\y2,\n1)},radius=2.8] -- (\p4) arc [start angle={180-atan2(\y2,\n1)},end angle={180-atan2(\y1,\n1)},radius=2.8] -- cycle;
+    % 主光轴
+    \draw[dash pattern=on 2pt off 2pt] (-2.9,0) -- (2.9,0) node[above=-1pt,pos=0.2]{主光轴};
+    % 光心
+    \draw[line width=0.1pt] (0,0) -- (0.5,-0.3) node[pos=1,below=-2pt]{光心};
+    \fill[red] (0,0) circle [radius=2pt];
+    \node at (12pt,6pt){$O$};
+    % 球心
+    \fill (-2.9,0) circle [radius=2pt];
+    \node[below] at (-2.9,0){$C$};
+    \fill (2.9,0) circle [radius=2pt];
+    \node[below] at (2.9,0){$C'$};
 \end{tikzpicture}
 \end{document}
 
