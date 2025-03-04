@@ -1,2 +1,0 @@
-windows强制删除文件夹的指令
-rmdir /s /q <dir_path>

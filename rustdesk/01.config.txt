@@ -1,0 +1,83 @@
+Rustdesk Server建议硬件配置
+1 CPU/1G RAM/10G Disk
+
+
+Ubuntu安装Rustdesk Server
+1.安装hbbr/hbbs
+hbbr/hbbs下载地址: https://github.com/rustdesk/rustdesk-server/releases
+wget https://github.com/rustdesk/rustdesk-server/releases/download/1.1.14/rustdesk-server-hbbr_1.1.14_amd64.deb
+wget https://github.com/rustdesk/rustdesk-server/releases/download/1.1.14/rustdesk-server-hbbs_1.1.14_amd64.deb
+sudo dpkg -i rustdesk-server-hbbr_1.1.14_amd64.deb
+sudo dpkg -i rustdesk-server-hbbs_1.1.14_amd64.deb
+
+2.端口开放
+TCP: 21115-21119
+UDP: 21116
+ufw allow 21115:21119/tcp
+ufw allow 21116/udp
+sudo ufw enable
+
+3.启动hbbr/hbbs
+systemctl start rustdesk-hbbr
+systemctl start rustdesk-hbbs
+
+4.从服务器查看key
+cat /lib/systemd/system/rustdesk-hbbs.service
+WorkingDirectory=/var/lib/rustdesk-server/
+cat /var/lib/rustdesk-server/id_ed25519.pub
+** 删除id_ed25519.pub后，重启rustdesk会导致重新生成公钥
+
+
+Windows安装Rustdesk Server
+1.下载安装node.js
+下载地址: https://nodejs.org/zh-cn
+
+2.安装VC++
+下载地址: https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+3.安装PM2
+npm install -g pm2
+npm install pm2-windows-startup -g
+pm2-startup install
+
+启动hbbr/hbbs
+hbbr/hbbs下载地址: https://github.com/rustdesk/rustdesk-server/releases
+cd d:\rustdesk-server-windows\x86_64
+pm2 start hbbr.exe
+pm2 start hbbs.exe
+pm2 save
+pm2 list
+
+5.防火墙端口开放
+TCP: 21115-21119
+UDP: 21116
+
+6.从服务器查看key
+type id_ed25519.pub
+
+
+
+
+rustdesk客户端
+1.下载客户端
+下载地址: https://github.com/rustdesk/rustdesk/releases
+
+2.配置参数
+1)ID server
+server IP
+
+2)key
+
+
+** iPhone无法成为被控制端
+
+
+
+错误集锦:
+1.npm: 无法加载文件，因为在此系统上进制运行脚本
+set-ExecutionPolicy RemoteSigned
+get-ExecutionPolicy
+
+
+
+最后编辑于: 2025-03-04

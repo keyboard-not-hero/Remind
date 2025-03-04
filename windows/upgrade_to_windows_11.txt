@@ -1,0 +1,2 @@
+1.win+R，输入tpm.msc，查看是否有TPM模块，并且为TPM 2.0版本
+2.通过电脑运行状况检查，查看是否可以升级到Windows 11. 下载链接: https://aka.ms/GetPCHealthCheckApp

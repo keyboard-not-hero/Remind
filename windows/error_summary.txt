@@ -7,3 +7,8 @@
 在U盘中创建一个driver文件夹，将下载的驱动解压缩放到该文件夹下
 驱动下载地址:
 https://dlcdnets.asus.com/pub/ASUS/GamingNB/FX507ZE/RST_V19.1.0.1001_PV.zip
+最后，在安装时，硬盘空白界面选取读取驱动
+
+
+
+最后编辑于: 2025-03-04

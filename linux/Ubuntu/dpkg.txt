@@ -82,3 +82,9 @@ installed
 
 配置文件位置
 /etc/dpkg/dpkg.cfg
+
+
+错误集锦:
+1.dpkg: error: dpkg frontend lock is locked by another process
+sudo lsof /var/lib/dpkg/lock-frontend
+sudo kill -9 <PID>

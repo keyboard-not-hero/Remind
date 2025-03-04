@@ -1,50 +1,39 @@
-激活方式:
-1.产品密钥激活  -- 一次性, 不支持重装(重装需再次输入密钥)
+github项目: https://github.com/massgravel/Microsoft-Activation-Scripts
+一、激活适用Windows版本
+1.Windows 8与之后版本激活
+使用管理员模式打开powershell
+输入激活指令
+irm https://get.activated.win | iex
 
-2.数字许可证激活 -- 支持重装
-    
-
-激活类型:
-1.Retail
-零售版, 通过官网购买
-
-2.MAK
-企业版, 服务器为微软服务器. 一个激活码能激活多台机器
-
-3.OEM
-硬件厂商版, 与主板绑定. PC预装系统
-
-4.Volume
-企业版. 即KMS激活方式, 通过KMS服务器进行激活, 有效期为180天, 临近180天向服务器发起验证激活. 服务器有高权限, 用于个人电脑有安全隐患
+2.Windows 7与之后版本激活
+下载激活脚本，下载地址:
+https://github.com/massgravel/Microsoft-Activation-Scripts/archive/refs/heads/master.zip
 
 
-查看激活状态:
-开始 -- 设置 -- 更新&安全 -- 激活
+二、激活方式
+1.HWID(HardWare ID)
+1)永久激活Windows 10/11
+2)主板绑定，可重装
+3)需要联网激活
 
-查看激活时间:
-c:\> slmgr.vbs -xpr
+2.Ohook
+1)永久激活Office
+2)不需要联网激活
+3)不支持版本，Windows 7上的office，或者office 2010及以下版本
 
-查看激活类型:
-c:\> slmgr.vbs -dlv
+3.TSforge
+1)永久激活Windows/ESU/Office
+2)不需要联网激活
+
+4.KMS38
+1)激活Windows 10/11和Windows Server(14393及以后版本)到2038年
+2)不需要联网激活
+
+5.Online KMS
+1)180激活Windows/Office(带有自动更新激活)
+2)需要联网激活，每7天与服务器连接，查看是否需要更新激活信息
 
 
-对应激活状态
-Windows尚未激活
-
-Windows已激活, 但未链接到Microsoft账户
-
-Windows已使用数字许可证激活, 但Microsoft账户未链接到数字许可证
-
-Windows已使用数字许可证激活, 并且Microsoft账户已链接到数字许可证
-
-已经通过使用你所在阻止的激活服务激活Windows
-
-
-Windows 10/11和office激活方式:
-使用管理员身份打开powershell, 输入以下指令:
-irm https://massgrave.dev/get | iex
-
-HWID(Hardware ID)适用于consumer版Windows 10/11
-Windows 8只能使用Online KMS激活(180天有效期)
-
-Ohook适用于office 2013及以上版本的产品
+三、查看激活状态
+slmgr /xpr
+slmgr /dlv

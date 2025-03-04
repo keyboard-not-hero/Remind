@@ -1,0 +1,10 @@
+1.Windows 11右键菜单改成Windows 10模式
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+tskill explorer
+
+2.Windows 11任务栏修改
+右键任务栏 -- 任务栏设置 -- 个性化 -- 任务栏行为 -- 任务栏对齐方式
+
+
+
+最后编辑于: 2025-03-04
