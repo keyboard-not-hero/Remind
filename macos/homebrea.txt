@@ -1,0 +1,9 @@
+1.安装Homebrew
+前提环境:
+1)silicon CPU或intel CPU
+2)MacOS 13及以上
+3)CLT(Command Line Tools) for Xcode(xcode-select --install)
+4)Bourne-again shell
+
+Homebrew下载地址: https://github.com/Homebrew/brew/releases
+点击Homebrew-*.pkg，进行安装
