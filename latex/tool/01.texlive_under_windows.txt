@@ -1,0 +1,19 @@
+1a.离线安装Texlive
+# 下载地址: https://www.tug.org/texlive/acquire-iso.html
+# 选择download from a nearby CTAN mirror 
+
+# 安装Texlive
+右键ISO文件 -- 装载，从DVD驱动器打开
+点击"install-tl-windows"，选择安装路径，并且选择安装TeXworks前端
+
+
+1b.在线安装Texlive
+官网地址: http://tug.org/texlive/
+选择'download' -- 点击'install-tl.zip'
+解压缩install-tl.zip
+
+点击"install-tl-windows"，选择安装路径，并且选择安装TeXworks前端
+
+
+2.启用编辑器
+<install_path>\bin\windows/texworks

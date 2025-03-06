@@ -35,18 +35,20 @@ LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaT
 三、Demo(示例)03 - font style
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \begin{document}
-    \songti 宋体
-
-    \heiti 黑体
-
-    \kaishu 楷书
+    \songti 宋体\\
+    \heiti 黑体\\
+    \fangsong 仿宋\\
+    \kaishu 楷书\\
 \end{document}
 
 内容讲解
-1.Windows默认自带宋体/黑体/仿宋/楷书, Linux自带宋体/楷书. Linux安装黑体:
-	sudo apt install fonts-wqy-microhei fonts-wqy-zenhei
+1.Windows/Linux默认自带宋体/黑体/仿宋/楷书
 
-2.\songti对应于宋体, \heiti对应于黑体, \kaishu对应于楷书
+2.字体指令如下:
+\songti - 宋体
+\heiti - 黑体
+\fangsong - 仿宋
+\kaishu - 楷书
 
 
 

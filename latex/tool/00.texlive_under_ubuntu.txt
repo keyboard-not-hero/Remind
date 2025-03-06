@@ -24,42 +24,20 @@ tar -zxf install-tl-unx.tar.gz
 
 安装
 cd install-tl-*
-./install-tl
+sudo ./install-tl
+安装选项列表，输入'i'/'I'进行安装
 
 
 2.配置PATH
 steven@~$ vi ~/.bashrc
 export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH
+export MANPATH=/usr/local/texlive/2024/texmf-dist/doc/man:$MANPATH
+export INFOPATH=/usr/local/texlive/2024/texmf-dist/doc/info:$INFOPATH
 
 steven@~$ source ~/.bashrc
 
 # 测试安装是否成功
 steven@~$ tex --version
-
-
-3.TexLive字体查找配置
-# 系统字体(windows会自动查找)
-steven@~$ sudo vi /usr/local/texlive/2024/texmf.cnf
-OSFONTDIR = /usr/share/fonts//;/usr/local/share/fonts//;~/.fonts//
-
-# texlive附带字体
-steven@~$ sudo cp /usr/local/texlive/2024/texmf-var/fonts/conf/texlive-fontconfig.conf /etc/fonts/conf.d/09-texlive.conf
-
-# windows默认自带宋体/楷书/黑体/仿宋, ubuntu默认自带宋体/楷书
-# 安装字体(黑体)
-steven@~$ sudo apt install fonts-wqy-zenhei fonts-wqy-microhei
-
-# 刷新fontconfig的字体缓存
-steven@~$ sudo fc-cache -fsv
-
-# 查看中文字体
-steven@~$ sudo fc-list :lang=zh-cn
-
-
-
-备注:
-latex package所在路径 - <install_package>/texmf-dist/tex/latex/, 安装在/usr/local目录时, install_package为/usr/local/texlive/2024
-
 
 
 引用: 

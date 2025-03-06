@@ -1,0 +1,7 @@
+CentOS 7/Ubuntu
+查看VMware Tool是否已经安装
+systemctl status vmtoolsd
+
+Windows
+查看VMware Tool是否已经安装
+控制面板 -- 程序 -- 程序和功能，查看VMware Tools是否在卸载列表中

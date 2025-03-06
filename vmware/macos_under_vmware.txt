@@ -1,0 +1,16 @@
+VMware workstation中安装MacOS
+1.下载auto unlocker(VMware识别MacOS)
+下载地址: https://github.com/paolo-projects/auto-unlocker/releases/tag/v2.0.1
+解压缩unlocker，打开unlocker，选择vmware安装位置，将进行patch
+
+2.安装MacOS
+MacOS 14下载地址
+https://github.com/Pyenb/macOS-ISOs?tab=readme-ov-file#download-links-
+
+3.MacOS与Windows共享文件
+vmware tools下载
+下载地址: https://drive.google.com/drive/folders/1vZpZ6LwTmFV4j1bqZTF7g8DcEqH-W5Zf
+虚拟机 -- 设置 -- CD/DVD(SATA) -- 使用ISO映像文件，选中下载的vmware tools
+
+在MacOS中进行vmware tools进行安装，需要选择隐私与安全 -- 允许vmware进行操作
+重启，虚拟机 -- 设置 -- 选项 -- 共享文件夹，添加Windows下共享的文件夹
