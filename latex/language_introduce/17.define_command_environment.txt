@@ -1,3 +1,23 @@
+一、Demo_01 -- def
+\documentclass{ctexart}
+\usepackage{xcolor}
+\setlength{\parindent}{0mm}
+\def\grayscale{1}
+\definecolor{hide}{gray}{\grayscale}
+\begin{document}
+\textcolor{hide}{This is first line}\\
+This is second line\\
+\end{document}
+
+内容讲解
+1.\def\<variable>{<value>}
+    定义变量值，用于后续引用. 参数列表如下:
+        variable - 变量名称
+        value - 变量的取值
+
+
+
+
 一、Demo(示例)01 - newcommand/renewcommand
 \documentclass{article}
 \usepackage{xspace}
