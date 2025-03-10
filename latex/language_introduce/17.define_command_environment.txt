@@ -1,4 +1,4 @@
-一、Demo_01 -- def
+一、Demo_01 -- 定义变量(def)
 \documentclass{ctexart}
 \usepackage{xcolor}
 \setlength{\parindent}{0mm}
@@ -17,45 +17,81 @@ This is second line\\
 
 
 
-
-一、Demo(示例)01 - newcommand/renewcommand
-\documentclass{article}
-\usepackage{xspace}
-\newcommand{\gn}{$\Gamma_i$}
-\newcommand{\cn}{\ensuremath{\Delta_{j}}}
-\newcommand{\vn}{$\Gamma_j$\xspace}
+二、Demo_02 -- 新建命令(newcommand)
+\documentclass{ctexart}
+\setlength{\parindent}{0mm}
+\newcommand{\nonearg}{Richard Stallman }
+\newcommand{\fonthei}[1]{{\heiti #1}}
+\newcommand{\mysequence}[2]{$#1_1,#1_2,\cdots,#1_#2$}
+\newcommand{\othersequence}[2][k]{$#2_1,#2_2,\cdots,#2_#1$}
+\newcommand{\mathenv}{$E=mc^2$}
+\newcommand{\ensuremathenv}{\ensuremath{E=mc^2}}
 \begin{document}
-    Let \gn\ in the first line\\
-    Let \cn\ in the second line\\
-    Let $\cn$\ in the third line\\
-    Let \vn in the forth line
+\nonearg is my idol\\
+Richard Stallman's wife is a hero\\
+\fonthei{这是黑体字}\\
+数列: \mysequence{a}{n}\\
+数列: \othersequence{b}\\
+\mathenv\\
+\ensuremathenv\\
+$\ensuremathenv$\\
 \end{document}
 
 内容讲解
 1.\newcommand{cmd}[num][default_val]{content}
     用于新建指令, 参数如下:
-	cmd - 指令名称, 不能与已有指令和环境重名, 并且不能以\end开头; 
-	num - 新建指令的参数个数, 范围为0~9, 默认为0; 
-	default_val - 指令第一个参数的默认值, 使之成为新建指令的可选参数;
-	content - 指令代表的内容, 可使用#1,#2...引用新建指令传递的参数, 并建议$N使用{}包裹, 限定declaration指令的区域. 
+	cmd - 新建指令名称, 不能与已有指令和环境重名, 并且不能以\end开头
+	num - 新建指令的参数个数, 范围为0~9, 默认为0
+	default_val - 指令第一个参数的默认值, 使之成为新建指令的可选参数. 但也只能指定第一个参数为可选参数
+	content - 指令代表的内容, 可使用#1,#2...引用新建指令传递的参数 
 	** 该指令位于preamble区时, 新建指令可作用于正文所有区域; 位于正文时, 新建指令只作用于该指令之后. 建议放置在preamble区域
+	** 在该命令中，所有参数都不能包含抄录命令\verb或抄录环境verbatim
 
-2.\newcommand*{cmd}[num][default_val]{content}为\newcommand的带'*'模式, 即新建指令参数中不能包含换段落指令(\par或者空行)
+2.当使用新命令时，正文中后续空格会被忽略，所以需要在\newcommand的content参数尾部硬性添加空格，并且遇到标点符号会自动省略该空格
+或者
+使用\xspace用于自动生成一个空格，该命令在xspace宏包中
 
-3.使用\newcommand定义的指令时, 所有后续空格被忽略, 需使用\<space>注明断词
+3.\newcommand{\fonthei}[1]{{\heiti #1}}用于定义带一个必选参数的命令，作用为加粗当前环境内的内容
 
-4.\ensuremath{}用于确保内容位于math mode
-位于paragraph/LR mode时, 内容为$$; 位于math mode时, 内容为<content>
+4.\newcommand{\mysequence}[2]{$#1_1,#1_2,\cdots,#1_#2$}用于定义带两个必选参数的命令，作用为定义一个数列
 
-5.\xspace用于识别新指令的后续空格. 包含在xspace宏包中
+5.\newcommand{\othersequence}[2][k]{$#2_1,#2_2,\cdots,#2_#1$}用于定义带一个必选参数、一个可选参数的命令，作用为定义一个数列
 
-6.\renewcommand{cmd}[num][default_val]{content}
-    用于重新定义已有指令, 参数参考\newcommand
-    重定义的指令必须已存在
+6.\newcommand*{cmd}[num][default_val]{content}为\newcommand的带'*'模式, 新建指令参数中不能包含换段落指令(\par或者空行). 该命令更容易定位错误
+
+7.\providecommand{cmd}[num][default_val]{content}也用于新建指令，与\newcommand的区别:
+当新建命令与已有指令重名时，不进行报错，新建命令不生效
+
+8.\ensuremath{}用于确保内容位于math mode. 位于paragraph/LR mode时, 内容为$<content>$; 位于math mode时, 内容为<content>
+
+9.在LaTeX源代码中，带@的命令为核心命令，无法直接引用或\newcommand直接定义，需要使用如下命令限定:
+\makeatletter ... \makeatother
+\makeatletter用于指定后续带@的命令为核心命令，\makeatother用于指定后续@为普通字符
 
 
 
-二、Demo(示例)02 - newenvironment/renewenvironment
+三、Demo_03 -- 更新已有命令(renewcommand)
+\documentclass{ctexart}
+\setlength{\parindent}{0mm}
+\newcommand{\nonearg}{Richard Stallman }
+\renewcommand{\nonearg}{Hello World}
+\begin{document}
+\nonearg
+\end{document}
+
+内容讲解
+1.\renewcommand{cmd}[num][default_val]{content}
+    用于修改已有指令, 参数如下:
+	cmd - 修改指令名称, 不能与已有指令和环境重名, 并且不能以\end开头
+	num - 修改指令的参数个数, 范围为0~9, 默认为0
+	default_val - 指令第一个参数的默认值, 使之成为新建指令的可选参数. 但也只能指定第一个参数为可选参数
+	content - 指令代表的内容, 可使用#1,#2...引用新建指令传递的参数 
+	** 该指令位于preamble区时, 新建指令可作用于正文所有区域; 位于正文时, 新建指令只作用于该指令之后. 建议放置在preamble区域
+	** 在该命令中，所有参数都不能包含抄录命令\verb或抄录环境verbatim
+
+
+
+四、Demo_04 -- 新建环境(newenvironment)
 \documentclass{article}
 \newenvironment{emphit}[1]{\begin{itemize}\em{#1}}{\end{itemize}}
 \begin{document}
@@ -66,10 +102,11 @@ this paragraph is normal
 \end{document}
 
 内容讲解
-1.\newenvironment{env_name}[env_arg_num]{begin_cmd}{end_cmd}
+1.\newenvironment{env_name}[num_arg][default_val]{begin_cmd}{end_cmd}
     用于定义新环境, 参数列表如下:
         env_name - 环境名称 
-	env_arg_num - 新环境使用时携带的参数个数 
+	num_arg - 新环境使用时携带的参数个数，范围为1~9
+	default_val - 第一个参数的默认值
 	begin_cmd - 引用的\begin环境. 可使用#1,#2...引用参数
 	end_cmd - 引用的\end环境. 不可使用#1,#2...引用参数
 
@@ -77,22 +114,7 @@ this paragraph is normal
 
 
 
-三、Demo(示例)03 - declare math operator
-\documentclass{article}
-\usepackage{amsmath}
-\DeclareMathOperator{\Span}{Span}
-\begin{document}
-$\Span{\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_n}$
-\end{document}
-
-内容讲解
-1.\DeclareMathOperator{\Span}{Span}用于将Span指令定义为数学模式下字符串Span. 包含在amsmath宏包中
-
-2.\DeckareMathOperator*{\Con}{Con}用于在在math mode的\displaystyle下，使上/下标位于正上/下方
-
-
-
-四、Demo(示例)04 - set length
+五、Demo_05 -- 长度(setlength)
 \documentclass{article}
 \setlength{\parindent}{0cm}
 \begin{document}
@@ -125,56 +147,4 @@ this is fifth paragraph
 	base line - 基线, 穿过引用点的水平线
 	height - 基线到最高字母的顶部
 	depth - 基线到字母g的底部
-
-
-
-五、Demo(示例)05 - def
-\documentclass{article}
-\def\stretchint#1{\vcenter{\hbox{\stretchto[440]{\displaystyle\int}{#1}}}}
-\begin{document}
-\end{document}
-
-内容讲解
-1.\def <command><parameter>{<content>}为TeX原生指令, 用于定义新指令, 参数列表如下:
-	command - 新指令名称; 
-	parameter - 指令参数, 参数格式为#1~#9, 用于指代使用新指令时, 必选参数内容, 并且可用于content内容对其进行引用, [#1]代表第一个参数为可选参数;
-	content - 指令执行的操作内容
-
-
-
-六、Demo(示例)06 - definecolor
-\documentclass{article}
-\usepackage{color}
-\definecolor{lightgray}{gray}{0.7}
-\begin{document}
-\textcolor{lightgray}{this is demo text}
-\end{document}
-
-内容讲解
-1.\definecolor{color_name}{model}{color_spec}用于定义名字为color_name的颜色, 该颜色采用model颜色模式, 并且使用color_spec指定该模式下的颜色数值. 包含在color宏包中
-
-
-
-七、Demo07 - newcolumntype
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{array}
-\begin{document}
-\newcolumntype{k}[1]{>{\centering\arraybackslash}p{#1\textwidth}}
-\begin{tabular}{|k{0.2}|k{0.4}|}
-\hline
-aaaa & bbbb\\
-\hline
-cccc & dddd\\
-\hline
-eeee & ffff\\
-\hline
-\end{tabular}
-\end{document}
-
-内容讲解
-1.newcolumntype{name}[args_num]{column_format}
-    定义新的列格式. 列表如下:
-        name - 列格式的名称, 该名称只能为一个字母
-	args_num - 新名称可以使用的参数数量. 默认为0
-	column_format - 列格式, 参考tabular环境的column_format参数. #1代表名称第一个参数的值, #2代表第二个, 以此类推
 

@@ -66,20 +66,27 @@ upgrade
 	该操作不会移除已安装的软件
 
 
+
 示例1 - 查找与opencv相关的软件
 sudo apt search opencv
+
 
 示例2 - 显示python3-opencv的详细信息
 sudo apt show python3-opencv
 
+
 示例3 - 更新源信息
+sudo vi /etc/apt/sources.list
 sudo apt update
+
 
 示例4 - 查看可更新的软件列表
 sudo apt list --upgradeable
 
+
 示例5 - 更新可更新的软件
 sudo apt upgrade
+
 
 示例6 - 解决依赖
 sudo apt install -f
