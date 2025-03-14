@@ -386,6 +386,25 @@
     \coordinate (P) at ([yshift=-1cm]L);
     \coordinate (Q) at ([yshift=-1cm]M);
     \filldraw[fill=color5] (L) to[bend right=15] (M) [rounded corners=5pt] -- (Q) -- (P) [sharp corners] -- cycle;
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}[scale=0.8,font=\scriptsize,transform shape]
+    % 量筒
+    % 水
+    \fill[light] (-0.6,2.2) to[out=-30,in=210] (0.6,2.2) -- (0.6,0) -- (-0.6,0) -- cycle;
+    % 量筒
+    \draw (-0.6,5.5) -- (-0.6,0) -- (0.6,0) -- (0.6,5.5);
+    \draw[rounded corners=1pt] (-0.9,-0.68) -- (0.9,-0.68) -- (0.85,-0.6) -- (-0.85,-0.6) -- cycle;
+    \draw (-0.85,-0.6) to[relative,out=20,in=160] (-0.6,0);
+    \draw (0.6,0) to[relative,out=20,in=160] (0.85,-0.6);
+    % 刻度线
+    \foreach \smally in {0.5,0.6,...,4}
+      \draw (-0.6,\smally) -- (-0.3,\smally);
+    \foreach \mediumy in {0.5,1,...,4}
+      \draw (-0.6,\mediumy) -- (-0.2,\mediumy);
+    \foreach \largey/\label in {1/10,2/20,3/30,4/40}
+      \draw (-0.6,\largey) -- (-0.1,\largey) node[pos=1.2,above=-2pt]{$\label$};
+    \node at (0,5){40\:mL};
 \end{tikzpicture}
 \end{document}
 
