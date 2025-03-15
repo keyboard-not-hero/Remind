@@ -405,6 +405,29 @@
     \foreach \largey/\label in {1/10,2/20,3/30,4/40}
       \draw (-0.6,\largey) -- (-0.1,\largey) node[pos=1.2,above=-2pt]{$\label$};
     \node at (0,5){40\:mL};
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}[font=\small]
+    % 弹簧测力计
+    % 框架
+    \draw (0,1.5) circle [radius=0.3];
+    \draw (0,1.5) circle [radius=0.2];
+    \filldraw[fill=white] (-0.6,-6) --  (-0.22,-6) arc [start angle=180,end angle=360,radius=0.22] -- (0.6,-6) -- (0.6,1) -- (0.22,1) arc [start angle=0,end angle=180,radius=0.22] -- (-0.6,1) -- cycle;
+    \filldraw[rounded corners=0.2pt,fill=white] (-0.04,1.1) rectangle (0.04,1.35);
+    \draw[rounded corners=0.5pt] ([shift={(0,-6.46)}]-98:0.14) arc [start angle=-98,end angle=250,radius=0.14] -- ([shift={(0,-6.46)}]250:0.2) arc [start angle=250,end angle=-80,radius=0.2] -- ([shift={(0,-7.2)}]84:0.3) arc [start angle=84,end angle=-185,radius=0.3] -- ([shift={(0,-7.2)}]-185:0.24) arc [start angle=-185,end angle=96,radius=0.24] -- cycle;
+    \filldraw[rounded corners=0.2pt,fill=white] (-0.06,-6.46) rectangle (0.06,-6.22);
+    % 刻度
+    \foreach \smally in {-5,-4.9,...,0}
+      \draw (-0.2,\smally) -- (0.2,\smally);
+    \foreach \largey/\label in {-5/5,-4/4,-3/3,-2/2,-1/1,0}{
+      \draw (-0.3,\largey) -- (0.3,\largey) node[pos=1.2]{\label};
+      \draw (-0.3,\largey) -- (0.3,\largey) node[pos=-0.2]{\label};
+    }
+    \filldraw[rounded corners=3.2pt,fill=white] (-0.1,-5.2) rectangle (0.1,0.2);
+    \node at (0,0.6){\large N};
+    \def\weight{2}
+    \draw (0,-\weight) -- (0,-5.2);
+    \fill[black!68] (-0.25,-\weight) to[out=-10,in=190] (0.25,-\weight) to[out=170,in=10] (-0.25,-\weight);
 \end{tikzpicture}
 \end{document}
 
