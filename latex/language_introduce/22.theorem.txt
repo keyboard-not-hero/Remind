@@ -1,99 +1,147 @@
-Demo_01 -- theorem
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{amsmath,framed,pstricks}
-\usepackage[framed]{ntheorem}
-\def\theoremframecommand{\psshadowbox[linecolor=black]}
-\theoremstyle{empty}
-\theoremheaderfont{\bfseries}
-\theorembodyfont{\normalfont}
-\newshadedtheorem{theorem}{定理}
+Demo_01 -- 定理环境
+\documentclass{ctexart}
+\newtheorem{Theorem}{定理}
+\newtheorem{Definition}[Theorem]{定义}
+\newtheorem{Proof}{证明}
 \begin{document}
-\begin{theorem}
-\centering\textbf{有理数加法法则}\\
-\raggedright\parindent=22pt
-同号两数相加，取相同的符号，并把绝对值相加。\\
-异号两数相加，绝对值相等时和为0；绝对值不等时，取绝对值较大的数的符号，并用较大>的绝对值减较小的绝对值。\\
-一个数同0相加，结果不变
-\end{theorem}
+\begin{Theorem}
+    内错角相等，两直线平行
+\end{Theorem}
+\begin{Definition}
+    同位角相等，两直线平行
+\end{Definition}
+\begin{Proof}
+    同旁内角互补，两直线平行
+\end{Proof}
 \end{document}
 
+内容讲解
+1.\newtheorem{env_name}[counter]{title}[sort_reset]
+    创建新定理环境名称. 参数如下:
+        env_name - 新环境的名称
+        counter - 与已创建的环境共用计数器. 默认根据新环境名称创建新计时器
+        title - 新环境的显示标题
+        sort_reset - 以chapter/section等重置计时器. 默认以全文为单位重置(即不重置)
 
- 内容讲解
+2.\begin{env_name}[sub_title] ... \end{env_name}
+    使用已创建的定义环境. sub_title指定副标题
+
+
+
+Demo_02 -- ntheorem
+\documentclass{ctexart}
+\usepackage{bbding}
+\usepackage{framed}
+\usepackage{pstricks}
+\usepackage[framed,thmmarks]{ntheorem}
+\theoremstyle{plainbreak}
+\theoremheaderfont{\songti}
+\theorembodyfont{\kaishu}
+\theoremindent2mm
+\theoremsymbol{\PencilLeft}
+\qedsymbol{\HandLeft}
+\shadecolor{red}
+\def\theoremframecommand{\psshadowbox[linecolor=red,fillcolor=blue!20]}
+\newtheorem{Proof}{证明}
+\newframedtheorem{Theorem}{定理}
+\newshadedtheorem{Definition}{定义}
+\setlength{\parindent}{0mm}
+\begin{document}
+这是一段文字
+\begin{Proof}
+    两相交线不平行
+\end{Proof}
+这是一段文字
+\begin{Theorem}
+    同旁内角互补，两直线平行
+\end{Theorem}
+这是一段文字
+\begin{Theorem}
+    内错角相等，两直线平行 \qed
+\end{Theorem}
+这是一段文字
+\begin{Definition}
+    同位角相等，两直线平行
+\end{Definition}
+\end{document}
+
+内容讲解 
 1.\theoremstyle{<style>}
-配置定理的显示风格，后续内容均需要使用ntheorem宏包. 风格列表如下:
-plain
-标题 序号 正文
-
-break
-标题 序号
-正文
-
-change
-序号 标题 正文
-
-changebreak
-序号 标题
-正文
-
-margin
-序号 标题 正文
-序号凸出
-
-marginbreak
-序号 标题
-正文
-序号凸出
-
-nonumberplain
-标题 内容
-
-nonumberbreak
-标题
-内容
-
-empty
-内容
-
+    配置定理的显示风格. 风格列表如下:
+        plain - 标题 序号 正文，默认值
+        nonumberplain - 标题 正文
+        break - 标题 序号\n正文
+        nonumberbreak - 标题\n正文
+        change - 序号 标题 正文
+        changebreak - 序号 标题\n正文
+        margin - 序号 标题 正文，序号凸出左边边界
+        marginbreak - 序号 标题\n正文，序号凸出左边边界
+        empty - 内容
 
 2.\theoremheaderfont{<font>}
-设置标题内容的字体
-
+    设置标题内容的字体
+    默认值: \normalfont\bfseries
 
 3.\theorembodyfont{<font>}
-设置正文内容的字体
+    设置正文内容的字体
+    默认值: \itshape
 
+4.\theoremnumbering{<style>}
+    设置序号格式. 格式列表如下:
+        arabic - 阿拉伯数字. 默认值. 如：1/2/3
+        alph - 小写字母. 如：a/b/c
+        Alph - 大写字母. 如：A/B/C
+        roman - 小写罗马数字. 如：i/ii/iii
+        Roman - 大写罗马数字. 如：I/II/III
+        greek - 小写希腊字母
+        Greek - 大写希腊字母
+        fnsymbol - 特殊符号
 
-4.\theoremseparator{<symbol>}
-标题与正文之间的分隔符号，默认为空格
+5.\theoremseparator{<symbol>}
+    标题与正文之间的分隔符号
+    默认值: null
 
+6.\theorempreskip{<length>}
+\theorempostskip{<length>}
+    最原始定理环境(非frame/shade)距离上下文的垂直宽度
+    默认值: \topsep
 
-5.\theoremindent<dimension>
-标题与正文内容的统一缩进
+7.\theoremindent<dimension>
+    标题与正文内容的缩进
+    默认值: 0cm
 
+8.\usepackage[thmmarks]{ntheorem}
+\theoremsymbol{<symbol>}
+    指定所有定理环境尾部符号
+    默认值: null
 
-6.\newtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
-定义新环境名. 参数列表如下:
-  env_name - 新环境的名称
-  counter_name - 不同环境名称使用不同计数器，当前环境名如果想与已定义环境合并计数器，则指定已定义环境名称
-  title - 显示的正文标题
-  sort - 排序重置标准，如: chapter代表在每章节开头重置排序数字
+9.\qedsymbol
+\qed
+    \qedsymbol用于设置符号，\qed引用符号，用于个别定理环境指定使用特殊尾部符号
 
+10.\usepackage{framed}
+\usepackage[framed]{ntheorem}
+\newframedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
+    定义带边框的环境名. 参数参考\newtheorem
 
-7.\newframedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
-定义带边框的环境名. 参数与newtheorem一致
-需要调用framed宏包，并且ntheorem宏包需要带framed可选参数
+11.\usepackage{framed}
+\usepackage{pstricks}
+\usepackage[framed]{ntheorem}
+\newshadedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
+    定义带边框和背景色的环境名. 参数参考\newtheorem
 
+12.\shadecolor{<color>}
+    修改带边框和背景色(shadedtheorem)的定理环境，其背景色
+    默认值: gray
 
-8.\newshadedtheorem{<env_name>}[<counter_name>]{<title>}[<sort>]
-定义带边框阴影的环境名. 参数与newtheorem一致
-需要调用framed和pstricks宏包，并且ntheorem宏包需要带framed可选参数
+13.\theoremframepreskip{<length>}
+\theoremframepostskip{<length>}
+    指定边框定理环境种，边框与外部上下文的垂直距离
 
-\def\theoremframecommand{\psshadowbox[linecolor=black]}
-设置阴影部分
+14.\theoreminframepreskip{<length>}
+\theoreminframepostskip{<length>}
+    指定边框定理环境中，边框与内部上下文的垂直距离
 
-
-
-9.\begin{<env_name>}
-...
-\end{<env_name>}
-使用定义的环境，并输入正文内容
+14.\def\theoremframecommand{\psshadowbox[linecolor=red,fillcolor=blue!20]}
+    设置带边框和背景色的定理环境，其阴影部分
+    \psshadowbox由pstricks宏包提供
