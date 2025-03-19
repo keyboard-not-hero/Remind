@@ -145,3 +145,7 @@ Demo_02 -- ntheorem
 14.\def\theoremframecommand{\psshadowbox[linecolor=red,fillcolor=blue!20]}
     设置带边框和背景色的定理环境，其阴影部分
     \psshadowbox由pstricks宏包提供
+
+
+
+最后编辑于: 2025-03-18
