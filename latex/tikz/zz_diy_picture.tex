@@ -355,6 +355,24 @@
     \node[below] at (2.9,0){$C'$};
 \end{tikzpicture}\vspace{1cm}
 
+\begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-0.3,-0.5);
+    \coordinate (C) at (0.3,-0.5);
+    \coordinate (D) at (-0.1,-0.5);
+    \coordinate (E) at (0.1,-0.5);
+    \coordinate (F) at (-0.5,-1);
+    \coordinate (G) at (0.5,-1);
+    \coordinate (H) at (-0.25,-1);
+    \coordinate (I) at (0.25,-1);
+    \coordinate (J) at (-0.65,-1.5);
+    \coordinate (K) at (0.65,-1.5);
+    \coordinate (L) at (-0.1,-2.5);
+    \coordinate (M) at (0.1,-1.5);
+    \draw (A) -- (B) -- (D) -- (F) -- (H) -- (J) -- (K) -- (I) -- (G) -- (E) -- (C) -- cycle;
+    \draw (L) rectangle (M);
+\end{tikzpicture}\vspace{1cm}
+
 \begin{tikzpicture}[scale=0.5]
     % 铅笔
     \coordinate (A) at (0,0);
