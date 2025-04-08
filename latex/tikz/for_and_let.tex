@@ -5,47 +5,94 @@
 % for循环与let语句
 \begin{tikzpicture}
     % for循环参考section 88，第1001页
-    % for循环格式: 
-    % \foreach \<var_name> [<options>] in {<list>} {<cmd>}
-    % 或
-    % \forwach <var_name> [<options>] in {<list>} <cmd>;
+    % for循环应用于单个语句: 
+    % \foreach \<var_name> [<options>] in {<list>} 
+    %   <cmd>;
     % list格式:
     %   1.<num_1>,<num_2>,<num_3>  完整列出列表
     %   2.<num_1>,<num_2>,...,<num_n>  以num_2-num_1为步进, 补足列表中间的数
     %   3.<num_1>,...,<num_n>  以步进为1(num_n > num_1)或-1(num_n < num_1)
-    \foreach \x in {1,2,...,5} \draw (\x,0) circle [radius=2pt];
+    \foreach \x in {1,2,...,5} 
+      \draw (\x,0) circle [radius=2pt];
 
-    % 多层for循环嵌套
-    \begin{scope}[yshift=-4cm]
-	\foreach \x in {0,1,2,3}
-	  \foreach \y in {0,1,2,3}
-	    {
-	      \filldraw[color=green,fill=red] (\x,\y) circle [radius=1mm];
-	    }
-    \end{scope}
+    % for循环应用于多个语句:
+    % \foreach \<var_name> [<options>] in {<list>} 
+    %   {<cmd>}
+    \foreach \x in {1,2,...,5}
+      {
+        \draw (\x,0) circle [radius=2pt];
+        \fill (\x,0) circle [radius=1pt];
+      }
+\end{tikzpicture}\\\vspace{1cm}
 
+\begin{tikzpicture}
+    % 多层foreach嵌套
+    \foreach \x in {0,1,2}
+      \foreach \y in {0,1,2}
+        {
+          \draw (\x,\y) circle [radius=2pt];
+          \fill (\x,\y) circle [radius=1pt];
+        }
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % 迭代item为坐标点
+    \foreach \x in {(1,1),(2,2),(5,5)}
+      {
+        \draw \x circle [radius=2pt];
+        \fill \x circle [radius=1pt];
+      }
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
     % for循环的多个变量
     % \foreach \<var_01>/\<var_02> in {<num_01_1>/<num_02_1>,<num_01_2>/<num_02_2>,<num_01_3>}
     % 多个变量名称使用/分隔, 每一组变量值中, 使用/分隔分配给不同变量的值; 如果组内后续变量值没有赋予, 则沿用前面变量的值(如num_02_3 = num_01_3)
-    \begin{scope}[yshift=-5cm]
-	\draw[->] (0,0) -- (2.5,0);
-	\foreach \x/\y in {0,0.5/\frac{1}{2}, 1, 1.5/\frac{3}{2},2}
-	{
-	    \draw (\x,-1pt) node[below]{$\y$} -- (\x,1pt);
-	};
-    \end{scope}
+    \draw[->] (0,0) -- (2.5,0);
+    \foreach \x/\y in {0,0.5/\frac{1}{2}, 1, 1.5/\frac{3}{2},2}
+      {
+        \draw (\x,-1pt) node[below]{$\y$} -- (\x,1pt);
+      }
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    %   for循环的list item默认不进行数学计算，evaluate对list item进行数学计算
+    \foreach \x in {2^0,2^...,2^9}
+      $\x$;
+
+    % foreach的可选参数
+    % 1.evaluate
+    %   (1)evaluate=<variable>
+    %     将计算评估结果覆盖到原变量
+    \foreach \x [evaluate=\x] in {2^0,2^...,2^9}
+      $\x$;
+
+    %   (2)evaluate=<variable> as <other_variable>
+    %     将计算评估结果放到其他变量
+    \foreach \x [evaluate=\x as \y] in {2^0,2^...,2^9}
+      $\y$;
+
+    %   (3)evaluate=<variable> as <other_variable> using <formula>
+    \foreach \x [evaluate=\x as \y using 10*\x] in {2^0,2^...,2^9}
+      $\y,\,$;
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
     % foreach的可选参数
-    % 1.evaluate=<variable> as <macro> using <formula>
-    % 没有指定as <macro>时，评估计算结果存放在原变量名variable中; using formula使用指定计算方式计算结果
-    \foreach \x in {2^0,2^...,2^5}{$\x,$}
-    \foreach \x [evaluate=\x as \xeval] in {2^0,2^...,2^5}{$\x=\xeval,$}
     % 2.remember=<variable> as <macro> (initially <value>)
-    % 将当前循环的变量值，保留到下一次循环的宏macro，并且赋予宏一个初始值
-    \foreach \x [remember=\x as \lastx (initially A)] in {B,...,F}{$\overrightarrow{\lastx\x},$}
-\end{tikzpicture}
+    %   将当前循环的变量值，保留到特殊变量，可以在下一次循环使用，并且可以使用initially赋予特殊变量一个初始值(默认为0)
+    \foreach \x [remember=\x as \xsave] in {5,7,9}
+      \node at (\x,0){$\x+\xsave$};
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % foreach的可选参数
+    % 3.parse=true
+    %   将list item的内容给\pgfmathresult进行计算，常配合evaluate参数一起使用
+    \def\mvalue{2}
+    \foreach \x [parse=true,evaluate=\x] in {\mvalue-10,...,\mvalue}
+      \node at (\x,0){$\x$};
+\end{tikzpicture}\\\vspace{1cm}
 
 % \breakforeach, 不管该指令在其他语句之前或之后，都会执行完当前循环才跳出循环，所以效果等同于放在所有语句的最后
 
@@ -77,8 +124,8 @@
     \filldraw (B) circle [radius=1.2pt];
     \draw
       let
-        \p1=(A),\p2=(B),
-        \n1={veclen(\x2-\x1,\y2)}
+        \p1=($(B)-(A)$),
+        \n1={veclen(\x1,\y1)}
       in
         (A) circle [radius=\n1];
 \end{tikzpicture}

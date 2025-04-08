@@ -33,6 +33,36 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 \begin{tikzpicture}
+    % rand生成[-1,1]区间的随机数
+    \draw[->] (-2.5,0) -- (2.5,0) node[below]{$x$};
+    \draw[->] (0,-2.5) -- (0,2.5) node[left]{$y$};
+    \foreach \x in {-2,-1,1,2}
+      \draw (\x,0) node[below]{$\x$} -- (\x,2pt);
+    \foreach \y in {-2,-1,1,2}
+      \draw (0,\y) node[left]{$\y$} -- (2pt,\y);
+    \coordinate (A) at (2*rand,2*rand);
+    \fill (A) circle [radius=2pt];
+\end{tikzpicture}\\\vspace{1cm}
+
+\begin{tikzpicture}
+    % $(<coordinate>)+(<coordinate>)$，进行坐标运算，需要calc库(\usetikzlibrary{calc})
+    \draw[->] (-3.5,0) -- (3.5,0) node[below]{$x$};
+    \draw[->] (0,-3.5) -- (0,3.5) node[left]{$y$};
+    \foreach \x in {-3,-2,-1,1,2,3}
+      \draw (\x,0) node[below]{$\x$} -- (\x,2pt);
+    \foreach \y in {-3,-2,-1,1,2,3}
+      \draw (0,\y) node[left]{$\y$} -- (2pt,\y);
+    \coordinate (A) at (1,2);
+    \coordinate (B) at (2,1);
+    \coordinate (C) at ($(A)+(B)$);
+    \coordinate (D) at ($(A)+0.5*(B)$);
+    \fill (A) circle [radius=2pt];
+    \fill (B) circle [radius=2pt];
+    \fill (C) circle [radius=2pt];
+    \fill (D) circle [radius=2pt];
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
     % 复杂计算
     \draw (0,0) circle [radius=2];
     % \pgfmathparse{<complex_calculate>}
@@ -40,23 +70,33 @@
     %   其他简单计算会全部转化为pt单位
     % \pgfmathresult
     %   将上一次\pgfmathparse计算结果进行引用
+    
+    % {<complex_calculate>}也可适用于复杂计算
     \filldraw (1,\pgfmathparse{sqrt(3)}\pgfmathresult) circle [radius=2pt];
     \draw (0,0) circle [radius=3];
     \fill[green] (1,\pgfmathparse{2*sqrt(2)}\pgfmathresult) circle [radius=2pt];
     
     % 常用函数
     % sqrt(<num>)
-    %   求平方根
+    %     求平方根
     % sin(<degree>)
-    %   求正弦值
-    %   参数为角度格式，可使用<radian> r将弧度转化为角度
+    %     求正弦值
+    %     参数为角度格式，可使用<radian> r将弧度转化为角度
     % asin(<val>)
-    %   求反正弦值, 值域[-90,90]
-    %   返回值为角度值  
+    %     求反正弦值, 值域[-90,90]
+    %     返回值为角度值  
     % atan(<val>)
-    %    求反正切值
+    %     求反正切值
     % atan2(y,x)
-    %    求y/x的反正切值
+    %     求y/x的反正切值
+    % round(<val>)
+    %     四舍五入取整数
+    % floor(<val>)
+    %     向下取整数
+    % ceil(<val>)
+    %     向上取整数
+    % veclen(<len_x>,<len_y>)
+    %     向量长度
 \end{tikzpicture}\vspace{1cm}
 
 \begin{tikzpicture}
