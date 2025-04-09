@@ -446,6 +446,69 @@
     \def\weight{2}
     \draw (0,-\weight) -- (0,-5.2);
     \fill[black!68] (-0.3,-\weight) to[out=-15,in=195] (0.3,-\weight) to[out=165,in=15] (-0.3,-\weight);
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
+    % 滑轮组1 - 单定滑轮、单动滑轮
+    \def\radius{0.4}
+    \def\fixcentral{-1.5*\radius}
+    \def\movecentral{-9.5*\radius}
+    % 墙壁
+    \draw (-2,0) -- (2,0);
+    \foreach \x in {-1.9,-1.8,...,2}
+      \draw (\x,0) -- (\x cm-2pt,2pt);
+    % 定滑轮
+    % 挂钩位置: (\fixcentral-\radius-0.4)cm-6pt
+    \draw (0,\fixcentral) circle [radius=\radius];
+    \filldraw[fill=white] (-2pt,0) -- (-2pt,\fixcentral-\radius-0.2) -- (2pt,\fixcentral-\radius-0.2) -- (2pt,0) -- cycle;
+    \fill (0,\fixcentral) circle [radius=1pt];
+    \draw (0,\fixcentral-\radius-0.2) -- (0,\fixcentral-\radius-0.4);
+    \draw (0,\fixcentral-\radius-0.4) arc [start angle=90,end angle=-180,radius=3pt];
+    % 动滑轮
+    % 上挂钩位置: (\movecentral+\radius+0.4)cm+6pt
+    % 下挂钩位置: (\movecentral-\radius-0.4)cm-6pt
+    \draw (0,\movecentral) circle [radius=\radius];
+    \filldraw[fill=white] (-2pt,\movecentral+\radius+0.2) -- (-2pt,\movecentral-\radius-0.2) -- (2pt,\movecentral-\radius-0.2) -- (2pt,\movecentral+\radius+0.2) -- cycle;
+    \fill (0,\movecentral) circle [radius=1pt];
+    \draw (0,\movecentral+\radius+0.2) -- (0,\movecentral+\radius+0.4);
+    \draw (0,\movecentral+\radius+0.4) arc [start angle=270,end angle=0,radius=3pt];
+    \draw (0,\movecentral-\radius-0.2) -- (0,\movecentral-\radius-0.4);
+    \draw (0,\movecentral-\radius-0.4) arc [start angle=90,end angle=-180,radius=3pt];
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    % 滑轮组2 - 双定滑轮、双动滑轮
+    \def\bradius{0.6}
+    \def\sradius{0.4}
+    \def\bfixcentral{-1.5*\bradius}
+    \def\sfixcentral{-2.5*\bradius-1.5*\sradius}
+    \def\smovecentral{-7.5*\bradius-2.5*\sradius}
+    \def\bmovecentral{-8.5*\bradius-4*\sradius}
+    % 墙壁
+    \draw (-2,0) -- (2,0);
+    \foreach \x in {-1.9,-1.8,...,2}
+      \draw (\x,0) -- (\x cm-2pt,2pt);
+    % 定滑轮
+    % 挂钩位置: (\sfixcentral-\sradius-0.4)cm-6pt
+    \draw (0,\bfixcentral) circle [radius=\bradius];
+    \draw (0,\sfixcentral) circle [radius=\sradius];
+    \filldraw[fill=white] (-2pt,0) -- (-2pt,\sfixcentral-\sradius-0.2) -- (2pt,\sfixcentral-\sradius-0.2) -- (2pt,0) -- cycle;
+    \fill (0,\bfixcentral) circle [radius=1pt];
+    \fill (0,\sfixcentral) circle [radius=1pt];
+    \draw (0,\sfixcentral-\sradius-0.2) -- (0,\sfixcentral-\sradius-0.4);
+    \draw (0,\sfixcentral-\sradius-0.4) arc [start angle=90,end angle=-180,radius=3pt];
+    % 动滑轮
+    % 上挂钩位置: (\smovecentral+\sradius+0.4)cm+6pt
+    % 下挂钩位置: (\bmovecentral-\bradius-0.4)cm-6pt
+    \draw (0,\smovecentral) circle [radius=\sradius];
+    \draw (0,\bmovecentral) circle [radius=\bradius];
+    \filldraw[fill=white] (-2pt,\smovecentral+\sradius+0.2) -- (-2pt,\bmovecentral-\bradius-0.2) -- (2pt,\bmovecentral-\bradius-0.2) -- (2pt,\smovecentral+\sradius+0.2) -- cycle;
+    \fill (0,\smovecentral) circle [radius=1pt];
+    \fill (0,\bmovecentral) circle [radius=1pt];
+    \draw (0,\smovecentral+\sradius+0.2) -- (0,\smovecentral+\sradius+0.4);
+    \draw (0,\smovecentral+\sradius+0.4) arc [start angle=270,end angle=0,radius=3pt];
+    \draw (0,\bmovecentral-\bradius-0.2) -- (0,\bmovecentral-\bradius-0.4);
+    \draw (0,\bmovecentral-\bradius-0.4) arc [start angle=90,end angle=-180,radius=3pt];
 \end{tikzpicture}
 \end{document}
 

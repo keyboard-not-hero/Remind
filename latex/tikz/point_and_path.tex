@@ -70,7 +70,10 @@
     %   其他简单计算会全部转化为pt单位
     % \pgfmathresult
     %   将上一次\pgfmathparse计算结果进行引用
-    
+
+    % \pdfmathsetmacro{\<var_name>}{<complex_calculate>}
+    %   复杂计算，并将计算结果保存到指定变量
+
     % {<complex_calculate>}也可适用于复杂计算
     \filldraw (1,\pgfmathparse{sqrt(3)}\pgfmathresult) circle [radius=2pt];
     \draw (0,0) circle [radius=3];

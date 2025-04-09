@@ -14,6 +14,7 @@ This is second line\\
     定义变量值，用于后续引用. 参数列表如下:
         variable - 变量名称
         value - 变量的取值
+        ** 不对value进行数学计算. 如: \def\mvar{2+1}，直接引用为2+1字符串
 
 
 
