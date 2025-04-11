@@ -1,7 +1,9 @@
 substitute指令
-:[<line_range>]s[ubstitute]/<regular_expression>/<string>/[<flags>]
-    将指定行line_range的原内容src_content替换成des_content
-    flags指定相关替换操作参数
+:[<line_range>]s[ubstitute]/<regular_expression>/<string>/[<flags>] [<count>]
+    将指定行line_range的原内容进行正则匹配，匹配内容替换成指定字符串
+
+:[<line_range>]s[ubstitute] [<flags>] [<count>]
+    利用上一次替换的regular_expression和string，进行指定行替换
 
 
 line_range参数
@@ -33,30 +35,53 @@ g/<regular_expression>/
     使用正则表达式匹配行，作用于所有匹配项
 
 
+/<re>/<str>/
+    可使用其他符号(除了\, ", |, #)代替'/'
+    如: /love/like/ ==> +love+like+
+
+
 regular_expression参数
     使用Regular Expression进行匹配查找
+    当内容为空，引用上一次substitute使用的regular_expression参数
 
 
 string参数
-    常规下为逐字符纯字符替换. 除了以下情况:
-        \0 - 引用regular_expression匹配的所有内容
-	\1 - 引用regular_expression匹配的第1个\(\)限定内容
-	...
-	\9 - 引用regular_expression匹配的第9个\(\)限定内容
-	\r - 换行符
-        \= - 必须为起始内容, 则后续内容为表达式, 可以调用函数, 可以将后续内容进行四则运算, 但不可以使用\<n>引用分组, 需要使用submatch(n)引用分组
+    逐字符纯字符替换
 
+特殊字符:
+    \0 - 引用regular_expression匹配的所有内容
+    \1 - 引用regular_expression匹配的第1个\(\)限定内容
+    ...
+    \9 - 引用regular_expression匹配的第9个\(\)限定内容
+    & - 引用regular_expression匹配的所有内容
+    ~ - 上一次substitute使用的string参数
+    \u - 下一个字符大写
+    \U - 后续字符全部大写
+    \l - 下一个字符小写
+    \L - 后续字符全部小写
+    \e - 结束\u,\U,\l,\L
+    \E - 结束\u,\U,\l,\L
+    \r
+    <CR> - 换行符，使用ctrl-V <enter>组合键输入<CR>
+    \t - <tab>键
+
+表达式(以\=为起始内容, 特殊字符不可以应用于表达式)
+    可用于取四则运算结果
+    如: \=submatch(1)+2, 将regular_expression匹配的第1个\(\)限定内容
 
 
 flags参数
+&
+    保留使用上一次substitute命令的flag
+
 c
     confirm, 在每一次替换前进行询问. 提示下列内容:
-        replace with Teacher (y/n/a/q/l/^E/^Y)?
-        y - yes; 执行当前单次替换
-        n - no; 不执行当前单次替换
-        a - all; 执行当前单词替换和后续所有替换
-        q - quit; 不执行替换直接退出
-        l - last; 执行当前单词替换, 并退出
+    replace with Teacher (y/n/a/q/l/^E/^Y)?
+        y - yes, 执行当前单次替换
+        l - last， 执行当前单次替换, 并退出
+        n - no, 跳过当前单次替换        
+        a - all, 执行当前和后续所有替换
+        q/<Esc> - quit, 退出替换
         ctrl-E - 当前页面内容上移一行(可查看之前页面顶部的上一行)
         ctrl-Y - 当前页面内容下移一行(可查看之前页面底部的下一行)
 
@@ -68,22 +93,20 @@ g
     默认只对行内的第一个匹配项执行替换
 
 i
-    ignore case, RE匹配忽视大小写
-    不使用:set ignore和:set smartcase选项
+    ignore case, RE匹配不区分大小写
 
 I
-    no ignore case, RE匹配不忽视大小写
-    不使用:set ignore和:set smartcase选项
+    no ignore case, RE匹配区分大小写
 
 n
-    no substitute, 只报告匹配, 不执行替换
+    no substitute, 只报告匹配次数, 不执行替换
     c flag被忽略
 
 p
     print line, 显示最后一个替换项的行
 
 #
-    类似于p, 并且prepend一个行号
+    类似于p, 并且显示行号
 
 l
     类似于p, 并且显示换行符
