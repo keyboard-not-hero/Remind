@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+% update 2025-04-16
+% 1.主要作图环境
+%   \begin{tikzpicture}[<option>] ... \end{tikzpicture}
+%   所有tikz作图语句，必须放置在tikzpicture环境内，且需要导入tikz宏包
+\begin{tikzpicture}
+    \draw (-2,0) -- (2,0);
+\end{tikzpicture}\vspace{1cm}
+
+
+% 2.单语句或少量语句作图环境
+%   \tikz[<options>]{...}
+\tikz{\draw (-2,0) -- (2,0);}
+
+
+% 3.成组指定属性
+%   \begin{scope}[<option>] ... \end{scope}
+%   给多个组内语句设置参数
+\begin{tikzpicture}
+    \begin{scope}[>=stealth,blue]
+        \draw[->] (-2,0) -- (2,0) node[below]{$x$};
+    \end{scope}
+    \begin{scope}[>=latex,red]
+        \draw[->] (-2,-1) -- (2,-1) node[below]{$x$};
+    \end{scope}
+\end{tikzpicture}\vspace{1cm}
+
+
+% 4.打包参数. section 12.4.2
+%   <name>/.style={<option>}
+%     指定变量name为参数合集
+%   <name>/.append style={<option>}
+%     在已定义变量后append参数
+%   <name>/.prefix style={<option>}
+%     在已定义变量前prepend参数
+\begin{tikzpicture}[help lines/.prefix style={red,line width=0.6pt}]
+    \draw[help lines] (-2,0) -- (2,0);
+\end{tikzpicture}
+
+
+% 相关参数:
+% 5.图片与文字的对齐方式
+% 默认图片的底部放在文字的基线上
+%   1)baseline
+%   将图片的x轴放在文字的基线上 
+Hello
+\begin{tikzpicture}[baseline]
+    \draw (0,-2) circle [radius=2];
+\end{tikzpicture}
+World\\[2cm]
+
+%   2)baseline=<dimension>
+%   将图片的y=<dimension>放在文字的基线上 
+Hello
+\begin{tikzpicture}[baseline=-1cm]
+    \draw (0,-2) circle [radius=2];
+\end{tikzpicture}
+World\\[2cm]
+
+%   3)baseline=<point>
+%   取坐标的y值n，将图片的y=n放在文字的基线上
+Strike
+\begin{tikzpicture}[baseline=(X.base)] 
+    \node [name=X,strike out,draw] {me};
+\end{tikzpicture}
+out!
+\end{document}

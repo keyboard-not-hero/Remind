@@ -2,27 +2,116 @@
 \usepackage{tikz}
 \usetikzlibrary{patterns,shadings}
 \begin{document}
-% 画笔属性
+% 路径类型
 \begin{tikzpicture}
-    % 线条粗细: line width, 也可使用以下预定义宽度: ultra thin/very thin/thin(默认，即0.4pt)/semithick/thick/very thick/ultra thick
+    % 1.描边线
+    %   \path[draw]，可简写为\draw
+    \path[draw] (0,0) -- (1,0) -- (0,1) -- cycle;
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
+    % 2.内容填充
+    %   \path[fill]，可简写为\fill
+    %   必须为闭合线条
+    \path[fill] (0,0) -- (1,0) -- (0,1) -- cycle;
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}
+    % 3.填充内容从一个颜色平滑过渡到另一个颜色
+    %   \path[shade]，可简写为\shade，需使用shadings库. 参考15.7和 section 69
+    %   1)axis模式, 左右或上下的线性颜色变化. 默认模式
+    %     使用shading=axis指定模式，默认为从上到下，由灰色过渡到白色
+    %     可使用如下参数: top color/bottom color/left color/right color/middle color
+    %     middle color可结合top color/bottom color, 成为垂直中间颜色; middle color也可结合left color/right color, 成为水平中间颜色. middle color必须在top/bottom/left/right color之后使用
+    %     shading angle可用于基于top/bottom旋转渐变方向，left/right默认为90
+    \shade (0,0) rectangle (2,2);
+    \shade[xshift=3cm,left color=blue!60] (0,0) rectangle (2,2);
+    \shade[xshift=6cm,top color=blue!60,bottom color=green!60,middle color=purple!60] (0,0) rectangle (2,2);
+    \shade[xshift=9cm,left color=blue!60,right color=green!60,middle color=red!60] (0,0) rectangle (2,2);
+    \shade[yshift=-3cm,left color=blue!60,right color=green!40,shading angle=45] (0,0) rectangle (2,2);
+
+    %   2)radial模式，由一点以半径向外扩散转化颜色
+    %     使用shading=radial指定模式
+    %     使用inner color指定中心颜色，outer color指定边缘颜色. 默认圆心为灰色，边缘颜色为白色
+    \shade[shift={(3,-3)},shading=radial,inner color=red,outer color=purple!10] (0,0) rectangle (2,2);
+
+    %   3)ball模式, 球体光影变化
+    %     使用shading=ball指定模式，默认为蓝色
+    %     可使用ball color指定颜色
+    \shade[shift={(6,-3)},shading=ball] (1,1) circle [radius=1cm];
+
+    %   4)bilinear interpolation模式，双线性
+    %     使用shading=bilinear interpolation指定模式，需要导入shadings tikz库
+    %     可使用以下关键字指定左上/右上/左下/右下颜色: upper left/upper right/lower left/lower right，默认都为白色
+    \shade[shift={(9,-3)},shading=bilinear interpolation,upper right=green!30,lower left=blue!30] (0,0) rectangle (2,2);
+
+    %   5)color wheel模式，车轮式颜色轮替
+    %     使用shading=color wheel指定模式，需要导入shadings tikz库
+    \shade[yshift=-6cm,shading=color wheel] (1,1) circle [radius=1cm];
+
+    %   6)color wheel black center模式，车轮式颜色轮替，中心为黑色
+    %     使用shading=color wheel black center指定模式，需要导入shadings tikz库
+    \shade[shift={(3,-6)},shading=color wheel black center] (1,1) circle [radius=1cm];
+    
+    %   7)color wheel white center模式，车轮式颜色轮替，中心为白色
+    %     使用shading=color wheel white center指定模式，需要导入shadings tikz库
+    \shade[shift={(6,-6)},shading=color wheel white center] (1,1) circle [radius=1cm];
+
+    %   8)Mandelbrot set模式，趣味性形状
+    %     使用shading=Mandelbrot set指定模式，需要导入shadings tikz库
+    \shade[shift={(9,-6)},shading=Mandelbrot set] (0,0) rectangle (2,2);
+\end{tikzpicture}\newpage
+
+
+% (p) |- (q)
+% 分别取坐标p的x值，坐标q的y值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
+% (p) -| (q)
+% 分别取坐标p的y值，坐标q的x值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
+\begin{tikzpicture}[line width=0.6pt]
+    \draw[help lines] (-2,-2) grid (2,2);
+    \draw[->] (-2.5,0) -- (2.5,0) node[below]{$x$};
+    \draw[->] (0,-2.5) -- (0,2.5) node[left]{$y$};
+    \draw[red] (0,0) -| (1,1);
+\end{tikzpicture}\vspace{1cm}
+
+
+% 切线系统
+% (tangent cs:node=<name>,point={(<point>)},solution=<num>)
+%   过一点作指定node的切线
+% update 2025-04-15
+
+
+
+
+\begin{tikzpicture}
+    % 1.指定线条粗细: 
+    %   line width=<dimension>
+    % 使用预定义宽度: 
+    %   1)ultra thin
     \draw[ultra thin] (-2,1) -- (2,1);
+    %   2)very thin
     \draw[very thin] (-2,0.5) -- (2,0.5);
+    %   3)thin(默认，即0.4pt)
     \draw[thin] (-2,0) -- (2,0);
     \draw (-2,-0.5) -- (2,-0.5);
+    %   4)semithick
     \draw[semithick] (-2,-1) -- (2,-1);
+    %   5)thick
     \draw[thick] (-2,-1.5) -- (2,-1.5);
+    %   6)very thick
     \draw[very thick] (-2,-2) -- (2,-2);
+    %   7)ultra thick
     \draw[ultra thick] (-2,-2.5) -- (2,-2.5);
 \end{tikzpicture}\newpage
 
 \begin{tikzpicture}
     % 线条类型: tikz的线条主要由虚线来实现
     % 1.dash pattern=on 2pt off 3pt on 4pt off 4pt
-    % 代表画2pt线条，间隔3pt，再画4pt线条，再间隔4pt
+    %   代表画2pt线条，间隔3pt，再画4pt线条，再间隔4pt
     % 2.dash phase=3pt
-    % 将通过dash pattern配置的虚线，左移3pt
+    %   将通过dash pattern配置的虚线，左移3pt
     % 3.dash=<pattern> phase <phase>
-    % 合并1/2步
+    %   合并1/2步
     % 4.其他预定义线条
     %   1)solid - 实线. 默认类型
     %   2)dotted/densely dotted/loosely dotted - 点线/密集点线/稀疏点线
@@ -37,7 +126,7 @@
     \draw[loosely dotted] (-2,-2.5) -- (2,-2.5);
     \draw[dotted] (-2,-3) -- (2,-3);
     \draw[densely dotted] (-2,-3.5) -- (2,-3.5);
-\end{tikzpicture}\newpage
+\end{tikzpicture}
 
 \begin{tikzpicture}
     % 填充颜色: 自定义颜色和颜色表达式，参考latex的xcolor宏包
@@ -47,7 +136,7 @@
     \fill[color=red!50!green!60] (0,0) rectangle (1,1);
     % filldraw命令中，color指定填充和边框颜色，fill指定填充颜色，draw指定边框颜色
     \filldraw[color=blue!50,fill=red!20] (0,-3) ellipse [x radius=3cm,y radius=2cm];
-\end{tikzpicture}\newpage
+\end{tikzpicture}
 
 \begin{tikzpicture}
     % rounded corners=<dimension>
@@ -58,7 +147,7 @@
     \draw (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
     \draw[xshift=4cm,rounded corners=5pt] (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
     \draw[yshift=-2cm] (0,0) -- (2,0) -- (2,1) [rounded corners=5pt] -- (0,1) -- cycle;
-\end{tikzpicture}\newpage
+\end{tikzpicture}
 
 \begin{tikzpicture}
     % 透明度，范围[0,1]，0代表完全透明，1代表完全不透明
@@ -159,41 +248,6 @@
 \end{tikzpicture}\newpage
 
 \begin{tikzpicture}
-    % shade，填充颜色从一个颜色平滑过渡到另一个颜色，需使用shadings库
-    % 1.axis模式, 从左到右或从上到下的线性颜色变化. 默认模式
-    % 使用shading=axis指定模式，该模式默认为从上到下，由灰色过渡到白色
-    % 可使用如下参数: top color/bottom color/left color/right color/middle color
-    % middle color可结合top color/bottom color, 成为垂直中间颜色; middle color也可结合left color/right color, 称为水平中间颜色. middle color必须在top/bottom/left/right color之后使用
-    \shade (0,0) rectangle (2,2);
-    \shade[xshift=3cm,left color=blue!60] (0,0) rectangle (2,2);
-    \shade[xshift=6cm,top color=blue!60,bottom color=green!60,middle color=purple!60] (0,0) rectangle (2,2);
-    \shade[xshift=9cm,left color=blue!60,right color=green!60,middle color=red!60] (0,0) rectangle (2,2);
-
-    % 2.ball模式, 球体光影变化
-    % 使用shading=ball指定模式，默认为蓝色
-    % 可使用ball color指定颜色
-    \shade[yshift=-3cm,shading=ball] (0,1) circle [radius=1cm];
-
-    % 3.bilinear interpolation模式，双线性
-    % 使用shading=bilinear interpolation指定模式
-    % 可使用以下关键字指定左上/右上/左下/右下颜色: upper left/upper right/lower left/lower right，默认都为白色
-    \shade[yshift=-6cm,shading=bilinear interpolation,upper right=green!30,lower left=blue!30] (0,0) rectangle (2,2);
-
-    % 4.color wheel模式，车轮式颜色轮替
-    % 使用shading=color wheel指定模式
-    \shade[yshift=-9cm,shading=color wheel] (0,0) rectangle (2,2);
-
-    % 5.color wheel black center模式，车轮式颜色轮替，中心为黑色
-    % 使用shading=color wheel black center指定模式
-    \shade[yshift=-12cm,shading=color wheel black center] (0,0) rectangle (2,2);
-
-    % 6.radial模式，由一点以半径向外扩散转化颜色
-    % 使用shading=radial指定模式
-    % 使用inner color指定中心颜色，outer color指定边缘颜色. 默认圆心为灰色，边缘颜色为白色
-    \shade[yshift=-15cm,shading=radial,inner color=red,outer color=purple!10] (0,0) rectangle (2,2);
-\end{tikzpicture}\newpage
-
-\begin{tikzpicture}
     % clip，针对该指令之后的内容，只保留该指令限定区域部分；指令之前的内容，不作区域限制
     \draw (0,0) -- (0:4cm);
     \draw (0,0) -- (15:4cm);
@@ -205,6 +259,11 @@
     \draw (0,0) -- (75:4cm);
     \draw (0,0) -- (90:4cm);
 \end{tikzpicture}\newpage
+
+
+
+
+
 
 \begin{tikzpicture}
     % preaction(pre-action)参数，先进行preaction的操作，再使用指定参数作图后

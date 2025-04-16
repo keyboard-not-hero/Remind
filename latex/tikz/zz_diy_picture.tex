@@ -199,11 +199,11 @@
         \draw[shift={(90:2.2)}] (\x:1.5) -- (\x:1.6);
 
     % 启动/停止按钮
-    \draw[left color=black,right color=black,middle color=white] (96:5) rectangle ([yshift=0.6cm]84:5);
-    \draw[left color=black,right color=black,middle color=white] ([shift={(-0.3,0.6)}]96:5) rectangle ([shift={(0.3,1.2)}]84:5);
+    \shade[shading=radial,left color=black,right color=black,middle color=white] (96:5) rectangle ([yshift=0.6cm]84:5);
+    \shade[shading=radial,left color=black,right color=black,middle color=white] ([shift={(-0.3,0.6)}]96:5) rectangle ([shift={(0.3,1.2)}]84:5);
     % 复位按钮
-    \draw[shading=radial,inner color=white,outer color=black!80,rotate=36] (94:5) rectangle ([yshift=0.4cm]86:5);
-    \draw[shading=radial,inner color=white,outer color=black!80,rotate=36] ([shift={(-0.2,0.4)}]94:5) rectangle ([shift={(0.2,0.8)}]86:5);
+    \shade[shading=radial,top color=black,bottom color=black,middle color=white,shading angle=90+36,rotate=36] (94:5) rectangle ([yshift=0.4cm]86:5);
+    \shade[shading=radial,left color=black,right color=black,middle color=white,shading angle=90+36,rotate=36] ([shift={(-0.2,0.4)}]94:5) rectangle ([shift={(0.2,0.8)}]86:5);
 
     % 大表盘指针
     \draw[line width=0.8pt] (0,0) -- (-90:3.8);

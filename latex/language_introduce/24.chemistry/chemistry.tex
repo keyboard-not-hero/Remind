@@ -1,23 +1,35 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{chemformula}
 \usepackage{extarrows}
+\setlength{\parindent}{0pt}
 \begin{document}
-%1.化学式
-\ch{Fe3O4}$\qquad $\ch{AgCl2}\par
+% 化学式
+% 需要使用chemformula宏包，使用\ch{<content>}命令
+%   下角标
+\ch{Fe3O4}\\
+%   上角标
+\ch{H+}\\
+\ch{Cu^2+}\\
+%   先下角标，后上角标
+\ch{AgCl2-}\\
+%   质子与相对原子质量
+\ch{^{227}_{90}Th+}\\
+%   复合化学式
+\ch{CuSO4 * 5 H2O}\\
 
-%2.化学方程式
-\ch{Fe + CuSO4 $\xlongequal{\phantom{耐高温}}$ Cu + FeSO4}\par
+% 化学反应式，->[<supscript>][<subscript>]
+\ch{硫 + 氧气 ->[点燃] 二氧化硫}\\
+\ch{硫 + 氧气 <->[点燃] 二氧化硫}\\
+\ch{硫 + 氧气 <>[点燃] 二氧化硫}\\
+\ch{硫 + 氧气 <=>[点燃] 二氧化硫}\\
 
-%3.上角标与下角标
-\ch{H+ + OH- $\xlongequal{\phantom{耐高温}}$ H2O}\par
-\ch{Cu^2+ + SO4^2- $\xlongequal{\phantom{耐高温}}$ CuSO4}\par
+% 化学方程式
+% 需要使用extarrows宏包，使用\xlongequal[<subscript>]{<supscript>}指令
+\ch{Cu + H2SO4\:\:$\xlongequal{\text{点燃}}$\:\:CuSO4 + H2}\\
 
-%4.气体与沉淀
-\ch{Zn + H2SO4  $\xlongequal{\phantom{耐高温}}$ ZnSO4 + H2 v}\par
-\ch{Ba^2+ + SO4^2- $\xlongequal{\phantom{耐高温}}$ BaSO4 ^}\par
+% 气体与沉淀标志
+\ch{BaCl2 + H2SO4\:\:$\xlongequal{\hphantom{12345678}}$\:\:BaSO4 v + 2 HCl}\\
+\ch{Zn + 2 HCl\:\:$\xlongequal{\text{高温加催化剂}}{catch}$\:\:ZnCl2 + H2 ^}\\
 
-%5.反应条件
-\ch{2 Cu + O2 $\xlongequal{\Delta}$ 2 CuO}\par
-\ch{N2 + 3 H2 $\xlongequal[\mathrm{Fe}]{\textrm{高温高压}}$ 2 NH2}\par
 \end{document}
 
