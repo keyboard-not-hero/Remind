@@ -170,4 +170,58 @@ this is fifth paragraph
 
 
 
+% 分式格式优化
+\newcommand{\mfrac}[2]{\dfrac{\,#1\,}{\,#2\,}}
+% 注意标签与字体，增强focus
+\newcommand{\warning}[1]{{\footnotesize\textcolor[gray]{0.6}{\rule[-3.6pt]{4pt}{13pt}}\hspace{2pt}\colorbox[gray]{0}{\textcolor[gray]{1}{注意}} #1}}
+% 超出页面左侧的题号
+\newcommand{\quesnum}[1]{\makebox[0pt][r]{#1\:}}
+% 选择题答案双行格式
+\newenvironment{dtable}[1][2cm]{\begin{table}[H]\begin{tabular}{@{\extracolsep{0mm}}l@{\extracolsep{#1}}l}}{\end{tabular}\end{table}}
+% 定义圆内阿拉伯数字大小
+\let\oldding\ding
+\renewcommand{\ding}[2][1.2]{\raisebox{-1pt}{\scalebox{#1}{\oldding{#2}}}}
+% 是否显示选择题/填空题答案
+\def\hidenum{0}
+% 填空题格式
+\newcommand{\uline}[2][3mm]{\underline{\hspace{#1}\textcolor[gray]{\hidenum}{#2}\hspace{#1}}}
+% 选择题格式
+\newcommand{\choice}[1]{\hspace{2mm}\textcolor[gray]{\hidenum}{#1}\hspace{2mm}}
+% caption无默认标签，和内容2pt垂直距离
+\captionsetup{labelformat=empty,skip=2pt}
+% 浮动体与外部内容的垂直距离为2mm
+\setleng{\intextsep}{2mm}
+% 双图并行
+\newenvironment{dfigure}[4]{\begin{figure}[H]
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    #2
+    \caption{#1}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    #4
+    \caption{#3}
+  \end{minipage}
+}{\end{figure}}
+% 三图并行
+\newenvironment{dfigure}[6]{\begin{figure}[H]
+  \begin{minipage}[b]{0.32\linewidth}
+    \centering
+    #2
+    \caption{#1}
+  \end{minipage}
+  \begin{minipage}[b]{0.32\linewidth}
+    \centering
+    #4
+    \caption{#3}
+  \end{minipage}
+    \begin{minipage}[b]{0.32\linewidth}
+    \centering
+    #6
+    \caption{#5}
+  \end{minipage}
+}{\end{figure}}
+
+
 最后编辑于: 2025-03-14

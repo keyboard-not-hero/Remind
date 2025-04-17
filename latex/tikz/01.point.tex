@@ -44,7 +44,12 @@
     \draw[green!40,very thick] (0,0) -- (1,0) -- ++(1,0) -- ++(0,1); 
     
     % ++(30:2)将极坐标与相对坐标结合
-\end{tikzpicture}\\\vspace{1cm}
+    \draw (0,2) -- (1,3) -- ++(30:1);
+    
+    % ([turn]30:1)极坐标相对于上一个点作为起始点，并且以上一个点的切线作为起始角度
+    \draw (0,0) -- (1,1) -- (30:1);
+    \draw (0,-2) -- (1,-1) -- ([turn]30:1);
+\end{tikzpicture}\vspace{1cm}
 
 
 % 命名坐标点
@@ -56,7 +61,7 @@
     \draw[->] (-2,0) -- (2,0) node[right] {$x$};
     \draw[->] (0,-2) -- (0,2) node[above] {$y$};
     \draw (A) -- (B) -- (C) -- (D) -- cycle;
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\vspace{1cm}
 
 
 % 利用伪随机数生成坐标点
@@ -70,31 +75,39 @@
       \draw (0,\y) node[left]{$\y$} -- (2pt,\y);
     \coordinate (A) at (2*rand,2*rand);
     \fill (A) circle [radius=2pt];
-\end{tikzpicture}\\\vspace{1cm}
+\end{tikzpicture}\vspace{1cm}
+
+
+% (p |- q)
+% 分别取坐标p的x值，坐标q的y值，组成(x,y)
+% (p -| q)
+% 分别取坐标p的y值，坐标q的x值，组成(x,y)
+begin{tikzpicture}[line width=0.6pt]
+    \draw[help lines] (-2,-2) grid (2,2);
+    \draw[->] (-2.5,0) -- (2.5,0) node[below]{$x$};
+    \draw[->] (0,-2.5) -- (0,2.5) node[left]{$y$};
+    \fill[red] (0,0 -| 1,1) circle [radius=2pt];
+\end{tikzpicture}\vspace{1cm}
 
 
 \begin{tikzpicture}
-    % $(<coordinate>)+(<coordinate>)$，进行坐标运算，需要calc库(\usetikzlibrary{calc})
-    \draw[->] (-3.5,0) -- (3.5,0) node[below]{$x$};
-    \draw[->] (0,-3.5) -- (0,3.5) node[left]{$y$};
-    \foreach \x in {-3,-2,-1,1,2,3}
-      \draw (\x,0) node[below]{$\x$} -- (\x,2pt);
-    \foreach \y in {-3,-2,-1,1,2,3}
-      \draw (0,\y) node[left]{$\y$} -- (2pt,\y);
-    \coordinate (A) at (1,2);
-    \coordinate (B) at (2,1);
-    \coordinate (C) at ($(A)+(B)$);
-    \coordinate (D) at ($(A)+0.5*(B)$);
-    \fill (A) circle [radius=2pt];
-    \fill (B) circle [radius=2pt];
-    \fill (C) circle [radius=2pt];
-    \fill (D) circle [radius=2pt];
+    % 线条与线条的交点，需要使用intersections库
+    \path [draw,name path=x axis](-2,0) -- (2,0);
+    \path [draw,name path=y axis](0,-2) -- (0,2);
+
+    % of参数，相交的两条路径, 格式为<path_01> and <path_02>
+    % by参数，相交点的坐标，可使用{}限定多个相交点
+    % name参数，相交点的名称，用于后续变量引用
+    % total参数，总的交点数量
+    % sort by参数，指定排序依据路径
+    % 交点引用格式: <name>-<num>
+    \path [name intersections={of=x axis and y axis,by=G}];
+    \fill (G) circle(2pt);
 \end{tikzpicture}\vspace{1cm}
 
 
 \begin{tikzpicture}
     % 复杂计算. section 94
-    % update by 2025-04-15
     \draw (0,0) circle [radius=2];
     % \pgfmathparse{<complex_calculate>}
     %   进行复杂计算(包含函数等)，将所有带单位的数字转化为pt，结果截去单位，为无单位数字
@@ -145,19 +158,61 @@
 \end{tikzpicture}\vspace{1cm}
 
 
-% (p |- q)
-% 分别取坐标p的x值，坐标q的y值，组成(x,y)
-% (p -| q)
-% 分别取坐标p的y值，坐标q的x值，组成(x,y)
-begin{tikzpicture}[line width=0.6pt]
+\begin{tikzpicture}[>=stealth,line width=0.6pt]
+    % ($<factor>*<coordinate><modifiers>$)
+    % 如果提供factor，则将factor传递给\pgfmathparse进行负责计算, 需要调用calc库(section 13.5). 优化版本: 
+    % {<factor>}*<coordinate><modifiers>，可更清晰区分factor和coordinate边界
+
+    % 格式1: <factor_01>*(<coordinate_01>)+<factor_02>*(<coordinate_02>)
+    % 进行坐标运算
+
+    % 格式2: <point_start>!<percent>!<point_end>
+    % 沿着point_start到point_end线段，指定百分比位置，percent可以小于0，也可以大于1
+    % percent传递给\pgfmathparse计算
+
+    % 格式3: <point_start>!<percent>!<angle>:<point_end>
+    % 绕起始点point_start旋转指定角度angle，然后从结果线段上截取指定百分比位置
+
+    % 格式4: <point_start>!<dimension>!<point_end>
+    % 沿着point_start到point_end直线，距离起始点point_start长度为dimension的位置
+
+    % 格式5: <point_start>!<dimension>!<angle>:<point_end>
+    % 绕起始点point_start旋转指定角度angle，然后从结果线段上截取距离起始点长度为dimension的位置
+
+    % 格式6: <point_start>!<point>!<point_end>
+    % 由点<point>，到由<point_start>和<point_end>组成的线段的垂足
+
+    % 格式7: <point_start>!<point>!<angle>:<point_end>
+    % 由<point_start>和<point_end>组成的线段，旋转指定角度angle后，过点point到该线段的垂足
+    \draw[->] (-3,0) -- (3,0) node[below]{$x$};
+    \draw[->] (0,-3) -- (0,3) node[left]{$y$};
     \draw[help lines] (-2,-2) grid (2,2);
-    \draw[->] (-2.5,0) -- (2.5,0) node[below]{$x$};
-    \draw[->] (0,-2.5) -- (0,2.5) node[left]{$y$};
-    \fill[red] (0,0 -| 1,1) circle [radius=2pt];
-\end{tikzpicture}
+    \coordinate (A) at (1,1);
+    \coordinate (B) at (2,3);
+    \coordinate (C) at ($(A)+0.5*(B)$);
+    \fill[red!40] (A) circle [radius=1.2pt];
+    \fill[blue!40] (B) circle [radius=1.2pt];
+    \fill[green!40] (C) circle [radius=1.2pt];
+    \coordinate (D) at ($(A)!0.5!(B)$);
+    \draw (A) -- (B);
+    \fill[purple!40] (D) circle [radius=1.2pt];
+\end{tikzpicture}\vspace{1cm}
 
 
-% update 2025-04-16
+% 切线系统
+% (tangent cs:node=<name>,point={(<point>)},solution=<num>)
+%   过一点作指定node的切线
+\begin{tikzpicture}[line width=0.6pt]
+    \node[draw,circle,minimum size=2cm] (A) at (0,0){};
+    \coordinate (P) at (2,3);
+    \coordinate (M) at (tangent cs:node=A,point={(P)},solution=1);
+    \coordinate (N) at (tangent cs:node=A,point={(P)},solution=2);
+    \fill[red] (M) circle [radius=1pt];
+    \fill[blue] (N) circle [radius=1pt];
+    \draw (M) -- (P) -- (N);
+\end{tikzpicture}\vspace{1cm}
+
+% update 2025-04-17
 
 
 
@@ -183,47 +238,4 @@ begin{tikzpicture}[line width=0.6pt]
     \filldraw ([rotate around={-90:(0.5,0)}]1,0) circle [radius=1.2pt];
 \end{tikzpicture}
 
-\begin{tikzpicture}
-    % 在指定线段上取一个点. 需要使用calc库
-    % update by 2025-04-15
-    % 格式1: <point_start>!<percent>!<point_end>
-    % 沿着point_start到point_end线段，指定百分比位置，percent可以小于0，也可以大于1
-
-    % 格式2: <point_start>!<percent>!<angle>:<point_end>
-    % 绕起始点point_start旋转指定角度angle，然后从结果线段上截取指定百分比位置
-
-    % 格式3: <point_start>!<length>!<point_end>
-    % 沿着point_start到point_end直线，距离起始点point_start长度为length的位置
-
-    % 格式4: <point_start>!<length>!<angle>:<point_end>
-    % 绕起始点point_start旋转指定角度angle，然后从结果线段上截取距离起始点长度为length的位置
-
-    % 格式5: <point_start>!<point>!<point_end>
-    % 由点<point>，到由<point_start>和<point_end>组成的线段的垂足
-
-    % 格式6: <point_start>!<point>!<angle>:<point_end>
-    % 由<point_start>和<point_end>组成的线段，旋转指定角度angle后，过点point到该线段的垂足
-
-    \coordinate (A) at (0,0);
-    \coordinate (B) at (2,0);
-    \coordinate (C) at ($ (A)!0.5!(B) $);
-
-    \draw (A) -- (B);
-    \draw (1,0) -- (1,0.2);
-    \fill[green!20] (C) circle [radius=2pt];
-\end{tikzpicture}\\\vspace{1cm}
-
-\begin{tikzpicture}
-    % 线条与线条的交点，需要使用intersections库
-    \path [draw,name path=x axis](-2,0) -- (2,0);
-    \path [draw,name path=y axis](0,-2) -- (0,2);
-
-    % of参数，相交的两条路径, 格式为<path_01> and <path_02>
-    % by参数，相交点的坐标，可使用{}限定多个相交点
-    % name参数，相交点的名称，用于后续变量引用
-    % total参数，总的交点数量
-    % 交点引用格式: <name>-<num>
-    \path [name intersections={of=x axis and y axis,by=G}];
-    \fill (G) circle(2pt);
-\end{tikzpicture}
 \end{document}

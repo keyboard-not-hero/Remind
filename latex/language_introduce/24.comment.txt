@@ -1,0 +1,28 @@
+Demo_01 -- 单行注释
+\documentclass{article}
+\setlength{\parindent}{0pt}
+\begin{document}
+% This is one line comment text
+This is normal text
+\end{document}
+
+内容讲解
+1.%符号后续的字符为注释内容，但只能注释单行
+
+
+
+Demo_02 -- 多行注释
+\documentclass{article}
+\usepackage{comment}
+\setlength{\parindent}{0pt}
+\begin{document}
+This is normal text
+\begin{comment}
+This is multiple comment text
+This is multiple comment text too
+So, this is also multiple comment text
+\end{comment}
+\end{document}
+
+内容讲解
+1.\begin{comment} ... \end{comment}为多行注释环境. 需导入comment宏包

@@ -9,12 +9,38 @@
     \path[draw] (0,0) -- (1,0) -- (0,1) -- cycle;
 \end{tikzpicture}\vspace{1cm}
 
+
 \begin{tikzpicture}
     % 2.内容填充
     %   \path[fill]，可简写为\fill
     %   必须为闭合线条
     \path[fill] (0,0) -- (1,0) -- (0,1) -- cycle;
 \end{tikzpicture}\vspace{1cm}
+
+% 同一命令，图形重叠部分的填充方式
+% 1.nonzero rule
+%   判断point是否在多层path内部，将point作为一个光源，并设置一个初始为0的数num
+%   当发射的光碰到一层path时，如果路径方向(光的视角)为从左到右，则num加1；如果路径为从右到左，则num减1
+%   在光到达path外部时，如果num不为0，则认为point在path内部(填充)；为0，则在外部(不填充)
+% 默认方式
+\begin{tikzpicture}
+    \filldraw[fill=blue!20] (2,0) arc [start angle=0,end angle=360,radius=2] (1,0) arc [start angle=0,end angle=360,radius=1];
+    \filldraw[fill=blue!20] (7,0) arc [start angle=360,end angle=0,radius=2] (6,0) arc [start angle=360,end angle=0,radius=1];
+    \filldraw[fill=blue!20] (2,-5) arc [start angle=0,end angle=360,radius=2] (1,-5) arc [start angle=360,end angle=0,radius=1];
+    \filldraw[fill=blue!20] (7,-5) arc [start angle=360,end angle=0,radius=2] (6,-5) arc [start angle=0,end angle=360,radius=1];
+\end{tikzpicture}
+
+% 2.even odd rule，图形相交部分直接留白
+%   判断point是否在多层path内部，将point作为一个光源，并设置一个初始为0的数num
+%   当发射的光碰到一层path时，如果路径方向(光的视角)为从左到右，则num加1；如果路径为从右到左，则num减1
+%   在光到达path外部时，如果num为奇数，则认为point在path内部(填充)；为偶数，则在外部(不填充)
+\begin{tikzpicture}
+    \filldraw[fill=blue!20,even odd rule] (2,0) arc [start angle=0,end angle=360,radius=2] (1,0) arc [start angle=0,end angle=360,radius=1];
+    \filldraw[fill=blue!20,even odd rule] (7,0) arc [start angle=360,end angle=0,radius=2] (6,0) arc [start angle=360,end angle=0,radius=1];
+    \filldraw[fill=blue!20,even odd rule] (2,-5) arc [start angle=0,end angle=360,radius=2] (1,-5) arc [start angle=360,end angle=0,radius=1];
+    \filldraw[fill=blue!20,even odd rule] (7,-5) arc [start angle=360,end angle=0,radius=2] (6,-5) arc [start angle=0,end angle=360,radius=1];
+\end{tikzpicture}\newpage
+
 
 \begin{tikzpicture}
     % 3.填充内容从一个颜色平滑过渡到另一个颜色
@@ -62,22 +88,133 @@
     \shade[shift={(9,-6)},shading=Mandelbrot set] (0,0) rectangle (2,2);
 \end{tikzpicture}\newpage
 
+\begin{tikzpicture}
+    % 4.使用预定义图形进行填充, 需要使用patterns库
+    %   \path[pattern]指定填充, 可简写为\pattern(section 62). 相关参数
+    %     pattern - 指定填充图形
+    %     pattern color - 指定填充图形的颜色
+    \draw[pattern=horizontal lines] (0,0) circle [radius=1cm];
+    \node at (0,0){1};
+    \draw[pattern=vertical lines,xshift=3cm] (0,0) circle [radius=1cm];
+    \node[xshift=3cm] at (0,0){2};
+    \draw[pattern=north east lines,xshift=6cm] (0,0) circle [radius=1cm];
+    \node[xshift=6cm] at (0,0){3};
+    \draw[pattern=north west lines,yshift=-3cm] (0,0) circle [radius=1cm];
+    \node[yshift=-3cm] at (0,0){4};
+    \draw[pattern=grid,shift={(3cm,-3cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-3cm)}] at (0,0){5};
+    \draw[pattern=crosshatch,shift={(6cm,-3cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-3cm)}] at (0,0){6};
+    \draw[pattern=dots,yshift=-6cm] (0,0) circle [radius=1cm];
+    \node[yshift=-6cm] at (0,0){7};
+    \draw[pattern=crosshatch dots,shift={(3cm,-6cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-6cm)}] at (0,0){8};
+    \draw[pattern=fivepointed stars,shift={(6cm,-6cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-6cm)}] at (0,0){9};
+    \draw[pattern=sixpointed stars,yshift=-9cm] (0,0) circle [radius=1cm];
+    \node[yshift=-9cm] at (0,0){10};
+    \draw[pattern=bricks,shift={(3cm,-9cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(3cm,-9cm)}] at (0,0){11};
+    \draw[pattern=checkerboard,shift={(6cm,-9cm)}] (0,0) circle [radius=1cm];
+    \node[shift={(6cm,-9cm)}] at (0,0){12};
+\end{tikzpicture}\newpage
 
-% (p) |- (q)
-% 分别取坐标p的x值，坐标q的y值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
-% (p) -| (q)
-% 分别取坐标p的y值，坐标q的x值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
-\begin{tikzpicture}[line width=0.6pt]
-    \draw[help lines] (-2,-2) grid (2,2);
-    \draw[->] (-2.5,0) -- (2.5,0) node[below]{$x$};
-    \draw[->] (0,-2.5) -- (0,2.5) node[left]{$y$};
-    \draw[red] (0,0) -| (1,1);
+
+\begin{tikzpicture}
+    % 5.对之后的内容，作区域保留；之前的内容，不作区域限制
+    %   \path[clip]，可简写为\clip
+    \begin{scope}[shift={(5cm,2cm)},scale=2,fill=blue!30]
+        \path[fill,draw,clip] (-1,0) rectangle (1,1);
+        \path[draw] plot[samples=100,domain=-2:2] (\x,\x*\x);
+    \end{scope}
+    \path[name=para,draw] plot[samples=100,domain=-2:2] (\x,\x*\x);
+\end{tikzpicture}\newpage
+
+
+% 6.连线类型-I:
+%   1)move to - 代表两点之间不连接，直接由上一个点，跳到下一个点
+%   2)line to - 代表两点之间使用直线连接. 通常结尾使用cycle，使线条闭合
+%   3)(p) |- (q)
+%     分别取坐标p的x值，坐标q的y值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
+%     (p) -| (q)
+%     分别取坐标p的y值，坐标q的x值，组成(x,y)，并依次连接(p) -- (x,y) -- (q)
+\begin{tikzpicture}
+    \draw (0,0) -- (1,0) (2,0) -- (3,0);
+
+    \begin{scope}[line width=2pt,yshift=-2cm]
+        \draw (0,0) -- (1,0) -- (0,1) -- cycle;
+        \draw[xshift=4cm] (0,0) -- (1,0) -- (0,1) -- (0,0);
+    \end{scope}
+
+    \begin{scope}[yshift=-4cm]
+        \draw[->] (-1.5,0) -- (1.5,0) node[below]{$x$};
+        \draw[->] (0,-1.5) -- (0,1.5) node[left]{$y$};
+        \draw[red] (0,0) -| (1,1);
+    \end{scope}
+\end{tikzpicture}\vspace{1cm}
+
+% 6.连线类型-II:
+%   4)曲线，使用(<first_point>) .. controls (<first_control_point>) and (<second_control_point>) .. (<second_point>)
+%     原理: 第一个点first_point的切线指向第一个控制点first_control_point，第二个点second_point的切线指向第二个控制点second_control_point
+%     如果省略 and (<second_control_point>)，则第二个点second_point的切线也指向第一个控制点first_control_point
+\begin{tikzpicture}
+    \draw[red] (0,0) .. controls (1,1) and (2,1) .. (3,0);
+    \draw (0,0) -- (1,1) (2,1) -- (3,0);
+\end{tikzpicture}
+
+
+
+
+
+% 常用图形形状
+\begin{tikzpicture}
+    % 圆
+    %   (<central>) circle [radius=<radius>]
+    \draw (0,0) circle [radius=1];
+
+    % 椭圆
+    %   (<central>) circle [x radius=<x_radius>,y radius=<y_radius>]
+    \draw (3,0) ellipse [x radius=1,y radius=0.5];
+
+    % 长方形
+    %   (<coordinate>) rectangle (<diagonal_coordinate>)
+    \draw (5,-1) rectangle (7,1);
+
+    % 圆弧
+    %   (<start_point_coordinate>) arc [start angle=<start_angle>,end angle=<end_angle>,radius=<radius>]
+    \draw (1,-3) arc [start angle=0,end angle=180,radius=1];
+    
+    % 椭圆弧
+    %   (<start_point_coordinate>) arc [start angle=<start_angle>,end angle=<end_angle>,x radius=<x_radius>,y radius=<y_radius>]
+    \draw (2,-3) arc [start angle=180,end angle=360,x radius=1,y radius=0.5];
+\end{tikzpicture}
+    
+    
+
+\begin{tikzpicture}
+    % 填充颜色: 自定义颜色和颜色表达式，可使用latex的xcolor宏包
+    % draw中, color指定边框颜色
+    \draw[color=green!20] (0,3) circle [radius=1cm];
+    % fill中, color指定填充颜色
+    \fill[color=red!50!green!60] (0,0) rectangle (1,1);
+    % filldraw中，color指定填充和边框颜色，fill指定填充颜色，draw指定边框颜色
+    \filldraw[color=blue!50,fill=red!20] (0,-3) ellipse [x radius=3cm,y radius=2cm];
 \end{tikzpicture}\vspace{1cm}
 
 
-% 切线系统
-% (tangent cs:node=<name>,point={(<point>)},solution=<num>)
-%   过一点作指定node的切线
+\begin{tikzpicture}
+    % 坐标顶点是圆角/尖角
+    % rounded corners=<dimension>
+    %   圆滑的边角弧度，dimension值不被scale影响
+    % sharp corners
+    %   尖锐的边角弧度
+    % 可以在路径中使用，影响后续顶点弧度
+    \draw (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
+    \draw[xshift=4cm,rounded corners=5pt] (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
+    \draw[yshift=-2cm] (0,0) -- (2,0) -- (2,1) [rounded corners=5pt] -- (0,1) -- cycle;
+\end{tikzpicture}
+
+
 % update 2025-04-15
 
 
@@ -128,26 +265,9 @@
     \draw[densely dotted] (-2,-3.5) -- (2,-3.5);
 \end{tikzpicture}
 
-\begin{tikzpicture}
-    % 填充颜色: 自定义颜色和颜色表达式，参考latex的xcolor宏包
-    % draw命令中, color指定边框颜色
-    \draw[color=green!20] (0,3) circle [radius=1cm];
-    % fill命令中, color指定填充颜色
-    \fill[color=red!50!green!60] (0,0) rectangle (1,1);
-    % filldraw命令中，color指定填充和边框颜色，fill指定填充颜色，draw指定边框颜色
-    \filldraw[color=blue!50,fill=red!20] (0,-3) ellipse [x radius=3cm,y radius=2cm];
-\end{tikzpicture}
 
-\begin{tikzpicture}
-    % rounded corners=<dimension>
-    %   圆滑的边角弧度
-    % sharp corners
-    %   尖锐的边角弧度
-    % 可以在路径中使用，影响后续顶点弧度
-    \draw (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
-    \draw[xshift=4cm,rounded corners=5pt] (0,0) -- (2,0) -- (2,1) -- (0,1) -- cycle;
-    \draw[yshift=-2cm] (0,0) -- (2,0) -- (2,1) [rounded corners=5pt] -- (0,1) -- cycle;
-\end{tikzpicture}
+
+
 
 \begin{tikzpicture}
     % 透明度，范围[0,1]，0代表完全透明，1代表完全不透明
@@ -169,96 +289,12 @@
     \draw[double,red,double=green,double distance=3pt] (0,-1) -- (2,-1);
 \end{tikzpicture}\newpage
 
-\begin{tikzpicture}
-    % 使用预定义图形进行填充, 需要使用patterns库
-    % pattern指定填充图形，pattern color指定填充图形的颜色
-    \draw[pattern=horizontal lines] (0,0) circle [radius=1cm];
-    \node at (0,0){1};
-    \draw[pattern=vertical lines,xshift=3cm] (0,0) circle [radius=1cm];
-    \node[xshift=3cm] at (0,0){2};
-    \draw[pattern=north east lines,xshift=6cm] (0,0) circle [radius=1cm];
-    \node[xshift=6cm] at (0,0){3};
-    \draw[pattern=north west lines,yshift=-3cm] (0,0) circle [radius=1cm];
-    \node[yshift=-3cm] at (0,0){4};
-    \draw[pattern=grid,shift={(3cm,-3cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(3cm,-3cm)}] at (0,0){5};
-    \draw[pattern=crosshatch,shift={(6cm,-3cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(6cm,-3cm)}] at (0,0){6};
-    \draw[pattern=dots,yshift=-6cm] (0,0) circle [radius=1cm];
-    \node[yshift=-6cm] at (0,0){7};
-    \draw[pattern=crosshatch dots,shift={(3cm,-6cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(3cm,-6cm)}] at (0,0){8};
-    \draw[pattern=fivepointed stars,shift={(6cm,-6cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(6cm,-6cm)}] at (0,0){9};
-    \draw[pattern=sixpointed stars,yshift=-9cm] (0,0) circle [radius=1cm];
-    \node[yshift=-9cm] at (0,0){10};
-    \draw[pattern=bricks,shift={(3cm,-9cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(3cm,-9cm)}] at (0,0){11};
-    \draw[pattern=checkerboard,shift={(6cm,-9cm)}] (0,0) circle [radius=1cm];
-    \node[shift={(6cm,-9cm)}] at (0,0){12};
-\end{tikzpicture}\newpage
 
-\begin{tikzpicture}
-    % 图形重叠部分的填充方式
-    % 1.nonzero rule，默认方式，当两个图形同时逆时针/顺时针构成时，重叠部分依然填充；当两个图形分别逆时针和顺时针时，重叠部分留白
-    \begin{scope}
-	\filldraw[fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.25,0.25) -- (0.75,0.25) -- (0.75,0.75) -- (0.25,0.75) -- cycle;
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (0.25,0.25) -- (0.5,0.25);
-    \end{scope}
-    \begin{scope}[yshift=-3cm]
-	\filldraw[fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.25,0.25) -- (0.25,0.75) -- (0.75,0.75) -- (0.75,0.25) -- cycle;
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (0.75,0.25) -- (0.5,0.25);
-    \end{scope}
-    \begin{scope}[yshift=-6cm]
-	\filldraw[fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.5,0.5) -- (1.5,0.5) -- (1.5,1.5) -- (0.5,1.5) -- cycle; 
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (1.5,1.5) -- (1,1.5);
-    \end{scope}
-    \begin{scope}[yshift=-9cm]
-	\filldraw[fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.5,0.5) -- (0.5,1.5) -- (1.5,1.5) -- (1.5,0.5) -- cycle; 
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (0.5,1.5) -- (1,1.5);
-    \end{scope}
 
-    % 2.even odd rule，图形相交部分直接留白
-    \begin{scope}[yshift=-12cm]
-	\filldraw[even odd rule,fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.5,0.5) -- (1.5,0.5) -- (1.5,1.5) -- (0.5,1.5) -- cycle; 
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (1.5,1.5) -- (1,1.5);
-    \end{scope}
-    \begin{scope}[yshift=-15cm]
-	\filldraw[even odd rule,fill=yellow!80!black]
-	(0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle
-	(0.5,0.5) -- (0.5,1.5) -- (1.5,1.5) -- (1.5,0.5) -- cycle; 
-	\draw[->] (0,0) -- (0.5,0);
-	\draw[->] (0.5,1.5) -- (1,1.5);
-    \end{scope}
-\end{tikzpicture}\newpage
 
-\begin{tikzpicture}
-    % clip，针对该指令之后的内容，只保留该指令限定区域部分；指令之前的内容，不作区域限制
-    \draw (0,0) -- (0:4cm);
-    \draw (0,0) -- (15:4cm);
-    \draw (0,0) -- (30:4cm);
-    \clip (0,0) rectangle (2,2);
-    \fill[red,opacity=0.4] (0,0) rectangle (2,2);
-    \draw (0,0) -- (45:4cm);
-    \draw (0,0) -- (60:4cm);
-    \draw (0,0) -- (75:4cm);
-    \draw (0,0) -- (90:4cm);
-\end{tikzpicture}\newpage
+
+
+
 
 
 

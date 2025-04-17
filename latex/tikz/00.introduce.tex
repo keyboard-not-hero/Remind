@@ -35,6 +35,10 @@
 %     在已定义变量后append参数
 %   <name>/.prefix style={<option>}
 %     在已定义变量前prepend参数
+% 预定义style:
+%   every path/.style - 应用于所有path
+%   every node/.style - 应用于所有node
+%   help lines/.style - 灰色度小，线条细的辅助线
 \begin{tikzpicture}[help lines/.prefix style={red,line width=0.6pt}]
     \draw[help lines] (-2,0) -- (2,0);
 \end{tikzpicture}
