@@ -1,123 +1,140 @@
 Demo_01 -- 指定文本颜色
-\documentclass{article}
-\usepackage{xcolor}
-\setlength{\parindent}{0mm}
-\begin{document}
-\color[gray]{0.1} This is gray text\\
-\color[rgb]{1,0,0} This is red text\\
-\color[RGB]{0,255,0} This is green text\\
-\color[cmyk]{0,1,0,0} This is magenta text\\
-\textcolor[RGB]{171,235,198}{This is light green text}
-\end{document}
 
 内容讲解
 1.本文档需xcolor宏包支持，xcolor宏包支持的颜色模式：
-    gray - 灰度模式。范围[0,1]，0代表黑色，1代表白色
-    rgb - red/green/blue三原色模式。每个基色的取值范围[0,1]
-    RGB - red/green/blue三原色模式。每个基色的取值范围[0,255]
-    cmyk - cyan/magenta/yellow/black四分色模式。每个基色的取值范围[0,1]
+    gray - black/white基色, 取值范围[0,1]
+    Gray - black/white基色，取值范围[0,15]，并且为整数
+    rgb - red/green/blue三基色，每个基色取值范围[0,1]
+    RGB - red/green/blue三基色，每个基色取值范围[0,255]，并且为整数
+    cmy - cyan/magenta/yellow三基色，每个基色取值范围[0,1]
+    cmyk - cyan/magenta/yellow/black四基色，每个基色取值范围[0,1]
+    hsb - hue/saturation/brightness三基色，每个基色取值范围[0,1]
+    HSB - hue/saturation/brightness三基色，每个基色取值范围[0,240]，并且为整数
 
-2.\color[<color_model>]{<base_color_val>}为颜色的声明格式命令，可指定后续文本颜色。参数列表如下：
-    color_model - 使用的颜色模式
-    base_color_val - 指定颜色模式下，基色的取值
+2.基础颜色表达式
+    <prefix><name_0>!<pct_1>!<name_1>!<pct_2>! . . . !<pct_n>!<name_n><postfix>
+    1)red!40!green代表取40%的红色(0.4 * 255)和60%(1-40%)的绿色(0.6 * 255)
 
-3.\textcolor[<color_model>]{<base_color_val>}{<text>}为颜色的参数格式命令，可指定参数文本的颜色。参数列表如下：
-    color_model - 使用的颜色模式
-    base_color_val - 指定颜色模式下，基色的取值
+    2)red!30!green!40!blue代表取40%分配给红色和绿色，其中，红色为12%(40% * 30%)，绿色为28%[40% * (1-70%)]；60%(1-40%)的蓝色
+
+    3)最后一组为数字，则最后添加!white，如: red!50!green!60为red!50!green!60!white
+    
+    4)如果prefix为‘-’，则表示为当前颜色的补集. 如： red!30!green!40!blue为(31,71,153)，则-red!30!green!40!blue为(224,184,102)
+
+3.拓展颜色表达式
+    <core_model>:<expr_1>,<dec_1>;<expr_2>,<dec_2>;...;<expr_n>,<dec_n>
+    1)每一个expr_<num>都是一个基础颜色表达式
+    
+    2)将表达式的结果转化为该颜色对应颜色model，然后result * dec_<num>/<sum>
+      sum = dec_1 + dec_2 + ... + dec_n
 
 
 
-Demo_02 -- 指定文本背景色
-\documentclass{article}
+Demo_02 -- 定义颜色变量
+\documentclass{ctexart}
+\usepackage{tikz}
 \usepackage{xcolor}
-\setlength{\parindent}{0mm}
+\setlength{\parindent}{0pt}
+\colorlet{mycolor}{red!30!green!40!blue}
 \begin{document}
-\colorbox[RGB]{0,255,0}{This is green background text}\\
-\fcolorbox[RGB]{100,0,0}{171,235,198}{This is light green background text}\\
-{\footnotesize\textcolor[gray]{0.6}{\rule[-3.6pt]{4pt}{13pt}}\:\:\colorbox[gray]{0}{\textcolor[gray]{1}{注意}}\:如果两个轻质物体相互吸引，可能两个物体带异种电荷；也可能一个带电，一个不带电}
+\textcolor{mycolor}{Hello World!!}
 \end{document}
 
 内容讲解
-1.\colorbox[<color_model>]{<base_color_val>}{<content>}为颜色的参数格式命令，可指定后续内容的背景色。参数列表如下：
-    color_model - 使用的颜色模式
-    base_color_val - 指定颜色模式下，基色的取值
+1.\definecolor{<name>}{<color_model>}{<color_spec>}
+    定义新颜色变量. 参数列表如下:
+        name - 新颜色名称. 可使用已定义变量名称，覆盖原有定义
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值  
 
-2.\fcolorbox[<color_model>]{<frame_base_color_val>}{<bg_base_color_val>}{<content>}为颜色的参数格式命令，可指定后续内容的背景色和边框颜色。参数列表如下：
-    color_model - 使用的颜色模式
-    frame_base_color_val - 边框在指定颜色模式下，基色的取值
-    frame_base_color_val - 背景在指定颜色模式下，基色的取值
+2.\providecolor{<name>}{<color_model>}{<color_spec>}
+    定义新颜色变量. 参数列表如下:
+        name - 新颜色名称. 不可使用已定义变量名称
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值 
+
+3.\colorlet{<name>}[<color_model>]{<color>}
+    将颜色结果赋予指定颜色变量. 参数列表如下:
+        name - 颜色名称
+        num_model - 指定模型，将color的结果转化为指定颜色模型，再赋予颜色变量
+        color - 使用颜色表达式的颜色，或者已定义颜色变量
+
+4.预定义颜色列表
+    red - 红色
+    green - 绿色
+    blue - 蓝色
+    cyan - 青色
+    magenta - 品红色
+    yellow - 黄色
+    black - 黑色
+    gray - 灰色
+    white - 白色
+    darkgray - 深灰色
+    lightgray - 浅灰色
+    brown - 棕色
+    lime - 柠檬色
+    olive - 橄榄色
+    orange - 橙色
+    pink - 粉红色
+    purple - 紫色
+    teal - 蓝绿色
+    violet - 紫罗兰色
 
 
 
-Demo_03 -- 指定页面背景色
-\documentclass{article}
+Demo_03 -- 使用颜色
+\documentclass{ctexart}
+\usepackage{tikz}
 \usepackage{xcolor}
-\setlength{\parindent}{0mm}
+\setlength{\parindent}{0pt}
+\colorlet{mycolor}{red!30!green!40!blue}
 \begin{document}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\newpage
-
-\pagecolor[RGB]{128,0,128}
-So she set to work, and very soon finished off the cake.
+\textcolor{mycolor}{Hello World!!}\\
+\colorbox{mycolor}{Look my eyes}\\
+\fcolorbox{black}{purple}{This is line}\newpage
+\pagecolor{mycolor}{This is new page}
 \end{document}
 
 内容讲解
-1.\pagecolor[<color_model>]{<base_color_val>}为颜色的声明格式命令，可指定后续page的背景色。参数列表如下：
-    color_model - 使用的颜色模式
-    base_color_val - 指定颜色模式下，基色的取值
+1.\color{<color>}
+\color{<color_model>}{<color_spec>}
+    之后后续所有文本颜色. 参数列表如下:
+        color - 已定义颜色名(或颜色表达式)
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值 
+
+2.\textcolor{<color>}{<content>}
+\textcolor{<color_model>}{<color_spec>}{<content>}
+    指定相应文本的颜色. 参数列表如下:
+        color - 已定义颜色名(或颜色表达式)
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值
+        content - 文本内容
+
+3.\pagecolor{<color>}
+\pagecolor{<color_model>}{<color_spec>}
+    之后后续所有页面背景颜色. 参数列表如下:
+        color - 已定义颜色名(或颜色表达式)
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值
+
+4.\colorbox{<color>}{<content>}
+\colorbox{<color_model>}{<color_spec>}{<content>}
+    指定相应文本的背景颜色. 参数列表如下:
+        color - 已定义颜色名(或颜色表达式)
+        color_model - 使用的颜色模式. 如：gray/rgb等
+        color_spec - 对应颜色模式下的基色值
+        content - 对应文本内容
+
+5.\fcolorbox{<frame_color>}{<background_color>}{<content>}
+[<color_model>]{<frame_color_spec>}{<bg_color_spec>}{<content>}
+[<frame_color_model>]{<frame_color_spec>}[<bg_color_model>]{<bg_color_spec>}{<content>}
+    指定背景边框色和背景色. 参数列表如下：
+        *_color - 已定义颜色名(或颜色表达式)
+        *_color_model - 使用的颜色模式. 如：gray/rgb等
+        *_color_spec - 对应颜色模式下的基色值
+        content - 文本内容
 
 
 
-Demo_04 -- 定义新颜色
-\documentclass{article}
-\usepackage{xcolor}
-\definecolor{own}{RGB}{128,0,128}
-\setlength{\parindent}{0mm}
-\begin{document}
-\textcolor{own}{This is purple text}\\
-\end{document}
-
-内容讲解
-1.\definecolor{<name>}{<color_model>}{<base_color_val>}
-    定义颜色. 参数列表如下:
-        name - 自定义颜色的名称
-	color_model - 使用的颜色模式
-	base_color_val - 指定颜色模式下，基色的取值
-
-2.\color{<color_name>}为指定文本颜色的声明格式命令
-
-3.\textcolor{<color_name>}{<text>}为指定文本颜色的参数格式命令
-
-4.\colorbox{<color_name>}{<text>}为指定文本背景色的参数格式命令
-
-5.\fcolorbox{<frame_color_name>}{<bg_color_name>}{<text>}为指定文本背景色和边框颜色的参数格式命令
-
-6.\pagecolor{<color_name>}为颜色的声明格式命令，可指定后续page的背景色
-
-
-
-Demo_05 -- 颜色表达式
-\documentclass{article}
-\usepackage{xcolor}
-\begin{document}
-\color{red!40!green}
-\color{red!50!green!40!blue}
-\color{red!50!green!60}
-\end{document}
-
-内容讲解
-1.red!40!green代表取60%(1-40%)的绿色(0.6 * 255)和40%的红色(0.4 * 255)
-
-2.red!30!green!40!blue代表取60%(1-40%)的蓝色(0.6 * 255); 28%[40% * (1-70%)]分配给绿色，12%(40% * 30%)分配给红色
-
-3.red!50!green!60代表取40%(1-60%)的白色(以数字结尾时，默认后续为white); 30%[60% * (1-50%)]分配给绿色，30%(60% * 50%)分配给红色
-40%白色=0.4*255(红)+0.4*255(绿)+0.4*255(蓝)
-
-
-
-
-颜色列表
-RGB
-254, 164, 67
-179, 179, 102
-144, 203, 251
-165, 170, 163
+% 最后编辑于: 2025-04-18

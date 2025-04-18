@@ -35,12 +35,13 @@
 %     在已定义变量后append参数
 %   <name>/.prefix style={<option>}
 %     在已定义变量前prepend参数
+%   <name>/.style={color=#1}
+%     带参数调用格式
 % 预定义style:
-%   every path/.style - 应用于所有path
-%   every node/.style - 应用于所有node
 %   help lines/.style - 灰色度小，线条细的辅助线
-\begin{tikzpicture}[help lines/.prefix style={red,line width=0.6pt}]
-    \draw[help lines] (-2,0) -- (2,0);
+\begin{tikzpicture}[my line/.style={color=#1}]
+    \draw[help lines] (0,0) -- (1,0);
+    \draw[my line=blue] (0,-2) -- (1,-2);
 \end{tikzpicture}
 
 
@@ -70,4 +71,15 @@ Strike
     \node [name=X,strike out,draw] {me};
 \end{tikzpicture}
 out!
+
+% 相关参数:
+% 6.指定x/y轴默认单位长度
+%   x=<dimension>
+%   y=<dimension>
+%   默认为1cm
+\begin{tikzpicture}[x=0.5cm,y=0.5cm]
+    \draw[->] (-2cm,0) -- (2cm,0) node[below]{$x$};
+    \draw[->] (0,-2cm) -- (0,2cm) node[left]{$y$};
+    \draw[red] (-2,0) -- (2,0);
+\end{tikzpicture}
 \end{document}
