@@ -13,6 +13,7 @@
 % 2.内容填充
 \begin{tikzpicture}
     %   \path[fill]，可简写为\fill
+    %   可与draw参数一起使用，底层先fill，后draw
     %   必须为闭合线条
     \path[fill] (0,0) -- (1,0) -- (0,1) -- cycle;
 \end{tikzpicture}\vspace{1cm}
@@ -44,7 +45,7 @@
 
 % 3.填充内容从一个颜色平滑过渡到另一个颜色
 \begin{tikzpicture}
-    %   \path[shade]，可简写为\shade，需使用shadings库. 参考15.7和 section 69
+    %   \path[shade]，可简写为\shade，需使用shadings库，可与draw参数一起使用. 参考15.7和 section 69
     %   1)axis模式, 左右或上下的线性颜色变化. 默认模式
     %     使用shading=axis指定模式，默认为从上到下，由灰色过渡到白色
     %     可使用如下参数: top color/bottom color/left color/right color/middle color
@@ -91,34 +92,51 @@
 
 % 4.使用预定义图形进行填充, 需要使用patterns库
 \begin{tikzpicture}
-    %   \path[pattern]指定填充, 可简写为\pattern(section 62). 相关参数
+    %   \path[pattern]指定填充, 可简写为\pattern(section 62)，可与draw参数一起使用
+    %   如需填充空白区域，需要使用save path和use path，先对path fill，再pattern
+    %   相关参数:
     %     pattern - 指定填充图形
     %     pattern color - 指定填充图形的颜色
-    \draw[pattern=horizontal lines] (0,0) circle [radius=1cm];
+    % 1) 水平线
+    \path[draw,pattern=horizontal lines] (0,0) circle [radius=1cm];
     \node at (0,0){1};
+    % 2)竖直线
     \draw[pattern=vertical lines,xshift=3cm] (0,0) circle [radius=1cm];
     \node[xshift=3cm] at (0,0){2};
+    % 3)往东北的线
     \draw[pattern=north east lines,xshift=6cm] (0,0) circle [radius=1cm];
     \node[xshift=6cm] at (0,0){3};
+    % 4)往东南的线
     \draw[pattern=north west lines,yshift=-3cm] (0,0) circle [radius=1cm];
     \node[yshift=-3cm] at (0,0){4};
+    % 5)水平和竖直交叉线
     \draw[pattern=grid,shift={(3cm,-3cm)}] (0,0) circle [radius=1cm];
     \node[shift={(3cm,-3cm)}] at (0,0){5};
+    % 6)东北和东南交叉线
     \draw[pattern=crosshatch,shift={(6cm,-3cm)}] (0,0) circle [radius=1cm];
     \node[shift={(6cm,-3cm)}] at (0,0){6};
+    % 7)水平点阵
     \draw[pattern=dots,yshift=-6cm] (0,0) circle [radius=1cm];
     \node[yshift=-6cm] at (0,0){7};
+    % 8)倾斜点阵
     \draw[pattern=crosshatch dots,shift={(3cm,-6cm)}] (0,0) circle [radius=1cm];
     \node[shift={(3cm,-6cm)}] at (0,0){8};
+    % 9)五角星
     \draw[pattern=fivepointed stars,shift={(6cm,-6cm)}] (0,0) circle [radius=1cm];
     \node[shift={(6cm,-6cm)}] at (0,0){9};
+    % 10)六角星
     \draw[pattern=sixpointed stars,yshift=-9cm] (0,0) circle [radius=1cm];
     \node[yshift=-9cm] at (0,0){10};
-    \draw[pattern=bricks,shift={(3cm,-9cm)}] (0,0) circle [radius=1cm];
+    % 11)砌砖块
+    \path[save path=\pathA,shift={(3cm,-9cm)}] (0,0) circle [radius=1cm];
+    \fill[red,use path=\pathA];
+    \draw[pattern=bricks,use path=\pathA] ;
     \node[shift={(3cm,-9cm)}] at (0,0){11};
+    % 12)黑白正方形间隔
     \draw[pattern=checkerboard,shift={(6cm,-9cm)}] (0,0) circle [radius=1cm];
     \node[shift={(6cm,-9cm)}] at (0,0){12};
 \end{tikzpicture}\newpage
+
 
 % 5.对之后的内容，作区域保留；之前的内容，不作区域限制
 \begin{tikzpicture}
@@ -127,7 +145,7 @@
         \path[fill,draw,clip] (-1,0) rectangle (1,1);
         \path[draw] plot[samples=100,domain=-2:2] (\x,\x*\x);
     \end{scope}
-    \path[name=para,draw] plot[samples=100,domain=-2:2] (\x,\x*\x);
+    \path[draw] plot[samples=100,domain=-2:2] (\x,\x*\x);
 \end{tikzpicture}\newpage
 
 
@@ -379,7 +397,81 @@
     \draw[line width=10pt,double distance between line centers=10pt] (-2,0) -- ++(4,0);
     \draw[red,line width=10pt,double distance=10pt] (-2,-2) -- ++(4,0);
 \end{tikzpicture}
-% update 2025-04-15
+
+
+% 9.在当前路径闭合区域填充自定义内容
+\begin{tikzpicture}
+    % path picture - 指定填充的自定义内容. 使用预定义参数path picture bounding box引用闭合路径
+    \draw[path picture={
+        \node at (path picture bounding box.center){\includegraphics[scale=0.6]{pic/dog_01.png}};
+    }] (0,0) circle [radius=2];
+\end{tikzpicture}
+
+
+% 10.边界盒子
+%   1)默认边界盒子随着作图过程，取所有路径中最外部的x/y的上下限值，作为边界盒子的边界
+%     使用预定义变量current bounding box获得当前边界盒子
+\begin{tikzpicture}
+    \draw[red] (0,0) circle (2pt);
+    \draw[red] (1,1) circle (3pt);
+    \draw (current bounding box.south west) rectangle (current bounding box.north east);
+    \draw[red] (3,3) circle (4pt);
+    \draw[thick] (current bounding box.south west) rectangle (current bounding box.north east);
+\end{tikzpicture}\vspace{1cm}
+
+%   2)use as bounding box - 只参考指定路径作为边界盒子参考值
+Left of picture\begin{tikzpicture}
+    \draw[use as bounding box] (2,0) rectangle (3,1);
+    \draw (1,0) -- (4,.75);
+\end{tikzpicture}right of picture.\\
+
+Left of picture\begin{tikzpicture}
+    \draw (2,0) rectangle (3,1);
+    \draw (1,0) -- (4,.75);
+\end{tikzpicture}right of picture.\\[1cm]
+
+%   3)如果前面已有路径，边界比当前使用use as bounding box的路径更偏向外部，则无法生效. 使用\pgfresetboundingbox
+Left of picture\begin{tikzpicture}
+    \draw (0,0) circle [radius=2];
+    \draw[use as bounding box] (0,0) circle [radius=1];
+\end{tikzpicture}right of picture.\\[3cm]
+
+Left of picture\begin{tikzpicture}
+    \draw (0,0) circle [radius=2];
+    \pgfresetboundingbox
+    \draw[use as bounding box] (0,0) circle [radius=1];
+\end{tikzpicture}right of picture.\\
+
+%   4)trim left - 将指定x值的左侧视为bounding box外部内容. 参数可以为dimension或point，point取x值
+%   5)trim right - 将指定x值的右侧视为bounding box外部内容. 参数可以为dimension或point，point取x值
+Left of picture\begin{tikzpicture}[trim left=0]
+    \draw (0,0) circle [radius=2];
+\end{tikzpicture}right of picture.\\[3cm]
+
+Left of picture\begin{tikzpicture}[trim right=0]
+    \draw (0,0) circle [radius=2];
+\end{tikzpicture}right of picture.\\
+
+
+% 11.参数的执行顺序
+%   preaction -- normal -- postaction
+\begin{tikzpicture}
+    \draw[preaction={fill=black,opacity=0.5,transform canvas={xshift=1mm,yshift=-1mm}}]
+    [preaction={top color=blue,bottom color=white}]
+    [pattern=fivepointed stars]
+    (0,0) rectangle (1,2)
+    (1,2) circle [radius=5mm];
+\end{tikzpicture}
+
+
+% 12.路径装饰，需要导入decorations.pathmorphing tikz库
+%   1)decorate - 路径为装饰符格式
+%   2)decoration - 装饰符名称
+\begin{tikzpicture}
+    \draw[fill=blue!20,decorate,decoration=zigzag] (0,0) circle [radius=2];
+\end{tikzpicture}
+
+% update 2025-04-19
 
 
 
@@ -402,44 +494,4 @@
     % filldraw中，fill opacity指定填充透明度，draw opacity指定边框透明度，opacity指定填充和边框透明度
     \filldraw[line width=2pt,draw=red,fill=blue,fill opacity=0.2] (0,-5) ellipse [x radius=3cm,y radius=2cm];
 \end{tikzpicture}\newpage
-
-
-\newpage
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{tikzpicture}
-    % preaction(pre-action)参数，先进行preaction的操作，再使用指定参数作图后
-    % 如图示例，先作一个宽度为2mm，颜色为蓝色的矩形；再画一个红色的矩形
-    \draw 
-    [preaction={draw,line width=4mm,blue}]
-    [line width=2mm,red] (0,0) rectangle (2,2);
-    \begin{scope}[yshift=-3cm]
-	\draw 
-	[preaction={fill=black,opacity=0.5,transform canvas={xshift=1mm,yshift=-1mm}}]
-	[fill=red] (0,0) rectangle (1,2) circle (5mm);
-    \end{scope}
-    % 多次调用preaction
-    \begin{scope}[yshift=-6cm]
-	\draw 
-	[preaction={fill=black,opacity=0.5,transform canvas={xshift=1mm,yshift=-1mm}}]
-	[preaction={top color=blue,bottom color=white}]
-	[pattern=fivepointed stars] (0,0) rectangle (1,2) circle (5mm);
-    \end{scope}
-    \begin{scope}[yshift=-9cm]
-	\draw 
-	[postaction={draw,line width=2mm,blue}]
-	[line width=4mm,red] (0,0) rectangle (2,2);
-    \end{scope}
-\end{tikzpicture}
 \end{document}
