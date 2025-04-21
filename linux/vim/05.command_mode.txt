@@ -66,8 +66,7 @@ string参数
     \t - <tab>键
 
 表达式(以\=为起始内容, 特殊字符不可以应用于表达式)
-    可用于取四则运算结果
-    如: \=submatch(1)+2, 将regular_expression匹配的第1个\(\)限定内容
+    可应用函数. 如: printf()/match()
 
 
 flags参数

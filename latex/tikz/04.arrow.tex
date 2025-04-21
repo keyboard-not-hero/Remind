@@ -193,7 +193,10 @@
 \end{tikzpicture}
 
 
-%   4)配置默认箭头'>='
+%   4)配置默认箭头
+%     >=Stealth
+%     配置默认箭头为Stealth
+%     >默认为To. 当没有导入arrows.meta库时，To默认为to；当导入arrows.meta时，To默认为Computer Modern Rightarrow
 \begin{tikzpicture}[>=stealth]
     \draw[->] (0,0) -- (2,0);
 \end{tikzpicture}
@@ -229,4 +232,5 @@
     \draw[-mine] (-2,0) -- (2,0);
 \end{tikzpicture}
 
+% 最后编辑与: 2025-04-20
 \end{document}

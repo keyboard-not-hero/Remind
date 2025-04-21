@@ -38,7 +38,12 @@
 %   <name>/.style={color=#1}
 %     带参数调用格式
 % 预定义style:
+%   1)需调用
 %   help lines/.style - 灰色度小，线条细的辅助线
+%   2)无需调用，直接生效
+%   every node/.style - 所有node的属性
+%   every <shape> node/.style - 指定shape node的属性
+%   every <part> node part/.style - 指定node part的属性
 \begin{tikzpicture}[my line/.style={color=#1}]
     \draw[help lines] (0,0) -- (1,0);
     \draw[my line=blue] (0,-2) -- (1,-2);
