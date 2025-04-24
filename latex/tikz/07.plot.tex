@@ -1,6 +1,56 @@
 \documentclass[UTF8,fontset=ubuntu]{ctexart}
 \usepackage{tikz}
 \usetikzlibrary{datavisualization.formats.functions}
+
+% tikz作函数图的方式
+%   1)\path plot
+%   2)datavisualization
+%   3)pgfplots package
+
+
+
+% 1.plot
+%   1)\path plot[<options>] coordinates {(<coordinate_1>) (coordinate_2) (coordinate_3)...}
+%   根据坐标点作图
+\begin{tikzpicture}
+    \draw plot coordinates {(0,0) (1,0) (2,1) (3,0)};
+\end{tikzpicture}
+
+%   2)\path plot[<options>] file {<file_name>}
+
+%   3)\path plot[<options>] <coordinate_expression>
+%   根据坐标点表达式作图. 相关参数:
+%     [1]variable=<macro>
+%       使用的变量. 默认为\x
+%     [2]samples=<number>
+%       取样本数量
+%     [3]domain=<start>:<end>
+%       变量的取值范围
+%     [4]samples at=<samples_list>
+%       样本取值列表
+%     [5]smooth
+%       使用曲线连接
+\begin{tikzpicture}[>=stealth]
+    \draw[->] (-4,0) -- (4,0) node[below]{$x$};
+    \draw[->] (0,-4) -- (0,4) node[left]{$y$};
+    \draw[help lines] (-3,-3) grid (3,3);
+    \draw plot[samples=100,domain=-3:3] (\x,\x);
+\end{tikzpicture}
+
+\begin{tikzpicture}[>=stealth]
+    \draw[help lines] (-3,-3) grid (3,3);
+    \draw[->] (-4,0) -- (4,0) node[below]{$x$};
+    \draw[->] (0,-4) -- (0,4) node[left]{$y$};
+    \draw plot[samples=200,domain=-pi:pi] (\x,{sin(\x r)});
+\end{tikzpicture}
+
+%   4)\path plot[options] function {<gnuplot_formula>}
+    
+
+
+
+
+
 % 1.datavisualization，参考section 82，第872页. 需要使用datavisualization库
 \begin{document}
 \begin{tikzpicture}
@@ -282,21 +332,5 @@
 \end{tikzpicture}\\\vspace{4mm}
 
 
-% 2.plot
-\begin{tikzpicture}
-    % \draw plot coordinates {<coordinate_01> <coordinate_02> ...};
-    % 使用一系列坐标，进行连接作图
-    \draw plot coordinates {(0,0) (1,1) (2,0)};
-\end{tikzpicture}\\\vspace{1cm}
 
-\begin{tikzpicture}
-    % \draw plot[<options>] (\x,{<y expression>});
-    % 使用函数作图. 参数列表:
-    %     variable - 指定自变量. 默认为\x
-    %     samples - 样本量. 默认为25
-    %     domain - 样本区间，格式为<start_val>:<end_val>. 默认为-5:5
-    \draw[-latex] (-1,0) -- (3,0);
-    \draw[-latex] (0,-3) -- (0,4);
-    \draw[smooth,fill=black!20] plot[samples=100,domain=0:1] (\x,{2*(\x-1)*(\x-1)}) -- (0,0) -- cycle;
-\end{tikzpicture}
 \end{document}

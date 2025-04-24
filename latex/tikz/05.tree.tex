@@ -2,7 +2,12 @@
 \usepackage{tikz}
 \usetikzlibrary{trees}
 \begin{document}
-% 树状图，section 76
+% 树状图，section 21和section 76
+% 语法 
+%   \path child [<options>] foreach <variables> in {<values>} {<child path>}
+
+
+% 没有指定node，则默认为coordinate
 \begin{tikzpicture}
     \coordinate
       child {}
@@ -12,6 +17,8 @@
       };
 \end{tikzpicture}\\\vspace{1cm}
 
+
+% 标准node格式
 \begin{tikzpicture}
     \node {}
       child { node{}
@@ -37,7 +44,6 @@
 %   2.grow' - 类似于grow，将child按顺时针方向排列
 %   3.level distance - 父节点与子节点(节点中央)之间的距离
 %   4.sibling distance - 兄弟节点(节点中央)之间的距离
-%   5.<color> - 给连线和节点配置颜色
 % ** 在\begin{tikzpicture}[<option>]配置，作用于全局，level <num>/.style适用于指定层级节点
 % ** 在child[<option>]配置，则作用于当前节点和后续子孙节点
 % ** 在node[<option>]配置，则只作用于当前node，every node/.style适用于所有node
@@ -75,8 +81,8 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 % 相关参数:
-%   7.grow cyclic - 沿圆方向拓展. 需要trees tikz库
-%   8.sibling angle - 当前节点到兄弟节点的角度，配合grow cyclic使用. 需要trees tikz库
+%   5.grow cyclic - 沿圆方向拓展. 需要trees tikz库
+%   6.sibling angle - 当前节点到兄弟节点的角度，配合grow cyclic使用. 需要trees tikz库
 \begin{tikzpicture}[align=flush center,text width=2.7cm,grow cyclic,level 1/.style={level distance=2.5cm,sibling angle=90},level 2/.style={text width=2cm,level distance=3cm,font=\footnotesize,sibling angle=30}]
 \node {Computational Complexity} % root
   child { node {Computational Problems}
@@ -110,7 +116,7 @@
 \end{tikzpicture}\\\vspace{1cm}
 
 % 相关参数:
-%   9.grow via three points={one child at (<coordinate_x>) and two children at (<coordinate_y>) and (<coordinate_z>)}
+%   7.grow via three points={one child at (<coordinate_x>) and two children at (<coordinate_y>) and (<coordinate_z>)}
 %     通过三个坐标点，确定树的子节点位置. 需要trees tikz库
 %     当只有一个子节点时，子节点坐标为coordinate_x
 %     当只有两个子节点时，子节点坐标为coordinate_y和coordinate_z
@@ -130,7 +136,7 @@
 \end{tikzpicture}\vspace{1cm}
 
 % 相关参数:
-%   10.clockwise from=<angle>
+%   8.clockwise from=<angle>
 %     以指定角度开始，并顺时针沿圆环绕
 %     使用sibling angle指定子节点之间的偏转角度
 \begin{tikzpicture}[>=stealth,clockwise from=60,sibling angle=20]
@@ -144,9 +150,9 @@
 \end{tikzpicture}\vspace{1cm}
 
 % 相关参数:
-%   11.counterclockwise from=<angle>
-%     以指定角度开始，并逆时针沿圆环绕
-%     使用sibling angle指定子节点之间的偏转角度
+% 9.counterclockwise from=<angle>
+%   以指定角度开始，并逆时针沿圆环绕
+%   使用sibling angle指定子节点之间的偏转角度
 \begin{tikzpicture}[>=stealth,counterclockwise from=60,sibling angle=20]
     \draw[->] (-2,0) -- (2,0) node[below]{$x$};
     \draw[->] (0,-2) -- (0,2) node[left]{$y$};
@@ -157,9 +163,11 @@
       child {node {four}};
 \end{tikzpicture}\vspace{1cm}
 
-% 相关参数:
-%   12.edge from parent fork down、edge from parent fork up、edge from parent fork left、edge from parent fork right
-%     指定从父节点到子节点的连线方式为折线，向指定方向拓展
+% 10.edge from parent fork down
+%    edge from parent fork up
+%    edge from parent fork left
+%    edge from parent fork right
+%    指定从父节点到子节点的连线方式为折线，向指定方向拓展
 \begin{tikzpicture}[>=stealth,edge from parent fork down]
     \node at (0,0) {root}
       child {node {one}}
@@ -168,5 +176,33 @@
       child {node {four}};
 \end{tikzpicture}
 
-% update 2025-04-15
+% 11.missing={true | false}
+%   是否不显示当前子节点
+
+
+相关命令
+% \path edge from parent[<options>]
+%   由子节点到父节点的连线. 默认自动连线
+%   可手动配置连线属性
+%   应该在子节点最后进行配置
+%   常用选项:
+%     1)double - 双线
+%     2)draw=none - 不作连线
+%     3)dashed - 虚线
+\begin{tikzpicture}[level distance=2em]
+    \node {C}
+      child[grow=up]     {node {H}}
+      child[grow=left]   {node {H}}
+      child[grow=down]   {node {H}
+        edge from parent[red]
+      }
+      child[grow=right]  {node {C}
+        child[grow=up]    {node {H}}
+        child[grow=right] {node {H}}
+        child[grow=down]   {node {H}}
+        edge from parent[double]
+      };
+\end{tikzpicture}
+
+% update 2025-04-22
 \end{document}

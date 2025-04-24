@@ -44,6 +44,13 @@
 %   every node/.style - 所有node的属性
 %   every <shape> node/.style - 指定shape node的属性
 %   every <part> node part/.style - 指定node part的属性
+%   every label/.style - 每个label node的属性
+%   every pin/.style - 每个pin node的属性
+%   every pin edge/.style - 每个pin node连线的属性
+%   every child/.style - 每个子节点的属性
+%   every child node/.style - 每个子节点node的属性
+%   level <num>/.style - 指定层级
+%   level/.style - 所有层级，使用#1参数传递当前层级num，使得每层属性进行分别配置
 \begin{tikzpicture}[my line/.style={color=#1}]
     \draw[help lines] (0,0) -- (1,0);
     \draw[my line=blue] (0,-2) -- (1,-2);

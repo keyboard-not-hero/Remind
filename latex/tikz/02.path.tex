@@ -89,6 +89,17 @@
     \shade[shift={(9,-6)},shading=Mandelbrot set] (0,0) rectangle (2,2);
 \end{tikzpicture}\newpage
 
+%   9)结合透明模式. 需要导入fading tikz库
+\begin{tikzfadingfrompicture}[name=fade rectangle]
+    \shade[top color=transparent!100,bottom color=transparent!0] (0,0) rectangle (2,2);
+\end{tikzfadingfrompicture}
+\begin{tikzpicture}
+    \fill [black!20] (-1.2,-1.2) rectangle (1.2,1.2);
+    \pattern[pattern=checkerboard,pattern color=black!30] (-1.2,-1.2) rectangle (1.2,1.2);
+    \fill[path fading=fade rectangle,red] (-1,-1) rectangle (1,1);
+\end{tikzpicture}
+
+
 
 % 4.使用预定义图形进行填充, 需要使用patterns库
 \begin{tikzpicture}
@@ -464,9 +475,148 @@ Left of picture\begin{tikzpicture}[trim right=0]
 \end{tikzpicture}
 
 
-% 12.路径装饰，需要导入decorations.pathmorphing tikz库
+% 12.路径装饰，参考section 24和section 50
+% decoration类型:
+%   1)path morphing
+%     将原来的一条path，转化为一条path. 需要调用decorations.pathmorphing库
+%     path morphing列表:
+%     [1]lineto - 直线
+%     [2]curveto - 曲线
+%     [3]random steps - 随机步. 可使用参数:
+%       segment length - 周期长度
+%       amplitude - 振幅 
+%     [4]saw - 锯齿. 可使用参数:
+%       segment length - 周期长度
+%       amplitude - 振幅        
+%     [5]zigzag - Z字形. 可使用参数:
+%       segment length - 周期长度
+%       amplitude - 振幅   
+%     [6]bent - 弯曲形. 可使用参数:
+%       aspect - 线条紧绷度. 0.3左右最合适
+%       amplitude - 振幅   
+%     [7]bumps - 半椭圆. 可使用参数:
+%       segment length - 椭圆宽度半径
+%       amplitude - 椭圆高度半径 
+%     [8]coil - 线圈. 可使用参数:
+%       segment length - 线圈周期半径
+%       amplitude - 线圈半径
+%       aspect - 观测角度. 0代表从侧面看，1代表从正面看
+%     [9]snake - 蛇形曲线. 可使用参数:
+%       segment length - 周期长度
+%       amplitude - 振幅
+\begin{tikzpicture}
+    \draw (0,0) -- ++(3,0);
+    \draw[decorate,decoration=bumps] (0,-0.5) -- ++(3,0);
+    \draw[decorate,decoration=coil] (0,-1) -- ++(3,0);
+    \draw[decorate,decoration=random steps] (0,-1.5) -- ++(3,0);
+    \draw[decorate,decoration=saw] (0,-2) -- ++(3,0);
+    \draw[decorate,decoration=snake] (0,-2.5) -- ++(3,0);
+    \draw[decorate,decoration=zigzag] (0,-3) -- ++(3,0);
+\end{tikzpicture}
+
+%   2)path replacing
+%     将原来的一条path，转化为一系列不相连的短path. 需调用decorations.pathreplacing和decorations.shapes库
+%     decorations.pathreplacing列表:
+%     [1]moveto - 跳转线
+%     [2]border - 边界标记线. 可使用参数:
+%       segment length - 两个标记线之间的距离
+%       amplitude - 标记线长度
+%       angle - 标记线与路径的夹角
+%     [3]brace - 大括号. 可使用参数:
+%       amplitude - 大括号的高度
+%       aspect - 大括号中点的位置. 0位于起始点，1位于结束点
+%     [4]expanding waves - 逐渐增大的波纹. 可使用参数:
+%       segment length - 波纹之间的距离
+%       angle - 波纹的圆心角的一半
+%     [5]ticks - 垂直于路径切线的直线. 可使用参数:
+%       segment length - 直线之间的距离
+%       amplitude - 直线长度的一半
+%     [6]waves - 固定大小的圆弧. 可使用参数:
+%       segment length - 圆弧之间的距离
+%       angle - 圆弧圆心角的一半
+%       radius - 圆弧的半径
+%     decorations.footprints列表:
+%       footprints
+%         脚印. 相关参数:
+%           [1]foot length - 脚印长度. 默认10pt
+%           [2]stride length - 左脚脚后跟到下一个左脚脚后跟的距离. 默认30pt
+%           [3]foot sep - 左脚与右脚之间的间隔. 默认4pt
+%           [4]foot angle - 脚印偏离path的角度. 默认10
+%           [5]foot of - 指定脚印类别. 列表:gnome/human(默认)/bird/felis silvestris
+%     decorations.shapes列表:
+%       [1]crosses - 交叉线. 可使用参数:
+%         segment length - 交叉线中心的间隔
+%         shape width - 交叉线的宽度
+%         shape height - 交叉线的高度
+%       [2]triangles - 三角形. 可使用参数:
+%         segment length - 三角形的间隔
+%         shape width - 三角形的宽度
+%         shape height - 三角形的高度
+\begin{tikzpicture}
+    \draw[decorate,decoration=brace] (0,-0.5) -- ++(3,0);
+    \draw[decorate,decoration=crosses] (0,-1) -- ++(3,0);
+    \draw[decorate,decoration=ticks] (0,-1.5) -- ++(3,0);
+    \draw[decorate,decoration=expanding waves] (0,-4) -- ++(3,0);
+    \draw[decorate,decoration=triangles] (0,-6.5) -- ++(3,0);
+    \draw[decorate,decoration=shape backgrounds] (0,-7) -- ++(3,0);
+\end{tikzpicture}
+
+%   3)path removing
+%     将原来的一条path，进行移除，添加文字. 需调用decorations.text库
+%     decorations.text列表:
+%     [1]text along path - 沿path的文本. 相关参数:
+%       text=<text>
+%         顺着path的文本内容. text相关:
+%           i.使用\<space>添加额外空格
+%           ii.指定text的格式，需要用分隔符来区分. 如: 当text format delimiters={[}{]},[\color{red}]see you again[]用于指定部分字体颜色为红色
+%       text format delimiters={<start>}{<end>}
+%         指定text部分格式的分隔符
+%       text color=<color>
+%         指定text字体颜色
+%       reverse path=<boolean>
+%         在排列text时，将path视为反方向
+%       text align={<options>}
+%         将text沿指定位置对齐. 参数列表如下:
+%           align=<direction>
+%           对齐位置. 列表如下:
+%             left - 沿path起始位置
+%             right - 沿path结束位置
+%             center - 沿path中间位置居中对齐
+%           left indent=<length>
+%           当align=left，沿path起始位置的缩进
+%           right indent=<length>
+%           当align=right，沿path结束位置的缩进
+%           fit to path=<boolean>
+%           将text伸缩以适配path长度. 伸缩字符之间的间隙
+%           fit to path stretching spaces=<boolean>
+%           将text伸缩以适配path长度. 只伸缩单词之间的空格
+\begin{tikzpicture}
+    \draw[postaction={decorate,decoration={text along path,raise=-8pt,text={try your best,enjoy your lift,love your parents}}}] (0,0) circle [radius=2];
+\end{tikzpicture}
+
+%     [2]text effects along path
+%       类似于text along path，但当前类型的每一个字符都是node，可以使用node的参数
+
+% decoration语法
+%   1)\path[decorate,decoration] <path>
+%     对整段path进行decorate
+%   2)\path decorate[decoration] {<path>}
+%     对subpath进行decorate，并且可嵌套(嵌套需要内层为path morphing，外层为path replacing)
+
+% 参数
 %   1)decorate - 路径为装饰符格式
-%   2)decoration - 装饰符名称
+%   2)decoration=<options>
+%     指定装饰符. 相关参数如下
+%     [1]name - 引用的装饰符名称. 如: name=brace
+%     [2]mirror - 关于原path的镜像
+%     [3]raise - 往原path路径方向的左侧偏移
+%     [4]transform - 对decoration进行shift或rotate操作
+%     [5]pre - 在起始的地方使用指定线条或decorate. 可使用lineto/moveto/curveto或decoration
+%     [6]pre length - 在起始指定长度使用指定线条
+%     [7]post - 在结束的地方使用指定线条或decorate. 可使用lineto/moveto/curveto或decoration
+%     [8]post length - 在结束指定长度使用指定线条
+%     [9]segment length - 一个周期的长度
+%     [10]amplitude - 振幅(波峰到平衡位置的距离)
 \begin{tikzpicture}
     \draw[fill=blue!20,decorate,decoration=zigzag] (0,0) circle [radius=2];
 \end{tikzpicture}

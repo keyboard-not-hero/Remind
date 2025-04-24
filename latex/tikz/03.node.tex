@@ -304,6 +304,18 @@
     \draw[->] (-2,0) .. controls (-2,2) and (2,2) .. (2,0) node[pos=0.3]{0.3} node[sloped,pos=0.6]{0.6};
 \end{tikzpicture}
 
+% 35.label - 在node处额外添加label node. 格式: [<options>]<angle>:<text>. angle可选列表:
+%   [1]above/below/right/left/above left/above right/below left/below right
+%   [2]center - label node与主node的中心重合
+%   [3]角度值 - label的angle会偏向于45度的整数倍,无法精确定位角度
+%   默认为90度
+
+% 36.absolute - 是否使用paper的绝对相对位置. 如果指定该参数，则label node相对于node的位置的参考为paper；不指定，则参考为main node
+% 37.label distance - label node与main node的额外距离. 默认为0pt
+% 38.pin - 类似于label，在main node与label node间添加连线
+% 39.pin distance - pin node与main node的额外距离. 默认为3ex
+% 40.pin edge - pin node的连线
+
 
 
 
@@ -336,28 +348,24 @@
 \end{tikzpicture}
 
 
+
+
+% node与坐标的连线
+%   1)node.<anchor> -- <coordinate>
+%     node.anchor对应的坐标点与coordinate直接连接
+%   2)node -- <coordinate>
+%     智能化地取node.center与coordinate连线经过的anchor点，取anchor坐标与coordinate连接
+
+
+
+
+% 从其他picture引用node
+%   1)需要在被引用node和引用处使用remember picture参数
+%   2)需要在引用处使用overlay
+
+% 引用当前页面node
+%   current page
+
+
 % update by 2025--4-21
-
-
-
-
-
-\begin{tikzpicture}
-    %   28)label - 在node处额外添加其他node. 格式: [<options>]<angle>:<text>. angle可选列表:
-    %     [1]above/below/right/left/above left/above right/below left/below right
-    %     [2]center - label node与主node的中心重合
-    %     [3]角度值 - label的angle会偏向于45度的整数倍,无法精确定位角度
-    %   29)pin - 类似于label，在主node与从node间添加连线
-    \path node foreach \x in {1,2,3} at (\x,0) {\x};
-    \path node (A) [color=green] at (1,1) {$A$};
-    \draw[line width=2pt] (0,0) node[fill=green!20,shape=circle]{$B$} -- (2,2) node[behind path,color=blue]{$C$};
-\end{tikzpicture}\\\vspace{1cm}
-
-\begin{tikzpicture}
-    % 其他node - label
-    \path node[circle,draw,label=text node] (A) at (0,0) {main node};
-    \path node[circle,draw,label=30:text node] (B) at (0,-3) {main node};
-    \path node[circle,draw,label={[centered]30:text node}] (C) at (0,-6) {main node};
-    \path node[circle,draw,label={[label distance=2cm]30:text node}] (D) at (0,-9) {main node};
-\end{tikzpicture}
 \end{document}

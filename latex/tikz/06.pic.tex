@@ -1,0 +1,60 @@
+\documentclass[UTF8,fontset=ubuntu]{ctexart}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\begin{document}
+% pic, short picture
+%   可以在picture内进行重复引用. 参考section 18
+
+% 语法
+%   \path pic <foreach_statements> [<options>] (<prefix>) at (<coordinate>) {<pic_type>}
+%     所有pic与{之间的选项都是可选的
+%     如果pic跟在坐标后，则at为非必选，否则at必须指定
+%     如果带foreach选项，必须紧跟node关键字，其他可选选项位置不固定
+
+
+
+% 定义pic type
+%   <name>/.pic={
+%     ...
+%   }
+\begin{tikzpicture}[line/.pic={\draw (-2,0) -- (2,0);}]
+    \path pic[draw]{line};
+\end{tikzpicture}
+
+
+% 相关参数:
+%   1.pic type
+%     指定pic，并不再读取{<pic_type>}
+
+%   2.pic text
+%     pic注解文本
+
+
+% angles库
+%   帮助画角度的pic类型库
+%   预定义pic type:
+%     1)angle=<A>--<B>--<C>
+%       作ABC角的标注
+%     2)right angle=<A>--<B>--<C>
+%       作ABC直角的标注
+%     ** A/B/C必须为coordinate坐标
+%   相关选项:
+%     1)angle radius=<dimension>
+%       该角度标注圆弧的半径
+%     2)angle eccentricity=<factor>
+%       注解文本的位置，从顶点到标注圆弧的比值系数. 初始为0.6
+%       固定于起始线段到结束线段中间，
+%     3)draw
+%       作标注圆弧边框. 可指定颜色
+%     4)fill
+%       填充标准圆弧与夹角形成的闭合区域. 可指定颜色
+%     5)line width
+%       指定圆弧边框线条宽度
+\begin{tikzpicture}
+    \coordinate (A) at (2,0);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (50:2);
+    \path pic[fill=blue!20,draw=red!40,line width=0.6pt,angle radius=3mm,angle eccentricity=1.6,pic text=1]{angle=A--B--C};
+    \draw (A) -- (B) -- (C);
+\end{tikzpicture}
+\end{document}

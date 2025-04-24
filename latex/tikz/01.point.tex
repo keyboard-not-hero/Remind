@@ -106,58 +106,6 @@ begin{tikzpicture}[line width=0.6pt]
 \end{tikzpicture}\vspace{1cm}
 
 
-\begin{tikzpicture}
-    % 复杂计算. section 94
-    \draw (0,0) circle [radius=2];
-    % \pgfmathparse{<complex_calculate>}
-    %   进行复杂计算(包含函数等)，将所有带单位的数字转化为pt，结果截去单位，为无单位数字
-    %   将结果保存到\pgfmathresult
-    %   其他简单计算会保留pt单位
-    % \pgfmathresult
-    %   将上一次\pgfmathparse计算结果进行引用
-    \pgfmathparse{sqrt(3)}
-    \coordinate (A) at (1,\pgfmathresult);
-    \filldraw (A) circle [radius=2pt];
-
-    % \pdfmathsetmacro{\<var_name>}{<complex_calculate>}
-    %   复杂计算，并将计算结果保存到指定变量，结果为无单位数字
-    \pgfmathsetmacro{\mdimen}{sqrt(3)}
-    \coordinate (B) at (-1,\mdimen);
-    \filldraw (B) circle [radius=2pt];
-
-    % {<complex_calculate>}也可适用于复杂计算
-    \coordinate (C) at (1,{-sqrt(3)});
-    \filldraw[fill=green] (C) circle [radius=2pt];
-
-    % 常用运算
-    % <num>!
-    %     指定数字的阶乘
-    % <num> r
-    %     将弧度转化为角度
-    % 常用函数
-    % sqrt(<num>)
-    %     求平方根
-    % sin(<degree>)
-    %     求正弦值
-    %     三角函数系列的参数必须为角度格式
-    % asin(<val>)
-    %     求反正弦值, 值域[-90,90]
-    %     返回值为角度值  
-    % atan(<val>)
-    %     求反正切值
-    % atan2(y,x)
-    %     求y/x的反正切值
-    % round(<val>)
-    %     四舍五入取整数
-    % floor(<val>)
-    %     向下取整数
-    % ceil(<val>)
-    %     向上取整数
-    % veclen(<len_x>,<len_y>)
-    %     向量长度
-\end{tikzpicture}\vspace{1cm}
-
-
 \begin{tikzpicture}[>=stealth,line width=0.6pt]
     % ($<factor>*<coordinate><modifiers>$)
     % 如果提供factor，则将factor传递给\pgfmathparse进行负责计算, 需要调用calc库(section 13.5). 优化版本: 
@@ -212,29 +160,18 @@ begin{tikzpicture}[line width=0.6pt]
     \draw (M) -- (P) -- (N);
 \end{tikzpicture}\vspace{1cm}
 
-% update 2025-04-17
-
-
-
 
 \begin{tikzpicture}
-    % 直接对坐标点进行移动_1
-    \coordinate (A) at (0,0);
+    % 直接对坐标点进行移动(transform)
+    \coordinate (A) at (1,0);
     \coordinate (B) at (3,0);
-    \coordinate (C) at ([shift=(B)]A);
-    \coordinate (D) at ([shift={(3,0)}]A);
-    \draw (A) -- (C);
-\end{tikzpicture}\\\vspace{1cm}
-
-\begin{tikzpicture}
-    % 直接对坐标点进行移动_2
-    \draw[-stealth] (-2,0) -- (2,0) node[pos=1,below]{$x$};
-    \draw[-stealth] (0,-2) -- (0,2) node[pos=1,right]{$y$};
-    \foreach \x in {-1.5,-1,-0.5,0.5,1,1.5}
-        \draw (\x,0) -- (\x,2pt);
-    \foreach \y in {-1.5,-1,-0.5,0.5,1,1.5}
-        \draw (0,\y) -- (2pt,\y);
-    \filldraw (0,0) circle [radius=1.2pt];
-    \filldraw ([rotate around={-90:(0.5,0)}]1,0) circle [radius=1.2pt];
+    \coordinate (O) at (0,1);
+    \coordinate (C) at ([shift=(O)]A);
+    \coordinate (D) at ([shift={(0,1)}]3,0);
+    \draw (A) -- (B);
+    \draw (C) -- (D);
 \end{tikzpicture}
+
+
+% update 2025-04-17
 \end{document}
