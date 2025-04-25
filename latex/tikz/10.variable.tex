@@ -101,6 +101,51 @@
     \node at (0,0){\myself};
 \end{tikzpicture}
 
+% 整数之间的转化
+%   11)\pgfmathbasetodec{<macro>}{<number>}{<base>}
+%     将进制为base的数字number转化为10进制，并赋予macro
+
+%   12)\pgfmathdectobase{<macro>}{<number>}{<base>}
+%     将10进制数字number转化为base进制，并赋予macro
+%     结果字母都为小写
+
+%   13)\pgfmathdectoBase{<macro>}{<number>}{<base>}
+%     将10进制数字number转化为base进制，并赋予macro
+%     结果字母都为大写
+
+%   14)\pgfmathbasetobase{<macro>}{<number>}{<base_1>}{<base_2>}
+%     将base_1进制数字number转化为base_2进制数字，并赋予macro
+%     结果字母都为小写
+
+%   15)\pgfmathbasetoBase{<macro>}{<number>}{<base_1>}{<base_2>}
+%     将base_1进制数字number转化为base_2进制数字，并赋予macro
+%     结果字母都为大写
+
+%   16)\pdfmathsetbasenumberlength{<length>}
+%     指定整数之间转化，结果的位数
+
+%   17)\pgfmathtodigitlist{<macro>}{<number>}
+%     将数字number添加到数组macro中
+\begin{tikzpicture}
+    \foreach \in in {1,2,...,8}
+      \pgfmathtodigitlist{\mylist}{\in}
+    \foreach \out in \mylist
+      \node at (\out,0){\out};
+\end{tikzpicture}
+
+
+% 角度计算
+%   18)\pgfmathanglebetweenpoints{<p>}{<q>}
+%     水平线到p--q线的偏转角度. 值域范围[0,360]
+%     坐标点使用\pgfpoint{<x_dimension>}{<y_dimension>}
+%     结果保存在\pgfmathresult
+
+
+%   19)\pgfmathanglebetweenlines{<p>}{<q>}{<m>}{<n>}
+%     线条p--q到m--n的偏转角度. 值域范围[0,360]
+%     坐标点使用\pgfpoint{<x_dimension>}{<y_dimension>}
+%     结果保存在\pgfmathresult
+
 
 % \pgfmathparse可识别运算:
 %    数学运算:
