@@ -1,3 +1,36 @@
+Demo_01 -- 增加行的深度/高度
+\documentclass{article}
+\usepackage{array}
+\usepackage{float}
+\usepackage{bigstrut}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{*{9}{|c}|}
+        \hline
+        1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3\bigstrut[t]\\
+        \hline
+        4 & 5 & 6 & 4 & 5 & 6 & 4 & 5 & 6\\
+        \hline
+        7 & 8 & 9 & 7 & 8 & 9 & 7 & 8 & 9\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.\bigstrut[<option>]表格行内添加高度或深度，需要导入bigstrut宏包或multirow宏包. option可选参数如下:
+    t - 增加当前表格单行的高度，即当前行与上边框的距离
+    b - 增加当前表格单行的深度，即当前行与下边框的距离
+    ** 不指定可选参数时，增加高度和深度
+
+2.\bigstrutjot可指定增加表格行高度或深度的距离，默认为2pt. 配置示例:
+    \setlength{\bigstrutjot}{2mm}
+
+
+
+Demo_02 -- 合并行
 \documentclass{article}
 \usepackage{ctex,multirow,bigstrut}
 \begin{document}
@@ -17,12 +50,16 @@
 
 内容讲解
 1.\multirow[<upos>]{<nrows>}[<bigstruts>]{<width>}[<vmove>]{<text>}用于合并多行. 包含在multirow宏包中. 参数列表如下:
-    upos - 内容在多行块中的垂直位置. 可选列表: t/c(默认)/b
+    upos - 内容在多行块中的垂直位置. 可选列表:
+        t - 在多行块的顶部
+	c - 在多行块的居中位置. 默认值
+	b - 在多行块的底部
     nrows - 需要合并的行数. 如果为正数, 合并当前行和之后的行; 如果为负数, 合并当前行和之前的行
+    bigstruts - 在使用\bigstrut的前提下指定. \bigstrut[t]和\bigstrut[b]代表1，\bigstrut代表2
     width - 指定合并行的宽度. 可选格式:
-        <N> - 直接使用数字和单位指定宽度, 此时正文处于段落模式(可换行)
-        * - 根据文字长度自动确定宽度, 此时正文处于左右模式(不可换行)
-        = - 使用合并前该列的宽度, 此时正文处于段落模式(可换行)
+        <dimension> - 直接指定宽度, 此时正文处于段落模式(可换行)
+        * - 根据文字自然长度确定宽度, 此时正文处于左右模式(不可换行)
+        = - 使用表格指定的宽度, 此时正文处于段落模式(可换行)
     vmove - 垂直移动合并文字. 正数代表向上移, 负数代表向下移
     text - 合并行的正文内容
     ** 合并行数原理: 保留一行数据, 该列的其他行内容留空
@@ -35,3 +72,7 @@
 
 3.\multicolumn{\multirow}
     当合并行与合并列进行嵌套时, 必须为\multirow放置在\multicolumn内
+
+
+
+最后编辑于: 2025-04-26

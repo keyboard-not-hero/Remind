@@ -45,10 +45,12 @@ i\documentclass{article}
 \end{document}
 
 内容讲解
-1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定角度逆时针旋转, 在args为默认值的情况下, angle为旋转角度. args列表如下:
-    origin - 设置旋转点, 参考\includegraphics的origin
-    x,y - 以基准点为原点, 以指定坐标为旋转点
-    units - angle的单位, 默认为逆时针旋转角度; 如果设置为-360, 则为顺时针旋转角度; 如果为6.283185, 则为逆时针旋转弧度
+1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定点逆时针旋转angle度. 参数列表如下:
+    args列表如下:
+        origin - 设置旋转点, 参考\includegraphics的origin
+        x,y - 以基准点为原点, 以指定坐标为旋转点
+        units - 指定将一圈划分为指定分数，默认为360. 如: 360代表将逆时针一圈分为360(angle对应角度值); -6.283代表将顺时针一圈分为6.283份(angle对应弧度值)
+    angle - 旋转的指定个单位度数
 
 2.\scalebox{horizontal_factor}[vertical_factor]{content}将内容按系数进行拉伸/缩小, horizontal_factor为水平拉伸系数; vertical_factor为垂直拉伸系数, 未提供时参考horizontal_factor值
 

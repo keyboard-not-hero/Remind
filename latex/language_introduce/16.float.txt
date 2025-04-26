@@ -1,26 +1,43 @@
-Demo_01 - 浮动体与上下文之间的垂直距离
-\documentclass{artical}
+Demo_01 -- 浮动环境
+\documentclass{ctexart}
 \usepackage{float}
-\usepackage{graphicx}
-\setleng{\intextsep}{2cm}
+\usepackage{caption}
+\setlength{\intextsep}{3pt}
+\setlength{\parindent}{0pt}
 \begin{document}
-This is begin line
-\begin{figure}[H]
-\includegraphics[scale=0.4]{picture/wolf.jpg}
-\end{figure}
-This is separate line
-\begin{figure}[H]
-\includegraphics[scale=0.4]{picture/snuggle}
-\end{figure}
-This is end line
+This is first line\\
+This is second line\\
+\begin{table}[h]
+    \begin{tabular}{*{3}{|c}|}
+        1 & 2 & 3\\
+        4 & 5 & 6\\
+    \end{tabular}
+\end{table}\\
+This is third line\\
+This is forth line\\
 \end{document}
 
-内容解释
-1.\intextsep表示处于非页面顶/底部的浮动体，与浮动体外部上下文之间的垂直距离
+
+
+内容讲解
+1.\begin{table}[<args>] ... \end{table}为表格类浮动体，内嵌表格环境(如: tabular), args列表如下:
+    h - 建议就地放置浮动体(here)，如果版面不足，则尝试该为t
+    t - 将浮动体放置在当前页或下一页的页面顶部
+    b - 将浮动体放置在当前页或下一页的页面底部
+    p - 将浮动体放置到之后的单独一页, 该页为浮动体页，全部为浮动体
+    ** 默认按t -> b -> p的顺序依次尝试
+    ! - 配合h/t/b/p, 强制(非必须)按指定方法安置浮动体
+    H - 相当于h!, 强制就地放置浮动体. 包含在float宏包中
+
+2.\begin{figure}[<args>] ... \end{figure}为图片类浮动体，内嵌图片(如: tikz作图、\includegraphics), args参考table环境
+
+3.\intextsep表示处于非页面顶/底部的浮动体，与浮动体外部上下文之间的垂直距离. 默认为12pt plus 2pt minus 2pt
+
+4.\textfloatsep表示处于页面顶部/底部的浮动体，与浮动体外部上下文之间的垂直距离. 默认为20pt plus 2pt minus 4pt
 
 
 
-Demo_02 - 浮动体标题设置
+Demo_02 -- 浮动体标题设置
 \documentclass{ctexart}
 \usepackage{caption}
 \usepackage{float}
@@ -45,33 +62,96 @@ This is end line
 \end{document}
 
 内容解释
-1.\captionsetup{<options>}对标题进行配置，包含在caption宏包中. 在preamble中配置，影响所有浮动体；在浮动体内部配置（在caption指令之前），则只影响当前浮动体. 配置参数列表:
-    labelformat - 指定标题序号格式. 可选内容如下:
-        original(default) - 默认格式，类似于simple值，name + number
-        empty - 留空，没有标题
-        brace - name + number)
-        simple - name + number
-        parens - name + (number)
-    labelsep - 指定标题序号与内容的分隔符. 可选内容如下:
-        none - 没有分隔
-        colon - 以冒号+空格(:<space>)分隔
-        period - 以句号(半角)+空格(.<space>)分隔
-        space - 以空格(<space>)分隔
-        quad - 以\quad分隔
-        newline - 以换行符分隔，并非适用于所有情景
-        endash - 以破折号(<space>--<space>)分隔
-    font/labelfont/textfont - 指定标题序号和内容/序号/内容的字体. 可选内容如下:
-        scriptsize/footnotesize/small/normalsize/large/Large - 字体大小
-        rm/sf/tt - 字族
-	bf - 加粗
-	it - 斜体
-	color - 字体颜色
-    parskip - 标题内容为多段落时，段落之间的额外垂直距离
-    skip - 标题与figure/table的垂直距离. 默认为10pt
+1.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格/图片指定标题, 标题默认居中. 参数列表如下:
+    toc_title - 在目录中显示的标题. 默认为title内容
+    title - 在当前表格处的标题
+
+    标题默认格式:
+    <name> <sequence><separator><title_content>
+    参数如下:
+      name - 标题类别. 
+        图片由\figurename指定, 默认为Figure
+        表格由\tablename指定, 默认为Table
+        重定义类别名称: \renewcommand{\figurename}{{\heiti 图}}
+      sequence - 标题序号. article文档全文排序，为一个数字<seq>; book/report文档以章节排序，为<chapter_num>.<seq>
+      separator - 分隔符，默认为:<space>
+
+    当标题内容不足一行时，居中格式；当标题内容超过一行时，按首行不缩进的段落格式
+
+2.\abovecaptionskip为标题与表格内容距离, 默认为10pt
+
+3.\belowcaptionskip为标题与浮动体之外内容的距离, 默认为0pt
+
+4.\captionsetup[<float_type>]{<options>}对标题进行配置. 在preamble中配置，影响所有浮动体；在浮动体内部配置（在caption指令之前），则只影响当前浮动体. 配置参数列表:
+    float_type
+    适用该参数的浮动体类型, 默认为figure和table都适用. 列表:
+        figure - 适用于figure环境
+	table - 适用于table环境
+    options
+    作用于浮动体的参数. 列表:
+        format - 在标题内容超过一行时，采用两种格式:
+	    plain - 将标题作为首行不缩进的普通段落. 默认值
+	    hang - 标题从第二行起开始缩进，缩进距离为<name> <sequence><separator>部分
+        indention - 在format参数适用的前提下，标题从第二行起额外缩进的宽度
+        labelformat - 指定标题序号格式. 可选内容如下:
+            original(default) - 默认格式，类似于simple值，<name> <sequence><separator><title_content>
+            empty - <title_content>
+            simple - <name> <sequence><separator><title_content>
+            brace - <name> <sequence>)<separator><title_content>
+            parens - <name> (<sequence>)<separator><title_content>
+        labelsep - 指定标题序号与内容的分隔符. 可选内容如下:
+            none - 没有分隔
+            colon - 以冒号+空格(:<space>)分隔. 默认值
+            period - 以句号(半角)+空格(.<space>)分隔
+            space - 以空格(<space>)分隔
+            quad - 以\quad分隔
+            newline - 以换行符分隔，只能与plain选项配合使用
+            endash - 以破折号(<space>--<space>)分隔
+        font - 设置标题所有内容的字体
+            scriptsize - 字体大小为\scriptsize
+	    footnotesize - 字体大小为\footnotesize
+	    small - 字体大小为\small
+	    normalsize - 字体大小为\normalsize
+	    large - 字体大小为\large
+	    Large - 字体大小为\Large
+	    normalfont - 常规字体
+	    up - 直立字体
+	    it - 斜体
+	    sl - 倾斜字体
+	    sc - 小型大写字体
+	    md - 中等字体
+	    bf - 加粗字体
+            rm - 罗马体
+	    sf - 等线体
+	    tt - 等宽体
+	    <color> - 字体颜色
+	    ** 颜色名称需要使用如下命令定义:
+	    ** \DeclareCaptionFont{blue}{\color{blue}}
+        labelfont - 指定<name> <sequence><separator>的字体. 参数值参考font
+        textfont - 指定<title_content>的字体. 参数值参考font
+	singlelinecheck - 标题只有一行时的对齐方式. 可选值如下:
+	    true - 标题居中. 默认值
+	    false - 标题应用justification的值
+	justification - 标题的对齐方式. 可选值如下:
+	    justified - 标题作为普通段落排版. 默认值
+	    centering - 每一行居中对齐
+	    centerfirst - 第一行居中对齐
+	    centerlast - 最后一行居中对齐
+	    raggedright - 每一行左对齐
+	    raggedleft - 每一行右对齐
+	margin - 指定标题跟版面左右两侧的距离. 指定一个值，代表与左右两侧距离为指定值；指定两个值{<l_margin>,<r_margin>}，代表分别指定与版面左侧距离、与版面右侧距离
+	width - 设置标题的宽度，无其他特别指定，则居中
+	aboveskip - 标题与浮动体的垂直距离. 默认为10pt
+	belowskip - 标题与浮动体外部上下文的垂直距离. 默认为0pt
+	figurewithin - 插图的排序依据. 可选值如下:
+	    chapter - 以章节排序. 默认值
+	    section - 以小节排序
+	    none - 以全文排序
+	tablewithin - 表格的排序依据. 可选值参考figurewithin
 
 
 
-Demo_03 - 多图并排
+Demo_03 -- 多图并排
 \documentclass{ctexart}
 \usepackage{float}
 \usepackage{tikz}
@@ -80,76 +160,49 @@ Demo_03 - 多图并排
 \captionsetup{labelformat=empty}
 \begin{document}
 \begin{figure}[H]
-\begin{minipage}[b]{0.3\linewidth}
-\begin{tikzpicture}[scale=0.8,font=\small]
-    \coordinate (A) at (60:2);
-    \coordinate (B) at (0,0);
-    \coordinate (C) at (3,0);
-    \coordinate (D) at ([shift={(3,0)}]A);
-    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
-    \path[draw,name path=AC] (A) -- (C);
-    \path[draw,name path=BD] (B) -- (D);
-    \path[name intersections={of=AC and BD,by=O}];
-    \node[below] at (O){$O$};
-\end{tikzpicture}
-\caption{第1题}
-\end{minipage}
-    \begin{minipage}[b]{0.3\linewidth}
-\begin{tikzpicture}[font=\small]
-    \coordinate (A) at (2,0);
-    \coordinate (B) at (0,0);
-    \coordinate (C) at (70:1.36);
-    \coordinate (D) at ($(A)!1.36/2!-110:(B)$);
-    \coordinate (O) at ($(B)!(A)!(D)$);
-    \coordinate (E) at ($(A)!2!(O)$);
-    \path[name path=CD] (C) -- (D);
-    \path[name path=BE] (B) -- (E);
-    \path[name intersections={of=CD and BE,by=F}];
-    \draw (B) node[below left=-2pt]{$B$} -- (E) node[above=-2pt]{$E$} -- (D) node[right=-2pt]{$D$} -- (B) -- (C) node[above left=-2pt]{$C$} -- (F);
-    \draw[dashed] (F) -- (D) -- (A) node[below right=-2pt]{$A$} -- (B);
-    \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=1]{angle=C--F--B};
-    \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=2]{angle=B--D--A};
-\end{tikzpicture}
-\caption{第2题}
-\end{minipage}
-    \begin{minipage}[b]{0.3\linewidth}
-\begin{tikzpicture}[scale=0.8,font=\small]
-    \coordinate (B) at (0,0);
-    \coordinate (C) at (4.272,0);
-    \path[name path=BA] (1.5,0) arc [start angle=0,end angle=70,radius=1.5];
-    \path[name path=CA] (0.272,0) arc [start angle=180,end angle=159,radius=4];
-    \path[name intersections={of=BA and CA,by=A}];
-    \coordinate (D) at ([shift={(4.272,0)}]A);
-    \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
-    \path[draw,name path=BD] (B) -- (D);
-    \path[draw,name path=AC] (A) -- (C);
-    \path[name intersections={of=BD and AC,by=O}];
-    \node[below] at (O){$O$};
-    \draw pic[draw,angle radius=6pt]{right angle=B--A--C};
-\end{tikzpicture}
-\caption{第3题}
-\end{minipage}
+    \begin{minipage}[b]{0.5\linewidth}
+        \centering
+        \begin{tikzpicture}[scale=0.8,font=\small]
+            \coordinate (A) at (60:2);
+            \coordinate (B) at (0,0);
+            \coordinate (C) at (3,0);
+            \coordinate (D) at ([shift={(3,0)}]A);
+            \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
+            \path[draw,name path=AC] (A) -- (C);
+            \path[draw,name path=BD] (B) -- (D);
+            \path[name intersections={of=AC and BD,by=O}];
+            \node[below] at (O){$O$};
+        \end{tikzpicture}
+        \caption{第1题}
+    \end{minipage}
+    \begin{minipage}[b]{0.5\linewidth}
+        \centering
+        \begin{tikzpicture}[font=\small]
+            \coordinate (A) at (2,0);
+            \coordinate (B) at (0,0);
+            \coordinate (C) at (70:1.36);
+            \coordinate (D) at ($(A)!1.36/2!-110:(B)$);
+            \coordinate (O) at ($(B)!(A)!(D)$);
+            \coordinate (E) at ($(A)!2!(O)$);
+            \path[name path=CD] (C) -- (D);
+            \path[name path=BE] (B) -- (E);
+            \path[name intersections={of=CD and BE,by=F}];
+            \draw (B) node[below left=-2pt]{$B$} -- (E) node[above=-2pt]{$E$} -- (D) node[right=-2pt]{$D$} -- (B) -- (C) node[above left=-2pt]{$C$} -- (F);
+            \draw[dashed] (F) -- (D) -- (A) node[below right=-2pt]{$A$} -- (B);
+            \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=1]{angle=C--F--B};
+            \draw pic[draw,angle radius=6pt,angle eccentricity=2,pic text=2]{angle=B--D--A};
+        \end{tikzpicture}
+        \caption{第2题}
+    \end{minipage}
 \end{figure}
 \end{document}
 
 内容解释
-1.在多图并排情况下，需要借助minipage环境，对当前图片所占宽度、垂直对齐方式和图标题进度配置
+1.在多图并排情况下，需要借助minipage环境，对当前图片所占宽度、垂直对齐方式和图标题进行配置
 
 
 
-Demo_04 - 图文绕排
-\documentclass{ctexart}
-\usepackage{siunitx}
-\usepackage{tikz}
-\usepackage{wrapfig}
-\usepackage{caption}
-\usetikzlibrary{calc,intersections,angles}
-\newcommand*\param{\mathord{\text{\tikz[baseline,line join=round]\draw (0,.1ex) -- (.8em,.1ex) -- (1em,1.4ex) -- (.2em,1.4ex) -- cycle;}}}
-\newcommand*\zhparallel{\mathrel{\text{\tikz[baseline,line cap=round] \draw (0em,-0.3ex) -- (.4em,1.7ex) (.2em,-0.3ex) -- (.6em,1.7ex);}}}
-\setlength{\parindent}{0mm}
-\captionsetup{labelformat=empty}
-\setlength{\intextsep}{0mm}
-\begin{document}
+Demo_04 -- 图文绕排
 \begin{wrapfigure}[3]{r}{0pt}
     \centering
     \begin{tikzpicture}[scale=0.68,font=\small]
@@ -164,55 +217,9 @@ Demo_04 - 图文绕排
         \draw (B) -- (E) node[left=-1pt]{$E$};
     \end{tikzpicture}
 \end{wrapfigure}
-11.如图，在$\param ABCD$中，$E$为$AD$的中点，$CE$的延长线交$BA$的延长线于点$F$，若$BC=2AB$，$\angle FBC=\ang{70}$，求$\angle EBC$的度数.\\[2cm]
+如图，在$\param ABCD$中，$E$为$AD$的中点，$CE$的延长线交$BA$的延长线于点$F$，若$BC=2AB$，$\angle FBC=\ang{70}$，求$\angle EBC$的度数.\\
 
-\begin{wrapfigure}{r}{0pt}
-    \centering
-    \begin{tikzpicture}[scale=0.56,font=\small]
-        \def\gou{3}
-        \def\gu{4}
-        \def\xian{5}
-        \coordinate (B) at (0,0);
-        \coordinate (C) at (0.5*\xian,0);
-        \coordinate (F) at (\xian,0);
-        \path[name path=gu] (\gu,0) arc [start angle=0,end angle=37,radius=4];
-        \path[name path=gou] (\xian-\gou,0) arc [start angle=180,end angle=126,radius=3];
-        \path[name intersections={of=gou and gu,by=A}];
-
-        \coordinate (D) at ([shift={(0.5*\xian,0)}]A);
-        \draw (A) node[above left=-2pt]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above right=-2pt]{$D$} -- cycle;
-        \draw (A) -- (F) node[below]{$F$} -- (C);
-        \coordinate (E) at ($(A)!0.5!(F)$);
-        \path node[left=2pt] at (E){$E$};
-    \end{tikzpicture}
-\end{wrapfigure}
-12.如图，$E$是$\param ABCD$的边$CD$的中点，延长$AE$交$BC$的延长线于点$F$，若$\angle BAF=\ang{90}$，$BC=5$，$\text{EF}=3$，求CD的长.\\[2cm]
-
-\begin{wrapfigure}{r}{0pt}
-    \begin{tikzpicture}[scale=0.8,font=\small]
-        \coordinate (A) at (120:2);
-        \coordinate (B) at (0,0);
-        \coordinate (C) at (3,0);
-        \coordinate (D) at ([shift={(3,0)}]A);
-
-        \draw (A) node[above]{$A$} -- (B) node[below]{$B$} -- (C) node[below]{$C$} -- (D) node[above]{$D$} -- cycle;
-        \path[draw,name path=BD] (B) -- (D);
-
-        \coordinate (G) at ($ (A)!1!-30:(D) $);
-        \path[name path=AG] (A) -- (G);
-        \path[name intersections={of=AG and BD,by=E}];
-        \draw (A) -- (E) node[below]{$E$};
-
-        \coordinate (H) at ($ (C)!1!-30:(B) $);
-        \path[name path=CH] (C) -- (H);
-        \path[name intersections={of=CH and BD,by=F}];
-        \draw (C) -- (F) node[above]{$F$};
-    \end{tikzpicture}
-\end{wrapfigure}
-13.如图，BD是$\param\text{ABCD}$的对角线，$\angle\text{BAD}$的平分线交BD于点E，$\angle\text{BCD}$的平分线交BD于点F. 求证:\:$\text{AE}\zhparallel\text{CF}$\\[2cm]
-\end{document}
-
-内容解释
+内容讲解
 1.\begin{wrapfigure}[<row_of_pic>]{<horizontal_pos>}[<overhang>]{<figure_width>} ... \end{wrapfigure}用于指定绕排环境，图放置在环境中，上下文紧跟在环境后. 该环境指令包含在wrapfig宏包中. 参数列表如下:
     row_of_pic - 图片绕排行数. 当文本内容过少时，该参数需正确指定，否则下个绕排内容会被影响
     horizontal_pos - 图片位于文本内容的水平位置，列表如下:
@@ -222,3 +229,38 @@ Demo_04 - 图文绕排
         o - 图片位于双页模式外侧
     overhang - 图片悬挂在外侧的长度，该参数可以使用\width指定图片的宽度，乘以一个系数代表图片宽度的百分比
     figure_width - 图片的宽度，指定为0可自动根据图片宽度适配
+
+
+
+Demo_05 -- 旋转浮动体
+\documentclass{ctexart}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage[figuresright]{rotating}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{sidewaystable}
+    \begin{tabular}[b]{|l@{\extracolsep{6cm}}l|l|l|l|}
+        \hline
+        1 & 2 & 3 & 4 & 5\\
+        \hline
+        6 & 7 & 8 & 9 & 10\\
+        \hline
+    \end{tabular}
+    \caption{Like}
+\end{sidewaystable}
+\end{document}
+
+内容讲解
+1.\begin{sidewaystable} ... \end{sidewaystable}用于将tabular进行旋转90或-90度，独占新的一页，并且可直接内嵌\caption
+
+2.\begin{sidewaysfigure} ... \end{sidewaysfigure}用于将picture内容进行旋转90或-90度，独占新的一页，并且可直接内嵌\caption
+
+3.旋转需使用rotating宏包，默认逆时针旋转90度，可使用如下package参数指定旋转方向:
+    figuresleft - 顺时针旋转90度(-90)
+    figuresright - 逆时针旋转90度(+90). 默认选项
+
+
+
+最后编辑于: 2025-04-26

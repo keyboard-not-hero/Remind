@@ -174,9 +174,9 @@ x	        y=1.2x		z=1.3y=1.56x
 
 1.\linespread{factor}表示对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
     在导言部分使用格式:
-    \linespread{}
+    \linespread{<factor>}
     在正文使用格式:
-    \linespread{}\selectfont
+    \linespread{<factor>}\selectfont
     
 2.\renewcommand{\baselinestretch}{factor}用于对全文行距进行行距伸缩(基于英文行距y), 结果为y*factor
     在导言部分使用格式:
@@ -185,7 +185,7 @@ x	        y=1.2x		z=1.3y=1.56x
     \renewcommand{\baselinestretch}{factor}\normalsize，\normalsize可换成其它指定字体尺寸的指令
 ** 中文已经默认使用\renewcommand{\baselinestretch}{1.3}，所以需要在ctex宏包之后使用
 
-3.\baselineskip=<value>直接将之后段落内容的行距指定具体值. 只能在正文使用(无法在导言使用)
+3.\baselineskip=<value>直接将之后段落内容的行距指定为具体值. 只能在正文使用(无法在导言使用)
 
 4.使用\baselinkskip时, 如果后续遇到字体设置指令, 字距会恢复默认值. 可使用\fontsize{<size>}{<space_between_line>}\selectfont, 设置字体大小的同时, 同时指定字距。size和line_distance默认单位为pt
 
@@ -225,7 +225,7 @@ this is number four
 \end{document}
 
 内容讲解
-1.\parskip用于在段落垂直间距上, 额外增加/减少垂直距离, 默认段落之间的垂直距离与行距相等, 当配置parskip时为n时, result = 行距 + n
+1.\parskip用于在默认段落垂直间距上, 额外增加/减少垂直距离, 默认段落之间的垂直距离相当于中间插入一个隐形行, 当配置parskip时为n时, result = 行距 + n
 
 2.\parskip可在导言或正文配置
 导言格式:
@@ -276,7 +276,32 @@ In another moment down went Alice after it, never once considering how in the wo
 
 
 
-Demo_11 -- new page
+Demo_11 -- 向下扩大当前页高度
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{caption}
+\setlength{\intextsep}{3pt}
+\setlength{\parindent}{0pt}
+\linespread{1}
+\begin{document}
+This is detect text\\
+\vspace{18cm}\\
+This is detect text\\
+\enlargethispage{2cm}
+This is normal text\\
+This is normal text\\
+This is normal text\\
+This is normal text\\
+This is normal text\\
+This is normal text\\
+\end{document}
+
+内容讲解
+1.\enlargethispage{<height>}用于在预计换页处，将该页继续延伸指定高度
+
+
+
+Demo_12 -- 换页
 \documentclass{article}
 \begin{document}
 This is page one\newpage
@@ -300,7 +325,7 @@ This is page three
 
 
 
-Demo_12 -- 水平空间
+Demo_13 -- 水平空间
 \documentclass{article}
 \usepackage[showframe=true]{geometry}
 \setlength{\parindent}{0mm}
@@ -325,7 +350,7 @@ Hello World\\
 
 
 
-Demo_13 -- 垂直空间
+Demo_14 -- 垂直空间
 \documentclass{article}
 \begin{document}
     this is first line\\
@@ -335,9 +360,14 @@ Demo_13 -- 垂直空间
 \end{document}
 
 内容讲解
-1.\vspace{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白。位于段落起始时，表示当前段落与上一个段落的额外垂直空白；位于段落中部时，表示与下一行的额外垂直空白；位于段落尾部时，表示与下一段落的额外垂直空白。 不适用于page起始和结束位置
+1.\vspace{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白. 不同位置作用:
+    1)位于段落起始时，表示当前段落与上一个段落的额外垂直空白；
+    2)位于段落中部时，表示与下一行的额外垂直空白；
+    3)位于段落尾部时，表示与下一段落的额外垂直空白. 
+    不适用于page起始和结束位置
 
-2.\vspace*{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白. 适用于page起始和结束位置
+2.\vspace*{<length>}生成一段高度为指定长度，宽度为文本行宽度的垂直空白. 
+    适用于page起始和结束位置
 
 3.\vfil为当页面尾部包含空白时，使用空白填充当前行与下一行位置，尽量使填满页面尾部空间(还是会包含部分尾部空白)
 
@@ -349,7 +379,7 @@ Demo_13 -- 垂直空间
 
 
 
-Demo_14 -- 保留与指定字符串等宽的空白
+Demo_15 -- 保留与指定字符串等宽的空白
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -375,7 +405,7 @@ Y
 
 
 
-Demo_15 -- 引用
+Demo_16 -- 引用
 \documentclass{article}
 \begin{document}
 Down, down, down. Would the fall NEVER come to an end! `I wonder how many miles I've fallen by this time?' she said aloud.

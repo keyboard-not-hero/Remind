@@ -89,7 +89,6 @@ Hello \begin{tabular}{|l@{\extracolsep{1cm}}l|l|}
 4)\extrarowheight
     表格行的额外附加高度(内容距离表格单元上边框). 格式: \setlength{\extrarowheight}{2pt}. 默认为0pt
     在preamble设置时，作用于所有表格；在正文设置，作用于当前环境内的后续所有表格
-    如何只增加一行的高度 - 在上面新增一行，尾部减少行距离. 如: & \\[-4mm]
 
 5)\tabcolsep
     列与列空白宽度的一半. 格式: \setlength{\tabcolsep}{1cm}. 默认为6pt
@@ -170,44 +169,33 @@ Demo_02 -- 合并列
 
 
 
-Demo_03 -- 浮动环境
+Demo_03 -- 定义新的列格式
 \documentclass{article}
-\usepackage{array,float}
+\usepackage{array}
+\usepackage{float}
+\setlength{\parindent}{0pt}
+\newcolumntype{M}{>{\centering\arraybackslash}m{2cm}}
 \begin{document}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
-\begin{table}[h]
-    \caption{example}
-    \centering
-    \begin{tabular}{|l|l|}
+\begin{table}[H]
+    \begin{tabular}{*{4}{|c}|M*{4}{|c}|}
         \hline
-        1 & 2\\
+        1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3\\
         \hline
-        3 & 4\\
+        4 & 5 & 6 & 4 & 5 & 6 & 4 & 5 & 6\\
+        \hline
+        7 & 8 & 9 & 7 & 8 & 9 & 7 & 8 & 9\\
         \hline
     \end{tabular}
 \end{table}
-So she set to work, and very soon finished off the cake.
 \end{document}
 
-
 内容讲解
-1.\begin{table}[<args>] <tabular_env> \end{table}环境中, table的参数列表如下:
-    h - 就地放置浮动体
-    t - 将浮动体放置在当前页或下一页的页面顶部
-    b - 将浮动体放置在当前页或下一页的页面底部
-    p - 将浮动体放置到之后的单独一页, 该也全部为浮动体, 成为浮动体页
-    ** 默认按t -> b -> p的顺序依次尝试; 如果指定h, 则按h -> t -> b -> p的顺序尝试
-    ! - 配合h/t/b/p, 强制按指定方法安置浮动体
-    H - 相当于h!, 强制就地放置浮动体. 包含在float宏包中
+1.\newcolumntype{<type_name>}[<arg_num>]{<format>}
+    配置新的列名称. 参数列表如下:
+        type_name - 新的列名称，只能使用一个字母表示
+	arg_num - 新名称的参数个数. 默认为0
+	format - 新列名称的列格式. 参考tabular的column_format
 
-2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参数列表如下:
-    toc_title - 在目录中显示的标题. 默认为title内容
-    title - 在当前表格处的标题
 
-3.\abovecaptionskip为标题与上方内容的距离, 默认为10pt. 上方内容定义如下:
-    1)当标题位于表格上方, 上方为浮动体外内容
-    2)当标题位于表格下方, 上方为浮动体内表格
 
-4.\belowcaptionskip为标题与下方内容的距离, 默认为0pt. 下方内容定义如下:
-    1)当标题位于表格上方, 下方为浮动体内表格
-    2)当标题位于表格下方, 下方为浮动体外内容
+最后编辑于: 2025-04-26
