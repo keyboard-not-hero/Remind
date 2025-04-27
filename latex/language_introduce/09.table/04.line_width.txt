@@ -1,0 +1,113 @@
+Demo_01 -- 垂直线条宽度
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{|c!{\vrule width 2pt}c|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.!{\vrule width 2pt}指定一条宽度为2pt的垂直线为列分隔线
+
+
+
+Demo_02 -- 水平线条宽度
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\cmidrulesep}{20pt}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{c c}
+        \toprule
+        1 & 2\\
+        \addlinespace[1cm]
+        \midrule
+        3 & 4\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\end{document}
+
+
+内容讲解
+1.\toprule[<line_width>]
+    配置顶部水平线，并指定宽度. 默认为0.8pt
+    后续相关指令全部需要导入booktabs宏包
+    该部分内容，不适用于表格含垂直线的情况
+
+2.\midrule[<line_width>]
+    配置非顶部/底部水平线，并指定宽度. 默认为0.5pt
+    双层水平线: \midrule\midrule
+
+3.\cmidrule[<line_width>]{i-j}
+    配置非顶部/底部水平线，该线可指定应用的列，并指定宽度. 默认为0.3pt
+    该命令类似于\cline
+
+4.\bottomrule[<line_width>]
+    配置底部水平线，并指定宽度. 默认为0.8pt
+
+5.\heavyrulewidth
+    \toprule和\bottomrule的默认宽度值. 可指定: \setlength{\heavyrulewidth}{2pt}
+
+6.\lightrulewidth
+    \midrule的默认宽度值. 可指定: \setlength{\lightrulewidth}{2pt}
+
+7.\cmidrulewidth
+    \cmidrule的默认宽度值. 可指定: \setlength{\cmidrulewidth}{2pt}
+
+8.\morecmidrules
+    当需要使用两层\cmidrule时，需要在中间添加该命令. 如:
+    \cmidrule{1-2}\morecmidrules\cmidrule{1-2}
+    使用\cmidrulesep设定宽度. 默认为2pt
+
+9.\specialrule{<line_width>}{<upper_space>}{<lower_space>}
+    画一条与表格等宽的线条. 参数如下:
+        line_width - 线条的宽度
+	upper_space - 线条上方留白的垂直高度
+	lower_space - 线条下方留白的垂直高度
+
+10.\addlinespace[<height>]
+    添加一段垂直高度
+    相交于\\[<height>]，该命令能使用的地方更多
+
+
+
+Demo_03 -- 所有线条宽度
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\setlength{\parindent}{0pt}
+\setlength{\arrayrulewidth}{2pt}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{|c|c|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.\setlength{\arrayrulewidth}{2pt}配置表格所有线条宽度
+
+
+
+最后编辑于: 2025-04-27

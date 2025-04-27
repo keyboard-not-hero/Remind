@@ -1,98 +1,68 @@
 Demo_01 -- 可跨页表格
-\documentclass{article}
-\usepackage{ctex,longtable,bbding}
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{bigstrut}
+\setlength{\parindent}{0pt}
+\setlength{\bigstrutjot}{2cm}
+\newcolumntype{M}{>{\centering\arraybackslash}b{3cm}}
 \begin{document}
-\begin{longtable}{c@{\hspace{1ex}}l|c@{\hspace{1ex}}l}
-\caption{bbding宏包}\\
-\hline
-	\ScissorRight & \textbackslash ScissorRight & \ScissorLeft & \textbackslash ScissorLeft\\
-	\ScissorRightBrokenTop & \textbackslash ScissorRightBrokenTop & \ScissorLeftBrokenTop & \textbackslash ScissorLeftBrokenTop\\
-	\ScissorRightBrokenBottom & \textbackslash ScissorRightBrokenBottom & \ScissorLeftBrokenBottom & \textbackslash ScissorLefttBrokenBottom\\
-	\ScissorHollowRight & \textbackslash ScissorHollowRight & \ScissorHollowLeft & \textbackslash ScissorHollowLeft\\
-	\hline
-	\HandRight & \textbackslash HandRight & \HandLeft & \textbackslash HandLeft\\
-	\HandRightUp & \textbackslash HandRightUp & \HandLeftUp & \textbackslash HandLeftUp\\
-	\HandCuffRight & \textbackslash HandCuffRight & \HandCuffLeft & \textbackslash HandCuffLeft\\
-	\HandCuffRightUp & \textbackslash HandCuffRightUp & \HandCuffLeftUp & \textbackslash HandCuffLeftUp\\
-	\HandPencilLeft & \textbackslash HandPencilLeft\\
-	\hline
-	\PencilRight & \textbackslash PencilRight & \PencilLeft & \textbackslash PencilLeft\\ 
-	\PencilRightUp & \textbackslash PencilRightUp & \PencilLeftUp & \textbackslash PencilLeftUp\\
-	\PencilRightDown & \textbackslash PencilRightDown & \PencilLeftDown & \textbackslash PencilLeftDown\\
-	\NibRight & \textbackslash NibRight & \NibLeft & \textbackslash NibLeft\\
-	\NibSolidRight & \textbackslash NibSolidRight & \NibSolidLeft & \textbackslash NibSolidLeft\\
-	\hline
-	\XSolid & \textbackslash XSolid & \XSolidBold & \textbackslash XSolidBold\\
-	\XSolidBrush & \textbackslash XSolidBrush & \Plus & \textbackslash Plus\\
-	\PlusOutline & \textbackslash PlusOutline & \PlusCenterOpen & \textbackslash PlusCenterOpen\\
-	\PlusThinCenterOpen & \textbackslash PlusThinCenterOpen & \Cross & \textbackslash Cross\\
-	\CrossOpenShadow & \textbackslash CrossOpenShadow & \CrossOutline & \textbackslash CrossOutline\\
-	\CrossBoldOutline & \textbackslash CrossBoldOutline & \CrossClowerTips & \textbackslash CrossClowerTips\\
-	\CrossMaltese & \textbackslash CrossMaltese\\
-	\hline
-	\DavidStar & \textbackslash DavidStar & \DavidStarSolid & \textbackslash DavidStarSolid\\
-	\JackStar & \textbackslash JackStar & \JackStarBold & \textbackslash JackStarBold\\
-	\FourStar & \textbackslash FourStar & \FourStarOpen & \textbackslash FourStarOpen\\
-	\FiveStar & \textbackslash FiveStar & \FiveStarLines & \textbackslash FiveStarLines\\
-	\FiveStarOpen & \textbackslash FiveStarOpen & \FiveStarOpenCircled & \textbackslash FiveStarOpenCircled\\
-	\FiveStarCenterOpen & \textbackslash FiveStarCenterOpen & \FiveStarOpenDotted & \textbackslash FiveStarOpenDotted\\
-	\FiveStarOutline & \textbackslash FiveStarOutline & \FiveStarOutlineHeavy & \textbackslash FiveStarOutlineHeavy\\
-	\FiveStarConvex & \textbackslash FiveStarConvex & \FiveStarShadow & \textbackslash FiveStarShadow\\
-	\SixStar & \textbackslash SixStar & \EightStar & \textbackslash EightStar\\
-	\EightStarBold & \textbackslash EightStarBold & \EightStarTaper & \textbackslash EightStarTaper\\
-	\EightStarConvex & \textbackslash EightStarConvex & \TwelweStar & \textbackslash TwelweStar\\
-	\SixteenStarLight & \textbackslash SixteenStarLight & \Asterisk & \textbackslash Asterisk\\
-	\AsteriskBold & \textbackslash AsteriskBold & \AsteriskCenterOpen & \textbackslash AsteriskCenterOpen\\
-	\AsteriskThin & \textbackslash AsteriskThin & \AsteriskThinCenterOpen & \textbackslash AsteriskThinCenterOpen\\
-	\AsteriskRoundedEnds & \textbackslash AsteriskRoundedEnds & \FourAsterisk & \textbackslash FourAsterisk\\
-	\EightAsterisk & \textbackslash EightAsterisk\\
-	\hline
-	\FiveFlowerOpen & \textbackslash FiveFlowerOpen & \FiveFlowerPetal & \textbackslash FiveFlowerPetal\\
-	\SixFlowerOpenCenter & \textbackslash SixFlowerOpenCenter & \SixFlowerRemovedOpenPetal & \textbackslash SixFlowerRemovedOpenPetal\\
-	\SixFlowerAlternate & \textbackslash SixFlowerAlternate & \SixFlowerAltPetal & \textbackslash SixFlowerAltPetal\\
-	\SixFlowerPetalDotted & \textbackslash SixFlowerPetalDotted & \SixFlowerPetalRemoved & \textbackslash SixFlowerPetalRemoved\\
-	\EightFlowerPetalRemoved & \textbackslash EightFlowerPetalRemoved & \EightFlowerPetal & \textbackslash EightFlowerPetal\\
-	\FourClowerOpen & \textbackslash FourClowerOpen & \FourClowerSolid & \textbackslash FourClowerSolid\\
-	\Sparkle & \textbackslash Sparkle & \SparkleBold & \textbackslash SparkleBold\\
-	\SnowflakeChevron & \textbackslash SnowflakeChevron & \SnowflakeChevronBold & \textbackslash SnowflakeChevronBold\\
-	\Snowflake & \textbackslash Snowflake\\
-	\hline
-	\CircleSolid & \textbackslash CircleSolid & \CircleShadow & \textbackslash CircleShadow\\
-	\HalfCircleRight & \textbackslash HalfCircleRight & \HalfCircleLeft & \textbackslash HalfCircleLeft\\
-	\Ellipse & \textbackslash Ellipse & \EllipseSolid & \textbackslash EllipseSolid\\
-	\EllipseShadow & \textbackslash EllipseShadow & \Square & \textbackslash Square\\
-	\SquareSolid & \textbackslash SquareSolid & \SquareShadowBottomRight & \textbackslash SquareShadowBottomRight\\
-	\SquareShadowTopRight & \textbackslash SquareShadowTopRight & \SquareShadowTopLeft & \textbackslash SquareShadowTopLeft\\
-	\SquareCastShadowBottomRight & \textbackslash SquareCastShadowBottomRight & \SquareCastShadowTopRight & \textbackslash SquareCastShadowTopRight\\
-	\SquareCastShadowTopLeft & \textbackslash SquareCastShadowTopLeft & \TriangleUp & \textbackslash TriangleUp\\
-	\TriangleDown & \textbackslash TriangleDown & \DiamondSolid & \textbackslash DiamondSolid\\
-	\OrnamentDiamondSolid & \textbackslash OrnamentDiamondSolid & \RectangleThin & \textbackslash RectangleThin\\
-	\Rectangle & \textbackslash Rectangle & \RectangleBold & \textbackslash RectangleBold\\
-	\hline
-	\Phone & \textbackslash Phone & \PhoneHandset & \textbackslash PhoneHandset\\
-	\Tape & \textbackslash Tape & \Plane & \textbackslash Plane\\
-	\Envelope & \textbackslash Envelope & \Peace & \textbackslash Peace\\
-	\Checkmark & \textbackslash Checkmark & \CheckmarkBold & \textbackslash CheckmarkBold\\
-	\SunshineOpenCircled & \textbackslash SunshineOpenCircled & \ArrowBoldRightStrobe & \textbackslash ArrowBoldRightStrobe\\
-	\ArrowBoldUpRight & \textbackslash ArrowBoldUpRight & \ArrowBoldDownRight & \textbackslash ArrowBoldDownRight\\
-	\ArrowBoldRightShort & \textbackslash ArrowBoldRightShort & \ArrowBoldRightCircled & \textbackslash ArrowBoldRightCircled\\
-\hline
+\begin{longtable}[l]{|M|M|}
+    \hline
+    first column & second column\endfirsthead
+    \multicolumn{2}{r}{(续)}\\
+    \hline
+    first column & second column\endhead
+    \hline
+    1 & 2\bigstrut\\
+    \hline
+    3 & 4\bigstrut\\
+    \hline
+    5 & 6\bigstrut\\
+    \hline
+    7 & 8\bigstrut\\
+    \hline
+    9 & 10\bigstrut\\
+    \hline
+    11 & 12\bigstrut\\
+    \hline
 \end{longtable}
 \end{document}
 
 
 内容讲解
-1.begin{longtable}[<horizon_align>]{<column_format>} ... \end{longtable}与tabular只有horizon_align参数有差异, 其他参数与tabular无异(参考01.basic_table.txt)
-    hosrizon_align - 表格与版心内容的水平对齐方式. 列表如下:
-        l - 左对齐
-	c - 水平居中对齐
-	r - 右对齐
-	默认为\LTleft(表格左边的宽度, 默认\fill)和\LTright(表格右边的宽度, 默认\fill)的值决定, 所以为居中
+1.begin{longtable}[<horizon_align>]{<column_format>} ... \end{longtable}
+    可跨页的表格. 参数如下:
+        horizon_align - 表格在版面的位置. 列表如下:
+            l - 左侧
+	    c - 中间. 默认
+	    r - 右侧
+	column_format - 与tabular环境的该参数完全一致，参考01.basic_table
 
-2.longtable可使用\multicolumn合并列指令
+2.\endhead
+    在每一页(包括第一页)的表格头部嵌入相同内容时，使用\endhead代替\\作为头部内容结束
 
-3.longtable内可以使用\caption指令指定表格标题
+3.\endfirsthead
+    如果第一页的表格头部与其他页头部内容不同，需要额外添加第一页头部内容，使用\endfirsthead代替\\作为第一页头部内容结束
 
-4.\LTpre代表表格与上文的距离, 默认为\bigskipamount; \LTpost代表表格与下文的距离, 默认为\bigskipamount
+4.\endfoot
+    在每一页(包括最后一页)的表格尾部嵌入相同内容时，使用\endfoot代替\\作为尾部内容结束
 
-5.\LTcapwidth为caption标题所占宽度, 达到宽度后自动换行. 默认为4 in
+5.\endlastfoot
+    如果最后一页的尾部与其他页尾部内容不同，需要额外添加尾页尾部内容，使用\endlastfoot代替\\作为最后一页尾部内容结束
+
+6.\LTleft/\LTright
+    分别代表表格距离版面左侧、右侧的距离. 默认都为\fill
+    其中一个必须要为弹性距离，以填充页面宽度. 如: \fill
+    horizon_align不配置时才生效
+
+7.\LTpre/\LTpost
+    分别代表表格与外部上文、下文的距离. 默认都为\bigskipamount
+
+8.longtable可使用\multicolumn/\multirow等合并指令
+
+9.longtable内可以使用\caption指令指定表格标题. 与tabular内不同，caption作为longtable正式内容，需要使用\\结尾
+
+
+
+最后编辑于: 2025-04-27

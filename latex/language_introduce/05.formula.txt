@@ -1,91 +1,53 @@
-Demo_01 -- 行内/行间公式
+Demo_01 -- 行内公式
 \documentclass{article}
-\usepackage{amsmath}
-\usepackage{amssymb}
 \setlength{\parindent}{0mm}
 \begin{document}
-$a^2+b^2=c^2$\\
-\(y=x^2 \Rightarrow y'=2x\)\\
-\begin{math}
-\because 1+1=2\\
-\therefore 2-1=1
+This is first formula: $a^2+b^2=c^2$\\
+This is second formula: \(x^2+y^2=z^2\)\\
+Thsi is third formula: \begin{math}
+m^2+n^2\\
 \end{math}\\
-$\frac{4}{2}=2$\\
-$\sqrt[3]{8}=2$\\
-$\binom{4}{3}$\\
-
-\abovedisplayshortskip=6pt
-\belowdisplayshortskip=20pt
-\abovedisplayskip=20pt
-\belowdisplayskip=20pt
-短公式
-\begin{displaymath}
-    f(x)=2\sin(\alpha x+\beta)-3\cos(\alpha x+\beta)
-\end{displaymath}
-以下内容, 可以简单的判定为长公式, 因为上一行文本超过公式左端
-\begin{displaymath}
-    f(x)=2\sin(\alpha x+\beta)-3\cos(\alpha x+\beta)
-\end{displaymath}
-该行内容用于判定公式与公式下文本的距离
 \end{document}
 
 内容讲解
-1.行内公式: 将数学式插入文本行之内, 使数学式与文本融为一体
-$ ... $
-\( ... \)
-\begin{math} ... \end{math}
-都用于限定行内公式内容, 行内公式特点:
-1)可以处于paragraph/LR mode下
-2)可以在二元运算符处自动换行
-3)可以使用\\手动换行
+1.行内公式: 将数学式插入文本行之内, 使数学式与文本融为一体. 有以下三种格式:
+    1) $ ... $
+    2) \( ... \)
+    3) \begin{math} ... \end{math}
+
+2.行内公式特点:
+    1)可以处于paragraph/LR mode下
+    2)可以在二元运算符处自动换行. 将内容放置于{}内，可防止在公式内换行
+    3)可以使用\\手动换行
 
 
-2.行间公式: 数学式插入文本行之间, 自成一个段落, 与上下文附件一段垂直距离, 突出数学式
-$$ ... $$
-\[ ... \]
-\begin{displaymath} ... \end{displaymath}
-都用于限定行间公式内容, 行间公式特点:
-1)只能处于paragraph mode下
-2)公式内容为单行, 不能换行
-3)切换段落会导致出错
 
+Demo_02 -- 行间公式
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+\setlength{\abovedisplayshortskip}{1cm}
+\setlength{\belowdisplayshortskip}{1cm}
+\setlength{\abovedisplayskip}{2cm}
+\setlength{\belowdisplayskip}{2cm}
+This is short formula: $$a^2+b^2=c^2$$\\
+This is long formula(this content used to placeholder): \[x^2+y^2=z^2\]\\
+Thsi is third formula: \begin{displaymath}
+m^2+n^2\\
+\end{displaymath}\\
+\end{document}
 
-3.\begin{equation} ... \end{equation}为编号版本的单行行间公式
+1.行间公式: 数学式插入文本行之间, 自成一个段落, 与上下文附件一段垂直距离, 突出数学式. 有以下三种格式:
+    1) $$ ... $$
+    2) \[ ... \]
+    3) \begin{displaymath} ... \end{displaymath}
 
+2.行间公式特点:
+    1)只能处于paragraph mode下
+    2)公式内容为单行, 不能换行
+    3)切换段落会导致出错
 
-4.\begin{eqnarray} ... \end{eqnarray}为编号版本的多行行间公式
-
-
-5._用于指定公式的subscript, ^用于指定公式的supscript
-
-
-6.'在公式中为求导符号
-
-
-7.数学公式中, \because和\therefore为几何的因为/所以符号, 包含在amssymb宏包中
-
-
-8.\frac{分子}{分母}上下式分数，根据所处上下文决定是textstyle或displaystyle格式；\dfrac{}{}代表displaystyle格式分数；\tfrac{}{}代表textstyle格式分数
-\sfrac{分子}{分母}斜分数, 包含在xfrac宏包中
-
-
-9.\sqrt[root]{num}用于求数num的root次方根, root默认为2
-可选参数内, 可使用\leftroot{}指定次方根值向左移动指定个单位
-\uproot{}指定次方根值向上移动指定个单位
-\leftroot和\uproot包含在amsmath宏包中
-
-
-10.\binom{n}{r}为组合'()'符号, 包含在amsmath宏包中
-
-
-11.数学公式下的字符尺寸列表(从大到小):
-    \displaystyle - 行间公式默认采用该尺寸
-    \textstyle - 行内公式默认采用该尺寸
-    \scriptstyle - textstyle格式文本的上下标采用该尺寸
-    \scriptscriptstyle - scriptstyle格式文本的上下标采用该尺寸
-
-
-12.行间公式与上下文距离类型:
+3.行间公式与上下文距离类型:
     1)当行间公式的左端位于上方文本末端的右侧, 则该公式称为短公式
     2)当行间公式的左端位于上方文本末端的左侧, 则该公式称为长公式
     \abovedisplayshortskip为短公式与上方文本之间的额外距离, 默认为0pt plus 3pt
@@ -96,19 +58,139 @@ $$ ... $$
 
 
 
-Demo_02 -- 上/下标注符及删除符
+Demo_03 -- 排序公式
 \documentclass{article}
-\usepackage{ctex,amsmath}
-\usepackage{cancel}
+\setlength{\parindent}{0mm}
 \begin{document}
-\begin{displaymath}
-    A=\overbrace{(a+b+c)+\underbrace{(d+e+f)i}_{\text{虚数}}}^{\text{复数}}\\
-    \bcancel{This is backslash delete}\\
-    \cancel{This is slash delete}\\
-    \xcancel{This is cross delete}
-\end{displaymath}
+This is first formula: \begin{equation}a^2+b^2=c^2\end{equation}\\
+This is second and third formula: \begin{eqnarray}x^2+y^2=z^2\\E=mc^2\end{eqnarray}\\
 \end{document}
 
+内容讲解
+1.\begin{equation} ... \end{equation}
+    排序单行行间公式
+
+2.\begin{eqnarray} ... \end{eqnarray}
+    排序多行行间公式
+
+
+
+Demo_04 -- 数学模式表格(array)
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$\begin{array}{r@{}l}
+    f(x) & = 2(x+1)^2-1\\
+         & = 2(x^2+2x+1)-1\\
+         & = 2x^2+4x+1\\
+\end{array}$
+\end{document}
+
+内容讲解
+1.\begin{array}{<column_format>} ... \end{array}
+    在数学模式内使用的表格，内部全部为数学模式
+    参数与tabular完全一致
+
+
+
+Demo_05 -- 公式组环境(align)
+\documentclass{article}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+\begin{align*}
+    f(x) & = 2(x+1)^2-1\\
+         & = 2(x^2+2x+1)-1\\
+         & = 2x^2+4x+1
+\end{align*}
+\end{document}
+
+内容讲解
+1.\begin{align} ... \end{align}
+    多行行间公式环境，奇数列右对齐，偶数列左对齐. 包含在amsmath宏包中
+    每行给出序号
+
+2.\begin{align*} ... \end{align*}
+    align环境的非序号环境版本
+
+
+
+Demo_06 -- 公式组环境(gather)
+\documentclass{article}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+\begin{gather*}
+    f(x)= 2(x+1)^2-1\\
+        = 2(x^2+2x+1)-1\\
+        = 2x^2+4x+1
+\end{gather*}
+\end{document}
+
+内容讲解
+1.\begin{gather} ... \end{gather}
+    多行行间公式环境，只有一列内容，居中对齐. 包含在amsmath宏包中
+    每行给出序号
+
+2.\begin{gather*} ... \end{gather}
+    gather环境的非序号环境版本
+
+
+
+Demo_07 -- 数学符号
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{xfrac}
+\usepackage{amssymb}
+\setlength{\parindent}{0mm}
+\begin{document}
+$a_1^2+a_2^2=a_3^2$\\
+$(a^2)'=2a$\\
+$\frac{1}{2}\quad\dfrac{1}{2}\quad\tfrac{1}{2}\quad\sfrac{1}{2}$\\
+$\sqrt{2}\quad\sqrt[3]{2}\quad\sqrt[\leftroot{4}3]{2}\quad\sqrt[\uproot{4}3]{2}$\\
+$\because a=b,c=b\quad\therefore a=c$\\
+$\displaystyle\binom{n}{r}$\\
+\end{document}
+
+内容讲解
+1._用于指定公式的下角标(subscript), ^用于指定公式的上角标(supscript)
+
+2.'在公式中为求导符号
+
+3.\frac{分子}{分母}上下式分数，位于行内公式是textstyle格式，位于行间公式是displaystyle格式；
+\dfrac{}{}代表displaystyle格式分数，包含在amsmath宏包中；
+\tfrac{}{}代表textstyle格式分数，包含在amsmath宏包中；
+\sfrac{分子}{分母}斜分数, 包含在xfrac宏包中
+
+4.\sqrt[root]{num}用于求数num的root次方根, root默认为2
+可选参数内, 可使用\leftroot{}指定次方根值向左移动指定个单位
+\uproot{}指定次方根值向上移动指定个单位
+\leftroot和\uproot包含在amsmath宏包中
+
+5.\because和\therefore为因为/所以符号, 包含在amssymb宏包中
+
+6.\binom{n}{r}为组合'()'符号
+  \tbinom{n}{r}为textstyle组合符号
+  \dbinom{n}{r}为displaystyle组合符号
+  命令包含在amsmath宏包中
+
+7.数学公式下的字符尺寸列表(从大到小):
+    \displaystyle - 行间公式默认采用该尺寸
+    \textstyle - 行内公式默认采用该尺寸
+    \scriptstyle - textstyle格式文本的上下标采用该尺寸
+    \scriptscriptstyle - scriptstyle格式文本的上下标采用该尺寸
+
+
+
+Demo_08 -- 上/下标注符
+\documentclass{article}
+\setlength{\parindent}{0mm}
+\begin{document}
+$\overbrace{a+a+a}^{3a}$\\[4mm]
+$\overbrace{\!a+a+a\!}^{3a}$\\[4mm]
+$\overbrace{\vphantom{\bigl\{}a+a+a}^{3a}$\\[4mm]
+$\makebox[0pt][l]{$\overbrace{a+b+c}$}a+b+\underbrace{c+d+e}$
+\end{document}
 
 内容讲解
 1.\overbrace{}用于内容上方的大括号, 并可对指令使用^{}添加备注
@@ -119,15 +201,31 @@ Demo_02 -- 上/下标注符及删除符
 
 4.\overbrace和\underbrace与内容的空白过小时，使用\vphantom{\bigl\{}可填充撑起空白空间
 
-5.\cancel{}为删除符号，需要cancel宏包
-
-6.\bcancel{}为反斜杠删除符号，需要cancel宏包
-
-7.\xcancel{}为交叉删除符号，需要cancel宏包
+5.当\overbrace和\underbrace出现重复部分时，需利用\makebox零宽度盒子特性
 
 
 
-Demo_03 -- 省略号
+Demo_09 -- 删除线
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{cancel}
+\setlength{\parindent}{0mm}
+\begin{document}
+$$\dfrac{a\cdot a\cdot a}{a\cdot b}=\dfrac{a\cdot a\cdot\cancel{a}}{\cancel{a}\cdot b}=\dfrac{a\cdot a}{b}$$
+$$\dfrac{a\cdot a\cdot a}{a\cdot b}=\dfrac{a\cdot a\cdot\bcancel{a}}{\bcancel{a}\cdot b}=\dfrac{a\cdot a}{b}$$
+$$\dfrac{a\cdot a\cdot a}{a\cdot b}=\dfrac{a\cdot a\cdot\xcancel{a}}{\xcancel{a}\cdot b}=\dfrac{a\cdot a}{b}$$
+\end{document}
+
+内容讲解
+1.\cancel{}为删除符号，需要cancel宏包
+
+2.\bcancel{}为反斜杠删除符号，需要cancel宏包
+
+3.\xcancel{}为交叉删除符号，需要cancel宏包
+
+
+
+Demo_10 -- 省略号
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -147,7 +245,7 @@ $\ddots$\\
 
 
 
-Demo_04 -- 希腊字母
+Demo_11 -- 希腊字母
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -170,21 +268,7 @@ $\Pi$\\
 
 
 
-Demo_05 -- 字体类型
-\documentclass{article}
-\usepackage{bm}
-\setlength{\parindent}{0mm}
-\begin{document}
-$a^2+b^2=c^2$\\
-$\bm{a^2+b^2=c^2}$\\
-\end{document}
-
-内容讲解
-1.\bm{}加粗数学字体, 包含在bm宏包中
-
-
-
-Demo_06 -- 二元运算符
+Demo_12 -- 二元运算符
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -196,11 +280,11 @@ $1+2-3\times 4\div 5$\\
 内容讲解
 1.\times和\div为数学的二元运算符, 只能用于math mode
 
-2.详情参考symbol_summary的表18
+2.详情参考symbol_summary的表17
 
 
 
-Demo_07 -- 比较运算符
+Demo_13 -- 二元比较符
 \documentclass{article}
 \usepackage{amssymb}
 \newcommand{\backcong}{\mathrel{\reflectbox{$\cong$}}}
@@ -221,7 +305,7 @@ $\triangle ABC\backcong\triangle DEF$
 
 
 
-Demo_08 -- 箭头符号
+Demo_14 -- 箭头符号
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -231,11 +315,44 @@ $a^2+b^2=c^2\quad\Longrightarrow\quad a^2=c^2-b^2$\\
 内容讲解
 1.\Longrightarrow为向右的长箭头, 只能用于math mode
 
-2.详情参考symbol_summary的表17
+2.详情参考symbol_summary的表19
 
 
 
-Demo_09 -- 数学模式的重音符
+Demo_15 -- 数学字体
+\documentclass{article}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+$A\cdot+\Gamma$\\
+$\mathnormal{A\cdot+\Gamma}$\\
+$\mathrm{A\cdot+\Gamma}$\\
+$\mathit{A\cdot+\Gamma}$\\
+$\mathbf{A\cdot+\Gamma}$\\
+$\boldsymbol{A\cdot+\Gamma}$\\
+$\boldsymbol{\mathrm{A\cdot+\Gamma}}$\\
+$\boldsymbol{\mathit{A\cdot+\Gamma}}$\\
+\end{document}
+
+内容讲解
+1.\mathnormal为数学模式普通字体，为斜体
+
+2.\mathrm为数学模式直立字体
+
+3.\mathit为数学模式斜体
+
+4.\mathbf为数学模式加粗体
+
+5.\math类命令只能作用于操作数，无法作用于操作符
+
+6.\boldsymbol为数学模式加粗体. 可作用于操作数和操作符
+  包含在amsmath宏包中
+
+7.\boldsymbol{\mathit{}}为数学模式的加粗斜体
+
+
+
+Demo_16 -- 数学模式的重音符
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -257,7 +374,7 @@ Demo_09 -- 数学模式的重音符
 
 
 
-Demo_10 -- 符号堆叠
+Demo_17 -- 符号堆叠
 \documentclass{article}
 \usepackage{amsmath}
 \begin{document}
@@ -274,7 +391,7 @@ Demo_10 -- 符号堆叠
 
 
 
-Demo_11 -- 定界符
+Demo_18 -- 定界符
 \documentclass{article}
 \usepackage{ctex,amssymb}
 \setlength{\parindent}{0mm}
@@ -308,7 +425,7 @@ Demo_11 -- 定界符
 
 
 
-Demo_12 -- 全等与相似符号
+Demo_19 -- 全等与相似符号
 \documentclass{article}
 usepackage{amsmath}
 \usepackage{tikz}
@@ -323,7 +440,7 @@ $\triangle ABC\zhsim\triangle DEF$
 
 
 
-Demo_13 -- 平行四边形
+Demo_20 -- 平行四边形
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{tikz}
@@ -341,7 +458,7 @@ $AB\paraleq CD$
 
 
 
-Demo_15 -- 圆
+Demo_21 -- 圆
 \documentclass{ctexart}
 \usepackage{amsmath}
 \usepackage{xspace}
@@ -354,7 +471,7 @@ $\circled O$\\
 
 
 
-Demo_15 -- 圆弧
+Demo_22 -- 圆弧
 \documentclass{ctexart}
 \usepackage{ctex,amsmath}
 \usepackage{xwatermark}
@@ -386,19 +503,4 @@ $\overarc{AB}$\\
 
 
 
-Demo_16 -- 数学符号加粗
-\documentclass{ctexart}
-\usepackage{amsmath}
-\newcommand{\bigcdot}{\boldsymbol{\cdot}}
-\begin{document}
-$$\begin{array}{r c l}
-    a^m\bigcdot a^n & = & \underbrace{(a\bigcdot a\bigcdot\:\cdots\:\bigcdot a)}_{m\textrm{个}a}\bigcdot\underbrace{(a\bigcdot a\bigcdot\:\cdots\:\bigcdot a)}_{n\textrm{个}a}\\[1mm]
-    & = & \underbrace{a\bigcdot a\bigcdot\:\cdots\:\bigcdot a}_{(m+n)\textrm{个}a}\\[2mm]
-    & = & a^{m+n}
-\end{array}$$\\[2cm]
-\end{document}
-
-内容讲解
-1.\boldsymbol{}用于将数学符号进行加粗，包含在amsmath宏包中
-
-2.\mathbf{}只能将拉丁字母进行加粗
+最后编辑于: 2025-04-27

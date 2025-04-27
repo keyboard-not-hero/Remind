@@ -1,138 +1,185 @@
+Demo_01 -- 列颜色
 \documentclass{ctexart}
-\usepackage{ctex,colortbl}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{colortbl}
+\setlength{\parindent}{0pt}
+\setlength{\arrayrulewidth}{2pt}
 \begin{document}
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|>{\columncolor[gray]{0.8}[0.5\tabcolsep][0.9\tabcolsep]}c|}
-    \hline
-    name & sex & item & score\\
-    \hline
-    peter & male & math & 99\\
-    \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{整列背景颜色}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|}
-    \hline
-    \rowcolor[rgb]{0.56,0.84,0.72}[0.6\tabcolsep] name & sex & item & score\\
-    \hline
-    peter & male & math & 99\\
-    \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{整行背景颜色}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|}
-    \hline
-    \cellcolor[gray]{0.8} name & sex & item & score\\
-    \hline
-    peter & male & math & 99\\
-    \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{单元格背景颜色}
-\end{table}
-
-\begin{table}
-\centering
-\rowcolors[\hline]{2}{red}{green}
-\begin{tabular}{|c|c|c|c|}
-    name & sex & item & score\\
-    peter & male & math & 99\\
-    david & male & english & 76\\
-    \hiderowcolors
-    steven & male & english & 59\\
-    david & male & english & 76\\
-    \showrowcolors
-    steven & male & english & 59\\
-    david & male & english & 76\\
-    steven & male & english & 59\\
-\end{tabular}
-\caption{间隔行背景色}
-\end{table}
-
-\begin{table}
-\centering
-\arrayrulecolor{blue}
-\doublerulesepcolor{yellow}
-\begin{tabular}{|c|c|c||c|}
-    \hline
-    name & sex & item & score\\
-    \hline
-    peter & male & math & 99\\
-    \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{分隔符颜色}
-\end{table}
-
-\begin{table}
-\centering
-\arrayrulecolor{black}
-\begin{tabular}{|c|c|c|>{\color[gray]{0.8}}c|}
-    \hline
-    \color[rgb]{0,1,1}name & sex & item & score\\
-    \hline
-    peter & male & math & 99\\
-    \hline
-    david & male & english & 76\\
-    \hline
-    steven & male & english & 59\\
-    \hline
-\end{tabular}
-\caption{文字上色}
+\begin{table}[H]
+    \begin{tabular}{|>{\centering\arraybackslash}m{2cm}|>{\columncolor{red}[1pt]\centering\arraybackslash}m{2cm}|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
 \end{table}
 \end{document}
 
-
 内容讲解
 1.\columncolor[color_mode]{color_val}[left_margin][right_margin]用于指定列的背景色, 参数列表如下:
-    color_mode - 颜色模式
-    color_val - 颜色值
-    left_margin - 单元格内容与左分隔符的距离(默认为\tabcolsep值)
-    right_margin - 单元格内容与右分隔符的距离(默认与left_margin一致)
-    指令包含在colortbl宏包中
+    color_mode - 颜色模式. 可选列表:
+        gray - 灰度值
+	rgb - RGB三基色
+	cmyk - CMYK四基色
+    color_val - 对应颜色值. 对应值类型如下:
+        color_name - 没有提供color_mode的情况下，直接使用xcolor中已定义颜色名称，或使用\definecolor自定义的颜色名称
+	color_base - 提供color_mode的情况下，提供对应mode下的基色值
+    left_margin - 在铺满列宽度的前提下，向左伸展的距离. tabular默认为\tabcolsep值，array默认为\arraycolsep值
+    right_margin - 在铺满列宽度的前提下，向左伸展的距离. 默认与left_margin一致
 
-2.\rowcolor[color_mode]{color_val}[left_margin][right_margin]用于指定行的背景色, 必须在行的起始位置进行指定. 包含在colortbl宏包中
+2.指令需要导入colortbl宏包，并且依赖于array和color宏包
 
-3.\cellcolor[color_mode]{color_val}用于指定单元格的背景色. 包含在colortbl宏包中
 
-4.\cellcolor覆盖\rowcolor, \rowcolor覆盖\columncolor
 
-5.\rowcolors[command]{row}{odd_row_color}{even_row_color}用于指定每两行切换背景色, 参数列表如下:
-    command - 用于指定额外参数, 如\hline可以自带水平分割线
-    row - 从指定行开始背景色, 行号由1起始
+Demo_02 -- 行颜色
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{colortbl}
+\setlength{\parindent}{0pt}
+\setlength{\arrayrulewidth}{2pt}
+\newcolumntype{M}{>{\centering\arraybackslash}m{2cm}}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{|M|M|}
+        \hline
+        \rowcolor{red}1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.\rowcolor[color_mode]{color_val}[left_margin][right_margin]用于指定行的背景色, 必须在行的起始位置进行指定. 参数列表如下:
+    color_mode - 颜色模式. 可选列表:
+        gray - 灰度值
+	rgb - RGB三基色
+	cmyk - CMYK四基色
+    color_val - 对应颜色值. 对应值类型如下:
+        color_name - 没有提供color_mode的情况下，直接使用xcolor中已定义颜色名称，或使用\definecolor自定义的颜色名称
+	color_base - 提供color_mode的情况下，提供对应mode下的基色值
+    left_margin - 在铺满列宽度的前提下，向左伸展的距离. tabular默认为\tabcolsep值，array默认为\arraycolsep值
+    right_margin - 在铺满列宽度的前提下，向左伸展的距离. 默认与left_margin一致
+    
+2.指令需要导入colortbl宏包，并且依赖于array和color宏包
+
+
+
+Demo_03 -- 单元颜色
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{colortbl}
+\setlength{\parindent}{0pt}
+\setlength{\arrayrulewidth}{2pt}
+\newcolumntype{M}{>{\centering\arraybackslash}m{2cm}}
+\begin{document}
+\begin{table}[H]
+    \begin{tabular}{|M|M|}
+        \hline
+        \cellcolor{red}1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.\cellcolor[color_mode]{color_val}用于指定单元格的背景色. 参数列表如下:
+    color_mode - 颜色模式. 可选列表:
+        gray - 灰度值
+	rgb - RGB三基色
+	cmyk - CMYK四基色
+    color_val - 对应颜色值. 对应值类型如下:
+        color_name - 没有提供color_mode的情况下，直接使用xcolor中已定义颜色名称，或使用\definecolor自定义的颜色名称
+	color_base - 提供color_mode的情况下，提供对应mode下的基色值
+
+2.指令需要导入colortbl宏包，并且依赖于array和color宏包
+
+3.\cellcolor覆盖\rowcolor, \rowcolor覆盖\columncolor
+
+
+
+Demo_04 -- 交替行颜色
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}
+\newcolumntype{M}{>{\centering\arraybackslash}m{2cm}}
+\begin{document}
+\begin{table}[H]
+    \rowcolors{2}{red}{blue}
+    \begin{tabular}{|M|M|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+        5 & 6\\
+        \hline
+        7 & 8\\
+        \hline
+        9 & 10\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
+
+内容讲解
+1.\rowcolors[command]{row}{odd_row_color}{even_row_color}用于从指定行row开始，奇数行和偶数行的颜色固定, 参数列表如下:
+    command - 作用于所有行的命令, 如\hline可以自带水平分割线
+    row - 从指定行开始绘制背景色. 行号由第一行计数，从1起始
     odd_row_color - 奇数行的背景色
     even_row_color - 偶数行的背景色
-    配合\showrowcolors和\hiderowcolors指令可以指定后续行是否显示背景色
-    指令包含在colortbl宏包中
 
-6.\arrayrulecolor{color}用于指定分隔符颜色
+2.指令需要导入colortbl宏包和xcolor宏包
 
-7.\doublerulesepcolor{color}用于指定分隔符||之间的填充色
 
-8.\color[color_mod]{color_val}可以给文字上色. 包含在xcolor宏包中. 示例:
-    \color[gray]{0.8}使用color_val的值范围[0,1]
-    \color[rgb]{0.2,0.3,0.4}使用color_val为r,g,b组合, 每个元素的值范围[0,1]
 
-9.colortbl宏包依赖于color宏包
+Demo_05 -- 边框颜色
+\documentclass{ctexart}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}
+\newcolumntype{M}{>{\centering\arraybackslash}m{2cm}}
+\begin{document}
+\begin{table}[H]
+    \arrayrulecolor{green}
+    \begin{tabular}{|M|M|}
+        \hline
+        1 & 2\\
+        \hline
+        3 & 4\\
+        \hline
+        5 & 6\\
+        \hline
+        7 & 8\\
+        \hline
+        9 & 10\\
+        \hline
+    \end{tabular}
+\end{table}
+\end{document}
 
+内容讲解
+1.\arrayrulecolor{color}用于指定分隔符颜色
+
+2.指令需要导入colortbl宏包
+
+
+
+最后编辑于: 2025-04-27
