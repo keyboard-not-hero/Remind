@@ -79,6 +79,22 @@ This is \raisebox{1cm}{\bfseries a very long} line
 
 
 
+Demo_04 -- 在左右盒子中换行
+\documentclass{ctexart}
+\usepackage{amsmath}
+\usepackage{makecell}
+\setlength{\parindent}{0mm}
+\begin{document}
+\fbox{\makecell{This is a very long story, it is about a man \\meet a woman in a game,they meet,they know,\\they together,they split,they together again.}}
+\end{document}
+
+内容讲解
+1.\makecell[<vertical_or_horizontal_align>]{<content>}
+    内容可任意换行
+    vertical_or_and_horizontal用于指定内容内容的水平对齐方式(l/c/r)，或者与外部文本的垂直对齐方式(t/c/b). 水平对齐和垂直对齐可同时指定. 默认水平和垂直居中
+
+
+
 二、段落盒子
 Demo_01 -- minipage
 \documentclass{article}

@@ -2,11 +2,13 @@ Demo_01 -- 导入图片
 \documentclass{article}
 \usepackage{graphicx}
 \begin{document}
-\includegraphics[scale=0.5,draft=true]{picture/math_01.pdf}
+\includegraphics[scale=0.5]{picture/math_01.pdf}
 \end{document}
 
 内容讲解
-1.\usepackage{graphicx}使用graphicx宏包
+1.\usepackage[<option>]{graphicx}使用graphicx宏包. option参数如下:
+    draft - 将插图使用正确尺寸的空白表示，用于测试图片排版
+    final - 实际插入图片，覆盖draft选项. 默认值
 
 2.\includegraphics[<args>]{pic_name}用于导入指定名称图片, 并执行转化操作. args列表为一系列可选参数, pic_name为指定图片, 可以使用绝对路径和相对路径. args列表如下:
     width - 图片的宽度, 当height未提供, 成比例拉伸高度
@@ -45,10 +47,14 @@ i\documentclass{article}
 \end{document}
 
 内容讲解
-1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定点逆时针旋转angle度. 参数列表如下:
+1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定点逆时针旋转angle度，默认绕基准点旋转. 参数列表如下:
     args列表如下:
-        origin - 设置旋转点, 参考\includegraphics的origin
-        x,y - 以基准点为原点, 以指定坐标为旋转点
+        origin
+            设置旋转点, 参考\includegraphics的origin
+        x=<dimension>
+            以基准点为原点, 以x偏移指定长度为旋转点
+        y=<dimension>
+            以基准点为原点，以y偏移指定长度为旋转点
         units - 指定将一圈划分为指定分数，默认为360. 如: 360代表将逆时针一圈分为360(angle对应角度值); -6.283代表将顺时针一圈分为6.283份(angle对应弧度值)
     angle - 旋转的指定个单位度数
 
@@ -57,30 +63,3 @@ i\documentclass{article}
 3.\resizebox{horizontal_size}{vertical_size}{content}将内容按指定长度进行拉伸/缩小, horizontal_size为水平拉伸尺寸; vertical_size为垂直拉伸尺寸. horizontal_size或vertical_size为!时, 根据另一个拉伸尺寸进行成比例拉伸
 
 4.\reflectbox{content}为内容的垂直镜像, 即以穿过中心的垂直线条为对称轴的镜像
-
-
-
-Demo_03 -- 浮动体
-\documentclass{article}
-\usepackage{graphicx}
-\begin{document}
-\begin{figure}
-\rotatebox[units=6.283185]{1}{I love you}
-\caption{rotete font}
-\end{figure}
-\end{document}
-
-内容讲解
-1.\begin{figure}[<args>]...\end{figure}用于放置图片的浮动环境. args参数列表如下:
-    h - 就地放置浮动体
-    t - 将浮动体放置在当前页或下一页的页面顶部
-    b - 将浮动体放置在当前页或下一页的页面底部
-    p - 将浮动体放置到之后的单独一页, 该也全部为浮动体, 成为浮动体页
-    ** 默认按t -> b -> p的顺序依次尝试; 如果指定h, 则按h -> t -> b -> p的顺序尝>试
-    ! - 配合h/t/b/p, 强制按指定方法安置浮动体
-    H - 相当于h!, 强制就地放置浮动体. 包含在float宏包中
-
-2.\caption[<toc_title>]{<title>}在浮动体环境中, 给表格指定标题, 标题默认居中. 参
-数列表如下:
-    toc_title - 在目录中显示的标题. 默认为title内容
-    title - 在当前图片处的标题

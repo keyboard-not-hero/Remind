@@ -24,101 +24,154 @@ Demo_01 -- 字体属性1
 	OMX - 大型数学符号，包括求和、积分、定界符等
 	U   - 未知编码字符
     family - 字体的字族，列表如下：
-        cmr  - 罗马体
-	cmss - 等线体
-	cmtt - 等宽体
-	cmm  - 数学斜体
-	cmsy - 数学符号
-	cmex - 数学扩充
+        cmr  - 罗马体. Computer Modern Roman
+	cmss - 等线体. Computer Modern Sans Serif
+	cmtt - 等宽体. Computer Modern TypeWriter
+	cmm  - 数学斜体 
+	cmsy - 数学符号 
+	cmex - 数学扩充 
     series - 字体的序列，列表如下：
         m  - 常规
-	bx - 粗宽
+	bx - 加粗
     shape - 字体的形状，列表如下：
         n  - 直立
 	it - 斜体
 	sl - 倾斜
 	sc - 小型大写
     size - 字体的尺寸
-        \<font_size>, 声明形式，可指定当前环境后续所有字体的大小， 列表:
-            tiny/scriptsize/footnotesize/small/normalsize/large/Large/LARGE/huge/Huge
-        详情参考symbol_summary的表3
 
-2.LaTeX各种类型字体的默认值。普通文本：
+2.LaTeX文本类型字体的默认值。普通文本：
     encoding - OT1
-    family   - cmr
-    series   - m
-    shape    - n
-    size     - normalsize, 10pt(article/report/book类文档)
-详情参考symbol_summary的表
-
-3.\textnormal为LaTeX普通文本默认字体
-\textrm为roman family字体，series/shape使用默认选项
-\textmd为mediym series字体，family/shape使用默认选项
-\textup为upright shape字体，family/series使用默认选项
-综合，使用\textnormal、\textrm、\textmd、\textup效果一致
-
-3.\textsf{}为等线体, 等线体字体线条一致, 没有衬线。字体参数如下：
-    family - cmss
-    series - m
-    shape  - n
-
-4.\texttt{}为等宽体, 在中文(或英文)中, 所有字体(或字符)的宽度一致, 适用于打印。字体参数如下：
-    family - cmtt
-    series - m
-    shape  - n
-
-5.\textbf{}为加粗体。字体参数如下：
-    family - cmr
-    series - bx
-    shape  - n
-
-6.\textit{}为斜体。字体参数如下：
-    family - cmr
-    series - m
-    shape  - it
-
-7.\textsl{}为倾斜体。字体参数如下：
-    family - cmr
-    series - m
-    shape  - sl
-
-8.\textsc{}为字体更小的大写字母。字体参数如下：
-    family - cmr
-    series - m
-    shape  - sc
-
-9.\text开头的普通文本指令可位于任何环境中, paragraph/LR/math mode
-
-10.字体建议：正文使用罗马字族，代码或专有名词使用等宽体字族，章节名称使用等线体字族
-
-11.字体加粗并倾斜，即嵌套:
-\textbf{\textit{<content>}}
-
-12.详情查看symbol_summary的表2
+    family   - Computer Modern Roman
+    series   - 常规
+    shape    - 直立
 
 
 
-Demo_02 -- 字体属性2
-\documentclass{article}
-\DeclareFixedFont{\myself}{OT1}{cmr}{m}{sl}{12pt}
+Demo_02 -- 字族
+\documentclass{ctexart}
+\usepackage{amsmath}
 \setlength{\parindent}{0mm}
 \begin{document}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'\\
-
-{\myself chapter 5}
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?'
+\textrm{Roman Family}\\
+\textsf{Sans Serif Family}\\
+\texttt{Typewriter Family}\\
+{\rm Roman Family}\\
+{\sf Sans Serif Family}\\
+{\tt Typewriter Family}\\
 \end{document}
 
 内容讲解
-1.\DeclareFixedFont{<cmd_name>}{<encoding>}{<series>}{<shape>}{<size>}用于定义新字符类指令，该指令指定字符属性
+1.\textrm{<content>}为罗马字体的参数形式，参数字体为罗马字体
+\rmfamily或\rm为声明形式，当前环境内都为罗马字体
 
-2.\<cmd_name>使用定义新字符类指令，用于指定当前环境后续字体
+2.\textsf{<content>}为等线字体的参数形式，参数字体为等线字体
+\sffamily或\sf为声明形式，当前环境内都为等线字体
 
-3.只适用于英文
+3.\texttt{<content>}为等宽字体的参数形式，参数字体为等宽字体
+\ttfamily或\tt为声明形式，当前环境内都为等宽字体
+
+4.通常正文使用罗马体，专有名词或程序采用等宽体，章节标题采用等线体
+
+5.\fontfamily{<family>}\selectfont
+    手动指定字族
 
 
 
-Demo_03 -- 特殊字符
+Demo_03 -- 字体序列
+\documentclass{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+\textmd{Medium Series}\\
+\textbf{Boldface Series}\\
+{\mdseries Medium Series}\\
+{\bf Boldface Series}\\
+\end{document}
+
+内容讲解
+1.\textmd{<content>}为常规字体的参数形式，参数字体为常规字体
+\mdseries为声明形式，当前环境内都为常规字体
+
+2.\textbf{<content>}为加粗字体的参数形式，参数字体为加粗字体
+\bfseries或\bf为声明形式，当前环境内都为加粗字体
+
+3.\fontseries{<series>}\selectfont
+    手动指定序列
+
+
+
+Demo_04 -- 字体形状
+\documentclass{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+\textup{Upright Shape}\\
+\textit{Italic Shape}\\
+\textsc{Small Caps Shape}\\
+\textsl{Slanted Shape}\\
+{\upshape Upright Shape}\\
+{\it Italic Shape}\\
+{\sc Small Caps Shape}\\
+{\sl Slanted Shape}\\
+\end{document}
+
+内容讲解
+1.\textup{<content>}为常规字体的参数形式，参数字体为常规字体
+\upshape为声明形式，当前环境内都为常规字体
+
+2.\textit{<content>}为斜体字体的参数形式，参数字体为斜体字体
+\itshape或\it为声明形式，当前环境内都为斜体字体
+
+3.\textsc{<content>}为小型大写字体的参数形式，参数字体为小型大写字体
+\scshape或\sc为声明形式，当前环境内都为小型大写字体
+
+4.\textsl{<content>}为倾斜字体的参数形式，参数字体为倾斜字体
+\slshape或\sl为声明形式，当前环境内都为倾斜字体
+
+5.斜体与倾斜体的区别:
+    斜体不仅字体倾斜，而且字体形态改变
+    倾斜体仅仅字体倾斜
+
+6.\textbf{\textit{<content>}}加粗斜体
+
+7.\fontshape{<shape>}\selectfont
+    手动指定形状
+
+
+
+Demo_05 -- 字体大小
+\documentclass{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+\tiny tiny\\
+\scriptsize scriptsize\\
+\footnotesize footnotesize\\
+\small small\\
+\normalsize normalsize\\
+\large large\\
+\Large Large\\
+\LARGE LARGE\\
+\huge huge\\
+\Huge Huge\\
+\fontsize{2cm}{6mm}\selectfont fontsize\\
+\end{document}
+      
+内容讲解
+1.\<predefine_font_size>
+    使用声明形式的预定义字体尺寸大小. 尺寸由小到大列表为:
+        tiny/scriptsize/footnotesize/small/normalsize/large/Large/LARGE/huge/Huge  
+    详情参考symbol_summary的表3
+
+2.\fontsize{<size>}{<line_distance>}\selectfont
+    手动指定尺寸
+    英文字体中，line_distance比size大20%左右
+    在ctex中，已自动加大行距，line_distance与size一致即可
+
+
+
+Demo_06 -- 特殊字符
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -133,7 +186,7 @@ special character:\\
 
 
 
-Demo_04 -- 对齐方式
+Demo_07 -- 对齐方式
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -161,7 +214,7 @@ This is flushright text
 
 
 
-Demo_05 -- 字符抄录(逐字符)
+Demo_08 -- 字符抄录(逐字符)
 \documentclass{article}
 \usepackage{ctex}
 \setlength{\parindent}{0mm}
@@ -206,7 +259,7 @@ print('结果为 {0} 和 {1}'.format(sol1,sol2))
 
 
 
-Demo_06 -- 音节重音
+Demo_09 -- 音节重音
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -228,7 +281,7 @@ Demo_06 -- 音节重音
 
 
 
-Demo_07 -- 非英文符号
+Demo_10 -- 非英文符号
 \documentclass{article}
 \setlength{\parindent}{0mm}
 \begin{document}
@@ -244,7 +297,7 @@ Demo_07 -- 非英文符号
 
 
 
-Demo_08 -- 下划线
+Demo_11 -- 下划线
 \documentclass{article}
 \usepackage{ulem}
 \setlength{\parindent}{0mm}
@@ -266,7 +319,7 @@ This is line \uline{four}
 
 
 
-Demo_09 -- TeX family text
+Demo_12 -- TeX family text
 \documentclass{article}
 \begin{document}
 Some people use plain \TeX, but I prefer \LaTeX.
@@ -277,7 +330,7 @@ Some people use plain \TeX, but I prefer \LaTeX.
 
 
 
-Demo_10 -- 破折号
+Demo_13 -- 破折号
 \documentclass{article}
 \begin{document}
     An intra-word dash or hyphen, as in X-ray.\\
@@ -296,7 +349,7 @@ Demo_10 -- 破折号
 
 
 
-Demo_11 -- 圆圈内字体
+Demo_14 -- 圆圈内字体
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{pifont}
@@ -314,7 +367,7 @@ Demo_11 -- 圆圈内字体
 
 
 
-Demo_12 -- 单位符号
+Demo_15 -- 单位符号
 \documentclass{article}
 \usepackage{siunitx}
 \setlength{\parindent}{0mm}

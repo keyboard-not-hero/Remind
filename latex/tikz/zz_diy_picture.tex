@@ -1,5 +1,6 @@
 \documentclass{ctexart}
 \usepackage{amsmath}
+\usepackage{makecell}
 \usepackage{tikz}
 \usepackage{siunitx}
 \usetikzlibrary{calc,intersections,arrows.meta}
@@ -509,6 +510,45 @@
     \draw (0,\smovecentral+\sradius+0.4) arc [start angle=270,end angle=0,radius=3pt];
     \draw (0,\bmovecentral-\bradius-0.2) -- (0,\bmovecentral-\bradius-0.4);
     \draw (0,\bmovecentral-\bradius-0.4) arc [start angle=90,end angle=-180,radius=3pt];
+\end{tikzpicture}\vspace{2cm}
+
+\begin{tikzpicture}[>=stealth,pin distance=5pt,pin edge={<-,line width=0.3pt,blue!50}]
+    \node[inner sep=0pt] (P) at (0,0){\fontsize{3.6cm}{0pt}\selectfont\color{white}g};
+    \node[inner sep=0pt] (O) at (0,0){\fontsize{3.6cm}{0pt}\selectfont gJ\hspace{-1pt}汉};
+    \coordinate (A) at (O.base -| O.west);
+    \coordinate (B) at (O.base -| O.east);
+    \coordinate (C) at ($(B)!1.4!(A)$);
+    \draw[dash pattern=on 2pt off 2pt,line width=0.8pt] (C) -- (B);
+    \fill (A) node[inner sep=3pt,pin={[inner sep=1pt]95:\footnotesize\makecell{基准点\\[-1mm]reference point}}]{} circle [radius=2pt];
+    \path
+      let
+        \p1=($(P.center)-(P.south)$),\p2=($(O.center)-(O.south)$),
+        \p3=($(P.center)-(P.west)$),\p4=($(O.center)-(O.west)$),
+        \p5=($(\p3)-(\p4)$),\p6=($(\p1)-(\p2)$),
+        \p7=(\x5,\y6)
+      in
+        node[inner sep=0pt] (Q) at (\p7) {\fontsize{3.6cm}{0pt}\selectfont g};
+    \coordinate (D) at (Q.base -| Q.east);
+    \coordinate (E) at (Q.north);
+    \coordinate (F) at (Q.south);
+    \coordinate (G) at (E -| C);
+    \coordinate (H) at (F -| C);
+    \coordinate (I) at ($(G)+(-2.2,0)$);
+    \coordinate (J) at ($(H)+(-2.2,0)$);
+    \coordinate (M) at (A |- F);
+    \coordinate (N) at (D |- F);
+    \coordinate (R) at ($(M)+(0,-1)$);
+    \coordinate (S) at ($(N)+(0,-1)$);
+    \fill (D) circle [radius=2pt];
+    \draw[dash pattern=on 2pt off 2pt,line width=0.8pt] (E) -- (I);
+    \draw[dash pattern=on 2pt off 2pt,line width=0.8pt] (F) -- (J);
+    \draw[<->] ($(C)+(0.4,0)$) -- ($(G)+(0.4,0)$) node[pos=0.5,fill=white,inner sep=1pt]{\footnotesize 高度};
+    \draw[<->] ($(C)+(1.2,0)$) -- ($(H)+(1.2,0)$) node[pos=0.5,fill=white,inner sep=1pt]{\footnotesize 深度};
+    \draw[<->] ($(G)+(-1.9,0)$) -- ($(H)+(-1.9,0)$) node[pos=0.5,fill=white,inner sep=1pt]{\footnotesize 总高度};
+    \node[pin={[inner sep=0pt]135:\footnotesize \makecell{基准线\\[-1mm](baseline)}}] at ($(C)+(0.2,0)$){};
+    \draw[dotted,line width=0.6pt] (A) -- (R);
+    \draw[dotted,line width=0.6pt] (D) -- (S);
+    \draw[<->] ($(R)+(0,0.5)$) -- ($(S)+(0,0.5)$) node[pos=0.5,fill=white,inner sep=2pt]{\footnotesize 宽度};
 \end{tikzpicture}
 \end{document}
 

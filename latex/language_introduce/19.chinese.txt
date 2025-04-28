@@ -6,10 +6,10 @@ LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaT
 \end{document}
 
 内容讲解
-1.\documentclass[UTF8,fontset]{ctexart}可选参数可以使用UTF8指定中文的编码规则, Linux可指定特殊字符集ubuntu; 必选参数文档类型列表与源类型列表对照如下:
-	ctexart - article
-	ctexrep - report
-	ctexbook - book
+1.\documentclass{ctexart}指定中文类文档类型. 中文文档类型与源文档类型对照如下:
+    ctexart - article
+    ctexrep - report
+    ctexbook - book
 
 2.\usepackage{ctex}指定使用中文包ctex
 
@@ -17,23 +17,8 @@ LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaT
 
 
 
-二、Demo(示例)02 - font size
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\begin{document}
-	\zihao{1} 一号字体
-
-	\zihao{-6} 小六号字体
-
-	\zihao{8} 八号字体
-\end{document}
-
-内容讲解
-1.\zihao{font_size}用于设置字体大小, 范围[0,8]; 额外的, 使用范围[-6, -0]代表小号字体
-
-
-
-三、Demo(示例)03 - font style
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
+Demo_02 -- 字体类型
+\documentclass{ctexart}
 \begin{document}
     \songti 宋体\\
     \heiti 黑体\\
@@ -42,30 +27,63 @@ LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaT
 \end{document}
 
 内容讲解
-1.Windows/Linux默认自带宋体/黑体/仿宋/楷书
+1.LaTeX默认使用宋体
 
-2.字体指令如下:
-\songti - 宋体
-\heiti - 黑体
-\fangsong - 仿宋
-\kaishu - 楷书
+2.Linux默认自带宋体/黑体/仿宋/楷书
+
+3.预定义字体指令如下:
+    \songti - 宋体
+    \heiti - 黑体
+    \fangsong - 仿宋
+    \kaishu - 楷书
+    \youyuan - 幼圆
+    \lishu - 隶书
 
 
 
-四、Demo04 - 字距
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\usepackage{bigstrut}
-\usepackage{multirow}
-\usepackage{array}
+Demo_03 -- 汉字大小
+\documentclass{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
 \begin{document}
-\begin{tabular}{>{\centering\arraybackslash}p{0.2\textwidth}|>{\centering\arraybackslash}p{0.2\textwidth}|>{\centering\arraybackslash}p{0.2\textwidth}|>{\centering\arraybackslash}p{0.2\textwidth}}
-    \hline
-    \multicolumn{3}{c|}{部门的产出分配} & \multirow{2}*{采购部门}\\\cline{1-3}
-    \ziju{1}煤炭 & 电力  & 钢铁 & \\\hline
-    0.0 & 0.4 & 0.6 & 煤炭\\\hline
-    0.6 & 0.1 & 0.2 & 电力\\\hline
-    0.4 & 0.5 & 0.2 & 钢铁\\\hline
-\end{tabular}
+\zihao{0}初号\\
+\zihao{-0}小初\\
+\zihao{1}一号\\
+\zihao{-1}小一\\
+\zihao{2}二号\\
+\zihao{-2}小二\\
+\zihao{3}三号\\
+\zihao{-3}小三\\
+\zihao{4}四号\\
+\zihao{-4}小四\\
+\zihao{5}五号\\
+\zihao{-5}小五\\
+\zihao{6}六号\\
+\zihao{-6}小六\\
+\zihao{7}七号\\
+\zihao{8}八号\\
+\end{document}
+
+内容讲解
+1.\zihao{<font_size>}用于设置字体大小，列表如下:
+    0 - 初号
+    -0 - 小初
+    ...
+    6 - 六号
+    -6 - 小六
+    7 - 七号
+    8 - 八号
+
+
+
+Demo_04 -- 字距
+\documentclass{ctexart}
+\usepackage{amsmath}
+\setlength{\parindent}{0mm}
+\begin{document}
+这是一段简短的文字！！\\
+\ziju{0.6}
+这是一段简短的文字！！\\
 \end{document}
 
 内容解释
@@ -73,23 +91,4 @@ LaTeX3 是一个长远而艰巨的奋斗目标，在它最终完成之前，\LaT
 
 
 
-Demo05 -- space
-\documentclass[UTF8,fontset=ubuntu]{ctexart}
-\setlength{\parindent}{0mm}
-\begin{document}
-我\!爱你\\
-我爱你\\
-我\,爱你\\
-我\:爱你\\
-我\;爱你\\
-我\enspace 爱你\\
-我\quad 爱你\\
-我\qquad 爱你\\
-\end{document}
-
-内容讲解
-1.水平距离排序
-    \qquad > \quad > \enspace > \; > \: > \, > [normal] > \!
-
-2.\hspace{<length>}
-    用于设置指定长度水平间隔
+最后编辑于: 2025-04-28

@@ -304,18 +304,36 @@
     \draw[->] (-2,0) .. controls (-2,2) and (2,2) .. (2,0) node[pos=0.3]{0.3} node[sloped,pos=0.6]{0.6};
 \end{tikzpicture}
 
-% 35.label - 在node处额外添加label node. 格式: [<options>]<angle>:<text>. angle可选列表:
-%   [1]above/below/right/left/above left/above right/below left/below right
-%   [2]center - label node与主node的中心重合
-%   [3]角度值 - label的angle会偏向于45度的整数倍,无法精确定位角度
-%   默认为90度
-
+% 35.label=[<options>]<angle>:<text>
+%   在node处额外添加label node. angle可选列表:
+%     [1]above/below/right/left/above left/above right/below left/below right
+%     [2]center - label node与主node的中心重合
+%     [3]角度值 - label的angle会偏向于45度的整数倍,无法精确定位角度
+%     默认为90度
 % 36.absolute - 是否使用paper的绝对相对位置. 如果指定该参数，则label node相对于node的位置的参考为paper；不指定，则参考为main node
-% 37.label distance - label node与main node的额外距离. 默认为0pt
-% 38.pin - 类似于label，在main node与label node间添加连线
-% 39.pin distance - pin node与main node的额外距离. 默认为3ex
-% 40.pin edge - pin node的连线
+% 37.label distance - label node与main node的额外距离，需要作为tikzpicture环境的参数. 默认为0pt
+\documentclass{ctexart}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{tikzpicture}[label distance=2cm]
+    \node[label=135:chinese] at (0,0){汉};
+\end{tikzpicture}
+\end{document}
 
+% 38.pin=[<options>]<angle>:<text>
+%   在node处额外添加label node，并在main node与label node间添加连线
+% 39.pin distance - pin node与main node的额外距离，需要作为tikzpicture环境的参数. 默认为3ex
+% 40.pin edge - pin node的连线属性设置，需要作为tikzpicture环境的参数
+\documentclass{ctexart}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\usetikzlibrary{decorations.pathmorphing}
+\begin{document}
+\begin{tikzpicture}[>=stealth,pin edge={line width=0.4pt,<-,decorate,decoration={snake,pre length=4pt}},pin distance=1cm]
+    \node[pin={[red]135:chinese}] at (0,0){汉};
+\end{tikzpicture}
+\end{document}
 
 
 
