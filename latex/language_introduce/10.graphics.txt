@@ -11,29 +11,23 @@ Demo_01 -- 导入图片
     final - 实际插入图片，覆盖draft选项. 默认值
 
 2.\includegraphics[<args>]{pic_name}用于导入指定名称图片, 并执行转化操作. args列表为一系列可选参数, pic_name为指定图片, 可以使用绝对路径和相对路径. args列表如下:
-    width - 图片的宽度, 当height未提供, 成比例拉伸高度
-    height - 图片的高度, 当width未提供, 成比例拉伸宽度
+    width - 图片的拉伸宽度
+    height - 图片的拉伸高度
     totalheight - 图片的总高度(高度+深度)
+    keepaspectratio - boolean值, 是否将图片严格按照比例伸缩, 并且满足任意一边的长度不超过指定长度
     scale - 图片的缩放系数
     angle - 图片角度的旋转角度, 正值表示逆时针旋转
     origin - 设置插图旋转点位置, 默认为基准点. 可选如下:
-        lt - 顶部左侧
-	ct - 顶部水平居中点
-	rt - 顶部右侧
-	lc - 垂直居中左侧
-	c  - 垂直居中和水平居中点
-	rc - 垂直居中右侧
-	lB - 基准点(基线左侧)
-	cB - 基线水平居中点
-	rB - 基线右侧
-	lb - 底部左侧
-	cb - 底部水平居中点
-	rb - 底部右侧
-    viewport - 指定插图的可显示区域, 由四个值组成, 前两个值为左下角坐标, 后两个值为右上角坐标, 单位为bp. 坐标以图片左下角为起始
-    trim - 不同方向的裁剪尺寸, 由四个值组成, 分别表示左、下、右、上的裁剪尺寸, 单位为bp
-    keepaspectratio - boolean值, 是否将图片严格按照比例伸缩, 并且任意满足任意一边的长度不超过指定长度
+        B - 基准点
+	l - 左侧
+	r - 右侧
+	t - 上侧
+	b - 下侧
+	c - 居中
+	** 可以两个组合搭配使用
+    viewport - 只截取指定矩形区域内的内容，left bottom right top指定
+    trim - 是否剪切掉left bottom right top四个方位指定长度
     clip - boolean值, 是否展示显示区域外的内容, true为不展示
-    draft - boolean值, 如果为true, 则不显示实际图片, 使用与图片尺寸相同的方框代替
 
 3.\graphicspath{{<path_01>}{<path_02>}...}指定插图的查找路径
 
@@ -47,19 +41,35 @@ i\documentclass{article}
 \end{document}
 
 内容讲解
-1.\rotatebox[<args>]{<angle>}{<content>}将内容按指定点逆时针旋转angle度，默认绕基准点旋转. 参数列表如下:
-    args列表如下:
-        origin
+1.\rotatebox[<args>]{<angle>}{<content>}
+    将内容按指定点逆时针旋转angle度，默认绕基准点旋转. 参数列表如下:
+        args列表如下:
+          origin
             设置旋转点, 参考\includegraphics的origin
-        x=<dimension>
+          x=<dimension>
             以基准点为原点, 以x偏移指定长度为旋转点
-        y=<dimension>
+          y=<dimension>
             以基准点为原点，以y偏移指定长度为旋转点
-        units - 指定将一圈划分为指定分数，默认为360. 如: 360代表将逆时针一圈分为360(angle对应角度值); -6.283代表将顺时针一圈分为6.283份(angle对应弧度值)
-    angle - 旋转的指定个单位度数
+          units - 指定将一圈划分为指定分数，默认为360. 如: 360代表将逆时针一圈分为360(angle对应角度值); -6.283代表将顺时针一圈分为6.283份(angle对应弧度值)
+        angle - 旋转的指定个单位度数
+	content - 内容
 
-2.\scalebox{horizontal_factor}[vertical_factor]{content}将内容按系数进行拉伸/缩小, horizontal_factor为水平拉伸系数; vertical_factor为垂直拉伸系数, 未提供时参考horizontal_factor值
+2.\scalebox{<horizontal_factor>}[<vertical_factor>]{<content>}
+    将内容按系数进行拉伸/缩小, 参数列表如下:
+        horizontal_factor - 水平拉伸系数
+	vertical_factor - 垂直拉伸系数, 未提供时与horizontal_factor一致
+	content - 内容
 
-3.\resizebox{horizontal_size}{vertical_size}{content}将内容按指定长度进行拉伸/缩小, horizontal_size为水平拉伸尺寸; vertical_size为垂直拉伸尺寸. horizontal_size或vertical_size为!时, 根据另一个拉伸尺寸进行成比例拉伸
+3.\resizebox{<horizontal_size>}{<vertical_size>}{<content>}
+    将内容按指定长度进行拉伸/缩小, 参数列表如下:
+        horizontal_size - 水平拉伸尺寸
+	vertical_size - 垂直拉伸尺寸
+	** horizontal_size或vertical_size为!时, 根据另一个拉伸尺寸进行成比例拉伸
+	content - 内容
 
-4.\reflectbox{content}为内容的垂直镜像, 即以穿过中心的垂直线条为对称轴的镜像
+4.\reflectbox{<content>}
+    原内容的垂直镜像, 即以穿过中心的垂直线条为对称轴的镜像
+
+
+
+最后编辑于: 2025-04-28

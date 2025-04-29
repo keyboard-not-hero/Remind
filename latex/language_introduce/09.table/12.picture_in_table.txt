@@ -1,62 +1,287 @@
-\documentclass{article}
-\usepackage{ctex,float,adjustbox}
+Demo_01 - 裁剪
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{array}
+\setlength{\parindent}{0mm}
 \begin{document}
-\begin{table}[H]
-    \begin{tabular}{|>{\centering\arraybackslash}l|>{\centering\arraybackslash}c|}
-        \hline
-        \raisebox{2.8cm}{文字} & \adjustbox{margin=10pt}{\begin{tikzpicture}[>=Stealth]
-            \draw[->] (-0.5,0) -- (5,0) node[below]{$x$};
-            \draw[->] (0,-0.5) -- (0,5) node[left]{$y$};
-            \draw (0,0) -- (4,4);
-        \end{tikzpicture}}\\
-        \hline
-    \end{tabular}
-\end{table}
+\adjustbox{trim=20pt,rndcorners=5pt,clip}{
+\begin{tikzpicture}
+    \draw (0,0) node[above right=0pt,inner sep=0pt,outer sep=0pt]{\huge big box} rectangle (200pt,200pt) node[below left=0pt,inner sep=0pt,outer sep=0pt]{\huge big box};
+    \draw (20pt,20pt) node[above right=0pt]{\huge medium box} rectangle (180pt,180pt) node[below left=0pt]{\huge medium box};
+    \draw (40pt,40pt) node[above right=0pt]{\huge small box} rectangle (160pt,160pt) node[below left=0pt]{\huge small box};
+\end{tikzpicture}}
+\adjustbox{Clip=20pt}{
+\begin{tikzpicture}
+    \draw (0,0) node[above right=0pt,inner sep=0pt,outer sep=0pt]{\huge big box} rectangle (200pt,200pt) node[below left=0pt,inner sep=0pt,outer sep=0pt]{\huge big box};
+    \draw (20pt,20pt) node[above right=0pt]{\huge medium box} rectangle (180pt,180pt) node[below left=0pt]{\huge medium box};
+    \draw (40pt,40pt) node[above right=0pt]{\huge small box} rectangle (160pt,160pt) node[below left=0pt]{\huge small box};
+\end{tikzpicture}}
+\end{document}
+
+
+Demo_02 -- 内容尺寸
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{makecell}
+\setlength{\parindent}{0mm}
+\begin{document}
+\fbox{Before\adjustbox{margin=20pt,frame,margin=2cm}{Normal text}After}\\
+\adjustbox{min width=2cm,min height=4mm,frame}{Normal text}\\
+\end{document}
+
+
+Demo_03 -- 边框
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{makecell}
+\setlength{\parindent}{0mm}
+\begin{document}
+\frame{Before\adjustbox{frame}{Normal text}After}\\
+\frame{Before\adjustbox{fbox}{Normal text}After}\\
+\frame{Before\adjustbox{cfbox=blue 2pt 10pt 1cm}{Normal text}After}\\
+\frame{Before\adjustbox{min size=2cm,rndframe={color=red,clip=true}{5mm}}{Normal text}After}\\
+\frame{Before\adjustbox{min size=2cm,rndfbox={color=blue,clip=true}{5mm}}{Normal text}After}\\
+\end{document}
+
+
+Demo_04 -- 对齐方式
+\documentclass{ctexart}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{makecell}
+\setlength{\parindent}{0mm}
+\begin{document}
+\begin{minipage}[b]{0.5\linewidth}
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=t}{Normal text}After}\\
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=m}{Normal text}After}\\
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=b}{Normal text}After}\\
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=T}{Normal text}After}\\
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=M}{Normal text}After}\\
+\frame{Before\adjustbox{margin=0cm 2cm,frame,valign=B}{Normal text}After}\\
+\end{minipage}
+\frame{Before\adjustbox{raise={0pt}{0pt}{1cm}}{Normal text}After}\\
+\frame{Before\adjustbox{center,fbox}{Normal text}After}\\
 \end{document}
 
 
 内容讲解
-1.\adjustbox{<options>}{<content>}用于对内容(包括tikz环境内容)进行强制操作. 该指令包含在adjustbox宏包中. 参数列表:
-    frame
-        给内容添加边框。详细格式如下：
-        frame
-            只给一个边框 
-        frame=<rule_width>
-            指定边框的线条宽度
-        frame=<rule_width> <sep>
-            指定边框的线条宽度和内部空白填充
-        frame=<rule_width> <sep> <margin>
-            指定边框的线条宽度、内部空白填充和外部空白填充
-    margin
-        该参数在frame参数之前，指定盒子内的内容与边框的空白
-        该参数在frame参数之后，指定边框与盒子外内容的空白
-        与参数padding效果一致。详细格式如下：
-        margin=<all_direction_margin>
-            一个参数值指定四个方向的填充值
-        margin=<left/right> <top/bottom>
-            第一个参数指定左右填充值，第二个参数指定上下填充值
-        margin=<left> <bottom> <right> <top>
-            四个参数分别为左/右/上/下填充值
-    raise 
-        将图片向上平移指定尺寸。详细格式如下:
-        raise=<amount>
-            垂直向上移动指定尺寸
-        raise={<amount>}{<height>}
-            垂直向上移动指定尺寸，并设置字体高度
-        raise={<amount>}{<height>}{<depth>}
-            垂直向上移动指定尺寸，并设置字体高度和深度
-    scale
-        内容的伸缩系数。详细格式如下：
-        scale=<factor>
-            一个参数指定水平和垂直伸缩系数
-        scale={<h-factor>}{<v-factor>}
-            两个参数分别指定水平和垂直伸缩系数
+1.\adjustbox{<options>}{<content>}用于对内容进行操作. 该指令包含在adjustbox宏包中. 参数列表:
+    trim=<all_site>
+    trim=<left/right> <top/bottom>
+    trim=<left> <bottom> <right> <top>
+        裁剪四个边的长度
+        根据参数个数适配使用的类型
+
+    viewport=<left> <bottom> <right> <top>
+        由四个点确定的矩形区域，为裁剪后保留位置
+
+    clip
+    clip=true | false
+        是否将裁剪掉的区域，不进行显示
+	不指定true/false值，只指定clip key，默认为true
+
+    Clip=<all_site>
+    Clip=<left/right> <top/bottom>
+    Clip=<left> <bottom> <right> <top>
+        裁剪四边边的长度，并且不进行显示
+        根据参数个数适配使用的类型
+
+    rndcorners=<radius_four_corners>
+    rndcorners=<left_corners> <right_corners>
+    rndcorners=<upper_left> <upper_right> <lower_left> <lower_right>
+        将四个角裁剪为指定半径的圆角
+        根据参数个数适配使用的类型
+
+    以上参数参考Demo_01
+
+
+
+    margin=<all_direction_margin>
+    margin=<left/right> <top/bottom>
+    margin=<left> <bottom> <right> <top>
+        限定内容与外部内容的额外填充空白
+        根据参数个数适配使用的类型
+
+    min width=<width>
+    min height=<height>
+    min size={<width>}{<height>}
+    min totalheight=<total_height>
+    min totalsize={<width>}{<total_height>}
+        配置width/height/totalheight为指定尺寸，内容进行按比例伸缩
+	指定多个时，依据不超过所有配置为依据
+        
+    max width=<width>
+    max height=<height>
+    max size={<width>}{<height>}
+    max totalheight=<total_height>
+    max totalsize={<width>}{<total_height>}
+        限制width/height/totalheight能达到的最大长度
+
+    以上参数参考Demo_02
+
+
+
+    scale=<factor>
+    scale={<horizontal_factor>}{<vertical_factor>}
+        将内容进行伸缩
+	指定多个时，依据不超过所有配置为依据
+
     reflect
-        内容关于过中心点的垂直直线，成镜像. 即左右翻转
+        以竖直线为对称轴的镜像
 
 
 
+    fbox
+    fbox=<rule_width>
+    fbox=<rule_width> <sep>
+    fbox=<rule_width> <sep> <margin>
+        内容加边框，内容与边框默认有些许距离. 参数如下:
+	    rule_width - 边框线条宽度
+	    sep - 边框内部padding
+	    margin - 边框与外部内容的margin
+
+    frame
+    frame=<rule_width>
+    frame=<rule_width> <sep>
+    frame=<rule_width> <sep> <margin>
+        内容加边框，内容与边框默认无空白. 参数如下:
+	    rule_width - 边框线条宽度
+	    sep - 边框内部padding
+	    margin - 边框与外部内容的margin
+    
+    cfbox=<color>
+    cfbox=<color> <rule_width>
+    cfbox=<color> <rule_width> <sep>
+    cfbox=<color> <rule_width> <sep> <margin>
+        内容加边框，边框配色，内容与边框默认有些许距离. 参数如下:
+	    color - 指定边框颜色. 依赖于xcolor宏包
+	    rule_width - 边框线条宽度
+	    sep - 边框内部padding
+	    margin - 边框与外部内容的margin
+
+    cframe=<color>
+    cframe=<color> <rule_width>
+    cframe=<color> <rule_width> <sep>
+    cframe=<color> <rule_width> <sep> <margin>
+        内容加边框，边框配色，内容与边框默认无空白. 参数如下:
+	    color - 指定边框颜色. 依赖于xcolor宏包
+	    rule_width - 边框线条宽度
+	    sep - 边框内部padding
+	    margin - 边框与外部内容的margin
+    
+    rndframe=<radius_four_corners>
+    rndframe=<left_corners> <right_corners>
+    rndframe=<upper_left> <upper_right> <below_left> <below_right>
+    rndframe={<options>}{<radius_four_corners>}
+    rndframe={<options>}{<left_corners> <right_corners>}
+    rndframe={<options>}{<upper_left> <upper_right> <below_left> <below_right>}
+        圆角边框. 参数列表如下:
+	    options - 配置边框的选项. 列表如下:
+	        color - 边框颜色
+		width - 边框线条宽度
+		sep - 边框与内容的空白填充
+		clip - 是否裁剪边框外的内容
+    
+    rndfbox=<radius_four_corners>
+    rndfbox=<left_corners> <right_corners>
+    rndfbox=<upper_left> <upper_right> <below_left> <below_right>
+    rndfbox={<options>}{<radius_four_corners>}
+    rndfbox={<options>}{<left_corners> <right_corners>}
+    rndfbox={<options>}{<upper_left> <upper_right> <below_left> <below_right>}
+        圆角边框，类似于rndframe，但默认保留一定padding空间. 参数列表如下:
+	    options - 配置边框的选项. 列表如下:
+	        color - 边框颜色
+		width - 边框线条宽度
+		sep - 边框与内容的空白填充
+		clip - 是否裁剪边框外的内容
+    
+    以上参数参考Demo_03
 
 
 
+    valign={t | m | b}
+        使用内容的顶部对齐外部内容顶部
+	内容垂直中部对齐外部内容垂直中部
+	内容的底部对齐外部内容底部
+    vlign={T | M | B}
+        使用内容的顶部/垂直中部/底部对齐外部内容的基线
 
+    raise=<amount>
+    raise={<amount>}{<height>}
+    raise={<amount>}{<height>}{<depth>}
+        将图片向上平移指定尺寸. 参数列表:
+	    amount - 上移距离
+	    height - 内容的额外高度
+	    depth - 内容的额外深度
+
+    set height=<height>
+    set depth=<depth>
+    set vsize={<height>}{<depth>}
+        设置额外高度或深度
+
+    left
+    left=<width>
+    center
+    center=<width>
+    right
+    right=<width>
+        在指定宽度内左对齐/居中/右对齐，默认宽度为\linewidth
+
+    以上参数参考Demo_04
+
+
+
+    lap=<lap_size>
+    lap={<length>}{<lap_size>}
+        当前内容指定尺寸被外部内容覆盖. 参数列表如下:
+	    lap_size - 被外部覆盖的尺寸，正数表示右侧被覆盖，负数表示左侧被覆盖
+	    length - 内容长度. 默认为字体长度-被覆盖长度
+    
+    color=<color>
+    color={<color_model>}{<color>}
+        指定所有元素的颜色
+
+    fgcolor=<color>
+    fgcolor={<color_model>}{<color>}
+        指定前景色. 依赖于xcolor宏包
+
+    bgcolor=<color>
+    bgcolor={<color_model>}{<color>}
+        指定背景色. 依赖于xcolor宏包
+
+    background=<background_content>
+    background={<options>}{<background_content>}
+        用于作为背景的内容
+	伸缩内容以适应主空间
+
+    foreground=<foreground_content>
+    foreground={<options>}{<background_content>}
+        用于作为前景的内容
+	伸缩内容以适应主空间
+
+
+
+2.\newadjustboxcmd{<macro>}[<arg_num>][<default>]{<options>}
+    定义一个adjustbox类宏，参数列表如下:
+        macro - 新命令的名称
+	arg_num - 参数的个数
+	default - 第一个参数的默认值
+	options - adjustbox相关参数. 参考\adjustbox
+
+
+
+3.\adjustboxset{<options>}
+    应用于所有\adjustbox的参数
+
+
+
+最后编辑于: 2025-04-29

@@ -441,7 +441,7 @@ Left of picture\begin{tikzpicture}
     \draw (1,0) -- (4,.75);
 \end{tikzpicture}right of picture.\\[1cm]
 
-%   3)如果前面已有路径，边界比当前使用use as bounding box的路径更偏向外部，则无法生效. 使用\pgfresetboundingbox
+%   3)如果前面已有路径，边界比当前使用use as bounding box的路径更偏向外部，则无法生效. 使用\pgfresetboundingbox重置根据之前路径(非use as bounding box)确定的bounding box
 Left of picture\begin{tikzpicture}
     \draw (0,0) circle [radius=2];
     \draw[use as bounding box] (0,0) circle [radius=1];
