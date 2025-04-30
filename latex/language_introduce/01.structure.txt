@@ -4,11 +4,24 @@ Demo_01 -- 页面结构
 \setlength{\parindent}{0mm}
 \begin{document}
 This is first paragraphy to catch the line end, please ignore the word from now onplease ignore the word from now on\marginpar{this is text for test marginpar width}\\
+% textwidth=345pt
+% marginparsep+marginparwidth=76pt
 \begin{tikzpicture}
-    \draw (0,0) -- (\textwidth,0);
+    \draw (0,0) -- (345pt,0);
 \end{tikzpicture}\makebox[0pt][l]{
 \begin{tikzpicture}
-    \draw (0,0) -- (\marginparsep+\marginparwidth-4pt,0);
+    \draw (0,0) -- (11pt+65pt-4pt,0);
+\end{tikzpicture}}\\
+% leftmargin=133pt
+\makebox[0pt][r]{\begin{tikzpicture}
+    \draw (0,0) -- (133pt,0);
+\end{tikzpicture}}
+% rightmargin=60pt
+\begin{tikzpicture}
+    \draw (0,0) -- (345pt,0);
+\end{tikzpicture}\makebox[0pt][l]{
+\begin{tikzpicture}
+    \draw (0,0) -- (11pt+65pt-4pt+56pt,0);
 \end{tikzpicture}}\\
 \textbf{paperwidth}: \the\paperwidth\\
 \textbf{textwidth}: \the\textwidth\\
@@ -18,7 +31,11 @@ This is first paragraphy to catch the line end, please ignore the word from now 
 \textbf{textheight}: \the\textheight\\
 \textbf{headheight}: \the\headheight\\
 \textbf{headsep}: \the\headsep\\
-\textbf{footskip}: \the\footskip
+\textbf{footskip}: \the\footskip\newpage
+\rule{1pt}{580pt}\vspace{-550pt}
+This is normal text\\
+This is normal text\\
+This is normal text\\
 \end{document}
 
 内容讲解
@@ -34,9 +51,9 @@ This is first paragraphy to catch the line end, please ignore the word from now 
     \footskip - 版面底部的页脚的距离+页脚的高度
 
     水平方向:
-    \paperwidth=\textwidth+\leftmargin+\marginparsep+\marginparwidth+\rightmargin
+    \paperwidth = \textwidth + \marginparsep + \marginparwidth + \leftmargin + \rightmargin
     垂直方向:
-    \paperheight=\textheight+\topmargin+\headheight+\headsep+\footskip+\bottommargin
+    \paperheight = \textheight + \headheight + \headsep + \footskip + \topmargin + \bottommargin
 
 2.引用TeX变量
     \the\<var_name>
@@ -53,8 +70,10 @@ Demo_02 -- LaTeX的源文档骨架
 
 内容讲解
 1.\documentclass[]{}为文档的第一个之类，指定文档类型。其中，参数可分为以下两种情况：
-    (1)代表必要参数的{}，该类参数必须进行指定，当有多个必要参数时，必须按顺序进行指定，不能调换顺序
-    (2)代表可选参数的[]，该类参数可以指定，也可以省略，当有多个可选参数时，必须按顺序进行指定(不能只省略序列靠前的可选参数，到导致乱序)；可选参数[]也可以由多个可选子参数构成[sub_arg1,sub_arg2...]，由半角逗号分隔，不能留空，顺序可以打乱
+    1)代表必要参数的{}，该类参数必须进行指定，当有多个必要参数时，必须按顺序进行指定，不能调换顺序
+    2)代表可选参数的[]，该类参数可以指定，也可以省略
+      当有多个可选参数时，必须按顺序进行指定(不能只省略序列靠前的可选参数，到导致乱序)
+      可选参数[]也可以由多个可选子参数构成[sub_arg1,sub_arg2...]，由半角逗号分隔，不能留空，顺序可以打乱
 
 2.\documentclass[arg1,arg2,...]{doc_class}指定文档类。参数列表:
     arg<N> - 可选参数的子参。列表:
@@ -70,16 +89,16 @@ Demo_02 -- LaTeX的源文档骨架
 
 	landscape - 将页面的宽和高的尺寸交换
 
-	final | draft - draft代表草稿模，在超过宽度内容的结尾右侧使用黑色小方块就行标记; final代表定稿模式，超过宽度内容不进行标。默认为final
+	final | draft - draft代表草稿模，在超过宽度内容的结尾右侧使用黑色小方块进行标记; final代表定稿模式，超过宽度内容不进行标记. 默认为final
 
 	oneside | twoside - oneside代表所有页面统一对齐，article/report文档类型默认选项; twoside代表奇数页偏左对齐，偶数页偏右对齐(偏向书本中心，book文档类型默认选。不支持letter/slides文档类型
 
 	openright | openany - openany代表新chapter可从奇/偶数开，report文档类默认选项; openright代表新chapter只从奇数页开，book文档类的默认选。只支持report/book文档类型(因为article/letter/slides不支持章节)
 
 	onecolumn | twocolumn - 页面分为单栏或双栏排列，默认选项为onecolum。支持article/report/book文档类型. twocolumn相关命令:
-        \columnsep - 双栏的距离. 默认为15pt
-        \columnwidth - 每一栏的宽度. \columnwidth=(\textwidth-\columnsep)/2
-        \columnseprule - 两栏之间的垂直分隔线. 默认为1pt
+          \columnsep - 双栏的距离. 默认为15pt
+          \columnwidth - 每一栏的宽度. \columnwidth=(\textwidth-\columnsep)/2
+          \columnseprule - 两栏之间的垂直分隔线. 默认为1pt
 
 	titlepage | notitlepage - notitlepage代表标题页和摘要页不另成一，article文档类默认选项; titlepage代表标题生成一个单独，摘要生成单独，report/book/slides文档类默认选项。不支持letter文档类型
 
