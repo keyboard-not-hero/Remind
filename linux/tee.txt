@@ -1,0 +1,23 @@
+tee -- 从stdin读取内容，输出到stdout和文件
+
+
+格式
+tee [<option>]... [<file>]...
+
+
+option列表
+-a, --append
+    append到文件，而不是覆盖
+
+-i, --ignore-interrupts
+    忽略中断信号
+
+--help
+    显示帮助信息
+
+--version
+    显示版本信息
+
+
+
+最后编辑于: 2025-05-17

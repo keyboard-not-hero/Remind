@@ -1,0 +1,41 @@
+ssh_config
+    OpenSSH客户端配置文件
+
+
+以'#'起始的行为注释行
+
+
+
+directive列表:
+Host
+    将该命令限定区域内的directives只应用于与指定server的连接
+    该directive的值使用wildcard进行匹配，可使用'<space>'分隔多个wildcard值
+
+AddressFamily
+    指定使用的地址族类型. 可选值列表:
+        any - IPv4和IPv6地址族. 默认值
+	inet - IPv4地址族
+	inet6 - IPv6地址族
+
+BatchMode
+    是否使用batch模式. 可选值列表:
+        yes - 使用batch模式，不弹出password prompt
+	no - 不使用batch模式. 默认值
+
+BindAddress
+    使用指定IP地址作为连接的source address
+    应用于本地存在多地址的情况
+
+BindInterface
+    使用指定接口作为连接的source address
+
+ProxyCommand
+    在连接过程中使用的其他命令. 命令可使用的token列表:
+        %% - 字符'%'
+	%h - 远程服务器地址
+	%n - 远程服务器origin地址
+	%p - 远程服务器端口
+	%r - 远程服务器用户名
+
+
+

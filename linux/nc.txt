@@ -1,0 +1,110 @@
+nc -- 管理TCP/UDP连接
+
+
+语法
+nc [<option>] [<destination>] [<port>]
+
+
+option列表
+-4
+    只使用IPv4地址族
+
+-6
+    只使用IPv6地址族
+
+-b
+    允许broadcast
+
+-C
+    将CRLF视为行结束符
+
+-d
+    不从stdin读取内容
+
+-h
+    help信息
+
+-I <length>
+    指定TCP receive buffer的大小
+
+-i <interval>
+    在行内容的发送间隙，sleep指定秒
+
+-k
+    当一个连接complete，监听其他连接
+
+-l
+    监听指定端口的入向连接，而非作为client初始化一个连接
+
+-M <ttl>
+    配置出向包的TTL/hop
+
+-m <min_ttl>
+    当入向包的TTL/hop低于指定值时，丢弃
+
+-N
+    当输入遇到EOF时，关闭网络套接口
+
+-n
+    不进行DNS或service lookup操作
+
+-O <length>
+    指定TCP send buffer的大小
+
+-P <proxy_username>
+    当proxy server需要认证时，提供的用户名
+
+-p <src_port>
+    发起端使用的端口
+
+-q <seconds>
+    当stdin遇到EOF后，等待指定秒后再退出
+
+-r
+    选择source/destination为随机端口
+
+-s <source>
+    指定IP地址的接口作为发送接口
+
+-u
+    使用UDP替换TCP
+
+-v
+    提供详尽(verbose)的输出
+
+-W <rec_limit>
+    在接收指定个packets后断开连接
+
+-X <proxy_protocol>
+    使用的代理协议类型. 可选列表如下:
+        4 - SOCKS4
+	5 - SOCKS5. 默认类型
+	connect - HTTPS
+
+-x <proxy_add>[:<port>]
+    使用proxy_add作为代理地址，port作为代理端口，连接到destination
+
+-z
+    只扫描监听端口，不发送数据
+
+
+destination
+    可以为连接目标的IP address或hostname
+
+
+port
+    可以为连接目标的port number或service name
+    可以使用nn-mm格式指定范围端口号
+
+
+
+示例1 - 测试范围端口号(20~30)的开启情况
+nc -zv <IP_add> 20-30
+
+
+示例2 - 指定连接的源端口号为2048
+nc -p 2048 <IP_add> 22
+
+
+
+最后编辑于: 2025-05-19

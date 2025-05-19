@@ -1,156 +1,194 @@
-ssh - OpenSSH SSH客户端程序
+ssh - OpenSSH客户端程序
+
 
 语法
-ssh [options] {[-l user] hostname | [user@]hostname} [command]
+ssh [<options>] [<user>@]<hostname> [command]
 
-参数释义
+ssh [-Q <query_option>]
+
+
+options参数列表
 -4
-	强制ssh只能使用IPv4地址
+    强制ssh只能使用IPv4地址
 
 -6
-	强制ssh只能使用IPv6地址
-
--A
-	允许转发认证代理的连接
-
--a
-	禁止转发认证代理的连接
+    强制ssh只能使用IPv6地址
 
 -B <bind_interface>
-	在拥有多个网络接口的主机上, 指定收发信息接口
+    在拥有多个网络接口的主机上, 指定收发信息接口
 
 -b <bind_address>
-	在拥有多个IP地址的主机上, 指定收发信息IP地址
+    在拥有多个IP地址的主机上, 指定收发信息IP地址
 
 -C
-	压缩传输数据
-	压缩算法与gzip采用的算法一致
+    压缩传输数据
+    压缩算法与gzip采用的算法一致
+    参考ssh_config(5)的Compression
 
 -c <cipher_spec>
-	指定传输数据加密算法优先级列表, 算法之间使用','分隔
-	spec以'+'开头, 代表添加算法到默认列表尾部; 以'-'开头, 代表从默认列表中删除; 以'^'开头, 代表添加算法到默认列表头部
-	默认算法列表: 
-		chacha20-poly1305@openssh.com,
-		aes128-ctr,
-		aes192-ctr,
-		aes256-ctr,
-		aes128-gcm@openssh.com,
-		aes256-gcm@openssh.com
-	支持的算法列表: 参考ssh -Q cipher
-
--D [<bind_address>:]<port>
-	监听本地指定端口信息, 并将信息转发给指定目标
-	用于动态转发
-	bind_address为指定多地址主机中, 限定需要监听的地址
+    指定传输数据对称密钥优先级列表, 算法之间使用','分隔
+    spec以'+'开头, 代表添加算法到默认列表尾部; 以'-'开头, 代表从默认列表中删除; 以'^'开头, 代表添加算法到默认列表头部
+    默认算法列表: 
+	chacha20-poly1305@openssh.com
+	aes128-ctr
+	aes192-ctr
+	aes256-ctr
+	aes128-gcm@openssh.com
+	aes256-gcm@openssh.com
+    支持的算法列表:
+        3des-cbc
+	aes128-cbc
+	aes192-cbc
+	aes256-cbc
+	aes128-ctr
+	aes192-ctr
+	aes256-ctr
+	aes128-gcm@openssh.com
+	aes256-gcm@openssh.com
+	chacha20-poly1305@openssh.com
+    参考ssh_config(5)的Ciphers
 
 -E <log_file>
-	将debug信息输出到指定文件
-	默认输出到stderr
+    将debug信息输出到指定文件
+    默认输出到stderr
 
 -e <escape_char>
-	登录服务器期间的特殊符号, 默认为'~'
-	列表如下:
-		<escape>. - 关闭连接
-		<escape><ctrl>Z - 后台执行ssh
-		<escape><escape> - 显示escape符号本身
-	当escape_char为none时, 关闭特殊符号
+    指定跳脱符号, 默认为'~'
+    组合列表如下:
+	<escape>. - 关闭连接
+	<escape><ctrl>Z - 暂停ssh连接(jobs查看为stopped状态)
+	<escape><escape> - 显示escape符号本身
+	当escape_char为none时, 关闭跳脱符号特性
 
 -F <config_file>
-	指定用户级配置文件
-	默认为~/.ssh/config
-	当设置为none时, 不读取配置文件
+    指定用户级配置文件. 指定该参数时，/etc/ssh/ssh_config被忽略
+    默认为~/.ssh/config
 
 -f
-	指定command在本地后台执行
-	隐式包含-n选项
+    配合command使用
+    指定command在后台执行，本地不等待command执行后再返回PS
 
 -G
-	打印连接相关的配置参数, 并退出连接
-
--g
-	允许远程主机连接到本地转发端口
+    打印ssh服务器的配置参数, 并退出连接
 
 -i <identity_file>
-	指定用于密钥登录的本地私钥
-	默认为如下列表:
-		~/.ssh/id_dsa, 
-		~/.ssh/id_ecdsa, 
-		~/.ssh/id_ecdsa_sk, 
-		~/.ssh/id_ed25519, 
-		~/.ssh/id_ed25519_sk,
-		~/.ssh/id_rsa
-
--L [bind_address:]port:host:host_port
-	本地所有发向port的信息, 经由SSH服务器建立安全隧道, 最终发向host的host_port
-	用于本地转发
+    指定用于公钥认证中，读取的本地私钥
+    默认为如下列表:
+	~/.ssh/id_dsa
+	~/.ssh/id_ecdsa
+	~/.ssh/id_ecdsa_sk
+	~/.ssh/id_ed25519
+	~/.ssh/id_ed25519_sk
+	~/.ssh/id_rsa
 
 -l <login_name>
-	指定登录用户名称
-	未指定时, 采用本地当前用户名登录
+    指定登录用户名称
+    未指定时, 采用本地当前用户名登录
 
 -m <mac_spec>
-	指定偏好的验证数据完整性的算法列表, 算法之间使用','分隔
-	支持的算法列表: 参考ssh -Q mac
+    指定偏好的验证数据完整性的算法列表, 算法之间使用','分隔
+    spec以'+'开头, 代表添加算法到默认列表尾部; 以'-'开头, 代表从默认列表中删除; 以'^'开头, 代表添加算法到默认列表头部
+    支持的MAC列表:
+        hmac-sha1
+        hmac-sha1-96
+        hmac-sha2-256
+        hmac-sha2-512
+        hmac-md5
+        hmac-md5-96
+        umac-64@openssh.com
+        umac-128@openssh.com
+        hmac-sha1-etm@openssh.com
+        hmac-sha1-96-etm@openssh.com
+        hmac-sha2-256-etm@openssh.com
+        hmac-sha2-512-etm@openssh.com
+        hmac-md5-etm@openssh.com
+        hmac-md5-96-etm@openssh.com
+        umac-64-etm@openssh.com
+        umac-128-etm@openssh.com
+    参考ssh_config(5)的MACs
 
--N
-	不登录ssh服务器, 不在ssh服务器执行指令
-	用于端口转发
+-n
+    将stdin重定向到/dev/null(即阻值读取输入)
+    适用于ssh在background运行
 
 -o <option>
-	指定配置文件中的参数
-	参考: man 5 ssh_config
+    用于指定配置文件中的格式参数
+    参考: man 5 ssh_config
 
 -p
-	连接到服务器的端口
-	默认为端口22
+    连接到服务器的sshd端口
+    默认为端口22
 
 -Q <query_option>
-	查询指定算法的可选列表. 支持查询列表:
-		cipher - 传输数据加密相关, 选项-c
-		mac - 数据完整性算法, 选项-m
-		kex - 密钥交换算法
-		key - 密钥加密类型
-		protocol-version - 支持的ssh版本
-		...
+    查询指定算法的可选列表. 支持查询列表:
+	cipher - 对称密钥
+	cipher-auth - 用于认证的对称密钥
+	kex - key exchange算法
+	kex-gss - GSSAPI key exchange算法
+	key - 密钥类型
+	key-cert - 证书型密钥
+	key-plain - 非证书型密钥
+	key-sign - 密钥类型和签名算法
+	mac - Message Authentication Code算法
+	protocol-version - OpenSSH支持的SSH版本
 
 -q
-	quiet模式
+    quiet模式
 
--R [bind_address:]port
--R [bind_address:]port:host:host_port
-	将连接到远程SSH服务器的指定端口port的连接, 转化到本地主机host的host_port端口
-	用于远程转发
+-T
+    不分配pseudo-terminal
 
 -t
-	在服务器端执行command时, 分配一个终端
+    强制分配pseudo-terminal
 
 -V
-	显示版本信息
+    OpenSSH版本信息
 
 -v
-	verbose模式
-	当多个-v重复使用时, 会增加显示内容的详细程度, 最大上限为3次
+    verbose模式
+    当多个-v重复使用时, 会增加显示内容的详细程度, 最大上限为3次
 
-	
-配置文件:
-全局 - /etc/ssh/ssh_config
-用户 - ~/.ssh/config
+-y
+    发送log信息到syslog模块
+    默认发送到stderr
 
-参数读取顺序:
-1.ssh指令
-2.用户级配置文件
-3.全局配置文件
+
+command
+    如果指定该shell指令，则在服务器上执行该指令，而非登入服务器
+
+
+
+认证方式:
+1.GSSAPI-based Authentication
+
+
+2.Host-based Authentication
+
+
+3.Public Key Authentication
+    将client的公钥(~/.ssh/id_<key_type>.pub)复制到server端的~/.ssh/authorized_keys文件内
+
+
+4.Keyboard-interactive Authentication
+
+
+5.Password Authentication
+    client端直接输入对应server端用户的密码
+** 认证方法默认顺序为1 -- 2 -- 3 -- 4 -- 5，可通过PreferredAuthentications修改
+
+
+
+配置读取顺序:
+1.ssh指令参数(ssh <option>)
+2.用户级配置文件(~/.ssh/config)
+3.全局配置文件(/etc/ssh/ssh_config)
+** 如果从当前文件读取到配置选项，则该选项值确定. 如: 从~/.ssh/config读取到Host值，则不再从/etc/ssh/ssh_config文件读取Host值
 
 
 
 示例1 - 远程登录到指定主机
-ssh -l steven -p 22 <host_name>
+ssh -p 22 <user>@<host_name>
 
-示例2 - 使用本地转发, 加密web访问连接
-ssh -L 2121:httpbin.org/:80 -N <ssh_server>
-curl http://localhost:2121
 
-示例3 - 远程转发(内网穿透)
-ssh -R 8080:localhost:80 -N <ssh_server>
-curl <ssh_server>:8080
-** 默认远程转发只开启本地监听, 开启全网监听, 需要配置ssh服务器的sshd配置文件的GatewayPorts为yes
+
+最后编辑于: 2025-05-19
