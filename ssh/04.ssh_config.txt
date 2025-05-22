@@ -29,6 +29,106 @@ BindAddress
 BindInterface
     使用指定接口作为连接的source address
 
+CheckHostIP
+    从known_hosts检查是否包含服务器端的IP地址. 可选值列表:
+        yes - 进行检查
+	no - 不进行检查
+
+Ciphers
+    使用指定的加密算法
+    可指定多个加密算法，算法之间使用','分隔，先指定的算法优先级更高
+    以'+'起始，则将指定算法append到默认算法之后；以'-'起始，则从默认算法中移除指定算法；以'^'起始，则将指定算法prepend到默认算法
+    默认算法列表: 
+	chacha20-poly1305@openssh.com
+	aes128-ctr
+	aes192-ctr
+	aes256-ctr
+	aes128-gcm@openssh.com
+	aes256-gcm@openssh.com
+    支持的算法列表:
+        3des-cbc
+	aes128-cbc
+	aes192-cbc
+	aes256-cbc
+	aes128-ctr
+	aes192-ctr
+	aes256-ctr
+	aes128-gcm@openssh.com
+	aes256-gcm@openssh.com
+	chacha20-poly1305@openssh.com
+
+Compression
+    是否对数据进行压缩
+    默认为no
+
+ConnectionAttempts
+    在连接到SSH Server时，最大尝试连接次数
+    默认为1
+
+ConnectTimeout
+    在连接到SSH Server时，单次连接等待时间
+
+EscapeChar
+    指定跳脱字符
+    默认为'~'
+
+FingerprintHash
+    fingerprint(对public key进行hash运算)使用的hash算法. 可选列表:
+        md5 - MD5算法
+	sha256 - SHA256算法. 默认值
+
+GSSAPIAuthentication
+    是否启用GSSAPI-based Authentication
+    默认为no
+
+HashKnownHosts
+    将主机名或IP地址添加到~/.ssh/known_hosts文件内之前，是否对其进行hash
+    默认为no
+
+HostbasedAuthentication
+    是否启用Host-based Authentication
+    默认为no
+
+KbdInteractiveAuthentication
+    是否启用Keyboard-interactive Authentication
+    默认为yes
+
+MACs
+    指定偏好的验证数据完整性的算法列表, 算法之间使用','分隔
+    spec以'+'开头, 代表添加算法到默认列表尾部; 以'-'开头, 代表从默认列表中删除; 以'^'开头, 代表添加算法到默认列表头部
+    支持的MAC列表:
+        hmac-sha1
+        hmac-sha1-96
+        hmac-sha2-256
+        hmac-sha2-512
+        hmac-md5
+        hmac-md5-96
+        umac-64@openssh.com
+        umac-128@openssh.com
+        hmac-sha1-etm@openssh.com
+        hmac-sha1-96-etm@openssh.com
+        hmac-sha2-256-etm@openssh.com
+        hmac-sha2-512-etm@openssh.com
+        hmac-md5-etm@openssh.com
+        hmac-md5-96-etm@openssh.com
+        umac-64-etm@openssh.com
+        umac-128-etm@openssh.com
+
+PasswordAuthentication
+    是否启用Password Authentication
+    默认为yes
+
+Port
+    指定连接到服务器端的端口号
+
+PreferredAuthentications
+    指定不同认证方式的优先级. 默认优先级列表如下:
+        1.GSSAPI-based Authentication
+        2.Host-based Authentication
+        3.Public Key Authentication
+	4.Keyboard-interactive Authentication
+	5.Password Authentication
+
 ProxyCommand
     在连接过程中使用的其他命令. 命令可使用的token列表:
         %% - 字符'%'
@@ -37,5 +137,13 @@ ProxyCommand
 	%p - 远程服务器端口
 	%r - 远程服务器用户名
 
+PubkeyAcceptedAlgorithms
+    PubkeyAuthentication可接受的算法类型
+
+PubkeyAuthentication
+    是否启用Public Key Authentication
+    默认为yes
+    
 
 
+最后编辑于: 2025-05-22
